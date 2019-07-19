@@ -1,0 +1,1439 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+    <!-- en/Country -->
+	<!-- en/Language -->
+    <!-- en/Timezone -->
+    <!-- VIETNAM_Code_en -->
+    
+	<system.Supplier 
+        name="EVN" 
+        country="Vietnam"
+        lang="English"
+        timezone="Asia/Ho_Chi_Minh"
+        address="HoChiMinh"
+        descr="EVN"
+        telno=""
+        cdPattern="###,###,###,###,##0.000"
+        cdRound="c"
+        cdGroupingSeperator="."
+        cdDecimalSeperator=","
+        mdPattern="###,###,###,###,##0.000"
+        mdRound="r"
+        mdGroupingSeperator="."
+        mdDecimalSeperator=","
+        image="images/utility_logo/EVN_logo.jpg"
+        licenceUse="1"
+        licenceMeterCount="30000"        
+    />
+	
+    <system.Supplier 
+        name="NURI" 
+        country="KOREA, REPUBLIC OF"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="Seoul"
+        descr="Nuri Telecom"
+        telno="02-781-0777"
+        cdPattern="0.0"
+        cdRound="f"
+        cdGroupingSeperator="."
+        cdDecimalSeperator=","
+        mdPattern="0.000"
+        mdRound="r"
+        mdGroupingSeperator="."
+        mdDecimalSeperator=","
+        image="images/utility_logo/NURI_logo.jpg"		
+    />    
+    
+    <system.Co2Formula name="ElectricityCO2" supplyTypeCode="3.1" unitUsage="100" co2emissions="44.3" co2factor="0.443" unit="KWh"/>
+    <system.Co2Formula name="WaterCO2" supplyTypeCode="3.2" unitUsage="100" co2emissions="66" co2factor="0.66" unit="m3"/>
+    <system.Co2Formula name="GasCO2" supplyTypeCode="3.3" unitUsage="100" co2emissions="224" co2factor="2.24" unit="m3"/>
+    <system.Co2Formula name="HeatCO2" supplyTypeCode="3.4" unitUsage="100" co2emissions="42.4" co2factor="0.424" unit="㎥"/>
+    <system.Co2Formula name="VolumeCorrectorCO2" supplyTypeCode="3.5" unitUsage="100" co2emissions="1.0" co2factor="0.0" unit="㎥"/>
+    
+    <system.SupplyType
+        supplier="EVN"
+        typeCode="3.1"
+        co2Formula="ElectricityCO2"
+        billDate="1"
+    />
+    
+    <system.Location  name="PE0100" orderNo="1" parent="" supplier="EVN"/>
+	<system.Location  name="PE0200" orderNo="2" parent="" supplier="EVN"/>
+	<system.Location  name="PE0300" orderNo="3" parent="" supplier="EVN"/>
+	<system.Location  name="PE0400" orderNo="4" parent="" supplier="EVN"/>
+	<system.Location  name="PE0500" orderNo="5" parent="" supplier="EVN"/>
+	<system.Location  name="PE0600" orderNo="6" parent="" supplier="EVN"/>
+	<system.Location  name="PE0700" orderNo="7" parent="" supplier="EVN"/>
+	<system.Location  name="PE0800" orderNo="8" parent="" supplier="EVN"/>
+	<system.Location  name="PE0900" orderNo="9" parent="" supplier="EVN"/>
+	<system.Location  name="PE1000" orderNo="10" parent="" supplier="EVN"/>
+	<system.Location  name="PE1100" orderNo="11" parent="" supplier="EVN"/>
+	<system.Location  name="PE1200" orderNo="12" parent="" supplier="EVN"/>
+	<system.Location  name="PE1300" orderNo="13" parent="" supplier="EVN"/>
+	<system.Location  name="PE1400" orderNo="14" parent="" supplier="EVN"/>
+	<system.Location  name="PE1500" orderNo="15" parent="" supplier="EVN"/>
+	<system.Location  name="PE1600" orderNo="16" parent="" supplier="EVN"/>
+       
+    <system.Role name="admin" 
+        supplier="EVN" 
+        systemAuthority="c" 
+        mtrAuthority="c" 
+        descr="Admin" 
+        hasDashboardAuth="true" 
+        customerRole="false" 
+        loginAuthority="true" />
+        
+    <system.Role name="vendor" 
+        supplier="EVN" 
+        systemAuthority="r" 
+        mtrAuthority="r" 
+        descr="Vendor" 
+        hasDashboardAuth="true" 
+        customerRole="false" 
+        loginAuthority="true" />
+                
+    <system.Role name="customer" 
+        supplier="EVN" 
+        systemAuthority="r"
+        mtrAuthority="r" 
+        descr="Customer" 
+        hasDashboardAuth="true" 
+        customerRole="true" 
+        loginAuthority="true" />
+        
+    <system.Role name="Integration" 
+        supplier="EVN" 
+        systemAuthority="r"
+        mtrAuthority="r" 
+        descr="Integration" 
+        hasDashboardAuth="true" 
+        customerRole="true" 
+        loginAuthority="true" />
+        
+    <system.Operator loginId="admin" 
+        aliasName="administrator" 
+        email="admin@evn.com" 
+        failedLoginCount="0" 
+        name="EVN"
+        password="hQXOwYy2SzvjPduK5ESBqwwaCAFQWFdQtJAQuQiM57NZ1duCOKDjMaIsPBTSx6iU01eHOPA933Zl7lKLk5yTvg=="
+        telNo="027810740"
+        loginDenied="false" 
+        role="admin"
+        showDefaultDashboard="true"
+        supplier="EVN"/>
+    
+    <system.Dashboard descr="Main Dashboard" name="Main" orderNo="0" role="admin"/>
+    <system.Dashboard descr="System Management Dashboard" name="System" orderNo="1" role="admin"/>
+    <system.Dashboard descr="Metering Management Dashboard" name="Metering" orderNo="2" role="admin"/>
+    <system.Dashboard descr="Device Management Dashboard" name="Device" orderNo="3" role="admin"/>
+    <system.Dashboard descr="Event and History Management Dashboard" name="Alarm Event" orderNo="4" role="admin"/>
+
+    <system.Gadget
+        descr="Code Management"
+        iconSrc="assets/images/gadget_en/code.gif"
+        maxUrl="system/code_manager_max.do"
+        miniUrl="system/code_manager_mini.do"
+        name="Code Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system001"
+    />
+    <system.Gadget
+        descr="Metering Data(Electricity)"
+        iconSrc="assets/images/gadget_en/meteringdata.gif"
+        maxUrl="mvm/mvmMaxGadgetEM_EVN.do"
+        miniUrl="mvm/mvmMiniGadgetEM_EVN.do"
+        name="Metering Data(Electricity)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering001"
+    />   
+    <system.Gadget
+        descr="Device Vendor Model"
+        iconSrc="assets/images/gadget_en/vendormodel.gif"
+        maxUrl="system/devicemodelMax_EVN.do"
+        miniUrl="system/devicemodelMini.do"
+        name="Device Vendor Model"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system002"
+    />   
+    <system.Gadget
+        descr="Supplier Management"
+        iconSrc="assets/images/gadget_en/supplier.gif"
+        maxUrl="system/supplier/supplierMgmtMax_EVN.do"
+        miniUrl="system/supplier/supplierMgmtMini_EVN.do"
+        name="Supplier Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system003"
+    />  
+    <system.Gadget
+        descr="User Management"
+        iconSrc="assets/images/gadget_en/user.gif"
+        maxUrl="system/operatorMgmtMax_EVN.do"
+        miniUrl="system/operatorMgmtMini_EVN.do"
+        name="User Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system004"
+    />
+   <system.Gadget
+        descr="Group Management(Equipment, customers, users, and are grouped together.)"
+        iconSrc="assets/images/gadget_en/group.gif"
+        maxUrl="system/groupManagementMaxGadget.do"
+        miniUrl="system/groupManagementMiniGadget.do"
+        name="Group Management"
+        miniHeight="500"
+        fullHeight="1000"
+        gadgetCode="gadget.system009"
+    />   
+    <system.Gadget
+        descr="Concentrator Management"
+        iconSrc="assets/images/gadget_en/mcu.gif"
+        maxUrl="device/mcuMaxGadget_EVN.do"
+        miniUrl="device/mcuMiniGadget_EVN.do"
+        name="Concentrator Management"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device001"
+    />
+    <system.Gadget
+        descr="Communication Log"
+        iconSrc="assets/images/gadget_en/commlog.gif"
+        maxUrl="device/commLog/commLogMaxGadget.do"
+        miniUrl="device/commLog/commLogMiniGadget.do"
+        name="Communication Log"
+        miniHeight="350"
+        fullHeight="1600"
+        gadgetCode="gadget.device006"
+    /> 
+    <system.Gadget
+        descr="Change Log"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="system/changeLogMaxGadget.do"
+        miniUrl="system/changeLogMiniGadget.do"
+        name="Change Log"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system007"
+    />
+    <system.Gadget
+        descr="Operation Management"
+        iconSrc="assets/images/gadget_en/operation.gif"
+        maxUrl="device/operationLog/operationLogMaxGadget.do"
+        miniUrl="device/operationLog/operationLogMiniGadget.do"
+        name="Operation Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system008"
+    />
+    <system.Gadget
+        descr="Event and Alarm"
+        iconSrc="assets/images/gadget_en/event.gif"
+        maxUrl="device/eventAlert/eventAlertLogMax.do"
+        miniUrl="device/eventAlert/eventAlertLogMini.do"
+        name="Event Alarm Log"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.device005"
+    />  
+    <system.Gadget
+        descr="Metering Fail(Electricity)"
+        iconSrc="assets/images/gadget_en/meteringfail.gif"
+        maxUrl="mvm/meteringFailureEmMaxGadget.do"
+        miniUrl="mvm/meteringFailureEmMiniGadget.do"
+        name="Metering Fail"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering005"
+    />
+
+    <system.Gadget
+        descr="Customer and Contract"
+        iconSrc="assets/images/gadget_en/customer.gif"
+        maxUrl="system/customerMax_EVN.do"
+        miniUrl="system/customerMini_EVN.do"
+        name="Customer and Contract"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.system010"
+    />
+     <system.Gadget
+        descr="Consumption Ranking(Electricity)"
+        iconSrc="assets/images/gadget_en/consumptionrank.gif"
+        maxUrl="mvm/consumptionRankingEmMaxGadget.do"
+        miniUrl="mvm/consumptionRankingEmMiniGadget.do"
+        name="Consumption Ranking(Electricity)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering012"
+    />    
+    <system.Gadget
+        descr="Modem Management"
+        iconSrc="assets/images/gadget_en/modem.gif"
+        maxUrl="device/modemMaxGadget_EVN.do"
+        miniUrl="device/modemMiniGadget)_EVN.do"
+        name="Modem Management"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device002"
+    />    
+    <system.Gadget
+        descr="Meter Management"
+        iconSrc="assets/images/gadget_en/meter.gif"
+        maxUrl="device/meterMaxGadget_EVN.do"
+        miniUrl="device/meterMiniGadget_EVN.do"
+        name="Meter Management"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device003"
+    /> 
+    <system.Gadget
+        descr="Asset Registration"
+        iconSrc="assets/images/gadget_en/devicereg.gif"
+        maxUrl="device/deviceRegistrationMaxGadget_EVN.do"
+        miniUrl="device/deviceRegistrationMiniGadget_EVN.do"
+        name="Asset Registration"
+        miniHeight="350"
+        fullHeight="700"
+        gadgetCode="gadget.device004"
+    />     
+    <system.Gadget
+        descr="Meter Time Management"
+        iconSrc="assets/images/gadget_en/meteringtime.gif"
+        maxUrl="device/meterTimeMaxGadget_EVN.do"
+        miniUrl="device/meterTimeMiniGadget.do"
+        name="Meter Time Management"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device007"
+    />
+    <system.Gadget
+        descr="Power Quality Management"
+        iconSrc="assets/images/gadget_en/powerquality.gif"
+        maxUrl="mvm/powerQualityMaxGadget.do"
+        miniUrl="mvm/powerQualityMiniGadget.do"
+        name="Power Quality"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.metering021"
+    />
+    <system.Gadget
+        descr="Google Map For Device"
+        iconSrc="assets/images/gadget_en/googlemap.gif"
+        maxUrl="device/GoogleMapMax.do"
+        miniUrl="device/GoogleMapMini.do"
+        name="Google Map For Device"
+        miniHeight="500"
+        fullHeight="640"
+        gadgetCode="gadget.device008"
+    />     
+    <system.Gadget
+        descr="Task Management"
+        iconSrc="assets/images/gadget_ko/vee.gif"
+        maxUrl="system/schedule/scheduleManagementMaxGadget.do"
+        miniUrl="system/schedule/scheduleManagementMiniGadget.do"
+        name="Task Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system013"
+    />
+    <system.Gadget
+        descr="Meter Event Log"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="device/meterEventLogMax.do"
+        miniUrl="device/meterEventLogMini.do"
+        name="Meter Event Log"
+        miniHeight="500"
+        fullHieght="1000"   
+        gadgetCode="gadget.device013"   
+    />   
+    
+<!--
+    <system.Gadget
+        descr="Energy Balance Monitoring (EVN)"
+        iconSrc="assets/images/gadget_en/thumbnail.gif"
+        maxUrl="system/energyBalanceMonitoringMax_EVN.do"
+        miniUrl="system/energyBalanceMonitoringMini_EVN.do"
+        name="Energy Balance Monitoring"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.system201"
+    />
+    <system.Gadget
+        descr="Energy Balance Monitoring_MOE"
+        iconSrc="assets/images/gadget_en/thumbnail.gif"
+        maxUrl="system/energyBalanceMonitoringMax_MOE.do"
+        miniUrl="system/energyBalanceMonitoringMini.do"
+        name="Energy Balance Monitoring_MOE"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.system201"
+    />	
+-->
+    <system.Gadget
+        descr="Energy Balance Monitoring"
+        iconSrc="assets/images/gadget_en/thumbnail.gif"
+        maxUrl="system/energyBalanceMonitoringMax_EVN.do"
+        miniUrl="system/energyBalanceMonitoringMini_EVN.do"
+        name="Energy Balance Monitoring"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.system201"
+    />
+
+    <system.Gadget
+            descr="Firmware Management"
+            iconSrc="assets/images/gadget_ko/thumbnail.gif"
+            maxUrl="device/firmware/firmwareMaxGadget_EVN.do"
+            miniUrl="device/firmware/firmwareMiniGadget_EVN.do"
+            name="Firmware Management"
+            miniHeight="350"
+            fullHeight="1000"
+            gadgetCode="gadget.device009"
+    />
+
+	<system.Gadget
+        descr="Billing Report(Electricity), Daily, Monthly TOU Data"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="mvm/mvmReportMaxGadget_EVN.do"
+        miniUrl="mvm/mvmReportMiniGadget_EVN.do"
+        name="TOU Report"
+        miniHeight="500"
+        fullHieght="1000"   
+        gadgetCode="gadget.metering025" 
+    />
+    
+    <system.Gadget
+        descr="Metering Data(Cumulative)"
+        iconSrc="assets/images/gadget_en/meteringdata.gif"
+        maxUrl="mvm/mvmCumMaxGadget.do"
+        miniUrl="mvm/mvmCumMiniGadget_EVN.do"
+        name="Metering Data(Cumulative)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering003"
+    /> 
+	
+    <!-- 메인 대시보드 시작 -->
+    <system.DashboardGadget
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="Main"
+        gadget="Metering Data(Electricity)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="Main"
+        gadget="Meter Management"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Main"
+        gadget="Customer and Contract"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="Main"
+        gadget="Consumption Ranking(Electricity)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="Main"
+        gadget="TOU Report"
+    />		
+    <!-- 메인 대시보드 끝 -->
+      
+    <!-- 시스템 관리 대시보드 시작-->
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="System"
+        gadget="Device Vendor Model"
+    />    
+     <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="System"
+        gadget="Supplier Management"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="System"
+        gadget="User Management"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="System"
+        gadget="Code Management"
+    /> 
+    <system.DashboardGadget
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="System"
+        gadget="Group Management"
+    />
+    <system.DashboardGadget
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="System"
+        gadget="Power Quality"
+    />
+    <!-- System 대시보드 끝-->
+            
+    <!-- 검침데이터 관리 대시보드 시작-->
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="Metering"
+        gadget="Metering Data(Electricity)"
+    />               
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="Metering"
+        gadget="Metering Fail"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Metering"
+        gadget="Energy Balance Monitoring"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="Metering"
+        gadget="Metering Data(Cumulative)"
+    />
+         	
+    <!-- Metering 대시보드 끝-->
+    
+    <!-- 장비 관리 대시보드 시작-->
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="Device"
+        gadget="Concentrator Management"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="Device"
+        gadget="Meter Management"
+    />    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Device"
+        gadget="Modem Management"
+    />      
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="Device"
+        gadget="Meter Time Management"
+    />     
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="Device"
+        gadget="Firmware Management"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="Device"
+        gadget="Asset Registration"
+    />     	
+    <!-- Device 대시보드 끝-->
+
+    <!-- 이력 관리 대시보드 시작--> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="Alarm Event"
+        gadget="Event Alarm Log"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="Alarm Event"
+        gadget="Meter Event Log"
+    />          
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Alarm Event"
+        gadget="Change Log"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="Alarm Event"
+        gadget="Operation Management"
+    />          
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="Alarm Event"
+        gadget="Communication Log"
+    /> 
+    <!-- 이력 관리 대시보드 끝-->    
+	
+    <system.GadgetRole
+        gadget="Customer and Contract"
+        role="admin"
+        supplier="EVN"
+    />
+    <system.GadgetRole
+        gadget="Consumption Ranking"
+        role="admin"
+        supplier="EVN"
+    />
+    <system.GadgetRole
+        gadget="Device Vendor Model"
+        role="admin"
+        supplier="EVN"
+    />
+    <system.GadgetRole
+        gadget="Supplier Management"
+        role="admin"
+        supplier="EVN"
+    />  
+    <system.GadgetRole
+        gadget="User Management"
+        role="admin"
+        supplier="EVN"
+    />
+    <system.GadgetRole 
+        gadget="Code Management"
+        role="admin"
+        supplier="EVN"
+    />
+    <system.GadgetRole
+        gadget="Metering Data"
+        role="admin"
+        supplier="EVN"
+    />
+    <system.GadgetRole
+        gadget="Metering Fail"
+        role="admin"
+        supplier="EVN"
+    />    
+    <system.GadgetRole
+        gadget="Energy Balance Monitoring"
+        role="admin"
+        supplier="EVN"
+    />  
+    <system.GadgetRole
+        gadget="Concentrator Management"
+        role="admin"
+        supplier="EVN"
+    />    
+    <system.GadgetRole
+        gadget="Meter Management"
+        role="admin"
+        supplier="EVN"
+    />
+    <system.GadgetRole
+        gadget="Modem Management"
+        role="admin"
+        supplier="EVN"
+    />    
+    <system.GadgetRole
+        gadget="Meter Time Management"
+        role="admin"
+        supplier="EVN"
+    />    
+    <system.GadgetRole
+        gadget="Firmware Management"
+        role="admin"
+        supplier="EVN"
+    />        
+    <system.GadgetRole
+        gadget="Event Alarm log"
+        role="admin"
+        supplier="EVN"
+    />
+	<system.GadgetRole
+        gadget="Meter Event log"
+        role="admin"
+        supplier="EVN"
+    />
+	<system.GadgetRole
+        gadget="Change Log"
+        role="admin"
+        supplier="EVN"
+    />
+	<system.GadgetRole
+        gadget="Operation Management"
+        role="admin"
+        supplier="EVN"
+    />
+	<system.GadgetRole
+        gadget="Communication Log"
+        role="admin"
+        supplier="EVN"
+    />
+    <system.GadgetRole
+        gadget="Group Management"
+        role="admin"
+        supplier="EVN"
+    />
+    <system.GadgetRole
+        gadget="Asset Registration"
+        role="admin"
+        supplier="EVN"
+    />
+    <system.GadgetRole
+       gadget="TOU Report"
+       role="admin"
+       supplier="EVN"
+    />
+    <system.GadgetRole
+        gadget="Metering Data(Cumulative)"
+        role="admin"
+        supplier="EVN"
+    />
+	
+    <system.GadgetRole
+        gadget="Power Quality"
+        role="admin"
+        supplier="EVN"
+    />
+    <system.DeviceVendor 
+        supplier="EVN"
+        name="NURITelecom"
+        code="100"
+        address="B-10F Woolim Lions Valley 371-28 Gasandong Geumcheon-gu, Seoul, Korea, 153-786 Tel : +82.2.781.0770"
+        descr="Nuri Telecom Co.,Ltd."
+    />
+    <system.DeviceVendor 
+        supplier="EVN"
+        name="LSIS"
+        code="6"
+        address="http://kr.lsis.biz/"
+        descr="LSIS"
+    />
+    
+    <!-- DCU -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="300"
+        deviceType="1.1.1.7"
+        name="NDC-I121"
+        image="uploadImg/mcu/NZC-O312P.jpg"
+    />
+    
+    <!-- Zigbee Repeater -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="98"
+        deviceType="1.2.1.98"
+        name="NZR-O121Px"
+    />
+    
+    <!-- Gprs modem -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="18"
+        deviceType="1.2.1.11"
+        name="NAMR-P403WT"
+    />
+    
+    <!-- Zigbee modem -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="19"
+        deviceType="1.2.1.1"
+        name="NAMR-P121SR"
+    />
+    
+    <!-- Meter -->
+<!--     <system.DeviceModel 
+        deviceVendor="LSIS"
+        code="223"
+        deviceType="1.3.1.1"
+        name="LVH1210DRW-040S"
+        image="uploadImg/meter/LS_SMART_METER.jpg"
+        description="1P direct-connected 10(40)A Single-tariff"
+        mdsIdPattern="[a-zA-Z0-9]*"
+    /> -->
+    <system.DeviceModel 
+        deviceVendor="LSIS"
+        code="224"
+        deviceType="1.3.1.1"
+        name="LSKLV1210DR-100S"        
+        image="uploadImg/meter/LS_SMART_METER.jpg"
+        description="1P direct-connected 5(100)A Single-tariff"
+        mdsIdPattern="[a-zA-Z0-9]*"
+    />
+    <system.DeviceModel 
+        deviceVendor="LSIS"
+        code="225"
+        deviceType="1.3.1.1"
+        name="LSKLV1210DR-100M"
+        image="uploadImg/meter/LS_SMART_METER.jpg"
+        description="1P direct-connected 5(100)A Multi-tariff"
+        mdsIdPattern="[a-zA-Z0-9]*"
+    />
+    <system.DeviceModel 
+        deviceVendor="LSIS"
+        code="226"
+        deviceType="1.3.1.1"
+        name="LSKLV3410DR-100S"
+        image="uploadImg/meter/LS_SMART_METER.jpg"
+        description="3P direct-connected 5(100)A Single-tariff"
+        mdsIdPattern="[a-zA-Z0-9]*"
+    />
+    <system.DeviceModel 
+        deviceVendor="LSIS"
+        code="227"
+        deviceType="1.3.1.1"
+        name="LSKLV3410DR-100M"
+        image="uploadImg/meter/LS_SMART_METER.jpg"
+        description="3P direct-connected 5(100)A Multi-tariff"
+        mdsIdPattern="[a-zA-Z0-9]*"
+    />
+    <system.DeviceModel 
+        deviceVendor="LSIS"
+        code="228"
+        deviceType="1.3.1.1"
+        name="LSKLV3410CT-010M"
+        image="uploadImg/meter/LS_SMART_METER.jpg"
+        description="3P CT-connected 5(10)A Multi-tariff"
+        mdsIdPattern="[a-zA-Z0-9]*"
+    />
+    <system.DeviceModel 
+        deviceVendor="LSIS"
+        code="229"
+        deviceType="1.3.1.1"
+        name="LSKLV3405CP-010M"
+        image="uploadImg/meter/LS_SMART_METER.jpg"
+        description="3P CT/VT-connected 2.5(10)A Multi-tariff"
+        mdsIdPattern="[a-zA-Z0-9]*"
+    />
+        
+    
+    
+<!--     <system.MeterConfig
+        meterClass="1.0"
+        phase="1P10(40)S"
+        pulseConst="5000"
+        name="LVH1210DRW-040S"
+        deviceModel="LVH1210DRW-040S"
+        parserName="com.aimir.fep.meter.parser.DLMSLSSmartMeterForEVN"
+        saverName="com.aimir.fep.meter.saver.DLMSLSSmartMeterSaverForEVN"
+    />    -->
+    
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="1P5(100)S"
+        pulseConst="5000"
+        name="LSKLV1210DR-100S"
+        deviceModel="LSKLV1210DR-100S"
+        parserName="com.aimir.fep.meter.parser.DLMSLSSmartMeterForEVN"
+        saverName="com.aimir.fep.meter.saver.DLMSLSSmartMeterSaverForEVN"
+    />   
+    
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="1P5(100)M"
+        pulseConst="5000"
+        name="LSKLV1210DR-100M"
+        deviceModel="LSKLV1210DR-100M"
+        parserName="com.aimir.fep.meter.parser.DLMSLSSmartMeterForEVN"
+        saverName="com.aimir.fep.meter.saver.DLMSLSSmartMeterSaverForEVN"
+    />   
+    
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="3P5(100)S"
+        pulseConst="5000"
+        name="LSKLV3410DR-100S"
+        deviceModel="LSKLV3410DR-100S"
+        parserName="com.aimir.fep.meter.parser.DLMSLSSmartMeterForEVN"
+        saverName="com.aimir.fep.meter.saver.DLMSLSSmartMeterSaverForEVN"
+    />           
+    
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="3P5(100)M"
+        pulseConst="5000"
+        name="LSKLV3410DR-100M"
+        deviceModel="LSKLV3410DR-100M"
+        parserName="com.aimir.fep.meter.parser.DLMSLSSmartMeterForEVN"
+        saverName="com.aimir.fep.meter.saver.DLMSLSSmartMeterSaverForEVN"
+    />   
+    
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="3PCT5(10)M"
+        pulseConst="5000"
+        name="LSKLV3410CT-010M"
+        deviceModel="LSKLV3410CT-010M"
+        parserName="com.aimir.fep.meter.parser.DLMSLSSmartMeterForEVN"
+        saverName="com.aimir.fep.meter.saver.DLMSLSSmartMeterSaverForEVN"
+    />   
+    
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="3PCP2.5(10)M"
+        pulseConst="5000"
+        name="LSKLV3405CP-010M"
+        deviceModel="LSKLV3405CP-010M"
+        parserName="com.aimir.fep.meter.parser.DLMSLSSmartMeterForEVN"
+        saverName="com.aimir.fep.meter.saver.DLMSLSSmartMeterSaverForEVN"
+    />               
+    
+    
+	<!-- 미터 Command-->
+	<!-- 1. LVH1210DRW-040S -->
+<!-- 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="LVH1210DRW-040S"    level="2"   paramType="2" desc="On Demand Metering" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.2"   model="LVH1210DRW-040S"    level="2"   desc="Meter Time Synchronization" />	
+	
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="LVH1210DRW-040S"    level="2"   desc="Relay Status" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="LVH1210DRW-040S"    level="2"   desc="Relay on" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="LVH1210DRW-040S"    level="2"   desc="Relay off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.6"   model="LVH1210DRW-040S"    level="2"   desc="Meter OTA" />
+	
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.7"   model="LVH1210DRW-040S"    level="2"   desc="Get Meter F/W Version" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="LVH1210DRW-040S"    level="2"   desc="Get Billing Cycle" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="LVH1210DRW-040S"    level="2"   desc="Set Billing Cycle" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="LVH1210DRW-040S"    level="2"   desc="Get Meter TOU" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.11"  model="LVH1210DRW-040S"    level="2"   desc="Set Meter TOU" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.12"  model="LVH1210DRW-040S"    level="2"   desc="Get Meter Demand Period" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.13"  model="LVH1210DRW-040S"    level="2"   desc="Set Meter Demand Period" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.14"  model="LVH1210DRW-040S"    level="2"   desc="Get Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.15"  model="LVH1210DRW-040S"    level="2"   desc="Set Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.16"  model="LVH1210DRW-040S"    level="2"   desc="Alarm Reset" />   -->
+	  	       
+    <!-- 2. LSKLV1210DR-100S -->
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="LSKLV1210DR-100S"    level="2"   paramType="2" desc="On Demand Metering" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.2"   model="LSKLV1210DR-100S"    level="2"   desc="Meter Time Synchronization" />
+	<!--
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="LSKLV1210DR-100S"    level="2"   desc="Relay Status" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="LSKLV1210DR-100S"    level="2"   desc="Relay on" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="LSKLV1210DR-100S"    level="2"   desc="Relay off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.6"   model="LSKLV1210DR-100S"    level="2"   desc="Meter OTA" />
+	-->
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.7"   model="LSKLV1210DR-100S"    level="2"   desc="Get Meter F/W Version" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="LSKLV1210DR-100S"    level="2"   desc="Get Billing Cycle" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="LSKLV1210DR-100S"    level="2"   desc="Set Billing Cycle" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="LSKLV1210DR-100S"    level="2"   desc="Get Meter TOU" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.11"  model="LSKLV1210DR-100S"    level="2"   desc="Set Meter TOU" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.12"  model="LSKLV1210DR-100S"    level="2"   desc="Get Meter Demand Period" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.13"  model="LSKLV1210DR-100S"    level="2"   desc="Set Meter Demand Period" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.14"  model="LSKLV1210DR-100S"    level="2"   desc="Get Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.15"  model="LSKLV1210DR-100S"    level="2"   desc="Set Current Load Limit" />
+	<!-- <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.16"  model="LSKLV1210DR-100S"    level="2"   desc="Alarm Reset" /> -->
+	
+	<!-- 3. LSKLV1210DR-100M -->
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="LSKLV1210DR-100M"    level="2"   paramType="2" desc="On Demand Metering" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.2"   model="LSKLV1210DR-100M"    level="2"   desc="Meter Time Synchronization" />
+	<!--
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="LSKLV1210DR-100M"    level="2"   desc="Relay Status" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="LSKLV1210DR-100M"    level="2"   desc="Relay on" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="LSKLV1210DR-100M"    level="2"   desc="Relay off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.6"   model="LSKLV1210DR-100M"    level="2"   desc="Meter OTA" />
+	-->
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.7"   model="LSKLV1210DR-100M"    level="2"   desc="Get Meter F/W Version" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="LSKLV1210DR-100M"    level="2"   desc="Get Billing Cycle" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="LSKLV1210DR-100M"    level="2"   desc="Set Billing Cycle" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="LSKLV1210DR-100M"    level="2"   desc="Get Meter TOU" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.11"  model="LSKLV1210DR-100M"    level="2"   desc="Set Meter TOU" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.12"  model="LSKLV1210DR-100M"    level="2"   desc="Get Meter Demand Period" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.13"  model="LSKLV1210DR-100M"    level="2"   desc="Set Meter Demand Period" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.14"  model="LSKLV1210DR-100M"    level="2"   desc="Get Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.15"  model="LSKLV1210DR-100M"    level="2"   desc="Set Current Load Limit" />
+	<!-- <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.16"  model="LSKLV1210DR-100M"    level="2"   desc="Alarm Reset" /> -->
+
+    <!-- 4. LSKLV3410DR-100S -->
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="LSKLV3410DR-100S"    level="2"   paramType="2" desc="On Demand Metering" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.2"   model="LSKLV3410DR-100S"    level="2"   desc="Meter Time Synchronization" />
+	<!--
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="LSKLV3410DR-100S"    level="2"   desc="Relay Status" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="LSKLV3410DR-100S"    level="2"   desc="Relay on" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="LSKLV3410DR-100S"    level="2"   desc="Relay off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.6"   model="LSKLV3410DR-100S"    level="2"   desc="Meter OTA" />
+	-->
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.7"   model="LSKLV3410DR-100S"    level="2"   desc="Get Meter F/W Version" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="LSKLV3410DR-100S"    level="2"   desc="Get Billing Cycle" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="LSKLV3410DR-100S"    level="2"   desc="Set Billing Cycle" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="LSKLV3410DR-100S"    level="2"   desc="Get Meter TOU" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.11"  model="LSKLV3410DR-100S"    level="2"   desc="Set Meter TOU" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.12"  model="LSKLV3410DR-100S"    level="2"   desc="Get Meter Demand Period" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.13"  model="LSKLV3410DR-100S"    level="2"   desc="Set Meter Demand Period" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.14"  model="LSKLV3410DR-100S"    level="2"   desc="Get Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.15"  model="LSKLV3410DR-100S"    level="2"   desc="Set Current Load Limit" />
+	<!-- <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.16"  model="LSKLV3410DR-100S"    level="2"   desc="Alarm Reset" /> -->
+
+    <!-- 5. LSKLV3410DR-100M -->
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="LSKLV3410DR-100M"    level="2"   paramType="2" desc="On Demand Metering" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.2"   model="LSKLV3410DR-100M"    level="2"   desc="Meter Time Synchronization" />
+	<!--
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="LSKLV3410DR-100M"    level="2"   desc="Relay Status" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="LSKLV3410DR-100M"    level="2"   desc="Relay on" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="LSKLV3410DR-100M"    level="2"   desc="Relay off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.6"   model="LSKLV3410DR-100M"    level="2"   desc="Meter OTA" />
+	-->
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.7"   model="LSKLV3410DR-100M"    level="2"   desc="Get Meter F/W Version" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="LSKLV3410DR-100M"    level="2"   desc="Get Billing Cycle" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="LSKLV3410DR-100M"    level="2"   desc="Set Billing Cycle" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="LSKLV3410DR-100M"    level="2"   desc="Get Meter TOU" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.11"  model="LSKLV3410DR-100M"    level="2"   desc="Set Meter TOU" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.12"  model="LSKLV3410DR-100M"    level="2"   desc="Get Meter Demand Period" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.13"  model="LSKLV3410DR-100M"    level="2"   desc="Set Meter Demand Period" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.14"  model="LSKLV3410DR-100M"    level="2"   desc="Get Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.15"  model="LSKLV3410DR-100M"    level="2"   desc="Set Current Load Limit" />
+	<!-- <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.16"  model="LSKLV3410DR-100M"    level="2"   desc="Alarm Reset" /> -->
+	
+	<!-- 6. LSKLV3410CT-010M -->
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="LSKLV3410CT-010M"    level="2"   paramType="2" desc="On Demand Metering" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.2"   model="LSKLV3410CT-010M"    level="2"   desc="Meter Time Synchronization" />
+	<!--
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="LSKLV3410CT-010M"    level="2"   desc="Relay Status" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="LSKLV3410CT-010M"    level="2"   desc="Relay on" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="LSKLV3410CT-010M"    level="2"   desc="Relay off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.6"   model="LSKLV3410CT-010M"    level="2"   desc="Meter OTA" />
+	-->
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.7"   model="LSKLV3410CT-010M"    level="2"   desc="Get Meter F/W Version" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="LSKLV3410CT-010M"    level="2"   desc="Get Billing Cycle" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="LSKLV3410CT-010M"    level="2"   desc="Set Billing Cycle" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="LSKLV3410CT-010M"    level="2"   desc="Get Meter TOU" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.11"  model="LSKLV3410CT-010M"    level="2"   desc="Set Meter TOU" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.12"  model="LSKLV3410CT-010M"    level="2"   desc="Get Meter Demand Period" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.13"  model="LSKLV3410CT-010M"    level="2"   desc="Set Meter Demand Period" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.14"  model="LSKLV3410CT-010M"    level="2"   desc="Get Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.15"  model="LSKLV3410CT-010M"    level="2"   desc="Set Current Load Limit" />
+	<!-- <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.16"  model="LSKLV3410CT-010M"    level="2"   desc="Alarm Reset" /> -->
+
+	<!-- 7. LSKLV3405CP-010M -->
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="LSKLV3405CP-010M"    level="2"   paramType="2" desc="On Demand Metering" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.2"   model="LSKLV3405CP-010M"    level="2"   desc="Meter Time Synchronization" />
+	<!--
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="LSKLV3405CP-010M"    level="2"   desc="Relay Status" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="LSKLV3405CP-010M"    level="2"   desc="Relay on" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="LSKLV3405CP-010M"    level="2"   desc="Relay off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.6"   model="LSKLV3405CP-010M"    level="2"   desc="Meter OTA" />
+	-->
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.7"   model="LSKLV3405CP-010M"    level="2"   desc="Get Meter F/W Version" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="LSKLV3405CP-010M"    level="2"   desc="Get Billing Cycle" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="LSKLV3405CP-010M"    level="2"   desc="Set Billing Cycle" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="LSKLV3405CP-010M"    level="2"   desc="Get Meter TOU" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.11"  model="LSKLV3405CP-010M"    level="2"   desc="Set Meter TOU" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.12"  model="LSKLV3405CP-010M"    level="2"   desc="Get Meter Demand Period" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.13"  model="LSKLV3405CP-010M"    level="2"   desc="Set Meter Demand Period" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.14"  model="LSKLV3405CP-010M"    level="2"   desc="Get Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.15"  model="LSKLV3405CP-010M"    level="2"   desc="Set Current Load Limit" />
+	<!-- <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.16"  model="LSKLV3405CP-010M"    level="2"   desc="Alarm Reset" /> -->
+	
+
+	<!-- 모뎀 Command -->				
+ 	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.1"   model="NAMR-P402GP"    level="2"   desc="Reset Modem" />
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.2"   model="NAMR-P402GP"    level="2"   desc="Upload Metering Data" />
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.3"   model="NAMR-P402GP"    level="2"   desc="Factory Setting" />
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.4"   model="NAMR-P402GP"    level="2"   desc="Read Modem Configuration" />	
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.5"   model="NAMR-P402GP"    level="2"   desc="Set Time" />
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.6"   model="NAMR-P402GP"    level="2"   desc="Set Modem Reset Interval" />
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.7"   model="NAMR-P402GP"    level="2"   desc="Set Metering Interval" />
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.8"   model="NAMR-P402GP"    level="2"   desc="Server IP,Port Change"/>
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.9"   model="NAMR-P402GP"    level="2"   desc="Set APN" />
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.10"   model="NAMR-P402GP"    level="2"   desc="Read Modem Event Log" />
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.11"   model="NAMR-P402GP"    level="2"   desc="OTA" />
+	<!--  
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.12"   model="NAMR-P402GP"    level="2"   desc="Identify Device" />
+	-->
+	
+
+    <system.ModemConfig 
+        name="NZR-O121Px"
+        deviceModel="NZR-O121Px" 
+        parserName="com.aimir.fep.meter.parser.ZBRepeater"
+        saverName="com.aimir.fep.meter.saver.ZBRepeaterMDSaver"
+    />
+    
+    <mvm.DisplayChannel name="CO2"                    localName="CO2"                    serviceType="Electricity" unit="Kg" chMethod="MAX"/>
+    <mvm.DisplayChannel name="Cumulative active energy -import for LP1"   localName="Cumulative active energy -import for LP1"   serviceType="Electricity" unit="kWh" chMethod="MAX"/>  
+    <mvm.DisplayChannel name="Cumulative reactive energy -import for LP1" localName="Cumulative reactive energy -import for LP1" serviceType="Electricity" unit="kVarh" chMethod="MAX"/>
+    <mvm.DisplayChannel name="Cumulative active energy -export for LP1"   localName="Cumulative active energy -export for LP1"   serviceType="Electricity" unit="kWh" chMethod="MAX"/>
+    <mvm.DisplayChannel name="Cumulative reactive energy -export for LP1" localName="Cumulative reactive energy -export for LP1" serviceType="Electricity" unit="kVarh" chMethod="MAX"/>
+    <mvm.DisplayChannel name="Cumulative active energy -import" localName="Cumulative active energy -import" serviceType="Electricity" unit="kWh" chMethod="MAX"/>
+    
+    <!-- LSKLV1210DR-100S 해당모델은 Energy load profile이 없고 하루에 1번만 올라옴. daily -->
+    <mvm.ChannelConfig meterConfig="LSKLV1210DR-100S" channel="CO2"                    channelIndex="0"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLV1210DR-100S" channel="Cumulative active energy -import"   channelIndex="1"  dataType="LpEM" displayType="SaveAndDisplay" />
+
+    <mvm.ChannelConfig meterConfig="LSKLV1210DR-100M" channel="CO2"                    channelIndex="0"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLV1210DR-100M" channel="Cumulative active energy -import for LP1"   channelIndex="1"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLV1210DR-100M" channel="Cumulative reactive energy -import for LP1" channelIndex="2"  dataType="LpEM" displayType="SaveAndDisplay" />    
+	
+    <!-- 	납품에서 제외 -->
+    <mvm.ChannelConfig meterConfig="LSKLV3410DR-100S" channel="CO2"                    channelIndex="0"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLV3410DR-100S" channel="Cumulative active energy -import for LP1"   channelIndex="1"  dataType="LpEM" displayType="SaveAndDisplay" />
+    
+    <mvm.ChannelConfig meterConfig="LSKLV3410DR-100M" channel="CO2"                    channelIndex="0"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLV3410DR-100M" channel="Cumulative active energy -import for LP1"   channelIndex="1"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLV3410DR-100M" channel="Cumulative reactive energy -import for LP1" channelIndex="2"  dataType="LpEM" displayType="SaveAndDisplay" />        
+    
+    <mvm.ChannelConfig meterConfig="LSKLV3410CT-010M" channel="CO2"                    channelIndex="0"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLV3410CT-010M" channel="Cumulative active energy -import for LP1"   channelIndex="1"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLV3410CT-010M" channel="Cumulative reactive energy -import for LP1" channelIndex="2"  dataType="LpEM" displayType="SaveAndDisplay" />            
+    
+    <mvm.ChannelConfig meterConfig="LSKLV3405CP-010M" channel="CO2"                    channelIndex="0"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLV3405CP-010M" channel="Cumulative active energy -import for LP1"   channelIndex="1"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLV3405CP-010M" channel="Cumulative reactive energy -import for LP1" channelIndex="2"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLV3405CP-010M" channel="Cumulative active energy -export for LP1"   channelIndex="3"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLV3405CP-010M" channel="Cumulative reactive energy -export for LP1" channelIndex="4"  dataType="LpEM" displayType="SaveAndDisplay" />
+    
+    
+        
+    <mvm.Season syear="2017" smonth="02" sday="01" eyear="2017" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2017" smonth="05" sday="01" eyear="2017" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2017" smonth="10" sday="01" eyear="2017" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2017" smonth="11" sday="01" eyear="2018" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2018" smonth="02" sday="01" eyear="2018" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2018" smonth="05" sday="01" eyear="2018" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2018" smonth="10" sday="01" eyear="2018" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2018" smonth="11" sday="01" eyear="2019" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2019" smonth="02" sday="01" eyear="2019" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2019" smonth="05" sday="01" eyear="2019" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2019" smonth="10" sday="01" eyear="2019" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2019" smonth="11" sday="01" eyear="2020" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2020" smonth="02" sday="01" eyear="2020" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2020" smonth="05" sday="01" eyear="2020" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2020" smonth="10" sday="01" eyear="2020" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2020" smonth="11" sday="01" eyear="2021" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2021" smonth="02" sday="01" eyear="2021" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2021" smonth="05" sday="01" eyear="2021" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2021" smonth="10" sday="01" eyear="2021" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2021" smonth="11" sday="01" eyear="2022" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2022" smonth="02" sday="01" eyear="2022" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2022" smonth="05" sday="01" eyear="2022" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2022" smonth="10" sday="01" eyear="2022" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2022" smonth="11" sday="01" eyear="2023" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2023" smonth="02" sday="01" eyear="2023" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2023" smonth="05" sday="01" eyear="2023" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2023" smonth="10" sday="01" eyear="2023" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2023" smonth="11" sday="01" eyear="2024" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2024" smonth="02" sday="01" eyear="2024" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2024" smonth="05" sday="01" eyear="2024" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2024" smonth="10" sday="01" eyear="2024" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2024" smonth="11" sday="01" eyear="2025" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2025" smonth="02" sday="01" eyear="2025" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2025" smonth="05" sday="01" eyear="2025" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2025" smonth="10" sday="01" eyear="2025" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2025" smonth="11" sday="01" eyear="2026" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2026" smonth="02" sday="01" eyear="2026" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2026" smonth="05" sday="01" eyear="2026" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2026" smonth="10" sday="01" eyear="2026" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2026" smonth="11" sday="01" eyear="2027" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2027" smonth="02" sday="01" eyear="2027" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2027" smonth="05" sday="01" eyear="2027" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2027" smonth="10" sday="01" eyear="2027" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2027" smonth="11" sday="01" eyear="2028" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2028" smonth="02" sday="01" eyear="2028" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2028" smonth="05" sday="01" eyear="2028" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2028" smonth="10" sday="01" eyear="2028" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2028" smonth="11" sday="01" eyear="2029" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2029" smonth="02" sday="01" eyear="2029" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2029" smonth="05" sday="01" eyear="2029" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2029" smonth="10" sday="01" eyear="2029" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2029" smonth="11" sday="01" eyear="2030" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2030" smonth="02" sday="01" eyear="2030" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2030" smonth="05" sday="01" eyear="2030" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2030" smonth="10" sday="01" eyear="2030" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2030" smonth="11" sday="01" eyear="2031" emonth="01" eday="31" name="Winter"/>
+
+  
+    
+    <system.TariffType supplier="EVN" serviceTypeCode="3.1" code="1" name="Residential" description="Residential"/>
+    <system.TariffType supplier="EVN" serviceTypeCode="3.1" code="2" name="Non Residential" description="Non Residential"/>
+    <system.TariffType supplier="EVN" serviceTypeCode="3.1" code="3" name="PRE-RESIDENTIAL" description="Residential Bill Determinant for prepaid"/>
+    <system.TariffType supplier="EVN" serviceTypeCode="3.1" code="4" name="PRE-INDUSTRIAL" description="Industrial Bill Determinant for prepaid"/>
+    <system.TariffType supplier="EVN" serviceTypeCode="3.1" code="5" name="PRE-COMMERCIAL" description="Commercial Bill Determinant for prepaid"/>
+    <system.TariffType supplier="EVN" serviceTypeCode="3.1" code="6" name="PRE-GOVERNMENT" description="Government Bill Determinant for prepaid"/>
+    <system.TariffType supplier="EVN" serviceTypeCode="3.1" code="7" name="PRE-AGRICULTURE" description="Agriculture Bill Determinant for prepaid"/>
+<!--
+    <system.TariffEM
+        supplier="EVN" 
+        yyyymmdd="20130121"
+        tariffType="Residential" 
+        supplySizeMin="0" 
+        supplySizeMax="50" 
+        condition1="&gt;="
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="0.1567"
+        serviceCharge="1" />
+    <system.TariffEM
+        supplier="EVN" 
+        yyyymmdd="20130121"
+        tariffType="Residential" 
+        supplySizeMin="51" 
+        supplySizeMax="300" 
+        condition1="&gt;="
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="0.3144"
+        serviceCharge="2.9574" />
+    <system.TariffEM
+        supplier="EVN" 
+        yyyymmdd="20130121"
+        tariffType="Residential" 
+        supplySizeMin="301" 
+        supplySizeMax="600" 
+        condition1="&gt;="
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="0.4081"
+        serviceCharge="2.9574" />
+    <system.TariffEM
+        supplier="EVN" 
+        yyyymmdd="20130121"
+        tariffType="Residential" 
+        supplySizeMin="601" 
+        condition1="&gt;="
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="0.45345"
+        serviceCharge="2.9574" />
+    <system.TariffEM
+        supplier="EVN" 
+        yyyymmdd="20130121"
+        tariffType="Non Residential" 
+        supplySizeMin="0" 
+        supplySizeMax="300" 
+        condition1="&gt;="
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="0.4521"
+        serviceCharge="4.9291" />
+    <system.TariffEM
+        supplier="EVN" 
+        yyyymmdd="20130121"
+        tariffType="Non Residential" 
+        supplySizeMin="301" 
+        supplySizeMax="600" 
+        condition1="&gt;="
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="0.481"
+        serviceCharge="4.9291" />
+    <system.TariffEM
+        supplier="EVN" 
+        yyyymmdd="20130121"
+        tariffType="Non Residential" 
+        supplySizeMin="601" 
+        condition1="&gt;="
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="0.759"
+        serviceCharge="4.9291" />
+-->    
+
+    <device.EventAlert eventAlertType='Event'
+                       severity='Information' 
+                       name='Equipment Installation' 
+                       descr='Equipment installation' 
+                       msgPattern='Install' 
+                       troubleAdvice='' 
+                       oid='200.1.0,203.8.0,201.1.0,203.105.0,GD_200.1.0,NG_220.1.0,NG_200.1.0,ZV_220.1.0,ZV_200.1.0,GV_200.1.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment Registration' 
+                       descr='equipment is created automatically or installed.' 
+                       msgPattern='Equipment Registration' 
+                       troubleAdvice='' 
+                       oid=''
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Major' 
+                       name='Ip Change Event' 
+                       descr='DCU IP Change detect' 
+                       msgPattern='From $(event.eventAttrs.oldIp) To $(event.eventAttrs.newIp)' 
+                       troubleAdvice='' 
+                       oid='NG_200.12.0,ZV_200.12.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>  
+     <device.EventAlert eventAlertType='Event' 
+                       severity='Critical' 
+                       name='Power Fail' 
+                       descr='Power Fail' 
+                       msgPattern='Power Fail' 
+                       troubleAdvice='' 
+                       oid='NG_200.23.0,ZV_200.23.0,GV_200.2.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>  
+     <device.EventAlert eventAlertType='Event' 
+                       severity='Critical' 
+                       name='Power Restore' 
+                       descr='Power Restore' 
+                       msgPattern='Power Restore' 
+                       troubleAdvice='' 
+                       oid='NG_200.24.0,ZV_200.24.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>  
+    <device.EventAlert eventAlertType='Event'
+                       severity='Information' 
+                       name='Sms Response' 
+                       descr='Sms Response' 
+                       msgPattern='SMS Response Success' 
+                       troubleAdvice='' 
+                       oid='GD_200.9.0,GV_200.9.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>                       
+    <device.EventAlert eventAlertType='Event'
+                       severity='Warning' 
+                       name='Excessive Number of Device Registrationn' 
+                       descr='Excessive Number of Device Registration' 
+                       msgPattern='Install' 
+                       troubleAdvice='' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>                       
+      <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='OTA'
+                       descr='OTA Step' 
+                       msgPattern='$(event.eventAttrs.otaStep) $(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='214.1.0,214.2.0,214.3.0,214.4.0,SP_200.59.0,SP_200.63.0,SP_200.64.0,SP_200.65.0,SP_200.66.0,SP_200.31.0,ZV_223.1.0,ZV_223.2.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>                     
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Modem Event Log' 
+                       descr='MIU Event Code' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/> 
+
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Critical' 
+                       name='DCU Low Battery' 
+                       descr='DCU Low Battery' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='ZV_200.21.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>   
+	
+<device.EventAlert eventAlertType='Event' 
+                       severity='Critical' 
+                       name='DCU Battery Out' 
+                       descr='DCU Battery Out' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='ZV_200.27.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>   
+                       
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Critical' 
+                       name='GPRS Modem RSSI' 
+                       descr='GPRS Modem RSSI' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>                      
+    <!-- VEE Conditions -->
+    <mvm.VEEParameter 
+                    ruleType="Validation" 
+                    parameter="ZeroConsumption"
+                    localName="Zero Consumption" 
+                    useThreshold="false"  
+                    condition="value_00=0 or value_01=0 or value_02=0 or value_03=0 or value_04=0 or value_05=0 or value_06=0 or value_07=0 or value_08=0 or value_09=0 or value_10=0 or value_11=0 or value_12=0 or value_13=0 or value_14=0 or value_15=0 or value_16=0 or value_17=0 or value_18=0 or value_19=0 or value_20=0 or value_21=0 or value_22=0 or value_23=0"  
+                    item="Day"  
+                    />
+    <mvm.VEEParameter   
+                    ruleType="Validation"
+                    parameter="OutOfThreshold"
+                    localName="Out Of Threshold" 
+                    useThreshold="true"  
+                    item="Day"
+                    condition="value_00&gt;threshold or value_01&gt;threshold or value_02&gt;threshold or value_03&gt;threshold or value_04&gt;threshold or value_05&gt;threshold or value_06&gt;threshold or value_07&gt;threshold or value_08&gt;threshold or value_09&gt;threshold or value_10&gt;threshold or value_11&gt;threshold or value_12&gt;threshold or value_13&gt;threshold or value_14&gt;threshold or value_15&gt;threshold or value_16&gt;threshold or value_17&gt;threshold or value_18&gt;threshold or value_19&gt;threshold or value_20&gt;threshold or value_21&gt;threshold or value_22&gt;threshold or value_23&gt;threshold"
+                    />
+                 
+
+</dataset>

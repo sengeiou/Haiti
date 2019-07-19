@@ -1,0 +1,96 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>
+    <!-- 검침데이타 R 타입 -->
+    <system.Code code="4.9.R" name="(R)Metering" descr="Measurement Metering Data Delivery Service (V4.0)" order="11" parent="4.9"/>
+
+    <!-- 태국 MEA/PEA 에서 사용하는 SIC로 변경해야함 -->
+    <system.Code code="14" name="SIC" descr="Standard Industry Classification" order="11" parent=""/>
+	  <system.Code code="14.0" name="Unknown" descr="Unknown" order="1" parent="14"/>
+	  <system.Code code="14.1" name="Factory" descr="Factory" order="2" parent="14"/>
+	  <system.Code code="14.2" name="Home" descr="Home" order="3" parent="14"/>
+	  <system.Code code="14.3" name="Soho" descr="Soho" order="4" parent="14"/>
+	  <system.Code code="14.E10L" name="Residential Service House" descr="Residential Service House" order="5" parent="14"/>
+	  <system.Code code="14.E1MH" name="Residential Service Apartment" descr="Residential Service Apartment" order="6" parent="14"/>
+	  <system.Code code="14.E1SH" name="Residential Service Apartment" descr="Residential Service Apartment" order="7" parent="14"/>
+	  <system.Code code="14.E2AH1" name="General Service(A) High-Voltage(I)" descr="General Service(A) High-Voltage(I)" order="8" parent="14"/>
+	  <system.Code code="14.E2AH2" name="General Service(A) High-Voltage(II)" descr="General Service(A) High-Voltage(II)" order="9" parent="14"/>
+	  <system.Code code="14.E2AL" name="General Service(A) Low-Voltage" descr="General Service(A) Low-Voltage" order="10" parent="14"/>
+	  <system.Code code="14.E2BH1" name="General Service(B) (I)" descr="General Service(B) (I)" order="11" parent="14"/>
+	  <system.Code code="14.E2BH2" name="General Service(B) (II)" descr="General Service(B) (II)" order="12" parent="14"/>
+	  <system.Code code="14.E30H1" name="Educational Service High-Voltage(I)" descr="Educational Service High-Voltage(I)" order="13" parent="14"/>
+	  <system.Code code="14.E30H2" name="Educational Service High-Voltage(II)" descr="Educational Service High-Voltage(II)" order="14" parent="14"/>
+	  <system.Code code="14.E30L" name="Educational Service Low-Voltage" descr="Educational Service Low-Voltage" order="15" parent="14"/>
+	  <system.Code code="14.E4AH1" name="Industrial Service(A) High(I)" descr="Industrial Service(A) High(I)" order="16" parent="14"/>
+	  <system.Code code="14.E4AH2" name="Industrial Service(A) High(II)" descr="Industrial Service(A) High(II)" order="17" parent="14"/>
+	  <system.Code code="14.E4AL" name="Industrial Service(A) Low" descr="Industrial Service(A) Low" order="18" parent="14"/>
+	  <system.Code code="14.E4BH1" name="Industrial Service(B) (I)" descr="Industrial Service(B) (I)" order="19" parent="14"/>
+	  <system.Code code="14.E4BH2" name="Industrial Service(B) (II)" descr="Industrial Service(B) (II)" order="20" parent="14"/>
+	  <system.Code code="14.E5C" name="Agricultural Service" descr="Agricultural Service" order="21" parent="14"/>
+	  <system.Code code="14.E6AL" name="Street Lights Service(A)" descr="Street Lights Service(A)" order="22" parent="14"/>
+	  <system.Code code="14.E6BH" name="Street Lights Service(B)" descr="Street Lights Service(B)" order="23" parent="14"/>
+	  <system.Code code="14.E7AL" name="Temporaty Power Service(A) Low-Voltage" descr="Temporaty Power Service(A) Low-Voltage" order="24" parent="14"/>
+	  <system.Code code="14.E7BH1" name="Temporaty Power Service(B) High-Voltage(I)" descr="Temporaty Power Service(B) High-Voltage(I)" order="25" parent="14"/>
+	  <system.Code code="14.E7BH2" name="Temporaty Power Service(B) High-Voltage(II)" descr="Temporaty Power Service(B) High-Voltage(II)" order="26" parent="14"/>
+	  <system.Code code="14.E7BL" name="Temporaty Power Service(B) Low-Voltage" descr="Temporaty Power Service(B) Low-Voltage" order="27" parent="14"/>
+	  <system.Code code="14.E9A" name="Night Thermal-Storage Power Service(A)" descr="Night Thermal-Storage Power Service(A)" order="28" parent="14"/>
+	  <system.Code code="14.E9B" name="Night Thermal-Storage Power Service(B)" descr="Night Thermal-Storage Power Service(B)" order="29" parent="14"/>
+	  <system.Code code="14.H11" name="Residential Service House(II)" descr="Residential Service House(II)" order="30" parent="14"/>
+	  <system.Code code="14.H21" name="Residential Service Office" descr="Residential Service Office" order="31" parent="14"/>
+	  <system.Code code="14.H22" name="Residential Service Office Factory" descr="Residential Service Office Factory" order="32" parent="14"/>
+	  <system.Code code="14.H31" name="Residential Service for  public institution" descr="Residential Service for  public institution" order="33" parent="14"/>
+	  <system.Code code="14.H32" name="Residential Service for wellfare facilities" descr="Residential Service for wellfare facilities" order="34" parent="14"/>
+
+    <system.GadgetRole
+       gadget="SIC Load Profile"
+       role="admin"
+       supplier="MEA THAILAND"
+    />
+    
+    <!-- MODEM FOR MITSUBISHI SX2 -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="221"
+        deviceType="1.2.1.1"
+        name="NAMR-P10BSR"
+    />
+
+    <!-- SX2용 모뎀 모델 설정 정보 -->
+    <system.ModemConfig 
+        name="NAMR-P10BSR"
+        parserName="com.aimir.fep.meter.parser.RDataParser"
+        saverName="com.aimir.fep.meter.saver.SXRMDSaver"
+        deviceModel="NAMR-P10BSR"
+    />
+	
+    <!-- SX2 계량기 모델 추가 -->
+    <system.DeviceModel 
+        deviceVendor="MITSUBISHI"
+        code="220"
+        deviceType="1.3.1.1"
+        name="SX2"
+        image="uploadImg/meter/SX2.jpg"
+    />
+    
+    <system.MeterConfig 
+        phase="3p3w"
+        pulseConst="1"
+        name="SX2"
+        deviceModel="SX2"
+    />
+
+    <!-- 6채널 Display 정보 -->
+    <mvm.DisplayChannel name="AE+" localName="AE+" serviceType="Electricity" unit="kWh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="AE-" localName="AE-" serviceType="Electricity" unit="kWh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="PF" localName="PF" serviceType="Electricity" unit="pF" chMethod="MAX"/>
+    <mvm.DisplayChannel name="V RMS" localName="V RMS" serviceType="Electricity" unit="V" chMethod="MAX"/>
+    <mvm.DisplayChannel name="NC RMS" localName="NC RMS" serviceType="Electricity" unit="A" chMethod="MAX"/>
+    <mvm.DisplayChannel name="LC RMS" localName="LC RMS" serviceType="Electricity" unit="A" chMethod="MAX"/>
+
+    <!-- channel config 6ch -->
+    <mvm.ChannelConfig meterConfig="SX2" channel="AE+" channelIndex="1" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="SX2" channel="AE-" channelIndex="2" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="SX2" channel="PF" channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="SX2" channel="V RMS" channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="SX2" channel="NC RMS" channelIndex="5" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="SX2" channel="LC RMS" channelIndex="6" dataType="LpEM" displayType="SaveAndDisplay" />    
+</dataset>

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<exhibition>  
+    <forwardGoal data="3000"/>
+    <reverseGoal data="2000"/>
+    <wmGoal data="1000"/>
+    <co2Goal data="10000"/>
+    <meteringGoal data="150"/>
+</exhibition>

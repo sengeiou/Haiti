@@ -1,0 +1,355 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="기본"
+        gadget="공지사항"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="기본"
+        gadget="검침 실패(전기)"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="기본"
+        gadget="계약용량 이상 고객(전기)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="기본"
+        gadget="사용자 메모"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="기본"
+        gadget="고객 및 계약 관리"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="기본"
+        gadget="검침데이터 조회(전기)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="2"
+        dashboard="기본"
+        gadget="소비 랭킹(전기)"
+    />
+	<system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="3"
+        dashboard="기본"
+        gadget="수요 관리"
+    />
+    <!-- 검침데이터 관리 대시보드 시작-->       
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="검침데이터 관리"
+        gadget="고객 및 계약 관리"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="검침데이터 관리"
+        gadget="검침데이터 조회(전기)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="검침데이터 관리"
+        gadget="검침 실패(전기)"
+    />       
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="검침데이터 관리"
+        gadget="주기별 데이터 누락 관리"
+    />     
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="검침데이터 관리"
+        gadget="계약용량 이상 고객(전기)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="검침데이터 관리"
+        gadget="소비 랭킹(전기)"
+    />
+    <!-- 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="2"
+        dashboard="검침데이터 관리"
+        gadget="소비 랭킹(가스)"
+    />    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="2"
+        dashboard="검침데이터 관리"
+        gadget="소비 랭킹(수도)"
+    />    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="2"
+        dashboard="검침데이터 관리"
+        gadget="소비 랭킹(열량)"
+    />
+    -->
+         <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="2"
+        dashboard="검침데이터 관리"
+        gadget="전기 판매 실적"
+    />
+    <!-- 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="3"
+        dashboard="검침데이터 관리"
+        gadget="가스 판매 실적"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="3"
+        dashboard="검침데이터 관리"
+        gadget="수도 판매 실적"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="3"
+        dashboard="검침데이터 관리"
+        gadget="열 판매 실적"
+    />
+     
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="4"
+        dashboard="검침데이터 관리"
+        gadget="검침 서비스 분석"
+    />
+    -->   
+        <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="4"
+        dashboard="검침데이터 관리"
+        gadget="전력 품질"
+    />  
+    <!-- 
+        <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="4"
+        dashboard="검침데이터 관리"
+        gadget="VEE Management"
+    />   
+     --> 
+    <!-- 검침데이터 관리 대시보드 끝-->
+    
+    <!-- 시스템 관리 대시보드 시작-->
+        <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="시스템 관리"
+        gadget="공급사 관리"
+    />
+        <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="시스템 관리"
+        gadget="사용자관리"
+    /> 
+        <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="시스템 관리"
+        gadget="제조사 모델 관리"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="시스템 관리"
+        gadget="코드관리"
+    />
+	<system.DashboardGadget
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="시스템 관리"
+        gadget="그룹 관리"
+    />
+    <!-- 시스템 관리 대시보드 끝-->
+    
+    <!-- 장비 관리 대시보드 시작-->
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="장비 관리"
+        gadget="집중기관리"
+    />    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="장비 관리"
+        gadget="모뎀관리"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="장비 관리"
+        gadget="미터관리"
+    /> 
+
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="장비 관리"
+        gadget="장비 등록"
+    /> 
+  <!-- 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="장비 관리"
+        gadget="배터리 로그"
+    />
+     -->
+       <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="장비 관리"
+        gadget="정전로그"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="2"
+        dashboard="장비 관리"
+        gadget="장비 구글 맵"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="2"
+        dashboard="장비 관리"
+        gadget="공급 차단재개"
+    />     
+ 	<system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="2"
+        dashboard="장비 관리"
+        gadget="미터 시간 관리"
+    />   
+    <!-- 장비 관리 대시보드 끝-->
+    
+    
+    <!-- 이력 관리 대시보드 시작--> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="이벤트알람"
+        gadget="이벤트 알람 로그"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="이벤트알람"
+        gadget="통신 로그"
+    />
+    <!-- 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="이벤트알람"
+        gadget="명령 이력 및 설정"
+    />   
+     --> 
+    <!-- 이력 관리 대시보드 끝--> 
+</dataset>

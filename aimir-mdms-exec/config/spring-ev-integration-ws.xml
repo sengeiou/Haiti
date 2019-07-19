@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:beans="http://www.springframework.org/schema/beans"
+  xmlns:jms="http://www.springframework.org/schema/jms"
+  xmlns:oxm="http://www.springframework.org/schema/oxm"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xmlns:batch="http://www.springframework.org/schema/batch"
+  xmlns:jaxws="http://cxf.apache.org/jaxws"
+  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xsd 
+    http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+    http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-3.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+  <context:property-placeholder
+    location="classpath:config/jdbc.properties,classpath:config/mars.properties" />
+
+  <import resource="classpath:config/spring-hibernate.xml" />
+
+  <!-- Activates scanning of @Autowired -->
+  <context:annotation-config />
+
+  <context:component-scan base-package="com.aimir">
+    <context:exclude-filter type="regex" expression="com.aimir.mars.integration.multispeak.*.*" />
+    <context:exclude-filter type="regex" expression="com.aimir.mars.integration.bulkreading.xml.service.*" />
+    <context:exclude-filter type="regex" expression="com.aimir.mars.util.*" />
+    <context:exclude-filter type="regex" expression="com.aimir.mars.integration.metercontrol.*" />
+  </context:component-scan>
+
+  <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSource" />
+  </bean>
+
+  <bean id="fileDumpInInterceptor" class="com.aimir.mars.util.SoapFileDumpInInterceptor"/>
+  <bean id="fileDumpOutInterceptor" class="com.aimir.mars.util.SoapFileDumpOutInterceptor"/>
+
+  <jaxws:client id="webServiceClientMeterEvent"
+                serviceClass="com.oracle.xmlns.ssys.nurieventsproxy.nurieventsproxy.NuriEvents"
+                address="${HES.EV.ws.address}">
+    <jaxws:features>
+      <bean class="org.apache.cxf.feature.LoggingFeature" />
+    </jaxws:features>
+    <jaxws:inInterceptors>
+      <ref bean="fileDumpInInterceptor"/>
+    </jaxws:inInterceptors>
+    <jaxws:outInterceptors>
+      <ref bean="fileDumpOutInterceptor"/>
+    </jaxws:outInterceptors>
+    <jaxws:properties>
+      <entry key="schema-validation-enabled" value="true" />
+    </jaxws:properties>
+  </jaxws:client>
+
+  <jaxws:client id="webServiceClientAlert"
+                serviceClass="com.oracle.xmlns.ssys.nurieventsproxy.nurieventsproxy.NuriEvents"
+                address="${HES.EV.realtime.address}">
+    <jaxws:features>
+      <bean class="org.apache.cxf.feature.LoggingFeature" />
+    </jaxws:features>
+    <jaxws:inInterceptors>
+      <ref bean="fileDumpInInterceptor"/>
+    </jaxws:inInterceptors>
+    <jaxws:outInterceptors>
+      <ref bean="fileDumpOutInterceptor"/>
+    </jaxws:outInterceptors>
+    <jaxws:properties>
+      <entry key="schema-validation-enabled" value="true" />
+    </jaxws:properties>
+  </jaxws:client>
+
+  <!-- bean job repository -->
+  <bean id="jobRepository"
+    class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+    <property name="transactionManager" ref="transactionManager" />
+  </bean>
+
+  <!-- bean for lauching the job -->
+  <bean id="jobLauncher"
+    class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+    <property name="jobRepository" ref="jobRepository" />
+  </bean>
+
+  <!-- beans for defining the job and its steps. configure its readers and 
+    writers -->
+  <batch:job id="soriaIntegrationEVTask" restartable="${batch.job.restartable}">
+
+    <batch:step id="ev_generate_outbound">
+      <batch:tasklet ref="generateOutboundTasklet" />
+      <batch:end on="FAILED"/>
+      <batch:next on="*" to="ev_remove_delivery"/>
+    </batch:step>
+    <batch:step id="ev_remove_delivery">
+      <batch:tasklet ref="removeDeliveryTasklet" />
+      <batch:end on="FAILED"/>
+      <batch:next on="*" to="ev_send_meterevent"/>
+    </batch:step>
+    <batch:step id="ev_send_meterevent">
+      <batch:tasklet ref="sendMeterEventLogWSTasklet" />
+      <batch:end on="FAILED"/>
+      <batch:next on="*" to="ev_remove_outbound"/>
+    </batch:step>
+    <batch:step id="ev_remove_outbound">
+      <batch:tasklet ref="removeOutboundTasklet" />
+      <batch:end on="*"/>
+    </batch:step>
+
+  </batch:job>
+
+  <bean id="generateOutboundTasklet"
+    class="com.aimir.mars.integration.event.GenerateEVOutboundTasklet">
+  </bean>
+
+  <bean id="removeDeliveryTasklet"
+    class="com.aimir.mars.integration.event.RemoveEVDeliveryTasklet">
+  </bean>
+
+  <bean id="sendMeterEventLogWSTasklet"
+    class="com.aimir.mars.integration.event.SendMeterEventLogWSTasklet">
+  </bean>
+
+  <bean id="removeOutboundTasklet"
+    class="com.aimir.mars.integration.event.RemoveEVOutboundTasklet">
+  </bean>
+
+</beans>

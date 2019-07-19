@@ -1,0 +1,19 @@
+@CHARSET "UTF-8";
+.g_clear {
+	clear: both !important;
+	line-height: 0px !important;
+	margin: 0px !important;
+	padding: 0px !important;
+}
+div#wrapper {
+	min-width: 380px;
+	max-width: 420px;
+}
+
+div#wrapper.max {
+	min-width: 800px;
+	max-width: 1200px;
+}
+.x-grid3-header td div {
+    text-align: center !important;
+}

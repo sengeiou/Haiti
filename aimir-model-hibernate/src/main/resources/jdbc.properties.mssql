@@ -1,0 +1,7 @@
+################# MS SQL Server ###############
+hibernate.dialect=org.hibernate.dialect.SQLServer2008Dialect
+jdbc.driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+jdbc.url=jdbc:sqlserver://127.0.0.1:1433;databaseName=aimir
+jdbc.username=aimir
+jdbc.password=aimir
+

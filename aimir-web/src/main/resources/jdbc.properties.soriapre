@@ -1,0 +1,10 @@
+hibernate.dialect=org.hibernate.dialect.Oracle10gDialect
+jdbc.databasePlatform=org.eclipse.persistence.platform.database.OraclePlatform
+jdbc.generateDdl=true
+jdbc.showSql=false
+jdbc.driverClassName=oracle.jdbc.pool.OracleDataSource
+jdbc.url=jdbc:oracle:thin:@(description=(address_list=(address=(host=10.40.125.6)(protocol=tcp)(port=1521))(address=(host=10.40.125.7)(protocol=tcp)(port=1521))(address=(host=10.40.125.8)(protocol=tcp)(port=1521)))(connect_data=(service_name=TEST.HES.VALIDER.NO)))
+jdbc.username=aimir
+jdbc.password=hvhKFeshWWqgHRiJMlYM
+jdbc.minimumIdleSize=1
+jdbc.maximumSize=10

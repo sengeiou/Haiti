@@ -1,0 +1,220 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+   
+    <!-- EnergyMeter -->
+
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="1p2w"
+        pulseConst="100"
+        name="Kamstrup 162"
+        deviceModel="Kamstrup 162"
+    />
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="1p2w"
+        pulseConst="100"
+        name="Kamstrup 382"
+        deviceModel="Kamstrup 382"
+    />
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="1p2w"
+        pulseConst="100"
+        name="Aidon 5520"
+        deviceModel="Aidon 5520"
+    />
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="1p2w"
+        pulseConst="1"
+        name="I210"
+        deviceModel="I210"
+    />
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="3p4w"
+        pulseConst="1"
+        name="kV2c"
+        deviceModel="kV2c"
+    />
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="1p3w"
+        pulseConst="100"
+        name="Aidon 5540"
+        deviceModel="Aidon 5540"
+    />
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="3p4w"
+        pulseConst="1"
+        name="A1RL+"
+        deviceModel="A1RL+"
+    />
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="3p3w"
+        pulseConst="100"
+        name="Aidon 5530"
+        deviceModel="Aidon 5530"
+    />
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="1p2w"
+        pulseConst="1"
+        name="SM110"
+        deviceModel="SM110"
+    />
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="1p2w"
+        pulseConst="1000"
+        name="I210P"
+        deviceModel="I210P"
+    />
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="3p4w"
+        pulseConst="1"
+        name="LK3405Cx"
+        deviceModel="LK3405Cx"
+    />
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="3p4w"
+        pulseConst="1"
+        name="LGRW3410"
+        deviceModel="LGRW3410"
+    />
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="3p3w"
+        pulseConst="1"
+        name="LK1210DRB-120"
+        deviceModel="LK1210DRB-120"
+    />
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="3p3w"
+        pulseConst="1"
+        name="LK3410DRB-120"
+        deviceModel="LK3410DRB-120"
+    />
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="3p4w"
+        pulseConst="1"
+        name="Mk6N"
+        deviceModel="Mk6N"
+    />
+    
+<!-- HeatMeter -->    
+    <system.MeterConfig 
+        pulseConst="1"
+        name="Multical Compact"
+        deviceModel="Multical Compact"
+    />
+    <system.MeterConfig 
+        pulseConst="1"
+        name="KDH"
+        deviceModel="KDH"
+    />
+    <system.MeterConfig 
+        pulseConst="1"
+        name="Kamstrup 601"
+        deviceModel="Kamstrup 601"
+    />
+    <system.MeterConfig 
+        pulseConst="1"
+        name="Multical 401"
+        deviceModel="Multical 401"
+    />
+    <system.MeterConfig 
+        pulseConst="1"
+        name="Kamstrup351"
+        deviceModel="Kamstrup351"
+    />
+    <system.MeterConfig 
+        pulseConst="1"
+        name="A1700"
+        deviceModel="A1700"
+    />
+    <system.MeterConfig 
+        pulseConst="1"
+        name="A1140"
+        deviceModel="A1140"
+    />
+    <system.MeterConfig 
+        phase="3p3w"
+        pulseConst="1"
+        name="A1830RLNQ"
+        deviceModel="A1830RLNQ"
+    />
+    <system.MeterConfig 
+        phase="3p3w"
+        pulseConst="1"
+        name="A1830RLN"
+        deviceModel="A1830RLN"
+    />
+    <system.MeterConfig 
+        phase="4p3w"
+        pulseConst="1"
+        name="MX2"
+        deviceModel="MX2"
+    />
+    <system.MeterConfig 
+        phase="3p3w"
+        pulseConst="1"
+        name="Mk10A"
+        deviceModel="Mk10A"
+    />
+    <system.MeterConfig 
+        phase="3p3w"
+        pulseConst="1"
+        name="Mk10E"
+        deviceModel="Mk10E"
+    />
+    <system.MeterConfig 
+        phase="3p3w"
+        pulseConst="1"
+        name="A3RLNQ"
+        deviceModel="A3RLNQ"
+    />
+    <system.MeterConfig 
+        phase="3p3w"
+        pulseConst="1"
+        name="SX2"
+        deviceModel="SX2"
+    />
+    <system.MeterConfig 
+        phase="3p3w"
+        pulseConst="1"
+        name="SENSUS_220C"
+        deviceModel="SENSUS_220C"
+    />
+    
+    <!-- LS for uzbek Project -->
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="3p3w"
+        pulseConst="1"
+        name="LSK-0114"
+        deviceModel="LSK-0114"
+    />
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="3p3w"
+        pulseConst="1"
+        name="LSK-0115"
+        deviceModel="LSK-0115"
+    />
+    <!-- MITSUBISHI for MDIS -->
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="3p3w"
+        pulseConst="1"
+        name="SMW1"
+        deviceModel="SMW1"
+    /> 
+</dataset>

@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>ActiveMQ Event Topic Test</title>
+<script type="text/javascript" src="js/amq/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="js/amq/amq_jquery_adapter.js"></script>
+<script type="text/javascript" src="js/amq/amq.js"></script>
+<script type="text/javascript">
+  var myDestination = "topic://AiMiR.Event";
+  var myMessage = "Event Test";
+  //var myId = (new Date()).getTime().toString();
+  var myId = 'amq_test';
+  var amq = org.activemq.Amq;
+  amq.init({ 
+    uri: 'amq',
+    logging: true,
+    timeout: 40
+    //clientId: (new Date()).getTime().toString()
+  });
+ 
+  var myHandler =
+  {
+    rcvMessage: function(message)
+    {
+        alert("message.textContent:" + message.textContent + "\nmessage.text:" + message.text);
+//        var msg = (message.text) ? message.text : message.textContent;
+//        var json = JSON.parse(msg);
+//        var str = "";
+//        str += "id:" + json.id + "\n";
+//        str += "eventAlertType:" + json.eventAlertType + "\n";
+//        str += "severity:" + json.severity + "\n";
+//        str += "name:" + json.name + "\n";
+//        str += "descr:" + json.descr + "\n";
+//        str += "msgPattern:" + json.msgPattern + "\n";
+//        str += "troubleAdvice:" + json.troubleAdvice + "\n";
+//        str += "oid:" + json.oid + "\n";
+//        str += "monitor:" + json.monitor + "\n";
+//        str += "autoClosed:" + json.autoClosed + "\n";
+//        str += "timeout:" + json.timeout;
+
+//        alert(str);
+    }
+  };
+
+  amq.addListener(myId, myDestination, myHandler.rcvMessage); 
+</script>
+</head>
+<body>
+<input type="button" value="send" onclick="javascript:amq.sendMessage(myDestination, myMessage);"/>
+<p/>
+<input type="button" value="remove Listener" onclick="javascript:amq.removeListener(myId, myDestination);"/>
+</body>
+</html>

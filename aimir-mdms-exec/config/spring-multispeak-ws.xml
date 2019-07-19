@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:beans="http://www.springframework.org/schema/beans"
+  xmlns:jaxws="http://cxf.apache.org/jaxws"
+  xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+  xmlns:sec="http://cxf.apache.org/configuration/security"
+  xmlns:http="http://cxf.apache.org/transports/http/configuration"
+  xmlns:httpj="http://cxf.apache.org/transports/http-jetty/configuration"
+  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+    http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+    http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+    http://cxf.apache.org/configuration/security http://cxf.apache.org/schemas/configuration/security.xsd
+    http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd
+    http://cxf.apache.org/transports/http-jetty/configuration http://cxf.apache.org/schemas/configuration/http-jetty.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.2.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+
+  <context:property-placeholder
+    location="classpath:config/jdbc.properties,classpath:config/mars.properties,classpath:config/cxf_service.properties" />
+
+  <import resource="classpath:config/spring-hibernate.xml" />
+  <import resource="classpath:META-INF/cxf/cxf.xml" />
+  <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+  <!-- Activates scanning of @Autowired -->
+  <context:annotation-config />
+
+  <!-- Scans for @Repository, @Service -->
+  <context:component-scan base-package="com.aimir">    <context:exclude-filter type="regex" expression="com.aimir.mars.integration.multispeak.queue_jms.*" />
+    <context:exclude-filter type="regex" expression="com.aimir.mars.integration.multispeak.service_jms.*" />
+    <context:exclude-filter type="regex" expression="com.aimir.mars.integration.event.*" />    
+    <context:exclude-filter type="regex" expression="com.aimir.mars.integration.metercontrol.*" />
+    <context:exclude-filter type="regex" expression="com.aimir.fep.*.*" />
+    <context:exclude-filter type="regex" expression="com.aimir.mars.integration.bulkreading.*" />
+    <context:exclude-filter type="regex" expression="com.aimir.mars.util.FTPClient" />
+    <context:exclude-filter type="regex" expression="com.aimir.mars.util.SFTPClient" />
+    
+  </context:component-scan>
+
+  <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSource" />
+  </bean>
+
+  <bean id="authenticateServerUsers"
+    class="org.springframework.beans.factory.config.MapFactoryBean">
+    <property name="sourceMap">
+      <map>
+        <entry key="${aimir.ws.username.aimirtest}" value="${aimir.ws.username.aimirtest.password}" />
+        <entry key="${aimir.ws.username.c2m}" value="${aimir.ws.username.c2m.password}" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="certificateServerUsers"
+    class="org.springframework.beans.factory.config.MapFactoryBean">
+    <property name="sourceMap">
+      <map>
+        <entry key="${aimir.ws.username.aimir}" value="${aimir.ws.username.aimir.password}" />
+        <entry key="${aimir.ws.username.aimirxml}" value="${aimir.ws.username.aimirxml.password}" />
+        <entry key="${aimir.ws.username.aimirtest}" value="${aimir.ws.username.aimirtest.password}" />
+        <entry key="${aimir.ws.username.aimirtestxml}" value="${aimir.ws.username.aimirtestxml.password}" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="serverPasswordCallback"
+    class="com.aimir.mars.util.CXFServerPasswordCallback">
+    <property name="authenticateUsers" ref="authenticateServerUsers" />
+    <property name="certUsers" ref="certificateServerUsers" />
+  </bean>
+
+  <bean id="CXFFromClient" class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+    <constructor-arg>
+      <map>
+        <!--<entry key="action" value="Timestamp UsernameToken Signature Encrypt"/> -->
+        <entry key="action" value="UsernameToken" />
+        <entry key="passwordType" value="PasswordText" />
+        <entry key="passwordCallbackRef" value-ref="serverPasswordCallback" />
+        <entry key="signaturePropFile" value="config/cxf_service_auth.properties" />
+        <entry key="decryptionPropFile" value="config/cxf_service_xml.properties" />
+      </map>
+    </constructor-arg>
+  </bean>
+
+  <bean id="fileDumpInInterceptor" class="com.aimir.mars.util.SoapFileDumpInInterceptor"/>
+  <bean id="fileDumpOutInterceptor" class="com.aimir.mars.util.SoapFileDumpOutInterceptor"/>
+
+  <jaxws:endpoint id="CB_Server"
+    implementorClass="com.aimir.mars.integration.multispeak.server.CB_Server"
+    implementor="#cB_Server" address="/CB_Server">
+    <jaxws:properties>
+      <entry key="faultStackTraceEnabled" value="true" />
+      <entry key="exceptionMessageCauseEnabled" value="true" />
+      <!--entry key="MessageLogger" value-ref="logger1" /-->
+      <!--entry key="schema-validation-enabled" value="true" /-->
+    </jaxws:properties>
+    <jaxws:inInterceptors>
+      <ref bean="CXFFromClient" />
+      <ref bean="fileDumpInInterceptor"/>
+      <bean class="org.apache.cxf.binding.soap.saaj.SAAJInInterceptor" />
+    </jaxws:inInterceptors>
+    <jaxws:outInterceptors>
+      <ref bean="fileDumpOutInterceptor"/>
+    </jaxws:outInterceptors>
+    <jaxws:features>
+      <bean class="org.apache.cxf.feature.LoggingFeature" />
+    </jaxws:features>
+  </jaxws:endpoint>
+
+  <jaxws:endpoint id="CD_Server"
+    implementorClass="com.aimir.mars.integration.multispeak.server.CD_Server"
+    implementor="#cD_Server" address="/CD_Server">
+    <jaxws:properties>
+      <entry key="faultStackTraceEnabled" value="true" />
+      <entry key="exceptionMessageCauseEnabled" value="true" />
+      <!--entry key="MessageLogger" value-ref="logger2" /-->
+      <!--entry key="schema-validation-enabled" value="true" /-->
+    </jaxws:properties>
+    <jaxws:inInterceptors>
+      <ref bean="CXFFromClient" />
+      <ref bean="fileDumpInInterceptor"/>
+      <bean class="org.apache.cxf.binding.soap.saaj.SAAJInInterceptor" />
+    </jaxws:inInterceptors>
+    <jaxws:outInterceptors>
+      <ref bean="fileDumpOutInterceptor"/>
+    </jaxws:outInterceptors>
+    <jaxws:features>
+      <bean class="org.apache.cxf.feature.LoggingFeature" />
+    </jaxws:features>
+  </jaxws:endpoint>
+
+  <jaxws:endpoint id="MR_Server"
+    implementorClass="com.aimir.mars.integration.multispeak.server.MR_Server"
+    implementor="#mR_Server" address="/MR_Server">
+    <jaxws:properties>
+      <entry key="faultStackTraceEnabled" value="true" />
+      <entry key="exceptionMessageCauseEnabled" value="true" />
+      <!--entry key="MessageLogger" value-ref="logger3" /-->
+      <!--entry key="schema-validation-enabled" value="true" /-->
+    </jaxws:properties>
+    <jaxws:inInterceptors>
+      <ref bean="CXFFromClient" />
+      <ref bean="fileDumpInInterceptor"/>
+      <bean class="org.apache.cxf.binding.soap.saaj.SAAJInInterceptor" />
+    </jaxws:inInterceptors>
+    <jaxws:outInterceptors>
+      <ref bean="fileDumpOutInterceptor"/>
+    </jaxws:outInterceptors>
+    <jaxws:features>
+      <bean class="org.apache.cxf.feature.LoggingFeature" />
+    </jaxws:features>
+  </jaxws:endpoint>
+
+  <jaxws:endpoint id="OA_Server"
+    implementorClass="com.aimir.mars.integration.multispeak.server.OA_Server"
+    implementor="#oA_Server" address="/OA_Server">
+    <jaxws:properties>
+      <entry key="faultStackTraceEnabled" value="true" />
+      <entry key="exceptionMessageCauseEnabled" value="true" />
+      <!--entry key="MessageLogger" value-ref="logger4" /-->
+      <!--entry key="schema-validation-enabled" value="true" /-->
+    </jaxws:properties>
+    <jaxws:inInterceptors>
+      <ref bean="CXFFromClient" />
+      <ref bean="fileDumpInInterceptor"/>
+      <bean class="org.apache.cxf.binding.soap.saaj.SAAJInInterceptor" />
+    </jaxws:inInterceptors>
+    <jaxws:outInterceptors>
+      <ref bean="fileDumpOutInterceptor"/>
+    </jaxws:outInterceptors>
+    <jaxws:features>
+      <bean class="org.apache.cxf.feature.LoggingFeature" />
+    </jaxws:features>
+  </jaxws:endpoint>
+
+  <jaxws:endpoint id="ServiceConfigure"
+    implementorClass="com.aimir.mars.integration.service.ServiceConfigure"
+    implementor="#serviceConfigure" address="/ServiceConfigure">
+    <jaxws:properties>
+      <entry key="faultStackTraceEnabled" value="true" />
+      <entry key="exceptionMessageCauseEnabled" value="true" />
+      <!--entry key="MessageLogger" value-ref="logger4" /-->
+      <!--entry key="schema-validation-enabled" value="true" /-->
+    </jaxws:properties>
+    <jaxws:inInterceptors>
+      <ref bean="CXFFromClient" />
+      <ref bean="fileDumpInInterceptor"/>
+      <bean class="org.apache.cxf.binding.soap.saaj.SAAJInInterceptor" />
+    </jaxws:inInterceptors>
+    <jaxws:outInterceptors>
+      <ref bean="fileDumpOutInterceptor"/>
+    </jaxws:outInterceptors>
+    <jaxws:features>
+      <bean class="org.apache.cxf.feature.LoggingFeature" />
+    </jaxws:features>
+  </jaxws:endpoint>
+
+  <!-- For local test. 
+  <jaxws:endpoint id="OD_Server"
+    implementorClass="com.aimir.mars.integration.multispeak.server.OD_Server"
+    implementor="#oD_Server" address="/OD_Server">
+    <jaxws:properties>
+      <entry key="faultStackTraceEnabled" value="true" />
+      <entry key="exceptionMessageCauseEnabled" value="true" />
+      <entry key="MessageLogger" value-ref="logger5"/>
+    </jaxws:properties>
+    <jaxws:inInterceptors>
+      <ref bean="CXFFromClient" />
+      <ref bean="fileDumpInInterceptor"/>
+      <bean class="org.apache.cxf.binding.soap.saaj.SAAJInInterceptor" />
+    </jaxws:inInterceptors>
+    <jaxws:outInterceptors>
+      <ref bean="fileDumpOutInterceptor"/>
+    </jaxws:outInterceptors>
+    <jaxws:features>
+      <bean class="org.apache.cxf.feature.LoggingFeature" />
+    </jaxws:features>
+  </jaxws:endpoint>
+  -->
+
+  <jaxws:client id="cbServiceSoap"
+                serviceClass="com.aimir.mars.integration.multispeak.client.CBServerSoap"
+                address="${HES.WS.RESPONSE.CB}">
+    <jaxws:features>
+      <bean class="org.apache.cxf.feature.LoggingFeature" />
+    </jaxws:features>
+    <jaxws:inInterceptors>
+      <ref bean="CXFFromClient" />
+      <ref bean="fileDumpInInterceptor"/>
+      <bean class="org.apache.cxf.binding.soap.saaj.SAAJInInterceptor" />
+    </jaxws:inInterceptors>
+    <jaxws:outInterceptors>
+      <ref bean="fileDumpOutInterceptor"/>
+    </jaxws:outInterceptors>
+    <jaxws:properties>
+      <entry key="schema-validation-enabled" value="true" />
+    </jaxws:properties>
+  </jaxws:client>
+
+  <jaxws:client id="mrServiceSoap"
+                serviceClass="com.aimir.mars.integration.multispeak.client.MRServerSoap"
+                address="${HES.WS.RESPONSE.MR}">
+    <jaxws:features>
+      <bean class="org.apache.cxf.feature.LoggingFeature" />
+    </jaxws:features>
+    <jaxws:inInterceptors>
+      <ref bean="CXFFromClient" />
+      <ref bean="fileDumpInInterceptor"/>
+      <bean class="org.apache.cxf.binding.soap.saaj.SAAJInInterceptor" />
+    </jaxws:inInterceptors>
+    <jaxws:outInterceptors>
+      <ref bean="fileDumpOutInterceptor"/>
+    </jaxws:outInterceptors>
+    <jaxws:properties>
+      <entry key="schema-validation-enabled" value="true" />
+    </jaxws:properties>
+  </jaxws:client>
+
+  <jaxws:client id="service1Soap"
+                serviceClass="com.aimir.mars.integration.multispeak.client.Service1Soap"
+                address="${HES.WS.RESPONSE.SVC.A}">
+    <jaxws:features>
+      <bean class="org.apache.cxf.feature.LoggingFeature" />
+    </jaxws:features>
+    <jaxws:inInterceptors>
+      <ref bean="CXFFromClient" />
+      <ref bean="fileDumpInInterceptor"/>
+      <bean class="org.apache.cxf.binding.soap.saaj.SAAJInInterceptor" />
+    </jaxws:inInterceptors>
+    <jaxws:outInterceptors>
+      <ref bean="fileDumpOutInterceptor"/>
+    </jaxws:outInterceptors>
+    <jaxws:properties>
+      <entry key="schema-validation-enabled" value="true" />
+    </jaxws:properties>
+  </jaxws:client>
+
+  <jaxws:client id="service2Soap"
+                serviceClass="com.aimir.mars.integration.multispeak.client.Service2Soap"
+                address="${HES.WS.RESPONSE.SVC.A}">
+    <jaxws:features>
+      <bean class="org.apache.cxf.feature.LoggingFeature" />
+    </jaxws:features>
+    <jaxws:inInterceptors>
+      <ref bean="CXFFromClient" />
+      <ref bean="fileDumpInInterceptor"/>
+      <bean class="org.apache.cxf.binding.soap.saaj.SAAJInInterceptor" />
+    </jaxws:inInterceptors>
+    <jaxws:outInterceptors>
+      <ref bean="fileDumpOutInterceptor"/>
+    </jaxws:outInterceptors>
+    <jaxws:properties>
+      <entry key="schema-validation-enabled" value="true" />
+    </jaxws:properties>
+  </jaxws:client>
+
+  <!-- Active MQ HES Internal -->
+  <bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+    <property name="brokerURL">
+      <value>${activemq.broker.url}</value>
+    </property>
+  </bean>
+
+  <bean id="activeCachingConnectionFactory"
+    class="org.springframework.jms.connection.CachingConnectionFactory">
+    <property name="targetConnectionFactory" ref="activeMQConnectionFactory" />
+    <property name="reconnectOnException" value="true" />
+  </bean>
+
+  <bean id="activeJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <property name="connectionFactory">
+      <ref bean="activeCachingConnectionFactory" />
+    </property>
+  </bean>
+
+  <bean id="cbProcessor" class="com.aimir.mars.integration.multispeak.queue.CBProcessor" />
+  <bean id="cdProcessor" class="com.aimir.mars.integration.multispeak.queue.CDProcessor" />
+  <bean id="mrProcessor" class="com.aimir.mars.integration.multispeak.queue.MRProcessor" />
+  <bean id="oaProcessor" class="com.aimir.mars.integration.multispeak.queue.OAProcessor" />
+  <!-- <bean id="odProcessor" class="com.aimir.mars.integration.multispeak.queue.ODProcessor"/> -->
+
+  <bean id="cbProcessorContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <property name="connectionFactory" ref="activeCachingConnectionFactory" />
+    <property name="destinationName" value="${MultiSpeak.CB_MESSAGE}" />
+    <property name="messageListener" ref="cbProcessor" />
+    <property name="concurrentConsumers" value="${jms.concurrent.consumers}" />
+    <property name="maxConcurrentConsumers" value="${jms.concurrent.consumers}" />
+  </bean>
+
+  <bean id="cdProcessorContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <property name="connectionFactory" ref="activeCachingConnectionFactory" />
+    <property name="destinationName" value="${MultiSpeak.CD_MESSAGE}" />
+    <property name="messageListener" ref="cdProcessor" />
+    <property name="concurrentConsumers" value="${jms.concurrent.consumers}" />
+    <property name="maxConcurrentConsumers" value="${jms.concurrent.consumers}" />
+  </bean>
+
+  <bean id="mrProcessorContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <property name="connectionFactory" ref="activeCachingConnectionFactory" />
+    <property name="destinationName" value="${MultiSpeak.MR_MESSAGE}" />
+    <property name="messageListener" ref="mrProcessor" />
+    <property name="concurrentConsumers" value="${jms.concurrent.consumers}" />
+    <property name="maxConcurrentConsumers" value="${jms.concurrent.consumers}" />
+  </bean>
+
+  <bean id="oaProcessorContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <property name="connectionFactory" ref="activeCachingConnectionFactory" />
+    <property name="destinationName" value="${MultiSpeak.OA_MESSAGE}" />
+    <property name="messageListener" ref="oaProcessor" />
+    <property name="concurrentConsumers" value="${jms.concurrent.consumers}" />
+    <property name="maxConcurrentConsumers" value="${jms.concurrent.consumers}" />
+  </bean>
+
+  <!--
+  <bean id="odProcessorContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <property name="connectionFactory" ref="activeCachingConnectionFactory"/>
+    <property name="destinationName" value="${MultiSpeak.OD_MESSAGE}"/>
+    <property name="messageListener" ref="odProcessor"/>
+    <property name="concurrentConsumers" value="${jms.concurrent.consumers}"/>
+    <property name="maxConcurrentConsumers" value="${jms.concurrent.consumers}"/>
+  </bean>
+  -->
+
+</beans>

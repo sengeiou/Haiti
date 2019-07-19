@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Gadget
+        descr="리포트"
+        iconSrc="assets/images/gadget_ko/myReport.gif"
+        maxUrl="energyConsumptionMonitoring/consumptionMonitoringMax.do"
+        miniUrl="energyConsumptionMonitoring/consumptionMonitoringMax.do"
+        name="리포트"
+        miniHeight="830"
+        fullHeight="830"
+        gadgetCode="gadget.hems.myreport"
+    />
+    <system.Gadget
+        descr="전기 사용량 정보"
+        iconSrc="assets/images/gadget_ko/consumptionSearchEm.gif"
+        maxUrl="energyConsumptionSearch/consumptionSearchEmMax.do"
+        miniUrl="energyConsumptionSearch/consumptionSearchEmMini.do"
+        name="전기 사용량 정보"
+        miniHeight="650"
+        fullHeight="800"
+        gadgetCode="gadget.hems.electconsumption"
+    /> 
+    <system.Gadget
+        descr="가스 사용량 정보"
+        iconSrc="assets/images/gadget_ko/consumptionSearchGm.gif"
+        maxUrl="energyConsumptionSearch/consumptionSearchGmMax.do"
+        miniUrl="energyConsumptionSearch/consumptionSearchGmMini.do"
+        name="가스 사용량 정보"
+        miniHeight="650"
+        fullHeight="1000"
+        gadgetCode="gadget.hems.gasconsumption"
+    />    
+    <system.Gadget
+        descr="수도 사용량 정보"
+        iconSrc="assets/images/gadget_ko/consumptionSearchWm.gif"
+        maxUrl="energyConsumptionSearch/consumptionSearchWmMax.do"
+        miniUrl="energyConsumptionSearch/consumptionSearchWmMini.do"
+        name="수도 사용량 정보"
+        miniHeight="650"
+        fullHeight="1000"
+        gadgetCode="gadget.hems.waterconsumption"
+    />
+    <system.Gadget
+        descr="제품 관리"
+        iconSrc="assets/images/gadget_ko/homeDeviceMgmt.gif"
+        maxUrl="homeDeviceMgmt/homeDeviceMgmtMax.do"
+        miniUrl="homeDeviceMgmt/homeDeviceMgmtMini.do"
+        name="제품 관리"
+        miniHeight="650"
+        fullHeight="650"
+        gadgetCode="gadget.hems.homedevicemgmt"
+    />
+    <system.Gadget
+        descr="전기 에너지 절감 목표"
+        iconSrc="assets/images/gadget_ko/energySavingGoalEm.gif"
+        maxUrl="energySavingGoal/energySavingGoalEmMax.do"
+        miniUrl="energySavingGoal/energySavingGoalEmMini.do"
+        name="전기 에너지 절감 목표"
+        miniHeight="650"
+        fullHeight="800"
+        gadgetCode="gadget.hems.electsavingsgoal"
+    />
+    <system.Gadget
+        descr="가스 에너지 절감 목표"
+        iconSrc="assets/images/gadget_ko/energySavingGoalGm.gif"
+        maxUrl="energySavingGoal/energySavingGoalGmMax.do"
+        miniUrl="energySavingGoal/energySavingGoalGmMini.do"
+        name="가스 에너지 절감 목표"
+        miniHeight="650"
+        fullHeight="800"
+        gadgetCode="gadget.hems.gassavingsgoal"
+    />
+    <system.Gadget
+        descr="수도 에너지 절감 목표"
+        iconSrc="assets/images/gadget_ko/energySavingGoalWm.gif"
+        maxUrl="energySavingGoal/energySavingGoalWmMax.do"
+        miniUrl="energySavingGoal/energySavingGoalWmMini.do"
+        name="수도 에너지 절감 목표"
+        miniHeight="600"
+        fullHeight="800"
+        gadgetCode="gadget.hems.watersavingsgoal"
+    />
+    <system.Gadget
+        descr="수요반응 관리"
+        iconSrc="assets/images/gadget_ko/demandResponseMgmt.gif"
+        maxUrl="demandResponseMgmt/demandResponseMgmtMax.do"
+        miniUrl="demandResponseMgmt/demandResponseMgmtMini.do"
+        name="수요반응 관리"
+        miniHeight="650"
+        fullHeight="700"
+        gadgetCode="gadget.hems.demandresponsemgmt"
+    />  
+    <system.Gadget
+        descr="전기 선불 관리"
+        iconSrc="assets/images/gadget_ko/prepaymentMgmtCustomer.gif"
+        maxUrl="prepaymentMgmt/prepaymentMgmtEmCustomerMax.do"
+        miniUrl="prepaymentMgmt/prepaymentMgmtEmCustomerMini.do"
+        name="전기 선불 관리"
+        miniHeight="500"
+        fullHeight="854"
+        gadgetCode="gadget.hems.electprepaymentcustomer"
+    />
+    <system.Gadget
+        descr="가스 선불 관리 "
+        iconSrc="assets/images/gadget_ko/prepaymentMgmtCustomer.gif"
+        maxUrl="prepaymentMgmt/prepaymentMgmtGmCustomerMax.do"
+        miniUrl="prepaymentMgmt/prepaymentMgmtGmCustomerMini.do"
+        name="가스 선불 관리"
+        miniHeight="500"
+        fullHeight="854"
+        gadgetCode="gadget.hems.gasprepaymentcustomer"
+    /> 
+    <system.Gadget
+        descr="수도 선불 관리"
+        iconSrc="assets/images/gadget_ko/prepaymentMgmtCustomer.gif"
+        maxUrl="prepaymentMgmt/prepaymentMgmtWmCustomerMax.do"
+        miniUrl="prepaymentMgmt/prepaymentMgmtWmCustomerMini.do"
+        name="수도 선불 관리"
+        miniHeight="500"
+        fullHeight="854"
+        gadgetCode="gadget.hems.waterprepaymentcustomer"
+    /> 
+</dataset>

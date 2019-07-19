@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Dashboard descr="Energy Dashboard" name="에너지모니터링" orderNo="0" role="admin"/>
+    <system.Dashboard descr="Stat. Dashboard" name="통계분석" orderNo="1" role="admin"/>
+    <system.Dashboard descr="DR Dashboard" name="수요반응" orderNo="2" role="admin"/>
+    <system.Dashboard descr="MeteringData Dashboard" name="검침데이터관리" orderNo="3" role="admin"/>
+    <system.Dashboard descr="Equip Dashboard" name="설비관리" orderNo="4" role="admin"/>
+    <system.Dashboard descr="Common Dashboard" name="환경설정" orderNo="5" role="admin"/>
+</dataset>

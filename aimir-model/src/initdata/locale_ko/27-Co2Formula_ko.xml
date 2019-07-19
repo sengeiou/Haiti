@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Co2Formula supplyTypeCode="3.1" unitUsage="100" co2emissions="42.4" co2factor="0.424" unit="KWh"/>
+    <system.Co2Formula supplyTypeCode="3.2" unitUsage="100" co2emissions="58.6" co2factor="0.586" unit="㎥"/>
+    <system.Co2Formula supplyTypeCode="3.3" unitUsage="100" co2emissions="36" co2factor="0.36" unit="N㎥"/>
+    <system.Co2Formula supplyTypeCode="3.4" unitUsage="100" co2emissions="42.4" co2factor="0.424" unit="㎥"/>
+    <system.Co2Formula supplyTypeCode="3.6" unitUsage="100" co2emissions="42.4" co2factor="0.424" unit="㎥"/>
+</dataset>

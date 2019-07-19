@@ -1,0 +1,337 @@
+drop table "AIMIR3"."BILLING_DAY_EM"  CASCADE CONSTRAINTS;
+
+CREATE TABLE "AIMIR3"."BILLING_DAY_EM"
+(
+   HHMMSS varchar2(6) DEFAULT '000000'   NOT NULL,
+   MDEV_ID varchar2(20) NOT NULL,
+   MDEV_TYPE decimal(10) NOT NULL,
+   YYYYMMDD varchar2(8) NOT NULL,
+   ACTIVEENERGYEXPORTRATE1 float(126),
+   ACTIVEENERGYEXPORTRATE2 float(126),
+   ACTIVEENERGYEXPORTRATE3 float(126),
+   ACTIVEENERGYEXPORTRATE4 float(126),
+   ACTIVEENERGYEXPORTRATETOTAL float(126),
+   ACTIVEENERGYIMPORTRATE1 float(126),
+   ACTIVEENERGYIMPORTRATE2 float(126),
+   ACTIVEENERGYIMPORTRATE3 float(126),
+   ACTIVEENERGYIMPORTRATE4 float(126),
+   ACTIVEENERGYIMPORTRATETOTAL float(126),
+   ACTIVEENERGYRATE1 float(126),
+   ACTIVEENERGYRATE2 float(126),
+   ACTIVEENERGYRATE3 float(126),
+   ACTIVEENERGYRATE4 float(126),
+   ACTIVEENERGYRATETOT float(126),
+   ACTIVEPWRDMDMAXTIMERATE1 varchar2(12),
+   ACTIVEPWRDMDMAXTIMERATE2 varchar2(12),
+   ACTIVEPWRDMDMAXTIMERATE3 varchar2(12),
+   ACTIVEPWRDMDMAXTIMERATE4 varchar2(12),
+   ACTIVEPWRDMDMAXTIMERATETOT varchar2(12),
+   ACTIVEPWRMAXDMDRATE1 float(126),
+   ACTIVEPWRMAXDMDRATE2 float(126),
+   ACTIVEPWRMAXDMDRATE3 float(126),
+   ACTIVEPWRMAXDMDRATE4 float(126),
+   ACTIVEPWRMAXDMDRATETOT float(126),
+   ACTIVEPWRDMDMAXEXPORTRATE1 float(126),
+   ACTIVEPWRDMDMAXEXPORTRATE2 float(126),
+   ACTIVEPWRDMDMAXEXPORTRATE3 float(126),
+   ACTIVEPWRDMDMAXEXPORTRATE4 float(126),
+   ACTIVEPWRDMDMAXEXPORTRATETOTAL float(126),
+   ACTIVEPWRDMDMAXIMPORTRATE1 float(126),
+   ACTIVEPWRDMDMAXIMPORTRATE2 float(126),
+   ACTIVEPWRDMDMAXIMPORTRATE3 float(126),
+   ACTIVEPWRDMDMAXIMPORTRATE4 float(126),
+   ACTIVEPWRDMDMAXIMPORTRATETOTAL float(126),
+   ACTIVEPWRDMDMAXTIMEEXPORTRATE1 varchar2(255),
+   ACTIVEPWRDMDMAXTIMEEXPORTRATE2 varchar2(255),
+   ACTIVEPWRDMDMAXTIMEEXPORTRATE3 varchar2(255),
+   ACTIVEPWRDMDMAXTIMEEXPORTRATE4 varchar2(255),
+   ATVPWRDMDMAXTIMEEXPRATETOT varchar2(255),
+   ACTIVEPWRDMDMAXTIMEIMPORTRATE1 varchar2(255),
+   ACTIVEPWRDMDMAXTIMEIMPORTRATE2 varchar2(255),
+   ACTIVEPWRDMDMAXTIMEIMPORTRATE3 varchar2(255),
+   ACTIVEPWRDMDMAXTIMEIMPORTRATE4 varchar2(255),
+   ATVPWRDMDMAXTIMEIMPRATETOT varchar2(255),
+   ADDITIONALCOSTS float(126),
+   BILL float(126),
+   CO2_EMISSIONS float(126),
+   CO2MILES float(126),
+   CONTRACT_ID decimal(10),
+   CUMMACTIVEPWRDMDMAXEXPORTRATE1 float(126),
+   CUMMACTIVEPWRDMDMAXEXPORTRATE2 float(126),
+   CUMMACTIVEPWRDMDMAXEXPORTRATE3 float(126),
+   CUMMACTIVEPWRDMDMAXEXPORTRATE4 float(126),
+   CUMMATVPWRDMDMAXEXPRATETOT float(126),
+   CUMMACTIVEPWRDMDMAXIMPORTRATE1 float(126),
+   CUMMACTIVEPWRDMDMAXIMPORTRATE2 float(126),
+   CUMMACTIVEPWRDMDMAXIMPORTRATE3 float(126),
+   CUMMACTIVEPWRDMDMAXIMPORTRATE4 float(126),
+   CUMMATVPWRDMDMAXIMPRATETOT float(126),
+   CUMMRTVPWRDMDMAXLAGEXPRATE1 float(126),
+   CUMMRTVPWRDMDMAXLAGEXPRATE2 float(126),
+   CUMMRTVPWRDMDMAXLAGEXPRATE3 float(126),
+   CUMMRTVPWRDMDMAXLAGEXPRATE4 float(126),
+   CUMMRTVPWRDMDMAXLAGEXPRATETOT float(126),
+   CUMMRTVPWRDMDMAXLAGIMPRATE1 float(126),
+   CUMMRTVPWRDMDMAXLAGIMPRATE2 float(126),
+   CUMMRTVPWRDMDMAXLAGIMPRATE3 float(126),
+   CUMMRTVPWRDMDMAXLAGIMPRATE4 float(126),
+   CUMMRTVPWRDMDMAXLAGIMPRATETOT float(126),
+   CUMMRTVPWRDMDMAXLEADEXPRATE1 float(126),
+   CUMMRTVPWRDMDMAXLEADEXPRATE2 float(126),
+   CUMMRTVPWRDMDMAXLEADEXPRATE3 float(126),
+   CUMMRTVPWRDMDMAXLEADEXPRATE4 float(126),
+   CUMMRTVPWRDMDMAXLEADEXPRATETOT float(126),
+   CUMMRTVPWRDMDMAXLEADIMPRATE1 float(126),
+   CUMMRTVPWRDMDMAXLEADIMPRATE2 float(126),
+   CUMMRTVPWRDMDMAXLEADIMPRATE3 float(126),
+   CUMMRTVPWRDMDMAXLEADIMPRATE4 float(126),
+   CUMMRTVPWRDMDMAXLEADIMPRATETOT float(126),
+   CUMMKVAH1RATE1 float(126),
+   CUMMKVAH1RATE2 float(126),
+   CUMMKVAH1RATE3 float(126),
+   CUMMKVAH1RATE4 float(126),
+   CUMMKVAH1RATETOTAL float(126),
+   CUMMACTIVEPWRDMDRATE1 float(126),
+   CUMMACTIVEPWRDMDRATE2 float(126),
+   CUMMACTIVEPWRDMDRATE3 float(126),
+   CUMMACTIVEPWRDMDRATE4 float(126),
+   CUMMACTIVEPWRDMDRATETOT float(126),
+   CUMMREACTIVEPWRDMDRATE1 float(126),
+   CUMMREACTIVEPWRDMDRATE2 float(126),
+   CUMMREACTIVEPWRDMDRATE3 float(126),
+   CUMMREACTIVEPWRDMDRATE4 float(126),
+   CUMMREACTIVEPWRDMDRATETOT float(126),
+   DISCOUNTEDRATES float(126),
+   ENDDEVICE_ID decimal(10),
+   IMPORTKWHPHASEA float(126),
+   IMPORTKWHPHASEB float(126),
+   IMPORTKWHPHASEC float(126),
+   KVAH float(126),
+   LOCATION_ID decimal(10),
+   MAXDMDKVAH1RATE1 float(126),
+   MAXDMDKVAH1RATE2 float(126),
+   MAXDMDKVAH1RATE3 float(126),
+   MAXDMDKVAH1RATE4 float(126),
+   MAXDMDKVAH1RATETOTAL float(126),
+   MAXDMDKVAH1TIMERATE1 varchar2(255),
+   MAXDMDKVAH1TIMERATE2 varchar2(255),
+   MAXDMDKVAH1TIMERATE3 varchar2(255),
+   MAXDMDKVAH1TIMERATE4 varchar2(255),
+   MAXDMDKVAH1TIMERATETOTAL varchar2(255),
+   METER_ID decimal(10),
+   MODEM_ID decimal(10),
+   NEWMILES float(126),
+   PF float(126),
+   REACTIVEENERGYLAGEXPORTRATE1 float(126),
+   REACTIVEENERGYLAGEXPORTRATE2 float(126),
+   REACTIVEENERGYLAGEXPORTRATE3 float(126),
+   REACTIVEENERGYLAGEXPORTRATE4 float(126),
+   RTVENERGYLAGEXPRATETOT float(126),
+   REACTIVEENERGYLAGIMPORTRATE1 float(126),
+   REACTIVEENERGYLAGIMPORTRATE2 float(126),
+   REACTIVEENERGYLAGIMPORTRATE3 float(126),
+   REACTIVEENERGYLAGIMPORTRATE4 float(126),
+   RTVENERGYLAGIMPRATETOT float(126),
+   REACTIVEENERGYLEADEXPORTRATE1 float(126),
+   REACTIVEENERGYLEADEXPORTRATE2 float(126),
+   REACTIVEENERGYLEADEXPORTRATE3 float(126),
+   REACTIVEENERGYLEADEXPORTRATE4 float(126),
+   RTVENERGYLEADEXPRATETOT float(126),
+   REACTIVEENERGYLEADIMPORTRATE1 float(126),
+   REACTIVEENERGYLEADIMPORTRATE2 float(126),
+   REACTIVEENERGYLEADIMPORTRATE3 float(126),
+   REACTIVEENERGYLEADIMPORTRATE4 float(126),
+   RTVENERGYLEADIMPRATETOT float(126),
+   REACTIVEENERGYRATE1 float(126),
+   REACTIVEENERGYRATE2 float(126),
+   REACTIVEENERGYRATE3 float(126),
+   REACTIVEENERGYRATE4 float(126),
+   REACTIVEENERGYRATETOT float(126),
+   REACTIVEPWRDMDMAXTIMERATE1 varchar2(12),
+   REACTIVEPWRDMDMAXTIMERATE2 varchar2(12),
+   REACTIVEPWRDMDMAXTIMERATE3 varchar2(12),
+   REACTIVEPWRDMDMAXTIMERATE4 varchar2(12),
+   REACTIVEPWRDMDMAXTIMERATETOT varchar2(12),
+   REACTIVEPWRMAXDMDRATE1 float(126),
+   REACTIVEPWRMAXDMDRATE2 float(126),
+   REACTIVEPWRMAXDMDRATE3 float(126),
+   REACTIVEPWRMAXDMDRATE4 float(126),
+   REACTIVEPWRMAXDMDRATETOT float(126),
+   RTVPWRDMDMAXLAGEXPRATE1 float(126),
+   RTVPWRDMDMAXLAGEXPRATE2 float(126),
+   RTVPWRDMDMAXLAGEXPRATE3 float(126),
+   RTVPWRDMDMAXLAGEXPRATE4 float(126),
+   RTVPWRDMDMAXLAGEXPRATETOT float(126),
+   RTVPWRDMDMAXLAGIMPRATE1 float(126),
+   RTVPWRDMDMAXLAGIMPRATE2 float(126),
+   RTVPWRDMDMAXLAGIMPRATE3 float(126),
+   RTVPWRDMDMAXLAGIMPRATE4 float(126),
+   RTVPWRDMDMAXLAGIMPRATETOT float(126),
+   RTVPWRDMDMAXLEADEXPRATE1 float(126),
+   RTVPWRDMDMAXLEADEXPRATE2 float(126),
+   RTVPWRDMDMAXLEADEXPRATE3 float(126),
+   RTVPWRDMDMAXLEADEXPRATE4 float(126),
+   RTVPWRDMDMAXLEADEXPRATETOT float(126),
+   RTVPWRDMDMAXLEADIMPRATE1 float(126),
+   RTVPWRDMDMAXLEADIMPRATE2 float(126),
+   RTVPWRDMDMAXLEADIMPRATE3 float(126),
+   RTVPWRDMDMAXLEADIMPRATE4 float(126),
+   RTVPWRDMDMAXLEADIMPRATETOT float(126),
+   RTVPWRDMDMAXTIMELAGEXPRATE1 varchar2(255),
+   RTVPWRDMDMAXTIMELAGEXPRATE2 varchar2(255),
+   RTVPWRDMDMAXTIMELAGEXPRATE3 varchar2(255),
+   RTVPWRDMDMAXTIMELAGEXPRATE4 varchar2(255),
+   RTVPWRDMDMAXTIMELAGEXPRATETOT varchar2(255),
+   RTVPWRDMDMAXTIMELAGIMPRATE1 varchar2(255),
+   RTVPWRDMDMAXTIMELAGIMPRATE2 varchar2(255),
+   RTVPWRDMDMAXTIMELAGIMPRATE3 varchar2(255),
+   RTVPWRDMDMAXTIMELAGIMPRATE4 varchar2(255),
+   RTVPWRDMDMAXTIMELAGIMPRATETOT varchar2(255),
+   RTVPWRDMDMAXTIMELEADEXPRATE1 varchar2(255),
+   RTVPWRDMDMAXTIMELEADEXPRATE2 varchar2(255),
+   RTVPWRDMDMAXTIMELEADEXPRATE3 varchar2(255),
+   RTVPWRDMDMAXTIMELEADEXPRATE4 varchar2(255),
+   RTVPWRDMDMAXTIMELEADEXPRATETOT varchar2(255),
+   RTVPWRDMDMAXTIMELEADIMPRATE1 varchar2(255),
+   RTVPWRDMDMAXTIMELEADIMPRATE2 varchar2(255),
+   RTVPWRDMDMAXTIMELEADIMPRATE3 varchar2(255),
+   RTVPWRDMDMAXTIMELEADIMPRATE4 varchar2(255),
+   RTVPWRDMDMAXTIMELEADIMPRATETOT varchar2(255),
+   REMAININGMILES float(126),
+   SEND_RESULT decimal(1),
+   SUPPLIER_ID decimal(10),
+   USAGE_READ_FROM_DATE varchar2(14),
+   USAGE_READ_TO_DATE varchar2(14),
+   USINGMILES float(126),
+   WRITEDATE varchar2(14),
+   ACCUMULATEBILL float(126),
+   ACCUMULATEUSAGE float(126),
+   CONSTRAINT SYS_C004148 PRIMARY KEY (HHMMSS,MDEV_ID,MDEV_TYPE,YYYYMMDD)
+)
+partition by range (yyyymmdd)
+(
+   partition billingdayem201407 values less than ('20140801') tablespace AIMIRDAT201407
+)
+;
+ALTER TABLE "AIMIR3"."BILLING_DAY_EM"
+ADD CONSTRAINT FK79A2E6AF8F8DBE27
+FOREIGN KEY (LOCATION_ID)
+REFERENCES "AIMIR3"."LOCATION"(ID)
+;
+ALTER TABLE "AIMIR3"."BILLING_DAY_EM"
+ADD CONSTRAINT FK79A2E6AFCAB63A94
+FOREIGN KEY (METER_ID)
+REFERENCES "AIMIR3"."METER"(ID)
+;
+ALTER TABLE "AIMIR3"."BILLING_DAY_EM"
+ADD CONSTRAINT FK79A2E6AF7D01F2C7
+FOREIGN KEY (SUPPLIER_ID)
+REFERENCES "AIMIR3"."SUPPLIER"(ID)
+;
+ALTER TABLE "AIMIR3"."BILLING_DAY_EM"
+ADD CONSTRAINT FK79A2E6AF5CF66507
+FOREIGN KEY (CONTRACT_ID)
+REFERENCES "AIMIR3"."CONTRACT"(ID)
+;
+ALTER TABLE "AIMIR3"."BILLING_DAY_EM"
+ADD CONSTRAINT FK79A2E6AFC0690AF4
+FOREIGN KEY (MODEM_ID)
+REFERENCES "AIMIR3"."MODEM"(ID)
+;
+ALTER TABLE "AIMIR3"."BILLING_DAY_EM"
+ADD CONSTRAINT FK79A2E6AFD6C540B4
+FOREIGN KEY (ENDDEVICE_ID)
+REFERENCES "AIMIR3"."ENDDEVICE"(ID)
+;
+CREATE UNIQUE INDEX SYS_C004148 ON "AIMIR3"."BILLING_DAY_EM"
+(
+  HHMMSS,
+  MDEV_ID,
+  MDEV_TYPE,
+  YYYYMMDD
+)
+;
+CREATE INDEX IDX_BILLING_DAY_EM_01 ON "AIMIR3"."BILLING_DAY_EM"
+(
+  MDEV_TYPE,
+  MDEV_ID,
+  YYYYMMDD
+)
+;
+alter table "AIMIR3"."BILLING_DAY_EM" add partition billingdayem201407 values less than ('20140801') tablespace AIMIRDAT201407;
+alter table "AIMIR3"."BILLING_DAY_EM" add partition billingdayem201408 values less than ('20140901') tablespace AIMIRDAT201408;
+alter table "AIMIR3"."BILLING_DAY_EM" add partition billingdayem201409 values less than ('20141001') tablespace AIMIRDAT201409;
+alter table "AIMIR3"."BILLING_DAY_EM" add partition billingdayem201410 values less than ('20141101') tablespace AIMIRDAT201410;
+alter table "AIMIR3"."BILLING_DAY_EM" add partition billingdayem201411 values less than ('20141201') tablespace AIMIRDAT201411;
+alter table "AIMIR3"."BILLING_DAY_EM" add partition billingdayem201412 values less than ('20150101') tablespace AIMIRDAT201412;
+alter table "AIMIR3"."BILLING_DAY_EM" add partition billingdayem201501 values less than ('20150201') tablespace AIMIRDAT201501;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201502 values less than ('20150301') tablespace AIMIRDAT201502;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201503 values less than ('20150401') tablespace AIMIRDAT201503;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201504 values less than ('20150501') tablespace AIMIRDAT201504;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201505 values less than ('20150601') tablespace AIMIRDAT201505;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201506 values less than ('20150701') tablespace AIMIRDAT201506;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201507 values less than ('20150801') tablespace AIMIRDAT201507;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201508 values less than ('20150901') tablespace AIMIRDAT201508;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201509 values less than ('20151001') tablespace AIMIRDAT201509;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201510 values less than ('20151101') tablespace AIMIRDAT201510;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201511 values less than ('20151201') tablespace AIMIRDAT201511;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201512 values less than ('20160101') tablespace AIMIRDAT201512;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201601 values less than ('20160201') tablespace AIMIRDAT201601;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201602 values less than ('20160301') tablespace AIMIRDAT201602;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201603 values less than ('20160401') tablespace AIMIRDAT201603;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201604 values less than ('20160501') tablespace AIMIRDAT201604;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201605 values less than ('20160601') tablespace AIMIRDAT201605;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201606 values less than ('20160701') tablespace AIMIRDAT201606;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201607 values less than ('20160801') tablespace AIMIRDAT201607;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201608 values less than ('20160901') tablespace AIMIRDAT201608;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201609 values less than ('20161001') tablespace AIMIRDAT201609;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201610 values less than ('20161101') tablespace AIMIRDAT201610;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201612 values less than ('20170101') tablespace AIMIRDAT201612;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201701 values less than ('20170201') tablespace AIMIRDAT201701;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201702 values less than ('20170301') tablespace AIMIRDAT201702;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201703 values less than ('20170401') tablespace AIMIRDAT201703;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201704 values less than ('20170501') tablespace AIMIRDAT201704;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201705 values less than ('20170601') tablespace AIMIRDAT201705;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201706 values less than ('20170701') tablespace AIMIRDAT201706;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201707 values less than ('20170801') tablespace AIMIRDAT201707;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201708 values less than ('20170901') tablespace AIMIRDAT201708;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201709 values less than ('20171001') tablespace AIMIRDAT201709;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201710 values less than ('20171101') tablespace AIMIRDAT201710;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201711 values less than ('20171201') tablespace AIMIRDAT201711;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201712 values less than ('20180101') tablespace AIMIRDAT201712;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201801 values less than ('20180201') tablespace AIMIRDAT201801;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201802 values less than ('20180301') tablespace AIMIRDAT201802;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201803 values less than ('20180401') tablespace AIMIRDAT201803;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201804 values less than ('20180501') tablespace AIMIRDAT201804;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201805 values less than ('20180601') tablespace AIMIRDAT201805;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201806 values less than ('20180701') tablespace AIMIRDAT201806;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201807 values less than ('20180801') tablespace AIMIRDAT201807;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201808 values less than ('20180901') tablespace AIMIRDAT201808;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201809 values less than ('20181001') tablespace AIMIRDAT201809;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201810 values less than ('20181101') tablespace AIMIRDAT201810;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201811 values less than ('20181201') tablespace AIMIRDAT201811;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201812 values less than ('20190101') tablespace AIMIRDAT201812;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201901 values less than ('20190201') tablespace AIMIRDAT201901;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201902 values less than ('20190301') tablespace AIMIRDAT201902;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201903 values less than ('20190401') tablespace AIMIRDAT201903;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201904 values less than ('20190501') tablespace AIMIRDAT201904;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201905 values less than ('20190601') tablespace AIMIRDAT201905;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201906 values less than ('20190701') tablespace AIMIRDAT201906;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201907 values less than ('20190801') tablespace AIMIRDAT201907;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201908 values less than ('20190901') tablespace AIMIRDAT201908;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201909 values less than ('20191001') tablespace AIMIRDAT201909;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201910 values less than ('20191101') tablespace AIMIRDAT201910;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201911 values less than ('20191201') tablespace AIMIRDAT201911;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem201912 values less than ('20200101') tablespace AIMIRDAT201912;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem202001 values less than ('20200201') tablespace AIMIRDAT202001;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem202002 values less than ('20200301') tablespace AIMIRDAT202002;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem202003 values less than ('20200401') tablespace AIMIRDAT202003;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem202004 values less than ('20200501') tablespace AIMIRDAT202004;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem202005 values less than ('20200601') tablespace AIMIRDAT202005;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem202006 values less than ('20200701') tablespace AIMIRDAT202006;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem202007 values less than ('20200801') tablespace AIMIRDAT202007;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem202008 values less than ('20200901') tablespace AIMIRDAT202008;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem202009 values less than ('20201001') tablespace AIMIRDAT202009;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem202010 values less than ('20201101') tablespace AIMIRDAT202010;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem202011 values less than ('20201201') tablespace AIMIRDAT202011;
+alter table "AIMIR"."BILLING_DAY_EM" add partition billingdayem202012 values less than ('20210101') tablespace AIMIRDAT202012;

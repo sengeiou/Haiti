@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+	<system.Supplier 
+        name="NURI" 
+        country="KOREA, REPUBLIC OF"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="Seoul"
+        descr="Nuri Telecom"
+        telno="02-781-0777"
+    />
+    <system.Supplier 
+        name="PEA THAILAND" 
+        country="THAILAND"
+        lang="English"
+        timezone="Asia/Bangkok"
+        address="Bangkok"
+        descr="PEA THAILAND"
+        telno=""
+    />
+</dataset>

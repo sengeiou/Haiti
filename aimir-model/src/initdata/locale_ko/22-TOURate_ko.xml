@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+	<!-- Kepco 8205  -->
+    <system.TOURate tariffType="8205" peakType="OFF_PEAK" season="Spring" localName="경부하" startTime="23" endTime="09" />
+    <system.TOURate tariffType="8205" peakType="PEAK" season="Spring" localName="중부하" startTime="09" endTime="18" />
+    <system.TOURate tariffType="8205" peakType="CRITICAL_PEAK" season="Spring" localName="최대부하" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="8205" peakType="OFF_PEAK" season="Summer" localName="경부하" startTime="23" endTime="09" />
+    <system.TOURate tariffType="8205" peakType="PEAK" season="Summer" localName="중부하" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="8205" peakType="CRITICAL_PEAK" season="Summer" localName="최대부하" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="8205" peakType="OFF_PEAK" season="Autumn" localName="경부하" startTime="23" endTime="09" />
+    <system.TOURate tariffType="8205" peakType="PEAK" season="Autumn" localName="중부하" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="8205" peakType="CRITICAL_PEAK" season="Autumn" localName="최대부하" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="8205" peakType="OFF_PEAK" season="Winter" localName="경부하" startTime="23" endTime="09" />
+    <system.TOURate tariffType="8205" peakType="PEAK" season="Winter" localName="중부하" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="8205" peakType="CRITICAL_PEAK" season="Winter" localName="최대부하" startTime="18" endTime="23" />
+
+</dataset>

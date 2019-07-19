@@ -1,0 +1,1910 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+    <!-- Language -->
+    <!-- Timezone -->
+    <!-- Code -->
+    
+    <system.Country 
+        name="대한민국"
+        code_2letter="KR"
+        code_3letter="KOR"
+        code_number="410"
+    />
+    
+    <system.Supplier 
+        name="대성에너지" 
+        country="대한민국"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="대구시"
+        descr="대성에너지"
+        telno=""
+        cd.pattern="###,###,###,###,##0.000"
+        cd.round="c"
+        md.pattern="###,###,###,###,##0.000"
+        md.round="r"
+    />
+    
+    <system.Co2Formula name="전기탄소배출량" supplyTypeCode="3.1" unitUsage="100" co2emissions="42" co2factor="0.42" unit="KWh"/>
+    <system.Co2Formula name="수도탄소배출량" supplyTypeCode="3.2" unitUsage="100" co2emissions="153" co2factor="1.53" unit="M3"/>
+    <system.Co2Formula name="가스탄소배출량" supplyTypeCode="3.3" unitUsage="100" co2emissions="222" co2factor="2.22" unit="M3"/>
+    
+    
+    <system.SupplyType
+        supplier="대성에너지"
+        typeCode="3.1"
+        co2Formula="전기탄소배출량"
+        billDate="1"
+    />
+    
+    <system.SupplyType
+        supplier="대성에너지"
+        typeCode="3.2"
+        co2Formula="수도탄소배출량"
+        billDate="1"
+    />
+    
+    <system.SupplyType
+        supplier="대성에너지"
+        typeCode="3.3"
+        co2Formula="가스탄소배출량"
+        billDate="1"
+    />
+    
+    <system.Location 
+        name="대구시"
+        orderNo="1"
+        parent=""
+        supplier="대성에너지"
+    />
+    
+    <system.Role name="admin" 
+        supplier="대성에너지" 
+        systemAuthority="c" 
+        mtrAuthority="c" 
+        descr="Admin" 
+        hasDashboardAuth="true" 
+        customerRole="false" 
+        loginAuthority="true" />
+        
+    <system.Operator loginId="admin" 
+        aliasName="administrator" 
+        email="" 
+        failedLoginCount="0" 
+        name="대성에너지"
+        password="hQXOwYy2SzvjPduK5ESBqwwaCAFQWFdQtJAQuQiM57NZ1duCOKDjMaIsPBTSx6iU01eHOPA933Zl7lKLk5yTvg=="
+        telNo="027810740"
+        loginDenied="false" 
+        role="admin"
+        showDefaultDashboard="true"
+        supplier="대성에너지"/>
+    
+    <system.Dashboard descr="메인 보드" name="메인" orderNo="0" role="admin"/>
+    <system.Dashboard descr="시스템 보드" name="시스템" orderNo="1" role="admin"/>
+    <system.Dashboard descr="검침데이타 보드" name="검침데이터관리" orderNo="2" role="admin"/>
+    <system.Dashboard descr="장비 관리 보드" name="장비관리" orderNo="3" role="admin"/>
+    <system.Dashboard descr="알람 이벤트 보드" name="장애 이력" orderNo="4" role="admin"/>
+    
+    <system.Gadget
+        descr="코드 관리 (코드 조회추가삭제변경)"
+        iconSrc="assets/images/gadget_ko/code.gif"
+        maxUrl="system/code_manager_max.do"
+        miniUrl="system/code_manager_mini.do"
+        name="코드관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system001"
+    />
+    <system.Gadget
+        descr="장비 제조사 모델 관리"
+        iconSrc="assets/images/gadget_ko/vendormodel.gif"
+        maxUrl="system/devicemodelMax.do"
+        miniUrl="system/devicemodelMini.do"
+        name="제조사 모델 관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system002"
+    />
+    <system.Gadget
+        descr="공급사 관리"
+        iconSrc="assets/images/gadget_ko/supplier.gif"
+        maxUrl="system/supplier/supplierMgmtMax.do"
+        miniUrl="system/supplier/supplierMgmtMini.do"
+        name="공급사관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system003"
+    />
+    <system.Gadget
+        descr="사용자 그룹 및 사용자 관리"
+        iconSrc="assets/images/gadget_ko/user.gif"
+        maxUrl="system/operatorMgmtMax.do"
+        miniUrl="system/operatorMgmtMini.do"
+        name="사용자관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system004"
+    />
+    <system.Gadget
+        descr="변경로그 가젯"
+        iconSrc="assets/images/gadget_ko/thumbnail.gif"
+        maxUrl="device/changeLogMaxGadget.do"
+        miniUrl="device/changeLogMiniGadget.do"
+        name="변경 로그"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system007"
+    />
+    <system.Gadget
+        descr="명령 이력 관리 가젯"
+        iconSrc="assets/images/gadget_ko/operation.gif"
+        maxUrl="device/operationLog/operationLogMaxGadget.do"
+        miniUrl="device/operationLog/operationLogMiniGadget.do"
+        name="명령 이력 및 설정"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system008"
+    />
+    <system.Gadget
+        descr="계약 관리 가젯"
+        iconSrc="assets/images/gadget_ko/customer.gif"
+        maxUrl="system/customerMax.do"
+        miniUrl="system/customerMini.do"
+        name="계약관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system010"
+    />
+    <system.Gadget
+        descr="리포트"
+	    iconSrc="assets/images/gadget_ko/myReport.gif"
+	    maxUrl="system/reportMgmtMax.do"
+	    miniUrl="system/reportMgmtMini.do"
+	    name="리포트"
+	    miniHeight="500"
+	    fullHieght="1000"   
+	    gadgetCode="gadget.system011"   
+    />
+    <system.Gadget
+        descr="검침데이터 관리"
+        iconSrc="assets/images/gadget_ko/meteringdata.gif"
+        maxUrl="mvm/mvmMaxGadgetEM.do"
+        miniUrl="mvm/mvmMiniGadgetEM.do"
+        name="검침데이터 조회"
+        miniHeight="350"
+        fullHeight="1200"
+        gadgetCode="gadget.metering001.electricity"
+    />  
+    <system.Gadget
+        descr="검침 실패 가젯"
+        iconSrc="assets/images/gadget_ko/meteringfail.gif"
+        maxUrl="mvm/meteringFailureEmMaxGadget.do"
+        miniUrl="mvm/meteringFailureEmMiniGadget.do"
+        name="검침실패 조회"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering005"
+    />  
+    <system.Gadget
+        descr="LP 통계"
+        iconSrc="assets/images/gadget_ko/datagaps.gif"
+        maxUrl="mvm/dataGapsEmMaxGadget.do"
+        miniUrl="mvm/dataGapsEmMiniGadget.do"
+        name="LP 통계"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.metering008.electricity"
+    />
+    <system.Gadget
+        descr="수요 관리 최대 부하 관리"
+        iconSrc="assets/images/gadget_ko/demand.gif"
+        maxUrl="mvm/demandManagementMax.do"
+        miniUrl="mvm/demandManagementMini.do"
+        name="수요 관리"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.metering020"
+    />
+    <system.Gadget
+        descr="집중기 목록 상세정보 관리"
+        iconSrc="assets/images/gadget_ko/mcu.gif"
+        maxUrl="device/mcuMaxGadget.do"
+        miniUrl="device/mcuMiniGadget.do"
+        name="집중기관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.device001"
+    />
+    <system.Gadget
+        descr="미터관리"
+        iconSrc="assets/images/gadget_ko/meter.gif"
+        maxUrl="device/meterMaxGadget.do"
+        miniUrl="device/meterMiniGadget.do"
+        name="미터관리"
+        miniHeight="350"
+        fullHeight="1600"
+        gadgetCode="gadget.device003"
+    />
+    <system.Gadget
+        descr="모뎀관리"
+        iconSrc="assets/images/gadget_ko/modem.gif"
+        maxUrl="device/modemMaxGadget.do"
+        miniUrl="device/modemMiniGadget.do"
+        name="모뎀관리"
+        miniHeight="350"
+        fullHeight="1600"
+        gadgetCode="gadget.device002"
+    />  
+    <system.Gadget
+        descr="자산 등록(미터, 모뎀등의 장비 정보와 고객 정보 등록)"
+        iconSrc="assets/images/gadget_ko/devicereg.gif"
+        maxUrl="device/deviceRegistrationMaxGadget.do"
+        miniUrl="device/deviceRegistrationMiniGadget.do"
+        name="자산등록"
+        miniHeight="350"
+        fullHeight="700"
+        gadgetCode="gadget.device004"
+    /> 
+    <system.Gadget
+        descr="태스크 관리"
+        iconSrc="assets/images/gadget_ko/vee.gif"
+        maxUrl="system/schedule/scheduleManagementMaxGadget.do"
+        miniUrl="system/schedule/scheduleManagementMiniGadget.do"
+        name="태스크 관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system201"
+    />
+    <system.Gadget
+        descr="전기 검침데이터 유효성 체크 , 검침데이터 예측 , 검침데이터 수정 등의 관리"
+        iconSrc="assets/images/gadget_ko/vee.gif"
+        maxUrl="mvm/VEEManagementEmMaxGadget.do"
+        miniUrl="mvm/VEEManagementEmMiniGadget.do"
+        name="검침값 유효성 관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering023.electricity"
+    />
+    <system.Gadget
+        descr="현재, 일별, 월별  TOU Data"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="mvm/mvmReportMaxGadget.do"
+        miniUrl="mvm/mvmReportMiniGadget.do"
+        name="TOU 데이터 조회"
+        miniHeight="500"
+        fullHieght="1000"   
+        gadgetCode="gadget.metering025" 
+    />
+    <system.Gadget
+        descr="이벤트 알람 가젯"
+        iconSrc="assets/images/gadget_ko/event.gif"
+        maxUrl="device/eventAlert/eventAlertLogMax.do"
+        miniUrl="device/eventAlert/eventAlertLogMini.do"
+        name="이벤트 알람 로그"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.device005"
+    />
+    <system.Gadget
+        descr="통신장비의 통신 로그 (송/송수신) "
+        iconSrc="assets/images/gadget_ko/commlog.gif"
+        maxUrl="device/commLog/commLogMaxGadget.do"
+        miniUrl="device/commLog/commLogMiniGadget.do"
+        name="통신 로그"
+        miniHeight="350"
+        fullHeight="1600"
+        gadgetCode="gadget.device006"
+    />
+    <system.Gadget
+        descr="미터 시간 관리"
+        iconSrc="assets/images/gadget_ko/meteringtime.gif"
+        maxUrl="device/meterTimeMaxGadget.do"
+        miniUrl="device/meterTimeMiniGadget.do"
+        name="미터 시간 관리"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device007"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="메인"
+        gadget="검침데이터 조회"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="메인"
+        gadget="LP 통계"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="메인"
+        gadget="태스크 관리"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="메인"
+        gadget="통신 로그"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="메인"
+        gadget="미터 시간 관리"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="검침데이터관리"
+        gadget="검침데이터  조회"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="검침데이터관리"
+        gadget="검침실패  조회"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="검침데이터관리"
+        gadget="LP 통계"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="검침데이터관리"
+        gadget="검침값 유효성 관리"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="검침데이터관리"
+        gadget="TOU 데이터 조회"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="검침데이터관리"
+        gadget="수요 관리"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="시스템"
+        gadget="공급사관리"
+    />
+        <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="시스템"
+        gadget="사용자관리"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="시스템"
+        gadget="코드관리"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="시스템"
+        gadget="제조사 모델 관리"
+    />
+    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="장비관리"
+        gadget="집중기관리"
+    />    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="장비관리"
+        gadget="모뎀관리"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="장비관리"
+        gadget="미터관리"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="장비관리"
+        gadget="자산등록"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="장비관리"
+        gadget="계약관리"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="장애 이력"
+        gadget="변경 로그"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="장애 이력"
+        gadget="명령 이력 및 설정"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="장애 이력"
+        gadget="이벤트 알람 로그"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="장애 이력"
+        gadget="통신 로그"
+    />
+    
+    <!-- 이력 관리 대시보드 끝-->    
+    
+    <system.GadgetRole
+        gadget="코드관리"
+        role="admin"
+        supplier="대성에너지"
+    />
+    <system.GadgetRole
+        gadget="제조사 모델 관리"
+        role="admin"
+        supplier="대성에너지"
+    /> 
+    <system.GadgetRole
+        gadget="공급사관리"
+        role="admin"
+        supplier="대성에너지"
+    />    
+    <system.GadgetRole
+        gadget="사용자관리"
+        role="admin"
+        supplier="대성에너지"
+    /> 
+    <system.GadgetRole
+        gadget="변경 로그"
+        role="admin"
+        supplier="대성에너지"
+    /> 
+    <system.GadgetRole
+        gadget="명령 이력 및 설정"
+        role="admin"
+        supplier="대성에너지"
+    />       
+    <system.GadgetRole
+        gadget="계약관리"
+        role="admin"
+        supplier="대성에너지"
+    />
+    <system.GadgetRole
+        gadget="리포트"
+        role="admin"
+        supplier="대성에너지"
+    />
+    <system.GadgetRole
+        gadget="검침데이터 조회"
+        role="admin"
+        supplier="대성에너지"
+    />
+    <system.GadgetRole
+        gadget="검침실패 조회"
+        role="admin"
+        supplier="대성에너지"
+    />
+    <system.GadgetRole
+        gadget="검침데이터 누락"
+        role="admin"
+        supplier="대성에너지"
+    /> 
+    <system.GadgetRole
+        gadget="TOU 데이터 조회"
+        role="admin"
+        supplier="대성에너지"
+    />
+    <system.GadgetRole
+        gadget="수요 관리"
+        role="admin"
+        supplier="대성에너지"
+    />
+    <system.GadgetRole
+       gadget="집중기관리"
+       role="admin"
+       supplier="대성에너지"
+    />
+    <system.GadgetRole
+       gadget="미터관리"
+       role="admin"
+       supplier="대성에너지"
+    />
+    <system.GadgetRole
+       gadget="모뎀관리"
+       role="admin"
+       supplier="대성에너지"
+    />
+    <system.GadgetRole
+       gadget="자산등록"
+       role="admin"
+       supplier="대성에너지"
+    />
+    <system.GadgetRole
+       gadget="태스크 관리"
+       role="admin"
+       supplier="대성에너지"
+    />
+    <system.GadgetRole
+       gadget="검침값 유효성 관리"
+       role="admin"
+       supplier="대성에너지"
+    />
+    <system.GadgetRole
+       gadget="이벤트 알람 로그"
+       role="admin"
+       supplier="대성에너지"
+    />
+    <system.GadgetRole
+       gadget="통신 로그"
+       role="admin"
+       supplier="대성에너지"
+    />
+    <system.GadgetRole
+       gadget="미터 시간 관리"
+       role="admin"
+       supplier="대성에너지"
+    />
+    <system.DeviceVendor 
+        supplier="대성에너지"
+        name="누리텔레콤"
+        code="100"
+        address="서울시 서초구 방배동 750-14(사평대로 16) 누리빌딩 137-060 Tel : +82.2.781.0770"
+        descr="Nuri Telecom Co.,Ltd."
+    />
+    <system.DeviceVendor 
+        supplier="대성에너지"
+        name="남전사"
+        code="31"
+        address="http://www.namjeon.co.kr/default/"
+        descr="(주)남전사"
+    />
+    
+    <system.DeviceModel 
+        deviceVendor="남전사"
+        code="1"
+        deviceType="1.3.1.1"
+        name="NJC 130820A"
+    />
+    
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="NJC 130820A"   level="2"   desc="On Demand Metering"  paramType="1"/>
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="NJC 130820A"    level="2"   desc="Meter Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="NJC 130820A"    level="2"   desc="Remote Control" />
+    
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="3p3w"
+        name="NJC 130820A"
+        deviceModel="NJC 130820A"
+        parserName="com.aimir.fep.meter.parser.DLMSGtype"
+        saverName="com.aimir.fep.meter.saver.DLMSGtypeMDSaver"
+    />
+    
+    <mvm.DisplayChannel name="Active Energy"        localName="유효전력량"        serviceType="Electricity" unit="kWh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Lag Reactive Energy"        localName="지상무효전력량"        serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Lead Reactive Energy"        localName="진상무효전력량"        serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Apparent Energy"        localName="피상전력량"        serviceType="Electricity" unit="kVA" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Cumm Active Energy"        localName="누적유효전력량"        serviceType="Electricity" unit="kWh" chMethod="MAX"/>
+    <mvm.DisplayChannel name="Cumm Lag Reactive Energy"        localName="누적지상무효전력량"        serviceType="Electricity" unit="kVarh" chMethod="MAX"/>
+    <mvm.DisplayChannel name="Cumm Lead Reactive Energy"        localName="누적진상무효전력량"        serviceType="Electricity" unit="kVarh" chMethod="MAX"/>
+    <mvm.DisplayChannel name="Cumm Apparent Energy"        localName="누적피상전력량"        serviceType="Electricity" unit="kVA" chMethod="MAX"/>
+    <mvm.DisplayChannel name="Lag Power Factor"        localName="지상역률"        serviceType="Electricity" unit="0~1" chMethod="AVG"/>
+    <mvm.DisplayChannel name="Lead Power Factor"        localName="진상역률"        serviceType="Electricity" unit="0~1" chMethod="AVG"/>
+    <mvm.DisplayChannel name="Power Factor"        localName="역률"        serviceType="Electricity" unit="0~1" chMethod="AVG"/>
+    <mvm.DisplayChannel name="Export Active Energy"        localName="역방향 유효전력량"        serviceType="Electricity" unit="kWh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Export Cumm Active Energy"        localName="역방향 누적유효전력량"        serviceType="Electricity" unit="kWh" chMethod="MAX"/>
+    
+    <mvm.ChannelConfig meterConfig="NJC 130820A" channel="Active Energy" channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130820A" channel="Cumm Active Energy" channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130820A" channel="Cumm Lag Reactive Energy" channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130820A" channel="Cumm Lead Reactive Energy" channelIndex="4"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130820A" channel="Cumm Apparent Energy" channelIndex="5"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130820A" channel="Lag Power Factor" channelIndex="6"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130820A" channel="Lead Power Factor" channelIndex="7"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130820A" channel="Power Factor" channelIndex="8"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130820A" channel="Lag Reactive Energy" channelIndex="9"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130820A" channel="Lead Reactive Energy" channelIndex="10"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130820A" channel="Apparent Energy" channelIndex="11"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130820A" channel="Export Active Energy" channelIndex="12"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130820A" channel="Export Cumm Active Energy" channelIndex="13"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    
+    <system.DeviceModel 
+        deviceVendor="남전사"
+        code="1"
+        deviceType="1.3.1.1"
+        name="NJC 130821A"
+    />
+    
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="NJC 130821A"   level="2"   desc="On Demand Metering" paramType="1"/>
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="NJC 130821A"    level="2"   desc="Meter Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="NJC 130821A"    level="2"   desc="Remote Control" />
+    
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="3p3w"
+        name="NJC 130821A"
+        deviceModel="NJC 130821A"
+        parserName="com.aimir.fep.meter.parser.DLMSGtype"
+        saverName="com.aimir.fep.meter.saver.DLMSGtypeMDSaver"
+    />
+    
+    <mvm.ChannelConfig meterConfig="NJC 130821A" channel="Active Energy" channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130821A" channel="Cumm Active Energy" channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130821A" channel="Cumm Lag Reactive Energy" channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130821A" channel="Cumm Lead Reactive Energy" channelIndex="4"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130821A" channel="Cumm Apparent Energy" channelIndex="5"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130821A" channel="Lag Power Factor" channelIndex="6"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130821A" channel="Lead Power Factor" channelIndex="7"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130821A" channel="Power Factor" channelIndex="8"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130821A" channel="Lag Reactive Energy" channelIndex="9"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130821A" channel="Lead Reactive Energy" channelIndex="10"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130821A" channel="Apparent Energy" channelIndex="11"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130821A" channel="Export Active Energy" channelIndex="12"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130821A" channel="Export Cumm Active Energy" channelIndex="13"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    
+    <system.DeviceModel 
+        deviceVendor="남전사"
+        code="1"
+        deviceType="1.3.1.1"
+        name="NJC Meter DLMSUA"
+        image="uploadImg/meter/NJC.jpg"
+    />
+    
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="3p4w"
+        pulseConst="5000"
+        name="NJC Meter DLMSUA"
+        deviceModel="NJC Meter DLMSUAr"
+        parserName="com.aimir.fep.meter.parser.DLMS"
+        saverName="com.aimir.fep.meter.saver.DLMSMDSaver"
+    />
+    
+    <mvm.ChannelConfig meterConfig="NJC Meter DLMSUA" channel="Active Energy" channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC Meter DLMSUA" channel="Lag Reactive Energy" channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC Meter DLMSUA" channel="Lead Reactive Energy" channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC Meter DLMSUA" channel="Apparent Energy" channelIndex="4"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    
+    <system.DeviceModel 
+        deviceVendor="누리텔레콤"
+        code="4"
+        deviceType="1.1.1.3"
+        name="NZC I211"
+        image="uploadImg/mcu/NZC-I212.jpg"
+    />
+    
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.1"   model="NZC I211"    level="2"   desc="Status Monitoring" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.2"   model="NZC I211"    level="2"   desc="Unit Scanning" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.3"   model="NZC I211"    level="2"   desc="Self Dignosis" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.8"   model="NZC I211"    level="2"   desc="Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.10"  model="NZC I211"    level="2"   desc="Reset" />
+    
+    <system.DeviceModel 
+        deviceVendor="누리텔레콤"
+        code="5"
+        deviceType="1.1.1.4"
+        name="NZC O312"
+    />
+    
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.1"   model="NZC O312"    level="2"   desc="Status Monitoring" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.2"   model="NZC O312"    level="2"   desc="Unit Scanning" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.3"   model="NZC O312"    level="2"   desc="Self Dignosis" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.8"   model="NZC O312"    level="2"   desc="Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.10"  model="NZC O312"    level="2"   desc="Reset" />
+    
+    <system.DeviceModel 
+        deviceVendor="누리텔레콤"
+        code="4"
+        deviceType="1.2.1.1"
+        name="NAMR-P115R"
+    />
+    
+    <system.ModemConfig 
+        name="NAMR-P115R"
+        deviceModel="NAMR-P115R"
+    />
+    
+    <system.DeviceModel 
+        deviceVendor="누리텔레콤"
+        code="98"
+        deviceType="1.2.1.98"
+        name="NZR-I121RE"
+    />
+    
+    <system.ModemConfig 
+        name="NZR-I121RE"
+        parserName="com.aimir.fep.meter.parser.ZBRepeater"
+        saverName="com.aimir.fep.meter.saver.ZBRepeaterMDSaver"
+        deviceModel="NZR-I121RE"
+    />
+    
+    <mvm.Season
+        smonth="03"
+        sday="01"
+        emonth="05"
+        eday="31"
+        name="봄"
+    />
+    <mvm.Season
+        smonth="06"
+        sday="01"
+        emonth="08"
+        eday="31"
+        name="여름"
+    />
+    <mvm.Season
+        smonth="09"
+        sday="01"
+        emonth="10"
+        eday="31"
+        name="가을"
+    />
+    <mvm.Season
+        smonth="11"
+        sday="01"
+        emonth="02"
+        eday="29"
+        name="겨울"
+    />
+    
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='OTA'
+        descr='OTA Step' 
+        msgPattern='$(event.eventAttrs.otaStep) $(event.eventAttrs.message)' 
+        troubleAdvice='' 
+        oid='214.1.0,214.2.0,214.3.0,214.4.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+        severity='Warning' 
+        name='Communication Alarm' 
+        descr='Communcation Failure or Restore' 
+        msgPattern='통신 경고' 
+        troubleAdvice='네트워크 점검' 
+        oid='205.1.0,205.20,205.3.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='MCU Mobile Connect' 
+        descr='MCU Mobile Connect' 
+        msgPattern='' 
+        troubleAdvice='' 
+        oid='202.4.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Reset' 
+        descr='Reset' 
+        msgPattern='리셋' 
+        troubleAdvice='' 
+        oid='200.20.0,203.9.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+        severity='Major' 
+        name='Battery Alarm' 
+        descr='Battery Low or Restore, Battery Charging Start or End.' 
+        msgPattern='$(event.eventAttrs.message)' 
+        troubleAdvice='' 
+        oid='200.16.0,200.17.0,200.23.0,200.24.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Equipment Installation' 
+        descr='Equipment installation' 
+        msgPattern='장비 설치' 
+        troubleAdvice='' 
+        oid='200.1.0,203.8.0,201.1.0,203.105.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Equipment De-Installation' 
+        descr='Equipment information deleted from System' 
+        msgPattern='장비 제거' 
+        troubleAdvice='' 
+        oid='200.2.0,201.2.0,203.106.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Equipment Startup' 
+        descr='Equipment Startup' 
+        msgPattern='시작' 
+        troubleAdvice='' 
+        oid='200.3.0,201.3.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Equipment ShutDown' 
+        descr='Equipment ShutDown' 
+        msgPattern='셧다운' 
+        troubleAdvice='' 
+        oid='200.4.0,201.4.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='MCU OAM' 
+        descr='User LoginOut MCU(OAM-PC)' 
+        msgPattern='Mcu Oam $(event.eventAttrs.logState) Operator[$(event.eventAttrs.usrAccount)] OperatorIP[$(event.eventAttrs.ip)]' 
+        troubleAdvice='' 
+        oid='200.11.0,200.12.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+        severity='Major' 
+        name='Power Alarm' 
+        descr='Power Failure, Restore or Massive and Line Missing or Restore' 
+        msgPattern='전원 경고' 
+        troubleAdvice='' 
+        oid='200.14.0,200.15.0,203.107.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Factory Default Setting' 
+        descr='Factory default Configuration Changed' 
+        msgPattern='' 
+        troubleAdvice='' 
+        oid='200.21.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Invalid Equipment' 
+        descr='invalid meter' 
+        msgPattern='미식별 장비' 
+        troubleAdvice='' 
+        oid='' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Equipment Registration' 
+        descr='equipment is created automatically or installed.' 
+        msgPattern='장비 등록' 
+        troubleAdvice='' 
+        oid='' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Equipment Replacement' 
+        descr='It just does in metering action to replace meter with other meter' 
+        msgPattern='장비 교체' 
+        troubleAdvice='' 
+        oid='' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Equipment Self-Test' 
+        descr='Equipment Selft Test Event' 
+        msgPattern='자가 테스트' 
+        troubleAdvice='' 
+        oid='200.105.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Equipment Notification' 
+        descr='Equipment Notification, Information, Waring or etc..' 
+        msgPattern='' 
+        troubleAdvice='' 
+        oid='203.10.0,212.1.0,200.29.0,210.1.0,203.100.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Attachment or Detachment' 
+        descr='Attachment or Detachment' 
+        msgPattern='$(event.eventAttrs.message)' 
+        troubleAdvice='' 
+        oid='203.1.0,203.2.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+        severity='Warning' 
+        name='EnergyLevelChanged' 
+        descr='Energy Level of Meter is changed' 
+        msgPattern='$(event.eventAttrs.message)' 
+        troubleAdvice='' 
+        oid='203.109.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+        
+   <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.0"
+        value="0"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="과전류"
+        descr="과전류"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+   <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.3"
+        value="3"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="Meter Cover"
+        descr="Meter Cover"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+   <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.4"
+        value="4"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="Terminal Cover"
+        descr="Terminal Cover"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+   <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.5"
+        value="5"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="Latch_ON"
+        descr="Latch_ON"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+   <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.6"
+        value="6"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="Latch_OFF"
+        descr="Latch_OFF"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+   <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.7"
+        value="7"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="Latch_Error"
+        descr="Latch_Error"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+   <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.8"
+        value="8"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="Sag"
+        descr="Saq"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+   <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.108"
+        value="108"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="Swell"
+        descr="Swell"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+   <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.9"
+        value="9"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="오결선"
+        descr="오결선"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+   <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.10"
+        value="10"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="온도"
+        descr="온도"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.11"
+        value="11"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="DST"
+        descr="DST"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.12"
+        value="12"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="자계감지"
+        descr="자계감지"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.13"
+        value="13"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="전류제한차단"
+        descr="전류제한차단"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.113"
+        value="113"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="전류제한차단해제"
+        descr="전류제한차단해제"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.16"
+        value="16"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="SR"
+        descr="SR"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.17"
+        value="17"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="정전"
+        descr="정전"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.117"
+        value="117"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="복전"
+        descr="복전"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.18"
+        value="18"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="시각변경전"
+        descr="시각변경전"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.118"
+        value="118"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="시각변경후"
+        descr="시각변경후"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.19"
+        value="19"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="수동검침"
+        descr="수동검침"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.20"
+        value="20"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="DR"
+        descr="DR"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.21"
+        value="21"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="배터리없음"
+        descr="배터리없음"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.22"
+        value="22"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="전압결상"
+        descr="전압결상"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.23"
+        value="23"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="프로그램변경"
+        descr="프로그램변경"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+   <device.MeterEvent 
+        id="STE.남전사.NJC 130820A.25"
+        value="25"
+        vendor="남전사" 
+        model="NJC 130820A"  
+        kind="STE"  
+        name="원격부하개폐"
+        descr="원격부하개폐"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />  
+   <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.0"
+        value="0"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="과전류"
+        descr="과전류"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+   <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.3"
+        value="3"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="Meter Cover"
+        descr="Meter Cover"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+   <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.4"
+        value="4"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="Terminal Cover"
+        descr="Terminal Cover"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+   <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.5"
+        value="5"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="Latch_ON"
+        descr="Latch_ON"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+   <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.6"
+        value="6"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="Latch_OFF"
+        descr="Latch_OFF"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+   <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.7"
+        value="7"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="Latch_Error"
+        descr="Latch_Error"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+   <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.8"
+        value="8"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="Sag"
+        descr="Saq"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+   <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.108"
+        value="108"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="Swell"
+        descr="Swell"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+   <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.9"
+        value="9"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="오결선"
+        descr="오결선"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+   <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.10"
+        value="10"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="온도"
+        descr="온도"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.11"
+        value="11"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="DST"
+        descr="DST"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.12"
+        value="12"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="자계감지"
+        descr="자계감지"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.13"
+        value="13"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="전류제한차단"
+        descr="전류제한차단"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.113"
+        value="113"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="전류제한차단해제"
+        descr="전류제한차단해제"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.16"
+        value="16"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="SR"
+        descr="SR"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.17"
+        value="17"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="정전"
+        descr="정전"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.117"
+        value="117"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="복전"
+        descr="복전"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.18"
+        value="18"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="시각변경"
+        descr="시각변경"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.118"
+        value="118"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="시각변경후"
+        descr="시각변경후"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.19"
+        value="19"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="수동검침"
+        descr="수동검침"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.20"
+        value="20"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="DR"
+        descr="DR"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.21"
+        value="21"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="배터리없음"
+        descr="배터리없음"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.22"
+        value="22"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="전압결상"
+        descr="전압결상"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.23"
+        value="23"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="프로그램변경"
+        descr="프로그램변경"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+    <device.MeterEvent 
+        id="STE.남전사.NJC 130821A.25"
+        value="25"
+        vendor="남전사" 
+        model="NJC 130821A"  
+        kind="STE"  
+        name="원격부하개폐"
+        descr="원격부하개폐"
+        troubleAdvice=""
+        support="true"
+        meterType="EnergyMeter"
+        />
+        
+    <!-- 가로등(을) -->
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="OFF_PEAK" season="봄" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="봄" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="봄" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="OFF_PEAK" season="여름" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="여름" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="여름" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="OFF_PEAK" season="가을" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="가을" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="가을" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="OFF_PEAK" season="겨울" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="12" endHour="17" />
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="20" endHour="22" />
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="17" endHour="20" />
+    <system.TariffEM tariffType="가로등(을)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="22" endHour="23" />
+    
+    <!-- 일반용 저압  -->
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="OFF_PEAK" season="봄" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="봄" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="봄" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="OFF_PEAK" season="여름" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="여름" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="여름" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="OFF_PEAK" season="가을" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="가을" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="가을" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="OFF_PEAK" season="겨울" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="12" endHour="17" />
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="20" endHour="22" />
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="17" endHour="20" />
+    <system.TariffEM tariffType="일반용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="22" endHour="23" />
+    
+    <!-- 주택용 저압  -->
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="OFF_PEAK" season="봄" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="봄" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="봄" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="OFF_PEAK" season="여름" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="여름" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="여름" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="OFF_PEAK" season="가을" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="가을" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="가을" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="OFF_PEAK" season="겨울" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="12" endHour="17" />
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="20" endHour="22" />
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="17" endHour="20" />
+    <system.TariffEM tariffType="주택용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="22" endHour="23" />
+    
+    <!-- 교육용저압  -->
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="OFF_PEAK" season="봄" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="봄" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="봄" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="OFF_PEAK" season="여름" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="여름" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="여름" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="OFF_PEAK" season="가을" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="가을" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="가을" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="OFF_PEAK" season="겨울" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="12" endHour="17" />
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="20" endHour="22" />
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="17" endHour="20" />
+    <system.TariffEM tariffType="교육용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="22" endHour="23" />
+    
+    <!-- 산업용저압  -->
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="OFF_PEAK" season="봄" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="봄" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="봄" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="OFF_PEAK" season="여름" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="여름" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="여름" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="OFF_PEAK" season="가을" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="가을" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="가을" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="OFF_PEAK" season="겨울" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="12" endHour="17" />
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="20" endHour="22" />
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="17" endHour="20" />
+    <system.TariffEM tariffType="산업용저압" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="22" endHour="23" />
+    
+    <!-- 심야전력(갑)  -->
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="OFF_PEAK" season="봄" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="봄" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="봄" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="OFF_PEAK" season="여름" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="여름" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="여름" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="OFF_PEAK" season="가을" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="가을" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="가을" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="OFF_PEAK" season="겨울" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="12" endHour="17" />
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="20" endHour="22" />
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="17" endHour="20" />
+    <system.TariffEM tariffType="심야전력(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="22" endHour="23" />
+    
+    <!-- 임시전력(갑)  -->
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="OFF_PEAK" season="봄" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="봄" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="봄" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="OFF_PEAK" season="여름" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="여름" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="여름" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="OFF_PEAK" season="가을" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="가을" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="가을" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="OFF_PEAK" season="겨울" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="12" endHour="17" />
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="20" endHour="22" />
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="17" endHour="20" />
+    <system.TariffEM tariffType="임시전력(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="22" endHour="23" />
+    
+    <!-- 임시전력(을)  -->
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="OFF_PEAK" season="봄" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="봄" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="봄" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="OFF_PEAK" season="여름" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="여름" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="여름" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="OFF_PEAK" season="가을" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="가을" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="가을" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="OFF_PEAK" season="겨울" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="12" endHour="17" />
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="20" endHour="22" />
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="17" endHour="20" />
+    <system.TariffEM tariffType="임시전력(을)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="22" endHour="23" />
+    
+    <!-- 가로등(갑)  -->
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="OFF_PEAK" season="봄" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="PEAK" season="봄" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="봄" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="봄" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="OFF_PEAK" season="여름" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="PEAK" season="여름" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="여름" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="여름" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="OFF_PEAK" season="가을" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="12" endHour="13" />
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="PEAK" season="가을" startHour="17" endHour="23" />
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="가을" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="가을" startHour="13" endHour="17" />
+    
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="OFF_PEAK" season="겨울" startHour="23" endHour="09" />
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="09" endHour="10" />
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="12" endHour="17" />
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="PEAK" season="겨울" startHour="20" endHour="22" />
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="10" endHour="12" />
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="17" endHour="20" />
+    <system.TariffEM tariffType="가로등(갑)" yyyymmdd='20131121' peakType="CRITICAL_PEAK" season="겨울" startHour="22" endHour="23" />
+    
+    <mvm.VEEParameter 
+                    ruleType="Validation"
+                    parameter="NegativeConsumption"
+                    localName="마이너스 사용량" 
+                    useThreshold="false"  
+                    item="Day"  
+                    condition="value_00&lt;0 or value_01&lt;0 or value_02&lt;0 or value_03&lt;0 or value_04&lt;0 or value_05&lt;0 or value_06&lt;0 or value_07&lt;0 or value_08&lt;0 or value_09&lt;0 or value_10&lt;0 or value_11&lt;0 or value_12&lt;0 or value_13&lt;0 or value_14&lt;0 or value_15&lt;0 or value_16&lt;0 or value_17&lt;0 or value_18&lt;0 or value_19&lt;0 or value_20&lt;0 or value_21&lt;0 or value_22&lt;0 or value_23&lt;0 "  
+                    />
+    <mvm.VEEParameter 
+                    ruleType="Validation" 
+                    parameter="ZeroConsumption"
+                    localName="0 사용량" 
+                    useThreshold="false"  
+                    condition="value_00=0 or value_01=0 or value_02=0 or value_03=0 or value_04=0 or value_05=0 or value_06=0 or value_07=0 or value_08=0 or value_09=0 or value_10=0 or value_11=0 or value_12=0 or value_13=0 or value_14=0 or value_15=0 or value_16=0 or value_17=0 or value_18=0 or value_19=0 or value_20=0 or value_21=0 or value_22=0 or value_23=0"  
+                    item="Day"  
+                    />
+                                        
+    <mvm.VEEParameter 
+                    ruleType="Validation" 
+                    parameter="DataGaps"
+                    localName="주기데이타 빠짐" 
+                    useThreshold="false"  
+                    condition="value_00=null or value_01=null or value_02=null or value_03=null or value_04=null or value_05=null or value_06=null or value_07=null or value_08=null or value_09=null or value_10=null or value_11=null or value_12=null or value_13=null or value_14=null or value_15=null or value_16=null or value_17=null or value_18=null or value_19=null or value_20=null or value_21=null or value_22=null or value_23=null"  
+                    item="Day"  
+                    />
+    <mvm.VEEParameter   
+                    ruleType="Validation"
+                    parameter="AbnormalHighUsage"
+                    localName="비정상 높은 사용량" 
+                    useThreshold="true"  
+                    item="Day"  
+                    threshold1="50"
+                    thresholdCondition1="&gt;"
+                    threshold2="500"
+                    thresholdCondition2="&lt;"
+                    thresholdItem="Average"
+                    thresholdPeriod="LastMonth"
+                    />
+     <mvm.VEEParameter   
+                    ruleType="Validation"
+                    parameter="AbnormalLowUsage"
+                    localName="비정상 낮은 사용량" 
+                    useThreshold="true"  
+                    item="Day"  
+                    threshold1="50"
+                    thresholdCondition1="&gt;"
+                    threshold2="500"
+                    thresholdCondition2="&lt;"
+                    thresholdItem="Average"
+                    thresholdPeriod="LastMonth"
+                    />
+</dataset>

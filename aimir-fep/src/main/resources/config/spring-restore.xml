@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:int="http://www.springframework.org/schema/integration"
+  xmlns:int-kafka="http://www.springframework.org/schema/integration/kafka"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/integration
+        http://www.springframework.org/schema/integration/spring-integration.xsd
+        ">
+    
+    <import resource="classpath:config/spring.xml"/>
+    
+    <!-- Scans for @Repository, @Service -->
+    <context:component-scan base-package="com.aimir">
+        <!-- <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.fmp.processor.ProcessorHandler"/>-->
+        <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.smcp.SMCPHandler"/>
+        <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.smcp.SMCPProtocolProvider"/>
+        <context:exclude-filter type="regex" expression="com.aimir.fep.adapter.*Adapter"/>
+        <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.emnv.server.EMnVProtocolHandler"/>
+        <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.emnv.server.EMnVAdapter"/>
+        <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.fmp.server.*ProtocolHandler"/>
+        <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.fmp.server.*ProtocolProvider"/>
+        <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.fmp.server.*Adapter"/>
+        <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.nip.server.*AdapterBack"/>
+        <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.nip.server.*Handler"/>
+    </context:component-scan>
+  
+    
+  
+    <!--  Process  -->
+    <bean id="mdProcessor" class="com.aimir.fep.protocol.fmp.processor.MDProcessor"/>
+    <bean id="dfProcessor" class="com.aimir.fep.protocol.fmp.processor.DFProcessor"/>
+    <bean id="commLogProcessor" class="com.aimir.fep.protocol.fmp.processor.CommLogProcessor"/>
+    
+    <bean id="mdLogger" class="com.aimir.fep.protocol.fmp.log.MDLogger"  init-method="init">
+        <property name="logDirName" value="db/md"/>
+        <property name="backupDirName" value="db/md/backup"/>
+    </bean>
+
+    <bean id="commLogger" class="com.aimir.fep.protocol.fmp.log.CommLogger" init-method="init">
+        <property name="logDirName" value="db/comm"/>
+        <property name="backupDirName" value="db/comm/backup"/>
+    </bean>
+
+</beans>

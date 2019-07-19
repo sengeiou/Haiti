@@ -1,0 +1,9 @@
+wolfSSL JNI is used for D-TLS (NiUdpDtlsAdapter.java)
+1. install wolfssl-3.X.0 and wolfssl-jni-1.3.0 ( see wolfSSL-JNI-Manual.pdf)
+   
+2. use wolfssl-jni-1.3.0/lib/wolfssl.jar
+      and wolfssl-jni-1.3.0/lib/libwolfSSL.so 
+   ( copied to /aimir-fep/lib)
+
+!!!!! libwolfSSL.so is wrapper for  libwolfssl.so.
+ So, libwoflssl.so is required in run time. 

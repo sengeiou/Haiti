@@ -1,0 +1,22 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<project name="deploy" default="reload" basedir=".">
+    <property name="url"         value="http://localhost:8085/manager/text"/>
+	<property name="username"    value="aimir"/>
+	<property name="password"    value="aimiramm"/>
+	<property name="path"        value="/aimir-web"/>
+	
+	<taskdef name="reload"       classname="org.apache.catalina.ant.ReloadTask"/>
+	
+	<target name="deploy">
+		<copy tofile="${cargo.home}/webapps/${deploy.name}.war">
+			<fileset dir="target">
+				<include name="${final.name}.war"/>
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="reload" description="Reload web application">
+		<reload url="${url}" username="${username}" password="${password}" path="${path}" />
+	</target>
+
+</project>

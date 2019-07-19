@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+    <context:property-placeholder location="config/schedule.properties"/>
+
+    <!-- Configurer that replaces ${...} placeholders with values from a properties file -->
+    <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
+        <property name="driverClass" value="${jdbc.driverClassName}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="idleConnectionTestPeriodInMinutes" value="3"/>
+        <property name="idleMaxAgeInMinutes" value="5"/>
+        <property name="maxConnectionsPerPartition" value="6"/>
+        <property name="minConnectionsPerPartition" value="3"/>
+        <property name="partitionCount" value="1"/>
+        <property name="acquireIncrement" value="1"/>
+        <property name="statementsCacheSize" value="100"/>
+    </bean>
+
+    <!-- Annotation Support Hibernate Session Factory -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.bytecode.use_reflection_optimizer">true</prop>
+                <prop key="hibernate.use_sql_comments">false</prop>
+                <!--<prop key="hibernate.hbm2ddl.auto">create-drop</prop>-->
+                <!--<prop key="hibernate.hbm2ddl.auto">create</prop> -->
+                <prop key="hibernate.hbm2ddl.auto">false</prop>
+                <prop key="hibernate.connection.autocommit">false</prop>
+                <!--<prop key="hibernate.query.substitutions">Y</prop>-->
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_second_level_cache">org.hibernate.cache.EhCacheProvider</prop>
+                <!-- Turn batching off for better error messages under PostgreSQL>-->
+                <!--prop key="hibernate.jdbc.batch_size">0</prop-->
+                <!-- 0:none, 1:read_uncommitted, 2:read_committed, 4:repeatable_read, 8:serializable -->
+                <prop key="hibernate.connection.isolation">1</prop>
+                <prop key="hibernate.transaction.flush_before_completion">true</prop>
+                <prop key="hibernate.transaction.auto_close_session">false</prop>
+            </props>
+        </property>
+        <property name="packagesToScan" value="com.aimir.model.*"/>
+    </bean>
+
+    <!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="defaultTimeout" value="130"/>
+    </bean>
+    
+    <bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL">
+            <value>${activemq.broker.url}</value>
+        </property>
+    </bean>
+
+    <bean id="activeCachingConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <property name="targetConnectionFactory" ref="activeMQConnectionFactory"/>
+        <property name="reconnectOnException" value="true"/>
+    </bean>
+    
+    <bean id="activeJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory">
+            <ref local="activeCachingConnectionFactory"/>
+        </property>
+    </bean>
+    
+    <!-- Activates scanning of @Autowired -->            
+    <context:annotation-config/>
+
+    <!-- Scans for @Repository, @Service -->
+    <context:component-scan base-package="com.aimir">
+        <context:exclude-filter type="regex" expression="com\.aimir\.fep\.adapter.*"/>
+        <context:exclude-filter type="regex" expression="com\.aimir\.fep\.protocol\.fmp\.processor\.*Processor"/>
+        <context:exclude-filter type="regex" expression="com\.aimir\.fep\.command\.mbean\.CommandBO.*"/>
+        <context:exclude-filter type="regex" expression="com\.aimir\.fep\.integration.*"/>
+        <context:exclude-filter type="regex" expression="com\.aimir\.fep\.meter\.prepayment.*"/>
+        <context:exclude-filter type="regex" expression="com\.aimir\.fep\.trap\.action.*"/>
+        <context:exclude-filter type="regex" expression="com\.aimir\.fep\.util.*"/>
+    </context:component-scan>
+    
+    <!-- Enable @Transactional support -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <!-- Enable @AspectJ support -->
+    <aop:aspectj-autoproxy/>
+
+    <bean id="sessionContextFactory" class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
+        <property name="targetBeanName" value="sessionContext" />
+    </bean>
+</beans>

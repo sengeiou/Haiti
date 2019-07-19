@@ -1,0 +1,1468 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+    <!-- en/Language -->
+    <!-- en/Timezone -->
+    <!-- IRAQ_MOE_Code_en -->
+    
+    <system.Country 
+        name="Iraq"
+        code_2letter="IQ"
+        code_3letter="IRQ"
+        code_number="964"
+    />
+    
+    <system.Supplier 
+        name="MOE" 
+        country="Iraq"
+        lang="English"
+        timezone="Asia/Baghdad"
+        address="Baghdad"
+        descr="MOE"
+        telno=""
+        cd.pattern="###,###,###,###,##0.000"
+        cd.round="c"
+        md.pattern="###,###,###,###,##0.00"
+        md.round="r"
+        image="images/utility_logo/MOE_logo.jpg"
+    />
+    
+    <system.Co2Formula name="ElectricityCO2" supplyTypeCode="3.1" unitUsage="100" co2emissions="44.3" co2factor="0.443" unit="KWh"/>
+    <system.Co2Formula name="WaterCO2" supplyTypeCode="3.2" unitUsage="100" co2emissions="66" co2factor="0.66" unit="m3"/>
+    <system.Co2Formula name="GasCO2" supplyTypeCode="3.3" unitUsage="100" co2emissions="224" co2factor="2.24" unit="m3"/>
+    <system.Co2Formula name="HeatCO2" supplyTypeCode="3.4" unitUsage="100" co2emissions="42.4" co2factor="0.424" unit="㎥"/>
+    <system.Co2Formula name="VolumeCorrectorCO2" supplyTypeCode="3.5" unitUsage="100" co2emissions="1.0" co2factor="0.0" unit="㎥"/>
+    
+    <system.SupplyType
+        supplier="MOE"
+        typeCode="3.1"
+        co2Formula="ElectricityCO2"
+        billDate="1"
+    />
+    
+    <system.Location 
+        name="North"
+        orderNo="1"
+        parent=""
+        supplier="MOE"
+    />
+    <system.Location 
+        name="Middle"
+        orderNo="2"
+        parent=""
+        supplier="MOE"
+    />
+    <system.Location 
+        name="South"
+        orderNo="3"
+        parent=""
+        supplier="MOE"
+    />
+    
+       
+    <system.Role name="admin" 
+        supplier="MOE" 
+        systemAuthority="c" 
+        mtrAuthority="c" 
+        descr="Admin" 
+        hasDashboardAuth="true" 
+        customerRole="false" 
+        loginAuthority="true" />
+<!--        
+    <system.Role name="vendor" 
+        supplier="MOE" 
+        systemAuthority="r" 
+        mtrAuthority="r" 
+        descr="Vendor" 
+        hasDashboardAuth="true" 
+        customerRole="false" 
+        loginAuthority="true" />
+                
+    <system.Role name="customer" 
+        supplier="MOE" 
+        systemAuthority="r"
+        mtrAuthority="r" 
+        descr="Customer" 
+        hasDashboardAuth="true" 
+        customerRole="true" 
+        loginAuthority="true" />
+        
+    <system.Role name="Integration" 
+        supplier="MOE" 
+        systemAuthority="r"
+        mtrAuthority="r" 
+        descr="Integration" 
+        hasDashboardAuth="true" 
+        customerRole="true" 
+        loginAuthority="true" />
+-->        
+    <system.Operator loginId="admin" 
+        aliasName="administrator" 
+        email="admin@moe.com" 
+        failedLoginCount="0" 
+        name="MOE"
+        password="hQXOwYy2SzvjPduK5ESBqwwaCAFQWFdQtJAQuQiM57NZ1duCOKDjMaIsPBTSx6iU01eHOPA933Zl7lKLk5yTvg=="
+        telNo="027810740"
+        loginDenied="false" 
+        role="admin"
+        showDefaultDashboard="true"
+        supplier="MOE"/>
+    
+    <!-- for CMS: CMS_SE001/SE001 -->
+    <system.Operator loginId="CMS_SE001" 
+        aliasName="CMS_SE001" 
+        email="admin@moe.com" 
+        failedLoginCount="0" 
+        name="CMS_SE001"
+        password="BZPEPJZ685SyzCOJrc19AGbUJjKo93/nmsFCIKsG3oc6FqnneEhkI6jg2/wBO5It2EwjTn/HdhMmXZzB4AQDUg=="
+        telNo="027810740"
+        loginDenied="false" 
+        role="Integration"
+        showDefaultDashboard="true"
+        supplier="MOE"/>	    
+    
+    <system.Dashboard descr="Main Dashboard" name="Main" orderNo="0" role="admin"/>
+    <system.Dashboard descr="System Management Dashboard" name="System" orderNo="1" role="admin"/>
+    <system.Dashboard descr="Metering Management Dashboard" name="Metering" orderNo="2" role="admin"/>
+    <system.Dashboard descr="Device Management Dashboard" name="Device" orderNo="3" role="admin"/>
+    <system.Dashboard descr="Event and History Management Dashboard" name="Alarm Event" orderNo="4" role="admin"/>
+
+<!-- 	
+    <system.Gadget
+        descr="Code Management"
+        iconSrc="assets/images/gadget_en/code.gif"
+        maxUrl="system/code_manager_max.do"
+        miniUrl="system/code_manager_mini.do"
+        name="Code Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system001"
+    />
+ -->
+    <system.Gadget
+        descr="Metering Data(Electricity) (MOE)"
+        iconSrc="assets/images/gadget_en/meteringdata.gif"
+        maxUrl="mvm/mvmMaxGadgetEM_MOE.do"
+        miniUrl="mvm/mvmMiniGadgetEM_MOE.do"
+        name="Metering Data"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering001"
+    />          
+<!--     
+    <system.Gadget
+        descr="VEE (Metering Data Validation, Estimation, Editing)"
+        iconSrc="assets/images/gadget_en/vee.gif"
+        maxUrl="mvm/VEEManagementEmMaxGadget.do"
+        miniUrl="mvm/VEEManagementEmMiniGadget.do"
+        name="VEE Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering023"
+    />
+ -->      
+    <system.Gadget
+        descr="Device Vendor Model (MOE)"
+        iconSrc="assets/images/gadget_en/vendormodel.gif"
+        maxUrl="system/devicemodelMax_MOE.do"
+        miniUrl="system/devicemodelMini.do"
+        name="Device Vendor Model"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system002"
+    />  
+    <system.Gadget
+        descr="Supplier Management"
+        iconSrc="assets/images/gadget_en/supplier.gif"
+        maxUrl="system/supplier/supplierMgmtMax.do"
+        miniUrl="system/supplier/supplierMgmtMini.do"
+        name="Supplier Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system003"
+    />  
+    <system.Gadget
+        descr="User Management"
+        iconSrc="assets/images/gadget_en/user.gif"
+        maxUrl="system/operatorMgmtMax.do"
+        miniUrl="system/operatorMgmtMini.do"
+        name="User Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system004"
+    />    
+    <system.Gadget
+        descr="Concentrator Management (MOE)"
+        iconSrc="assets/images/gadget_en/mcu.gif"
+        maxUrl="device/mcuMaxGadget_MOE.do"
+        miniUrl="device/mcuMiniGadget_MOE.do"
+        name="Concentrator Management"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device001.moe"
+    />
+    <system.Gadget
+        descr="Communication Log"
+        iconSrc="assets/images/gadget_en/commlog.gif"
+        maxUrl="device/commLog/commLogMaxGadget.do"
+        miniUrl="device/commLog/commLogMiniGadget.do"
+        name="Communication Log"
+        miniHeight="350"
+        fullHeight="1600"
+        gadgetCode="gadget.device006"
+    />
+<!--     
+    <system.Gadget
+        descr="Notice"
+        iconSrc="assets/images/gadget_en/notice.gif"
+        maxUrl="system/noticeMax.do"
+        miniUrl="system/noticeMini.do"
+        name="Notice"
+        miniHeight="170"
+        fullHeight="800"
+        gadgetCode="gadget.system006"
+    />
+ -->    
+    <system.Gadget
+        descr="Change Log"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="system/changeLogMaxGadget.do"
+        miniUrl="system/changeLogMiniGadget.do"
+        name="Change Log"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system007"
+    />
+    <system.Gadget
+        descr="Operation Management"
+        iconSrc="assets/images/gadget_en/operation.gif"
+        maxUrl="device/operationLog/operationLogMaxGadget.do"
+        miniUrl="device/operationLog/operationLogMiniGadget.do"
+        name="Operation Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system008"
+    />
+    <system.Gadget
+        descr="Event and Alarm (MOE)"
+        iconSrc="assets/images/gadget_en/event.gif"
+        maxUrl="device/eventAlert/eventAlertLogMax_MOE.do"
+        miniUrl="device/eventAlert/eventAlertLogMini_MOE.do"
+        name="Event Alarm Log"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.device005.moe"
+    />    
+    <system.Gadget
+        descr="Metering Fail(Electricity)"
+        iconSrc="assets/images/gadget_en/meteringfail.gif"
+        maxUrl="mvm/meteringFailureEmMaxGadget.do"
+        miniUrl="mvm/meteringFailureEmMiniGadget.do"
+        name="Metering Fail"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering005"
+    />
+<!--     
+    <system.Gadget
+        descr="Customer and Contract"
+        iconSrc="assets/images/gadget_en/customer.gif"
+        maxUrl="system/customerMax.do"
+        miniUrl="system/customerMini.do"
+        name="Customer and Contract"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.system010"
+    />
+ -->
+<!--      
+    <system.Gadget
+        descr="Data Gaps(Electricity)"
+        iconSrc="assets/images/gadget_en/datagaps.gif"
+        maxUrl="mvm/dataGapsEmMaxGadget.do"
+        miniUrl="mvm/dataGapsEmMiniGadget.do"
+        name="Data Gaps"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.metering008"
+    />
+ -->    
+    <system.Gadget
+        descr="Modem Management (MOE)"
+        iconSrc="assets/images/gadget_en/modem.gif"
+        maxUrl="device/modemMaxGadget_MOE.do"
+        miniUrl="device/modemMiniGadget.do"
+        name="Modem Management"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device002.moe"
+    />
+    <system.Gadget
+        descr="Meter Management (MOE)"
+        iconSrc="assets/images/gadget_en/meter.gif"
+        maxUrl="device/meterMaxGadget_MOE.do"
+        miniUrl="device/meterMiniGadget.do"
+        name="Meter Management"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device003.moe"
+    />    
+    <system.Gadget
+        descr="Asset Registration"
+        iconSrc="assets/images/gadget_en/devicereg.gif"
+        maxUrl="device/deviceRegistrationMaxGadget_MOE.do"
+        miniUrl="device/deviceRegistrationMiniGadget_MOE.do"
+        name="Asset Registration"
+        miniHeight="350"
+        fullHeight="700"
+        gadgetCode="gadget.device004"
+    /> 
+    
+    <system.Gadget
+        descr="Group Management(Equipment, customers, users, and are grouped together.)"
+        iconSrc="assets/images/gadget_en/group.gif"
+        maxUrl="system/groupManagementMaxGadget.do"
+        miniUrl="system/groupManagementMiniGadget.do"
+        name="Group Management"
+        miniHeight="500"
+        fullHeight="1000"
+        gadgetCode="gadget.system009"
+    />    
+<!-- 
+    <system.Gadget
+        descr="Meter Time Management"
+        iconSrc="assets/images/gadget_en/meteringtime.gif"
+        maxUrl="device/meterTimeMaxGadget.do"
+        miniUrl="device/meterTimeMiniGadget.do"
+        name="Meter Time Management"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device007"
+    />
+    <system.Gadget
+        descr="Power Quality Management"
+        iconSrc="assets/images/gadget_en/powerquality.gif"
+        maxUrl="mvm/powerQualityMaxGadget.do"
+        miniUrl="mvm/powerQualityMiniGadget.do"
+        name="Power Quality"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.metering021"
+    />
+    <system.Gadget
+        descr="Power Outage Management"
+        iconSrc="assets/images/gadget_ko/poweralarm.gif"
+        maxUrl="device/powerAlarmLogMaxGadget.do"
+        miniUrl="device/powerAlarmLogMiniGadget.do"
+        name="Power Outage Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.device009"
+    /> 
+    <system.Gadget
+        descr="Google Map For Device"
+        iconSrc="assets/images/gadget_en/googlemap.gif"
+        maxUrl="device/GoogleMapMax.do"
+        miniUrl="device/GoogleMapMini.do"
+        name="Google Map For Device"
+        miniHeight="500"
+        fullHeight="640"
+        gadgetCode="gadget.device008"
+    />     
+    <system.Gadget
+        descr="Power Fail Restore Alarm Line Missing Alarm"
+        iconSrc="assets/images/gadget_en/poweralarm.gif"
+        maxUrl="device/powerAlarmLogMaxGadget.do"
+        miniUrl="device/powerAlarmLogMiniGadget.do"
+        name="PowerAlarmLog"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.descr.device009"
+    />  
+    <system.Gadget
+        descr="Billing Report(Electricity), Daily, Monthly TOU Data"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="mvm/mvmReportMaxGadget.do"
+        miniUrl="mvm/mvmReportMiniGadget.do"
+        name="TOU Report"
+        miniHeight="500"
+        fullHieght="1000"   
+        gadgetCode="gadget.metering025" 
+    />
+    <system.Gadget
+        descr="Task Management"
+        iconSrc="assets/images/gadget_ko/vee.gif"
+        maxUrl="system/schedule/scheduleManagementMaxGadget.do"
+        miniUrl="system/schedule/scheduleManagementMiniGadget.do"
+        name="Task Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system013"
+    />
+   <system.Gadget
+        descr="Prepayment Customer Management"
+        iconSrc="assets/images/gadget_en/prepayCustomerMgmt.gif"
+        maxUrl="prepaymentMgmt/prepaymentMgmtOperatorMax.do"
+        miniUrl="prepaymentMgmt/prepaymentMgmtOperatorMini.do"
+        name="Prepayment Customer Management"
+        miniHeight="600"
+        fullHeight="800"
+        gadgetCode="gadget.prepay001"
+    />        	
+    <system.Gadget
+        descr="Vendor Prepayment Charge"
+        iconSrc="assets/images/gadget_ko/thumbnail.gif"
+        maxUrl="prepaymentMgmt/vendorPrepaymentChargeMaxGadget.do"
+        miniUrl="prepaymentMgmt/vendorPrepaymentChargeMiniGadget.do"
+        name="Vendor Prepayment Charge"
+        miniHeight="420"
+        fullHeight="800"
+        gadgetCode="gadget.prepay002"
+    />
+    <system.Gadget
+        descr="Deposit Management"
+        iconSrc="assets/images/gadget_ko/thumbnail.gif"
+        maxUrl="prepaymentMgmt/depositMgmtMax.do"
+        miniUrl="prepaymentMgmt/depositMgmtMini.do"
+        name="Deposit Management"
+        miniHeight="420"
+        fullHeight="800"
+        gadgetCode="gadget.prepay003"
+    />
+-->    
+    <system.Gadget
+        descr="Meter Event Log"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="device/meterEventLogMax.do"
+        miniUrl="device/meterEventLogMini.do"
+        name="Meter Event Log"
+        miniHeight="500"
+        fullHieght="1000"   
+        gadgetCode="gadget.device013"   
+    />        
+    <system.Gadget
+        descr="Hand-Held Unit Data Gadget(HHU, metering data manual upload)(MOE)"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="mvm/handheldUnitDataUploadMaxGadget_MOE.do"
+        miniUrl="mvm/handheldUnitDataUploadMiniGadget_MOE.do"
+        name="Handheld Unit Data Upload"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.metering028"
+    />
+    <system.Gadget
+        descr="Energy Balance Monitoring (MOE)"
+        iconSrc="assets/images/gadget_en/thumbnail.gif"
+        maxUrl="system/energyBalanceMonitoringMax_MOE.do"
+        miniUrl="system/energyBalanceMonitoringMini_MOE.do"
+        name="Energy Balance Monitoring"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.system201"
+    />
+    <!-- 메인 대시보드 시작 -->
+    <system.DashboardGadget
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="Main"
+        gadget="Metering Data"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="Main"
+        gadget="Metering Fail"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Main"
+        gadget="Meter Management"
+    />
+    <!-- 메인 대시보드 끝 -->
+      
+    <!-- 시스템 관리 대시보드 시작-->
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="System"
+        gadget="Device Vendor Model"
+    />    
+     <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="System"
+        gadget="Supplier Management"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="System"
+        gadget="User Management"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="System"
+        gadget="Energy Balance Monitoring"
+    /> 
+    <!-- System 대시보드 끝-->
+            
+    <!-- 검침데이터 관리 대시보드 시작-->
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="Metering"
+        gadget="Metering Fail"
+    />               
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="Metering"
+        gadget="Metering Data"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Metering"
+        gadget="Handheld Unit Data Upload"
+    />  
+    <!-- Metering 대시보드 끝-->
+    
+    <!-- 장비 관리 대시보드 시작-->
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="Device"
+        gadget="Concentrator Management"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="Device"
+        gadget="Meter Management"
+    />    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Device"
+        gadget="Modem Management"
+    />      
+    <!-- Device 대시보드 끝-->
+
+    <!-- 이력 관리 대시보드 시작--> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="Alarm Event"
+        gadget="Change Log"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="Alarm Event"
+        gadget="Communication Log"
+    />          
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Alarm Event"
+        gadget="Event Alarm Log"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="Alarm Event"
+        gadget="Meter Event Log"
+    />          
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="Alarm Event"
+        gadget="Operation Management"
+    /> 
+    <!-- 이력 관리 대시보드 끝-->    
+	
+    <system.GadgetRole
+        gadget="Metering Data"
+        role="admin"
+        supplier="MOE"
+    />
+    <system.GadgetRole
+        gadget="Meter Event Log"
+        role="admin"
+        supplier="MOE"
+    />
+    <system.GadgetRole
+        gadget="Device Vendor Model"
+        role="admin"
+        supplier="MOE"
+    />
+    <system.GadgetRole
+        gadget="Supplier Management"
+        role="admin"
+        supplier="MOE"
+    />  
+    <system.GadgetRole
+        gadget="User Management"
+        role="admin"
+        supplier="MOE"
+    />
+    <system.GadgetRole 
+        gadget="Concentrator Management"
+        role="admin"
+        supplier="MOE"
+    />
+    <system.GadgetRole
+        gadget="Communication Log"
+        role="admin"
+        supplier="MOE"
+    />
+    <system.GadgetRole
+        gadget="Change Log"
+        role="admin"
+        supplier="MOE"
+    />    
+    <system.GadgetRole
+        gadget="Operation Management"
+        role="admin"
+        supplier="MOE"
+    />  
+    <system.GadgetRole
+        gadget="Event Alarm Log"
+        role="admin"
+        supplier="MOE"
+    />    
+    <system.GadgetRole
+        gadget="Metering Fail"
+        role="admin"
+        supplier="MOE"
+    />
+    <system.GadgetRole
+        gadget="Customer and Contract"
+        role="admin"
+        supplier="MOE"
+    />    
+    <system.GadgetRole
+        gadget="Modem Management"
+        role="admin"
+        supplier="MOE"
+    />    
+    <system.GadgetRole
+        gadget="Meter Management"
+        role="admin"
+        supplier="MOE"
+    />        
+    <system.GadgetRole
+        gadget="Device Registration"
+        role="admin"
+        supplier="MOE"
+    />
+	<system.GadgetRole
+        gadget="Handheld Unit Data Upload"
+        role="admin"
+        supplier="MOE"
+    />
+    	
+    <system.DeviceVendor 
+        supplier="MOE"
+        name="NURITelecom"
+        code="100"
+        address="B-10F Woolim Lions Valley 371-28 Gasandong Geumcheon-gu, Seoul, Korea, 153-786 Tel : +82.2.781.0770"
+        descr="Nuri Telecom Co.,Ltd."
+    />
+    <system.DeviceVendor 
+        supplier="MOE"
+        name="LSIS"
+        code="6"
+        address="http://kr.lsis.biz/"
+        descr="LSIS"
+    />
+    
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="300"
+        deviceType="1.1.1.7"
+        name="NDC-I332"
+        image="uploadImg/mcu/NZC-O312P.jpg"
+    />
+    <!-- PLC Repeater -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="98"
+        deviceType="1.2.1.98"
+        name="NZR-O121Px"
+    />
+    
+    <!-- gprs modem -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="17"
+        deviceType="1.2.1.11"
+        name="NAMR-P401GP"
+    />
+    
+    <!-- gprs modem -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="18"
+        deviceType="1.2.1.11"
+        name="NAMR-P402GP"
+    />
+    
+    <!-- plc modem -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="19"
+        deviceType="1.2.1.18"
+        name="NAMR-C401PG"
+    />
+    
+    <!-- plc modem -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="20"
+        deviceType="1.2.1.18"
+        name="NAMR-C402PG"
+    />
+    
+    <system.DeviceModel 
+        deviceVendor="LSIS"
+        code="223"
+        deviceType="1.3.1.1"
+        name="LSIQ-1P"
+        image="uploadImg/meter/LS_SMART_METER.jpg"
+    />
+    
+    <system.DeviceModel 
+        deviceVendor="LSIS"
+        code="224"
+        deviceType="1.3.1.1"
+        name="LSIQ-3P"
+        image="uploadImg/meter/LS_SMART_METER.jpg"
+    />
+    
+    <system.DeviceModel 
+        deviceVendor="LSIS"
+        code="225"
+        deviceType="1.3.1.1"
+        name="LSIQ-3PCT"
+        image="uploadImg/meter/LS_SMART_METER.jpg"
+    />
+
+    <system.DeviceModel 
+        deviceVendor="LSIS"
+        code="226"
+        deviceType="1.3.1.1"
+        name="LSIQ-3PCV"
+        image="uploadImg/meter/LS_SMART_METER.jpg"
+    />
+    
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="1p2w"
+        pulseConst="5000"
+        name="LSIQ-1P"
+        deviceModel="LSIQ-1P"
+        parserName="com.aimir.fep.meter.parser.DLMSLSSmartMeter"
+        saverName="com.aimir.fep.meter.saver.DLMSLSSmartMeterSaver"
+    />   
+    
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="3p4w"
+        pulseConst="5000"
+        name="LSIQ-3P"
+        deviceModel="LSIQ-3P"
+        parserName="com.aimir.fep.meter.parser.DLMSLSSmartMeter"
+        saverName="com.aimir.fep.meter.saver.DLMSLSSmartMeterSaver"
+    />
+    
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="3p4w"
+        pulseConst="5000"
+        name="LSIQ-3PCT"
+        deviceModel="LSIQ-3PCT"
+        parserName="com.aimir.fep.meter.parser.DLMSLSSmartMeter"
+        saverName="com.aimir.fep.meter.saver.DLMSLSSmartMeterSaver"
+    />
+    
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="3p4w"
+        pulseConst="5000"
+        name="LSIQ-3PCV"
+        deviceModel="LSIQ-3PCV"
+        parserName="com.aimir.fep.meter.parser.DLMSLSSmartMeter"
+        saverName="com.aimir.fep.meter.saver.DLMSLSSmartMeterSaver"
+    />
+    
+	<!-- 미터 Command-->
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="LSIQ-1P"    level="2"  paramType="2" desc="On Demand Metering" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="LSIQ-1P"    level="2"   desc="Meter Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="LSIQ-1P"    level="2"   desc="Remote Control" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="LSIQ-1P"    level="2"   desc="Relay Status" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.35"    model="LSIQ-1P"    level="2"   desc="Get Meter F/W Version" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.36"    model="LSIQ-1P"    level="2"   desc="Alarm Reset" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.37"    model="LSIQ-1P"    level="2"   desc="Billing Cycle Setting" />
+<!-- <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.38"    model="LSIQ-1P"    level="2"   desc="Meter TOU Setting" />  -->
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.39"    model="LSIQ-1P"    level="2"   desc="Meter Demand Period Setting" />    
+    
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="LSIQ-3P"    level="2" paramType="2"  desc="On Demand Metering" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="LSIQ-3P"    level="2"   desc="Meter Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="LSIQ-3P"    level="2"   desc="Remote Control" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="LSIQ-3P"    level="2"   desc="Relay Status" />
+   	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.35"    model="LSIQ-3P"    level="2"   desc="Get Meter F/W Version" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.36"    model="LSIQ-3P"    level="2"   desc="Alarm Reset" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.37"    model="LSIQ-3P"    level="2"   desc="Billing Cycle Setting" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.38"    model="LSIQ-3P"    level="2"   desc="Meter TOU Setting" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.39"    model="LSIQ-3P"    level="2"   desc="Meter Demand Period Setting" />
+    	
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="LSIQ-3PCT"    level="2" paramType="2"  desc="On Demand Metering" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="LSIQ-3PCT"    level="2"   desc="Meter Time Synchronization" />
+   	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.35"    model="LSIQ-3PCT"    level="2"   desc="Get Meter F/W Version" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.36"    model="LSIQ-3PCT"    level="2"   desc="Alarm Reset" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.37"    model="LSIQ-3PCT"    level="2"   desc="Billing Cycle Setting" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.38"    model="LSIQ-3PCT"    level="2"   desc="Meter TOU Setting" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.39"    model="LSIQ-3PCT"    level="2"   desc="Meter Demand Period Setting" />
+    	
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="LSIQ-3PCV"    level="2" paramType="2"  desc="On Demand Metering" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="LSIQ-3PCV"    level="2"   desc="Meter Time Synchronization" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.35"    model="LSIQ-3PCV"    level="2"   desc="Get Meter F/W Version" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.36"    model="LSIQ-3PCV"    level="2"   desc="Alarm Reset" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.37"    model="LSIQ-3PCV"    level="2"   desc="Billing Cycle Setting" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.38"    model="LSIQ-3PCV"    level="2"   desc="Meter TOU Setting" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.39"    model="LSIQ-3PCV"    level="2"   desc="Meter Demand Period Setting" />
+	  
+	 <!-- 모뎀 Command -->				
+ 	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.1"   model="NAMR-P402GP"    level="2"   desc="Reset Modem" />
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.27"   model="NAMR-P402GP"    level="2"   desc="Upload Metering Data" />
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.28"   model="NAMR-P402GP"    level="2"   desc="Factory Setting" />
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.8"   model="NAMR-P402GP"    level="2"   desc="Read Modem Configuration" />
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.29"   model="NAMR-P402GP"    level="2"   desc="Identify Device" />
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.30"   model="NAMR-P402GP"    level="2"   desc="Set Time" />
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.21"   model="NAMR-P402GP"    level="2"   desc="Set Modem Reset Interval" />
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.19"   model="NAMR-P402GP"    level="2"   desc="Set Metering Interval" />
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.26"   model="NAMR-P402GP"    level="2"   desc="Server IP,Port Change"/>
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.31"   model="NAMR-P402GP"    level="2"   desc="Set APN" />
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.13"   model="NAMR-P402GP"    level="2"   desc="OTA" />
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.32"   model="NAMR-P402GP"    level="2"   desc="Set Meter Time" />
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.33"   model="NAMR-P402GP"    level="2"   desc="Current Values Metering" />
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.34"   model="NAMR-P402GP"    level="2"   desc="Get Meter Status" />  
+	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.5"    model="NAMR-P402GP"    level="2"   desc="Read Event Log" />
+
+	
+
+    <system.ModemConfig 
+        name="NZR-O121Px"
+        deviceModel="NZR-O121Px" 
+        parserName="com.aimir.fep.meter.parser.PLCRepeater"
+        saverName="com.aimir.fep.meter.saver.PLCRepeaterMDSaver"
+    />
+    
+    <mvm.DisplayChannel name="CO2"        localName="CO2"        serviceType="Electricity" unit="Kg" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Active Energy Import"        		localName="Active Energy Import"        serviceType="Electricity" unit="kWh" chMethod="SUM"/>  
+    <mvm.DisplayChannel name="Active Energy Export"        		localName="Active Energy Export"        serviceType="Electricity" unit="kWh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Reactive Energy Import"        	localName="Reactive Energy Import"        serviceType="Electricity" unit="kVarh" chMethod="SUM"/>    
+    <mvm.DisplayChannel name="Cumulative Active Energy Import"  localName="Cumulative Active Energy Import"        serviceType="Electricity" unit="kWh" chMethod="SUM"/>   
+    <mvm.DisplayChannel name="Total Reactive Energy"        	localName="Total Reactive Energy"        serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Total Import Apparent Energy"     localName="Total Import Apparent Energy"        serviceType="Electricity" unit="kVah" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Total Maximum Demand +A"        	localName="Total Maximum Demand +A"        serviceType="Electricity" unit="kW" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Total Maximum Demand +R"        	localName="Total Maximum Demand +R"        serviceType="Electricity" unit="kVar" chMethod="SUM"/>	
+    <mvm.DisplayChannel name="Total Apparent Maxinum Demand+"   localName="Total Apparent Maxinum Demand+"        serviceType="Electricity" unit="kVa" chMethod="SUM"/>  
+    <mvm.DisplayChannel name="Total Cumulative Demand +A"       localName="Total Cumulative Demand +A"        serviceType="Electricity" unit="kW" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Voltage, Phase B"        			localName="Voltage, Phase B"        serviceType="Electricity" unit="kVa" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Current, Phase B"        			localName="Current, Phase B"        serviceType="Electricity" unit="kAh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Power factor, Phase B"        	localName="Power factor, Phase B"        serviceType="Electricity" unit="kWh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Consumption Active Energy Import LP1"        localName="Consumption Active Energy Import LP1"        serviceType="Electricity" unit="kWh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Consumption Reactive Energy Import LP1"      localName="Consumption Reactive Energy Import LP1"        serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+    <!-- <mvm.DisplayChannel name="Active Power Exp."        localName="Active Power Exp."        serviceType="Electricity" unit="kW" chMethod="AVG"/> -->
+    <!-- <mvm.DisplayChannel name="Active Power Imp."        localName="Active Power Imp."        serviceType="Electricity" unit="kW" chMethod="AVG"/> -->
+    <!-- <mvm.DisplayChannel name="Reactive Power Exp."        localName="Reactive Power Exp."        serviceType="Electricity" unit="kVar" chMethod="AVG"/> -->
+    <!-- <mvm.DisplayChannel name="Reactive Power Imp."        localName="Reactive Power Imp."        serviceType="Electricity" unit="kVar" chMethod="AVG"/> -->
+    <!-- <mvm.DisplayChannel name="Total apparent power(QII+QIII) Exp."        localName="Total apparent power(QII+QIII) Exp."        serviceType="Electricity" unit="kVA" chMethod="AVG"/> -->
+    <!-- <mvm.DisplayChannel name="Total apparent power(QI+QIV) Imp."        localName="Total apparent power(QI+QIV) Imp."        serviceType="Electricity" unit="kVA" chMethod="AVG"/> -->
+
+    <mvm.ChannelConfig meterConfig="LSIQ-1P" channel="CO2" channelIndex="0" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-1P" channel="Active Energy Import" channelIndex="1" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-1P" channel="Active Energy Export" channelIndex="2" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-1P" channel="Reactive Energy Import" channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-1P" channel="Active Power Exp." channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-1P" channel="Active Power Imp." channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-1P" channel="Reactive Power Exp." channelIndex="5" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-1P" channel="Reactive Power Imp." channelIndex="6" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-1P" channel="Total apparent power(QII+QIII) Exp." channelIndex="7" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-1P" channel="Total apparent power(QI+QIV) Imp." channelIndex="8" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    
+	<mvm.ChannelConfig meterConfig="LSIQ-3P" channel="CO2" channelIndex="0" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3P" channel="Active Energy Import" channelIndex="1" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3P" channel="Active Energy Export" channelIndex="2" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3P" channel="Reactive Energy Import" channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />
+    
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-3P" channel="Active Power Exp." channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-3P" channel="Active Power Imp." channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-3P" channel="Reactive Power Exp." channelIndex="5" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-3P" channel="Reactive Power Imp." channelIndex="6" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-3P" channel="Total apparent power(QII+QIII) Exp." channelIndex="7" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-3P" channel="Total apparent power(QI+QIV) Imp." channelIndex="8" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCT" channel="CO2" channelIndex="0" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCT" channel="Cumulative Active Energy Import" channelIndex="1" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCT" channel="Total Reactive Energy" channelIndex="2" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCT" channel="Total Import Apparent Energy" channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />    
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCT" channel="Total Maximum Demand +A" channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCT" channel="Total Maximum Demand +R" channelIndex="5" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCT" channel="Total Apparent Maxinum Demand+" channelIndex="6" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCT" channel="Total Cumulative Demand +A" channelIndex="7" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCT" channel="Voltage, Phase B" channelIndex="8" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCT" channel="Current, Phase B" channelIndex="9" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCT" channel="Power factor, Phase B" channelIndex="10" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCT" channel="Consumption Active Energy Import LP1" channelIndex="11" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCT" channel="Consumption Reactive Energy Import LP1" channelIndex="12" dataType="LpEM" displayType="SaveAndDisplay" />
+    
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-3PCT" channel="Active Power Exp." channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-3PCT" channel="Active Power Imp." channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-3PCT" channel="Reactive Power Exp." channelIndex="5" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-3PCT" channel="Reactive Power Imp." channelIndex="6" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-3PCT" channel="Total apparent power(QII+QIII) Exp." channelIndex="7" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-3PCT" channel="Total apparent power(QI+QIV) Imp." channelIndex="8" dataType="LpEM" displayType="SaveAndDisplay" />-->
+
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCV" channel="CO2" channelIndex="0" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCV" channel="Cumulative Active Energy Import" channelIndex="1" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCV" channel="Total Reactive Energy" channelIndex="2" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCV" channel="Total Import Apparent Energy" channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />    
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCV" channel="Total Maximum Demand +A" channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCV" channel="Total Maximum Demand +R" channelIndex="5" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCV" channel="Total Apparent Maxinum Demand+" channelIndex="6" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCV" channel="Total Cumulative Demand +A" channelIndex="7" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCV" channel="Voltage, Phase B" channelIndex="8" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCV" channel="Current, Phase B" channelIndex="9" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCV" channel="Power factor, Phase B" channelIndex="10" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCV" channel="Consumption Active Energy Import LP1" channelIndex="11" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSIQ-3PCV" channel="Consumption Reactive Energy Import LP1" channelIndex="12" dataType="LpEM" displayType="SaveAndDisplay" />
+        
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-3PCV" channel="Active Power Exp." channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-3PCV" channel="Active Power Imp." channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-3PCV" channel="Reactive Power Exp." channelIndex="5" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-3PCV" channel="Reactive Power Imp." channelIndex="6" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-3PCV" channel="Total apparent power(QII+QIII) Exp." channelIndex="7" dataType="LpEM" displayType="SaveAndDisplay" />-->
+    <!-- <mvm.ChannelConfig meterConfig="LSIQ-3PCV" channel="Total apparent power(QI+QIV) Imp." channelIndex="8" dataType="LpEM" displayType="SaveAndDisplay" />-->   
+	
+    <mvm.Season syear="2010" smonth="03" sday="01" eyear="2010" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2010" smonth="06" sday="01" eyear="2010" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2010" smonth="09" sday="01" eyear="2010" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2010" smonth="11" sday="01" eyear="2011" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2011" smonth="03" sday="01" eyear="2011" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2011" smonth="06" sday="01" eyear="2011" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2011" smonth="09" sday="01" eyear="2011" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2011" smonth="11" sday="01" eyear="2012" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2012" smonth="03" sday="01" eyear="2012" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2012" smonth="06" sday="01" eyear="2012" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2012" smonth="09" sday="01" eyear="2012" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2012" smonth="11" sday="01" eyear="2013" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2013" smonth="06" sday="01" eyear="2013" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2013" smonth="09" sday="01" eyear="2013" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2013" smonth="03" sday="01" eyear="2013" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2013" smonth="11" sday="01" eyear="2014" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2014" smonth="03" sday="01" eyear="2014" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2014" smonth="06" sday="01" eyear="2014" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2014" smonth="09" sday="01" eyear="2014" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2014" smonth="11" sday="01" eyear="2015" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2015" smonth="03" sday="01" eyear="2015" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2015" smonth="06" sday="01" eyear="2015" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2015" smonth="09" sday="01" eyear="2015" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2015" smonth="11" sday="01" eyear="2016" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2016" smonth="03" sday="01" eyear="2016" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2016" smonth="06" sday="01" eyear="2016" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2016" smonth="09" sday="01" eyear="2016" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2016" smonth="11" sday="01" eyear="2017" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2017" smonth="03" sday="01" eyear="2017" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2017" smonth="06" sday="01" eyear="2017" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2017" smonth="09" sday="01" eyear="2017" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2017" smonth="11" sday="01" eyear="2018" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2018" smonth="03" sday="01" eyear="2018" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2018" smonth="06" sday="01" eyear="2018" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2018" smonth="09" sday="01" eyear="2018" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2018" smonth="11" sday="01" eyear="2019" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2019" smonth="03" sday="01" eyear="2019" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2019" smonth="06" sday="01" eyear="2019" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2019" smonth="09" sday="01" eyear="2019" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2019" smonth="11" sday="01" eyear="2020" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2020" smonth="03" sday="01" eyear="2020" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2020" smonth="06" sday="01" eyear="2020" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2020" smonth="09" sday="01" eyear="2020" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2020" smonth="11" sday="01" eyear="2021" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2021" smonth="03" sday="01" eyear="2021" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2021" smonth="06" sday="01" eyear="2021" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2021" smonth="09" sday="01" eyear="2021" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2021" smonth="11" sday="01" eyear="2022" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2022" smonth="03" sday="01" eyear="2022" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2022" smonth="06" sday="01" eyear="2022" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2022" smonth="09" sday="01" eyear="2022" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2022" smonth="11" sday="01" eyear="2023" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2023" smonth="03" sday="01" eyear="2023" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2023" smonth="06" sday="01" eyear="2023" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2023" smonth="09" sday="01" eyear="2023" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2023" smonth="11" sday="01" eyear="2024" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2024" smonth="03" sday="01" eyear="2024" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2024" smonth="06" sday="01" eyear="2024" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2024" smonth="09" sday="01" eyear="2024" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2024" smonth="11" sday="01" eyear="2025" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2025" smonth="03" sday="01" eyear="2025" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2025" smonth="06" sday="01" eyear="2025" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2025" smonth="09" sday="01" eyear="2025" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2025" smonth="11" sday="01" eyear="2026" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2026" smonth="03" sday="01" eyear="2026" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2026" smonth="06" sday="01" eyear="2026" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2026" smonth="09" sday="01" eyear="2026" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2026" smonth="11" sday="01" eyear="2027" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2027" smonth="03" sday="01" eyear="2027" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2027" smonth="06" sday="01" eyear="2027" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2027" smonth="09" sday="01" eyear="2027" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2027" smonth="11" sday="01" eyear="2028" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2028" smonth="03" sday="01" eyear="2028" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2028" smonth="06" sday="01" eyear="2028" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2028" smonth="09" sday="01" eyear="2028" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2028" smonth="11" sday="01" eyear="2029" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2029" smonth="03" sday="01" eyear="2029" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2029" smonth="06" sday="01" eyear="2029" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2029" smonth="09" sday="01" eyear="2029" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2029" smonth="11" sday="01" eyear="2030" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2030" smonth="03" sday="01" eyear="2030" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2030" smonth="06" sday="01" eyear="2030" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2030" smonth="09" sday="01" eyear="2030" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2030" smonth="11" sday="01" eyear="2031" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2031" smonth="03" sday="01" eyear="2031" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2031" smonth="06" sday="01" eyear="2031" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2031" smonth="09" sday="01" eyear="2031" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2031" smonth="11" sday="01" eyear="2032" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2032" smonth="03" sday="01" eyear="2032" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2032" smonth="06" sday="01" eyear="2032" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2032" smonth="09" sday="01" eyear="2032" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2032" smonth="11" sday="01" eyear="2033" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2033" smonth="03" sday="01" eyear="2033" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2033" smonth="06" sday="01" eyear="2033" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2033" smonth="09" sday="01" eyear="2033" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2033" smonth="11" sday="01" eyear="2034" emonth="02" eday="29" name="Winter"/>
+
+    <mvm.Season syear="2034" smonth="03" sday="01" eyear="2034" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2034" smonth="06" sday="01" eyear="2034" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2034" smonth="09" sday="01" eyear="2034" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2034" smonth="11" sday="01" eyear="2035" emonth="02" eday="29" name="Winter"/>
+    
+    <mvm.Season syear="2035" smonth="03" sday="01" eyear="2035" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2035" smonth="06" sday="01" eyear="2035" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2035" smonth="09" sday="01" eyear="2035" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2035" smonth="11" sday="01" eyear="2036" emonth="02" eday="29" name="Winter"/>
+    
+    <mvm.Season syear="2036" smonth="03" sday="01" eyear="2036" emonth="05" eday="31" name="Spring"/>
+    <mvm.Season syear="2036" smonth="06" sday="01" eyear="2036" emonth="08" eday="31" name="Summer"/>
+    <mvm.Season syear="2036" smonth="09" sday="01" eyear="2036" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2036" smonth="11" sday="01" eyear="2037" emonth="02" eday="29" name="Winter"/>    
+  
+    
+    <system.TariffType supplier="MOE" serviceTypeCode="3.1" code="1" name="Residential" description="Residential"/>
+    <system.TariffType supplier="MOE" serviceTypeCode="3.1" code="2" name="Non Residential" description="Non Residential"/>
+    <system.TariffType supplier="MOE" serviceTypeCode="3.1" code="3" name="PRE-RESIDENTIAL" description="Residential Bill Determinant for prepaid"/>
+    <system.TariffType supplier="MOE" serviceTypeCode="3.1" code="4" name="PRE-INDUSTRIAL" description="Industrial Bill Determinant for prepaid"/>
+    <system.TariffType supplier="MOE" serviceTypeCode="3.1" code="5" name="PRE-COMMERCIAL" description="Commercial Bill Determinant for prepaid"/>
+    <system.TariffType supplier="MOE" serviceTypeCode="3.1" code="6" name="PRE-GOVERNMENT" description="Government Bill Determinant for prepaid"/>
+    <system.TariffType supplier="MOE" serviceTypeCode="3.1" code="7" name="PRE-AGRICULTURE" description="Agriculture Bill Determinant for prepaid"/>
+
+    <system.TariffEM
+        supplier="MOE" 
+        yyyymmdd="20130121"
+        tariffType="Residential" 
+        supplySizeMin="0" 
+        supplySizeMax="50" 
+        condition1="&gt;="
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="0.1567"
+        serviceCharge="1" />
+    <system.TariffEM
+        supplier="MOE" 
+        yyyymmdd="20130121"
+        tariffType="Residential" 
+        supplySizeMin="51" 
+        supplySizeMax="300" 
+        condition1="&gt;="
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="0.3144"
+        serviceCharge="2.9574" />
+    <system.TariffEM
+        supplier="MOE" 
+        yyyymmdd="20130121"
+        tariffType="Residential" 
+        supplySizeMin="301" 
+        supplySizeMax="600" 
+        condition1="&gt;="
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="0.4081"
+        serviceCharge="2.9574" />
+    <system.TariffEM
+        supplier="MOE" 
+        yyyymmdd="20130121"
+        tariffType="Residential" 
+        supplySizeMin="601" 
+        condition1="&gt;="
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="0.45345"
+        serviceCharge="2.9574" />
+    <system.TariffEM
+        supplier="MOE" 
+        yyyymmdd="20130121"
+        tariffType="Non Residential" 
+        supplySizeMin="0" 
+        supplySizeMax="300" 
+        condition1="&gt;="
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="0.4521"
+        serviceCharge="4.9291" />
+    <system.TariffEM
+        supplier="MOE" 
+        yyyymmdd="20130121"
+        tariffType="Non Residential" 
+        supplySizeMin="301" 
+        supplySizeMax="600" 
+        condition1="&gt;="
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="0.481"
+        serviceCharge="4.9291" />
+    <system.TariffEM
+        supplier="MOE" 
+        yyyymmdd="20130121"
+        tariffType="Non Residential" 
+        supplySizeMin="601" 
+        condition1="&gt;="
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="0.759"
+        serviceCharge="4.9291" />
+    
+    <!--   
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Attachment or Detachment' 
+                       descr='Attachment or Detachment' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='203.1.0,203.2.0,NG_210.1.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Warning' 
+                       name='Communication Alarm' 
+                       descr='Communication Alarm' 
+                       msgPattern='Communication State=[$(event.eventAttrs.commState)]' 
+                       troubleAdvice='Check Communication Line' 
+                       oid='205.1.0,205.20,205.3.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Major' 
+                       name='Threshold Warning' 
+                       descr='Threshold Warning' 
+                       msgPattern='Threshold Usage=[$(event.eventAttrs.observedValue)] crossed the defined value[$(event.eventAttrs.thresholdValue)]' 
+                       troubleAdvice='Check System Performance' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='MCU Mobile Connect' 
+                       descr='MCU Mobile Connect' 
+                       msgPattern='MCU Mobile Connected' 
+                       troubleAdvice='' 
+                       oid='202.4.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Reset' 
+                       descr='Reset' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='200.20.0,203.9.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Warning' 
+                       name='Battery Alarm' 
+                       descr='Battery Low or Restore, Battery Charging Start or End.'
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='200.16.0,200.17.0,200.23.0,200.24.0' 
+                       monitor='SaveAndMonitor'
+                       timeout='840'/>
+    -->                   
+    <device.EventAlert eventAlertType='Event'
+                       severity='Information' 
+                       name='Equipment Installation' 
+                       descr='Equipment installation' 
+                       msgPattern='Install' 
+                       troubleAdvice='' 
+                       oid='200.1.0,203.8.0,201.1.0,203.105.0,GD_200.1.0,NG_220.1.0,NG_200.1.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <!--     
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment De-Installation' 
+                       descr='Equipment information deleted from System' 
+                       msgPattern='Uninstall' 
+                       troubleAdvice='' 
+                       oid='200.2.0,201.2.0,203.106.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment Startup' 
+                       descr='Equipment Startup' 
+                       msgPattern='Startup' 
+                       troubleAdvice='' 
+                       oid='200.3.0,201.3.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment Shutdown' 
+                       descr='Equipment Shutdown' 
+                       msgPattern='Shutdown' 
+                       troubleAdvice='' 
+                       oid='200.4.0,201.4.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Major' 
+                       name='Power Alarm' 
+                       descr='Power Failure, Restore or Massive and Line Missing or Restore' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='200.14.0,200.15.0,203.107.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment Configuration Changed' 
+                       descr='Equipment Configuration Chagned' 
+                       msgPattern='Configuration Change' 
+                       troubleAdvice='' 
+                       oid='200.10.0,201.5.0,203.3.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Time Synchronization Performed' 
+                       descr='Time Synchronization Performed' 
+                       msgPattern='Clock Synchronized Time[$(event.eventAttrs.sysTime)]' 
+                       troubleAdvice='' 
+                       oid='200.13.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment Registration' 
+                       descr='equipment is created automatically or installed.' 
+                       msgPattern='Equipment Registration' 
+                       troubleAdvice='' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment Replacement' 
+                       descr='It just does in metering action to replace meter with other meter' 
+                       msgPattern='From $(event.eventAttrs.equipType) [$(event.eventAttrs.oldEquipID)] To $(event.eventAttrs.equipType)[$(event.eventAttrs.newEquipID)]' 
+                       troubleAdvice='' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Warning' 
+                       name='Case Alarm' 
+                       descr='Case Open or Close' 
+                       msgPattern='Case $(event.eventAttrs.caseState)' 
+                       troubleAdvice='' 
+                       oid='200.25.0,200.26.0,210.1' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment Notification' 
+                       descr='Equipment Notification, Information, Warning or etc..' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='203.10.0,212.1.0,200.29.0,210.1.0,203.100.0,NG_210.3.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='OTA'
+                       descr='OTA Step' 
+                       msgPattern='$(event.eventAttrs.otaStep) $(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='214.1.0,214.2.0,214.3.0,214.4.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Transaction Event'
+                       descr='Transaction Event' 
+                       msgPattern='TRID[$(event.eventAttrs.trID)] COMMAND[$(event.eventAttrs.command)] DEVICE[$(event.eventAttrs.deviceId)($(event.eventAttrs.deviceType))] LASTTIME[$(event.eventAttrs.lastTime)] ERR[$(event.eventAttrs.error)] CNT[$(event.eventAttrs.resultCnt)]' 
+                       troubleAdvice='' 
+                       oid='215.1.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Warning' 
+                       name='EnergyLevelChanged' 
+                       descr='Energy Level of Meter is changed' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='203.109.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+-->
+                                              
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Modem Event Log' 
+                       descr='MIU Event Code' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/> 
+    
+     <device.EventAlert eventAlertType='Event' 
+                       severity='Major' 
+                       name='Ip Change Event' 
+                       descr='DCU IP Change detect' 
+                       msgPattern='From $(event.eventAttrs.oldIp) To $(event.eventAttrs.newIp)' 
+                       troubleAdvice='' 
+                       oid='NG_200.12.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>  
+     <device.EventAlert eventAlertType='Event' 
+                       severity='Critical' 
+                       name='Power Fail' 
+                       descr='Power Fail' 
+                       msgPattern='Power Fail' 
+                       troubleAdvice='' 
+                       oid='NG_200.23.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>  
+     <device.EventAlert eventAlertType='Event' 
+                       severity='Critical' 
+                       name='Power Restore' 
+                       descr='Power Restore' 
+                       msgPattern='Power Restore' 
+                       troubleAdvice='' 
+                       oid='NG_200.24.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>  
+    <device.EventAlert eventAlertType='Event'
+                       severity='Information' 
+                       name='Sms Response' 
+                       descr='Sms Response' 
+                       msgPattern='SMS Response Success' 
+                       troubleAdvice='' 
+                       oid='GD_200.9.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event'
+                       severity='Warning' 
+                       name='Excessive Number of Device Registrationn' 
+                       descr='Excessive Number of Device Registration' 
+                       msgPattern='Install' 
+                       troubleAdvice='' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>                       
+                       
+                       
+    <!-- VEE Conditions -->
+    <mvm.VEEParameter 
+                    ruleType="Validation" 
+                    parameter="ZeroConsumption"
+                    localName="Zero Consumption" 
+                    useThreshold="false"  
+                    condition="value_00=0 or value_01=0 or value_02=0 or value_03=0 or value_04=0 or value_05=0 or value_06=0 or value_07=0 or value_08=0 or value_09=0 or value_10=0 or value_11=0 or value_12=0 or value_13=0 or value_14=0 or value_15=0 or value_16=0 or value_17=0 or value_18=0 or value_19=0 or value_20=0 or value_21=0 or value_22=0 or value_23=0"  
+                    item="Day"  
+                    />
+    <mvm.VEEParameter   
+                    ruleType="Validation"
+                    parameter="OutOfThreshold"
+                    localName="Out Of Threshold" 
+                    useThreshold="true"  
+                    item="Day"
+                    condition="value_00&gt;threshold or value_01&gt;threshold or value_02&gt;threshold or value_03&gt;threshold or value_04&gt;threshold or value_05&gt;threshold or value_06&gt;threshold or value_07&gt;threshold or value_08&gt;threshold or value_09&gt;threshold or value_10&gt;threshold or value_11&gt;threshold or value_12&gt;threshold or value_13&gt;threshold or value_14&gt;threshold or value_15&gt;threshold or value_16&gt;threshold or value_17&gt;threshold or value_18&gt;threshold or value_19&gt;threshold or value_20&gt;threshold or value_21&gt;threshold or value_22&gt;threshold or value_23&gt;threshold"
+                    />
+                 
+
+</dataset>

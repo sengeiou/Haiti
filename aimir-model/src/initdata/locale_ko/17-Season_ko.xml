@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <mvm.Season
+        smonth="04"
+        sday="01"
+        emonth="05"
+        name="봄"
+    />
+    <mvm.Season
+        smonth="06"
+        sday="01"
+        emonth="08"
+        name="여름"
+    />
+    <mvm.Season
+        smonth="09"
+        sday="01"
+        emonth="10"
+        name="가을"
+    />
+    <mvm.Season
+        smonth="11"
+        sday="01"
+        emonth="03"
+        name="겨울"
+    />
+</dataset>

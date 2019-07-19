@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:a="http://langdale.com.au/2005/Message#" xmlns:sawsdl="http://www.w3.org/ns/sawsdl" targetNamespace="http://iec.ch/TC57/2011/AuxiliaryAgreementConfig#" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://langdale.com.au/2005/Message#" xmlns:m="http://iec.ch/TC57/2011/AuxiliaryAgreementConfig#">
+<xs:annotation/>
+<xs:element name="AuxiliaryAgreementConfig" type="m:AuxiliaryAgreementConfig"/>
+<xs:complexType name="AuxiliaryAgreementConfig">
+<xs:sequence>
+<xs:element name="AuxiliaryAgreement" type="m:AuxiliaryAgreement" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="AccountMovement" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AccountMovement">
+<xs:annotation>
+<xs:documentation>Credit/debit movements for an account.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="amount" minOccurs="0" maxOccurs="1" type="m:Money" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AccountMovement.amount">
+<xs:annotation>
+<xs:documentation>Amount that was credited to/debited from an account. For example: payment received/interest charge on arrears.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="dateTime" minOccurs="0" maxOccurs="1" type="xs:dateTime" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AccountMovement.dateTime">
+<xs:annotation>
+<xs:documentation>Date and time when the credit/debit transaction was performed.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="reason" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AccountMovement.reason">
+<xs:annotation>
+<xs:documentation>Reason for credit/debit transaction on an account. Example: payment received/arrears interest levied.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="AccountingUnit" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AccountingUnit">
+<xs:annotation>
+<xs:documentation>Unit for accounting; use either 'energyUnit' or 'currencyUnit' to specify the unit for 'value'.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="energyUnit" minOccurs="0" maxOccurs="1" type="m:RealEnergy" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AccountingUnit.energyUnit">
+<xs:annotation>
+<xs:documentation>Unit of service.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="monetaryUnit" minOccurs="0" maxOccurs="1" type="m:Currency" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AccountingUnit.monetaryUnit">
+<xs:annotation>
+<xs:documentation>Unit of currency.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="multiplier" minOccurs="0" maxOccurs="1" type="m:UnitMultiplier" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AccountingUnit.multiplier">
+<xs:annotation>
+<xs:documentation>Multiplier for the 'energyUnit' or 'monetaryUnit'.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="value" minOccurs="0" maxOccurs="1" type="xs:float" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AccountingUnit.value">
+<xs:annotation>
+<xs:documentation>Value expressed in applicable units.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="AuxiliaryAccount" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AuxiliaryAccount">
+<xs:annotation>
+<xs:documentation>Variable and dynamic part of auxiliary agreement, generally representing the current state of the account related to the outstanding balance defined in auxiliary agreement.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="mRID" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#IdentifiedObject.mRID">
+<xs:annotation>
+<xs:documentation>A Model Authority issues mRIDs. Given that each Model Authority has a unique id and this id is part of the mRID, then the mRID is globally unique.</xs:documentation>
+<xs:documentation>Global uniqeness is easily achived by using a UUID for the mRID. It is strongly recommended to do this.</xs:documentation>
+<xs:documentation>For CIMXML data files the mRID is mapped to rdf:ID or rdf:about attributes that identifies CIM object elements.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="balance" minOccurs="0" maxOccurs="1" type="m:Money" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AuxiliaryAccount.balance">
+<xs:annotation>
+<xs:documentation>The total amount currently remaining on this account that is required to be paid in order to settle the account to zero. This excludes any due amounts not yet paid.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="createdDateTime" minOccurs="0" maxOccurs="1" type="xs:dateTime" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Document.createdDateTime">
+<xs:annotation>
+<xs:documentation>Date and time that this document was created.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="lastModifiedDateTime" minOccurs="0" maxOccurs="1" type="xs:dateTime" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Document.lastModifiedDateTime">
+<xs:annotation>
+<xs:documentation>Date and time this document was last modified. Documents may potentially be modified many times during their lifetime.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="principleAmount" minOccurs="0" maxOccurs="1" type="m:Money" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AuxiliaryAccount.principleAmount">
+<xs:annotation>
+<xs:documentation>The initial principle amount, with which this account was instantiated.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="revisionNumber" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Document.revisionNumber">
+<xs:annotation>
+<xs:documentation>Revision number for this document.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="subject" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Document.subject">
+<xs:annotation>
+<xs:documentation>Document subject.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="title" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Document.title">
+<xs:annotation>
+<xs:documentation>Document title.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="type" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Document.type">
+<xs:annotation>
+<xs:documentation>Utility-specific classification of this document, according to their corporate standards, practices, and existing IT systems (e.g., for management of assets, maintenance, work, outage, customers, etc.).</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Charges" minOccurs="0" maxOccurs="unbounded" type="m:Charge" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AuxiliaryAccount.Charges">
+<xs:annotation>
+<xs:documentation>All charges levied on this account.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="docStatus" minOccurs="0" maxOccurs="1" type="m:Status" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Document.docStatus">
+<xs:annotation>
+<xs:documentation>Status of this document. For status of subject matter this document represents (e.g., Agreement, Work), use 'status' attribute.</xs:documentation>
+<xs:documentation>Example values for 'docStatus.status' are draft, approved, cancelled, etc.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="due" minOccurs="0" maxOccurs="1" type="m:Due" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AuxiliaryAccount.due">
+<xs:annotation>
+<xs:documentation>Current amounts now due for payment on this account.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="lastCredit" minOccurs="0" maxOccurs="1" type="m:AccountMovement" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AuxiliaryAccount.lastCredit">
+<xs:annotation>
+<xs:documentation>Details of the last credit transaction performed on this account.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="lastDebit" minOccurs="0" maxOccurs="1" type="m:AccountMovement" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AuxiliaryAccount.lastDebit">
+<xs:annotation>
+<xs:documentation>Details of the last debit transaction performed on this account.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Names" minOccurs="0" maxOccurs="unbounded" type="m:Name" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#IdentifiedObject.Names">
+<xs:annotation>
+<xs:documentation>All names of this identified object.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="status" minOccurs="0" maxOccurs="1" type="m:Status" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Document.status">
+<xs:annotation>
+<xs:documentation>Status of subject matter (e.g., Agreement, Work) this document represents. For status of the document itself, use 'docStatus' attribute.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="AuxiliaryAgreement" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AuxiliaryAgreement">
+<xs:annotation>
+<xs:documentation>An ad-hoc auxiliary account agreement associated with a customer agreement, not part of the customer's account, but typically subject to formal agreement between customer and supplier (utility). Typically this is used to collect revenue owing by the customer for other services or arrears accrued with the utility for other services. It is typically linked to a prepaid token purchase transaction, thus forcing the customer to make a payment towards settlement of the auxiliary account balance whenever he needs to purchase a prepaid token for electricity.</xs:documentation>
+<xs:documentation>The present status of auxiliary agreement can be defined in the context of the utility's business rules, for example: enabled, disabled, pending, over recovered, under recovered, written off, etc.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="mRID" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#IdentifiedObject.mRID">
+<xs:annotation>
+<xs:documentation>A Model Authority issues mRIDs. Given that each Model Authority has a unique id and this id is part of the mRID, then the mRID is globally unique.</xs:documentation>
+<xs:documentation>Global uniqeness is easily achived by using a UUID for the mRID. It is strongly recommended to do this.</xs:documentation>
+<xs:documentation>For CIMXML data files the mRID is mapped to rdf:ID or rdf:about attributes that identifies CIM object elements.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="arrearsInterest" minOccurs="0" maxOccurs="1" type="m:PerCent" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AuxiliaryAgreement.arrearsInterest">
+<xs:annotation>
+<xs:documentation>The interest per annum to be charged prorata on 'AuxiliaryAccount.dueArrears' at the end of each 'payCycle'.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="auxCycle" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AuxiliaryAgreement.auxCycle">
+<xs:annotation>
+<xs:documentation>The frequency for automatically recurring auxiliary charges, where 'AuxiliaryAccount.initialCharge' is recursively added to 'AuxiliaryAccount.dueCurrent' at the start of each 'auxCycle'. For example: on a specified date and time; hourly; daily; weekly; monthly; 3-monthly; 6-monthly; 12-monthly; etc.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="auxPriorityCode" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AuxiliaryAgreement.auxPriorityCode">
+<xs:annotation>
+<xs:documentation>The coded priority indicating the priority that this auxiliary agreement has above other auxiliary agreements (associated with the same customer agreement) when it comes to competing for settlement from a payment transaction or token purchase.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="createdDateTime" minOccurs="0" maxOccurs="1" type="xs:dateTime" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Document.createdDateTime">
+<xs:annotation>
+<xs:documentation>Date and time that this document was created.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="fixedAmount" minOccurs="0" maxOccurs="1" type="m:Money" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AuxiliaryAgreement.fixedAmount">
+<xs:annotation>
+<xs:documentation>The fixed amount that must be collected from each vending transaction towards settlement of this auxiliary agreement. Note that there may be multiple tokens vended per vending transaction, but this is not relevant.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="lastModifiedDateTime" minOccurs="0" maxOccurs="1" type="xs:dateTime" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Document.lastModifiedDateTime">
+<xs:annotation>
+<xs:documentation>Date and time this document was last modified. Documents may potentially be modified many times during their lifetime.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="minAmount" minOccurs="0" maxOccurs="1" type="m:Money" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AuxiliaryAgreement.minAmount">
+<xs:annotation>
+<xs:documentation>The minimum amount that must be paid at any transaction towards settling this auxiliry agreement or reducing the balance.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="payCycle" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AuxiliaryAgreement.payCycle">
+<xs:annotation>
+<xs:documentation>The contractually expected payment frequency (by the customer). Examples are: ad-hoc; on specified date; hourly, daily, weekly, monthly. etc.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="revisionNumber" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Document.revisionNumber">
+<xs:annotation>
+<xs:documentation>Revision number for this document.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="signDate" minOccurs="0" maxOccurs="1" type="xs:date" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Agreement.signDate">
+<xs:annotation>
+<xs:documentation>Date this agreement was consummated among associated persons and/or organisations.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="subject" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Document.subject">
+<xs:annotation>
+<xs:documentation>Document subject.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="subType" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AuxiliaryAgreement.subType">
+<xs:annotation>
+<xs:documentation>Sub-classification of the inherited 'type' for this AuxiliaryAgreement.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="title" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Document.title">
+<xs:annotation>
+<xs:documentation>Document title.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="type" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Document.type">
+<xs:annotation>
+<xs:documentation>Utility-specific classification of this document, according to their corporate standards, practices, and existing IT systems (e.g., for management of assets, maintenance, work, outage, customers, etc.).</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="vendPortion" minOccurs="0" maxOccurs="1" type="m:PerCent" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AuxiliaryAgreement.vendPortion">
+<xs:annotation>
+<xs:documentation>The percentage of the transaction amount that must be collected from each vending transaction towards settlement of this auxiliary agreement when payments are not in arrears. Note that there may be multiple tokens vended per vending transaction, but this is not relevant.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="vendPortionArrear" minOccurs="0" maxOccurs="1" type="m:PerCent" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AuxiliaryAgreement.vendPortionArrear">
+<xs:annotation>
+<xs:documentation>The percentage of the transaction amount that must be collected from each vending transaction towards settlement of this auxiliary agreement when payments are in arrears. Note that there may be multiple tokens vended per vending transaction, but this is not relevant.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="AuxiliaryAccounts" minOccurs="0" maxOccurs="unbounded" type="m:AuxiliaryAccount" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AuxiliaryAgreement.AuxiliaryAccounts">
+<xs:annotation>
+<xs:documentation>All auxiliary accounts regulated by this agreement.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ConfigurationEvents" minOccurs="0" maxOccurs="1" type="m:ConfigurationEvent" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Document.ConfigurationEvents">
+<xs:annotation>
+<xs:documentation>All configuration events created for this document.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="CustomerAgreement" minOccurs="0" maxOccurs="1" type="m:CustomerAgreement" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#AuxiliaryAgreement.CustomerAgreement">
+<xs:annotation>
+<xs:documentation>Customer agreement this (non-service related) auxiliary agreement refers to.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="docStatus" minOccurs="0" maxOccurs="1" type="m:Status" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Document.docStatus">
+<xs:annotation>
+<xs:documentation>Status of this document. For status of subject matter this document represents (e.g., Agreement, Work), use 'status' attribute.</xs:documentation>
+<xs:documentation>Example values for 'docStatus.status' are draft, approved, cancelled, etc.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Names" minOccurs="0" maxOccurs="unbounded" type="m:Name" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#IdentifiedObject.Names">
+<xs:annotation>
+<xs:documentation>All names of this identified object.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="status" minOccurs="0" maxOccurs="1" type="m:Status" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Document.status">
+<xs:annotation>
+<xs:documentation>Status of subject matter (e.g., Agreement, Work) this document represents. For status of the document itself, use 'docStatus' attribute.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="validityInterval" minOccurs="0" maxOccurs="1" type="m:DateTimeInterval" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Agreement.validityInterval">
+<xs:annotation>
+<xs:documentation>Date and time interval this agreement is valid (from going into effect to termination).</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Charge" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Charge">
+<xs:annotation>
+<xs:documentation>A charge element associated with other entities such as tariff structures, auxiliary agreements or other charge elements. The total charge amount applicable to this instance of charge is the sum of fixed and variable portion.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="mRID" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#IdentifiedObject.mRID">
+<xs:annotation>
+<xs:documentation>A Model Authority issues mRIDs. Given that each Model Authority has a unique id and this id is part of the mRID, then the mRID is globally unique.</xs:documentation>
+<xs:documentation>Global uniqeness is easily achived by using a UUID for the mRID. It is strongly recommended to do this.</xs:documentation>
+<xs:documentation>For CIMXML data files the mRID is mapped to rdf:ID or rdf:about attributes that identifies CIM object elements.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="kind" minOccurs="0" maxOccurs="1" type="m:ChargeKind" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Charge.kind">
+<xs:annotation>
+<xs:documentation>The kind of charge to be applied.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="variablePortion" minOccurs="0" maxOccurs="1" type="m:PerCent" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Charge.variablePortion">
+<xs:annotation>
+<xs:documentation>The variable portion of this charge element, calculated as a percentage of the total amount of a parent charge.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ChildCharges" minOccurs="0" maxOccurs="unbounded" type="m:ChildCharge" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Charge.ChildCharges">
+<xs:annotation>
+<xs:documentation>All sub-components of this complex charge.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="fixedPortion" minOccurs="0" maxOccurs="1" type="m:AccountingUnit" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Charge.fixedPortion">
+<xs:annotation>
+<xs:documentation>The fixed portion of this charge element.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Names" minOccurs="0" maxOccurs="unbounded" type="m:Name" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#IdentifiedObject.Names">
+<xs:annotation>
+<xs:documentation>All names of this identified object.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="ChargeKind" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ChargeKind">
+<xs:annotation>
+<xs:documentation>Kind of charge.</xs:documentation>
+</xs:annotation>
+<xs:restriction base="xs:string">
+<xs:enumeration value="auxiliaryCharge">
+<xs:annotation>
+<xs:documentation>Any other charge which is not a consumptionCharge or demandCharge. For example: debt recovery, arrears, standing charge or charge for another service such as street lighting.</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="consumptionCharge">
+<xs:annotation>
+<xs:documentation>The charge levied for the actual usage of the service, normally expressed in terms of a tariff. For example: usage x price per kWh = total charge for consumption.</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="demandCharge">
+<xs:annotation>
+<xs:documentation>The charge related to the usage within a defined time interval, normally expressed in terms of a tariff. For example: a maximum-demand tariff will levy an additional charge on top of the consumption charge if the usage exceeds a defined limit per hour.</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="other">
+<xs:annotation>
+<xs:documentation>Other kind of charge.</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="taxCharge">
+<xs:annotation>
+<xs:documentation>Any charge that is classified as a tax of a kind. For example: VAT, GST, TV tax, etc.</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+</xs:restriction>
+</xs:simpleType>
+<xs:complexType name="ChildCharge" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Charge">
+<xs:annotation>
+<xs:documentation>A charge element associated with other entities such as tariff structures, auxiliary agreements or other charge elements. The total charge amount applicable to this instance of charge is the sum of fixed and variable portion.</xs:documentation>
+<xs:documentation/>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="mRID" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#IdentifiedObject.mRID">
+<xs:annotation>
+<xs:documentation>A Model Authority issues mRIDs. Given that each Model Authority has a unique id and this id is part of the mRID, then the mRID is globally unique.</xs:documentation>
+<xs:documentation>Global uniqeness is easily achived by using a UUID for the mRID. It is strongly recommended to do this.</xs:documentation>
+<xs:documentation>For CIMXML data files the mRID is mapped to rdf:ID or rdf:about attributes that identifies CIM object elements.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="kind" minOccurs="0" maxOccurs="1" type="m:ChargeKind" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Charge.kind">
+<xs:annotation>
+<xs:documentation>The kind of charge to be applied.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="variablePortion" minOccurs="0" maxOccurs="1" type="m:PerCent" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Charge.variablePortion">
+<xs:annotation>
+<xs:documentation>The variable portion of this charge element, calculated as a percentage of the total amount of a parent charge.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="fixedPortion" minOccurs="0" maxOccurs="1" type="m:AccountingUnit" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Charge.fixedPortion">
+<xs:annotation>
+<xs:documentation>The fixed portion of this charge element.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Names" minOccurs="0" maxOccurs="unbounded" type="m:Name" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#IdentifiedObject.Names">
+<xs:annotation>
+<xs:documentation>All names of this identified object.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ConfigurationEvent" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ConfigurationEvent">
+<xs:annotation>
+<xs:documentation>Used to report details on creation, change or deletion of an entity or its configuration.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="mRID" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#IdentifiedObject.mRID">
+<xs:annotation>
+<xs:documentation>A Model Authority issues mRIDs. Given that each Model Authority has a unique id and this id is part of the mRID, then the mRID is globally unique.</xs:documentation>
+<xs:documentation>Global uniqeness is easily achived by using a UUID for the mRID. It is strongly recommended to do this.</xs:documentation>
+<xs:documentation>For CIMXML data files the mRID is mapped to rdf:ID or rdf:about attributes that identifies CIM object elements.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="createdDateTime" minOccurs="0" maxOccurs="1" type="xs:dateTime" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ActivityRecord.createdDateTime">
+<xs:annotation>
+<xs:documentation>Date and time this activity record has been created (different from the 'status.dateTime', which is the time of a status change of the associated object, if applicable).</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="effectiveDateTime" minOccurs="0" maxOccurs="1" type="xs:dateTime" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ConfigurationEvent.effectiveDateTime">
+<xs:annotation>
+<xs:documentation>Date and time this event has or will become effective.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="effectiveEndDateTime" minOccurs="0" maxOccurs="1" type="xs:dateTime" sawsdl:modelReference="http://landisgyr.com/v2/CIM-schema-ext#ConfigurationEvent.effectiveEndDateTime">
+<xs:annotation>
+<xs:documentation>Date and time this event has or will end being effective.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="modifiedBy" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ConfigurationEvent.modifiedBy">
+<xs:annotation>
+<xs:documentation>Source/initiator of modification.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="reason" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ActivityRecord.reason">
+<xs:annotation>
+<xs:documentation>Reason for event resulting in this activity record, typically supplied when user initiated.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="remark" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ConfigurationEvent.remark">
+<xs:annotation>
+<xs:documentation>Free text remarks.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="severity" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ActivityRecord.severity">
+<xs:annotation>
+<xs:documentation>Severity level of event resulting in this activity record.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="type" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ActivityRecord.type">
+<xs:annotation>
+<xs:documentation>Type of event resulting in this activity record.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Names" minOccurs="0" maxOccurs="unbounded" type="m:Name" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#IdentifiedObject.Names">
+<xs:annotation>
+<xs:documentation>All names of this identified object.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="status" minOccurs="0" maxOccurs="1" type="m:Status" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ActivityRecord.status">
+<xs:annotation>
+<xs:documentation>Information on consequence of event resulting in this activity record.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="Currency" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Currency">
+<xs:annotation>
+<xs:documentation>Monetary currencies. Apologies for this list not being exhaustive.</xs:documentation>
+</xs:annotation>
+<xs:restriction base="xs:string">
+<xs:enumeration value="AUD">
+<xs:annotation>
+<xs:documentation>Australian dollar</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="CAD">
+<xs:annotation>
+<xs:documentation>Canadian dollar</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="CHF">
+<xs:annotation>
+<xs:documentation>Swiss francs</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="CNY">
+<xs:annotation>
+<xs:documentation>Chinese yuan renminbi</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="DKK">
+<xs:annotation>
+<xs:documentation>Danish crown</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="EUR">
+<xs:annotation>
+<xs:documentation>European euro</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="GBP">
+<xs:annotation>
+<xs:documentation>British pound</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="INR">
+<xs:annotation>
+<xs:documentation>India rupees</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="JPY">
+<xs:annotation>
+<xs:documentation>Japanese yen</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="NOK">
+<xs:annotation>
+<xs:documentation>Norwegian crown</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="RUR">
+<xs:annotation>
+<xs:documentation>Russian ruble</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="SEK">
+<xs:annotation>
+<xs:documentation>Swedish crown</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="USD">
+<xs:annotation>
+<xs:documentation>US dollar</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="other">
+<xs:annotation>
+<xs:documentation>Another type of currency.</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+</xs:restriction>
+</xs:simpleType>
+<xs:complexType name="CustomerAgreement" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#CustomerAgreement">
+<xs:annotation>
+<xs:documentation>Agreement between the customer and the service supplier to pay for service at a specific service location. It records certain billing information about the type of service provided at the service location and is used during charge creation to determine the type of service.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="mRID" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#IdentifiedObject.mRID">
+<xs:annotation>
+<xs:documentation>A Model Authority issues mRIDs. Given that each Model Authority has a unique id and this id is part of the mRID, then the mRID is globally unique.</xs:documentation>
+<xs:documentation>Global uniqeness is easily achived by using a UUID for the mRID. It is strongly recommended to do this.</xs:documentation>
+<xs:documentation>For CIMXML data files the mRID is mapped to rdf:ID or rdf:about attributes that identifies CIM object elements.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Names" minOccurs="0" maxOccurs="unbounded" type="m:Name" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#IdentifiedObject.Names">
+<xs:annotation>
+<xs:documentation>All names of this identified object.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="DateTimeInterval" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#DateTimeInterval">
+<xs:annotation>
+<xs:documentation>Interval of date and time.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="end" minOccurs="0" maxOccurs="1" type="xs:dateTime" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#DateTimeInterval.end">
+<xs:annotation>
+<xs:documentation>End date and time of this interval.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="start" minOccurs="0" maxOccurs="1" type="xs:dateTime" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#DateTimeInterval.start">
+<xs:annotation>
+<xs:documentation>Start date and time of this interval.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Due" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Due">
+<xs:annotation>
+<xs:documentation>Details on amounts due for an account.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="arrears" minOccurs="0" maxOccurs="1" type="m:Money" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Due.arrears">
+<xs:annotation>
+<xs:documentation>Part of 'current' that constitutes the arrears portion.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="charges" minOccurs="0" maxOccurs="1" type="m:Money" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Due.charges">
+<xs:annotation>
+<xs:documentation>Part of 'current' that constitutes the charge portion: 'charges' = 'Charge.fixedPortion' + 'Charge.variablePortion'.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="current" minOccurs="0" maxOccurs="1" type="m:Money" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Due.current">
+<xs:annotation>
+<xs:documentation>Current total amount now due: current = principle + arrears + interest + charges. Typically the rule for settlement priority is: interest dues, then arrears dues, then current dues, then charge dues.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="interest" minOccurs="0" maxOccurs="1" type="m:Money" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Due.interest">
+<xs:annotation>
+<xs:documentation>Part of 'current' that constitutes the interest portion.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="principle" minOccurs="0" maxOccurs="1" type="m:Money" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Due.principle">
+<xs:annotation>
+<xs:documentation>Part of 'current' that constitutes the portion of the principle amount currently due.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Name" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Name">
+<xs:annotation>
+<xs:documentation>The Name class provides the means to define any number of human readable  names for an object. A name is &lt;b&gt;not&lt;/b&gt; to be used for defining inter-object relationships. For inter-object relationships instead use the object identification 'mRID'.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Name.name">
+<xs:annotation>
+<xs:documentation>Any free text that name the object.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="NameType" minOccurs="0" maxOccurs="1" type="m:NameType" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Name.NameType">
+<xs:annotation>
+<xs:documentation>Type of this name.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="NameType" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#NameType">
+<xs:annotation>
+<xs:documentation>Type of name. Possible values for attribute 'name' are implementation dependent but standard profiles may specify types. An enterprise may have multiple IT systems each having its own local name for the same object, e.g. a planning system may have different names from an EMS. An object may also have different names within the same IT system, e.g. localName and aliasName as defined in CIM version 14. Their definitions from CIM14 are</xs:documentation>
+<xs:documentation>The localName is a human readable name of the object. It is only used with objects organized in a naming hierarchy. localName: A free text name local to a node in a naming hierarchy similar to a file directory structure. A power system related naming hierarchy may be: Substation, VoltageLevel, Equipment etc. Children of the same parent in such a hierarchy have names that typically are unique among them.</xs:documentation>
+<xs:documentation>aliasName: A free text alternate name typically used in tabular reports where the column width is limited.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="description" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#NameType.description">
+<xs:annotation>
+<xs:documentation>Description of the name type.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#NameType.name">
+<xs:annotation>
+<xs:documentation>Name of the name type.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="NameTypeAuthority" minOccurs="0" maxOccurs="1" type="m:NameTypeAuthority" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#NameType.NameTypeAuthority">
+<xs:annotation>
+<xs:documentation>Authority responsible for managing names of this type.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="NameTypeAuthority" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#NameTypeAuthority">
+<xs:annotation>
+<xs:documentation>Authority responsible for creation and management of names of a given type; typically an organization or an enterprise system.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="description" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#NameTypeAuthority.description">
+<xs:annotation>
+<xs:documentation>Description of the name type authority.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#NameTypeAuthority.name">
+<xs:annotation>
+<xs:documentation>Name of the name type authority.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Status" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Status">
+<xs:annotation>
+<xs:documentation>Current status information relevant to an entity.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="dateTime" minOccurs="0" maxOccurs="1" type="xs:dateTime" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Status.dateTime">
+<xs:annotation>
+<xs:documentation>Date and time for which status 'value' applies.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="reason" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Status.reason">
+<xs:annotation>
+<xs:documentation>Reason code or explanation for why an object went to the current status 'value'.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="remark" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Status.remark">
+<xs:annotation>
+<xs:documentation>Pertinent information regarding the current 'value', as free form text.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="value" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Status.value">
+<xs:annotation>
+<xs:documentation>Status value at 'dateTime'; prior status changes may have been kept in instances of activity records associated with the object to which this status applies.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="UnitMultiplier" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#UnitMultiplier">
+<xs:annotation>
+<xs:documentation>The unit multipliers defined for the CIM.</xs:documentation>
+</xs:annotation>
+<xs:restriction base="xs:string">
+<xs:enumeration value="G">
+<xs:annotation>
+<xs:documentation>Giga 10**9</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="M">
+<xs:annotation>
+<xs:documentation>Mega 10**6</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="T">
+<xs:annotation>
+<xs:documentation>Tera 10**12</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="c">
+<xs:annotation>
+<xs:documentation>Centi 10**-2</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="d">
+<xs:annotation>
+<xs:documentation>Deci 10**-1</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="k">
+<xs:annotation>
+<xs:documentation>Kilo 10**3</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="m">
+<xs:annotation>
+<xs:documentation>Milli 10**-3</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="micro">
+<xs:annotation>
+<xs:documentation>Micro 10**-6</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="n">
+<xs:annotation>
+<xs:documentation>Nano 10**-9</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="none">
+<xs:annotation/>
+</xs:enumeration>
+<xs:enumeration value="p">
+<xs:annotation>
+<xs:documentation>Pico 10**-12</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="RealEnergy" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#RealEnergy">
+<xs:annotation>
+<xs:documentation>Real electrical energy</xs:documentation>
+</xs:annotation>
+<xs:restriction base="xs:float"/>
+</xs:simpleType>
+<xs:simpleType name="PerCent" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#PerCent">
+<xs:annotation>
+<xs:documentation>Normally 0 - 100 on a defined base.</xs:documentation>
+</xs:annotation>
+<xs:restriction base="xs:float"/>
+</xs:simpleType>
+<xs:simpleType name="Money" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Money">
+<xs:annotation>
+<xs:documentation>Amount of money.</xs:documentation>
+</xs:annotation>
+<xs:restriction base="xs:decimal"/>
+</xs:simpleType>
+</xs:schema>

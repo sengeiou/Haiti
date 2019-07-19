@@ -1,0 +1,105 @@
+@charset "UTF-8";
+/* CSS Document */
+
+
+body {margin:0; padding:0}
+
+
+.f_modi_cg {color:#666}
+.f_modi_cb {color:#1170f0}
+
+
+
+.f_modi_v12 { /*font-family:Verdana, Geneva, sans-serif; font-size:12px;*/ font-weight:bold; 
+				padding:0 !important; margin:0 !important; border:1px solid transparent !important; 
+				width:100%; background-color:transparent !important; }
+
+.f_modi_v10 { font-family:Verdana, Geneva, sans-serif; font-size:10px;}
+
+
+/*login_adm*/
+
+#logcom_body {	background:url(../images/login_com_bg.jpg) no-repeat; width: 960px; height:650px; margin:0 auto; display:block;}
+
+
+/*login_customer*/
+
+#logcus_body {	background:url(../images/login_cus_bg.jpg) no-repeat !important; width: 960px; height:650px; margin:0 auto; display:block;}
+
+#logcus_ff { width:380px; height:90px; margin:100px 0 0 440px; display: block; float:left}
+#logcus_ff_version { font-size:22px;padding-left:120px;font-style:italic;font-weight:bold;}
+#logcus_ff_customer { width:426px; height:90px; margin:150px 0 0 400px; display: block; float:left;}
+
+
+.login_nuri {width:292px; height:25px; display:block; float:left;}
+.login_pw_nuri {width:292px; height:25px; display:block; margin:10px 0 0 0; float:left}
+
+.login_nuri2 {width:292px; height:25px; display:block; float:left;}
+.login_pw_nuri2 {width:292px; height:25px; display:block; margin:10px 0 0 0; float:left}
+
+
+.log_f_left {width:6px; height:25px; background:url(../images/log_f_bg.gif) ; display:block; float:left; }
+.log_f_bg {background:url(../images/log_f_bg.gif) repeat-x 0 -25px; height:15px; width:210px;border:0 none; padding:5px; float:left; margin-right:0; }
+.log_f_right {width:6px; height:25px; background: url(../images/log_f_bg.gif) no-repeat 0 -50px; display:block; float:left; }
+
+.login_nuri_btn { display:block; float:left}
+.login_nuri_btn a {width:0; height:0; display:block; overflow:hidden; padding:60px 0 0 76px; background:url(../images/login_nuri_btn.gif); float:left}
+.login_nuri_btn a:hover {width:0; height:0; display:block; overflow:hidden; padding:60px 0 0 76px; background:url(../images/login_nuri_btn.gif) 0 -60px; float:left}
+
+.text_bluegreen{color:#006d64;margin-top:-3px}
+.text_bluegreen2{color:#006d64}
+.noframe {border:0 transparent !important;background-color:transparent !important;}
+.checkbox{border:0 transparent !important;margin:4px 0 0 0}
+.saveid{clear:both; margin:5px 0 0 92px;*margin:5px 0 0 96px; overflow:hidden}
+.comment{overflow:hidden; color:#888; text-align:right; clear:both; letter-spacing:0;}
+
+.customerlogin{width:auto; overflow:hidden}
+.customerlogin dl{width:auto;float:left; position:relative; overflow:hidden;text-align:right;}
+ @-moz-document url-prefix(){.customerlogin dl { width:310px}}
+.customerlogin dl.log_btn{width:auto;float:left; position:relative; overflow:hidden;}
+.customerlogin dt{float:left;min-width:90px;*padding:5px 0 0 0;padding:5px 5px 0 0;}
+.customerlogin dd{padding:4px 0 1px 10px;overflow:hidden; background:url(../images/log_bg_input.png) no-repeat;  width:198px; height:25px }
+
+.account_menu {float:right;width:auto;text-align:right;margin:10px 2px 0 0;}
+.account_menu a {color:#888;font-weight:bold; text-decoration:none;}
+.account_menu a:hover {color:#434343;font-weight:bold; text-decoration:none;}
+.account_menu span.menu_bar {font-size:11px; color:#d5d5d5; margin:0 6px}
+
+.log_button,.log_button a
+		{
+		position:relative; 
+		display:inline-block; 
+		text-decoration:none; 
+		height:56px !important;
+		white-space:nowrap; 
+		background:url(../images/log_btn.png) no-repeat; 
+		vertical-align:middle; 
+		color:#fff; 
+		font-weight:bold;
+		padding-right:4px;
+		}
+.log_button a
+		{
+		left:4px;
+		overflow:visible; 
+		padding:18px 14px 10px 8px; 
+		background-position:right top; 
+		vertical-align:middle;
+		cursor:pointer; 
+		_vertical-align:top;
+		}
+
+.log_button a, x:-moz-any-link, x:default {padding:18px 10px 10px 8px; } 
+
+.log_button a:hover{color:#E8FF95;text-decoration:none; font-weight:bold}
+
+
+
+
+
+
+
+
+
+
+

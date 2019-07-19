@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Role name="admin" supplier="한전" systemAuthority="w" mtrAuthority="w" descr="Admin" hasDashboardAuth="true" customerRole="false" loginAuthority="true" />
+    <system.Role name="customer" supplier="한전" systemAuthority="r" mtrAuthority="r" descr="Customer" hasDashboardAuth="true" customerRole="true" loginAuthority="true" />
+</dataset>

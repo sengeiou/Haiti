@@ -1,0 +1,1 @@
+./dnssync.py > dnssync.log 2>&1

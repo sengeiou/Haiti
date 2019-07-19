@@ -1,0 +1,4803 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>
+	<!-- mx2 -->
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.1" value="1"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="Over blotage (Phase A)"
+		descr="Over blotage (Phase A)" troubleAdvice="" support="true"
+		meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.2" value="2"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="Over voltage (Phase B)"
+		descr="Over voltage (Phase B)" troubleAdvice="" support="true"
+		meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.3" value="3"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="Over voltage (Phase C)"
+		descr="Over voltage (Phase C)" troubleAdvice="" support="true"
+		meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.4" value="4"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="Under voltage (Phase A)"
+		descr="Under voltage (Phase A)" troubleAdvice="" support="true"
+		meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.5" value="5"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="Under voltage (Phase B)"
+		descr="Under voltage (Phase B)" troubleAdvice="" support="true"
+		meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.6" value="6"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="Under voltage (Phase C)"
+		descr="Under voltage (Phase C)" troubleAdvice="" support="true"
+		meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.7" value="7"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="Over current (Phase A)"
+		descr="Over current (Phase A)" troubleAdvice="" support="true"
+		meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.8" value="8"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="Over current (Phase B)"
+		descr="Over current (Phase B)" troubleAdvice="" support="true"
+		meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.9" value="9"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="Over current (Phase C)"
+		descr="Over current (Phase C)" troubleAdvice="" support="true"
+		meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.10" value="10"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="Power ON" descr="Power ON"
+		troubleAdvice="" support="true" meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.11" value="11"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="Power OFF" descr="Power OFF"
+		troubleAdvice="" support="true" meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.12" value="12"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="Time change (Before)"
+		descr="Time change (Before)" troubleAdvice="" support="true"
+		meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.13" value="13"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="Time change (After)"
+		descr="Time change (After)" troubleAdvice="" support="true" meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.14" value="14"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="Manual Demand reset"
+		descr="Manual Demand reset" troubleAdvice="" support="true" meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.15" value="15"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="Self-reading" descr="Self-reading"
+		troubleAdvice="" support="true" meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.16" value="16"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="TOU Calendar change"
+		descr="TOU Calendar change" troubleAdvice="" support="true" meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.17" value="17"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="Low battery" descr="Low battery"
+		troubleAdvice="" support="true" meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.18" value="18"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="Reverse current"
+		descr="Reverse current" troubleAdvice="" support="true" meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.19" value="19"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="T-cover open" descr="T-cover open"
+		troubleAdvice="" support="true" meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.20" value="20"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="Data reset" descr="Data reset"
+		troubleAdvice="" support="true" meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.21" value="21"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="Potential loss"
+		descr="Potential loss" troubleAdvice="" support="true" meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.22" value="22"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="Invalid password"
+		descr="Invalid password" troubleAdvice="" support="true" meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.23" value="23"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="Internal H/W loss"
+		descr="Internal H/W loss" troubleAdvice="" support="true" meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.24" value="24"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="F-Cover open" descr="F-Cover open"
+		troubleAdvice="" support="true" meterType="EnergyMeter" />
+	<device.MeterEvent id="STE.MITSUBISHI.MX2.25" value="25"
+		vendor="MITSUBISHI" model="MX2" kind="STE" name="External Input Ch1"
+		descr="External Input Ch1" troubleAdvice="" support="true" meterType="EnergyMeter" />
+	<!-- mx2 end -->
+    <device.MeterEvent 
+    				id="STE.GE.SM110.1"
+    				value="1"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STE"  
+    				name="Power Down"
+    				descr="Power Down"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>	
+    <device.MeterEvent 
+    				id="STE.GE.SM110.2"
+    				value="2"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STE"  
+    				name="Power Up"
+    				descr="Power Up"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>	
+	<device.MeterEvent 
+    				id="STE.GE.SM110.11"
+    				value="11"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STE"  
+    				name="Meter Programmed"
+    				descr="Meter Programmed"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>				
+    <device.MeterEvent 
+    				id="STE.GE.SM110.20"
+    				value="20"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STE"  
+    				name="Demand Reset Occurred"
+    				descr="Demand Reset Occurred"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+     <device.MeterEvent 
+    				id="STE.GE.SM110.32"
+    				value="32"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STE"  
+    				name="Test Mode Start"
+    				descr="Test Mode Start"
+    				troubleAdvice="to test meter operation and site characteristics without effecting billing quantities or load profile data"
+    				support="true"
+					meterType="EnergyMeter"
+    				/>   				
+         <device.MeterEvent 
+    				id="STE.GE.SM110.33"
+    				value="33"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STE"  
+    				name="Test Mode Exit"
+    				descr="Test Mode Exit"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>				
+    	<device.MeterEvent 
+    				id="STE.GE.SM110.21"
+    				value="21"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STE"  
+    				name="Self-read Occurred"
+    				descr="Self-read Occurred"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+        <device.MeterEvent 
+    				id="MFE.GE.SM110.16"
+    				value="16"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="MFE"  
+    				name="Under Voltage"
+    				descr="Under Voltage"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.SM110.17"
+    				value="17"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="MFE"  
+    				name="Under Voltage Condition Cleared"
+    				descr="Under Voltage Condition Cleared"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    				
+    	<device.MeterEvent 
+    				id="MFE.GE.SM110.18"
+    				value="18"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="MFE"  
+    				name="Demand Overload"
+    				descr="Demand Overload"
+    				troubleAdvice="1. Rewire according to applicable diagram 
+								   2. Check that voltage and current connectors are seated properly.Check the leads for damage. 
+								   3.Replace meter. "
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.SM110.19"
+    				value="19"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="MFE"  
+    				name="Demand Overload Condition Cleared"
+    				descr="Demand Overload Condition Cleared"
+    				troubleAdvice="The meter does not automatically clear the Demand Overload caution. The
+Demand Overload caution is cleared by a demand reset"
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+                    id="MFE.GE.SM110.20"
+                    value="20"
+                    vendor="GE" 
+                    model="SM110"  
+                    kind="MFE"  
+                    name="Received kWh"
+                    descr="Reverse Running"
+                    troubleAdvice="Reverse Running"
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+    	<device.MeterEvent 
+    				id="MFE.GE.SM110.24"
+    				value="24"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="MFE"  
+    				name="Real Time Pricing Activation"
+    				descr="Real Time Pricing Activation"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.SM110.25"
+    				value="25"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="MFE"  
+    				name="Real Time Pricing Deactivation"
+    				descr="Real Time Pricing Deactivation"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.SM110.28"
+    				value="28"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="MFE"  
+    				name="Calibration Mode Activated"
+    				descr="Calibration Mode Activated"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.SM110.33"
+    				value="33"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="MFE"  
+    				name="DC detection condition"
+    				descr="DC detection condition"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+		<device.MeterEvent 
+    				id="MFE.GE.SM110.34"
+    				value="34"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="MFE"  
+    				name="DC detection condition cleared"
+    				descr="DC detection condition cleared"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+		<device.MeterEvent 
+    				id="STS.GE.SM110.20"
+    				value="20"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STS"  
+    				name="Low battery"
+    				descr="Low battery"
+    				troubleAdvice="Replace battery."
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="STS.GE.SM110.13"
+    				value="13"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STS"  
+    				name="RAM error"
+    				descr="Meter did detect a RAM error"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="STS.GE.SM110.14"
+    				value="14"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STS"  
+    				name="ROM error"
+    				descr="Meter did detect a ROM error"
+    				troubleAdvice="Check for proper installation. Check for proper grounding. Call for factory for further
+assistance"
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+		<device.MeterEvent 
+    				id="STS.GE.SM110.16"
+    				value="16"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STS"  
+    				name="Clock error"
+    				descr="Meter did detect a clock error"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+		<device.MeterEvent 
+    				id="STS.GE.SM110.17"
+    				value="17"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STS"  
+    				name="Bad voltage"
+    				descr="Meter did detect a bad voltage"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+		<device.MeterEvent 
+    				id="STS.GE.SM110.10"
+    				value="10"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STS"  
+    				name="Meter is unprogrammed"
+    				descr="Meter is unprogrammed"
+    				troubleAdvice="Program the meter."
+      				support="true"
+					meterType="EnergyMeter"
+    				/>
+		<device.MeterEvent 
+                    id="STE.Elster.A1700.1"
+                    value="1"
+                    vendor="Elster" 
+                    model="A1700"  
+                    kind="STE"  
+                    name="Power Up"
+                    descr="Power Up"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="STE.Elster.A1700.2"
+                    value="2"
+                    vendor="Elster" 
+                    model="A1700"  
+                    kind="STE"  
+                    name="Power Down"
+                    descr="Power Down"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="STE.Elster.A1700.3"
+                    value="3"
+                    vendor="Elster" 
+                    model="A1700"  
+                    kind="STE"  
+                    name="Configuration Change"
+                    descr="Configuration Change"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="STE.Elster.A1700.4"
+                    value="4"
+                    vendor="Elster" 
+                    model="A1700"  
+                    kind="STE"  
+                    name="Time Change"
+                    descr="Time Change"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="STE.Elster.A1700.5"
+                    value="5"
+                    vendor="Elster" 
+                    model="A1700"  
+                    kind="STE"  
+                    name="Daylight Saving"
+                    descr="Daylight Saving"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="STE.Elster.A1700.6"
+                    value="6"
+                    vendor="Elster" 
+                    model="A1700"  
+                    kind="STE"  
+                    name="Load Profile Cleared"
+                    descr="Load Profile Cleared"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="STE.Elster.A1700.7"
+                    value="7"
+                    vendor="Elster" 
+                    model="A1700"  
+                    kind="STE"  
+                    name="Forced End Of Demand"
+                    descr="Forced End Of Demand"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="STE.Elster.A1700.8"
+                    value="8"
+                    vendor="Elster" 
+                    model="A1700"  
+                    kind="STE"  
+                    name="Meter Reset"
+                    descr="Meter Reset"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="STE.Elster.A1700.9"
+                    value="9"
+                    vendor="Elster" 
+                    model="A1700"  
+                    kind="STE"  
+                    name="Time Sync"
+                    descr="Time Sync"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="STE.Elster.A1700.10"
+                    value="10"
+                    vendor="Elster" 
+                    model="A1700"  
+                    kind="STE"  
+                    name="Data Change"
+                    descr="Data Change"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="STE.Elster.A1700.11"
+                    value="11"
+                    vendor="Elster" 
+                    model="A1700"  
+                    kind="STE"  
+                    name="Battery Fail"
+                    descr="Battery Fail"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="STE.Elster.A1700.12"
+                    value="12"
+                    vendor="Elster" 
+                    model="A1700"  
+                    kind="STE"  
+                    name="Phase Failure"
+                    descr="Phase Failure"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="STE.Elster.A1700.13"
+                    value="13"
+                    vendor="Elster" 
+                    model="A1700"  
+                    kind="STE"  
+                    name="Reverse Running"
+                    descr="Reverse Running"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+
+<device.MeterEvent 
+                id="STE.Kamstrup.351B.1"
+                value="1"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Meter reset"
+                descr="Meter reset_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.2"
+                value="2"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Error at EEPROM access Error at restore or backup"
+                descr="Error at EEPROM access Error at restore or backup_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.3"
+                value="3"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Detection of magnet"
+                descr="Detection of magnet_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                     
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.4"
+                value="4"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="RAM test error"
+                descr="RAM test error_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />   
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.5"
+                value="5"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="ROM checksum error"
+                descr="ROM checksum error_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />        
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.6"
+                value="6"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Alarm input"
+                descr="Alarm input_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                                               
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.7"
+                value="7"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Tamper detected"
+                descr="Tamper detected_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />      
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.9"
+                value="9"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="KMP command SetClock PutRegister 1047"
+                descr="KMP command SetClock PutRegister 1047_RTC status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />           
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.10"
+                value="10"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="No change"
+                descr="No change_RTC status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />         
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.11"
+                value="11"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="System L1"
+                descr="System L1_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />         
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.12"
+                value="12"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="System L2"
+                descr="System L2_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />        
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.13"
+                value="13"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="System L3"
+                descr="System L3_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                 
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.14"
+                value="14"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Voltage exceeds cutoff voltage"
+                descr="Voltage exceeds cutoff voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />          
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.15"
+                value="15"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Voltage below cutoff voltage"
+                descr="Voltage below cutoff voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />          
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.16"
+                value="16"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Voltage within limits of under- and over voltage"
+                descr="Voltage within limits of under- and over voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />        
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.17"
+                value="17"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Under voltage"
+                descr="Under voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />   
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.18"
+                value="18"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Over voltage"
+                descr="Over voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />           
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.19"
+                value="19"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Relays disconnected by command"
+                descr="Relays disconnected by command_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                                                                                                                                                                           
+                
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.20"
+                value="20"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Relays connected"
+                descr="Relays connected_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                 
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.21"
+                value="21"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Pre cutoff warning"
+                descr="Pre cutoff warning_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.22"
+                value="22"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Cutoff"
+                descr="Cutoff_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />           
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.23"
+                value="23"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Cutoff prepayment"
+                descr="Cutoff prepayment_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />           
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.24"
+                value="24"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Relays released for reconnection"
+                descr="Relays released for reconnection_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />     
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.25"
+                value="25"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Cutoff prepayment, LowMax expired"
+                descr="Cutoff prepayment, LowMax expired_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.26"
+                value="26"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Relays disconnected by push button"
+                descr="Relays disconnected by push button_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />   
+                
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.27"
+                value="27"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="No voltage of Voltage L1"
+                descr="No voltage of Voltage L1_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />   
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.28"
+                value="28"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="voltage of Voltage L1"
+                descr="voltage of Voltage L1_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.29"
+                value="29"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="No voltage of Voltage L2"
+                descr="No voltage of Voltage L2_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />               
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.30"
+                value="30"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="voltage of Voltage L2"
+                descr="voltage of Voltage L2_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />       
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.31"
+                value="31"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="No voltage of Voltage L3"
+                descr="No voltage of Voltage L3_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />      
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.32"
+                value="32"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="voltage of Voltage L3"
+                descr="voltage of Voltage L3_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />          
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.33"
+                value="33"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Validation(Bit 0-2 not valid)"
+                descr="Validation(Bit 0-2 not valid)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.34"
+                value="34"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Validation(Bit 0-2 is valid)"
+                descr="Validation(Bit 0-2 is valid)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.35"
+                value="35"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Internal relay control status(Error)"
+                descr="Internal relay control status(Error)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />         
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.36"
+                value="36"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Internal relay control status(No Error)"
+                descr="Internal relay control status(No Error)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />         
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.37"
+                value="37"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Disconnect(follows Low)"
+                descr="Disconnect(follows Low)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.38"
+                value="38"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Disconnect(follows High)"
+                descr="Disconnect(follows High)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />             
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.39"
+                value="39"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Transition pending(No transition pending)"
+                descr="Transition pending(No transition pending)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />             
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.40"
+                value="40"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Transition pending(Transition pending)"
+                descr="Transition pending(Transition pending)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.41"
+                value="41"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Default"
+                descr="Default_Load profile"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />               
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.42"
+                value="42"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Loadprofile_Logger_Size"
+                descr="Loadprofile_Logger_Size_Load profile"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />    
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.43"
+                value="43"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Loadprofile_Log_Reg_Changed"
+                descr="Loadprofile_Log_Reg_Changed_Load profile"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />    
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.351B.44"
+                value="44"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Loadprofile_Logger_Interval"
+                descr="Loadprofile_Logger_Interval_Load profile"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />        
+                
+         <device.MeterEvent 
+                id="STE.Kamstrup.351B.45"
+                value="45"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Power Down"
+                descr="Power Down"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />     
+                
+        <device.MeterEvent 
+                id="STE.Kamstrup.351B.46"
+                value="46"
+                vendor="Kamstrup" 
+                model="351B"  
+                kind="STE"  
+                name="Power Up"
+                descr="Power Up"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />   
+
+
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10E.4112"
+                value="4112"
+                vendor="EDMI" 
+                model="Mk10E"  
+                kind="STE"  
+                name="Power Up"
+                descr="Power Up"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                /> 
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10E.4096"
+                value="4096"
+                vendor="EDMI" 
+                model="Mk10E"  
+                kind="STE"  
+                name="Power Down"
+                descr="Power Down"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10E.20480"
+                value="20480"
+                vendor="EDMI" 
+                model="Mk10E"  
+                kind="STE"  
+                name="Demand Reset"
+                descr="Demand Reset"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10E.8384"
+                value="8384"
+                vendor="EDMI" 
+                model="Mk10E"  
+                kind="STE"  
+                name="System time change on port"
+                descr="System time change on port"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10E.8399"
+                value="8399"
+                vendor="EDMI" 
+                model="Mk10E"  
+                kind="STE"  
+                name="System time changed"
+                descr="System time changed"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10E.8256"
+                value="8256"
+                vendor="EDMI" 
+                model="Mk10E"  
+                kind="STE"  
+                name="User changed settings in Setup 1 on port"
+                descr="User changed settings in Setup 1 on port"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10E.8257"
+                value="8257"
+                vendor="EDMI" 
+                model="Mk10E"  
+                kind="STE"  
+                name="User changed settings in Setup 2 on port"
+                descr="User changed settings in Setup 2 on port"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10E.8258"
+                value="8258"
+                vendor="EDMI" 
+                model="Mk10E"  
+                kind="STE"  
+                name="User changed settings in Setup 3 on port"
+                descr="User changed settings in Setup 3 on port"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10E.12301"
+                value="12301"
+                vendor="EDMI" 
+                model="Mk10E"  
+                kind="STE"  
+                name="EFA V- Condition became Active from Unlatched"
+                descr="EFA V- Condition became Active from Unlatched"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10E.12290"
+                value="12290"
+                vendor="EDMI" 
+                model="Mk10E"  
+                kind="STE"  
+                name="EFA N- Condition became Active from Unlatched"
+                descr="EFA N- Condition became Active from Unlatched"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10E.20480"
+                value="20480"
+                vendor="EDMI" 
+                model="Mk10E"  
+                kind="STE"  
+                name="Demand Reset"
+                descr="Demand Reset"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10E.20481"
+                value="20481"
+                vendor="EDMI" 
+                model="Mk10E"  
+                kind="STE"  
+                name="Manual Demand Reset"
+                descr="Manual Demand Reset"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10A.4112"
+                value="4112"
+                vendor="EDMI" 
+                model="Mk10A"  
+                kind="STE"  
+                name="Power Up"
+                descr="Power Up"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                /> 
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10A.4096"
+                value="4096"
+                vendor="EDMI" 
+                model="Mk10A"  
+                kind="STE"  
+                name="Power Down"
+                descr="Power Down"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10A.20480"
+                value="20480"
+                vendor="EDMI" 
+                model="Mk10A"  
+                kind="STE"  
+                name="Demand Reset"
+                descr="Demand Reset"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10A.8384"
+                value="8384"
+                vendor="EDMI" 
+                model="Mk10A"  
+                kind="STE"  
+                name="System time change on port"
+                descr="System time change on port"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10A.8399"
+                value="8399"
+                vendor="EDMI" 
+                model="Mk10A"  
+                kind="STE"  
+                name="System time changed"
+                descr="System time changed"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10A.8256"
+                value="8256"
+                vendor="EDMI" 
+                model="Mk10A"  
+                kind="STE"  
+                name="User changed settings in Setup 1 on port"
+                descr="User changed settings in Setup 1 on port"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10A.8257"
+                value="8257"
+                vendor="EDMI" 
+                model="Mk10A"  
+                kind="STE"  
+                name="User changed settings in Setup 2 on port"
+                descr="User changed settings in Setup 2 on port"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10A.8258"
+                value="8258"
+                vendor="EDMI" 
+                model="Mk10A"  
+                kind="STE"  
+                name="User changed settings in Setup 3 on port"
+                descr="User changed settings in Setup 3 on port"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10A.12301"
+                value="12301"
+                vendor="EDMI" 
+                model="Mk10A"  
+                kind="STE"  
+                name="EFA V- Condition became Active from Unlatched"
+                descr="EFA V- Condition became Active from Unlatched"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10A.12290"
+                value="12290"
+                vendor="EDMI" 
+                model="Mk10A"  
+                kind="STE"  
+                name="EFA N- Condition became Active from Unlatched"
+                descr="EFA N- Condition became Active from Unlatched"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10A.20480"
+                value="20480"
+                vendor="EDMI" 
+                model="Mk10A"  
+                kind="STE"  
+                name="Demand Reset"
+                descr="Demand Reset"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+		<device.MeterEvent 
+                id="STE.EDMI.Mk10A.20481"
+                value="20481"
+                vendor="EDMI" 
+                model="Mk10A"  
+                kind="STE"  
+                name="Manual Demand Reset"
+                descr="Manual Demand Reset"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+
+
+	<!-- Mk6N -->
+	<device.MeterEvent 
+                id="STE.EDMI.Mk6N.0"
+                value="0"
+                vendor="EDMI" 
+                model="Mk6N"  
+                kind="STE"  
+                name="An error occurred reading one of the registers."
+                descr="An error occurred reading one of the registers."
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+	<device.MeterEvent 
+                id="STE.EDMI.Mk6N.1"
+                value="1"
+                vendor="EDMI" 
+                model="Mk6N"  
+                kind="STE"  
+                name="Filled entry - no data."
+                descr="Filled entry - no data."
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+	<device.MeterEvent 
+                id="STE.EDMI.Mk6N.2"
+                value="2"
+                vendor="EDMI" 
+                model="Mk6N"  
+                kind="STE"  
+                name="Power failed during interval."
+                descr="Power failed during interval."
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+	<device.MeterEvent 
+                id="STE.EDMI.Mk6N.4"
+                value="4"
+                vendor="EDMI" 
+                model="Mk6N"  
+                kind="STE"  
+                name="Incomplete interval."
+                descr="Incomplete interval."
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+	<device.MeterEvent 
+                id="STE.EDMI.Mk6N.8"
+                value="8"
+                vendor="EDMI" 
+                model="Mk6N"  
+                kind="STE"  
+                name="Daylight savings was in effect."
+                descr="Daylight savings was in effect."
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+	<device.MeterEvent 
+                id="STE.EDMI.Mk6N.16"
+                value="16"
+                vendor="EDMI" 
+                model="Mk6N"  
+                kind="STE"  
+                name="Calibration lost."
+                descr="Calibration lost."
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+	<device.MeterEvent 
+                id="STE.EDMI.Mk6N.32"
+                value="32"
+                vendor="EDMI" 
+                model="Mk6N"  
+                kind="STE"  
+                name="S,V,F,R or M EFA failure (any or all)."
+                descr="S,V,F,R or M EFA failure (any or all)."
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+	<device.MeterEvent 
+                id="STE.EDMI.Mk6N.64"
+                value="64"
+                vendor="EDMI" 
+                model="Mk6N"  
+                kind="STE"  
+                name="U EFA failure ? User flag."
+                descr="U EFA failure ? User flag."
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+	<device.MeterEvent 
+                id="STE.EDMI.Mk6N.128"
+                value="128"
+                vendor="EDMI" 
+                model="Mk6N"  
+                kind="STE"  
+                name="Data checksum error"
+                descr="Data checksum error"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+
+
+	<!-- Mk6N END -->
+	
+		<!-- LS for uzbek Project -->
+	
+	<device.MeterEvent 
+                id="STE.LS.LSK-0114.1"
+                value="1"
+                vendor="LS" 
+                model="LSK-0114"  
+                kind="STE"  
+                name="Power Down"
+                descr="Power Down"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />     
+                
+    <device.MeterEvent 
+                id="STE.LS.LSK-0114.2"
+                value="2"
+                vendor="LS" 
+                model="LSK-0114"  
+                kind="STE"  
+                name="Power Up"
+                descr="Power Up"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                /> 
+                
+    <device.MeterEvent 
+                id="STE.LS.LSK-0115.1"
+                value="1"
+                vendor="LS" 
+                model="LSK-0115"  
+                kind="STE"  
+                name="Power Down"
+                descr="Power Down"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />     
+                
+    <device.MeterEvent 
+                id="STE.LS.LSK-0115.2"
+                value="2"
+                vendor="LS" 
+                model="LSK-0115"  
+                kind="STE"  
+                name="Power Up"
+                descr="Power Up"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+
+
+    <device.MeterEvent 
+                id="STE.NAMJUN.DLMS Meter.1"
+                value="1"
+                vendor="NAMJUN" 
+                model="DLMS Meter"  
+                kind="STE"  
+                name="Power Down"
+                descr="Power Down"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />     
+                
+    <device.MeterEvent 
+                id="STE.NAMJUN.DLMS Meter.2"
+                value="2"
+                vendor="NAMJUN" 
+                model="DLMS Meter"  
+                kind="STE"  
+                name="Power Up"
+                descr="Power Up"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+
+
+	<device.MeterEvent 
+    				id="STE.GE.I210+c.1"
+    				value="1"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="STE"  
+    				name="Power Down"
+    				descr="Power Down"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>	
+    <device.MeterEvent 
+    				id="STE.GE.I210+c.2"
+    				value="2"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="STE"  
+    				name="Power Up"
+    				descr="Power Up"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>	
+	<device.MeterEvent 
+    				id="STE.GE.I210+c.11"
+    				value="11"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="STE"  
+    				name="Meter Programmed"
+    				descr="Meter Programmed"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>				
+    <device.MeterEvent 
+    				id="STE.GE.I210+c.20"
+    				value="20"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="STE"  
+    				name="Demand Reset Occurred"
+    				descr="Demand Reset Occurred"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+     <device.MeterEvent 
+    				id="STE.GE.I210+c.32"
+    				value="32"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="STE"  
+    				name="Test Mode Start"
+    				descr="Test Mode Start"
+    				troubleAdvice="to test meter operation and site characteristics without effecting billing quantities or load profile data"
+    				support="true"
+					meterType="EnergyMeter"
+    				/>   				
+         <device.MeterEvent 
+    				id="STE.GE.I210+c.33"
+    				value="33"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="STE"  
+    				name="Test Mode Exit"
+    				descr="Test Mode Exit"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>				
+    	<device.MeterEvent 
+    				id="STE.GE.I210+c.21"
+    				value="21"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="STE"  
+    				name="Self-read Occurred"
+    				descr="Self-read Occurred"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+        <device.MeterEvent 
+    				id="MFE.GE.I210+c.16"
+    				value="16"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="MFE"  
+    				name="Under Voltage"
+    				descr="Under Voltage"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.I210+c.17"
+    				value="17"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="MFE"  
+    				name="Under Voltage Condition Cleared"
+    				descr="Under Voltage Condition Cleared"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    				
+    	<device.MeterEvent 
+    				id="MFE.GE.I210+c.18"
+    				value="18"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="MFE"  
+    				name="Demand Overload"
+    				descr="Demand Overload"
+    				troubleAdvice="1. Rewire according to applicable diagram.
+								   2. Check that voltage and current connectors are seated properly.Check the leads for damage.
+								   3.Replace meter. "
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.I210+c.19"
+    				value="19"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="MFE"  
+    				name="Demand Overload Condition Cleared"
+    				descr="Demand Overload Condition Cleared"
+    				troubleAdvice="The meter does not automatically clear the Demand Overload caution. The Demand Overload caution is cleared by a demand reset"
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.I210+c.24"
+    				value="24"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="MFE"  
+    				name="Real Time Pricing Activation"
+    				descr="Real Time Pricing Activation"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.I210+c.25"
+    				value="25"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="MFE"  
+    				name="Real Time Pricing Deactivation"
+    				descr="Real Time Pricing Deactivation"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.I210+c.28"
+    				value="28"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="MFE"  
+    				name="Calibration Mode Activated"
+    				descr="Calibration Mode Activated"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.I210+c.33"
+    				value="33"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="MFE"  
+    				name="DC detection condition"
+    				descr="DC detection condition"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+		<device.MeterEvent 
+    				id="MFE.GE.I210+c.34"
+    				value="34"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="MFE"  
+    				name="DC detection condition cleared"
+    				descr="DC detection condition cleared"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+		<device.MeterEvent 
+    				id="STS.GE.I210+c.20"
+    				value="20"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="STS"  
+    				name="Low battery"
+    				descr="Low battery"
+    				troubleAdvice="Replace battery."
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="STS.GE.I210+c.13"
+    				value="13"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="STS"  
+    				name="RAM error"
+    				descr="Meter did detect a RAM error"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="STS.GE.I210+c.14"
+    				value="14"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="STS"  
+    				name="ROM error"
+    				descr="Meter did detect a ROM error"
+    				troubleAdvice="Check for proper installation. Check for proper grounding. Call for factory for further assistance"
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+		<device.MeterEvent 
+    				id="STS.GE.I210+c.16"
+    				value="16"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="STS"  
+    				name="Clock error"
+    				descr="Meter did detect a clock error"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+		<device.MeterEvent 
+    				id="STS.GE.I210+c.17"
+    				value="17"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="STS"  
+    				name="Bad voltage"
+    				descr="Meter did detect a bad voltage"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+		<device.MeterEvent 
+    				id="STS.GE.I210+c.10"
+    				value="10"
+    				vendor="GE" 
+    				model="I210+c"  
+    				kind="STS"  
+    				name="Meter is unprogrammed"
+    				descr="Meter is unprogrammed"
+    				troubleAdvice="Program the meter."
+      				support="true"
+					meterType="EnergyMeter"
+    				/>
+    				     	<device.MeterEvent 
+    				id="STE.GE.I210+cn.1"
+    				value="1"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="STE"  
+    				name="Power Down"
+    				descr="Power Down"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>	
+    <device.MeterEvent 
+    				id="STE.GE.I210+cn.2"
+    				value="2"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="STE"  
+    				name="Power Up"
+    				descr="Power Up"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>	
+	<device.MeterEvent 
+    				id="STE.GE.I210+cn.11"
+    				value="11"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="STE"  
+    				name="Meter Programmed"
+    				descr="Meter Programmed"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>				
+    <device.MeterEvent 
+    				id="STE.GE.I210+cn.20"
+    				value="20"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="STE"  
+    				name="Demand Reset Occurred"
+    				descr="Demand Reset Occurred"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+     <device.MeterEvent 
+    				id="STE.GE.I210+cn.32"
+    				value="32"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="STE"  
+    				name="Test Mode Start"
+    				descr="Test Mode Start"
+    				troubleAdvice="to test meter operation and site characteristics without effecting billing quantities or load profile data"
+    				support="true"
+					meterType="EnergyMeter"
+    				/>   				
+         <device.MeterEvent 
+    				id="STE.GE.I210+cn.33"
+    				value="33"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="STE"  
+    				name="Test Mode Exit"
+    				descr="Test Mode Exit"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>				
+    	<device.MeterEvent 
+    				id="STE.GE.I210+cn.21"
+    				value="21"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="STE"  
+    				name="Self-read Occurred"
+    				descr="Self-read Occurred"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+        <device.MeterEvent 
+    				id="MFE.GE.I210+cn.16"
+    				value="16"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="MFE"  
+    				name="Under Voltage"
+    				descr="Under Voltage"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.I210+cn.17"
+    				value="17"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="MFE"  
+    				name="Under Voltage Condition Cleared"
+    				descr="Under Voltage Condition Cleared"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    				
+    	<device.MeterEvent 
+    				id="MFE.GE.I210+cn.18"
+    				value="18"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="MFE"  
+    				name="Demand Overload"
+    				descr="Demand Overload"
+    				troubleAdvice="1. Rewire according to applicable diagram.
+								   2. Check that voltage and current connectors are seated properly.Check the leads for damage.
+								   3.Replace meter. "
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.I210+cn.19"
+    				value="19"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="MFE"  
+    				name="Demand Overload Condition Cleared"
+    				descr="Demand Overload Condition Cleared"
+    				troubleAdvice="The meter does not automatically clear the Demand Overload caution. The Demand Overload caution is cleared by a demand reset"
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.I210+cn.24"
+    				value="24"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="MFE"  
+    				name="Real Time Pricing Activation"
+    				descr="Real Time Pricing Activation"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.I210+cn.25"
+    				value="25"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="MFE"  
+    				name="Real Time Pricing Deactivation"
+    				descr="Real Time Pricing Deactivation"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.I210+cn.28"
+    				value="28"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="MFE"  
+    				name="Calibration Mode Activated"
+    				descr="Calibration Mode Activated"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.I210+cn.33"
+    				value="33"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="MFE"  
+    				name="DC detection condition"
+    				descr="DC detection condition"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+		<device.MeterEvent 
+    				id="MFE.GE.I210+cn.34"
+    				value="34"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="MFE"  
+    				name="DC detection condition cleared"
+    				descr="DC detection condition cleared"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+		<device.MeterEvent 
+    				id="STS.GE.I210+cn.20"
+    				value="20"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="STS"  
+    				name="Low battery"
+    				descr="Low battery"
+    				troubleAdvice="Replace battery."
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="STS.GE.I210+cn.13"
+    				value="13"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="STS"  
+    				name="RAM error"
+    				descr="Meter did detect a RAM error"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="STS.GE.I210+cn.14"
+    				value="14"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="STS"  
+    				name="ROM error"
+    				descr="Meter did detect a ROM error"
+    				troubleAdvice="Check for proper installation. Check for proper grounding. Call for factory for further assistance"
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+		<device.MeterEvent 
+    				id="STS.GE.I210+cn.16"
+    				value="16"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="STS"  
+    				name="Clock error"
+    				descr="Meter did detect a clock error"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+		<device.MeterEvent 
+    				id="STS.GE.I210+cn.17"
+    				value="17"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="STS"  
+    				name="Bad voltage"
+    				descr="Meter did detect a bad voltage"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+		<device.MeterEvent 
+    				id="STS.GE.I210+cn.10"
+    				value="10"
+    				vendor="GE" 
+    				model="I210+cn"  
+    				kind="STS"  
+    				name="Meter is unprogrammed"
+    				descr="Meter is unprogrammed"
+    				troubleAdvice="Program the meter."
+      				support="true"
+					meterType="EnergyMeter"
+    				/>
+    				     	<device.MeterEvent 
+    				id="STE.GEFM.Azos GFI.1"
+    				value="1"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="STE"  
+    				name="Power Down"
+    				descr="Power Down"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>	
+    <device.MeterEvent 
+    				id="STE.GEFM.Azos GFI.2"
+    				value="2"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="STE"  
+    				name="Power Up"
+    				descr="Power Up"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>	
+	<device.MeterEvent 
+    				id="STE.GEFM.Azos GFI.11"
+    				value="11"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="STE"  
+    				name="Meter Programmed"
+    				descr="Meter Programmed"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>				
+    <device.MeterEvent 
+    				id="STE.GEFM.Azos GFI.20"
+    				value="20"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="STE"  
+    				name="Demand Reset Occurred"
+    				descr="Demand Reset Occurred"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+     <device.MeterEvent 
+    				id="STE.GEFM.Azos GFI.32"
+    				value="32"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="STE"  
+    				name="Test Mode Start"
+    				descr="Test Mode Start"
+    				troubleAdvice="to test meter operation and site characteristics without effecting billing quantities or load profile data"
+    				support="true"
+					meterType="EnergyMeter"
+    				/>   				
+         <device.MeterEvent 
+    				id="STE.GEFM.Azos GFI.33"
+    				value="33"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="STE"  
+    				name="Test Mode Exit"
+    				descr="Test Mode Exit"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>				
+    	<device.MeterEvent 
+    				id="STE.GEFM.Azos GFI.21"
+    				value="21"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="STE"  
+    				name="Self-read Occurred"
+    				descr="Self-read Occurred"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+        <device.MeterEvent 
+    				id="MFE.GEFM.Azos GFI.16"
+    				value="16"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="MFE"  
+    				name="Under Voltage"
+    				descr="Under Voltage"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GEFM.Azos GFI.17"
+    				value="17"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="MFE"  
+    				name="Under Voltage Condition Cleared"
+    				descr="Under Voltage Condition Cleared"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    				
+    	<device.MeterEvent 
+    				id="MFE.GEFM.Azos GFI.18"
+    				value="18"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="MFE"  
+    				name="Demand Overload"
+    				descr="Demand Overload"
+    				troubleAdvice="1. Rewire according to applicable diagram.
+								   2. Check that voltage and current connectors are seated properly.Check the leads for damage.
+								   3.Replace meter. "
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GEFM.Azos GFI.19"
+    				value="19"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="MFE"  
+    				name="Demand Overload Condition Cleared"
+    				descr="Demand Overload Condition Cleared"
+    				troubleAdvice="The meter does not automatically clear the Demand Overload caution. The Demand Overload caution is cleared by a demand reset"
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GEFM.Azos GFI.24"
+    				value="24"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="MFE"  
+    				name="Real Time Pricing Activation"
+    				descr="Real Time Pricing Activation"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GEFM.Azos GFI.25"
+    				value="25"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="MFE"  
+    				name="Real Time Pricing Deactivation"
+    				descr="Real Time Pricing Deactivation"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GEFM.Azos GFI.28"
+    				value="28"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="MFE"  
+    				name="Calibration Mode Activated"
+    				descr="Calibration Mode Activated"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GEFM.Azos GFI.33"
+    				value="33"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="MFE"  
+    				name="DC detection condition"
+    				descr="DC detection condition"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+		<device.MeterEvent 
+    				id="MFE.GEFM.Azos GFI.34"
+    				value="34"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="MFE"  
+    				name="DC detection condition cleared"
+    				descr="DC detection condition cleared"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+		<device.MeterEvent 
+    				id="STS.GEFM.Azos GFI.20"
+    				value="20"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="STS"  
+    				name="Low battery"
+    				descr="Low battery"
+    				troubleAdvice="Replace battery."
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="STS.GEFM.Azos GFI.13"
+    				value="13"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="STS"  
+    				name="RAM error"
+    				descr="Meter did detect a RAM error"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="STS.GEFM.Azos GFI.14"
+    				value="14"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="STS"  
+    				name="ROM error"
+    				descr="Meter did detect a ROM error"
+    				troubleAdvice="Check for proper installation. Check for proper grounding. Call for factory for further assistance"
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+		<device.MeterEvent 
+    				id="STS.GEFM.Azos GFI.16"
+    				value="16"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="STS"  
+    				name="Clock error"
+    				descr="Meter did detect a clock error"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+		<device.MeterEvent 
+    				id="STS.GEFM.Azos GFI.17"
+    				value="17"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="STS"  
+    				name="Bad voltage"
+    				descr="Meter did detect a bad voltage"
+    				troubleAdvice=""
+    				support="true"
+					meterType="EnergyMeter"
+    				/>
+		<device.MeterEvent 
+    				id="STS.GEFM.Azos GFI.10"
+    				value="10"
+    				vendor="GEFM" 
+    				model="Azos GFI"  
+    				kind="STS"  
+    				name="Meter is unprogrammed"
+    				descr="Meter is unprogrammed"
+    				troubleAdvice="Program the meter."
+      				support="true"
+					meterType="EnergyMeter"
+    				/>
+    				
+    				
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.1"
+                value="1"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Meter reset"
+                descr="Meter reset_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.2"
+                value="2"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Error at EEPROM access Error at restore or backup"
+                descr="Error at EEPROM access Error at restore or backup_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.3"
+                value="3"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Detection of magnet"
+                descr="Detection of magnet_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                     
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.4"
+                value="4"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="RAM test error"
+                descr="RAM test error_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />   
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.5"
+                value="5"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="ROM checksum error"
+                descr="ROM checksum error_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />        
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.6"
+                value="6"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Alarm input"
+                descr="Alarm input_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                                               
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.7"
+                value="7"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Tamper detected"
+                descr="Tamper detected_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />      
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.9"
+                value="9"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="KMP command SetClock PutRegister 1047"
+                descr="KMP command SetClock PutRegister 1047_RTC status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />           
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.10"
+                value="10"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="No change"
+                descr="No change_RTC status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />         
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.11"
+                value="11"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="System L1"
+                descr="System L1_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />         
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.12"
+                value="12"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="System L2"
+                descr="System L2_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />        
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.13"
+                value="13"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="System L3"
+                descr="System L3_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                 
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.14"
+                value="14"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Voltage exceeds cutoff voltage"
+                descr="Voltage exceeds cutoff voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />          
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.15"
+                value="15"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Voltage below cutoff voltage"
+                descr="Voltage below cutoff voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />          
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.16"
+                value="16"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Voltage within limits of under- and over voltage"
+                descr="Voltage within limits of under- and over voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />        
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.17"
+                value="17"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Under voltage"
+                descr="Under voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />   
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.18"
+                value="18"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Over voltage"
+                descr="Over voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />           
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.19"
+                value="19"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Relays disconnected by command"
+                descr="Relays disconnected by command_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                                                                                                                                                                           
+                
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.20"
+                value="20"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Relays connected"
+                descr="Relays connected_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                 
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.21"
+                value="21"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Pre cutoff warning"
+                descr="Pre cutoff warning_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.22"
+                value="22"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Cutoff"
+                descr="Cutoff_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />           
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.23"
+                value="23"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Cutoff prepayment"
+                descr="Cutoff prepayment_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />           
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.24"
+                value="24"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Relays released for reconnection"
+                descr="Relays released for reconnection_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />     
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.25"
+                value="25"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Cutoff prepayment, LowMax expired"
+                descr="Cutoff prepayment, LowMax expired_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.26"
+                value="26"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Relays disconnected by push button"
+                descr="Relays disconnected by push button_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />   
+                
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.27"
+                value="27"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="No voltage of Voltage L1"
+                descr="No voltage of Voltage L1_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />   
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.28"
+                value="28"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="voltage of Voltage L1"
+                descr="voltage of Voltage L1_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.29"
+                value="29"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="No voltage of Voltage L2"
+                descr="No voltage of Voltage L2_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />               
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.30"
+                value="30"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="voltage of Voltage L2"
+                descr="voltage of Voltage L2_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />       
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.31"
+                value="31"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="No voltage of Voltage L3"
+                descr="No voltage of Voltage L3_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />      
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.32"
+                value="32"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="voltage of Voltage L3"
+                descr="voltage of Voltage L3_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />          
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.33"
+                value="33"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Validation(Bit 0-2 not valid)"
+                descr="Validation(Bit 0-2 not valid)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.34"
+                value="34"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Validation(Bit 0-2 is valid)"
+                descr="Validation(Bit 0-2 is valid)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.35"
+                value="35"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Internal relay control status(Error)"
+                descr="Internal relay control status(Error)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />         
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.36"
+                value="36"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Internal relay control status(No Error)"
+                descr="Internal relay control status(No Error)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />         
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.37"
+                value="37"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Disconnect(follows Low)"
+                descr="Disconnect(follows Low)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.38"
+                value="38"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Disconnect(follows High)"
+                descr="Disconnect(follows High)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />             
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.39"
+                value="39"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Transition pending(No transition pending)"
+                descr="Transition pending(No transition pending)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />             
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.40"
+                value="40"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Transition pending(Transition pending)"
+                descr="Transition pending(Transition pending)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.41"
+                value="41"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Default"
+                descr="Default_Load profile"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />               
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.42"
+                value="42"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Loadprofile_Logger_Size"
+                descr="Loadprofile_Logger_Size_Load profile"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />    
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.43"
+                value="43"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Loadprofile_Log_Reg_Changed"
+                descr="Loadprofile_Log_Reg_Changed_Load profile"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />    
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.44"
+                value="44"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Loadprofile_Logger_Interval"
+                descr="Loadprofile_Logger_Interval_Load profile"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                                                                                                                                                                     
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K382.45"
+                value="45"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Power Down"
+                descr="Power Down"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />     
+                
+        <device.MeterEvent 
+                id="STE.Kamstrup.K382.46"
+                value="46"
+                vendor="Kamstrup" 
+                model="K382"  
+                kind="STE"  
+                name="Power Up"
+                descr="Power Up"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />     
+    				
+    <device.MeterEvent 
+                id="STE.NAMJUN.NJC Meter DLMSUA.1"
+                value="1"
+                vendor="NAMJUN" 
+                model="NJC Meter DLMSUA"  
+                kind="STE"  
+                name="Power Down"
+                descr="Power Down"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />     
+                
+    <device.MeterEvent 
+                id="STE.NAMJUN.NJC Meter DLMSUA.2"
+                value="2"
+                vendor="NAMJUN" 
+                model="NJC Meter DLMSUA"  
+                kind="STE"  
+                name="Power Up"
+                descr="Power Up"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+                
+                        <device.MeterEvent 
+                id="STE.NAMJUN.NJC Meter DLMSUA.1"
+                value="1"
+                vendor="NAMJUN" 
+                model="NJC Meter DLMSUA"  
+                kind="STE"  
+                name="Power Down"
+                descr="Power Down"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />     
+                
+    <device.MeterEvent 
+                id="STE.NAMJUN.NJC Meter DLMSUA.2"
+                value="2"
+                vendor="NAMJUN" 
+                model="NJC Meter DLMSUA"  
+                kind="STE"  
+                name="Power Up"
+                descr="Power Up"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />    
+			<device.MeterEvent 
+                id="STE.Kamstrup.K162.1"
+                value="1"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Meter reset"
+                descr="Meter reset_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.2"
+                value="2"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Error at EEPROM access Error at restore or backup"
+                descr="Error at EEPROM access Error at restore or backup_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.3"
+                value="3"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Detection of magnet"
+                descr="Detection of magnet_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                     
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.4"
+                value="4"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="RAM test error"
+                descr="RAM test error_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />   
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.5"
+                value="5"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="ROM checksum error"
+                descr="ROM checksum error_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />        
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.6"
+                value="6"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Alarm input"
+                descr="Alarm input_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                                               
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.7"
+                value="7"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Tamper detected"
+                descr="Tamper detected_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />      
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.9"
+                value="9"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="KMP command SetClock PutRegister 1047"
+                descr="KMP command SetClock PutRegister 1047_RTC status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />           
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.10"
+                value="10"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="No change"
+                descr="No change_RTC status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />         
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.11"
+                value="11"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="System L1"
+                descr="System L1_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />         
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.12"
+                value="12"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="System L2"
+                descr="System L2_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />        
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.13"
+                value="13"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="System L3"
+                descr="System L3_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                 
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.14"
+                value="14"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Voltage exceeds cutoff voltage"
+                descr="Voltage exceeds cutoff voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />          
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.15"
+                value="15"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Voltage below cutoff voltage"
+                descr="Voltage below cutoff voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />          
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.16"
+                value="16"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Voltage within limits of under- and over voltage"
+                descr="Voltage within limits of under- and over voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />        
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.17"
+                value="17"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Under voltage"
+                descr="Under voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />   
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.18"
+                value="18"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Over voltage"
+                descr="Over voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />           
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.19"
+                value="19"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Relays disconnected by command"
+                descr="Relays disconnected by command_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                                                                                                                                                                           
+                
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.20"
+                value="20"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Relays connected"
+                descr="Relays connected_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                 
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.21"
+                value="21"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Pre cutoff warning"
+                descr="Pre cutoff warning_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.22"
+                value="22"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Cutoff"
+                descr="Cutoff_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />           
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.23"
+                value="23"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Cutoff prepayment"
+                descr="Cutoff prepayment_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />           
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.24"
+                value="24"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Relays released for reconnection"
+                descr="Relays released for reconnection_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />     
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.25"
+                value="25"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Cutoff prepayment, LowMax expired"
+                descr="Cutoff prepayment, LowMax expired_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.26"
+                value="26"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Relays disconnected by push button"
+                descr="Relays disconnected by push button_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />   
+                
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.27"
+                value="27"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="No voltage of Voltage L1"
+                descr="No voltage of Voltage L1_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />   
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.28"
+                value="28"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="voltage of Voltage L1"
+                descr="voltage of Voltage L1_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.29"
+                value="29"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="No voltage of Voltage L2"
+                descr="No voltage of Voltage L2_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />               
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.30"
+                value="30"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="voltage of Voltage L2"
+                descr="voltage of Voltage L2_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />       
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.31"
+                value="31"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="No voltage of Voltage L3"
+                descr="No voltage of Voltage L3_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />      
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.32"
+                value="32"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="voltage of Voltage L3"
+                descr="voltage of Voltage L3_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />          
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.33"
+                value="33"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Validation(Bit 0-2 not valid)"
+                descr="Validation(Bit 0-2 not valid)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.34"
+                value="34"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Validation(Bit 0-2 is valid)"
+                descr="Validation(Bit 0-2 is valid)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.35"
+                value="35"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Internal relay control status(Error)"
+                descr="Internal relay control status(Error)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />         
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.36"
+                value="36"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Internal relay control status(No Error)"
+                descr="Internal relay control status(No Error)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />         
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.37"
+                value="37"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Disconnect(follows Low)"
+                descr="Disconnect(follows Low)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.38"
+                value="38"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Disconnect(follows High)"
+                descr="Disconnect(follows High)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />             
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.39"
+                value="39"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Transition pending(No transition pending)"
+                descr="Transition pending(No transition pending)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />             
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.40"
+                value="40"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Transition pending(Transition pending)"
+                descr="Transition pending(Transition pending)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.41"
+                value="41"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Default"
+                descr="Default_Load profile"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />               
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.42"
+                value="42"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Loadprofile_Logger_Size"
+                descr="Loadprofile_Logger_Size_Load profile"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />    
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.43"
+                value="43"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Loadprofile_Log_Reg_Changed"
+                descr="Loadprofile_Log_Reg_Changed_Load profile"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />    
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.44"
+                value="44"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Loadprofile_Logger_Interval"
+                descr="Loadprofile_Logger_Interval_Load profile"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                                                                                                                                                                     
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K162.45"
+                value="45"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Power Down"
+                descr="Power Down"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />     
+                
+        <device.MeterEvent 
+                id="STE.Kamstrup.K162.46"
+                value="46"
+                vendor="Kamstrup" 
+                model="K162"  
+                kind="STE"  
+                name="Power Up"
+                descr="Power Up"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />	
+                
+                		<device.MeterEvent 
+                id="STE.Kamstrup.K282.1"
+                value="1"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Meter reset"
+                descr="Meter reset_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.2"
+                value="2"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Error at EEPROM access Error at restore or backup"
+                descr="Error at EEPROM access Error at restore or backup_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.3"
+                value="3"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Detection of magnet"
+                descr="Detection of magnet_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                     
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.4"
+                value="4"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="RAM test error"
+                descr="RAM test error_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />   
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.5"
+                value="5"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="ROM checksum error"
+                descr="ROM checksum error_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />        
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.6"
+                value="6"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Alarm input"
+                descr="Alarm input_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                                               
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.7"
+                value="7"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Tamper detected"
+                descr="Tamper detected_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />      
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.9"
+                value="9"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="KMP command SetClock PutRegister 1047"
+                descr="KMP command SetClock PutRegister 1047_RTC status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />           
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.10"
+                value="10"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="No change"
+                descr="No change_RTC status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />         
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.11"
+                value="11"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="System L1"
+                descr="System L1_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />         
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.12"
+                value="12"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="System L2"
+                descr="System L2_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />        
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.13"
+                value="13"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="System L3"
+                descr="System L3_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                 
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.14"
+                value="14"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Voltage exceeds cutoff voltage"
+                descr="Voltage exceeds cutoff voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />          
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.15"
+                value="15"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Voltage below cutoff voltage"
+                descr="Voltage below cutoff voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />          
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.16"
+                value="16"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Voltage within limits of under- and over voltage"
+                descr="Voltage within limits of under- and over voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />        
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.17"
+                value="17"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Under voltage"
+                descr="Under voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />   
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.18"
+                value="18"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Over voltage"
+                descr="Over voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />           
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.19"
+                value="19"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Relays disconnected by command"
+                descr="Relays disconnected by command_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                                                                                                                                                                           
+                
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.20"
+                value="20"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Relays connected"
+                descr="Relays connected_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                 
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.21"
+                value="21"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Pre cutoff warning"
+                descr="Pre cutoff warning_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.22"
+                value="22"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Cutoff"
+                descr="Cutoff_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />           
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.23"
+                value="23"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Cutoff prepayment"
+                descr="Cutoff prepayment_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />           
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.24"
+                value="24"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Relays released for reconnection"
+                descr="Relays released for reconnection_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />     
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.25"
+                value="25"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Cutoff prepayment, LowMax expired"
+                descr="Cutoff prepayment, LowMax expired_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.26"
+                value="26"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Relays disconnected by push button"
+                descr="Relays disconnected by push button_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />   
+                
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.27"
+                value="27"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="No voltage of Voltage L1"
+                descr="No voltage of Voltage L1_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />   
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.28"
+                value="28"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="voltage of Voltage L1"
+                descr="voltage of Voltage L1_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.29"
+                value="29"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="No voltage of Voltage L2"
+                descr="No voltage of Voltage L2_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />               
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.30"
+                value="30"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="voltage of Voltage L2"
+                descr="voltage of Voltage L2_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />       
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.31"
+                value="31"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="No voltage of Voltage L3"
+                descr="No voltage of Voltage L3_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />      
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.32"
+                value="32"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="voltage of Voltage L3"
+                descr="voltage of Voltage L3_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />          
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.33"
+                value="33"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Validation(Bit 0-2 not valid)"
+                descr="Validation(Bit 0-2 not valid)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.34"
+                value="34"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Validation(Bit 0-2 is valid)"
+                descr="Validation(Bit 0-2 is valid)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.35"
+                value="35"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Internal relay control status(Error)"
+                descr="Internal relay control status(Error)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />         
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.36"
+                value="36"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Internal relay control status(No Error)"
+                descr="Internal relay control status(No Error)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />         
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.37"
+                value="37"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Disconnect(follows Low)"
+                descr="Disconnect(follows Low)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.38"
+                value="38"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Disconnect(follows High)"
+                descr="Disconnect(follows High)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />             
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.39"
+                value="39"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Transition pending(No transition pending)"
+                descr="Transition pending(No transition pending)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />             
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.40"
+                value="40"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Transition pending(Transition pending)"
+                descr="Transition pending(Transition pending)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.41"
+                value="41"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Default"
+                descr="Default_Load profile"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />               
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.42"
+                value="42"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Loadprofile_Logger_Size"
+                descr="Loadprofile_Logger_Size_Load profile"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />    
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.43"
+                value="43"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Loadprofile_Log_Reg_Changed"
+                descr="Loadprofile_Log_Reg_Changed_Load profile"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />    
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.44"
+                value="44"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Loadprofile_Logger_Interval"
+                descr="Loadprofile_Logger_Interval_Load profile"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                                                                                                                                                                     
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K282.45"
+                value="45"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Power Down"
+                descr="Power Down"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />     
+                
+        <device.MeterEvent 
+                id="STE.Kamstrup.K282.46"
+                value="46"
+                vendor="Kamstrup" 
+                model="K282"  
+                kind="STE"  
+                name="Power Up"
+                descr="Power Up"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+                
+                		<device.MeterEvent 
+                id="STE.Kamstrup.K351.1"
+                value="1"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Meter reset"
+                descr="Meter reset_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.2"
+                value="2"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Error at EEPROM access Error at restore or backup"
+                descr="Error at EEPROM access Error at restore or backup_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.3"
+                value="3"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Detection of magnet"
+                descr="Detection of magnet_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                     
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.4"
+                value="4"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="RAM test error"
+                descr="RAM test error_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />   
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.5"
+                value="5"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="ROM checksum error"
+                descr="ROM checksum error_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />        
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.6"
+                value="6"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Alarm input"
+                descr="Alarm input_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                                               
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.7"
+                value="7"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Tamper detected"
+                descr="Tamper detected_Meter status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />      
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.9"
+                value="9"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="KMP command SetClock PutRegister 1047"
+                descr="KMP command SetClock PutRegister 1047_RTC status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />           
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.10"
+                value="10"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="No change"
+                descr="No change_RTC status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />         
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.11"
+                value="11"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="System L1"
+                descr="System L1_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />         
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.12"
+                value="12"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="System L2"
+                descr="System L2_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />        
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.13"
+                value="13"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="System L3"
+                descr="System L3_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                 
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.14"
+                value="14"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Voltage exceeds cutoff voltage"
+                descr="Voltage exceeds cutoff voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />          
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.15"
+                value="15"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Voltage below cutoff voltage"
+                descr="Voltage below cutoff voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />          
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.16"
+                value="16"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Voltage within limits of under- and over voltage"
+                descr="Voltage within limits of under- and over voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />        
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.17"
+                value="17"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Under voltage"
+                descr="Under voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />   
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.18"
+                value="18"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Over voltage"
+                descr="Over voltage_Voltage event"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />           
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.19"
+                value="19"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Relays disconnected by command"
+                descr="Relays disconnected by command_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                                                                                                                                                                           
+                
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.20"
+                value="20"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Relays connected"
+                descr="Relays connected_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                 
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.21"
+                value="21"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Pre cutoff warning"
+                descr="Pre cutoff warning_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.22"
+                value="22"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Cutoff"
+                descr="Cutoff_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />           
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.23"
+                value="23"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Cutoff prepayment"
+                descr="Cutoff prepayment_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />           
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.24"
+                value="24"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Relays released for reconnection"
+                descr="Relays released for reconnection_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />     
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.25"
+                value="25"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Cutoff prepayment, LowMax expired"
+                descr="Cutoff prepayment, LowMax expired_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.26"
+                value="26"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Relays disconnected by push button"
+                descr="Relays disconnected by push button_Disconnect status"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />   
+                
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.27"
+                value="27"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="No voltage of Voltage L1"
+                descr="No voltage of Voltage L1_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />   
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.28"
+                value="28"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="voltage of Voltage L1"
+                descr="voltage of Voltage L1_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.29"
+                value="29"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="No voltage of Voltage L2"
+                descr="No voltage of Voltage L2_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />               
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.30"
+                value="30"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="voltage of Voltage L2"
+                descr="voltage of Voltage L2_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />       
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.31"
+                value="31"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="No voltage of Voltage L3"
+                descr="No voltage of Voltage L3_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />      
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.32"
+                value="32"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="voltage of Voltage L3"
+                descr="voltage of Voltage L3_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />          
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.33"
+                value="33"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Validation(Bit 0-2 not valid)"
+                descr="Validation(Bit 0-2 not valid)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.34"
+                value="34"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Validation(Bit 0-2 is valid)"
+                descr="Validation(Bit 0-2 is valid)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.35"
+                value="35"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Internal relay control status(Error)"
+                descr="Internal relay control status(Error)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />         
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.36"
+                value="36"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Internal relay control status(No Error)"
+                descr="Internal relay control status(No Error)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />         
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.37"
+                value="37"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Disconnect(follows Low)"
+                descr="Disconnect(follows Low)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.38"
+                value="38"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Disconnect(follows High)"
+                descr="Disconnect(follows High)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />             
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.39"
+                value="39"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Transition pending(No transition pending)"
+                descr="Transition pending(No transition pending)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />             
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.40"
+                value="40"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Transition pending(Transition pending)"
+                descr="Transition pending(Transition pending)_Disconnect FeedBack"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />            
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.41"
+                value="41"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Default"
+                descr="Default_Load profile"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />               
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.42"
+                value="42"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Loadprofile_Logger_Size"
+                descr="Loadprofile_Logger_Size_Load profile"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />    
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.43"
+                value="43"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Loadprofile_Log_Reg_Changed"
+                descr="Loadprofile_Log_Reg_Changed_Load profile"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />    
+                
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.44"
+                value="44"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Loadprofile_Logger_Interval"
+                descr="Loadprofile_Logger_Interval_Load profile"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />                                                                                                                                                                     
+
+		<device.MeterEvent 
+                id="STE.Kamstrup.K351.45"
+                value="45"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Power Down"
+                descr="Power Down"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />     
+                
+        <device.MeterEvent 
+                id="STE.Kamstrup.K351.46"
+                value="46"
+                vendor="Kamstrup" 
+                model="K351"  
+                kind="STE"  
+                name="Power Up"
+                descr="Power Up"
+                troubleAdvice=""
+                support="true"
+                meterType="EnergyMeter"
+                />	 
+</dataset>

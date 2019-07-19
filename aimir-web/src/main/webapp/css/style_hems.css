@@ -1,0 +1,39 @@
+@charset "UTF-8";
+/* 가젯 안쪽의 Style를 정의 */
+
+/* 테마와 무관한 공통 Style */
+@import url(common.css);
+
+/*HEMS_Style*/
+@import url(/aimir-web/themes/css/ext-all-gadget-hems.css);
+@import url(/aimir-web/themes/css/ext-all-gadget-common.css); 
+
+/*language*/
+@import url(/aimir-web/themes/css/language-ko.css);
+/* @import url(/aimir-web/themes/css/language-en.css);  */
+/*  @import url(/aimir-web/themes/css/language-ja.css);  */
+/* @import url(/aimir-web/themes/css/language-ar.css); */
+
+/* JQuery UI 관련 Style */
+@import url(jquery-ui-1.7.2.css);
+
+/* JQuery ComboBox 관련 Style */
+@import url(jquery.selectbox.css);
+
+/* JQuery autocomplete 관련 Style */
+@import url(jquery.autocomplete.css);
+
+/* Tree 관련 Style */
+@import url(/aimir-web/js/themes/default/style.css);
+
+/* 'Gadget Setting 화면' 적용 가젯 */
+@import url(/aimir-web/themes/css/mn-gadgetsetting.css);
+
+/* JQuery cluetip 관련 Style  */
+@import url(jquery.cluetip.css);
+
+
+/* 테마 적용 가젯 Style */
+/* @import url(/aimir-web/themes/css/gadget-gray.css);  */
+/* @import url(/aimir-web/themes/css/gadget-green.css); */
+

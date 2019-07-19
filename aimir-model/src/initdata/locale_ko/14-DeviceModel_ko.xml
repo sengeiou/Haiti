@@ -1,0 +1,938 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+
+<!-- MCU -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="4"
+        deviceType="1.1.1.3"
+        name="NZC I211"
+        image="uploadImg/mcu/NZC-I212.jpg"
+    />
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="5"
+        deviceType="1.1.1.4"
+        name="NZC O312"
+    />
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="5"
+        deviceType="1.1.1.4"
+        name="NZC O201"
+    />
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="7"
+        deviceType="1.1.1.4"
+        name="NPC O301"
+    />
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="8"
+        deviceType="1.1.1.3"
+        name="NDCU-I212"
+        image="uploadImg/mcu/NDCU-I212.jpg"
+    />
+    
+<!-- Modem -->
+	<!-- MX2 Modem -->
+	<system.DeviceModel
+		deviceVendor="NURITelecom"
+		code="900"
+		deviceType="1.2.1.11"
+		name="NAMR-P114GP_MX2"
+	/>
+
+	<!-- Ethernet Converter -->
+	<system.DeviceModel
+		deviceVendor="NURITelecom"
+		code="903"
+		deviceType="1.2.1.19"
+		name="NAMR-P114EC_MX2"
+	/>
+	<system.DeviceModel
+		deviceVendor="NURITelecom"
+		code="904"
+		deviceType="1.2.1.19"
+		name="NAMR-P114EC_Mk6N"
+	/>
+	<system.DeviceModel
+		deviceVendor="NURITelecom"
+		code="905"
+		deviceType="1.2.1.19"
+		name="NAMR-P114EC_Mk10E"
+	/>
+	<system.DeviceModel
+		deviceVendor="NURITelecom"
+		code="906"
+		deviceType="1.2.1.19"
+		name="NAMR-P114EC_Mk10A"
+	/>
+	<system.DeviceModel
+		deviceVendor="NURITelecom"
+		code="907"
+		deviceType="1.2.1.19"
+		name="NAMR-P114EC_A1800"
+	/>
+
+
+
+
+
+	<!-- Elster A1800 Modem -->
+	<system.DeviceModel
+		deviceVendor="NURITelecom"
+		code="901"
+		deviceType="1.2.1.11"
+		name="NAMR-P114GP_A1800"
+	/>
+	<!-- EDMI Mk10 Modem -->
+	<system.DeviceModel
+		deviceVendor="NURITelecom"
+		code="902"
+		deviceType="1.2.1.11"
+		name="NAMR-P114GP_Mk10"
+	/>
+    <!-- Repeater Indoor -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="98"
+        deviceType="1.2.1.98"
+        name="NZR-I121SR"
+    />
+    <!-- Repeater Outdoor -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="98"
+        deviceType="1.2.1.98"
+        name="NZR-O121SR"
+    />
+        
+    <!-- Repeater(indoor) -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="98"
+        deviceType="1.2.1.98"
+        name="NZR-O121RE"
+    />
+    <!-- Repeater(outdoor) -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="98"
+        deviceType="1.2.1.98"
+        name="NZR-I121RE"
+    />
+<!-- Energy Meter -->
+    <!--  Aidon -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="1"
+        deviceType="1.2.1.1"
+        name="NAMR-P108SR"
+    />
+    <!--  GE SM110 -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="1"
+        deviceType="1.2.1.1"
+        name="NAMR-P109SR"
+    />
+    <!-- Kamstrup 382 , 162 -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="1"
+        deviceType="1.2.1.1"
+        name="NAMR-P110SR"
+    />
+    
+    <!-- Kamstrup 382 (for sweden old version) -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="11"
+        deviceType="1.2.1.11"
+        name="NAMR-P112GP"
+    />
+    
+    <!-- Kamstrup 382, 351 (new sweden, 남아공) -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="11"
+        deviceType="1.2.1.11"
+        name="NAMR-P112GP_KMP"
+    />
+
+    <!-- Kamstrup351 -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="11"
+        deviceType="1.2.1.11"
+        name="NAMR-P112GP_Kamstrup351"
+    />
+	
+	<!-- Elster -->
+	<system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="11"
+        deviceType="1.2.1.11"
+        name="NAMR-P112GP_ElsterA1700"
+    />
+    
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="11"
+        deviceType="1.2.1.11"
+        name="NAMR-P112GP_ElsterA1140"
+    />
+
+    <!--  GE(I210) -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="1"
+        deviceType="1.2.1.1"
+        name="NAMR-201SR"
+    />
+   <!--  GE(kv2c) -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="1"
+        deviceType="1.2.1.1"
+        name="NAMR-202SR"
+    />
+    <!-- Gas Pulse -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="5"
+        deviceType="1.2.1.5"
+        name="NAPC-G115SR"
+    />
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="5"
+        deviceType="1.2.1.5"
+        name="NAPC-G117SR"
+    />
+    <!-- (Water) -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="5"
+        deviceType="1.2.1.5"
+        name="NAPC-W103SR"
+    />
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="5"
+        deviceType="1.2.1.5"
+        name="NAPC-W104SR"
+    />
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="5"
+        deviceType="1.2.1.5"
+        name="NAPC-W105SR"
+    />
+    <!-- Sensus(Water) Modem for spasa -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="5"
+        deviceType="1.2.1.5"
+        name="NAPC-W202SR"
+    />
+    <!-- Kamstrup(M-Bus) -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="14"
+        deviceType="1.2.1.14"
+        name="NAMR-H101MG"
+    />
+
+    <!-- GSM MMIU 이집트필리핀 -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="11"
+        deviceType="1.2.1.11"
+        name="NPG-P111"
+    />
+    <!-- 집단에너지 -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="13"
+        deviceType="1.2.1.13"
+        name="CDM-C211 V2"
+    />
+    <!-- 남전사(bems) -->
+    <system.DeviceModel 
+        deviceVendor="NAMJUN"
+        code="1"
+        deviceType="1.2.1.1"
+        name="NJ34-212-THI"
+    />    
+    <system.DeviceModel
+        deviceVendor="NAMJUN"
+        code="1"
+        deviceType="1.3.1.1"
+        name="DLMS Meter"
+    />
+
+    <!-- HMU -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="17"
+        deviceType="1.2.1.17"
+        name="NHMU-Z1240"
+    />
+    <!-- ACD -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="16"
+        deviceType="1.2.1.16"
+        name="NACD-E15"
+    />  
+    <!--  SENA Converter -->
+    <system.DeviceModel 
+        deviceVendor="SENA"
+        code="19"
+        deviceType="1.2.1.19"
+        name="PS110-A1800"
+    /> 
+    <!--  SENA Converter -->
+    <system.DeviceModel 
+        deviceVendor="SENA"
+        code="19"
+        deviceType="1.2.1.19"
+        name="PS110-MX2"
+    /> 
+    <!--  SENA Converter -->
+    <system.DeviceModel 
+        deviceVendor="SENA"
+        code="19"
+        deviceType="1.2.1.19"
+        name="PS110-Mk10"
+    />
+    <!-- EnergyMeter -->
+    <!-- 
+    <system.DeviceModel 
+        deviceVendor="Unknown"
+        code="0"
+        deviceType="1.3.1.1"
+        name="UnknownEnergyMeter"
+    />
+    -->
+    <system.DeviceModel 
+        deviceVendor="Kamstrup"
+        code="1"
+        deviceType="1.3.1.1"
+        name="Kamstrup 162"
+        image="uploadImg/meter/kamstrup.jpg"
+    />
+    <system.DeviceModel 
+        deviceVendor="Kamstrup"
+        code="2"
+        deviceType="1.3.1.1"
+        name="Kamstrup 382"
+        image="uploadImg/meter/kamstrup.jpg"
+    />
+    
+   <system.DeviceModel 
+        deviceVendor="Kamstrup"
+        code="228"
+        deviceType="1.3.1.1"
+        name="K382"
+        image="uploadImg/meter/kamstrup.jpg"
+    />
+    <system.DeviceModel 
+        deviceVendor="Kamstrup"
+        code="229"
+        deviceType="1.3.1.1"
+        name="K162"
+        image="uploadImg/meter/kamstrup.jpg"
+    />
+        <system.DeviceModel 
+        deviceVendor="Kamstrup"
+        code="230"
+        deviceType="1.3.1.1"
+        name="K282"
+        image="uploadImg/meter/kamstrup.jpg"
+    />
+    <system.DeviceModel 
+        deviceVendor="Kamstrup"
+        code="231"
+        deviceType="1.3.1.1"
+        name="K351"
+        image="uploadImg/meter/kamstrup.jpg"
+    />
+    <system.DeviceModel 
+        deviceVendor="Aidon"
+        code="3"
+        deviceType="1.3.1.1"
+        name="Aidon 5520"
+        image="uploadImg/meter/aidon.jpg"
+    />
+    <system.DeviceModel 
+        deviceVendor="GE"
+        code="4"
+        deviceType="1.3.1.1"
+        name="I210"
+        image="uploadImg/meter/i210_elec.jpg"
+    />
+    <system.DeviceModel 
+        deviceVendor="GE"
+        code="5"
+        deviceType="1.3.1.1"
+        name="kV2c"
+        image="uploadImg/meter/kv2c.jpg"
+    />
+    <system.DeviceModel 
+        deviceVendor="Aidon"
+        code="6"
+        deviceType="1.3.1.1"
+        name="Aidon 5540"
+    />
+    <system.DeviceModel 
+        deviceVendor="Elster"
+        code="7"
+        deviceType="1.3.1.1"
+        name="A1RL+"
+    />
+    <system.DeviceModel 
+        deviceVendor="Elster"
+        code="8"
+        deviceType="1.3.1.1"
+        name="A3RLNQ"
+    />
+	<system.DeviceModel 
+        deviceVendor="Landis+Gyr"
+        code="9"
+        deviceType="1.3.1.1"
+        name="ZMD"
+    />
+    <system.DeviceModel 
+        deviceVendor="Landis+Gyr"
+        code="10"
+        deviceType="1.3.1.1"
+        name="ZMQ"
+    />
+    <system.DeviceModel 
+        deviceVendor="Aidon"
+        code="11"
+        deviceType="1.3.1.1"
+        name="Aidon 5530"
+        image="uploadImg/meter/aidon.jpg"
+    />
+    <system.DeviceModel 
+        deviceVendor="GE"
+        code="12"
+        deviceType="1.3.1.1"
+        name="SM110"
+        image="uploadImg/meter/sm110.jpg"
+    />
+    <system.DeviceModel 
+        deviceVendor="GE"
+        code="13"
+        deviceType="1.3.1.1"
+        name="I210P"
+        image="uploadImg/meter/i210_elec.jpg"
+    />
+    <system.DeviceModel 
+        deviceVendor="LS"
+        code="14"
+        deviceType="1.3.1.1"
+        name="LK3405Cx"
+    />
+    <system.DeviceModel 
+        deviceVendor="LS"
+        code="15"
+        deviceType="1.3.1.1"
+        name="LGRW3410"
+    />
+    <system.DeviceModel 
+        deviceVendor="LS"
+        code="16"
+        deviceType="1.3.1.1"
+        name="LK1210DRB-120"
+    />
+    <system.DeviceModel 
+        deviceVendor="LS"
+        code="17"
+        deviceType="1.3.1.1"
+        name="LK3410DRB-120"
+    />
+    <system.DeviceModel 
+        deviceVendor="EDMI"
+        code="18"
+        deviceType="1.3.1.1"
+        name="Mk6N"
+		image="uploadImg/meter/Mk6N.jpg"
+    />
+    <system.DeviceModel 
+        deviceVendor="PLC Vendor"
+        code="19"
+        deviceType="1.3.1.1"
+        name="PLC Modem"
+    />
+	<system.DeviceModel 
+        deviceVendor="Elster"
+        code="20"
+        deviceType="1.3.1.1"
+        name="A1700"
+    />
+    <system.DeviceModel 
+        deviceVendor="Elster"
+        code="22"
+        deviceType="1.3.1.1"
+        name="A1140"
+    />
+	<system.DeviceModel 
+        deviceVendor="Kamstrup"
+        code="21"
+        deviceType="1.3.1.1"
+        name="Kamstrup351"
+    />
+    <system.DeviceModel 
+        deviceVendor="Elster"
+        code="22"
+        deviceType="1.3.1.1"
+        name="A1830RLN"
+		image="uploadImg/meter/A1800.jpg"
+    />
+<!-- GasMeter -->   
+<!-- 
+    <system.DeviceModel 
+        deviceVendor="Unknown"
+        code="0"
+        deviceType="1.3.1.3"
+        name="UnknownGasMeter"
+    />
+    -->
+    <system.DeviceModel 
+        deviceVendor="Actaris"
+        code="1"
+        deviceType="1.3.1.3"
+        name="Gallus 2000"
+    />
+    <system.DeviceModel 
+        deviceVendor="Elster"
+        code="2"
+        deviceType="1.3.1.3"
+        name="BK-G4"
+    />
+    <system.DeviceModel 
+        deviceVendor="Elster-Kromschroeder"
+        code="3"
+        deviceType="1.3.1.3"
+        name="BK-4"
+    />
+    <system.DeviceModel 
+        deviceVendor="Elster-Kromschroeder"
+        code="4"
+        deviceType="1.3.1.3"
+        name="BK-6"
+    />
+    <system.DeviceModel 
+        deviceVendor="Elster-Kromschroeder"
+        code="5"
+        deviceType="1.3.1.3"
+        name="Bk-10"
+    />
+    <system.DeviceModel 
+        deviceVendor="Elster-Kromschroeder"
+        code="6"
+        deviceType="1.3.1.3"
+        name="BK-25"
+    />
+    <system.DeviceModel 
+        deviceVendor="극동"
+
+        code="7"
+        deviceType="1.3.1.3"
+        name="MC2000"
+    />
+    
+<!-- WaterMeter -->    
+    <system.DeviceModel 
+        deviceVendor="Hanseo"
+        code="0"
+        deviceType="1.3.1.2"
+        name="Hanseo"
+    />
+    <system.DeviceModel 
+        deviceVendor="Elster"
+        code="1"
+        deviceType="1.3.1.2"
+        name="Elster M 140"
+    />
+    <system.DeviceModel 
+        deviceVendor="Elster-Kromschroeder"
+        code="2"
+        deviceType="1.3.1.2"
+        name="Elster V 220"
+    />
+    <system.DeviceModel 
+        deviceVendor="Elster-Kromschroeder"
+        code="3"
+        deviceType="1.3.1.2"
+        name="MD13"
+    />
+    
+<!-- HeatMeter -->  
+<!--   
+    <system.DeviceModel 
+        deviceVendor="Unknown"
+        code="0"
+        deviceType="1.3.1.4"
+        name="UnknownHeatMeter"
+    />
+    -->
+    <system.DeviceModel 
+        deviceVendor="Kamstrup"
+        code="1"
+        deviceType="1.3.1.4"
+        name="Multical Compact"
+    />
+    <system.DeviceModel 
+        deviceVendor="Wizit"
+        code="139"
+        deviceType="1.3.1.4"
+        name="KDH"
+    />
+    <system.DeviceModel 
+        deviceVendor="Kamstrup"
+        code="144"
+        deviceType="1.3.1.4"
+        name="Kamstrup 601"
+    />
+    <system.DeviceModel 
+        deviceVendor="Kamstrup"
+        code="2"
+        deviceType="1.3.1.4"
+        name="Multical 401"
+    />
+
+<!-- VolumeCorrector -->
+<!-- 
+    <system.DeviceModel 
+        deviceVendor="Unknown"
+        code="0"
+        deviceType="1.3.1.5"
+        name="UnknownVolumeCorrector"
+    />
+    -->
+    <system.DeviceModel 
+        deviceVendor="Actaris"
+        code="151"
+        deviceType="1.3.1.5"
+        name="SEVC-D"
+    />
+    <system.DeviceModel 
+        deviceVendor="Actaris"
+        code="152"
+        deviceType="1.3.1.5"
+        name="SEVC"
+    />
+    <system.DeviceModel 
+        deviceVendor="Actaris"
+        code="153"
+        deviceType="1.3.1.5"
+        name="Corrus"
+    />
+    <system.DeviceModel 
+        deviceVendor="Elster"
+        code="161"
+        deviceType="1.3.1.5"
+        name="EK88"
+    />
+    <system.DeviceModel 
+        deviceVendor="Elster"
+        code="162"
+        deviceType="1.3.1.5"
+        name="EK260"
+    />
+    <system.DeviceModel 
+        deviceVendor="Equipmeter"
+        code="171"
+        deviceType="1.3.1.5"
+        name="Nexcorr"
+    />
+    <system.DeviceModel 
+        deviceVendor="Instromet"
+        code="181"
+        deviceType="1.3.1.5"
+        name="555"
+    />
+    <system.DeviceModel 
+        deviceVendor="Instromet"
+        code="182"
+        deviceType="1.3.1.5"
+        name="999"
+    />
+    <system.DeviceModel 
+        deviceVendor="GasMicro"
+        code="191"
+        deviceType="1.3.1.5"
+        name="GasMicro"
+    />
+
+	
+	<system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="211"
+        deviceType="1.3.1.3"
+        name="NAPC-G116SR"
+    />
+	<system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="212"
+        deviceType="1.3.1.2"
+        name="NAPC-W104SR"
+    />
+
+	<!-- SHINHAN-PRECISION -->
+	<system.DeviceModel 
+        deviceVendor="SHINHAN-PRECISION"
+        code="213"
+        deviceType="1.3.1.2"
+        name="Water_15mm"
+    />
+    
+    
+    <!-- MITSUBISHI -->
+	<system.DeviceModel 
+        deviceVendor="MITSUBISHI"
+        code="214"
+        deviceType="1.3.1.1"
+        name="MX2"
+		image="uploadImg/meter/MX2.jpg"
+    />
+    
+    <!-- Elster -->
+	<system.DeviceModel 
+        deviceVendor="Elster"
+        code="215"
+        deviceType="1.3.1.1"
+        name="A1830RLNQ"
+		image="uploadImg/meter/A1800.jpg"
+    />
+    
+    <!-- EDMI -->
+    <system.DeviceModel 
+        deviceVendor="EDMI"
+        code="216"
+        deviceType="1.3.1.1"
+        name="Mk10A"
+		image="uploadImg/meter/Mk10A.jpg"
+    />
+    <!-- EDMI -->
+    <system.DeviceModel 
+        deviceVendor="EDMI"
+        code="217"
+        deviceType="1.3.1.1"
+        name="Mk10E"
+		image="uploadImg/meter/Mk10E.jpg"
+    />
+    <!--  UK CommHub -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="190"
+        deviceType="1.2.1.19"
+        name="CommHub"
+
+    /> 
+    
+        <!--  Kepco DLMS Meter -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="77"
+        deviceType="1.3.1.1"
+        name="DLMSKepco"
+    />
+    
+    
+    <!--  I210+C, I210+, I210+N SubGiga Modem-->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="226"
+        deviceType="1.2.1.101"
+        name="NAMR-N(E)101SR"
+    />
+    
+    <!--  I210+C, I210+, I210+N Zigbee GE Fuji-->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="225"
+        deviceType="1.2.1.1"
+        name="NAMR-P10CSR"
+    />
+    
+    <!--  I210+C, I210+, I210+N -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="200"
+        deviceType="1.2.1.1"
+        name="NAMR-P201SR"
+    />
+    <system.DeviceModel 
+        deviceVendor="GE"
+        code="201"
+        deviceType="1.3.1.1"
+        name="I210+"
+        image="uploadImg/meter/i210_elec.jpg"
+    />
+    <system.DeviceModel 
+        deviceVendor="GE"
+        code="202"
+        deviceType="1.3.1.1"
+        name="I210+c"
+        image="uploadImg/meter/i210_elec.jpg"
+    />
+    <system.DeviceModel 
+        deviceVendor="GE"
+        code="203"
+        deviceType="1.3.1.1"
+        name="I210+n"
+        image="uploadImg/meter/i210_elec.jpg"
+    />
+    <system.DeviceModel 
+        deviceVendor="GE"
+        code="204"
+        deviceType="1.3.1.1"
+        name="I210+cn"
+        image="uploadImg/meter/i210_elec.jpg"
+    />
+    <system.DeviceModel 
+        deviceVendor="GEFM"
+        code="205"
+        deviceType="1.3.1.1"
+        name="Azos GFI"
+        image="uploadImg/meter/i210_elec.jpg"
+    />
+    <!-- MITSUBISHI -->
+	<system.DeviceModel 
+        deviceVendor="MITSUBISHI"
+        code="220"
+        deviceType="1.3.1.1"
+        name="SX1"
+		image="uploadImg/meter/SX1.jpg"
+    />
+    <system.DeviceModel 
+        deviceVendor="MITSUBISHI"
+        code="220"
+        deviceType="1.3.1.1"
+        name="SX2"
+        image="uploadImg/meter/SX2.jpg"
+    />
+    <!-- FOR MITSUBISHI SX2 MODEM -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="221"
+        deviceType="1.2.1.1"
+        name="NAMR-P10BSR"
+    />
+     <!-- Osaki 계량기 WFD1를 위한 누리텔레콤 모뎀 모델정보 -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="15"
+        deviceType="1.2.1.1"
+        name="NAMR-P10ASR"
+    /> 
+	<system.DeviceModel 
+        deviceVendor="OSAKI"
+        code="24"
+        deviceType="1.3.1.1"
+        name="WFD1"
+    />
+
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="217"
+        deviceType="1.2.1.5"
+        name="NAPC-W202"
+    />
+
+    <!-- Sensus(Water) -->
+    <system.DeviceModel 
+        deviceVendor="Sensus"
+        code="218"
+        deviceType="1.3.1.1"
+        name="SENSUS_220C"
+    /> 
+    
+    <!-- WaterMeter for spasa -->  
+    <system.DeviceModel 
+        deviceVendor="Sensus"
+        code="219"
+        deviceType="1.3.1.2"
+        name="SM150P"
+    /> 
+
+    <!-- LS for uzbek Project -->
+    <system.DeviceModel 
+        deviceVendor="LS"
+        code="222"
+        deviceType="1.3.1.1"
+        name="LSK-0114"
+        image="uploadImg/meter/LSK-0114(0115).jpg"
+    />
+
+    <system.DeviceModel 
+        deviceVendor="LS"
+        code="222"
+        deviceType="1.3.1.1"
+        name="LSK-0115"
+        image="uploadImg/meter/LSK-0114(0115).jpg"
+    />
+    
+    <!-- MITSUBISHI for MDIS -->
+    <system.DeviceModel 
+        deviceVendor="MITSUBISHI"
+        code="214"
+        deviceType="1.3.1.1"
+        name="SMW1"
+    />
+
+    <!-- LS Modem -->
+    <system.DeviceModel
+        deviceVendor="NURITelecom"
+        code="900"
+        deviceType="1.2.1.11"
+        name="NAMR-P111SR"
+    /> 
+    <!-- Solar Power  -->
+    <system.DeviceModel
+        deviceVendor="NURITelecom"
+        code="300"
+        deviceType="1.3.1.6"
+        name="Inverter"
+    />
+    
+    <!-- LS PLC MIU -->
+    <system.DeviceModel
+        deviceVendor="NURITelecom"
+        code="901"
+        deviceType="1.2.1.11"
+        name="NAMR-C101SR_SLAVE"
+    />   
+    
+    <!--  subgiga miu kamstrup -->
+    <system.DeviceModel
+        deviceVendor="NURITelecom"
+        code="227"
+        deviceType="1.2.1.101"
+        name="NAMR-P114SR"
+    />
+    
+    <!--  meter for hmu -->
+    <system.DeviceModel
+        deviceVendor="NURITelecom"
+        code="1"
+        deviceType="1.2.1.17"
+        name="HMUMeter"
+    />
+    
+    <system.DeviceModel 
+        deviceVendor="NAMJUN"
+        code="223"
+        deviceType="1.2.1.1"
+        name="NJC Meter DLMSUA"
+        image="uploadImg/meter/NJC.jpg"
+    />
+</dataset>

@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+<!--  Tariff Start -->
+    <system.TariffWMCaliber supplier="ORGRES" caliber="13"  basicRate="960"    writeTime="20100101000000" />
+	<system.TariffWMCaliber supplier="ORGRES" caliber="20"  basicRate="1600"   writeTime="20100101000000" /> 
+	<system.TariffWMCaliber supplier="ORGRES" caliber="25"  basicRate="2540"   writeTime="20100101000000" />
+	<system.TariffWMCaliber supplier="ORGRES" caliber="32"  basicRate="3620"   writeTime="20100101000000" /> 
+	<system.TariffWMCaliber supplier="ORGRES" caliber="40"  basicRate="5560"   writeTime="20100101000000" />
+	<system.TariffWMCaliber supplier="ORGRES" caliber="50"  basicRate="8780"   writeTime="20100101000000" /> 
+	<system.TariffWMCaliber supplier="ORGRES" caliber="75"  basicRate="17540"  writeTime="20100101000000" />
+	<system.TariffWMCaliber supplier="ORGRES" caliber="100" basicRate="27060"  writeTime="20100101000000" /> 
+	<system.TariffWMCaliber supplier="ORGRES" caliber="150" basicRate="52760"  writeTime="20100101000000" />
+	<system.TariffWMCaliber supplier="ORGRES" caliber="200" basicRate="88420"  writeTime="20100101000000" /> 
+	<system.TariffWMCaliber supplier="ORGRES" caliber="250" basicRate="121000" writeTime="20100101000000" />
+	<system.TariffWMCaliber supplier="ORGRES" caliber="300" basicRate="136810" writeTime="20100101000000" /> 
+</dataset>

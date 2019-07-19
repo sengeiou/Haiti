@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<ha-jdbc>
+  <sync id="passive" class="net.sf.hajdbc.sync.PassiveSynchronizationStrategy"></sync>
+  <cluster balancer="simple" meta-data-cache="none"  dialect="derby" default-sync="passive" transaction-mode="parallel"> >
+    <database id="database1">
+      <driver>org.apache.derby.jdbc.ClientDriver</driver>
+      <url>jdbc:derby://187.1.10.200:1527//disk1/aimir/javadb1;user=aimir;password=aimirdb;</url>      
+    </database>
+    <database id="database2">
+      <driver>org.apache.derby.jdbc.ClientDriver</driver>
+      <url>jdbc:derby://187.1.10.200:1528//disk1/aimir/javadb2;user=aimir;password=aimirdb;</url>
+    </database>
+  </cluster>
+</ha-jdbc>
+

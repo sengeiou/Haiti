@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+    <system.Supplier 
+        name="NURI" 
+        country="KR"
+        lang="ko"
+        timezone="Asia/Tokyo"
+        address="Seoul"
+        descr="Nuri Telecom"
+        telno="02-781-0777"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />
+</dataset>

@@ -1,0 +1,59 @@
+mariadb 설치순서
+- root 로그인
+
+- yum 레파지토리 등록
+/etc/yum.repos.d/MariaDB.repo
+[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/5.5/centos5-x86
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+
+- yum 으로 설치
+shell> yum install MariaDB-server MariaDB-client
+
+* cluster 설치시 MariaDB-server 설치를 하면 안된다.
+shell> yum install MariaDB-Galera-server MariaDB-client galera
+
+- my.cnf 에 추가 (/etc/my.cnf)
+[client]
+default-character-set = utf8
+
+[mysqld]
+init_connect = "SET collation_connection = utf8_general_ci"
+init_connect = "SET NAMES utf8"
+character-set-server = utf8
+collation-server = utf8_general_ci
+skip-character-set-client-handshake
+lower_case_table_names=1
+
+[mysql]
+default-character-set = utf8
+
+- 설치 후 시작
+shell> /etc/init.d/mysql start
+
+- 자동 시작과 멈춤
+/etc/init.d/mysql 스크립트로 자동 시작과 멈춤이 가능함.
+
+- 옵션 보기
+shell> mysql --verbose --help
+
+- User 생성
+CREATE USER 'aimir'@'%' IDENTIFIED BY 'aimir'
+
+- 데이타베이스 문자셋 설정 (show collation)
+CREATE DATABASE aimirdb 
+  CHARACTER SET = 'utf8'
+  COLLATE = 'utf8_general_ci';
+
+- 권한 설정
+grant all on aimirdb.* to 'aimir'@'%' identified by 'aimir' with grant option;
+
+* % 대신 hostname을 입력해야 함. 58번 개발서버의 hostname (aimirdev) 이면
+'aimir'@'aimirdev' 를 넣어야 함.
+
+flush privileges;
+
+- 확인
+shell> mysql -u aimir -p -h localhost aimirdb

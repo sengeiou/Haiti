@@ -1,0 +1,104 @@
+/* MAX GADGET STYLE ----------------------------- */
+.max #wrapper {
+}
+	.max .btn-confirm {
+		margin-top: 10px;
+	}
+	.max .tit_default {
+		padding: 0px;
+	}
+	.max .tab-menu {
+		height: 100% !important;
+		padding: 9px 7px 0 7px;
+		overflow: visible;
+		background: url('/aimir-web/themes/images/default/setting/sub_tab_bg01.gif') repeat-x top;
+	}
+
+	.max #power-generation-inverters-chart {
+		width: 27%;
+		float: left;
+		border-right: solid 1px #CCC;
+		border-bottom: solid 1px #CCC;
+		box-shadow: 3px 3px 0px 0px #EBEBEB;
+		border-radius: 8px;
+	}
+
+	.max #power-generation-date-group-charts {
+		top: -20px;
+		position: relative;
+		width: 70%;		
+		float: right;
+	}
+		.max #power-generation-date-group-charts h1 span {
+			float: none;
+			padding-left: 10px;
+			color: #0F7CD0;
+		}
+		.max #inverterStatChartArea li {
+			overflow: hidden;
+			padding-bottom: 10px;
+		}
+		.max #power-generation-date-group-charts h1 {
+			line-height: 25px;
+			margin-bottom: 5px;
+			border-bottom: dashed 1px #CCC;
+			font-size: 15px;
+		}
+		
+	.max #generation-statistics-grid {
+		margin-top: 10px;
+	}
+
+/* MIN GADGET STYLE ----------------------------- */
+.min #wrapper {
+}
+	.min .top-wrapper {
+		width: 75%;
+		margin: 0 auto;
+		height: 110px;	
+	}
+	.min #solar-power-station, .min #weather {
+		margin: 0px;
+	}
+	.min #weather {
+		float: left;		
+		width: 50%;
+		text-align: center;
+	}
+		.min #weather .current-weather {
+			height: 90px;					
+		}
+		.min #weather span {
+			width: 100%;
+			font-weight: bold;	
+			margin: 0 auto;		
+		}
+	.min #solar-power-station {
+		text-align: center;
+		padding-top: 10px;
+		float: right;
+		width: 50%;
+	}
+		.min #solar-power-station img {
+			height: 90px;
+		}
+	#current-information {
+		width: 80%;
+		margin: 0 auto;
+	}
+	#current-information ul li {
+		border: 1px solid #E5E5E5;
+		background-color: #F1F1F1;	
+		padding: 1px 5px 1px 20px;
+		background-position: 10px center;
+		margin-top: 10px;
+	}
+		#current-information ul li span.hilght-label {
+			display: inline-block;
+			width: 160px;
+			*display: inline;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			zoom: 1;
+			margin-left: 10px;
+		}

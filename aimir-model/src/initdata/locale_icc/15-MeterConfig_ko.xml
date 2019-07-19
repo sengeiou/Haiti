@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="3p4w"
+        pulseConst="1"
+        name="PM1200"
+        deviceModel="PM1200"
+    />
+</dataset>

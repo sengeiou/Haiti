@@ -1,0 +1,11 @@
+/* CSS file */
+DataGrid
+{
+    border-skin: Embed(skinClass="DataGrid_borderSkin");
+    columnDropIndicatorSkin: Embed(skinClass="DataGrid_columnDropIndicatorSkin");
+    columnResizeSkin: Embed(skinClass="DataGrid_columnResizeSkin");
+    headerBackgroundSkin: Embed(source='./assets/images/grid_head_bg01.jpg');
+    headerSeparatorSkin: Embed(skinClass="DataGrid_headerSeparatorSkin");
+    sortArrowSkin: Embed(skinClass="DataGrid_sortArrowSkin");
+    stretchCursor: Embed(skinClass="DataGrid_stretchCursor");
+}

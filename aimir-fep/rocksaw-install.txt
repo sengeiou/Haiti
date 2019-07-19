@@ -1,0 +1,11 @@
+rocksaw 설치 https://www.savarese.com/software/rocksaw/
+
+1. lib install
+   mvn install:install-file -Dfile=lib/rocksaw-1.1.0.jar -DgroupId=com.savarese -DartifactId=rocksaw -Dversion=1.1.0 -Dpackaging=jar
+   mvn install:install-file -Dfile=lib/vserv-tcpip-0.9.2.jar -DgroupId=com.savarese -DartifactId=vserv-tcpip -Dversion=0.9.2 -Dpackaging=jar
+
+2. rocksaw so 생성
+   cd src/main/cpp/rocksaw
+   make
+
+3. LP_LIBRARY_PATH 추가

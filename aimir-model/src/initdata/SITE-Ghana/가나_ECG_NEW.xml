@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+
+    <system.DeviceModel image="uploadImg/meter/kamstrup.jpg" name="OmniPower" deviceType="1.3.1.1" code="0" deviceVendor="Kamstrup"/>
+    <system.MeterConfig name="OmniPower" 
+                    saverName="com.aimir.fep.meter.saver.KamstrupOmniPowerMDSaver" 
+                    parserName="com.aimir.fep.meter.parser.KamstrupOmniPower" 
+                    deviceModel="OmniPower" 
+                    pulseConst="100" 
+                    phase="3P3W" 
+                    meterClass="1.0"/>
+
+    <mvm.ChannelConfig displayType="SaveAndDisplay" dataTpye="LpEM" channelIndex="1" channel="Active Energy Imp." meterConfig="OmniPower"/>
+    <mvm.ChannelConfig displayType="SaveAndDisplay" dataTpye="LpEM" channelIndex="2" channel="Active Energy Exp." meterConfig="OmniPower"/>
+    <mvm.ChannelConfig displayType="SaveAndDisplay" dataTpye="LpEM" channelIndex="3" channel="Reactive Energy Imp." meterConfig="OmniPower"/>
+    <mvm.ChannelConfig displayType="SaveAndDisplay" dataTpye="LpEM" channelIndex="4" channel="Reactive Energy Exp." meterConfig="OmniPower"/>
+
+
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="OmniPower"    level="2"   desc="On Demand Metering" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="OmniPower"    level="2"   desc="Meter Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="OmniPower"    level="2"   desc="Remote Control" />
+  
+    
+
+
+    <!-- gprs modem -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="1"
+        deviceType="1.2.1.1"
+        name="NAMR-P116GP"
+    />
+    <system.ModemConfig 
+        name="NAMR-P116GP"
+        deviceModel="NAMR-P116GP"
+    />
+    
+    
+    <device.EventAlert eventAlertType='Event'
+                       severity='Information' 
+                       name='Equipment Installation' 
+                       descr='Equipment installation' 
+                       msgPattern='Install' 
+                       troubleAdvice='' 
+                       oid='200.1.0,203.8.0,201.1.0,203.105.0,GD_200.1.0,GD_200.1.0,GG_200.1.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>                       
+                       
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Warning' 
+                       name='Case Alarm' 
+                       descr='Case Open or Close' 
+                       msgPattern='Case $(event.eventAttrs.caseState)' 
+                       troubleAdvice='' 
+                       oid='200.25.0,200.26.0,210.1,GG_200.2.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+                       
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Major' 
+                       name='Power Alarm' 
+                       descr='Power Failure, Restore or Massive and Line Missing or Restore' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='200.14.0,200.15.0,203.107.0,GG_200.2.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+   
+</dataset>

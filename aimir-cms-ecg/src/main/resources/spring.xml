@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:jaxws="http://cxf.apache.org/jaxws"
+    xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+    xmlns:sec="http://cxf.apache.org/configuration/security"
+    xmlns:http="http://cxf.apache.org/transports/http/configuration"
+    xmlns:httpj="http://cxf.apache.org/transports/http-jetty/configuration"      
+    xsi:schemaLocation="
+         http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://cxf.apache.org/jaxws
+         http://cxf.apache.org/schemas/jaxws.xsd
+         http://cxf.apache.org/jaxrs
+         http://cxf.apache.org/schemas/jaxrs.xsd
+         http://cxf.apache.org/configuration/security
+         http://cxf.apache.org/schemas/configuration/security.xsd
+         http://cxf.apache.org/transports/http/configuration
+         http://cxf.apache.org/schemas/configuration/http-conf.xsd
+         http://cxf.apache.org/transports/http-jetty/configuration
+         http://cxf.apache.org/schemas/configuration/http-jetty.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx.xsd">
+        
+    <context:property-placeholder location="classpath:cms.properties"/>
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml"/>
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+  
+    <!-- Configurer that replaces ${...} placeholders with values from a properties file -->
+    <!--
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+    -->
+
+    <!-- 
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="initialSize" value="5"/>
+        <property name="maxActive" value="10"/>
+        <property name="maxIdle" value="10"/>
+        <property name="validationQuery" value="select 1 from dual"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+    </bean>
+    -->
+    
+    <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
+        <property name="driverClass" value="${jdbc.driverClassName}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="idleConnectionTestPeriodInMinutes" value="5"/>
+        <property name="idleMaxAgeInMinutes" value="60"/>
+        <property name="maxConnectionsPerPartition" value="5"/>
+        <property name="minConnectionsPerPartition" value="2"/>
+        <property name="partitionCount" value="2"/>
+        <property name="acquireIncrement" value="1"/>
+        <property name="statementsCacheSize" value="100"/>
+    </bean>
+    
+    <!-- Annotation Support Hibernate Session Factory -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.bytecode.use_reflection_optimizer">true</prop>
+                <prop key="hibernate.use_sql_comments">false</prop>
+                <!--<prop key="hibernate.hbm2ddl.auto">create-drop</prop>-->
+                <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
+                <!--<prop key="hibernate.hbm2ddl.auto">validate</prop>-->
+                <prop key="hibernate.hbm2ddl.auto">false</prop>
+                <prop key="hibernate.connection.autocommit">false</prop>
+                <!--<prop key="hibernate.query.substitutions">Y</prop>-->
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_second_level_cache">org.hibernate.cache.EhCacheProvider</prop>
+                <!-- Turn batching off for better error messages under PostgreSQL>-->
+                <!--prop key="hibernate.jdbc.batch_size">0</prop-->
+                <!-- 0:none, 1:read_uncommitted, 2:read_committed, 4:repeatable_read, 8:serializable -->
+                <prop key="hibernate.connection.isolation">1</prop>
+                <prop key="hibernate.transaction.flush_before_completion">true</prop>
+                <prop key="hibernate.transaction.auto_close_session">false</prop>
+            </props>
+        </property>
+        <property name="packagesToScan">
+            <list>
+                <value>com.aimir.cms.model</value>
+                <value>com.aimir.model.*</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="defaultTimeout" value="${tx.default.timeout}"/>
+    </bean>
+    
+    <bean id="sessionContextFactory" class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
+        <property name="targetBeanName" value="sessionContext" />
+    </bean>
+    
+    <!-- Enable @Transactional support -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+    
+    <!-- Activates scanning of @Autowired -->            
+    <context:annotation-config/>
+    
+    <!-- Scans for @Repository, @Service -->
+    <context:component-scan base-package="com.aimir"/>
+    
+    <jaxws:endpoint id="CmsWS"
+         implementorClass="com.aimir.cms.ws.server.CmsWS"
+         implementor="#cmsWS"
+         address="/CmsWS">
+        <jaxws:properties> 
+            <entry key="faultStackTraceEnabled" value="true" />
+            <entry key="exceptionMessageCauseEnabled" value="true" /> 
+            <entry key="MessageLogger" value-ref="logger"/>      
+        </jaxws:properties>  
+        <jaxws:features>
+            <bean class="org.apache.cxf.feature.LoggingFeature"/>
+        </jaxws:features>       
+    </jaxws:endpoint>
+    
+    <bean id="logger" class="org.apache.cxf.common.logging.LogUtils" factory-method="getLogger">
+    <constructor-arg value="com.aimir.cms.ws.server.CmsWS"/>
+    </bean>
+</beans>

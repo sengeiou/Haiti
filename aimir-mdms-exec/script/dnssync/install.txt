@@ -1,0 +1,47 @@
+1. python pip install
+  export http_proxy=http://localhost:8888
+  export https_proxy=http://localhost:8888
+  export no_proxy=".aimir.int"
+  1) wget
+     wget https://bootstrap.pypa.io/get-pip.py
+     python get-pip.py --user
+     rm -f get-pip.py
+  2) yum
+     yum install python-pip.noarch
+
+2. add path
+  vi .bashrc
+  export PATH=$PATH:~/.local/bin
+
+3. Install Oracle Client
+  instantclient-basic-linux.x64-12.1.0.2.0.zip
+  instantclient-sqlplus-linux.x64-12.1.0.2.0.zip
+  instantclient-sdk-linux.x64-12.1.0.2.0.zip
+
+  vi .bashrc
+  export ORACLE_HOME=~/instantclient_12_1
+  export LD_LIBRARY_PATH=$ORACLE_HOME
+  cp ~/instantclient_12_1/libclntsh.so.12.1 ~/instantclient_12_1/libclntsh.so
+
+4. Install cx_Oracle lib
+  yum install gcc.x86_64 python-devel.x86_64
+  pip install --user cx_Oracle
+
+5. Install mariadb-libs
+  yum install mariadb-libs mariadb-devel
+
+6. Install MySQL-python lib
+  pip install --user MySQL-python
+
+5. setup db user
+  GRANT ALL ON powerdns.* TO 'dnssync'@'10.40.202.47' IDENTIFIED BY 'aimiramm';
+  GRANT ALL ON powerdns.* TO 'dnssync'@'10.40.202.121' IDENTIFIED BY 'aimiramm';
+  GRANT ALL ON powerdns.* TO 'dnssync'@'10.40.202.122' IDENTIFIED BY 'aimiramm';
+  GRANT ALL ON powerdns.* TO 'dnssync'@'10.40.202.221' IDENTIFIED BY 'aimiramm';
+  GRANT ALL ON powerdns.* TO 'dnssync'@'10.40.202.222' IDENTIFIED BY 'aimiramm';
+
+  REVOKE ALL ON powerdns.* FROM 'dnssync'@'10.40.202.47';
+  REVOKE ALL ON powerdns.* FROM 'dnssync'@'10.40.202.121';
+  REVOKE ALL ON powerdns.* FROM 'dnssync'@'10.40.202.122';
+  REVOKE ALL ON powerdns.* FROM 'dnssync'@'10.40.202.221';
+  REVOKE ALL ON powerdns.* FROM 'dnssync'@'10.40.202.222';

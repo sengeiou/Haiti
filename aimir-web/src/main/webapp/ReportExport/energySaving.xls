@@ -1,0 +1,2131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?mso-application progid="Excel.Sheet"?>
+
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40">
+	<DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+		<Author/>
+		<Title/>
+		<Description/>
+		<Subject/>
+	</DocumentProperties>
+	<Styles>
+		<Style ss:ID="HyperlinkId" ss:Name="Hyperlink">
+			<Font ss:Color="#0000ff"/>
+		</Style>
+		<Style ss:ID="31">
+			<Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10" ss:Bold="1" ss:Color="#000000"/>
+		</Style>
+		<Style ss:ID="28">
+			<Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10" ss:Bold="1" ss:Color="#ffffff"/>
+			<Interior ss:Color="#0557c3" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="25">
+			<Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="굴림체" ss:Size="18" ss:Bold="1" ss:Color="#0557c3"/>
+		</Style>
+		<Style ss:ID="23">
+			<Alignment ss:Horizontal="Right" ss:Vertical="Center" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="굴림체" ss:Size="9" ss:Color="#000000"/>
+		</Style>
+		<Style ss:ID="20">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10" ss:Color="#000000"/>
+		</Style>
+		<Style ss:ID="39">
+			<Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10" ss:Bold="1" ss:Color="#ffffff"/>
+			<Interior ss:Color="#57a826" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="1">
+			<NumberFormat ss:Format="yyyy-M-d HH:mm:ss AM/PM"/>
+		</Style>
+		<Style ss:ID="36">
+			<Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10" ss:Color="#000000"/>
+		</Style>
+		<Style ss:ID="41">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10" ss:Bold="1" ss:Color="#000000"/>
+		</Style>
+		<Style ss:ID="33">
+			<Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10" ss:Color="#000000"/>
+		</Style>
+		<Style ss:ID="42">
+			<Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10" ss:Bold="1" ss:Color="#000000"/>
+		</Style>
+		<Style ss:ID="40">
+			<Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10" ss:Bold="1" ss:Color="#ffffff"/>
+			<Interior ss:Color="#57a826" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="35">
+			<Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10" ss:Color="#000000"/>
+		</Style>
+		<Style ss:ID="32">
+			<Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10" ss:Bold="1" ss:Color="#000000"/>
+		</Style>
+		<Style ss:ID="29">
+			<Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10" ss:Bold="1" ss:Color="#000000"/>
+		</Style>
+		<Style ss:ID="38">
+			<Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10" ss:Bold="1" ss:Color="#ffffff"/>
+			<Interior ss:Color="#f8941d" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="21">
+			<Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="맑은 고딕" ss:Size="24" ss:Bold="1" ss:Color="#000000"/>
+		</Style>
+		<Style ss:ID="43">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Bottom" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10" ss:Color="#000000"/>
+		</Style>
+		<Style ss:ID="22">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="돋움체" ss:Size="9" ss:Color="#000000"/>
+		</Style>
+		<Style ss:ID="30">
+			<Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10" ss:Bold="1" ss:Color="#000000"/>
+		</Style>
+		<Style ss:ID="34">
+			<Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10" ss:Color="#000000"/>
+		</Style>
+		<Style ss:ID="37">
+			<Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10" ss:Bold="1" ss:Color="#ffffff"/>
+			<Interior ss:Color="#f8941d" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="27">
+			<Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10" ss:Bold="1" ss:Color="#ffffff"/>
+			<Interior ss:Color="#0557c3" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="24">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Center" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="돋움체" ss:Size="9" ss:Color="#000000"/>
+		</Style>
+		<Style ss:ID="26">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10" ss:Color="#000000"/>
+		</Style>
+	</Styles>
+	<Names>
+		<NamedRange ss:Name="__bookmark_13" ss:RefersTo="=Sheet1!R71C18"/>
+		<NamedRange ss:Name="__bookmark_12" ss:RefersTo="=Sheet1!R71C10"/>
+		<NamedRange ss:Name="__bookmark_11" ss:RefersTo="=Sheet1!R71C1"/>
+		<NamedRange ss:Name="__bookmark_17" ss:RefersTo="=Sheet1!R73C1"/>
+		<NamedRange ss:Name="__bookmark_16" ss:RefersTo="=Sheet1!R72C18"/>
+		<NamedRange ss:Name="__bookmark_15" ss:RefersTo="=Sheet1!R72C10"/>
+		<NamedRange ss:Name="__bookmark_14" ss:RefersTo="=Sheet1!R72C1"/>
+		<NamedRange ss:Name="__bookmark_9" ss:RefersTo="=Sheet1!R52C4"/>
+		<NamedRange ss:Name="__bookmark_8" ss:RefersTo="=Sheet1!R50C1"/>
+		<NamedRange ss:Name="__bookmark_6" ss:RefersTo="=Sheet1!R34C3"/>
+		<NamedRange ss:Name="__bookmark_5" ss:RefersTo="=Sheet1!R32C1"/>
+		<NamedRange ss:Name="__bookmark_20" ss:RefersTo="=Sheet1!R79C4"/>
+		<NamedRange ss:Name="__bookmark_3" ss:RefersTo="=Sheet1!R16C2"/>
+		<NamedRange ss:Name="__bookmark_2" ss:RefersTo="=Sheet1!R14C1"/>
+		<NamedRange ss:Name="__bookmark_24" ss:RefersTo="=Sheet1!R89C4"/>
+		<NamedRange ss:Name="__bookmark_18" ss:RefersTo="=Sheet1!R73C11"/>
+		<NamedRange ss:Name="__bookmark_22" ss:RefersTo="=Sheet1!R84C4"/>
+		<NamedRange ss:Name="__bookmark_19" ss:RefersTo="=Sheet1!R73C20"/>
+	</Names>
+	<Worksheet ss:Name="Report">
+		<ss:Table>
+			<ss:Column ss:Width="88" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="0" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="53" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="34" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="0" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="24" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="53" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="10" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="0" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="1" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="86" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="0" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="63" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="24" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="0" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="78" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="9" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="1" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="3" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="84" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="1" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="87" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="1" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="81" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="1" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="0" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="0" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="0" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="0" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="0" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="6" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="0" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="2" ss:AutoFitWidth="0"/>
+			<ss:Column ss:Width="0" ss:AutoFitWidth="0"/>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="20" ss:MergeAcross="12">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="14" ss:StyleID="20" ss:MergeAcross="19">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="21" ss:MergeAcross="32">
+					<Data ss:Type="String">에너지목표관리 보고서</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="22" ss:MergeAcross="12">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="14" ss:StyleID="22" ss:MergeAcross="19">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="23" ss:MergeAcross="12">
+					<Data ss:Type="String">조회기준년도 : </Data>
+				</Cell>
+				<Cell ss:Index="14" ss:StyleID="24" ss:MergeAcross="19">
+					<Data ss:Type="String">2010</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="22" ss:MergeAcross="12">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="14" ss:StyleID="22" ss:MergeAcross="19">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="22" ss:MergeAcross="12">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="14" ss:StyleID="22" ss:MergeAcross="19">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="22" ss:MergeAcross="12">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="14" ss:StyleID="22" ss:MergeAcross="19">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="22" ss:MergeAcross="12">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="14" ss:StyleID="22" ss:MergeAcross="19">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="22" ss:MergeAcross="12">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="14" ss:StyleID="22" ss:MergeAcross="19">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="22" ss:MergeAcross="12">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="14" ss:StyleID="22" ss:MergeAcross="19">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="22" ss:MergeAcross="12">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="14" ss:StyleID="22" ss:MergeAcross="19">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="20" ss:MergeAcross="12">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="14" ss:StyleID="20" ss:MergeAcross="19">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="64.0">
+				<Cell ss:Index="1" ss:StyleID="25" ss:MergeAcross="32">
+					<Data ss:Type="String">전력 에너지목표관리 실적 보고서</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="161.0">
+				<Cell ss:Index="1" ss:StyleID="26" ss:MergeAcross="24">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="26" ss:StyleID="20" ss:MergeAcross="7">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="20" ss:MergeAcross="32">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="20.0">
+				<Cell ss:Index="1" ss:StyleID="28" ss:MergeAcross="2">
+					<Data ss:Type="String">월간 전력 절감 목표</Data>
+				</Cell>
+				<Cell ss:Index="4" ss:StyleID="28" ss:MergeAcross="2">
+					<Data ss:Type="String">20.0%</Data>
+				</Cell>
+				<Cell ss:Index="7" ss:StyleID="20" ss:MergeAcross="26">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="30" ss:MergeAcross="1" ss:MergeDown="1">
+					<Data ss:Type="String">항목</Data>
+				</Cell>
+				<Cell ss:Index="3" ss:StyleID="30" ss:MergeAcross="6">
+					<Data ss:Type="String">에너지사용목표</Data>
+				</Cell>
+				<Cell ss:Index="10" ss:StyleID="30" ss:MergeAcross="5">
+					<Data ss:Type="String">에너지사용실적</Data>
+				</Cell>
+				<Cell ss:Index="16" ss:StyleID="30" ss:MergeAcross="5">
+					<Data ss:Type="String">에너지목표효과</Data>
+				</Cell>
+				<Cell ss:Index="22" ss:StyleID="30" ss:MergeAcross="1">
+					<Data ss:Type="String">목표대비 절감율</Data>
+				</Cell>
+				<Cell ss:Index="24" ss:StyleID="30" ss:MergeAcross="4">
+					<Data ss:Type="String">CO2 절감량</Data>
+				</Cell>
+				<Cell ss:Index="29" ss:StyleID="20" ss:MergeAcross="4" ss:MergeDown="13">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="3" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">KWh/월</Data>
+				</Cell>
+				<Cell ss:Index="6" ss:StyleID="32" ss:MergeAcross="3">
+					<Data ss:Type="String">TOE/월</Data>
+				</Cell>
+				<Cell ss:Index="10" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">KWh/월</Data>
+				</Cell>
+				<Cell ss:Index="13" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">TOE/월</Data>
+				</Cell>
+				<Cell ss:Index="16" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">KWh/월</Data>
+				</Cell>
+				<Cell ss:Index="19" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">TOE/월</Data>
+				</Cell>
+				<Cell ss:Index="22" ss:StyleID="32" ss:MergeAcross="1">
+					<Data ss:Type="String">%</Data>
+				</Cell>
+				<Cell ss:Index="24" ss:StyleID="32" ss:MergeAcross="4">
+					<Data ss:Type="String">%</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34" ss:MergeAcross="1">
+					<Data ss:Type="String">201001</Data>
+				</Cell>
+				<Cell ss:Index="3" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">646991.328</Data>
+				</Cell>
+				<Cell ss:Index="6" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">139.103</Data>
+				</Cell>
+				<Cell ss:Index="10" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="13" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="16" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-646991.328</Data>
+				</Cell>
+				<Cell ss:Index="19" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-139.103</Data>
+				</Cell>
+				<Cell ss:Index="22" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="24" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-342905.403</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34" ss:MergeAcross="1">
+					<Data ss:Type="String">201002</Data>
+				</Cell>
+				<Cell ss:Index="3" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">638968.780</Data>
+				</Cell>
+				<Cell ss:Index="6" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">137.378</Data>
+				</Cell>
+				<Cell ss:Index="10" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="13" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="16" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-638968.780</Data>
+				</Cell>
+				<Cell ss:Index="19" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-137.378</Data>
+				</Cell>
+				<Cell ss:Index="22" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="24" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-338653.453</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34" ss:MergeAcross="1">
+					<Data ss:Type="String">201003</Data>
+				</Cell>
+				<Cell ss:Index="3" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">543501.235</Data>
+				</Cell>
+				<Cell ss:Index="6" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">116.852</Data>
+				</Cell>
+				<Cell ss:Index="10" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="13" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="16" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-543501.235</Data>
+				</Cell>
+				<Cell ss:Index="19" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-116.852</Data>
+				</Cell>
+				<Cell ss:Index="22" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="24" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-288055.654</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34" ss:MergeAcross="1">
+					<Data ss:Type="String">201004</Data>
+				</Cell>
+				<Cell ss:Index="3" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">624875.903</Data>
+				</Cell>
+				<Cell ss:Index="6" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">134.348</Data>
+				</Cell>
+				<Cell ss:Index="10" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="13" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="16" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-624875.903</Data>
+				</Cell>
+				<Cell ss:Index="19" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-134.348</Data>
+				</Cell>
+				<Cell ss:Index="22" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="24" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-331184.229</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34" ss:MergeAcross="1">
+					<Data ss:Type="String">201005</Data>
+				</Cell>
+				<Cell ss:Index="3" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">590498.496</Data>
+				</Cell>
+				<Cell ss:Index="6" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">126.957</Data>
+				</Cell>
+				<Cell ss:Index="10" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="13" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="16" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-590498.496</Data>
+				</Cell>
+				<Cell ss:Index="19" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-126.957</Data>
+				</Cell>
+				<Cell ss:Index="22" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="24" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-312964.202</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34" ss:MergeAcross="1">
+					<Data ss:Type="String">201006</Data>
+				</Cell>
+				<Cell ss:Index="3" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">634216.896</Data>
+				</Cell>
+				<Cell ss:Index="6" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">136.356</Data>
+				</Cell>
+				<Cell ss:Index="10" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="13" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="16" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-634216.896</Data>
+				</Cell>
+				<Cell ss:Index="19" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-136.356</Data>
+				</Cell>
+				<Cell ss:Index="22" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="24" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-336134.954</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34" ss:MergeAcross="1">
+					<Data ss:Type="String">201007</Data>
+				</Cell>
+				<Cell ss:Index="3" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">622661.184</Data>
+				</Cell>
+				<Cell ss:Index="6" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">133.872</Data>
+				</Cell>
+				<Cell ss:Index="10" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="13" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="16" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-622661.184</Data>
+				</Cell>
+				<Cell ss:Index="19" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-133.872</Data>
+				</Cell>
+				<Cell ss:Index="22" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="24" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-330010.427</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34" ss:MergeAcross="1">
+					<Data ss:Type="String">201008</Data>
+				</Cell>
+				<Cell ss:Index="3" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">667746.547</Data>
+				</Cell>
+				<Cell ss:Index="6" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">143.565</Data>
+				</Cell>
+				<Cell ss:Index="10" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="13" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="16" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-667746.547</Data>
+				</Cell>
+				<Cell ss:Index="19" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-143.565</Data>
+				</Cell>
+				<Cell ss:Index="22" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="24" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-353905.670</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34" ss:MergeAcross="1">
+					<Data ss:Type="String">201009</Data>
+				</Cell>
+				<Cell ss:Index="3" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">665778.816</Data>
+				</Cell>
+				<Cell ss:Index="6" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">143.142</Data>
+				</Cell>
+				<Cell ss:Index="10" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="13" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="16" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-665778.816</Data>
+				</Cell>
+				<Cell ss:Index="19" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-143.142</Data>
+				</Cell>
+				<Cell ss:Index="22" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="24" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-352862.772</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34" ss:MergeAcross="1">
+					<Data ss:Type="String">201010</Data>
+				</Cell>
+				<Cell ss:Index="3" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">597431.808</Data>
+				</Cell>
+				<Cell ss:Index="6" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">128.447</Data>
+				</Cell>
+				<Cell ss:Index="10" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">501.199</Data>
+				</Cell>
+				<Cell ss:Index="13" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.107</Data>
+				</Cell>
+				<Cell ss:Index="16" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-596930.608</Data>
+				</Cell>
+				<Cell ss:Index="19" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-128.340</Data>
+				</Cell>
+				<Cell ss:Index="22" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">-99.916</Data>
+				</Cell>
+				<Cell ss:Index="24" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-316426.349</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34" ss:MergeAcross="1">
+					<Data ss:Type="String">201011</Data>
+				</Cell>
+				<Cell ss:Index="3" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">621100.223</Data>
+				</Cell>
+				<Cell ss:Index="6" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">133.536</Data>
+				</Cell>
+				<Cell ss:Index="10" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">742934.000</Data>
+				</Cell>
+				<Cell ss:Index="13" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">159.730</Data>
+				</Cell>
+				<Cell ss:Index="16" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">121833.776</Data>
+				</Cell>
+				<Cell ss:Index="19" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">26.194</Data>
+				</Cell>
+				<Cell ss:Index="22" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">19.615</Data>
+				</Cell>
+				<Cell ss:Index="24" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-14237.097</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34" ss:MergeAcross="1">
+					<Data ss:Type="String">201012</Data>
+				</Cell>
+				<Cell ss:Index="3" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">588869.568</Data>
+				</Cell>
+				<Cell ss:Index="6" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">126.606</Data>
+				</Cell>
+				<Cell ss:Index="10" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">671062.829</Data>
+				</Cell>
+				<Cell ss:Index="13" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">144.278</Data>
+				</Cell>
+				<Cell ss:Index="16" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">82193.261</Data>
+				</Cell>
+				<Cell ss:Index="19" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">17.671</Data>
+				</Cell>
+				<Cell ss:Index="22" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">13.957</Data>
+				</Cell>
+				<Cell ss:Index="24" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-27570.231</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="25" ss:MergeAcross="32">
+					<Data ss:Type="String">가스 에너지목표관리 실적 보고서</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="161.0">
+				<Cell ss:Index="1" ss:StyleID="26" ss:MergeAcross="25">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="27" ss:StyleID="20" ss:MergeAcross="6">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="20" ss:MergeAcross="32">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="20.0">
+				<Cell ss:Index="1" ss:StyleID="38" ss:MergeAcross="2">
+					<Data ss:Type="String">월간 가스 절감 목표</Data>
+				</Cell>
+				<Cell ss:Index="4" ss:StyleID="38" ss:MergeAcross="2">
+					<Data ss:Type="String">0.0%</Data>
+				</Cell>
+				<Cell ss:Index="7" ss:StyleID="20" ss:MergeAcross="26">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="30" ss:MergeDown="1">
+					<Data ss:Type="String">항목</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="30" ss:MergeAcross="6">
+					<Data ss:Type="String">에너지사용목표</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="30" ss:MergeAcross="5">
+					<Data ss:Type="String">에너지사용실적</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="30" ss:MergeAcross="5">
+					<Data ss:Type="String">에너지목표효과</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="30" ss:MergeAcross="1">
+					<Data ss:Type="String">목표대비 절감율</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="30" ss:MergeAcross="4">
+					<Data ss:Type="String">CO2 절감량</Data>
+				</Cell>
+				<Cell ss:Index="28" ss:StyleID="20" ss:MergeAcross="5" ss:MergeDown="13">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="2" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">㎥/월</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="32" ss:MergeAcross="3">
+					<Data ss:Type="String">TOE/월</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">㎥/월</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">TOE/월</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">㎥/월</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">TOE/월</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="32" ss:MergeAcross="1">
+					<Data ss:Type="String">%</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="32" ss:MergeAcross="4">
+					<Data ss:Type="String">%</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201001</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">1094.423</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">1.045</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-1094.423</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-1.045</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-3969.475</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201002</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">1094.688</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">1.045</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-1094.688</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-1.045</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-3970.433</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201003</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">988.511</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">0.944</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-988.511</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-0.944</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-3585.333</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201004</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">1094.399</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">1.045</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-1094.399</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-1.045</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-3969.388</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201005</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">1059.119</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">1.011</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-1059.119</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-1.011</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-3841.428</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201006</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">1059.119</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">1.011</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-1059.119</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-1.011</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-3841.428</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201007</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">1094.399</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">1.045</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-1094.399</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-1.045</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-3969.388</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201008</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">1094.423</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">1.045</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-1094.423</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-1.045</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-3969.475</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201009</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">1094.399</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">1.045</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-1094.399</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-1.045</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-3969.388</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201010</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">1059.119</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">1.011</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-1059.119</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-1.011</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">-3841.428</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201011</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">1094.399</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">1.045</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">5764.400</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">5.505</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">4670.000</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">4.459</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">426.873</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">11370.627</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201012</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">1059.119</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">1.011</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">24692.092</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">23.580</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">23632.972</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">22.569</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">2231.633</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="4">
+					<Data ss:Type="String">674165.277</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="25" ss:MergeAcross="31">
+					<Data ss:Type="String">수도 에너지목표관리 실적 보고서</Data>
+				</Cell>
+				<Cell ss:Index="33" ss:StyleID="20" ss:MergeDown="17">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="161.0">
+				<Cell ss:Index="1" ss:StyleID="26" ss:MergeAcross="28">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="30" ss:StyleID="20" ss:MergeAcross="2">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="20" ss:MergeAcross="31">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="20.0">
+				<Cell ss:Index="1" ss:StyleID="40" ss:MergeAcross="2">
+					<Data ss:Type="String">월간 수도 절감 목표</Data>
+				</Cell>
+				<Cell ss:Index="4" ss:StyleID="40" ss:MergeAcross="2">
+					<Data ss:Type="String">0.0%</Data>
+				</Cell>
+				<Cell ss:Index="7" ss:StyleID="20" ss:MergeAcross="25">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="30" ss:MergeDown="1">
+					<Data ss:Type="String">항목</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="30" ss:MergeAcross="6">
+					<Data ss:Type="String">에너지사용목표</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="30" ss:MergeAcross="5">
+					<Data ss:Type="String">에너지사용실적</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="30" ss:MergeAcross="5">
+					<Data ss:Type="String">에너지목표효과</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="30" ss:MergeAcross="1">
+					<Data ss:Type="String">목표대비 절감율</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="30" ss:MergeAcross="7">
+					<Data ss:Type="String">CO2 절감량</Data>
+				</Cell>
+				<Cell ss:Index="31" ss:StyleID="20" ss:MergeAcross="1" ss:MergeDown="13">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="2" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">㎥/월</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="32" ss:MergeAcross="3">
+					<Data ss:Type="String">TOE/월</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">㎥/월</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">TOE/월</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">㎥/월</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">TOE/월</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="32" ss:MergeAcross="1">
+					<Data ss:Type="String">%</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="32" ss:MergeAcross="7">
+					<Data ss:Type="String">%</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201001</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">4657.439</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">0.784</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-4657.439</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-0.784</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="7">
+					<Data ss:Type="String">-2733.917</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201002</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">4657.632</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">0.784</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-4657.632</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-0.784</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="7">
+					<Data ss:Type="String">-2734.030</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201003</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">4206.719</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">0.708</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-4206.719</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-0.708</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="7">
+					<Data ss:Type="String">-2469.344</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201004</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">4657.680</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">0.784</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-4657.680</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-0.784</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="7">
+					<Data ss:Type="String">-2734.058</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201005</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">4507.199</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">0.758</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-4507.199</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-0.758</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="7">
+					<Data ss:Type="String">-2645.726</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201006</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">4657.680</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">0.784</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-4657.680</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-0.784</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="7">
+					<Data ss:Type="String">-2734.058</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201007</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">4507.199</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">0.758</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-4507.199</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-0.758</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="7">
+					<Data ss:Type="String">-2645.726</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201008</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">4657.439</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">0.784</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-4657.439</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-0.784</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="7">
+					<Data ss:Type="String">-2733.917</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201009</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">4657.680</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">0.784</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-4657.680</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-0.784</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="7">
+					<Data ss:Type="String">-2734.058</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201010</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">4507.199</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">0.758</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-4507.199</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-0.758</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">0.000</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="7">
+					<Data ss:Type="String">-2645.726</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201011</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">4657.680</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">0.784</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">813.599</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.136</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-3844.080</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-0.647</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">-82.542</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="7">
+					<Data ss:Type="String">-2359.267</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">201012</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">4507.199</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">0.758</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">1552.195</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.261</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-2955.004</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-0.497</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">-65.564</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="7">
+					<Data ss:Type="String">-674.876</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="20" ss:MergeAcross="9">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="11" ss:StyleID="20" ss:MergeAcross="8">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="20" ss:StyleID="20" ss:MergeAcross="11">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="32" ss:StyleID="20" ss:MergeAcross="1" ss:MergeDown="8">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="25" ss:MergeAcross="30">
+					<Data ss:Type="String">년간 에너지목표관리 실적 보고서</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="41.0">
+				<Cell ss:Index="1" ss:StyleID="20" ss:MergeAcross="9">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="11" ss:StyleID="20" ss:MergeAcross="8">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="20" ss:StyleID="20" ss:MergeAcross="11">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="36.0">
+				<Cell ss:Index="1" ss:StyleID="28" ss:MergeAcross="9">
+					<Data ss:Type="String">년간 전력 절감 목표</Data>
+				</Cell>
+				<Cell ss:Index="11" ss:StyleID="38" ss:MergeAcross="8">
+					<Data ss:Type="String">년간 가스 절감 목표</Data>
+				</Cell>
+				<Cell ss:Index="20" ss:StyleID="40" ss:MergeAcross="11">
+					<Data ss:Type="String">년간 수도 절감 목표</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="41" ss:MergeAcross="9">
+					<Data ss:Type="String">1 년간 2010 평균 대비 20.0% 절감목표</Data>
+				</Cell>
+				<Cell ss:Index="11" ss:StyleID="41" ss:MergeAcross="8">
+					<Data ss:Type="String">1 년간 2010 평균 대비 0.0% 절감목표</Data>
+				</Cell>
+				<Cell ss:Index="20" ss:StyleID="41" ss:MergeAcross="11">
+					<Data ss:Type="String">1 년간 2010 평균 대비 0.0% 절감목표</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="42" ss:MergeAcross="9">
+					<Data ss:Type="String">-80.994 %</Data>
+				</Cell>
+				<Cell ss:Index="11" ss:StyleID="42" ss:MergeAcross="8">
+					<Data ss:Type="String">2231.633 %</Data>
+				</Cell>
+				<Cell ss:Index="20" ss:StyleID="42" ss:MergeAcross="11">
+					<Data ss:Type="String">-80.994 %</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="130.0">
+				<Cell ss:Index="1" ss:StyleID="26" ss:MergeAcross="6">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="8" ss:StyleID="20" ss:MergeAcross="2">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="11" ss:StyleID="26" ss:MergeAcross="5">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="17" ss:StyleID="20" ss:MergeAcross="2">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="20" ss:StyleID="26" ss:MergeAcross="4">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="25" ss:StyleID="20" ss:MergeAcross="6">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="20" ss:MergeAcross="9">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="11" ss:StyleID="20" ss:MergeAcross="8">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="20" ss:StyleID="20" ss:MergeAcross="11">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="20" ss:MergeAcross="9">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="11" ss:StyleID="20" ss:MergeAcross="8">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="20" ss:StyleID="20" ss:MergeAcross="11">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="20" ss:MergeAcross="31">
+					<Data ss:Type="String"/>
+				</Cell>
+				<Cell ss:Index="33" ss:StyleID="20" ss:MergeDown="16">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="25" ss:MergeAcross="31">
+					<Data ss:Type="String">년간 에너지목표관리 실적 보고서</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="20" ss:MergeAcross="31">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="47.0">
+				<Cell ss:Index="1" ss:StyleID="28" ss:MergeAcross="2">
+					<Data ss:Type="String">년간 전력 절감 목표</Data>
+				</Cell>
+				<Cell ss:Index="4" ss:StyleID="28" ss:MergeAcross="2">
+					<Data ss:Type="String">20.0%</Data>
+				</Cell>
+				<Cell ss:Index="7" ss:StyleID="43" ss:MergeAcross="25">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="30" ss:MergeDown="1">
+					<Data ss:Type="String">항목</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="30" ss:MergeAcross="6">
+					<Data ss:Type="String">에너지사용목표</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="30" ss:MergeAcross="5">
+					<Data ss:Type="String">에너지사용실적</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="30" ss:MergeAcross="5">
+					<Data ss:Type="String">에너지목표효과</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="30" ss:MergeAcross="1">
+					<Data ss:Type="String">목표대비 절감율</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="30" ss:MergeAcross="7">
+					<Data ss:Type="String">CO2 절감량</Data>
+				</Cell>
+				<Cell ss:Index="31" ss:StyleID="20" ss:MergeAcross="1" ss:MergeDown="2">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="2" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">KWh/월</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="32" ss:MergeAcross="3">
+					<Data ss:Type="String">TOE/월</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">KWh/월</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">TOE/월</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">KWh/월</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">TOE/월</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="32" ss:MergeAcross="1">
+					<Data ss:Type="String">%</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="32" ss:MergeAcross="7">
+					<Data ss:Type="String">%</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">2010</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">7442640.787</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">1600.167</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">1414498.029</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">304.117</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-6028142.757</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-1296.050</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">-80.994</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="7">
+					<Data ss:Type="String">-3344910.447</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="20" ss:MergeAcross="31">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="78.0">
+				<Cell ss:Index="1" ss:StyleID="38" ss:MergeAcross="2">
+					<Data ss:Type="String">년간 가스 절감 목표</Data>
+				</Cell>
+				<Cell ss:Index="4" ss:StyleID="38" ss:MergeAcross="2">
+					<Data ss:Type="String">0.0%</Data>
+				</Cell>
+				<Cell ss:Index="7" ss:StyleID="43" ss:MergeAcross="25">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="30" ss:MergeDown="1">
+					<Data ss:Type="String">항목</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="30" ss:MergeAcross="6">
+					<Data ss:Type="String">에너지사용목표</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="30" ss:MergeAcross="5">
+					<Data ss:Type="String">에너지사용실적</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="30" ss:MergeAcross="5">
+					<Data ss:Type="String">에너지목표효과</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="30" ss:MergeAcross="1">
+					<Data ss:Type="String">목표대비 절감율</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="30" ss:MergeAcross="7">
+					<Data ss:Type="String">CO2 절감량</Data>
+				</Cell>
+				<Cell ss:Index="31" ss:StyleID="20" ss:MergeAcross="1" ss:MergeDown="2">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="2" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">㎥/월</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="32" ss:MergeAcross="3">
+					<Data ss:Type="String">TOE/월</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">㎥/월</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">TOE/월</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">㎥/월</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">TOE/월</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="32" ss:MergeAcross="1">
+					<Data ss:Type="String">%</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="32" ss:MergeAcross="7">
+					<Data ss:Type="String">%</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">2010</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">1059.119</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">1.011</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">24692.092</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">23.580</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">23632.972</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">22.569</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">2231.633</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="7">
+					<Data ss:Type="String">674165.277</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="20" ss:MergeAcross="31">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="78.0">
+				<Cell ss:Index="1" ss:StyleID="40" ss:MergeAcross="2">
+					<Data ss:Type="String">년간 수도 절감 목표</Data>
+				</Cell>
+				<Cell ss:Index="4" ss:StyleID="40" ss:MergeAcross="2">
+					<Data ss:Type="String">0.0%</Data>
+				</Cell>
+				<Cell ss:Index="7" ss:StyleID="43" ss:MergeAcross="25">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="30" ss:MergeDown="1">
+					<Data ss:Type="String">항목</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="30" ss:MergeAcross="6">
+					<Data ss:Type="String">에너지사용목표</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="30" ss:MergeAcross="5">
+					<Data ss:Type="String">에너지사용실적</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="30" ss:MergeAcross="5">
+					<Data ss:Type="String">에너지목표효과</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="30" ss:MergeAcross="1">
+					<Data ss:Type="String">목표대비 절감율</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="30" ss:MergeAcross="7">
+					<Data ss:Type="String">CO2 절감량</Data>
+				</Cell>
+				<Cell ss:Index="31" ss:StyleID="20" ss:MergeAcross="1" ss:MergeDown="2">
+					<Data ss:Type="String"/>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="2" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">㎥/월</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="32" ss:MergeAcross="3">
+					<Data ss:Type="String">TOE/월</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">㎥/월</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">TOE/월</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">㎥/월</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="32" ss:MergeAcross="2">
+					<Data ss:Type="String">TOE/월</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="32" ss:MergeAcross="1">
+					<Data ss:Type="String">%</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="32" ss:MergeAcross="7">
+					<Data ss:Type="String">%</Data>
+				</Cell>
+			</Row>
+			<Row ss:AutoFitHeight="0" ss:Height="15.0">
+				<Cell ss:Index="1" ss:StyleID="34">
+					<Data ss:Type="String">2010</Data>
+				</Cell>
+				<Cell ss:Index="2" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">4507.199</Data>
+				</Cell>
+				<Cell ss:Index="5" ss:StyleID="36" ss:MergeAcross="3">
+					<Data ss:Type="String">0.758</Data>
+				</Cell>
+				<Cell ss:Index="9" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">1552.195</Data>
+				</Cell>
+				<Cell ss:Index="12" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">0.261</Data>
+				</Cell>
+				<Cell ss:Index="15" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-2955.004</Data>
+				</Cell>
+				<Cell ss:Index="18" ss:StyleID="36" ss:MergeAcross="2">
+					<Data ss:Type="String">-0.497</Data>
+				</Cell>
+				<Cell ss:Index="21" ss:StyleID="36" ss:MergeAcross="1">
+					<Data ss:Type="String">-65.564</Data>
+				</Cell>
+				<Cell ss:Index="23" ss:StyleID="36" ss:MergeAcross="7">
+					<Data ss:Type="String">-674.876</Data>
+				</Cell>
+			</Row>
+		</ss:Table>
+		<WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+			<PageSetup>
+				<Layout x:Orientation="Landscape"/>
+				<Header/>
+				<Footer/>
+			</PageSetup>
+			<Print>
+				<PaperSizeIndex>9</PaperSizeIndex>
+			</Print>
+		</WorksheetOptions>
+	</Worksheet>
+</Workbook>

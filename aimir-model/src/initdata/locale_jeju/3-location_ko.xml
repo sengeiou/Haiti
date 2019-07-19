@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Location 
+		name="제주도"
+		orderNo="1"
+		parent=""
+		supplier="한전"
+	/>
+	<system.Location 
+		name="제주시"
+		orderNo="2"
+		parent="제주도"
+        supplier="한전"
+	/>
+	<system.Location 
+		name="구좌읍"
+		orderNo="3"
+		parent="제주시"
+        supplier="한전"
+	/>
+	<system.Location 
+        name="송당리"
+        orderNo="4"
+        parent="구좌읍"
+        supplier="한전"
+    />
+    <system.Location 
+        name="행원리"
+        orderNo="5"
+        parent="구좌읍"
+        supplier="한전"
+    />
+</dataset>

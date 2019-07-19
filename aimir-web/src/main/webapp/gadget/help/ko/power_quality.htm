@@ -1,0 +1,88 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!-- saved from url=(0029)http://www.helpandmanual.com/ -->
+<head>
+   <title>전력 품질</title>
+   <meta name="generator" content="Help &amp; Manual" />
+   <meta name="keywords" content="" />
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+   <meta http-equiv="Content-Style-Type" content="text/css" />
+   <link type="text/css" href="default.css" rel="stylesheet" />
+<script type="text/javascript" src="helpman_topicinit.js"></script>
+<!-- Redirect browser to frame page if page is not in the content frame. -->
+<script type="text/javascript">
+<!--
+if (location.search.lastIndexOf("toc=0")<=0) {
+  if (parent.frames.length==0) { parent.location.href="index.html?power_quality.htm"; }
+  else { parent.quicksync(''); }
+}
+//-->
+</script>
+<script type="text/javascript" src="highlight.js"></script></head>
+<body style="margin: 0px 0px 0px 0px; background: #FFFFFF;" onload="highlight();">
+<div id="hmpopupDiv" style="visibility:hidden; position:absolute; z-index:1000; "></div>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="5" bgcolor="#C0C0C0">
+  <tr valign="middle">
+    <td align="left">
+      <p class="p_Heading1"><span class="f_Heading1">전력 품질</span></p>
+
+    </td>
+    <td align="right">
+     <span style="font-size: 9pt">
+     <a href="chapter_2.htm">Top</a>&nbsp;
+     
+     
+     </span>
+    </td>
+  </tr>
+</table>
+
+
+<!-- Placeholder for topic body. -->
+<table width="100%" border="0" cellspacing="0" cellpadding="5"><tr valign="top"><td align="left">
+<p>전기의 전력 품질(Voltage, Current) &nbsp;, Voltage Level, Voltage Imbalance 정보를 제공합니다</p>
+<p><span style="color: #000000;">&nbsp;</span></p>
+<p>전기 미터의 경우에만 Power Quality데이터가 존재하게 되며 검침 주기 별 전력 품질데이터를 의미합니다. </p>
+<p><span style="color: #000000;">&nbsp;</span></p>
+<p>장비 데이터(Instrument data)는 다음과 같은 정보를 확인할 수 있습니다.  </p>
+<p>― Voltage Per Phase </p>
+<p>― Current Per Phase </p>
+<p>― Voltage Angle Per Phase </p>
+<p>― Current Angle Per Phase </p>
+<p>― Power Factor Per Phase </p>
+<p>― Voltage THD Per Phase </p>
+<p>― Current THD Per Phase </p>
+<p>― TDD Per Phase </p>
+<p>― Distortion Power Factor Per Phase </p>
+<p>― Momentary Interval Distortion kVA Demand </p>
+<p>― Fundamental (1st harmonic) Voltage Magnitude </p>
+<p>― Fundamental (1st harmonic) Current Magnitude </p>
+<p>― Voltage 2nd Harmonic Magnitude </p>
+<p>― Current 2nd Harmonic Magnitude </p>
+<p>― 2nd Harmonic Voltage % </p>
+<p>― Harmonic Current (sum of 2nd through 15th) </p>
+<p>― Line Frequency </p>
+<p>―¡ª    System Power Factor Angle</p>
+<p><span style="color: #000000;">&nbsp;</span></p>
+<p><span style="color: #000000;">&nbsp;</span></p>
+<p>미니 가젯에서 </p>
+<p><span style="color: #000000;">&nbsp;</span></p>
+<p>먼저 각 Voltage Phase별 최대최소 오차는 다음과 같다.</p>
+<p><span style="color: #000000;">&nbsp;</span></p>
+<p>100 * 최대-최소/평균 &nbsp; (Voltage Variation시간대별 각 phase별 전압 불균형을 뜻함)</p>
+<p><span style="color: #000000;">&nbsp;</span></p>
+<p>위 공식을 이용해 오차를 구한 다음에 해당 기간의 Voltage Unbalance구하는 공식 및 Voltage Angle이 마이너스인 구간에 대해 각 항목별로 값을 구함. Voltage Angle의 경우 phase 3개중 하나라도 있으면 카운트가 1개씩 올라감</p>
+<p><span style="color: #000000;">&nbsp;</span></p>
+<p>Instrument에서는 목록에 대한 조건에서 먼저 각 Voltage Phase별 최대최소 오차</p>
+<p>(Voltage Variation시간대별 각 phase별 전압 불균형)를 구함, </p>
+<p>해당 기간 대에 Reverse Angle이 있는지 조회 시간대별로 하나라도 있으면 데이터 조회</p>
+<p> Voltage Level에서 Reverse Angle조회부분이 이쪽으로 옮겨옴</p>
+<p><span style="color: #000000;">&nbsp;</span></p>
+<p>PowerQuality Data의 vol_a,vol_b,vol_C와 vol_angle_a, vol_angle_b, vol_angle_C의 기간별 최대, 최소, 평균값을 구합니다. </p>
+
+</td></tr></table>
+
+</body>
+</html>

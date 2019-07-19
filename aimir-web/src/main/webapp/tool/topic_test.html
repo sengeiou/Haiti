@@ -1,0 +1,81 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>TOPIC test</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <script type="text/javascript" src="../js/jquery-1.4.2.min.js"></script>
+  <script type="text/javascript" src="../js/stomp.js"></script>
+  <script type="text/javascript">
+    var url = "ws://187.1.10.58:61614/stomp";
+    var client = Stomp.client(url);
+    var message_callback = function(message) {
+        // called when the client receives a STOMP message from the server
+        if (message.body) {
+            $("#message").append(document.createTextNode(message.body + "\n"));
+        }
+        else {
+        	$("#message").append(document.createTextNode("got empty message\n"));
+        }
+    }
+    var connect_callback = function() {
+        client.debug("connected to Stomp");
+        client.subscribe("/topic/AiMiR.Event", message_callback, {id:(new Date()).getTime().toString()});
+    }
+    var error_callback = function(error) {
+        alert(error);
+    }
+    client.debug = function(str) {
+    	$("#debug").append(document.createTextNode(str + "\n"));
+    }
+    
+    client.heartbeat.outgoing = 0;
+    client.heartbeat.incoming = 0;
+    client.connect('guest', 'guest', connect_callback, error_callback);
+    
+    var sleep = function(sec) {
+    	var now = new Date();
+    	var stop = now.getTime() + (sec*1000);
+    	while (true) {
+    		now = new Date();
+    		if (now.getTime() > stop) return;
+    	}
+    }
+
+    var keepalive = function() {
+        setInterval("client.send('/topic/keepalive', {}, 'keep alive')", 60000);
+    }
+  </script>
+  <link rel="stylesheet" href="assets/unittest.css" type="text/css" />
+</head>
+<body onload="keepalive();">
+
+<div id="content">
+  <div id="header">
+    <h1>TOPIC tests</h1>
+    <p>
+      This file tests amq.js.
+    </p>
+  </div>
+</div>
+<pre id="message"></pre>
+<pre id="debug"></pre>
+</body>
+</html>

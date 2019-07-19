@@ -1,0 +1,179 @@
+.js-support .js-hidden {
+}
+
+/* 플로트 클리어 */
+selectbox, .selectbox, {
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+}
+
+.hilght-label {
+	margin: 0 10px 0 0;
+}
+.x-grid3-cell-inner {
+	padding: 3px 6px 2px 1px;
+}
+.g_clear {
+	clear: both !important;
+	line-height: 0px !important;
+	margin: 0px !important;
+	padding: 0px !important;
+}
+.absolute-hidden {
+	display: none !important;
+}
+.inline-block-fix {
+	display: inline-block;
+	*display: inline;
+	zoom: 1
+}
+.ui-loading-indicator {
+	display: none;
+	z-index: 9999;
+	position: absolute !important;
+	background: white !important;
+	padding: 10px !important;
+	margin: 0 auto !important;
+	width: 100% !important;
+	font-size: 16px !important;
+	text-align: center !important;
+	font-weight: bold !important;
+}
+/* 그리드 헤더 센터정렬 */
+.x-grid3-header td div {
+    text-align: center !important;
+}
+
+/* Extjs 탭패널 탭버튼 스타일 */
+.x-tab-panel-header ul.x-tab-strip li {
+	text-align: left;
+	min-width: 75px;	
+}
+
+.ext-form-type {
+	width: 100%;	
+	text-align: center;
+}
+.ext-form-type tr td{
+	font-size: 12px;
+}
+
+/* datepicker height bug fix */
+#ui-datepicker-div,
+.ui-datepicker {
+	height: 170px !important;
+}
+
+/* 폼 테이블 일괄 */
+.form-table {
+	height: 100%;
+}
+	.form-table tr {
+		height: 26px;
+	}
+	.min .form-table tr {
+		height: 23px;
+	}
+	.max .form-table th {
+		padding-left: 20px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.max .form-table td {	
+		padding-left: 10px;	
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.min .form-table td {	
+		padding-left: 10px;	
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.form-table .form-label {
+		text-align: left;
+		min-width: 70px;
+	}
+	.max .form-table select,
+	.max .form-table input {
+		width: 120px;
+	}
+	.min .form-table select {
+		width: 132px;
+	}
+	.min .form-table input {
+		width: 130px;
+	}
+	.form-table input.hasDatepicker {
+		width: 85px;
+	}
+	.form-table input.hasDatepicker, 
+	.form-table .between {
+		margin-right: 0px;		
+	}
+	.form-table td div {
+		/*padding: 0px !important;*/
+	}
+	.form-table .between {
+		margin: 0px 3px !important;
+	}
+	.form-table .hm_button {
+		margin-right: 5px;
+	}
+	.form-table textarea { 
+		display: inline !important; 
+		float: none; 
+		width: 99%; 
+		height: 100px; 
+	}
+
+/* 가젯 래퍼 MIN */
+div#wrapper {
+	min-width: 380px;
+	margin: 0 auto;
+}
+
+/* 가젯 래퍼 MAX */
+div#wrapper.max {
+	min-width: 800px;
+	max-width: 1300px;
+}
+
+ul.floatlist li {
+	float: left;
+	margin: 2px 3px;
+}
+.max .dashedline {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.chart-title {
+	margin-left: 10px;
+	margin-bottom: 10px;
+	font-weight: bold;
+	padding-left: 20px;	
+	background: url('/aimir-web/themes/images/default/setting/ic-check.gif') no-repeat left center;
+	overflow: hidden;
+}
+.require_field_label {
+}
+
+div.tagList {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	overflow-y: auto;
+}
+div.tagList li {	
+	font-size: 12px !important;
+	float: left;
+	margin: 1px 2px 1px 0px;
+	padding: 4px 6px 2px 6px;
+	color: #0F7CD0;
+	border: 1px solid #99BBE8;
+	background-color: white;
+	border-radius: 4px;
+	cursor: pointer;
+	background: url('/aimir-web/themes/images/default/setting/sub_tab_bg01.gif') repeat-x bottom;
+}

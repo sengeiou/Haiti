@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="1p2w"
+        pulseConst="1"
+        name="Azos GFI"
+        deviceModel="Azos GFI"
+        parserName="com.aimir.fep.meter.parser.I210PlusCSeries"
+        saverName="com.aimir.fep.meter.saver.I210PlusCSeriesMDSaver"
+    />
+    
+</dataset>

@@ -1,0 +1,1248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.21" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 3.7.2.v20120213 Build &lt;3.7.2.v20120214-1408></property>
+    <list-property name="propertyBindings">
+        <structure>
+            <property name="name">FILELIST</property>
+            <property name="id">1295</property>
+            <expression name="value" type="javascript">"http://localhost:"+ params["localPort"] +"/aimir-web/report/energyUsageStatistic.do?energyType=" + params["energyType"] + "&amp;yyyymm="+params["searchDate"]</expression>
+        </structure>
+    </list-property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <parameters>
+        <scalar-parameter name="energyType" id="7">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">EM</value>
+            </simple-property-list>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="searchDate" id="8">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">201208</value>
+            </simple-property-list>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="localPort" id="1300">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">8085</value>
+            </simple-property-list>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.datatools.enablement.oda.xml" name="Data Source" id="1295">
+            <property name="FILELIST">http://localhost:8085/aimir-web/report/energyUsageStatistic.do?energyType=EM&amp;yyyymm=201208</property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.datatools.enablement.oda.xml.dataSet" name="Data Set" id="1296">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">endDeviceName</property>
+                    <property name="analysis">dimension</property>
+                    <property name="onColumnLayout">false</property>
+                    <text-property name="heading">endDeviceName</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">currUsage</property>
+                    <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
+                    <text-property name="heading">currUsage</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">lastUsage</property>
+                    <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
+                    <text-property name="heading">lastUsage</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">currBill</property>
+                    <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
+                    <text-property name="heading">currBill</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">lastBill</property>
+                    <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
+                    <text-property name="heading">lastBill</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">unit</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">unit</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">endDeviceName</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">currUsage</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">lastUsage</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">currBill</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">lastBill</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">unit</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">endDeviceName</property>
+                    <property name="nativeName">endDeviceName</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">currUsage</property>
+                    <property name="nativeName">currUsage</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">lastUsage</property>
+                    <property name="nativeName">lastUsage</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">currBill</property>
+                    <property name="nativeName">currBill</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">lastBill</property>
+                    <property name="nativeName">lastBill</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">unit</property>
+                    <property name="nativeName">unit</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[table0#-TNAME-#table0#:#[/EnergyCharge/row]#:#{endDeviceName;STRING;/@endDeviceName},{currUsage;INT;/@currUsage},{lastUsage;INT;/@lastUsage},{currBill;INT;/@currBill},{lastBill;INT;/@lastBill},{unit;STRING;/@unit}]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>endDeviceName</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>endDeviceName</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>currUsage</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>currUsage</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>lastUsage</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>lastUsage</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>MAX_ROW</name>
+                    <value>-1</value>
+                </ex-property>
+                <ex-property>
+                    <name>XML_FILE</name>
+                </ex-property>
+            </list-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.datatools.enablement.oda.xml.dataSet" name="totalUsage" id="1470">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">currBillSum</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="heading">currBillSum</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">lastBillSum</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="heading">lastBillSum</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">currUsageSum</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="heading">currUsageSum</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">lastUsageSum</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="heading">lastUsageSum</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">resultUsageSum</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">resultUsageSum</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">resultBillSum</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">resultBillSum</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">unit</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="heading">unit</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">currBillSum</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">lastBillSum</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">currUsageSum</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">lastUsageSum</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">resultUsageSum</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">resultBillSum</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">unit</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">currBillSum</property>
+                    <property name="nativeName">currBillSum</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">lastBillSum</property>
+                    <property name="nativeName">lastBillSum</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">currUsageSum</property>
+                    <property name="nativeName">currUsageSum</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">lastUsageSum</property>
+                    <property name="nativeName">lastUsageSum</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">resultUsageSum</property>
+                    <property name="nativeName">resultUsageSum</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">resultBillSum</property>
+                    <property name="nativeName">resultBillSum</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">unit</property>
+                    <property name="nativeName">unit</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[table0#-TNAME-#table0#:#[/EnergyCharge/Row1]#:#{currBillSum;INT;/@currBillSum},{lastBillSum;INT;/@lastBillSum},{currUsageSum;INT;/@currUsageSum},{lastUsageSum;INT;/@lastUsageSum},{resultUsageSum;STRING;/@resultUsageSum},{resultBillSum;STRING;/@resultBillSum},{unit;STRING;/@unit}]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>currBillSum</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>currBillSum</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>lastBillSum</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>lastBillSum</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>currUsageSum</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>currUsageSum</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>lastUsageSum</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>4</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>lastUsageSum</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>resultUsageSum</design:name>
+              <design:position>5</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>resultUsageSum</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>resultBillSum</design:name>
+              <design:position>6</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>-1</design:precision>
+            <design:scale>-1</design:scale>
+            <design:nullability>Unknown</design:nullability>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>resultBillSum</design:label>
+            <design:formattingHints/>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>MAX_ROW</name>
+                    <value>-1</value>
+                </ex-property>
+                <ex-property>
+                    <name>XML_FILE</name>
+                </ex-property>
+            </list-property>
+        </oda-data-set>
+    </data-sets>
+    <styles>
+        <style name="report" id="4">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">10pt</property>
+        </style>
+        <style name="crosstab-cell" id="5">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab" id="6">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="orientation">portrait</property>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <text-data id="1147">
+            <property name="fontFamily">"dotumche"</property>
+            <property name="fontSize">24pt</property>
+            <property name="fontWeight">bold</property>
+            <property name="marginTop">0pt</property>
+            <property name="marginBottom">40pt</property>
+            <property name="textAlign">center</property>
+            <expression name="valueExpr">
+            	var yyyymm = params["searchDate"].value;&#13;
+				var month = (yyyymm.substring(4)*1) + "월";&#13;
+				&#13;
+				var energyType="";&#13;
+				if (params["energyType"].value == "EM") {&#13;
+					energyType = "전기";&#13;
+				} else if (params["energyType"].value == "GM") {&#13;
+					energyType = "가스";&#13;
+				} else if (params["energyType"].value == "WM") {&#13;
+					energyType = "수도";&#13;
+				} else if (params["energyType"].value == "HM") {&#13;
+					energyType = "등유";&#13;
+				}&#13;
+				this.text = month + " " + energyType + "요금청구 금액내역";
+			</expression>
+            <property name="contentType">html</property>
+        </text-data>
+        <data id="1483">
+            <property name="textAlign">right</property>
+            <property name="dataSet">totalUsage</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">unit</property>
+                    <text-property name="displayName">unit</text-property>
+                    <expression name="expression" type="javascript">this.value ="(단위: 원," + dataSetRow["unit"]+")"</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <property name="resultSetColumn">unit</property>
+        </data>
+        <table id="1149">
+            <property name="borderBottomColor">#000000</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">thin</property>
+            <property name="borderLeftColor">#000000</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">thin</property>
+            <property name="borderRightColor">#000000</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">thin</property>
+            <property name="borderTopColor">#000000</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">thin</property>
+            <property name="width">7.90625in</property>
+            <property name="dataSet">Data Set</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">endDeviceName</property>
+                    <text-property name="displayName">endDeviceName</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["endDeviceName"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">currUsage</property>
+                    <text-property name="displayName">currUsage</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["currUsage"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">lastUsage</property>
+                    <text-property name="displayName">lastUsage</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["lastUsage"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">currUsageSum</property>
+                    <text-property name="displayName">currUsageSum</text-property>
+                    <property name="dataType">integer</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["currUsage"]</expression>
+                        </structure>
+                    </list-property>
+                </structure>
+                <structure>
+                    <property name="name">LastUsageSum</property>
+                    <text-property name="displayName">LastUsageSum</text-property>
+                    <property name="dataType">integer</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["lastUsage"]</expression>
+                        </structure>
+                    </list-property>
+                </structure>
+                <structure>
+                    <property name="name">lastBill</property>
+                    <text-property name="displayName">lastBill</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["lastBill"]</expression>
+                    <property name="dataType">integer</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">currBill</property>
+                    <text-property name="displayName">currBill</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["currBill"]</expression>
+                    <property name="dataType">integer</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Column Binding</property>
+                    <text-property name="displayName">BillUsage</text-property>
+                    <expression name="expression" type="javascript">var comp = ""; &#13;
+											var sign = 1;&#13;
+											if ( row["currBill"] >= row["lastBill"] ) {&#13;
+												comp = "(증) ";&#13;
+												sign = 1;&#13;
+											} else {&#13;
+												comp = "(감) ";&#13;
+												sign = -1;&#13;
+											}&#13;
+											var value = sign * (row["currBill"] - row["lastBill"] ) ;&#13;
+											&#13;
+											this.value = "금액:  "+ comp + value +"(원)";</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Column Binding_1</property>
+                    <text-property name="displayName">UsageSum</text-property>
+                    <expression name="expression" type="javascript">var comp = ""; &#13;
+											var sign = 1;&#13;
+											if ( dataSetRow["currUsage"] >= dataSetRow["lastUsage"] ) {&#13;
+												comp = "(증) ";&#13;
+												sign = 1;&#13;
+											} else {&#13;
+												comp = "(감) ";&#13;
+												sign = -1;&#13;
+											}&#13;
+											var value = sign * (dataSetRow["currUsage"] - dataSetRow["lastUsage"] ) ;&#13;
+											&#13;
+											this.value = "사용량: "+ comp + value +"("+dataSetRow["unit"]+")";</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <column id="1255">
+                <property name="width">1.34375in</property>
+                <property name="textAlign">center</property>
+                <property name="verticalAlign">middle</property>
+            </column>
+            <column id="1256">
+                <property name="width">90px</property>
+                <property name="textAlign">center</property>
+                <property name="verticalAlign">middle</property>
+            </column>
+            <column id="1257">
+                <property name="width">1.34375in</property>
+                <property name="verticalAlign">middle</property>
+            </column>
+            <column id="1259">
+                <property name="width">1.5in</property>
+                <property name="verticalAlign">middle</property>
+            </column>
+            <column id="1260">
+                <property name="width">1.90625in</property>
+                <property name="verticalAlign">middle</property>
+            </column>
+            <header>
+                <row id="1150">
+                    <property name="height">0.3541666666666667in</property>
+                    <property name="backgroundColor">#C0C0C0</property>
+                    <property name="verticalAlign">middle</property>
+                    <cell id="1151">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <label id="1261">
+                            <property name="paddingTop">6pt</property>
+                            <text-property name="text">구 분</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1152">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <label id="1262">
+                            <property name="paddingTop">6pt</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">년도</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1153">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <label id="1263">
+                            <property name="paddingTop">6pt</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">청구금액</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1155">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <text-data id="1266">
+                            <property name="paddingTop">6pt</property>
+                            <property name="textAlign">center</property>
+                            <expression name="valueExpr">
+                                        	var energyType = "";&#13;
+											if (params["energyType"].value == "EM") {&#13;
+												energyType= "전기";&#13;
+											} else if ( params["energyType"].value == "GM") {&#13;
+												energyType="가스";&#13;
+											} else if ( params["energyType"].value == "WM") {&#13;
+												energyType="수도";&#13;
+											} else if ( params["energyType"].value == "HM") {	&#13;
+												energyType="등유";&#13;
+											}&#13;
+											this.value = energyType + "사용량";
+										</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="1156">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <property name="paddingTop">5pt</property>
+                        <label id="1267">
+                            <property name="paddingTop">6pt</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">증감내용</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="1157">
+                    <property name="height">0.292in</property>
+                    <property name="verticalAlign">middle</property>
+                    <cell id="1158">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">2</property>
+                        <property name="backgroundColor">#C0C0C0</property>
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <data id="1297">
+                            <property name="whiteSpace">nowrap</property>
+                            <property name="resultSetColumn">endDeviceName</property>
+                        </data>
+                    </cell>
+                    <cell id="1159">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <property name="paddingTop">5pt</property>
+                        <property name="verticalAlign">middle</property>
+                        <text-data id="1301">
+                            <property name="paddingTop">3pt</property>
+                            <property name="verticalAlign">middle</property>
+                            <property name="whiteSpace">nowrap</property>
+                            <expression name="valueExpr">var yyyymm = params["searchDate"].value;&#13;
+var year = yyyymm.substring(0,4);&#13;
+this.value = year +"년"</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="1160">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <property name="textAlign">right</property>
+                        <property name="verticalAlign">middle</property>
+                        <data id="1393">
+                            <property name="paddingTop">3pt</property>
+                            <property name="whiteSpace">nowrap</property>
+                            <property name="resultSetColumn">currBill</property>
+                        </data>
+                    </cell>
+                    <cell id="1162">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <property name="textAlign">right</property>
+                        <property name="verticalAlign">middle</property>
+                        <list-property name="mapRules">
+                            <structure>
+                                <expression name="testExpr" type="javascript">row["currUsage"]</expression>
+                                <property name="operator">eq</property>
+                                <simple-property-list name="value1">
+                                    <value type="javascript">0</value>
+                                </simple-property-list>
+                                <text-property name="display">-</text-property>
+                            </structure>
+                        </list-property>
+                        <data id="1395">
+                            <property name="paddingTop">3pt</property>
+                            <property name="whiteSpace">nowrap</property>
+                            <property name="resultSetColumn">currUsage</property>
+                        </data>
+                    </cell>
+                    <cell id="1163">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">2</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightColor">#000000</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <property name="textAlign">right</property>
+                        <property name="verticalAlign">middle</property>
+                        <data id="1478">
+                            <property name="paddingTop">3pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">Column Binding</property>
+                        </data>
+                        <data id="1479">
+                            <property name="paddingTop">3pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">Column Binding_1</property>
+                        </data>
+                    </cell>
+                </row>
+                <row id="1164">
+                    <property name="height">0.2916666666666667in</property>
+                    <property name="verticalAlign">middle</property>
+                    <cell id="1166">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <property name="paddingTop">5pt</property>
+                        <property name="verticalAlign">middle</property>
+                        <text-data id="1302">
+                            <property name="paddingTop">3pt</property>
+                            <property name="verticalAlign">middle</property>
+                            <property name="whiteSpace">nowrap</property>
+                            <expression name="valueExpr">var yyyymm = params["searchDate"].value;&#13;
+var year = yyyymm.substring(0,4) * 1 - 1;&#13;
+this.value = year +"년"</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="1167">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <property name="textAlign">right</property>
+                        <property name="verticalAlign">middle</property>
+                        <data id="1394">
+                            <property name="paddingTop">3pt</property>
+                            <property name="whiteSpace">nowrap</property>
+                            <property name="resultSetColumn">lastBill</property>
+                        </data>
+                    </cell>
+                    <cell id="1169">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <property name="textAlign">right</property>
+                        <property name="verticalAlign">middle</property>
+                        <list-property name="mapRules">
+                            <structure>
+                                <expression name="testExpr" type="javascript">row["lastUsage"]</expression>
+                                <property name="operator">eq</property>
+                                <simple-property-list name="value1">
+                                    <value type="javascript">0</value>
+                                </simple-property-list>
+                                <text-property name="display">-</text-property>
+                            </structure>
+                        </list-property>
+                        <data id="1396">
+                            <property name="paddingTop">3pt</property>
+                            <property name="whiteSpace">nowrap</property>
+                            <property name="resultSetColumn">lastUsage</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+        </table>
+        <grid id="1441">
+            <property name="height">0.6354166666666666in</property>
+            <property name="width">7.906in</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">Column Binding</property>
+                    <text-property name="displayName">yyyy</text-property>
+                    <expression name="expression" type="javascript">var yyyymm = params["searchDate"].value;&#13;
+var year = yyyymm.substring(0,4) * 1 ;&#13;
+this.value = year +"년"</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <column id="1442">
+                <property name="width">1.344in</property>
+                <property name="backgroundColor">#FFFFFF</property>
+                <property name="textAlign">center</property>
+                <property name="verticalAlign">middle</property>
+                <property name="whiteSpace">nowrap</property>
+            </column>
+            <column id="1443">
+                <property name="width">90px</property>
+                <property name="textAlign">center</property>
+                <property name="verticalAlign">middle</property>
+                <property name="whiteSpace">nowrap</property>
+            </column>
+            <column id="1444">
+                <property name="width">1.344in</property>
+                <property name="textAlign">center</property>
+                <property name="verticalAlign">middle</property>
+                <property name="whiteSpace">nowrap</property>
+            </column>
+            <column id="1445">
+                <property name="width">1.5in</property>
+                <property name="textAlign">center</property>
+                <property name="verticalAlign">middle</property>
+                <property name="whiteSpace">nowrap</property>
+            </column>
+            <column id="1446">
+                <property name="width">1.906in</property>
+                <property name="verticalAlign">middle</property>
+            </column>
+            <row id="1447">
+                <property name="height">0.2916666666666667in</property>
+                <property name="verticalAlign">middle</property>
+                <cell id="1448">
+                    <property name="colSpan">1</property>
+                    <property name="rowSpan">2</property>
+                    <property name="backgroundColor">#C0C0C0</property>
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <property name="textAlign">center</property>
+                    <property name="whiteSpace">nowrap</property>
+                    <label id="1460">
+                        <property name="textAlign">center</property>
+                        <text-property name="text">합계금액</text-property>
+                    </label>
+                </cell>
+                <cell id="1449">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <data id="1480">
+                        <property name="paddingTop">3pt</property>
+                        <property name="resultSetColumn">Column Binding</property>
+                    </data>
+                </cell>
+                <cell id="1450">
+                    <property name="colSpan">2</property>
+                    <property name="rowSpan">1</property>
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <data id="1473">
+                        <property name="paddingTop">3pt</property>
+                        <property name="textAlign">right</property>
+                        <property name="dataSet">totalUsage</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">currUsageSum</property>
+                                <text-property name="displayName">currUsageSum</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["currUsageSum"]</expression>
+                                <property name="dataType">integer</property>
+                                <property name="allowExport">true</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">currUsageSum</property>
+                    </data>
+                </cell>
+                <cell id="1452">
+                    <property name="colSpan">1</property>
+                    <property name="rowSpan">2</property>
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <data id="1476">
+                        <property name="textAlign">left</property>
+                        <property name="dataSet">totalUsage</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">resultBillSum</property>
+                                <text-property name="displayName">resultUsageSum</text-property>
+                                <expression name="expression" type="javascript">var comp = ""; &#13;
+var sign = 1;&#13;
+if ( dataSetRow["currUsageSum"] >= dataSetRow["lastUsageSum"] ) {&#13;
+	comp = "(증) ";&#13;
+	sign = 1;&#13;
+} else {&#13;
+	comp = "(감) ";&#13;
+	sign = -1;&#13;
+}&#13;
+var value = sign * ( dataSetRow["currUsageSum"] - dataSetRow["lastUsageSum"] ) ;&#13;
+											&#13;
+this.value = "사용량: "+ comp + value +dataSetRow["unit"];</expression>
+                                <property name="dataType">string</property>
+                                <property name="allowExport">true</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">resultBillSum</property>
+                    </data>
+                    <data id="1471">
+                        <property name="textAlign">left</property>
+                        <property name="dataSet">totalUsage</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">resultBillSum</property>
+                                <text-property name="displayName">resultBillSum</text-property>
+                                <expression name="expression" type="javascript">var comp = ""; &#13;
+var sign = 1;&#13;
+if ( dataSetRow["currBillSum"] >= dataSetRow["lastBillSum"] ) {&#13;
+	comp = "(증) ";&#13;
+	sign = 1;&#13;
+} else {&#13;
+	comp = "(감) ";&#13;
+	sign = -1;&#13;
+}&#13;
+var value = sign * ( dataSetRow["currBillSum"] - dataSetRow["lastBillSum"] ) ;&#13;
+											&#13;
+this.value = "사용량: "+ comp + value +"(원)";</expression>
+                                <property name="dataType">string</property>
+                                <property name="allowExport">true</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">resultBillSum</property>
+                    </data>
+                </cell>
+            </row>
+            <row id="1453">
+                <property name="height">0.2916666666666667in</property>
+                <property name="verticalAlign">middle</property>
+                <cell id="1455">
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <text-data id="1462">
+                        <property name="paddingTop">3pt</property>
+                        <property name="textAlign">center</property>
+                        <expression name="valueExpr">var yyyymm = params["searchDate"].value;&#13;
+var year = yyyymm.substring(0,4) * 1 - 1;&#13;
+this.value = year +"년"</expression>
+                        <property name="contentType">html</property>
+                    </text-data>
+                </cell>
+                <cell id="1456">
+                    <property name="colSpan">2</property>
+                    <property name="rowSpan">1</property>
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">thin</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">thin</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <data id="1474">
+                        <property name="paddingTop">3pt</property>
+                        <property name="textAlign">right</property>
+                        <property name="dataSet">totalUsage</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">lastUsageSum</property>
+                                <text-property name="displayName">lastUsageSum</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["lastUsageSum"]</expression>
+                                <property name="dataType">integer</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">lastUsageSum</property>
+                    </data>
+                </cell>
+            </row>
+        </grid>
+        <grid id="1490">
+            <column id="1491"/>
+            <row id="1492">
+                <cell id="1493"/>
+            </row>
+        </grid>
+    </body>
+</report>

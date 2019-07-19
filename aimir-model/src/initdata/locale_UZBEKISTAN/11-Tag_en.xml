@@ -1,0 +1,223 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Tag
+        tag="System"
+        gadget="Code Management"
+    />
+    <system.Tag
+        tag="Code"
+        gadget="Code Management"
+    />  
+
+    <system.Tag
+        tag="Metering Data"
+        gadget="Metering Data(Electricity)"
+
+    />  
+    <system.Tag
+        tag="Device Vendor Model"
+        gadget="Device Vendor Model"
+
+    />  
+    <system.Tag
+        tag="Supplier Management"
+        gadget="Supplier Management"
+
+    />  
+    <system.Tag
+        tag="User Management"
+        gadget="User Management"
+
+    />
+    <system.Tag
+        tag="Concentrator Management"
+        gadget="Concentrator Management"
+
+    />
+    <system.Tag
+        tag="Capacity over the contract customers"
+        gadget="Abnormal contract customers(Electricity)"
+
+    />
+    <system.Tag
+        tag="Communication Log"
+        gadget="Communication Log"
+
+    />
+    <system.Tag
+        tag="Memo"
+        gadget="Memo"
+
+    />
+    <system.Tag
+        tag="Notice"
+        gadget="Notice"
+    />
+    
+    <system.Tag
+        tag="Change Log"
+        gadget="Change Log"
+    />
+    
+    <system.Tag
+        tag="Operation Management"
+        gadget="Operation Management"
+    />
+	
+	<system.Tag
+        tag="Event"
+        gadget="Event Alarm Log"
+    />
+    <system.Tag
+        tag="Alarm"
+        gadget="Event Alarm Log"
+    />
+    
+    <system.Tag
+        tag="Metering Fail"
+        gadget="Metering Fail(Electricity)"
+
+    />
+    
+    <system.Tag
+        tag="Customer"
+        gadget="Customer and Contract"
+    />
+    <system.Tag
+        tag="Contract"
+        gadget="Customer and Contract"
+    />
+    
+    <system.Tag
+        tag="Data Gaps"
+        gadget="Data Gaps(Electricity)"
+
+    />
+    
+    <system.Tag
+        tag="Consumption Ranking"
+
+        gadget="Consumption Ranking(Electricity)"
+
+    />    
+    <system.Tag
+        tag="Consumption Ranking"
+        gadget="Consumption Ranking(Gas)"
+ 
+    />
+    <system.Tag
+        tag="Consumption Ranking"
+        gadget="Consumption Ranking(Water)"
+
+    />
+    <system.Tag
+        tag="Consumption Ranking"
+        gadget="Consumption Ranking(Heat)"
+
+    />
+    <system.Tag
+        tag="Modem"
+        gadget="Modem Management"
+
+    />        
+
+    <system.Tag
+        tag="Meter"
+        gadget="Meter Management"
+
+    />
+        
+    <system.Tag
+        tag="Device Registration"
+        gadget="Device Registration"
+    /> 
+    
+    <system.Tag
+        tag="Meter Time Management"
+        gadget="Meter Time Management"
+    />
+    
+    <system.Tag
+        tag="Sales Report"
+        gadget="Electricity sales"
+
+    />  
+    <system.Tag
+        tag="Sales Report"
+        gadget="Gas sales"
+
+    />  
+    <system.Tag
+        tag="Sales Report"
+        gadget="Water sales"
+
+    />  
+    <system.Tag
+        tag="Sales Report"
+        gadget="Heat sales"
+
+    />      
+	<system.Tag
+        tag="Demand Management"
+        gadget="Demand Management"
+
+    />    
+    <system.Tag
+        tag="Power Quality"
+        gadget="Power Quality"
+
+    /> 
+    <system.Tag
+        tag="SLA"
+        gadget="Metring SLA"
+
+    />  
+    <system.Tag
+        tag="Google Map"
+        gadget="Google Map For Device"
+    /> 
+    <system.Tag
+        tag="Map"
+        gadget="Google Map For Device"
+    />
+    <system.Tag
+        tag="Customer Energy Usage"
+        gadget="Energy Usage Information"
+    />
+    <system.Tag
+        tag="Customer Energy Usage"
+        gadget="Electricity Usage"
+    /> 
+    <system.Tag
+        tag="Customer Energy Usage"
+        gadget="Gas Usage"
+    />
+    <system.Tag
+        tag="Tariff"
+        gadget="Energy Tariff Rates"
+    />   
+	<system.Tag
+        tag="TOU"
+        gadget="TOU Report(Electricity)"
+    />
+	<system.Tag
+        tag="Time of use"
+        gadget="TOU Report(Electricity)"
+    />
+	<system.Tag
+        tag="Billing Data (Daily,Monthly)"
+        gadget="TOU Report(Electricity)"
+    />
+	<system.Tag
+        tag="Meter Event"
+        gadget="Meter Event Log"
+    />
+	<system.Tag
+        tag="Prepayment Customer"
+        gadget="Prepayment Customer Management"
+    />
+	<system.Tag
+        tag="Energy Balance Monitoring"
+        gadget="Energy Balance Monitoring"
+    />
+</dataset>

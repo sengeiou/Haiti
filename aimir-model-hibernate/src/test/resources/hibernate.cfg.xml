@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory name="1">
+        <property name="hibernate.connection.driver_class">net.sf.hajdbc.sql.Driver</property>
+        <property name="hibernate.connection.password">aimirdb</property>
+        <property name="hibernate.connection.url">jdbc:derby://localhost:1527/javadb</property>
+        <property name="hibernate.connection.username">aimir</property>
+        <property name="hibernate.default_catalog">aimir</property>
+        <property name="hibernate.default_schema">AIMIR</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.DerbyDialect</property>
+    </session-factory>
+</hibernate-configuration>

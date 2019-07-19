@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+	
+	<!-- repeater parser start-->
+	<system.ModemConfig 
+        name="NZR-O121RE"
+        parserName="com.aimir.fep.meter.parser.ZBRepeater"
+        saverName="com.aimir.fep.meter.saver.ZBRepeaterMDSaver"
+        deviceModel="NZR-O121RE"
+    />
+	<system.ModemConfig 
+        name="NZR-I121RE"
+        parserName="com.aimir.fep.meter.parser.ZBRepeater"
+        saverName="com.aimir.fep.meter.saver.ZBRepeaterMDSaver"
+        deviceModel="NZR-I121RE"
+    /> 
+   	<!-- repeater parser end -->
+    <system.ModemConfig 
+        name="NAMR-P109SR"
+        parserName="com.aimir.fep.meter.parser.SM110"
+        saverName="com.aimir.fep.meter.saver.SM110MDSaver"
+        deviceModel="NAMR-P109SR"
+    /> 
+	<system.ModemConfig 
+        name="NAPC-W202SR"
+        parserName="com.aimir.fep.meter.parser.UMC2000G4R"
+        saverName="com.aimir.fep.meter.saver.UMC2000G4RMDSaver"
+        deviceModel="NAPC-W202SR"
+    />
+</dataset>

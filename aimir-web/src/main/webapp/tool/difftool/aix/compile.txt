@@ -1,0 +1,5 @@
+gcc -O3 -lbz2 bsdiff.c -o bsdiff
+gcc -O3 -lbz2 bspatch.c -o bspatch
+
+bsdiff,bspatch,bsdiff.exe,bspatch.exe 
+/home/aimir/aimiramm/fw에 위치해야 함

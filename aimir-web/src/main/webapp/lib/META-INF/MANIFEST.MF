@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Created-By: 1.6.0_43 (Sun Microsystems Inc.)
+
+Name: NetIfApplet.class
+SHA1-Digest: HUajbTfxbICzA5Zs+B6JyfNb7UU=
+

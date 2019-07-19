@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+    
+  <parent>
+    <groupId>com.aimir</groupId>
+    <artifactId>aimir-parent</artifactId>
+    <version>3.3</version>
+    <relativePath>../aimir-parent/pom.xml</relativePath>
+  </parent>
+  
+  <groupId>com.aimir</groupId>
+  <artifactId>aimir-mars-exec</artifactId>
+  <packaging>jar</packaging>
+  <description></description>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <tasks>
+            <property name="runtime_classpath" refid="maven.runtime.classpath"/>
+            <echo message="runtime classpath: ${runtime_classpath}"/>
+            <mkdir dir="${basedir}/${fepName}"/>
+            <java dir="${basedir}/${fepName}"
+                  classname="com.aimir.mars.integration.event.EventRealTimeApp"
+                  fork="true"
+                  maxmemory="512M"
+                  >
+              <jvmarg value="-server"/>
+              <jvmarg value="-Djava.security.egd=file:///dev/urandom"/>
+              <jvmarg value="-Duser.timezone=GMT+0"/>
+              <jvmarg value="-Djavax.net.ssl.keyStore=${basedir}/config/tomcat_keystore.jks"/>
+              <jvmarg value="-Djavax.net.ssl.keyStorePassword=aimiramm"/>
+              <jvmarg value="-Djavax.net.ssl.trustStore=${basedir}/config/tomcat_truststore.jks"/>
+              <jvmarg value="-Djavax.net.ssl.trustStorePassword=aimiramm"/>
+              <!--<jvmarg value="-agentpath:/home/aimir/jprofiler6/bin/linux-x86/libjprofilerti.so=port=8849"/>-->
+              <sysproperty key="name" value="${fepName}"/>
+              <sysproperty key="file.encoding" value="UTF-8"/>
+              <sysproperty key="jmx.remote.x.server.connection.timeout" value="20000"/>
+              <sysproperty key="jmx.remote.x.client.connection.check.period" value="0"/>
+              <sysproperty key="com.sun.management.jmxremote.port" value="${jmxPort}"/>
+              <sysproperty key="com.sun.management.jmxremote.authenticate" value="false"/>
+              <sysproperty key="com.sun.management.jmxremote.ssl" value="false"/>
+              <sysproperty key="com.sun.management.jmxremote.ssl.need.client.auth" value="false"/>
+              <sysproperty key="log4j.configuration" value="config/log4j-evdelivery.properties"/>
+              <sysproperty key="org.apache.cxf.Logger" value="org.apache.cxf.common.logging.Log4jLogger"/>
+              <arg value="-configFile"/>
+              <arg value="${configFile}"/>
+              <classpath>
+                <pathelement path=".:${runtime_classpath}"/>
+              </classpath>
+            </java>
+          </tasks>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>${maven-bundle-plugin.version}</version>
+        <extensions>true</extensions>
+      </plugin>
+    </plugins>
+  </build>
+    
+  <dependencies>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>${log4j.version}</version>
+    </dependency> 
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>${commons-logging.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-pool</groupId>
+      <artifactId>commons-pool</artifactId>
+      <version>${commons-pool.version}</version>
+    </dependency>
+    <!--
+    <dependency>
+      <groupId>org.quartz-scheduler</groupId>
+      <artifactId>quartz</artifactId>
+      <version>${quartz.version}</version>
+    </dependency>
+    -->
+    <dependency>
+      <groupId>com.aimir</groupId>
+      <artifactId>aimir-model</artifactId>
+      <version>${aimir.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.aimir</groupId>
+      <artifactId>aimir-mdms-iesco</artifactId>
+      <version>${aimir.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.aimir</groupId>
+          <artifactId>aimir-fep</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.aimir</groupId>
+          <artifactId>aimir-model-eclipselink</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.aimir</groupId>
+          <artifactId>aimir-schedule</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.aimir</groupId>
+          <artifactId>aimir-service-system</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>commons-dbcp</groupId>
+      <artifactId>commons-dbcp</artifactId>
+      <version>${commons-dbcp.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-jaxws</artifactId>
+      <version>${cxf.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>jaxb-impl</artifactId>
+          <groupId>com.sun.xml.bind</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-transports-http</artifactId>
+      <version>${cxf.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-databinding-aegis</artifactId>
+      <version>${cxf.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>jaxb-impl</artifactId>
+          <groupId>com.sun.xml.bind</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-ws-security</artifactId>
+      <version>${cxf.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.wss4j</groupId>
+      <artifactId>wss4j-ws-security-common</artifactId>
+      <version>${wss4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcprov-jdk16</artifactId>
+      <version>${bcprov.version}</version>
+    </dependency>
+    <!--
+    <dependency>
+      <groupId>regexp</groupId>
+      <artifactId>regexp</artifactId>
+      <version>${regexp.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>${commons-beanutils.version}</version>
+      <type>jar</type>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>xalan</groupId>
+      <artifactId>xalan</artifactId>
+      <version>${xalan.version}</version>
+      <type>jar</type>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjrt</artifactId>
+      <version>${aspectj.version}</version>
+      <type>jar</type>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.derby</groupId>
+      <artifactId>derbyclient</artifactId>
+      <version>${derbyclient.version}</version>
+      <type>jar</type>
+      <scope>runtime</scope>
+    </dependency>
+     -->
+    <!-- ORACLE 11g-->
+    <dependency>
+      <groupId>com.oracle</groupId> 
+      <artifactId>ojdbc6</artifactId> 
+      <version>${ojdbc6.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <!-- SQL Server -->
+    <dependency>
+      <groupId>net.sourceforge.jtds</groupId>
+      <artifactId>jtds</artifactId>
+      <version>${jtds.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <!-- ==================== -->
+    <!--   Spring Framework   -->
+    <!-- ==================== -->
+    <dependency>
+      <groupId>org.springframework.batch</groupId>
+      <artifactId>spring-batch-core</artifactId>
+      <version>${spring.batch.version}</version>
+      <scope>runtime</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.2</version>
+      <type>jar</type>
+      <scope>runtime</scope>
+    </dependency>
+    <!-- SLF4J Logging API -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${slf4j.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+        </exclusion>
+      </exclusions>
+      <scope>runtime</scope>
+    </dependency>
+    <!--
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjtools</artifactId>
+      <version>${aspectj.version}</version>
+      <type>jar</type>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>cglib</groupId>
+      <artifactId>cglib</artifactId>
+      <version>${cglib.version}</version>
+      <type>jar</type>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.jms</groupId>
+      <artifactId>jms</artifactId>
+      <version>${jms.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+     <dependency>
+        <groupId>com.oracle.weblogic</groupId>
+        <artifactId>wlthint3client</artifactId>
+        <version>12.2.1</version>
+     </dependency>
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-all</artifactId>
+      <version>${activemq.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.json-lib</groupId>
+      <artifactId>json-lib</artifactId>
+      <version>${json-lib.version}</version>
+      <classifier>jdk15</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-mapper-asl</artifactId>
+      <version>${jackson-mapper-asl.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>${servlet-api.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mariadb.jdbc</groupId>
+      <artifactId>mariadb-java-client</artifactId>
+      <version>${mariadb-java-client.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.googlecode.jsmpp</groupId>
+      <artifactId>jsmpp</artifactId>
+      <version>${jsmpp.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>${gson.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>com.jolbox</groupId>
+      <artifactId>bonecp</artifactId>
+      <version>0.8.0.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>com.jolbox</groupId>
+      <artifactId>bonecp-spring</artifactId>
+      <version>0.8.0.RELEASE</version>
+    </dependency>
+  -->
+    <dependency>
+      <groupId>com.zaxxer</groupId>
+      <artifactId>HikariCP</artifactId>
+      <version>2.2.5</version>
+      <type>bundle</type>
+    </dependency>
+  </dependencies>  
+  <repositories>
+    <repository>
+      <id>oracle</id>
+      <name>ORACLE JDBC Repository</name>
+      <url>http://maven.jahia.org/maven2</url>
+    </repository>
+    <repository>
+      <id>repo.eclipse.org</id>
+      <name>Californium Repository - Releases</name>
+      <url>https://repo.eclipse.org/content/repositories/californium-releases/</url>
+    </repository>
+  </repositories>
+</project>

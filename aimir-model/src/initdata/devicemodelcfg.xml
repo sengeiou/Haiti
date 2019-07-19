@@ -1,0 +1,465 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+<system.DeviceVendor 
+        supplier="NURI"
+        name="Elster"
+        code="12"
+        address="http://www.elstersolutions.com/"
+        descr="Elster"
+    />
+
+<system.DeviceVendor 
+        supplier="NURI"
+        name="NURITelecom"
+        code="100"
+        address="NURI Build. 750-14, Bangbae-dong, Seocho-gu, Seoul, Korea, 153-786 Tel : +82.2.781.0770"
+        descr="Nuri Telecom Co.,Ltd."
+    />
+
+<system.DeviceVendor 
+        supplier="NURI"
+        name="Kamstrup"
+        code="1"
+        address="Industrivej 28, Stilling DK-8660 Skanderborg http://www.kamstrup.com/"
+        descr="Kamstrup"
+    />
+
+<system.DeviceVendor 
+        supplier="NURI"
+        name="NAMJUN"
+        code="31"
+        address="http://www.namjeon.co.kr/default/"
+        descr="(주)남전사"
+    />
+
+<system.DeviceVendor 
+        supplier="NURI"
+        name="Aidon"
+        code="5"
+        address="http://www.aidon.fi/"
+        descr="Aidon"
+    /> 
+<system.DeviceVendor 
+        supplier="NURI"
+        name="GE"
+        code="2"
+        address="http://www.ge.com"
+        descr="General Electric Company"
+    />
+<system.DeviceVendor 
+        supplier="NURI"
+        name="Sensus"
+        code="33"
+        address="http://www.sensus.com/"
+        descr="Sensus"
+    />
+<system.DeviceVendor 
+        supplier="NURI"
+        name="SENA"
+        code="34"
+        address="www.sena.com"
+        descr="Zigbee, Converter manufacture"
+    />
+<system.DeviceVendor 
+        supplier="NURI"
+        name="MITSUBISHI"
+        code="28"
+        address=""
+        descr="MITSUBISHI ELECTRIC AUTOMATION CO.,LTD"
+    />
+
+<!-- DCU -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="4"
+        deviceType="1.1.1.3"
+        name="NZC I211"
+        image="uploadImg/mcu/NZC-I212.jpg"
+    />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.1"   model="NZC I211"    level="2"   desc="Status Monitoring" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.2"   model="NZC I211"    level="2"   desc="Unit Scanning" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.3"   model="NZC I211"    level="2"   desc="Self Dignosis" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.8"   model="NZC I211"    level="2"   desc="Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.10"  model="NZC I211"    level="2"   desc="Reset" />
+
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="5"
+        deviceType="1.1.1.4"
+        name="NZC O312"
+    />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.1"   model="NZC O312"    level="2"   desc="Status Monitoring" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.2"   model="NZC O312"    level="2"   desc="Unit Scanning" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.3"   model="NZC O312"    level="2"   desc="Self Dignosis" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.8"   model="NZC O312"    level="2"   desc="Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.10"  model="NZC O312"    level="2"   desc="Reset" />
+
+
+<!-- Modem -->
+<!-- 남전사 DLMS 모뎀 -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="4"
+        deviceType="1.2.1.1"
+        name="NAMR-P115R"
+    />
+
+    <system.ModemConfig 
+        name="NAMR-P115R"
+        deviceModel="NAMR-P115R"
+    />
+
+<!-- Kamstrup KMP -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="1"
+        deviceType="1.2.1.1"
+        name="NAMR-P110SR"
+    />
+
+    <system.ModemConfig 
+        name="NAMR-P112GP_KMP"
+        deviceModel="NAMR-P110SR"
+    />
+
+<!-- GE Meter Modem -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="1"
+        deviceType="1.2.1.1"
+        name="NAMR-P109SR"
+    />
+
+    <system.ModemConfig 
+        name="NAMR-P109SR"
+        parserName="com.aimir.fep.meter.parser.SM110"
+        saverName="com.aimir.fep.meter.saver.SM110MDSaver"
+        deviceModel="NAMR-P109SR"
+    /> 
+
+
+<!-- Repeater -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="98"
+        deviceType="1.2.1.98"
+        name="NZR-I121RE"
+    />
+    
+    <system.ModemConfig 
+        name="NZR-I121RE"
+        parserName="com.aimir.fep.meter.parser.ZBRepeater"
+        saverName="com.aimir.fep.meter.saver.ZBRepeaterMDSaver"
+        deviceModel="NZR-I121RE"
+    />
+
+<!-- Water Modem -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="5"
+        deviceType="1.2.1.5"
+        name="NAPC-W105SR"
+    />
+
+    <system.ModemConfig 
+        name="NAPC-W105SR"
+        parserName="com.aimir.fep.meter.parser.ZEUPLS"
+        saverName="com.aimir.fep.meter.saver.ZEUPLS2MDSaver"
+        deviceModel="NAPC-W105SR"
+    />
+
+<!-- Gas Modem -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="5"
+        deviceType="1.2.1.5"
+        name="NAPC-G105SR"
+    />
+
+    <system.ModemConfig 
+        name="NAPC-G105SR"
+        parserName="com.aimir.fep.meter.parser.ZEUPLS"
+        saverName="com.aimir.fep.meter.saver.ZEUPLS2MDSaver"
+        deviceModel="NAPC-G105SR"
+    />
+
+
+<!-- Elster A1140 계량기 -->
+    <system.DeviceModel 
+        deviceVendor="Elster"
+        code="22"
+        deviceType="1.3.1.1"
+        name="A1140"
+    />
+
+    <system.MeterConfig 
+        pulseConst="1"
+        name="A1140"
+        deviceModel="A1140"
+        parserName="com.aimir.fep.meter.parser.ElsterA1140"
+        saverName="com.aimir.fep.meter.saver.ElsterA1140MDSaver"
+    />
+
+    <mvm.DisplayChannel name="Active Power Imp."        localName="Active Power Imp."        serviceType="Electricity" unit="kW" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Active Power Exp."        localName="Active Power Exp."        serviceType="Electricity" unit="kW" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Reactive Power Imp. Lead"      localName="Reactive Power Imp. Lead"      serviceType="Electricity" unit="kVarh" chMethod="SUM"/>   
+    <mvm.DisplayChannel name="Reactive Power Imp. Lag"      localName="Reactive Power Imp. Lag"      serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+
+
+    <mvm.ChannelConfig meterConfig="A1140" channel="Active Power Imp."      channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="A1140" channel="Active Power Exp."      channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="A1140" channel="Reactive Power Imp. Lead" channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="A1140" channel="Reactive Power Imp. Lag"     channelIndex="4"   dataType="LpEM" displayType="SaveAndDisplay" />
+
+<!-- GE 계량기 -->
+    <system.DeviceModel 
+        deviceVendor="GE"
+        code="12"
+        deviceType="1.3.1.1"
+        name="SM110"
+        image="uploadImg/meter/sm110.jpg"
+    />
+
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="1p2w"
+        pulseConst="1"
+        name="SM110"
+        deviceModel="SM110"
+        parserName="com.aimir.fep.meter.parser.SM110"
+        saverName="com.aimir.fep.meter.saver.SM110MDSaver"
+    />
+
+    <mvm.DisplayChannel name="Total Del Only F+H"       localName="Total Del Only F+H"      serviceType="Electricity" unit="kWh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Total Rcvd Only F+H"      localName="Total Rcvd Only F+H"     serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+    
+    <mvm.ChannelConfig meterConfig="SM110" channel="Total Del Only F+H"   channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="SM110" channel="Total Rcvd Only F+H"  channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay" />
+    
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="SM110"   level="2"   desc="On Demand Metering" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="SM110"   level="2"   desc="Meter Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="SM110"   level="2"   desc="Relay Switch" />
+
+<!-- 남전사 계량기 -->
+    <system.DeviceModel 
+        deviceVendor="NAMJUN"
+        code="1"
+        deviceType="1.3.1.1"
+        name="NJC 130820A"
+    />
+    
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="NJC 130820A"   level="2"   desc="On Demand Metering" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="NJC 130820A"    level="2"   desc="Meter Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="NJC 130820A"    level="2"   desc="Remote Control" />
+    
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="3p3w"
+        name="NJC 130820A"
+        deviceModel="NJC 130820A"
+        parserName="com.aimir.fep.meter.parser.DLMSGtype"
+        saverName="com.aimir.fep.meter.saver.DLMSGtypeMDSaver"
+    />
+    
+    <mvm.DisplayChannel name="Active Energy"        localName="Active Energy"        serviceType="Electricity" unit="kWh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Cumm Active Energy"        localName="Cumm Active Energy"        serviceType="Electricity" unit="kWh" chMethod="MAX"/>
+    <mvm.DisplayChannel name="Cumm Lag Reactive Energy"        localName="Cumm Lag Reactive Energy"        serviceType="Electricity" unit="kVarh" chMethod="MAX"/>
+    <mvm.DisplayChannel name="Cumm Lead Reactive Energy"        localName="Cumm Lead Reactive Energy"        serviceType="Electricity" unit="kVarh" chMethod="MAX"/>
+    <mvm.DisplayChannel name="Cumm Apparent Energy"        localName="Cumm Apparent Energy"        serviceType="Electricity" unit="kVA" chMethod="MAX"/>
+    <mvm.DisplayChannel name="Lag Power Factor"        localName="Lag Power Factor"        serviceType="Electricity" unit="0~1" chMethod="AVG"/>
+    <mvm.DisplayChannel name="Lead Power Factor"        localName="Lead Power Factor"        serviceType="Electricity" unit="0~1" chMethod="AVG"/>
+    <mvm.DisplayChannel name="Power Factor"        localName="Power Factor"        serviceType="Electricity" unit="0~1" chMethod="AVG"/>
+    
+    <mvm.ChannelConfig meterConfig="NJC 130820A" channel="Active Energy" channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130820A" channel="Cumm Active Energy" channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130820A" channel="Cumm Lag Reactive Energy" channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130820A" channel="Cumm Lead Reactive Energy" channelIndex="4"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130820A" channel="Cumm Apparent Energy" channelIndex="5"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130820A" channel="Lag Power Factor" channelIndex="6"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130820A" channel="Lead Power Factor" channelIndex="7"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130820A" channel="Power Factor" channelIndex="8"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    
+    <system.DeviceModel 
+        deviceVendor="NAMJUN"
+        code="1"
+        deviceType="1.3.1.1"
+        name="NJC 130821A"
+    />
+    
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="NJC 130821A"   level="2"   desc="On Demand Metering" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="NJC 130821A"    level="2"   desc="Meter Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="NJC 130821A"    level="2"   desc="Remote Control" />
+    
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="3p3w"
+        name="NJC 130821A"
+        deviceModel="NJC 130821A"
+        parserName="com.aimir.fep.meter.parser.DLMSGtype"
+        saverName="com.aimir.fep.meter.saver.DLMSGtypeMDSaver"
+    />
+    
+    <mvm.ChannelConfig meterConfig="NJC 130821A" channel="Active Energy" channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130821A" channel="Cumm Active Energy" channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130821A" channel="Cumm Lag Reactive Energy" channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130821A" channel="Cumm Lead Reactive Energy" channelIndex="4"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130821A" channel="Cumm Apparent Energy" channelIndex="5"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130821A" channel="Lag Power Factor" channelIndex="6"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130821A" channel="Lead Power Factor" channelIndex="7"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC 130821A" channel="Power Factor" channelIndex="8"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    
+    <system.DeviceModel 
+        deviceVendor="NAMJUN"
+        code="1"
+        deviceType="1.3.1.1"
+        name="NJC Meter DLMSUA"
+        image="uploadImg/meter/NJC.jpg"
+    />
+    
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="3p4w"
+        pulseConst="5000"
+        name="NJC Meter DLMSUA"
+        deviceModel="NJC Meter DLMSUAr"
+        parserName="com.aimir.fep.meter.parser.DLMS"
+        saverName="com.aimir.fep.meter.saver.DLMSMDSaver"
+    />
+    
+    <mvm.DisplayChannel name="Lag Reactive Energy"        localName="Lag Reactive Energy"        serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Lead Reactive Energy"        localName="Lead Reactive Energy"        serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Apparent Energy"        localName="Apparent Energy"        serviceType="Electricity" unit="kVA" chMethod="SUM"/>
+
+    <mvm.ChannelConfig meterConfig="NJC Meter DLMSUA" channel="Active Energy" channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC Meter DLMSUA" channel="Lag Reactive Energy" channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC Meter DLMSUA" channel="Lead Reactive Energy" channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="NJC Meter DLMSUA" channel="Apparent Energy" channelIndex="4"   dataType="LpEM" displayType="SaveAndDisplay"/>
+
+<!-- Kamstrup 계량기 -->
+    <system.DeviceModel 
+        deviceVendor="Kamstrup"
+        code="1"
+        deviceType="1.3.1.1"
+        name="K162M"
+        image="uploadImg/meter/kamstrup.jpg"
+    />
+    
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="1p2w"
+        pulseConst="100"
+        name="K162M"
+        deviceModel="K162M"
+        parserName="com.aimir.fep.meter.parser.Kamstrup162"
+        saverName="com.aimir.fep.meter.saver.Kamstrup162MDSaver"
+    />
+    
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="K162M"    level="2"   desc="On Demand Metering" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="K162M"    level="2"   desc="Meter Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="K162M"    level="2"   desc="Remote Control" />
+
+    <system.DeviceModel 
+        deviceVendor="Kamstrup"
+        code="2"
+        deviceType="1.3.1.1"
+        name="K351C"
+        image="uploadImg/meter/kamstrup.jpg"
+    />
+    
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="1p2w"
+        pulseConst="100"
+        name="K351C"
+        deviceModel="K351C"
+        parserName="com.aimir.fep.meter.parser.Kamstrup162"
+        saverName="com.aimir.fep.meter.saver.Kamstrup162MDSaver"
+    />
+    
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="K351C"    level="2"   desc="On Demand Metering" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="K351C"    level="2"   desc="Meter Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="K351C"    level="2"   desc="Remote Control" />
+    
+    <system.DeviceModel 
+        deviceVendor="Kamstrup"
+        code="3"
+        deviceType="1.3.1.1"
+        name="K382M"
+        image="uploadImg/meter/kamstrup.jpg"
+    />
+    
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="1p2w"
+        pulseConst="100"
+        name="K382M"
+        deviceModel="K382M"
+        parserName="com.aimir.fep.meter.parser.Kamstrup162"
+        saverName="com.aimir.fep.meter.saver.Kamstrup162MDSaver"
+    />
+    
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="K382M"    level="2"   desc="On Demand Metering" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="K382M"    level="2"   desc="Meter Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="K382M"    level="2"   desc="Remote Control" />
+    
+    <system.DeviceModel 
+        deviceVendor="Kamstrup"
+        code="1"
+        deviceType="1.3.1.1"
+        name="K162Mv2"
+        image="uploadImg/meter/kamstrup.jpg"
+    />
+    
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="1p2w"
+        pulseConst="100"
+        name="K162Mv2"
+        deviceModel="K162Mv2"
+        parserName="com.aimir.fep.meter.parser.KamstrupV2"
+        saverName="com.aimir.fep.meter.saver.Kamstrup162MDSaver"
+    />
+    
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="K162Mv2"    level="2"   desc="On Demand Metering" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="K162Mv2"    level="2"   desc="Meter Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="K162Mv2"    level="2"   desc="Remote Control" />
+    
+    <mvm.DisplayChannel name="Active Energy Imp."        localName="Active Energy Imp."        serviceType="Electricity" unit="kWh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Active Energy Exp."        localName="Active Energy Exp."        serviceType="Electricity" unit="kWh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Reactive Energy Imp."        localName="Reactive Energy Imp."        serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Reactive Energy Exp."        localName="Reactive Energy Exp."        serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="CO2"        localName="CO2"        serviceType="Electricity" unit="kg" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Flag"        localName="Flag"        serviceType="Electricity" unit="" chMethod="MAX"/>
+    
+    <mvm.ChannelConfig meterConfig="K162M" channel="CO2" channelIndex="0" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="K162M" channel="Active Energy Imp." channelIndex="1" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="K162M" channel="Active Energy Exp." channelIndex="2" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="K162M" channel="Reactive Energy Imp." channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="K162M" channel="Reactive Energy Exp." channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="K162M" channel="Flag" channelIndex="100" dataType="LpEM" displayType="SaveAndDisplay" />
+    
+    <mvm.ChannelConfig meterConfig="K162Mv2" channel="CO2" channelIndex="0" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="K162Mv2" channel="Active Energy Imp." channelIndex="1" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="K162Mv2" channel="Active Energy Exp." channelIndex="2" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="K162Mv2" channel="Reactive Energy Imp." channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="K162Mv2" channel="Reactive Energy Exp." channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="K162Mv2" channel="Flag" channelIndex="100" dataType="LpEM" displayType="SaveAndDisplay" />
+    
+    <mvm.ChannelConfig meterConfig="K351C" channel="CO2" channelIndex="0" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="K351C" channel="Active Energy Imp." channelIndex="1" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="K351C" channel="Active Energy Exp." channelIndex="2" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="K351C" channel="Reactive Energy Imp." channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="K351C" channel="Reactive Energy Exp." channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="K351C" channel="Flag" channelIndex="100" dataType="LpEM" displayType="SaveAndDisplay" />
+    
+    <mvm.ChannelConfig meterConfig="K382M" channel="CO2" channelIndex="0" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="K382M" channel="Active Energy Imp." channelIndex="1" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="K382M" channel="Active Energy Exp." channelIndex="2" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="K382M" channel="Reactive Energy Imp." channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="K382M" channel="Reactive Energy Exp." channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="K382M" channel="Flag" channelIndex="100" dataType="LpEM" displayType="SaveAndDisplay" />
+
+
+<!-- 가스 수도용 채널 -->
+    <mvm.DisplayChannel name="Usage" localName="Usage" serviceType="Gas" unit="m3" chMethod="SUM"/>
+</dataset>

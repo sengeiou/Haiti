@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Operator loginId="admin" aliasName="administrator" email="admin@spasa.com" failedLoginCount="0" 
+        name="Spasa" password="hQXOwYy2SzvjPduK5ESBqwwaCAFQWFdQtJAQuQiM57NZ1duCOKDjMaIsPBTSx6iU01eHOPA933Zl7lKLk5yTvg==" telNo="027810740" loginDenied="false" 
+        role="admingroup"
+        showDefaultDashboard="true"
+        supplier="Spasa"/>
+</dataset>
+
+
+
+
+
+
+

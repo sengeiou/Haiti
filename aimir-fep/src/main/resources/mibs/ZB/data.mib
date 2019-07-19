@@ -1,0 +1,94 @@
+smiEntry,OID,3,1.1.0,SMI Variable
+unknownEntry,BYTE,0,1.2.0,unsigned char
+boolEntry,BOOL,1,1.3.0,unsigned char
+byteEntry,BYTE,1,1.4.0,unsigned char
+wordEntry,WORD,2,1.5.0,unsigned short
+uintEntry,UINT,4,1.6.0,unsigned int
+charEntry,CHAR,1,1.7.0,signed char
+shortEntry,SHORT,2,1.8.0,signed short
+intEntry,INT,4,1.9.0,signed int
+oidEntry,OID,3,1.10.0,Object ID (3 Bytes)
+oidDot1,BYTE,1,1.10.1,ID 1
+oidDot2,BYTE,1,1.10.2,ID 2
+oidDot3,BYTE,1,1.10.3,ID 3
+stringEntry,STRING,0,1.11.0,String
+streamEntry,STREAM,0,1.12.0,Data Stream
+opaqueEntry,OPAQUE,0,1.13.0,Structure
+eui64Entry,HEX,8,1.14.0,SINK-SENSOR ID
+Ids,STREAM,8,1.14.1,8 byte binary stream
+ipEntry,IPADDR,4,1.15.0,IP Address
+ipDot1,BYTE,1,1.15.1,IP 1
+ipDot2,BYTE,1,1.15.2,IP 2
+ipDot3,BYTE,1,1.15.3,IP 3
+ipDot4,BYTE,1,1.15.4,IP 4
+timeEntry,TIMESTAMP,7,1.16.0,yyyymmddhhMMss
+timeYear,WORD,2,1.16.1,year
+timeMon,BYTE,1,1.16.2,month
+timeDay,BYTE,1,1.16.3,day
+timeHour,BYTE,1,1.16.4,hour
+timeMin,BYTE,1,1.16.5,minute
+timeSec,BYTE,1,1.16.6,second
+dayEntry,TIMEDATE,4,1.17.0,yyyymmdd
+dayYear,WORD,2,1.17.1,year
+dayMon,BYTE,1,1.17.2,month
+dayDay,BYTE,1,1.17.3,day
+ip6Entry,IP6ADDR,16,1.18.0,IPv6 Address
+ipHex1,STREAM,2,1.18.1,IP Hexadecimal 1
+ipHex2,STREAM,2,1.18.2,IP Hexadecimal 2
+ipHex3,STREAM,2,1.18.3,IP Hexadecimal 3
+ipHex4,STREAM,2,1.18.4,IP Hexadecimal 4
+ipHex5,STREAM,2,1.18.5,IP Hexadecimal 5
+ipHex6,STREAM,2,1.18.6,IP Hexadecimal 6
+ipHex7,STREAM,2,1.18.7,IP Hexadecimal 7
+ipHex8,STREAM,2,1.18.8,IP Hexadecimal 8
+macEntry,MACADDR,6,1.19.0,MAC Address
+macOctet1,BYTE,1,1.19.1,MAC Octet 1
+macOctet2,BYTE,1,1.19.2,MAC Octet 2
+macOctet3,BYTE,1,1.19.3,MAC Octet 3
+macOctet4,BYTE,1,1.19.4,MAC Octet 4
+macOctet5,BYTE,1,1.19.5,MAC Octet 5
+macOctet6,BYTE,1,1.19.6,MAC Octet 6
+sysEntry,OPAQUE,0,2.1.0,Concentrator Registry values
+sysID,STRING,32,2.1.1,DCU ID
+sysType,UINT,4,2.1.2,DCU TYPE  
+sysName,STRING,64,2.1.3,DCU name  
+sysLocation,STRING,64,2.1.4,DCU location  
+sysContact,STRING,64,2.1.5,DCU manager  
+sysModel,STRING,32,2.1.6,DCU HW model name   
+sysHwVersion,WORD,2,2.1.7,DCU HW version  
+sysHwBuild,BYTE,1,2.1.8,DCU HW build   
+sysSwVersion,WORD,2,2.1.9,DCU SW version   
+sysSwBuild,BYTE,1,2.1.10,DCU SW build
+sysStatusEntry,OPAQUE,0,2.2.0,DCU current status
+sysUptime,UINT,4,2.2.1,live time after boot-up(sec)
+sysTime,TIMESTAMP,7,2.2.2,current DCU time
+sysTemerature,INT,4,2.2.3,current temperature (T*pow(10,2))
+sysState,WORD,1,2.2.4,current status
+sysServerEntry,OPAQUE,0,2.3.0,Server configuration
+serverAddr,STRING,256,2.3.1,Server Address
+serverPort,UINT,4,2.3.2,Server Data Port
+serverAlarmPort,UINT,4,2.3.3,Server Alarm Port
+severProtocol,BYTE,1,2.3.4,Server Application Protocol
+serverDataProtocol,BYTE,1,2.3.5,Server Network Protocol–Data
+serverAlarmProtocol,BYTE,1,2.3.6,Server Network Protocol–Alarm
+meterDataEntry,OPAQUE,0,10.1.0,Metering Data
+mdModemId,EUI64,8,10.1.1,Modem Id
+mdMeterId,STRING,20,10.1.2,Meter Id
+mdVendor,STRING,3,10.1.3,Meter Vendor 
+mdType,BYTE,1,10.1.4,Meter Type
+mdVersion,BYTE,1, 10.1.5,Metering data version 
+mdTime,TIMESTAMP,7,10.1.6,Metering time
+mdDataCount,WORD,2,10.1.7,Metering data count
+mdLength,WORD,2,10.1.8,Metering data length
+mdData,STREAM,0,10.1.9,Metering data
+meterDataEntry2,OPAQUE,0,21.1.0,Meter Data Entry
+meterId,STRING,21,21.1.1,Meter Data Entry
+model,STRING,21,21.1.2,Meter model
+vendor,STRING,4,21.1.3,Meter Vendor
+type,BYTE,1,21.1.4,Meter Type
+modemId,EUI64,8,21.1.5,Modem Id
+shortId,WORD,2,21.1.6,Network short Id
+status,BOOL,1,21.1.7,Network status
+installTime,TIMESTAMP,7,21.1.8,Install time stamp
+lastOnLine,TIMESTAMP,7,21.1.9,On-line time stamp
+lastOffLine,TIMESTAMP,7,21.1.10,Off-line time stamp

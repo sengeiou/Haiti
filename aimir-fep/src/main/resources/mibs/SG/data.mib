@@ -1,0 +1,78 @@
+evtEUI,HEX,8,200.1.1,EUI64
+evtTime,TIMESTAMP,7,200.1.2,yyyymmddhhMMss
+evtResetInterval,WORD,2,200.1.3,reset interval
+evtMeteringInterval,WORD,2,200.1.4,metering interval
+evtMeteringTimeRange,BYTE,1,200.1.5,metering time range
+evtServerIP,IPADDR,4,200.1.6,server ip
+evtServerPort,WORD,2,200.1.7,server port
+evtAPNAddress,STRING,0,200.1.8,apn address
+evtAPNID,STRING,0,200.1.9,apn id
+evtAPNPassword,STRING,0,200.1.10,apn password
+evtModelName,STRING,0,200.1.11,modem model name
+evtFwVer,WORD,2,200.1.12,firmware version
+evtBuildNumber,WORD,2,200.1.13,build number
+evtHwVer,WORD,2,200.1.14,hardware version
+evtSimIMSI,STRING,0,200.1.15,sim card serial number
+evtSimNumberID,STRING,0,200.1.16,sim number
+evtFrequency,STRING,0,200.1.17,subgiga network frequency
+evtBandwidth,STRING,0,200.1.18,subgiga network bandwidth
+evtPanID,WORD,2,200.1.19,subgiga network panid
+evtRfPower,BYTE,1,200.1.20,subgiga network rf power
+evtChildInfoTable,STREAM,0,201.1.1,child info table
+evtNetworkTable,STREAM,0,202.1.1,netowkr table
+cmdResetModemID,HEX,8,100.1.2,reset modem eui
+cmdFactorySettingModemID,HEX,8,100.3.2,factory setting modem eui
+cmdFactorySettingCode,WORD,2,100.3.3,factory setting code
+cmdMeterTimeSyncModemID,HEX,8,100.4.2,modem eui for meter time sync
+cmdModemID,HEX,8,101.3.2,modem id
+cmdSetTimeModemID,HEX,8,102.1.2,set time modem eui
+cmdSetTimestamp,TIMESTAMP,7,102.1.3,set time
+cmdModemResetModemID,HEX,8,102.2.2,set modem reset modem eui
+cmdModemResetIntervalMinute,WORD,2,102.2.3,set modem reset interval
+cmdSetMeteringIntervalModemID,HEX,8,102.3.2,set metering interval modem eui
+cmdSetMeteringIntervalMinute,WORD,2,102.3.3,set metering interval
+cmdSetMeteringTimeRange,BYTE,1,102.3.4,set metering time range
+cmdSetServerIp,IPADDR,4,103.1.2,set server ip
+cmdSetServerPort,WORD,2,103.1.3,set server port
+cmdSetApnAddress,STRING,0,103.2.2,set apn address
+cmdSetApnID,STRING,0,103.2.3,set apn id
+cmdSetApnPassword,STRING,0,103.2.4,set apn password
+cmdOBISListUpModemID,HEX,8,104.1.2,obis list up modem eui
+cmdOBISListUpCnt,BYTE,1,104.1.3,obis list up cnt
+cmdOBISLIstUpIndex,BYTE,1,104.1.4,obis list up index
+cmdOBISListUpCode,STREAM,0,104.1.5,obis list up code
+cmdOBISListUpAccessLength,BYTE,1,104.1.6,obis list up access length
+cmdOBISListUpAccessData,STREAM,0,104.1.7,obis list up access data
+cmdOBISAddModemID,HEX,8,104.2.2,obis add modem eui
+cmdOBISAddCode,STREAM,0,104.2.3,obis add code
+cmdOBISAddAccessLength,BYTE,1,104.2.4,obis add access length
+cmdOBISAddAccessData,STREAM,0,104.2.5,obis add access data
+cmdOBISAddResult,BYTE,1,104.2.6,obis add result
+cmdOBISRemoveModemID,HEX,8,104.3.2,obis remove modem eui
+cmdOBISRemoveIndex,BYTE,1,104.3.3,obis remove index
+cmdOBISRemoveResult,BYTE,1,104.3.4,obis remove result
+cmdOBISListChangeModemID,HEX,8,104.4.2,obis list change modem eui
+cmdOBISListChangeCnt,BYTE,1,104.4.3,obis list change count
+cmdOBISListChangeIndex,BYTE,1,104.4.4,obis list change index
+cmdOBISListChangeCode,STREAM,0,104.4.5,obis list change code
+cmdOBISListChangeAccessLength,BYTE,1,104.4.6,obis list change access length
+cmdOBISListChangeAccessData,STREAM,0,104.4.7,obis list change access data
+cmdOBISListChangeResult,BYTE,1,104.4.8,obis list change result
+cmdSetBypassStartMeterID,STRING,0,200.1.16,meter id
+cmdSetBypassStartTimeout,WORD,2,105.1.2,bypass start timeout
+cmdModemFwImageType,BYTE,1,106.1.2,modem fw image type
+cmdModemFwImageLength,UINT,4,106.1.3,modem fw image length
+cmdModemFwImageCRC,WORD,2,106.1.4,modem fw image crc
+cmdModemModel,STRING,0,106.1.5,modem model name
+cmdModemFwVer,WORD,2,106.1.6,modem fw version
+cmdModemBuildNo,WORD,2,106.1.7,modem build no
+cmdModemHwVer,WORD,2,106.1.8,modem hw version
+cmdModemFwSize,WORD,2,106.1.9,fw size
+cmdImageAddress,UINT,4,106.2.2,image address
+cmdImageSize,WORD,2,106.2.3,image size
+cmdImageData,STREAM,0,106.2.4,image
+cmdUpgradeStatus,BYTE,1,106.3.2,upgrade status
+cmdUpgradeCount,WORD,2,106.3.3,upgrade count
+cmdUpgradeModemID,HEX,8,106.3.4,upgrade modem eui
+
+

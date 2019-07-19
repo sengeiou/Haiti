@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Dashboard descr="고객의 에너지 사용 리포트" name="My Report" orderNo="0" />
+	<system.Dashboard descr="고객의 에너지 사용 상세 정보 제공" name="Dashboard" orderNo="1" />
+</dataset>

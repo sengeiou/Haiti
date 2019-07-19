@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jms="http://www.springframework.org/schema/jms"
+  xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:oxm="http://www.springframework.org/schema/oxm"
+  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd">
+
+  <context:property-placeholder
+    location="classpath:config/jdbc.properties,classpath:config/mars.properties" />
+
+  <import resource="classpath:config/spring.xml" />
+
+  <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
+    destroy-method="close">
+    <property name="driverClass" value="${jdbc.driverClassName}" />
+    <property name="jdbcUrl" value="${jdbc.url}" />
+    <property name="username" value="${jdbc.username}" />
+    <property name="password" value="${jdbc.password}" />
+    <property name="idleConnectionTestPeriodInMinutes" value="5" />
+    <property name="idleMaxAgeInMinutes" value="60" />
+    <property name="maxConnectionsPerPartition" value="5" />
+    <property name="minConnectionsPerPartition" value="2" />
+    <property name="partitionCount" value="3" />
+    <property name="acquireIncrement" value="1" />
+    <property name="statementsCacheSize" value="100" />
+  </bean>
+
+  <!-- Activates scanning of @Autowired -->
+  <context:annotation-config />
+
+  <!-- Scans for @Repository, @Service -->
+  <context:component-scan base-package="com.aimir">
+    <context:exclude-filter type="regex" expression="com.aimir.mars.integration.multispeak.queue_jms.*" />
+    <context:exclude-filter type="regex" expression="com.aimir.mars.integration.multispeak.service_jms.*" />
+    <context:exclude-filter type="regex" expression="com.aimir.fep.adapter.*" />
+    <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.emnv.server.*" />
+    <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.fmp.processor.*" />
+    <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.fmp.server.*" />
+    <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.reversegprs.*" />
+    <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.smcp.*" />
+    <context:exclude-filter type="regex" expression="com.aimir.fep.integration.*" />
+  </context:component-scan>
+
+  <!-- HES Integration JMS Configuration For Weblogic -->
+  <bean id="jndiTemplate" class="org.springframework.jndi.JndiTemplate">
+    <property name="environment">
+      <props>
+        <prop key="java.naming.factory.initial" value="${HES.integration.jms.jndi.connectionFactory}" />
+        <prop key="java.naming.provider.url" value="${HES.integration.jms.jndi.providerURL}" />
+      </props>
+    </property>
+  </bean>
+  <bean id="jmsConnectionFactory" class="org.springframework.jndi.JndiObjectFactoryBean">
+    <property name="jndiTemplate" ref="jndiTemplate" />
+    <property name="jndiName" value="jms/connectionFactory" />
+  </bean>
+  <bean id="jmsDestinationResolver"
+    class="org.springframework.jms.support.destination.JndiDestinationResolver">
+    <property name="jndiTemplate" ref="jndiTemplate" />
+    <property name="cache" value="true" />
+  </bean>
+  <bean id="cachingConnectionFactory"
+    class="org.springframework.jms.connection.CachingConnectionFactory">
+    <property name="targetConnectionFactory" ref="jmsConnectionFactory" />
+    <property name="sessionCacheSize" value="5" />
+    <property name="cacheConsumers" value="true" />
+  </bean>
+
+  <bean id="oaInJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <property name="connectionFactory" ref="cachingConnectionFactory" />
+    <property name="messageConverter" ref="oxmMessageConverter" />
+    <property name="defaultDestinationName" value="${HES.WS.jms.destination.OA.in}" />
+  </bean>
+
+  <bean id="cdInJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <property name="connectionFactory" ref="cachingConnectionFactory" />
+    <property name="messageConverter" ref="oxmMessageConverter" />
+    <property name="defaultDestinationName" value="${HES.WS.jms.destination.CD.in}" />
+  </bean>
+
+  <bean id="cbInJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <property name="connectionFactory" ref="cachingConnectionFactory" />
+    <property name="messageConverter" ref="oxmMessageConverter" />
+    <property name="defaultDestinationName" value="${HES.WS.jms.destination.CB.in}" />
+  </bean>
+
+  <bean id="mrInJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <property name="connectionFactory" ref="cachingConnectionFactory" />
+    <property name="messageConverter" ref="oxmMessageConverter" />
+    <property name="defaultDestinationName" value="${HES.WS.jms.destination.MR.in}" />
+  </bean>
+
+  <jms:listener-container acknowledge="auto"
+    connection-factory="cachingConnectionFactory" container-type="default"
+    concurrency="20-25" message-converter="oxmMessageConverter">
+    <jms:listener destination="${HES.WS.jms.destination.ALL.out}"
+      method="handleMessage" ref="allJMSListener" />
+  </jms:listener-container>
+
+  <bean id="allJMSListener"
+    class="com.aimir.mars.integration.multispeak.server_jms.ALL_JMSListener" />
+
+  <!-- Message converter - automatically marshalls and unmarshalls messages 
+    using the provided marshaller / unmarshaller -->
+  <bean id="oxmMessageConverter"
+    class="org.springframework.jms.support.converter.MarshallingMessageConverter">
+    <property name="marshaller" ref="marshaller" />
+    <property name="unmarshaller" ref="marshaller" />
+  </bean>
+
+  <!-- Spring's JAXB implementation of marshaller - provided a class the 
+    JAXB generated class -->
+  <oxm:jaxb2-marshaller id="marshaller">
+    <!-- Bulk Meter Value -->
+    <oxm:class-to-be-bound name="com.aimir.mars.integration.bulkreading.xml.data.MeterReadingsType" />
+    <!-- Meter Event -->
+    <oxm:class-to-be-bound name="ch.iec.tc57._2011.enddeviceeventsmessage.EndDeviceEventsEventMessageType" />
+    <!-- CD Service -->
+    <oxm:class-to-be-bound name="org.multispeak.version_4.InitiateConnectDisconnect" />
+    <oxm:class-to-be-bound name="org.multispeak.version_4.InitiateCDStateRequest" />
+    <!-- CB Service -->
+    <oxm:class-to-be-bound name="org.multispeak.version_4.CDStatesChangedNotification" />
+    <oxm:class-to-be-bound name="org.multispeak.version_4.ReadingChangedNotification" />
+    <oxm:class-to-be-bound name="org.multispeak.version_4.ModifyCBDataForMeters" />
+    <!-- MR Service -->
+    <oxm:class-to-be-bound name="org.multispeak.version_4.InitiateMeterReadingsByMeterID" />
+    <oxm:class-to-be-bound name="org.multispeak.version_4.MeterAddNotification" />
+    <oxm:class-to-be-bound name="org.multispeak.version_4.MeterRemoveNotification" />
+    <oxm:class-to-be-bound name="org.multispeak.version_4.MeterRetireNotification" />
+    <oxm:class-to-be-bound name="org.multispeak.version_4.MeterChangedNotification" />
+    <!-- OA Service -->
+    <oxm:class-to-be-bound name="org.multispeak.version_4.AssessmentLocationChangedNotification" />
+  </oxm:jaxb2-marshaller>
+
+  <!-- Active MQ HES Internal -->
+  <bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+    <property name="brokerURL" value="${activemq.broker.url}" />
+  </bean>
+
+  <bean id="activeCachingConnectionFactory"
+    class="org.springframework.jms.connection.CachingConnectionFactory">
+    <property name="targetConnectionFactory" ref="activeMQConnectionFactory" />
+    <property name="reconnectOnException" value="true" />
+  </bean>
+
+  <bean id="activeJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <property name="connectionFactory">
+      <ref local="activeCachingConnectionFactory" />
+    </property>
+  </bean>
+
+  <bean id="cbProcessor" class="com.aimir.mars.integration.multispeak.queue.CBProcessor" />
+  <bean id="cdProcessor" class="com.aimir.mars.integration.multispeak.queue.CDProcessor" />
+  <bean id="mrProcessor" class="com.aimir.mars.integration.multispeak.queue.MRProcessor" />
+  <bean id="oaProcessor" class="com.aimir.mars.integration.multispeak.queue.OAProcessor" />
+  <!-- <bean id="odProcessor" class="com.aimir.mars.integration.multispeak.queue.ODProcessor"/> -->
+
+  <bean id="cbProcessorContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <property name="connectionFactory" ref="activeCachingConnectionFactory" />
+    <property name="destinationName" value="${MultiSpeak.CB_MESSAGE}" />
+    <property name="messageListener" ref="cbProcessor" />
+    <property name="concurrentConsumers" value="${jms.concurrent.consumers}" />
+    <property name="maxConcurrentConsumers" value="${jms.concurrent.consumers}" />
+  </bean>
+
+  <bean id="cdProcessorContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <property name="connectionFactory" ref="activeCachingConnectionFactory" />
+    <property name="destinationName" value="${MultiSpeak.CD_MESSAGE}" />
+    <property name="messageListener" ref="cdProcessor" />
+    <property name="concurrentConsumers" value="${jms.concurrent.consumers}" />
+    <property name="maxConcurrentConsumers" value="${jms.concurrent.consumers}" />
+  </bean>
+
+  <bean id="mrProcessorContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <property name="connectionFactory" ref="activeCachingConnectionFactory" />
+    <property name="destinationName" value="${MultiSpeak.MR_MESSAGE}" />
+    <property name="messageListener" ref="mrProcessor" />
+    <property name="concurrentConsumers" value="${jms.concurrent.consumers}" />
+    <property name="maxConcurrentConsumers" value="${jms.concurrent.consumers}" />
+  </bean>
+
+  <bean id="oaProcessorContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <property name="connectionFactory" ref="activeCachingConnectionFactory" />
+    <property name="destinationName" value="${MultiSpeak.OA_MESSAGE}" />
+    <property name="messageListener" ref="oaProcessor" />
+    <property name="concurrentConsumers" value="${jms.concurrent.consumers}" />
+    <property name="maxConcurrentConsumers" value="${jms.concurrent.consumers}" />
+  </bean>
+
+  <!--
+  <bean id="odProcessorContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <property name="connectionFactory" ref="activeCachingConnectionFactory"/>
+    <property name="destinationName" value="${MultiSpeak.OD_MESSAGE}"/>
+    <property name="messageListener" ref="odProcessor"/>
+    <property name="concurrentConsumers" value="${jms.concurrent.consumers}"/>
+    <property name="maxConcurrentConsumers" value="${jms.concurrent.consumers}"/>
+  </bean>
+  -->
+
+</beans>

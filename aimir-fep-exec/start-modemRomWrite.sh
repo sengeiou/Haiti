@@ -1,0 +1,2 @@
+#!/bin/sh
+mvn -e -f pom-modemRomWrite.xml antrun:run -DfepName=FEP1 -Dfilename=/home/aimir/aimiramm/aimir-fep-exec/panaExport/export.xml -DudpPort=65333 -DudpUse=true -Dspring.instrument.path=/home/aimir/aimiramm/aimir-project-lib/org/springframework/spring-instrument/4.2.5.RELEASE 2>&1 > fep_modemRomWrite.log &

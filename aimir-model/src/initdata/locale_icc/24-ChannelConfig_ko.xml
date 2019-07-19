@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+
+    <mvm.ChannelConfig meterConfig="PM1200" channel="Active Power" channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="PM1200" channel="Reactive Power" channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay" />
+        
+</dataset>
+

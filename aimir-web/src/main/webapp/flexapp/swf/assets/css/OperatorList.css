@@ -1,0 +1,43 @@
+/* CSS file */
+Application
+{
+    background-image: Embed(source='../images/grid_body_bg01.jpg');
+}
+
+
+DataGrid
+{
+    color: #434343;
+    fontFamily: dotum;
+    fontSize: 11;
+    border-color:#CCCFD0;
+    border-style:solid;
+    border-thickness:1;
+    header-background-skin: Embed(source='../images/grid_head_bg01.jpg');
+    verticalGridLineColor: #D3E7F7;
+    headerStyleName: DataGridHeader;
+    horizontalGridLines: true;
+    horizontalGridLineColor: #D3E7F7;
+    verticalScrollBarStyleName: DataGridVerticalScrollBar;
+    backgroundAlpha: 0.0;
+    backgroundDisabledColor: #FFFCFC;
+    fontWeight: normal;
+    textRollOverColor: #434343;
+    headerSeparatorSkin: Embed(source="../images/grid_head_bg_line.jpg");
+	folderOpenIcon: Embed(source="../images/ic_folder_opened.png");
+	folderClosedIcon: Embed(source="../images/ic_folder_closed.png");
+	disclosureOpenIcon: Embed(source="../images/ic_minus.png");
+	disclosureClosedIcon: Embed(source="../images/ic_plus.png");
+}
+.DataGridHeader
+{
+    fontWeight: bold;
+}
+.DataGridVerticalScrollBar
+{
+    trackColors: #E1EEF3, #E1EEF3;
+    borderColor: #D3E7F7;
+    fillAlphas: 1.0, 1.0;
+    fillColors: #FCFDFF, #CCCCCC, #FFFEFE, #FFFFFF;
+    cornerRadius: 4;
+}

@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+<!--  남아공 Tariff Start -->
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1001" name="Night Save Urban Large" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1002" name="Night Save Urban Rural" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1003" name="Mega Flex" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1004" name="Mini Flex" /> 
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1005" name="Business Rate1" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1006" name="Business Rate2" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1007" name="Business Rate3" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1008" name="Business Rate4" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1009" name="Home Power Bulk" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1010" name="Home Power1" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1011" name="Home Power2" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1012" name="Home Power3" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1013" name="Home Power4" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1014" name="Home Light1" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1015" name="Home Light2" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1016" name="Night Save Rural" />   
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1017" name="Rural Flex" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1018" name="Rand Rate1" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1019" name="Rand Rate2" />   
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1020" name="Rand Rate3" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1021" name="Rand Rate4" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1022" name="Rand Rate Dx" />	    
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1023" name="Rand Light" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1024" name="Public Lighting" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1025" name="Home Light1 Prepaid" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1026" name="Home Light2 Prepaid" />
+    
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1027" name="Home Flex1" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1028" name="Home Flex2" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1029" name="Home Flex3" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.1" code="1030" name="Home Flex4" />
+
+	<system.TariffType supplier="NURI" serviceTypeCode="3.2" code="1122" name="Home" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.2" code="1123" name="Business" />
+	<system.TariffType supplier="NURI" serviceTypeCode="3.2" code="1125" name="Standard" /> 
+	<system.TariffType supplier="NURI" serviceTypeCode="3.2" code="1127" name="Industrial" /> 
+	
+	<system.TariffType supplier="NURI" serviceTypeCode="3.3" code="1032" name="Home Cooking" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.3" code="1033" name="Home Heating" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.3" code="1034" name="Commercial Heating" /> 
+	<system.TariffType supplier="NURI" serviceTypeCode="3.3" code="1035" name="Standard" /> 
+	<system.TariffType supplier="NURI" serviceTypeCode="3.3" code="1036" name="Cooling" /> 
+	<system.TariffType supplier="NURI" serviceTypeCode="3.3" code="1037" name="Industrial" />	
+	
+	<system.TariffType supplier="NURI" serviceTypeCode="3.3" code="19001" name="Home Cooking" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.3" code="19002" name="Home Heating" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.3" code="19003" name="Commercial Heating" />  
+    <system.TariffType supplier="NURI" serviceTypeCode="3.3" code="19004" name="Business(1)" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.3" code="19005" name="Business(2)" />  
+    <system.TariffType supplier="NURI" serviceTypeCode="3.3" code="19006" name="Cooling" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.3" code="19007" name="Industrial" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.3" code="19008" name="Apartment House(CHP)" /> 
+    <system.TariffType supplier="NURI" serviceTypeCode="3.3" code="19009" name="Business,Industrial(CHP)" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.3" code="19010" name="Eltricity Business(CHP)" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.3" code="19011" name="District Heating,Cooling(CHP)" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.3" code="19012" name="Apartment House" /> 
+    <system.TariffType supplier="NURI" serviceTypeCode="3.3" code="19013" name="Business,Industrial" />    
+    <system.TariffType supplier="NURI" serviceTypeCode="3.3" code="19014" name="District Heating,Cooling" />
+    <system.TariffType supplier="NURI" serviceTypeCode="3.3" code="19015" name="NONE" />
+    
+    
+    <!--  남아공 Tariff End --> 
+
+<!-- 한전 테스트 -->
+    <system.TariffType supplier="KEPCO" serviceTypeCode="3.1" code="2001" name="Business Rate1" />
+    <system.TariffType supplier="KEPCO" serviceTypeCode="3.1" code="2002" name="Business Rate2" />
+    <system.TariffType supplier="KEPCO" serviceTypeCode="3.1" code="2003" name="Business Rate3" />
+    <system.TariffType supplier="KEPCO" serviceTypeCode="3.1" code="2004" name="Business Rate4" />
+    
+<!-- 인천종합에너지 테스트-->
+    <system.TariffType supplier="INCHEON" serviceTypeCode="3.1" code="3001" name="Home Power1" />
+    <system.TariffType supplier="INCHEON" serviceTypeCode="3.1" code="3002" name="Home Power2" />
+    <system.TariffType supplier="INCHEON" serviceTypeCode="3.1" code="3003" name="Business Rate1" />
+    <system.TariffType supplier="INCHEON" serviceTypeCode="3.1" code="3004" name="Business Rate2" />
+    
+<!-- 인천종합에너지 테스트 -->
+    <system.TariffType supplier="INCHEON" serviceTypeCode="3.5" code="3101" name="Night Save" />
+    <system.TariffType supplier="INCHEON" serviceTypeCode="3.5" code="3102" name="Rate Rate1" />
+    <system.TariffType supplier="INCHEON" serviceTypeCode="3.5" code="3103" name="Rate Rate2" />
+    <system.TariffType supplier="INCHEON" serviceTypeCode="3.5" code="3104" name="Business Rate2" />
+  
+<!-- 대한도시가스 테스트-->  
+    <system.TariffType supplier="DAEHAN" serviceTypeCode="3.3" code="4001" name="Night Save" />
+    <system.TariffType supplier="DAEHAN" serviceTypeCode="3.3" code="4002" name="Night Save Rural" />
+   
+<!-- 수완에너지 테스트-->   
+    <system.TariffType supplier='SUWAN' serviceTypeCode='3.1' code='5001' name='Home Power1' />
+    <system.TariffType supplier='SUWAN' serviceTypeCode='3.1' code='5002' name='Home Power2' />   
+    <system.TariffType supplier='SUWAN' serviceTypeCode='3.1' code='5003' name='Home Power3' />
+    <system.TariffType supplier='SUWAN' serviceTypeCode='3.1' code='5004' name='Home Power4' />
+    
+    <system.TariffType supplier="SUWAN" serviceTypeCode="3.4" code="5005" name="Rate Rate1" />
+    <system.TariffType supplier="SUWAN" serviceTypeCode="3.4" code="5006" name="Rate Rate2" />   
+    <system.TariffType supplier="SUWAN" serviceTypeCode="3.4" code="5007" name="Rate Rate3" />
+    <system.TariffType supplier="SUWAN" serviceTypeCode="3.4" code="5008" name="Rate Rate4" />
+    
+<!-- 광명수도 테스트-->   
+    <system.TariffType supplier="KYUNGNAM" serviceTypeCode="3.2" code="6001" name="Night Save" />
+    <system.TariffType supplier="KYUNGNAM" serviceTypeCode="3.2" code="6002" name="Mega Flex" />
+    <system.TariffType supplier="KYUNGNAM" serviceTypeCode="3.2" code="6003" name="Mini Flex" /> 
+    
+     <!--  서울 도시가스  -->
+    <system.TariffType supplier="SEOUL" serviceTypeCode="3.3" code="9001" name="Home Cooking" />
+    <system.TariffType supplier="SEOUL" serviceTypeCode="3.3" code="9002" name="Home Heating" />
+    <system.TariffType supplier="SEOUL" serviceTypeCode="3.3" code="9003" name="Commercial Heating" />  
+    <system.TariffType supplier="SEOUL" serviceTypeCode="3.3" code="9004" name="Business(1)" />
+    <system.TariffType supplier="SEOUL" serviceTypeCode="3.3" code="9005" name="Business(2)" />  
+    <system.TariffType supplier="SEOUL" serviceTypeCode="3.3" code="9006" name="Cooling" />
+    <system.TariffType supplier="SEOUL" serviceTypeCode="3.3" code="9007" name="Industrial" />
+    <system.TariffType supplier="SEOUL" serviceTypeCode="3.3" code="9008" name="Apartment House(CHP)" /> 
+    <system.TariffType supplier="SEOUL" serviceTypeCode="3.3" code="9009" name="Business,Industrial(CHP)" />
+    <system.TariffType supplier="SEOUL" serviceTypeCode="3.3" code="9010" name="Eltricity Business(CHP)" />
+    <system.TariffType supplier="SEOUL" serviceTypeCode="3.3" code="9011" name="District Heating,Cooling(CHP)" />
+    <system.TariffType supplier="SEOUL" serviceTypeCode="3.3" code="9012" name="Apartment House" /> 
+    <system.TariffType supplier="SEOUL" serviceTypeCode="3.3" code="9013" name="Business,Industrial" />    
+    <system.TariffType supplier="SEOUL" serviceTypeCode="3.3" code="9014" name="District Heating,Cooling" />
+    <system.TariffType supplier="SEOUL" serviceTypeCode="3.3" code="9015" name="NONE" />
+
+ <!--  서울 도시가스 끝 -->  
+    
+</dataset>

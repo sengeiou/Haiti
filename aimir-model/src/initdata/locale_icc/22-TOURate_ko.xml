@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+	<!-- Kepco 8205  -->
+    <system.TOURate tariffType="8205" peakType="OFF_PEAK" season="Spring" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="8205" peakType="PEAK" season="Spring" localName="Peak" startTime="09" endTime="18" />
+    <system.TOURate tariffType="8205" peakType="CRITICAL_PEAK" season="Spring" localName="Critical Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="8205" peakType="OFF_PEAK" season="Summer" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="8205" peakType="PEAK" season="Summer" localName="Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="8205" peakType="CRITICAL_PEAK" season="Summer" localName="Critical Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="8205" peakType="OFF_PEAK" season="Autumn" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="8205" peakType="PEAK" season="Autumn" localName="Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="8205" peakType="CRITICAL_PEAK" season="Autumn" localName="Critical Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="8205" peakType="OFF_PEAK" season="Winter" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="8205" peakType="PEAK" season="Winter" localName="Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="8205" peakType="CRITICAL_PEAK" season="Winter" localName="Critical Peak" startTime="18" endTime="23" />
+
+</dataset>

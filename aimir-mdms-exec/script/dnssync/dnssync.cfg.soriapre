@@ -1,0 +1,14 @@
+[CONFIG]
+domain = aimir.int
+
+[DB]
+dns.db.ip = ns1.aimir.int
+dns.db.user = dnssync
+dns.db.passwd = aimiramm
+dns.db.name = powerdns
+aimir.db.user = aimir
+aimir.db.passwd = hvhKFeshWWqgHRiJMlYM
+aimir.db.url = 10.40.125.6:1521/TEST.HES.VALIDER.NO
+
+[LOG]
+level=DEBUG

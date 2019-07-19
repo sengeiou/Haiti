@@ -1,0 +1,2 @@
+1. lib install
+   mvn install:install-file -Dfile=lib/spring-flex-core-1.6.0.RC1.jar -DgroupId=org.springframework.flex -DartifactId=spring-flex-core -Dversion=1.6.0.RC1 -Dpackaging=jar

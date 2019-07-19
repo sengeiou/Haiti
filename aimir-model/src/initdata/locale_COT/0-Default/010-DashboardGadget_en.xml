@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.DashboardGadget collapsible='false' layout='fit' gridX='0' gridY='3' dashboard='MTR' gadget='TOU Report(Electricity)'/>
+    <system.DashboardGadget collapsible='false' layout='fit' gridX='0' gridY='0' dashboard='System' gadget='Code Management'/>
+    <system.DashboardGadget collapsible='false' layout='fit' gridX='1' gridY='0' dashboard='System' gadget='Device Vendor Model'/>
+    <system.DashboardGadget collapsible='false' layout='fit' gridX='2' gridY='0' dashboard='System' gadget='Supplier Management'/>
+    <system.DashboardGadget collapsible='false' layout='fit' gridX='0' gridY='1' dashboard='System' gadget='Customer and Contract'/>
+    <system.DashboardGadget collapsible='false' layout='fit' gridX='1' gridY='1' dashboard='System' gadget='User Management'/>
+    <system.DashboardGadget collapsible='false' layout='fit' gridX='2' gridY='1' dashboard='System' gadget='Metring SLA'/>
+	<system.DashboardGadget collapsible='false' layout='fit' gridX='0' gridY='0' dashboard='MTR' gadget='Power Outage Management'/>
+	<system.DashboardGadget collapsible='false' layout='fit' gridX='1' gridY='0' dashboard='MTR' gadget='Data Gaps(Electricity)'/>
+	<system.DashboardGadget collapsible='false' layout='fit' gridX='2' gridY='0' dashboard='MTR' gadget='Metering Data(Electricity)'/>
+	<system.DashboardGadget collapsible='false' layout='fit' gridX='0' gridY='1' dashboard='MTR' gadget='VEE Management(Electricity)'/>
+	<system.DashboardGadget collapsible='false' layout='fit' gridX='1' gridY='1' dashboard='MTR' gadget='Abnormal contract customers(Electricity)'/>
+	<system.DashboardGadget collapsible='false' layout='fit' gridX='2' gridY='1' dashboard='MTR' gadget='Consumption Ranking(Electricity)'/>
+	<system.DashboardGadget collapsible='false' layout='fit' gridX='0' gridY='2' dashboard='MTR' gadget='Demand Management'/>
+	<system.DashboardGadget collapsible='false' layout='fit' gridX='1' gridY='2' dashboard='MTR' gadget='Power Quality'/>
+	<system.DashboardGadget collapsible='false' layout='fit' gridX='2' gridY='2' dashboard='MTR' gadget='Metering Fail(Electricity)'/>
+	<system.DashboardGadget collapsible='false' layout='fit' gridX='0' gridY='0' dashboard='NMS' gadget='Communication Log'/>
+	<system.DashboardGadget collapsible='false' layout='fit' gridX='1' gridY='0' dashboard='NMS' gadget='Meter Time Management'/>
+	<system.DashboardGadget collapsible='false' layout='fit' gridX='2' gridY='0' dashboard='NMS' gadget='Operation Management'/>
+	<system.DashboardGadget collapsible='false' layout='fit' gridX='0' gridY='1' dashboard='NMS' gadget='Meter Management'/>
+	<system.DashboardGadget collapsible='false' layout='fit' gridX='1' gridY='1' dashboard='NMS' gadget='Modem Management'/>
+	<system.DashboardGadget collapsible='false' layout='fit' gridX='2' gridY='1' dashboard='NMS' gadget='Google Map For Device'/>
+	<system.DashboardGadget collapsible='false' layout='fit' gridX='0' gridY='2' dashboard='NMS' gadget='Device Registration'/>
+	<system.DashboardGadget collapsible='false' layout='fit' gridX='1' gridY='2' dashboard='NMS' gadget='Meter Event Log'/>
+	<system.DashboardGadget collapsible='false' layout='fit' gridX='2' gridY='2' dashboard='NMS' gadget='Event Alarm Log'/>
+	<system.DashboardGadget collapsible='false' layout='fit' gridX='0' gridY='3' dashboard='NMS' gadget='Firmware Management'/>
+</dataset>

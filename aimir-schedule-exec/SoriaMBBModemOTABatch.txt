@@ -1,0 +1,52 @@
+Module Name : SoriaMBBModemOTABatch
+Module Description : SORIA MBB Modem OTA 를 주기적으로 실행시키고자 할때 사용하는 tool이다
+Package : aimir-schedule/src/main/java/com/aimir/schedule/task/SoriaMBBModemOTABatch.java
+ 		  aimir-schedule-exec/config/schedule-SoriaMBBModemOTABatch.properties
+		  aimir-schedule-exec/log4j-SoriaMBBModemOTABatch.xml
+		  aimir-schedule-exec/pom-SoriaMBBModemOTABatch.xml
+		  aimir-schedule-exec/spring-SoriaMBBModemOTABatch.xml		  
+          aimir-schedule-exec/exec-SoriaMBBModemOTABatch.sh
+
+Execute Description
+Tool : exec-SoriaMBBModemOTABatch.sh
+Parameters : 
+	 1. location
+	   - 대상 모뎀의 Location.
+	   - 옵션 : 필수
+	 2. targetFWVersion
+	   - 대상 모뎀의 펌웨어버전
+	   - 옵션 : 선택 (default : all)
+	 3. lastLinkTimeRange
+	   - 대상 모뎀의 통신시간 범위. (Day)
+	     EX) 1 : 1일 이내 통신이력있는 대상
+	         2 : 2일 이내 통신이력있는 대상
+	         3 : 3일 이내 통신이력있는 대상
+	   - 옵션 : 선택 (default : 3)
+	 4. fwFileName  
+	   - 적용할 펌웨어 파일명
+	   - 옵션 : 필수
+	 5. fwFileVersion
+	   - 적용할 펌웨어 파일 버전
+	   - 옵션 : 필수
+	 6. reTryCount
+	   - 재시도 횟수
+	   - 옵션 : 선택 (default : 2)
+	 7. reTryInterval
+	   - 재시도 간격 (Time)
+	     ex) 1 : 1 시간 간격으로 실행
+	         2 : 2 시간 간격으로 실행
+	         3 : 3 시간 간격으로 실행
+	   - 옵션 : 선택 (default : 3)
+Parameters Ex)
+	### Properties ####
+	location='BKK'
+	#targetFWVersion='1.3'
+	lastLinkTimeRange=3
+	fwFileName='NOR_NAMR-P117LT_V0130_0040_M_KAIFA_OTA_(Soria)_20171127'
+	fwFileVersion='1.3'
+	reTryCount=2
+	reTryInterval=4
+	####################
+		 
+	  
+

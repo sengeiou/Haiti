@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Location 
+		name="서울"
+		orderNo="1"
+		parent=""
+		supplier="누리"
+	/>
+	<system.Location 
+		name="금천구"
+		orderNo="2"
+		parent="서울"
+        supplier="누리"
+	/>
+	<system.Location 
+		name="가산"
+		orderNo="3"
+		parent="금천구"
+        supplier="누리"
+	/>
+</dataset>

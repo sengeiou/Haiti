@@ -1,0 +1,67 @@
+.min div#location_tree {
+	width: 37%;
+	padding: 1%;
+	float: left;
+	min-width: 100px;
+}
+.min div#end_device_chart {
+	clear: both;
+	min-width: 120px;
+	/*width: 58%;
+	float: left;*/
+}
+.min div#end_device_pie_chart {
+	min-width: 100px;
+	width: 58%;
+	margin-top: 25px;
+	float: left;
+}
+.min div#facility_data {
+	padding: 1%;
+	clear: both;
+}
+
+.max div#location_tree {
+	width: 21%;
+	padding: 1%;
+	float: left;
+	min-width: 150px;
+}
+.max div.chart_and_grid {
+	width: 74%;
+	min-width: 400px;
+	float: left;
+}
+.max div#end_device_chart {
+	width: 100%;
+	min-width: 120px;
+}
+.max div#facility_data {
+	margin-bottom: 5px;
+}
+.max div#stat_chart_grid div.used_chart {
+	width: 25%;
+	height: 150px;
+	float: left;
+}
+
+.btn-confirm {
+	margin-top: 10px;
+}
+div.excel_button {
+	margin-top: 5px;
+	text-align: right !important;
+	margin-bottom: -5px;
+	padding-right: 2px;
+}
+.add-device .x-btn-text {
+	background-image: url('/aimir-web/js/extjs/examples/shared/icons/fam/add.png');
+}
+
+.x-tree-nodeimg.branch-end-device, 
+.x-tree-node-collapsedimg.branch-end-device {
+	background: url('/aimir-web/images/tree/ic_bldg_closed.gif');
+}
+.x-tree-node-expandedimg.branch-end-device {
+	background: url('/aimir-web/images/tree/ic_bldg_opened.gif');
+}

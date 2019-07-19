@@ -1,0 +1,107 @@
+.min {
+}
+
+.top-wrapper {
+	padding-bottom: 2px;
+}
+
+/* datepicker css bug */
+#tab-monthly ul {
+	height: 26px;
+}
+
+/* CSS override */
+.ui-widget-content { 
+    height: 100% !important;
+    padding: 9px 7px 0 7px;
+    overflow: visible;
+    background: url('/aimir-web/themes/images/default/setting/sub_tab_bg01.gif') repeat-x top; 
+}
+div#manual-metering-tabs {
+	margin-bottom: 10px;
+}
+
+#metering-day-type {
+	width: 45px !important;
+	margin-right: 0px !important;
+}
+
+#meter-value-wrapper input {
+	width: 100px;
+	margin-right: 2px !important;
+}
+select#metering-unit-selector {
+	width: 80px;
+}
+
+input#manual-meter-check {
+	margin-right: 5px;
+}
+
+#datepicker-area input {
+	width: 80px;
+	margin-right: 2px !important;
+}
+
+.btn-confirm {
+	margin-top: 10px;
+}
+div.excel_button {
+	margin-top: 10px;
+	text-align: right;
+	margin-bottom: -10px;
+	padding-right: 2px;
+}
+
+.max .form-table {
+	text-align: center;
+}
+
+.max #manual-metering-grid,
+.max #metering-common-template {
+	width: 1150px;
+}
+
+.max #singleRegMeterMdsId {
+	margin-right: 0px;
+}
+.max #singleRegMeterModemSerial {
+	margin-right: 5px;
+}
+
+.max #manual_metring_result_table {
+	margin: 0 auto;
+	width: 100%;
+	min-width: 800px;
+}
+
+.max #metering-chart .manual-meter-selector {
+	width: 260px; 
+	float: left;
+}
+.max #metering-chart .meter-stat-charts {
+	float: right; 
+	width: 920px;
+}
+.min #metering-unit-selector {
+	margin-right: 10px;
+}
+.min input[name=meteringValue] {
+	margin-right: 10px;
+}
+.min #manual_metring_type_grid {
+	width: 98%;
+	margin: 0 auto;
+}
+.max #manualMeterSelectbox {
+	width: 310px;
+}
+.min #manualMeterSelectbox {
+	width: 232px;
+}
+.max #manualValue {
+	width: 120px;
+}
+.max td.table-end-space {
+	width: 150px;
+}

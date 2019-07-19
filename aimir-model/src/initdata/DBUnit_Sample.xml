@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+  <Code SEQ="19" NAME="1" SUBJECT="1" CONTENT="1" PASSWORD="1" LOGTIME="2008-05-07 06:18:06.0"/>  
+  <Code SEQ="22" NAME="이나영" EMAIL="nayoung@naver.com" HOMEPAGE="nayoung.com" SUBJECT="utsman님에게" CONTENT="잘지내요?" PASSWORD="0000" LOGTIME="2008-05-07 13:15:54.0"/>  
+  <Code SEQ="23" NAME="김태희" EMAIL="taehye@naver.com" HOMEPAGE="taehye.com" SUBJECT="utsman님에게 태희가요" CONTENT="좋아해요~" PASSWORD="1111" LOGTIME="2008-05-07 13:16:59.0"/>  
+</dataset>

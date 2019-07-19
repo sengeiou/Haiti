@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+    
+    <import resource="classpath:config/spring.xml"/>
+    
+    <!-- Scans for @Repository, @Service -->
+    <context:component-scan base-package="com.aimir">
+        <!-- <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.fmp.processor.ProcessorHandler"/>-->
+        <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.smcp.SMCPHandler"/>
+        <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.smcp.SMCPProtocolProvider"/>
+        <context:exclude-filter type="regex" expression="com.aimir.fep.adapter.*Adapter"/>
+        <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.emnv.server.EMnVProtocolHandler"/>
+        <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.emnv.server.EMnVAdapter"/>
+        <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.fmp.server.*ProtocolHandler"/>
+        <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.fmp.server.*ProtocolProvider"/>
+        <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.fmp.server.*Adapter"/>
+        <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.nip.server.*AdapterBack"/>
+        <context:exclude-filter type="regex" expression="com.aimir.fep.protocol.nip.server.*Handler"/>
+    </context:component-scan>
+  
+    <!-- Annotation Support Hibernate Session Factory -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <!--  <property name="entityInterceptor" ref="auditLogInterceptor"/>  -->
+        <property name="dataSource" ref="dataSource" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.bytecode.use_reflection_optimizer">true</prop>
+                <prop key="hibernate.use_sql_comments">false</prop>
+                <!--<prop key="hibernate.hbm2ddl.auto">create-drop</prop>-->
+                <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
+                <!--<prop key="hibernate.hbm2ddl.auto">validate</prop>-->
+                <!-- <prop key="hibernate.hbm2ddl.auto">false</prop>-->
+                <prop key="hibernate.hbm2ddl.auto">none</prop>
+                <prop key="hibernate.connection.autocommit">false</prop>
+                <!--<prop key="hibernate.query.substitutions">Y</prop>-->
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_second_level_cache">org.hibernate.cache.EhCacheProvider</prop>
+                <!-- Turn batching off for better error messages under PostgreSQL>-->
+                <!--prop key="hibernate.jdbc.batch_size">0</prop-->
+                <!-- 0:none, 1:read_uncommitted, 2:read_committed, 4:repeatable_read, 8:serializable -->
+                <prop key="hibernate.connection.isolation">${hibernate.connection.isolation}</prop>
+                <prop key="hibernate.ejb.event.flush">com.aimir.hibernate.PatchedFlushListener</prop>
+                <prop key="hibernate.transaction.flush_before_completion">false</prop>
+                <prop key="hibernate.transaction.auto_close_session">false</prop>
+            </props>
+        </property>
+        <property name="packagesToScan" value="com.aimir.model.*"/>
+    </bean>
+    
+    <!--  Process  -->
+    <!-- <bean id="alarmProcessor" class="com.aimir.fep.protocol.fmp.processor.AlarmProcessor"/> -->
+    <bean id="mdProcessor" class="com.aimir.fep.protocol.fmp.processor.MDProcessor"/>
+    <bean id="dfProcessor" class="com.aimir.fep.protocol.fmp.processor.DFProcessor"/>
+    <bean id="commLogProcessor" class="com.aimir.fep.protocol.fmp.processor.CommLogProcessor"/>
+    
+    <bean id="mdLogger" class="com.aimir.fep.protocol.fmp.log.MDLogger"  init-method="init">
+        <property name="logDirName" value="db/md"/>
+        <property name="backupDirName" value="db/md/backup"/>
+    </bean>
+
+    <bean id="commLogger" class="com.aimir.fep.protocol.fmp.log.CommLogger" init-method="init">
+        <!--  큐를 사용하게 되면 주석을 해제한다.
+        <property name="jmsTemplate" ref="activeJmsTemplate"/>
+        <property name="queueName" value="LogQueue"/>
+         -->
+        <property name="logDirName" value="db/comm"/>
+        <property name="backupDirName" value="db/comm/backup"/>
+    </bean>
+
+</beans>

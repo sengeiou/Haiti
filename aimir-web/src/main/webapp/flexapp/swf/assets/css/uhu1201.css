@@ -1,0 +1,13 @@
+/* CSS file */
+
+DataGrid
+{
+ headerHeight:50;
+ headerBackgroundSkin:Embed(source='/images/grid_head_bg01.jpg');
+ borderStyle:solid;
+ borderColor:#4C4C4C;
+ borderThickness:2;
+ height:100%;
+ dataProvider:10;
+ columnWidth:10;
+}

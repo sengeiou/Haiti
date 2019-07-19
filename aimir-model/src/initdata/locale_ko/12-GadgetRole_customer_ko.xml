@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+    <system.GadgetRole
+        gadget="메인통합"
+        role="customer"
+        supplier="누리"
+    />
+    <system.GadgetRole
+        gadget="전기 사용량"
+        role="customer"
+        supplier="누리"
+    />    
+    <system.GadgetRole
+        gadget="가스 사용량"
+        role="customer"
+        supplier="누리"
+    />    
+    <system.GadgetRole
+        gadget="수도 사용량"
+        role="customer"
+        supplier="누리"
+    />       
+    <system.GadgetRole
+        gadget="에너지 사용 요금"
+        role="customer"
+        supplier="누리"
+    />
+</dataset>

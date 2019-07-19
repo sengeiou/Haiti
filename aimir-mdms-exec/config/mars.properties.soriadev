@@ -1,0 +1,120 @@
+#persistence xml file
+#persistence.xml=persistence-none.xml
+persistence.xml=persistence-create.xml
+#persistence.xml=persistence-drop.xml
+#persistence.xml=persistence-dropandcreate.xml
+
+# HTTPS SSL
+SSL.keyAlias=tomcat
+SSL.keystorePass=aimiramm
+SSL.keystoreFile=config/tomcat_keystore.jks
+
+#ActiveMQ Configuration
+activemq.broker.url=tcp://localhost:61616
+
+MultiSpeak.CD_MESSAGE=MultiSpeak.CD_MESSAGE?consumer.prefetchSize=100
+MultiSpeak.CB_MESSAGE=MultiSpeak.CB_MESSAGE?consumer.prefetchSize=100
+MultiSpeak.MR_MESSAGE=MultiSpeak.MR_MESSAGE?consumer.prefetchSize=100
+MultiSpeak.OD_MESSAGE=MultiSpeak.OD_MESSAGE?consumer.prefetchSize=100
+MultiSpeak.OA_MESSAGE=MultiSpeak.OA_MESSAGE?consumer.prefetchSize=100
+
+MutliSepak.GetReadingsByMeterId.splitPeriod=2
+
+jms.concurrent.consumers=10
+
+# default supplier, location
+default.supplier.name=SORIA
+default.location.geocode=HES
+default.dcu.name=NDC-I336
+
+# Batch Configuration
+batch.job.restartable=false
+
+# HES Configuration
+HES.ID=NURI001
+HES.ACTOR.LOCATION=false
+
+# HES Integration JMS configuration for activemq.
+HES.integration.jms.brokerURL=tcp://localhost:61616
+
+# HES Integration JMS configuration for weblogic(OSB)
+HES.integration.jms.jndi.connectionFactory=weblogic.jndi.WLInitialContextFactory
+HES.integration.jms.jndi.connectionFactoryName=jms/JmsConnectionFactory
+HES.integration.jms.jndi.providerURL=t3://sand-oag.ssys:7001
+
+# HES MV Integration Configuration
+HES.MV.MAX_BATCH_SIZE=5000
+HES.MV.DELIVERY.EM=TRUE
+HES.MV.DELIVERY.WM=FALSE
+HES.MV.DELIVERY.GM=FALSE
+HES.MV.DELIVERY.HM=FALSE
+
+# HES MV Integration Queue - ActiveMQ
+HES.MV.jms.destination=VALUES
+
+# HES MV Integration Queue - Weblogic
+HES.MV.jms.jndi.destination=jms/VALUES
+
+# HES MV Integration WebService
+# HES.MV.ws.address=http://localhost:8089/services/NuriMeterData
+HES.MV.ws.address=https://sand-oag.ssys:8443/ssys/services/v1_1/NuriMeterDataProxy
+
+# HES EV Integration Configuration
+HES.EV.DELIVERY=TRUE
+HES.EV.MAX_BATCH_SIZE=5000
+
+# HES EV Integration Realtime Configuration
+HES.EV.aimir.topic.url=tcp://devweb.aimir.int:61616
+HES.EV.aimir.topic.name=AiMiR.Event
+
+# HES EV Integration Queue - ActiveMQ
+HES.EV.jms.destination=EVENT
+
+# HES EV Integration Queue - Weblogic
+HES.EV.jms.jndi.destination=jms/EVENT
+
+# HES EV Integration WebService
+# HES.EV.ws.address=http://localhost:8089/services/NuriEvent
+HES.EV.ws.address=https://sand-oag.ssys:8443/ssys/services/v1_1/NuriEventsProxy
+HES.EV.realtime.addres=https://sand-oag.ssys:8443/ssys/services/v1_1/NuriEventsProxy
+HES.EV.powel.enableFirmwareInformation=false
+
+HES.WS.METERPARAMETER.PARAM.ONLYJSON=false
+HES.WS.DEFAULTMETERMODEL=MA105H
+
+# HES Webservice Async response URL
+# HES.WS.RESPONSE.MR=http://localhost:8089/services/MR_Server
+HES.WS.RESPONSE.MR=https://sand-oag.ssys:8086/ssys/services/v1_1/NuriProxy/MR/proxy
+# HES.WS.RESPONSE.CB=http://localhost:8089/services/CB_Server
+HES.WS.RESPONSE.CB=https://sand-oag.ssys:8086/ssys/services/v1_1/NuriProxy/CB/proxy
+
+# HES Webservice jms Queue - ActiveMQ
+HES.WS.jms.destination.ALL.out=OUT
+HES.WS.jms.destination.CD.out=CD_Server.Out
+HES.WS.jms.destination.CB.out=CB_Server.Out
+HES.WS.jms.destination.MR.out=MR_Server.Out
+HES.WS.jms.destination.OA.out=OA_Server.Out
+HES.WS.jms.destination.OD.out=OD_Server.Out
+#HES.WS.jms.destination.CD.in=CD_Server.In
+#HES.WS.jms.destination.CB.in=CB_Server.In
+#HES.WS.jms.destination.MR.in=MR_Server.In
+#HES.WS.jms.destination.OA.in=OA_Server.In
+#HES.WS.jms.destination.OD.in=OD_Server.In
+HES.WS.jms.destination.CD.in=ASYNC
+HES.WS.jms.destination.CB.in=ASYNC
+HES.WS.jms.destination.MR.in=ASYNC
+HES.WS.jms.destination.OA.in=ASYNC
+HES.WS.jms.destination.OD.in=ASYNC
+
+# HES Webservice jms Queue - Weblogic
+HES.WS.jms.jndi.destination.ALL.out=jms/OUT
+HES.WS.jms.jndi.destination.CD.out=jms/CD_Server.Out
+HES.WS.jms.jndi.destination.CB.out=jms/CB_Server.Out
+HES.WS.jms.jndi.destination.MR.out=jms/MR_Server.Out
+HES.WS.jms.jndi.destination.OA.out=jms/OA_Server.Out
+HES.WS.jms.jndi.destination.OD.out=jms/OD_Server.Out
+HES.WS.jms.jndi.destination.CD.in=jms/CD_Server.In
+HES.WS.jms.jndi.destination.CB.in=jms/CB_Server.In
+HES.WS.jms.jndi.destination.MR.in=jms/MR_Server.In
+HES.WS.jms.jndi.destination.OA.in=jms/OA_Server.In
+HES.WS.jms.jndi.destination.OD.in=jms/OD_Server.In

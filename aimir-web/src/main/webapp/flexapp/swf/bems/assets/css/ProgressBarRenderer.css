@@ -1,0 +1,20 @@
+/* CSS file */
+.progressBar
+{
+    labelPlacement:center;
+    textIndent:45;
+    barColor:#93E030;
+    textAlign:right;
+    trackHeight:8;                          
+    height:16;
+    y:10;
+    x:20;
+    borderColor: #3395EF;
+    fontFamily: Tahoma;
+    fontSize: 9;
+    fontStyle: normal;
+    fontWeight: normal;
+    color: #767676;
+    verticalGap: 0;
+    padding-left:10;
+}

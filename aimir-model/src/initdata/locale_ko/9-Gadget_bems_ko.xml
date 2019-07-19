@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Gadget
+        descr="빌딩 관리"
+        iconSrc="bems/assets/images/bems_gadget_ko/buildingMgmtMini.gif"
+        maxUrl="bems/buildingMgmtMax.do"
+        miniUrl="bems/buildingMgmtMini.do"
+        name="빌딩 관리"
+        miniHeight="350"
+        fullHeight="800"
+ 	gadgetCode="gadget.bems001"
+	
+    />
+	<system.Gadget
+        descr="설비 관리"
+        iconSrc="bems/assets/images/bems_gadget_ko/facilityMgmtMini.gif"
+        maxUrl="bems/facilityMgmtMax.do"
+        miniUrl="bems/facilityMgmtMini.do"
+        name="설비 관리"
+        miniHeight="350"
+        fullHeight="800"
+ 	gadgetCode="gadget.bems002"
+    />
+	
+	<system.Gadget
+        descr="빌딩(동/층) 전력 사용량 모니터링"
+        iconSrc="bems/assets/images/bems_gadget_ko/emMonitoringMini.gif"
+        maxUrl="bems/consumptionMonitoringEmMaxGadget.do"
+        miniUrl="bems/consumptionMonitoringEmMiniGadget.do"
+        name="빌딩 전력 사용량 모니터링"
+        miniHeight="350"
+        fullHeight="800"
+ 	gadgetCode="gadget.bems003"
+    />
+	<system.Gadget
+        descr="빌딩(동/층) 가스 사용량 모니터링"
+        iconSrc="bems/assets/images/bems_gadget_ko/gmMonitoringMini.gif"
+        maxUrl="bems/consumptionMonitoringGmMaxGadget.do"
+        miniUrl="bems/consumptionMonitoringGmMiniGadget.do"
+        name="빌딩 가스 사용량 모니터링"
+        miniHeight="350"
+        fullHeight="800"
+ 	gadgetCode="gadget.bems004"
+    />
+	<system.Gadget
+        descr="빌딩(동/층) 수도 사용량 모니터링"
+        iconSrc="bems/assets/images/bems_gadget_ko/wmMonitoringMini.gif"
+        maxUrl="bems/consumptionMonitoringWmMaxGadget.do"
+        miniUrl="bems/consumptionMonitoringWmMiniGadget.do"
+        name="빌딩 수도 사용량 모니터링"
+        miniHeight="350"
+        fullHeight="800"
+ 	gadgetCode="gadget.bems005"
+    />
+	<system.Gadget
+        descr="계약전력과 Peak Demand"
+        iconSrc="bems/assets/images/bems_gadget_ko/contractPeakDemandMini.gif"
+        maxUrl="null"
+        miniUrl="bems/contractEnergyPeakDemandMiniGadget.do"
+        name="계약전력과 Peak Demand"
+        miniHeight="430"
+        fullHeight="800"
+ 	gadgetCode="gadget.bems006"
+    />
+	<system.Gadget
+        descr="에너지 절감 목표"
+        iconSrc="bems/assets/images/bems_gadget_ko/locationUsageMax.gif"
+        maxUrl="bems/energySavingGoalMaxGadget.do"
+        miniUrl="bems/energySavingGoalMiniGadget.do"
+        name="에너지 절감 목표"
+        miniHeight="350"
+        fullHeight="800"
+ 	gadgetCode="gadget.bems007"
+    />
+	<system.Gadget
+        descr="위치별 사용량 통계"
+        iconSrc="bems/assets/images/bems_gadget_ko/energySavingMini.gif"
+        maxUrl="bems/locationUsageStatisticMax.do"
+        miniUrl="bems/locationUsageStatisticMini.do"
+        name="위치별 사용량 통계"
+        miniHeight="350"
+        fullHeight="800"
+ 	gadgetCode="gadget.bems008"
+    />
+	<system.Gadget
+        descr="설비별 사용량 통계"
+        iconSrc="bems/assets/images/bems_gadget_ko/facilityUsageMini.gif"
+        maxUrl="bems/facilityUsageMonitoringMaxGadget.do"
+        miniUrl="bems/facilityUsageMonitoringMiniGadget.do"
+        name="설비별 사용량 통계"
+        miniHeight="350"
+        fullHeight="800"
+ 	gadgetCode="gadget.bems009"
+    />
+    <system.Gadget
+        descr="Zone별 사용량 통계"
+        iconSrc="bems/assets/images/bems_gadget_ko/zoneUsageMini.gif"
+        maxUrl="bems/zoneUsageMonitoringMaxGadget.do"
+        miniUrl="bems/zoneUsageMonitoringMiniGadget.do"
+        name="Zone별 사용량 통계"
+        miniHeight="500"
+        fullHeight="800"
+ 	gadgetCode="gadget.bems010"
+    />
+    
+    <system.Gadget
+        descr="Zone 관리"
+        iconSrc="bems/assets/images/bems_gadget_ko/zoneMgmtMini.gif"
+        maxUrl="bems/zoneMgmtMaxGadget.do"
+        miniUrl="bems/zoneMgmtMiniGadget.do"
+        name="Zone 관리"
+        miniHeight="350"
+        fullHeight="800"
+ 	gadgetCode="gadget.bems011"
+    />
+    
+    <system.Gadget
+        descr="전력 에너지 절감 목표 2"
+        iconSrc="bems/assets/images/bems_gadget_ko/EmEnergySavingMini2.gif"
+        maxUrl="bems/energySavingGoal2EmMaxGadget.do"
+        miniUrl="bems/energySavingGoal2EmMiniGadget.do"
+        name="전력 에너지 절감 목표 2"
+        miniHeight="350"
+        fullHeight="800"
+ 	gadgetCode="gadget.bems012"
+    />
+    <system.Gadget
+        descr="가스 에너지 절감 목표 2"
+        iconSrc="bems/assets/images/bems_gadget_ko/GmEnergySavingMini2.gif"
+        maxUrl="bems/energySavingGoal2GmMaxGadget.do"
+        miniUrl="bems/energySavingGoal2GmMiniGadget.do"
+        name="가스 에너지 절감 목표 2"
+        miniHeight="350"
+        fullHeight="800"
+ 	gadgetCode="gadget.bems013"
+    />
+    <system.Gadget
+        descr="수도 에너지 절감 목표 2"
+        iconSrc="bems/assets/images/bems_gadget_ko/WmEnergySavingMini2.gif"
+        maxUrl="bems/energySavingGoal2WmMaxGadget.do"
+        miniUrl="bems/energySavingGoal2WmMiniGadget.do"
+        name="수도 에너지 절감 목표 2"
+        miniHeight="350"
+        fullHeight="800"
+ 	gadgetCode="gadget.bems014"
+    />
+    <system.Gadget
+        descr="EMS 리포트"
+        iconSrc="bems/assets/images/bems_gadget_ko/ems.gif"
+        maxUrl="report/emsReport.jsp"
+        miniUrl="report/emsReport.jsp"
+        name="EMS 리포트"
+        miniHeight="350"
+        fullHeight="800"
+ 	gadgetCode="gadget.bems015"
+    />       
+   <system.Gadget
+        descr="BEMS 빌딩 열량 사용량 모니터링"
+        iconSrc="assets/images/gadget_ko/thumbnail.gif"
+        maxUrl="bems/consumptionMonitoringHmMaxGadget.do"
+        miniUrl="bems/consumptionMonitoringHmMiniGadget.do"
+        name="빌딩 열량 사용량 모니터링"
+        miniHeight="400"
+        fullHeight="800"
+        gadgetCode="gadget.bems016"
+   />
+   <system.Gadget
+        descr="BEMS 열량 에너지 절감 목표 2"
+        iconSrc="assets/images/gadget_ko/thumbnail.gif"
+        maxUrl="bems/energySavingGoal2HmMaxGadget.do"
+        miniUrl="bems/energySavingGoal2HmMiniGadget.do"
+        name="열량 에너지 절감 목표 2"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.bems017"
+   />
+   <system.Gadget
+        descr="수검침관리기능"
+        iconSrc="assets/images/gadget_ko/thumbnail.gif"
+        maxUrl="mvm/ManualMeteringMax.do"
+        miniUrl="mvm/ManualMeteringMini.do"
+        name="수검침관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering026"
+   />
+</dataset>

@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+<!--  한국전력 -->
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8201" name="주택용전력(저압)" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8202" name="주택용전력(고압)" />    
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8203" name="일반용전력(갑)-저압" />    
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8204" name="일반용전력(갑)-고압A 선택 I" />  
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8205" name="일반용전력(갑)-고압A 선택 II" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8206" name="일반용전력(갑)-고압B 선택 I" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8207" name="일반용전력(갑)-고압B 선택 II" />     
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8208" name="일반용전력(을)-고압A 선택I" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8209" name="일반용전력(을)-고압A 선택II" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8210" name="일반용전력(을)-고압B 선택I" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8211" name="일반용전력(을)-고압B 선택II" />       
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8212" name="교육용전력-저압" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8213" name="교육용전력-고압A 선택 I" />  
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8214" name="교육용전력-고압A 선택 II" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8215" name="교육용전력-고압B 선택 I" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8216" name="교육용전력-고압B 선택 II" />    
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8217" name="산업용전력(갑)-저압" /> 
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8218" name="산업용전력(갑)-고압A 선택 I" />  
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8219" name="산업용전력(갑)-고압A 선택 II" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8220" name="산업용전력(갑)-고압B 선택 I" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8221" name="산업용전력(갑)-고압B 선택 II" />       
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8222" name="산업용전력(을)-고압A 선택I" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8223" name="산업용전력(을)-고압A 선택II" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8224" name="산업용전력(을)-고압B 선택I" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8225" name="산업용전력(을)-고압B 선택II" />    
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8226" name="산업용전력(병)-고압A 선택 I" />  
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8227" name="산업용전력(병)-고압A 선택 II" /> 
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8228" name="산업용전력(병)-고압B 선택 I" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8229" name="산업용전력(병)-고압B 선택 II" /> 
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8230" name="산업용전력(병)-고압B 선택 III" /> 
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8231" name="산업용전력(병)-고압C 선택 I" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8232" name="산업용전력(병)-고압C 선택 II" /> 
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8233" name="산업용전력(병)-고압C 선택 III" />    
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8234" name="농사용전력 A" />  
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8235" name="농사용전력 B" /> 
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8236" name="농사용전력 C" />     
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8237" name="가로등 A" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8238" name="가로등 B" />            
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8239" name="심야전력(갑)" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8240" name="심야전력(을) I" />  
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8241" name="심야전력(을) II" />    
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8242" name="지식서비스-일반용전력(갑)-저압" />    
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8243" name="지식서비스-일반용전력(갑)-고압A 선택 I" />  
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8244" name="지식서비스-일반용전력(갑)-고압A 선택 II" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8245" name="지식서비스-일반용전력(갑)-고압B 선택 I" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8246" name="지식서비스-일반용전력(갑)-고압B 선택 II" />     
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8247" name="지식서비스-일반용전력(을)-고압A 선택I" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8248" name="지식서비스-일반용전력(을)-고압A 선택II" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8249" name="지식서비스-일반용전력(을)-고압B 선택I" />
+    <system.TariffType supplier="한전" serviceTypeCode="3.1" code="8250" name="지식서비스-일반용전력(을)-고압B 선택II" />
+ 
+ <!--  한국전력 끝 -->   
+ 
+ 
+ <!--  서울 도시가스  -->
+    <system.TariffType supplier="서울" serviceTypeCode="3.3" code="9001" name="주택취사용" />
+    <system.TariffType supplier="서울" serviceTypeCode="3.3" code="9002" name="주택난방용" />
+    <system.TariffType supplier="서울" serviceTypeCode="3.3" code="9003" name="업무난방용" />  
+    <system.TariffType supplier="서울" serviceTypeCode="3.3" code="9004" name="영업(1)" />
+    <system.TariffType supplier="서울" serviceTypeCode="3.3" code="9005" name="영업(2)" />  
+    <system.TariffType supplier="서울" serviceTypeCode="3.3" code="9006" name="냉방용" />
+    <system.TariffType supplier="서울" serviceTypeCode="3.3" code="9007" name="산업용" />
+    <system.TariffType supplier="서울" serviceTypeCode="3.3" code="9008" name="공동주택(CHP)" /> 
+    <system.TariffType supplier="서울" serviceTypeCode="3.3" code="9009" name="업무, 산업용(CHP)" />
+    <system.TariffType supplier="서울" serviceTypeCode="3.3" code="9010" name="구역전기사업자용(CHP)" />
+    <system.TariffType supplier="서울" serviceTypeCode="3.3" code="9011" name="집단에너지(CHP)" />
+    <system.TariffType supplier="서울" serviceTypeCode="3.3" code="9012" name="공동주택" />    
+    <system.TariffType supplier="서울" serviceTypeCode="3.3" code="9013" name="업무/산업" />    
+    <system.TariffType supplier="서울" serviceTypeCode="3.3" code="9014" name="집단에너지" />
+
+ <!--  서울 도시가스 끝 -->                                         
+</dataset>

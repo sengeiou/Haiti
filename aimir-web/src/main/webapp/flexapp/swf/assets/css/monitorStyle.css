@@ -1,0 +1,92 @@
+/* 폰트스타일    ------------------------------------------------------------------------------------------  */
+	@font-face {
+		src:url("/assets/fonts/ygo530.ttf"); 
+		fontFamily: "ygo530";
+		advancedAntiAliasing: true;
+	}
+ 	@font-face {
+		src:url("/assets/fonts/ygo550.ttf");
+		fontFamily: "ygo550"; 
+		advancedAntiAliasing: true; 
+	}
+	@font-face {
+		src:url("/assets/fonts/ds-digital.ttf");
+		fontFamily: "ds-digital";
+		advancedAntiAliasing: true; 
+	}	
+	@font-face {
+		src:url("/assets/fonts/DINBol.TTF");
+		fontFamily: "Dinbol";
+		advancedAntiAliasing: true; 
+	}  
+ 
+ 
+/* 공통   ------------------------------------------------------------------------------------------  */
+global
+{
+    font-family: dotum, tahoma;
+    color: #000000; 
+    font-size:12;
+}
+/* 폰트스타일  -------------------------------------------------------------------------------------  */
+.ygo32		{font-size:32; font-family:ygo550}
+.ygo14		{font-size:14; font-family:ygo550}
+.ygo15		{font-size:15; font-family:ygo550}
+.ygo18		{font-size:18; font-family:ygo550}
+.ygo22		{font-size:22; font-family:ygo550}
+.ygo24		{font-size:24; font-family:ygo550}
+.ygo26		{font-size:26; font-family:ygo550}
+.ygoGry13	{font-size:14; font-family:ygo550; color:#434343}
+.ygoGrn18	{font-size:18; font-family:ygo550; color:#005B02}
+.ygoGrn16	{font-size:16; font-family:ygo550; color:#005B02}
+.ygoGrn22	{font-size:22; font-family:ygo550; color:#005B02}
+.ygoGrn24	{font-size:24; font-family:ygo550; color:#005B02}
+.ygoGrn26	{font-size:26; font-family:ygo550; color:#005B02}
+.ygoRed18	{font-size:18; font-family:ygo550; color:#ca0100}
+.dinGrn16	{font-size:16; font-family:Dinbol; color:#005B02}
+.dinGrn20	{font-size:20; font-family:Dinbol; color:#005B02}
+.dinGrn26	{font-size:26; font-family:Dinbol; color:#005B02}
+.din22		{font-size:22; font-family:Dinbol;}
+.dinGrn22	{font-size:22; font-family:Dinbol;color:#005B02}
+.dinwht24	{font-size:24; font-family:Dinbol; color:#FFFFFF}
+.dswht34	{font-size:34; font-family:ds-digital; color:#FFFFFF}
+.dtm12bold	{font-weight:bold; text-align:center;}
+
+/* 위치  -----------------------------------------------------------------------------------------  */
+.centerMiddle{horizontal-align:center; vertical-align:middle}
+.box{border-style:solid; background-color:#FFFFFF; border-color:#FFFFFF; background-alpha:0.2; horizontal-align:center; vertical-align:middle}
+.smallGraph{vertical-align:middle; horizontal-align:right; padding-right:10}
+.grdth	{ vertical-align:middle; font-weight:bold; text-align:center;}
+
+
+/* 여백  -----------------------------------------------------------------------------------------  */ 
+.padRBL10{padding-right:10; padding-bottom:10; padding-left:10}
+.padTRBL10{padding-top:10; padding-right:10; padding-right:10; padding-left:10}
+.padL20{padding-left:20}
+.padT10{padding-top:10}
+
+/* 배경  -----------------------------------------------------------------------------------------  */ 
+.numbgGry {background-image:Embed(source='/assets/monitor/num_gray.png'); horizontal-align:center; vertical-align:middle}
+.numbgGrn {background-image:Embed(source='/assets/monitor/num_green.png'); horizontal-align:center; vertical-align:middle}
+ 
+
+ .grdBorder 		
+{
+		border-sides: top, bottom, left, right; 
+		background-color: #ffffff; 
+		background-alpha:0.5;
+		border-color :#81BEE7;
+		border-thickness: 1;
+		border-style: solid;
+		
+}	
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

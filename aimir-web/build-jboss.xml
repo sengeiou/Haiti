@@ -1,0 +1,29 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<project name="deploy" default="deploy" basedir=".">
+
+	<taskdef name="jmx" classname="org.jboss.ant.JMX">
+		<classpath>
+			<fileset dir="${jboss.home}/client">
+				<include name="**/*.jar"/>
+			</fileset>
+		</classpath>
+	</taskdef>
+
+	<target name="deployer">
+		<echo message="Deploy or Redeploy : ${final.name}.war"/>
+		<jmx>
+			<invoke target="jboss.system:service=MainDeployer" operation="redeploy">
+				<parameter type="java.lang.String" arg="file:/${jboss.home}/server/${jboss.configuration.name}/deploy/${final.name}.war"/>
+			</invoke>
+		</jmx>
+	</target>
+
+	<target name="deploy">
+		<copy todir="${jboss.home}/server/${jboss.configuration.name}/deploy">
+			<fileset dir="target">
+				<include name="${final.name}.war"/>
+			</fileset>
+		</copy>
+	</target>
+
+</project>

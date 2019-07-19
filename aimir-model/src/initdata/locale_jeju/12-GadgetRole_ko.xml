@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+   
+    <system.GadgetRole
+        gadget="코드관리"
+        role="admin"
+        supplier="한전"
+    />
+    <system.GadgetRole
+        gadget="검침데이터 조회(전기)"
+        role="admin"
+        supplier="한전"
+    />  
+    <system.GadgetRole
+        gadget="검침데이터 조회(수도)"
+        role="admin"
+        supplier="한전"
+    />  
+    <system.GadgetRole
+        gadget="제조사 모델 관리"
+        role="admin"
+        supplier="한전"
+    />  
+    <system.GadgetRole
+        gadget="공급사 관리"
+        role="admin"
+        supplier="한전"
+    />  
+    <system.GadgetRole
+        gadget="사용자관리"
+        role="admin"
+        supplier="한전"
+    />
+    <system.GadgetRole
+        gadget="집중기관리"
+        role="admin"
+        supplier="한전"
+    />
+    <system.GadgetRole
+        gadget="계약용량 이상 고객(전기)"
+        role="admin"
+        supplier="한전"
+    />
+    <system.GadgetRole
+        gadget="통신 로그"
+        role="admin"
+        supplier="한전"
+    />
+    <system.GadgetRole
+        gadget="사용자 메모"
+        role="admin"
+        supplier="한전"
+    />
+    <system.GadgetRole
+        gadget="공지사항"
+        role="admin"
+        supplier="한전"
+    />
+    
+    <system.GadgetRole
+        gadget="변경 로그"
+        role="admin"
+        supplier="한전"
+    />
+    
+    <system.GadgetRole
+        gadget="명령 이력 및 설정"
+        role="admin"
+        supplier="한전"
+    />
+	
+	<system.GadgetRole
+        gadget="이벤트 알람 로그"
+        role="admin"
+        supplier="한전"
+    />
+    
+    <system.GadgetRole
+        gadget="검침 실패(전기)"
+        role="admin"
+        supplier="한전"
+    />
+    
+    <system.GadgetRole
+        gadget="고객 및 계약 관리"
+        role="admin"
+        supplier="한전"
+    />
+    
+    <system.GadgetRole
+        gadget="주기별 데이터 누락 관리"
+        role="admin"
+        supplier="한전"
+    />
+    
+    <system.GadgetRole
+        gadget="소비 랭킹(전기)"
+        role="admin"
+        supplier="한전"
+    />    
+    <system.GadgetRole
+        gadget="소비 랭킹(가스)"
+        role="admin"
+        supplier="한전"
+    />
+    <system.GadgetRole
+        gadget="소비 랭킹(수도)"
+        role="admin"
+        supplier="한전"
+    />
+    <system.GadgetRole
+        gadget="소비 랭킹(열량)"
+        role="admin"
+        supplier="한전"
+    />
+    <system.GadgetRole
+        gadget="모뎀관리"
+        role="admin"
+        supplier="한전"
+    />    
+
+    <system.GadgetRole
+        gadget="미터관리"
+        role="admin"
+        supplier="한전"
+    />               
+    <system.GadgetRole
+        gadget="장비 등록"
+        role="admin"
+        supplier="한전"
+    />  
+    <system.GadgetRole
+        gadget="미터 시간 관리"
+        role="admin"
+        supplier="한전"
+    />
+    <system.GadgetRole
+        gadget="전기 판매 실적"
+        role="admin"
+        supplier="한전"
+    />
+    <system.GadgetRole
+        gadget="가스 판매 실적"
+        role="admin"
+        supplier="한전"
+    />  
+    <system.GadgetRole
+        gadget="수도 판매 실적"
+        role="admin"
+        supplier="한전"
+    />  
+    <system.GadgetRole
+        gadget="열 판매 실적"
+        role="admin"
+        supplier="한전"
+    />  
+	<system.GadgetRole
+        gadget="수요 관리"
+        role="admin"
+        supplier="한전"
+    />    
+    <system.GadgetRole
+        gadget="전력 품질"
+        role="admin"
+        supplier="한전"
+    />    
+    <system.GadgetRole
+        gadget="검침 서비스 분석"
+        role="admin"
+        supplier="한전"
+    />  
+    <system.GadgetRole
+        gadget="장비 구글 맵"
+        role="admin"
+        supplier="한전"
+    />
+    
+    <system.GadgetRole
+        gadget="정전로그"
+        role="admin"
+        supplier="한전"
+    /> 
+    <system.GadgetRole
+        gadget="공급 차단재개"
+        role="admin"
+        supplier="한전"
+    /> 
+    <system.GadgetRole
+        gadget="VEE Management"
+        role="admin"
+        supplier="한전"
+    />
+    <system.GadgetRole
+        gadget="배터리 로그"
+        role="admin"
+        supplier="한전"
+    /> 
+    <system.GadgetRole
+        gadget="그룹 관리"
+        role="admin"
+        supplier="한전"
+    /> 
+</dataset>

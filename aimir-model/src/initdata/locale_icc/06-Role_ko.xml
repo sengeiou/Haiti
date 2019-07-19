@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Role name="admin" supplier="제주ICC" systemAuthority="w" mtrAuthority="w" descr="Admin" hasDashboardAuth="true" customerRole="false" loginAuthority="true" />
+    <system.Role name="bems" supplier="제주ICC" systemAuthority="w" mtrAuthority="w" descr="bems" hasDashboardAuth="true" customerRole="false" loginAuthority="true" />
+</dataset>

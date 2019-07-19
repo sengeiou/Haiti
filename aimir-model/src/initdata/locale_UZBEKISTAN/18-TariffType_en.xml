@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+<!--  남아공 Tariff Start -->
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1001" name="Night Save Urban Large" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1002" name="Night Save Urban Rural" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1003" name="Mega Flex" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1004" name="Mini Flex" /> 
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1005" name="Business Rate1" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1006" name="Business Rate2" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1007" name="Business Rate3" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1008" name="Business Rate4" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1009" name="Home Power Bulk" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1010" name="Home Power1" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1011" name="Home Power2" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1012" name="Home Power3" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1013" name="Home Power4" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1014" name="Home Light1" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1015" name="Home Light2" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1016" name="Night Save Rural" />   
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1017" name="Rural Flex" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1018" name="Rand Rate1" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1019" name="Rand Rate2" />   
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1020" name="Rand Rate3" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1021" name="Rand Rate4" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1022" name="Rand Rate Dx" />	    
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1023" name="Rand Light" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1024" name="Public Lighting" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1025" name="Home Light1 Prepaid" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1026" name="Home Light2 Prepaid" />
+    
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1027" name="Home Flex1" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1028" name="Home Flex2" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1029" name="Home Flex3" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.1" code="1030" name="Home Flex4" />
+
+	<system.TariffType supplier="ORGRES" serviceTypeCode="3.2" code="1122" name="Home" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.2" code="1123" name="Business" />
+	<system.TariffType supplier="ORGRES" serviceTypeCode="3.2" code="1125" name="Standard" /> 
+	<system.TariffType supplier="ORGRES" serviceTypeCode="3.2" code="1127" name="Industrial" /> 
+	
+	<system.TariffType supplier="ORGRES" serviceTypeCode="3.3" code="1032" name="Home Cooking" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.3" code="1033" name="Home Heating" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.3" code="1034" name="Commercial Heating" /> 
+	<system.TariffType supplier="ORGRES" serviceTypeCode="3.3" code="1035" name="Standard" /> 
+	<system.TariffType supplier="ORGRES" serviceTypeCode="3.3" code="1036" name="Cooling" /> 
+	<system.TariffType supplier="ORGRES" serviceTypeCode="3.3" code="1037" name="Industrial" />	
+	
+	<system.TariffType supplier="ORGRES" serviceTypeCode="3.3" code="19001" name="Home Cooking" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.3" code="19002" name="Home Heating" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.3" code="19003" name="Commercial Heating" />  
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.3" code="19004" name="Business(1)" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.3" code="19005" name="Business(2)" />  
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.3" code="19006" name="Cooling" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.3" code="19007" name="Industrial" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.3" code="19008" name="Apartment House(CHP)" /> 
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.3" code="19009" name="Business,Industrial(CHP)" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.3" code="19010" name="Eltricity Business(CHP)" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.3" code="19011" name="District Heating,Cooling(CHP)" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.3" code="19012" name="Apartment House" /> 
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.3" code="19013" name="Business,Industrial" />    
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.3" code="19014" name="District Heating,Cooling" />
+    <system.TariffType supplier="ORGRES" serviceTypeCode="3.3" code="19014" name="District Heating,Cooling" />
+    <!--  남아공 Tariff End --> 
+</dataset>

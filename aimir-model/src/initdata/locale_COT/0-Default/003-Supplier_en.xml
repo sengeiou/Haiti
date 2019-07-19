@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+    <system.Supplier 
+        name="COT" 
+        country="SOUTH AFRICA"
+        lang="English"
+        timezone="Africa/Harare"
+        address="South Africa"
+        descr=""
+        telno=""
+    />
+</dataset>

@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+
+  <mvm.ChannelConfig meterConfig="Azos GFI" channel="Active Energy"        channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
+  <mvm.ChannelConfig meterConfig="Azos GFI" channel="Reactive Energy"          channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay" />
+  <mvm.ChannelConfig meterConfig="Azos GFI" channel="Voltage"          channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay" />
+
+</dataset>
+

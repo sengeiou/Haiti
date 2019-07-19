@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Dashboard descr="Energy Report of Customer" name="My Report" orderNo="0" />
+    <system.Dashboard descr="Energy Usage Details of Customer" name="Dashboard" orderNo="1" />
+</dataset>

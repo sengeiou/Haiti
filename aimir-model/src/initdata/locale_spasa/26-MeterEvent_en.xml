@@ -1,0 +1,273 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>
+    <device.MeterEvent 
+    				id="STE.GE.SM110.1"
+    				value="1"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STE"  
+    				name="Power Down"
+    				descr="Power Down"
+    				troubleAdvice=""
+    				support="true"
+					meterType="ElectricMeter"
+    				/>	
+    <device.MeterEvent 
+    				id="STE.GE.SM110.2"
+    				value="2"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STE"  
+    				name="Power Up"
+    				descr="Power Up"
+    				troubleAdvice=""
+    				support="true"
+					meterType="ElectricMeter"
+    				/>	
+	<device.MeterEvent 
+    				id="STE.GE.SM110.11"
+    				value="11"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STE"  
+    				name="Meter Programmed"
+    				descr="Meter Programmed"
+    				troubleAdvice=""
+    				support="true"
+					meterType="ElectricMeter"
+    				/>				
+    <device.MeterEvent 
+    				id="STE.GE.SM110.20"
+    				value="20"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STE"  
+    				name="Demand Reset Occurred"
+    				descr="Demand Reset Occurred"
+    				troubleAdvice=""
+    				support="true"
+					meterType="ElectricMeter"
+    				/>
+     <device.MeterEvent 
+    				id="STE.GE.SM110.32"
+    				value="32"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STE"  
+    				name="Test Mode Start"
+    				descr="Test Mode Start"
+    				troubleAdvice="to test meter operation and site characteristics without effecting billing quantities or load profile data"
+    				support="true"
+					meterType="ElectricMeter"
+    				/>   				
+         <device.MeterEvent 
+    				id="STE.GE.SM110.33"
+    				value="33"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STE"  
+    				name="Test Mode Exit"
+    				descr="Test Mode Exit"
+    				troubleAdvice=""
+    				support="true"
+					meterType="ElectricMeter"
+    				/>				
+    	<device.MeterEvent 
+    				id="STE.GE.SM110.21"
+    				value="21"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STE"  
+    				name="Self-read Occurred"
+    				descr="Self-read Occurred"
+    				troubleAdvice=""
+    				support="true"
+					meterType="ElectricMeter"
+    				/>
+        <device.MeterEvent 
+    				id="MFE.GE.SM110.16"
+    				value="16"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="MFE"  
+    				name="Under Voltage"
+    				descr="Under Voltage"
+    				troubleAdvice=""
+    				support="true"
+					meterType="ElectricMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.SM110.17"
+    				value="17"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="MFE"  
+    				name="Under Voltage Condition Cleared"
+    				descr="Under Voltage Condition Cleared"
+    				troubleAdvice=""
+    				support="true"
+					meterType="ElectricMeter"
+    				/>
+    				
+    	<device.MeterEvent 
+    				id="MFE.GE.SM110.18"
+    				value="18"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="MFE"  
+    				name="Demand Overload"
+    				descr="Demand Overload"
+    				troubleAdvice="1. Rewire according to applicable diagram 
+								   2. Check that voltage and current connectors are seated properly.Check the leads for damage. 
+								   3.Replace meter. "
+    				support="true"
+					meterType="ElectricMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.SM110.19"
+    				value="19"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="MFE"  
+    				name="Demand Overload Condition Cleared"
+    				descr="Demand Overload Condition Cleared"
+    				troubleAdvice="The meter does not automatically clear the Demand Overload caution. The
+Demand Overload caution is cleared by a demand reset"
+    				support="true"
+					meterType="ElectricMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.SM110.24"
+    				value="24"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="MFE"  
+    				name="Real Time Pricing Activation"
+    				descr="Real Time Pricing Activation"
+    				troubleAdvice=""
+    				support="true"
+					meterType="ElectricMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.SM110.25"
+    				value="25"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="MFE"  
+    				name="Real Time Pricing Deactivation"
+    				descr="Real Time Pricing Deactivation"
+    				troubleAdvice=""
+    				support="true"
+					meterType="ElectricMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.SM110.28"
+    				value="28"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="MFE"  
+    				name="Calibration Mode Activated"
+    				descr="Calibration Mode Activated"
+    				troubleAdvice=""
+    				support="true"
+					meterType="ElectricMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="MFE.GE.SM110.33"
+    				value="33"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="MFE"  
+    				name="DC detection condition"
+    				descr="DC detection condition"
+    				troubleAdvice=""
+    				support="true"
+					meterType="ElectricMeter"
+    				/>
+		<device.MeterEvent 
+    				id="MFE.GE.SM110.34"
+    				value="34"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="MFE"  
+    				name="DC detection condition cleared"
+    				descr="DC detection condition cleared"
+    				troubleAdvice=""
+    				support="true"
+					meterType="ElectricMeter"
+    				/>
+		<device.MeterEvent 
+    				id="STS.GE.SM110.20"
+    				value="20"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STS"  
+    				name="Low battery"
+    				descr="Low battery"
+    				troubleAdvice="Replace battery."
+    				support="true"
+					meterType="ElectricMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="STS.GE.SM110.13"
+    				value="13"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STS"  
+    				name="RAM error"
+    				descr="Meter did detect a RAM error"
+    				troubleAdvice=""
+    				support="true"
+					meterType="ElectricMeter"
+    				/>
+    	<device.MeterEvent 
+    				id="STS.GE.SM110.14"
+    				value="14"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STS"  
+    				name="ROM error"
+    				descr="Meter did detect a ROM error"
+    				troubleAdvice="Check for proper installation. Check for proper grounding. Call for factory for further
+assistance"
+    				support="true"
+					meterType="ElectricMeter"
+    				/>
+		<device.MeterEvent 
+    				id="STS.GE.SM110.16"
+    				value="16"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STS"  
+    				name="Clock error"
+    				descr="Meter did detect a clock error"
+    				troubleAdvice=""
+    				support="true"
+					meterType="ElectricMeter"
+    				/>
+		<device.MeterEvent 
+    				id="STS.GE.SM110.17"
+    				value="17"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STS"  
+    				name="Bad voltage"
+    				descr="Meter did detect a bad voltage"
+    				troubleAdvice=""
+    				support="true"
+					meterType="ElectricMeter"
+    				/>
+		<device.MeterEvent 
+    				id="STS.GE.SM110.10"
+    				value="10"
+    				vendor="GE" 
+    				model="SM110"  
+    				kind="STS"  
+    				name="Meter is unprogrammed"
+    				descr="Meter is unprogrammed"
+    				troubleAdvice="Program the meter."
+      				support="true"
+					meterType="ElectricMeter"
+    				/>
+		
+</dataset>

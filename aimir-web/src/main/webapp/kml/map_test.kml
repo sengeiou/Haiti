@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>RF Mesh - Topology</name>
+    <Placemark>
+      <name>DCU: 5675</name>
+      <description><![CDATA[DCU: 5675]]></description>
+      <Point>
+        <coordinates>10.3028,63.3542,0.0</coordinates>
+      </Point>
+      <styleUrl>#dcuIcon</styleUrl>
+    </Placemark>
+    <Placemark>
+      <name>Meter: 6970631400015886</name>
+      <description><![CDATA[Meter: 6970631400015886<br/>Modem: 000B120000002040<br/>GS1: 707057500068525096<br/>FWVER: 0.98(104)<br/>GPS X: 10.3113<br/>GPS Y: 63.353<br/>RSSI: -72<br/>Last read date : 2017/01/23 05:46:40<br/>Parent : <br/>Hop: 1]]></description>
+      <Point>
+        <coordinates>10.3113,63.353,0.0</coordinates>
+      </Point>
+      <styleUrl>#meterIcon</styleUrl>
+    </Placemark>
+    <Placemark>
+      <name>Meter: 6970631400016197</name>
+      <description><![CDATA[Meter: 6970631400016197<br/>Modem: 000B120000002097<br/>GS1: 707057500068525102<br/>FWVER: 0.98(104)<br/>GPS X: 10.3115<br/>GPS Y: 63.352<br/>RSSI: -99<br/>Last read date : 2017/01/23 01:20:31<br/>Parent : <br/>Hop: 1]]></description>
+      <Point>
+        <coordinates>10.3115,63.352,0.0</coordinates>
+      </Point>
+      <styleUrl>#meterIcon</styleUrl>
+    </Placemark>
+    <Placemark>
+      <name>Meter: 6970631400016210</name>
+      <description><![CDATA[Meter: 6970631400016210<br/>Modem: 000B120000002013<br/>GS1: 707057500068525225<br/>FWVER: 0.98(104)<br/>GPS X: 10.3066<br/>GPS Y: 63.3547<br/>RSSI: -67<br/>Last read date : 2017/01/23 05:42:35<br/>Parent : <br/>Hop: 1]]></description>
+      <Point>
+        <coordinates>10.3066,63.3547,0.0</coordinates>
+      </Point>
+      <styleUrl>#meterIcon</styleUrl>
+    </Placemark>
+    <Placemark>
+      <name>Hop 1</name>
+      <styleUrl>#line-0288D1-1-nodesc</styleUrl>
+      <LineString>
+        <tessellate>1</tessellate>
+        <coordinates>10.3113,63.353,0.0 10.3028,63.3542,0.0</coordinates>
+      </LineString>
+    </Placemark>
+    <Placemark>
+      <name>Hop 1</name>
+      <styleUrl>#line-0288D1-1-nodesc</styleUrl>
+      <LineString>
+        <tessellate>1</tessellate>
+        <coordinates>10.3115,63.352,0.0 10.3028,63.3542,0.0</coordinates>
+      </LineString>
+    </Placemark>
+    <Placemark>
+      <name>Hop 1</name>
+      <styleUrl>#line-0288D1-1-nodesc</styleUrl>
+      <LineString>
+        <tessellate>1</tessellate>
+        <coordinates>10.3066,63.3547,0.0 10.3028,63.3542,0.0</coordinates>
+      </LineString>
+    </Placemark>
+    <Style id="dcuIcon">
+      <IconStyle>
+        <Icon>
+          <href>http://maps.gstatic.com/mapfiles/markers2/measle_blue.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="meterIcon">
+      <IconStyle>
+        <Icon>
+          <href>http://maps.gstatic.com/mapfiles/markers2/measle.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="line-0288D1-1-nodesc-normal">
+      <LineStyle>
+        <color>ffD18802</color>
+        <width>1</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-0288D1-1-nodesc-highlight">
+      <LineStyle>
+        <color>ffD18802</color>
+        <width>2.0</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-0288D1-1-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-0288D1-1-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-0288D1-1-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-3949AB-1-nodesc-normal">
+      <LineStyle>
+        <color>ffAB4939</color>
+        <width>2</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-3949AB-1-nodesc-highlight">
+      <LineStyle>
+        <color>ffAB4939</color>
+        <width>3.0</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-3949AB-1-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-3949AB-1-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-3949AB-1-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-880E4F-3-nodesc-normal">
+      <LineStyle>
+        <color>ff4F0E88</color>
+        <width>3</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-880E4F-3-nodesc-highlight">
+      <LineStyle>
+        <color>ff4F0E88</color>
+        <width>4.0</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-880E4F-3-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-880E4F-3-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-880E4F-3-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-9C27B0-2-nodesc-normal">
+      <LineStyle>
+        <color>ffB0279C</color>
+        <width>4</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-9C27B0-2-nodesc-highlight">
+      <LineStyle>
+        <color>ffB0279C</color>
+        <width>4.0</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-9C27B0-2-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-9C27B0-2-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-9C27B0-2-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-A52714-3-nodesc-normal">
+      <LineStyle>
+        <color>ff1427A5</color>
+        <width>4</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-A52714-3-nodesc-highlight">
+      <LineStyle>
+        <color>ff1427A5</color>
+        <width>4.0</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-A52714-3-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-A52714-3-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-A52714-3-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-FF5252-4-nodesc-normal">
+      <LineStyle>
+        <color>ff5252FF</color>
+        <width>4</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-FF5252-4-nodesc-highlight">
+      <LineStyle>
+        <color>ff5252FF</color>
+        <width>4.0</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-FF5252-4-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-FF5252-4-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-FF5252-4-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+  </Document>
+</kml>

@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Country 
+        name="KOREA, REPUBLIC OF "
+        code_2letter="KR"
+        code_3letter="KOR"
+        code_number="410"
+    />
+</dataset>

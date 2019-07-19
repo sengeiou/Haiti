@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+    <system.DeviceVendor 
+        supplier="제주ICC"
+        name="Schneider"
+        code="1"
+        address="http://www.schneider-electric.com" 
+        descr="슈나이더"
+    />
+    <system.DeviceVendor
+        supplier="제주ICC"
+        name="NURITelecom"
+        code="100"
+        address="http://www.nuritelecom.com"
+        descr="(주)누리텔레콤"
+    />
+</dataset>

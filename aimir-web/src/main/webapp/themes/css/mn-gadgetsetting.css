@@ -1,0 +1,505 @@
+
+/* Default */
+BODY.gadgetsetting	{
+	padding:5px 20px 0px 20px;
+	}
+TD.gadgetsetting_leftwidth	{
+	width:220px;
+	}
+
+
+/* Left Element : bg box */
+.dashboardset_bg {
+	background:url(../images/default/setting/table-body.gif) repeat-y;
+	width:205px;
+	height:610px;
+	float:left;
+	}
+
+.dashboardset_bg_topleft {
+	background:url(../images/default/setting/table-topleft.gif) no-repeat top left;
+	width:4px; 
+	height:32px;
+	position:relative;
+    top:0px;
+    left:0px;
+	}
+
+.dashboardset_bg_top {
+	background:url(../images/default/setting/table-topmid.gif) repeat-x;
+	color:#36a008;
+	font-weight:bold;
+	font-size:12px;
+	padding-left:10px;
+	padding-top:10px;
+	width:187px; 
+	height:22px;
+	position:relative;
+    top:-32px;
+    left:4px;
+	}
+
+.dashboardset_bg_topright {
+	background:url(../images/default/setting/table-topright.gif) no-repeat top right;
+	width:4px; 
+	height:32px;
+	position:relative;
+    top:-64px;
+    left:201px;
+	}
+
+.dashboardset_bg2 {
+	width:205px;
+	height:4px;
+	float:left;
+	}
+
+.dashboardset_bg_btmleft {
+	background:url(../images/default/setting/table-btmleft.gif) no-repeat bottom left;
+	width:4px; 
+	height:4px;
+	position:relative;
+    top:0px;
+    left:0px;
+	}
+
+.dashboardset_bg_btm {
+	background:url(../images/default/setting/table-btmmid.gif) repeat-x bottom;
+	width:197px; 
+	height:4px;
+	position:relative;
+    top:-4px;
+    left:4px;
+	}
+
+.dashboardset_bg_btmright {
+	background:url(../images/default/setting/table-btmright.gif) no-repeat bottom right;
+	width:4px; 
+	height:4px;
+	position:relative;
+    top:-8px;
+    left:201px;
+	}
+
+
+
+/* Right Element : bg box */
+.gadgetset_header, .gadgetset_header ul {
+	float:left;
+	width:100%;
+	height:32px;
+	}
+
+.gadgetset_header ul {
+	background:url(../images/default/setting/table-gadgetset-topmid.gif) repeat-x;
+	}
+
+
+.gadgetset_header_topleft {
+	background:url(../images/default/setting/table-gadgetset-topleft.gif) no-repeat top left;
+	width:4px; 
+	height:32px;
+	float:left;
+	}
+
+.gadgetset_header_top {
+	color:#36a008;
+	font-weight:bold;
+	font-size:12px;
+	padding-left:10px;
+	padding-top:10px;
+	height:22px;
+	float:left;
+	}
+
+.gadgetset_header_topright {
+	background:url(../images/default/setting/table-gadgetset-topright.gif) no-repeat top right;
+	width:4px; 
+	height:32px;
+	float:right;
+	}
+
+
+.gadgetset_flex {
+	background:url(../images/default/setting/table-gadgetset-body.gif) repeat-y;
+	float:left;
+	display:block; 
+	width:100%;
+	height:603px;
+	}
+
+.gadgetset_flex ul	{
+	background:url(../images/default/setting/table-gadgetset-body.gif) repeat-y right;
+	width:100%;
+	float:left;
+	height:603px; 
+	}
+
+.gadgetset_flex li	{
+	width:100%;
+	margin:15px;
+	overflow:auto;
+}
+
+
+
+
+
+
+.gadgetset_bg2, .gadgetset_bg2 ul {
+	float:left;
+	width:100%;
+	height:4px;
+	}
+
+.gadgetset_bg2 ul {
+	background:url(../images/default/setting/table-gadgetset-btmmid.gif) repeat-x bottom;
+	}
+
+.gadgetset_bg2_btmleft {
+	background:url(../images/default/setting/table-gadgetset-btmleft.gif) no-repeat bottom left;
+	width:4px; 
+	height:4px;
+	float:left;
+	}
+
+.gadgetset_bg2_btmright {
+	background:url(../images/default/setting/table-gadgetset-btmright.gif) no-repeat bottom right;
+	width:4px; 
+	height:4px;
+	float:right;
+	}
+
+
+
+
+/* Left Element : tab */
+.dashboardset_tab {
+	background:url(../images/default/setting/dashboardset-tabbg-line.gif) repeat-x bottom;
+	width:205px; 
+	height:19px;
+	position:relative;
+    top:-49px;
+    left:0px;
+	}
+
+.dashboardset_tab * {
+	font-size:11px !important;
+	}
+
+.dashboardset_tab li, span, a {
+	float:left;
+	}
+.dashboardset_tab a {
+	cursor:pointer;
+	}
+
+.dashboardset_tabon span.left	{
+	background:url(../images/default/setting/dashboardset-tabbg-onleft.gif) no-repeat right; 
+	width:24px; 
+	height:19px;
+	display:block;
+	}
+	
+.dashboardset_tabon span.right	{
+	background:url(../images/default/setting/dashboardset-tabbg-onright.gif) no-repeat left; 
+	width:7px; 
+	height:19px;
+	display:block;
+	}
+
+.dashboardset_tabon span.mid {
+	background:url(../images/default/setting/dashboardset-tabbg-on.gif) repeat-x; 
+	color:#424242;
+	font-weight:bold;
+	letter-spacing:-1px;
+	text-decoration:none;
+	padding-top:4px;
+	height:15px;
+	}
+
+.dashboardset_taboff span.left	{
+	background:url(../images/default/setting/dashboardset-tabbg-offleft.gif) no-repeat right; 
+	width:24px; 
+	height:19px;
+	display:block;
+	}
+	
+.dashboardset_taboff span.right	{
+	background:url(../images/default/setting/dashboardset-tabbg-offright.gif) no-repeat left; 
+	width:7px; 
+	height:19px;
+	display:block;
+	}
+
+.dashboardset_taboff span.mid {
+	background:url(../images/default/setting/dashboardset-tabbg-off.gif) repeat-x; 
+	color:#c7c7c7;
+	font-weight:bold;
+	letter-spacing:-1px;
+	text-decoration:none;
+	padding-top:4px;
+	height:15px;
+	}
+
+.dashboardset_taboff a:hover span.left	{
+	background:url(../images/default/setting/dashboardset-tabbg-onleft.gif) no-repeat right; 
+	}
+	
+.dashboardset_taboff a:hover span.right	{
+	background:url(../images/default/setting/dashboardset-tabbg-onright.gif) no-repeat left; 
+	}
+
+.dashboardset_taboff a:hover span.mid {
+	background:url(../images/default/setting/dashboardset-tabbg-on.gif) repeat-x; 
+	color:#424242 !important;
+	cursor:pointer;
+	}
+
+
+
+/* Left Element : dashboard lists */
+.dashboard_list	{
+	overflow-y:scroll;
+	overflow-x: hidden;
+	float:left;
+	padding:10px 10px;
+	width:184px;
+	height:270px;
+	position:relative;
+    top:-49px;
+	}
+	
+.dashboard_list * {
+	font-size:11px !important;
+	}
+
+.dashboard_list ul {
+	display:inline;
+	}
+
+.dashboard_list li {
+	float:left;
+	width:157px;
+	height:28px;
+	overflow:hidden;
+	}
+
+
+.dashboard_list span {
+	float:left;
+	width:20px;
+	padding-top:3px;
+	}
+
+.dashboard_list li a {
+	color:#666;
+	text-decoration:none;
+	padding:3px 0px 0px 0px;
+	height:15px;
+	}
+
+.dashboard_list li a:hover {
+	background-color:#4798fe;
+	color:#fff;
+	font-weight:bold;
+	letter-spacing:-1px;
+	}
+	
+
+
+
+/* Left Element : dashboard details */
+/*
+.dashboard_detail	 {
+}
+.dashboard_detail ul	{
+	float:left;
+	padding:0 0 3px 0;
+	display:block;
+	clear:both;
+	border:1px solid blue;
+}
+.dashboard_detail li  {
+	float:left;
+    display:inline;
+	border:1px solid red;
+}
+*/
+
+
+
+/* Left Element : dashboard details, dashboard add, modify */
+.dash-detail-title, .dash-add-title, .dash-modify-title {
+	background:url(../images/default/setting/table-topmid2.gif) repeat-x;
+	color:#36a008;
+	font-weight:bold;
+	font-size:12px;
+	float:left;
+	padding-left:10px;
+	padding-top:8px;
+	width:193px; 
+	height:21px;
+	position:relative;
+    top:-49px;
+    left:1px;
+	display:block; 
+	}
+
+.dash-add-title, .dash-modify-title {
+	display:none; 
+	}
+
+#dashboardDetail, #dashboard-AddForm, #dashboard-UpdateForm		{
+	display:none;
+	float:left;
+	position:relative;
+    top:-51px;
+	padding:20px 15px 0px 15px;
+	width:174px;
+	height:190px;
+	}
+#dashboardDetail *, #dashboard-AddForm *, #dashboard-UpdateForm *	{ 
+	font-size:11px !important;
+	color:#505050 !important;
+	}
+#dashboardDetail ul, #dashboard-AddForm ul, #dashboard-UpdateForm ul	{ 
+	/*display:inline; 
+	float:left; */
+	overflow:hidden;
+	margin:2px 0;
+	/* height:30px; */
+	}
+#dashboardDetail label,	#dashboard-AddForm label, #dashboard-UpdateForm label	{ 
+	float:left;
+	width:30px;
+	font-weight:bold;
+	position:relative;
+    margin-top:2px;
+    *margin-top:4px;
+	}
+#dashboardDetail li, #dashboard-AddForm li, #dashboard-UpdateForm li	{ 
+	float:left;
+	width:143px;
+	}
+#dashboardDetail label.type2, #dashboard-AddForm label.type2, #dashboard-UpdateForm label.type2	{ 
+	width:130px;
+	}
+	
+.type4{width:auto}
+#dashboardDetail li.type2, #dashboard-AddForm li.type2, #dashboard-UpdateForm li.type2	{ 
+	width:43px;
+	}
+#dashboardDetail li.type3, #dashboard-AddForm li.type3, #dashboard-UpdateForm li.type3	{ 
+	width:173px;
+	}
+#dashboardDetail label.type3, #dashboard-AddForm label.type3, #dashboard-UpdateForm label.type3	{ 
+	width:173px;
+	height:19px;
+	}
+#dashboardDetail textarea, #dashboardDetail input	{ 
+	border:1px solid white;
+	border:1px solid #b8e882;
+	}
+#dashboardDetail textarea, #dashboard-AddForm textarea, #dashboard-UpdateForm textarea		{ 
+	width:166px;
+	height:55px;
+	overflow:auto;
+	line-height:1.3em;
+	border:1px solid #b8e882;
+	}
+#dashboard-AddForm input, #dashboard-UpdateForm input,#dashboardDetail input		{ 
+	width:136px;
+	border:1px solid #b8e882;
+	}
+#dashboardDetail input.type2, #dashboard-AddForm input.type2, #dashboard-UpdateForm input.type2	{ 
+	width:36px;
+	border:1px solid #b8e882;
+	}
+#dashboard-AddForm select, #dashboard-UpdateForm select	{ 
+	width:38px;
+	border:1px solid #b8e882;
+	}
+
+
+
+
+
+
+
+
+
+/* Left Element : dashboard add, modify - buttons */
+.btn-gr *	{
+	width:auto !important;
+}
+.btn-gr {
+	background-color:white;
+	/*width:178px;*/
+	width:170px;
+	height:20px;
+	position:relative;
+	padding-right:5px;
+    /*top:55px;*/
+}
+.btn-gr ul {
+	background: url(../images/default/setting/btn-bg-edge-green.gif) repeat-x;
+	float:right;
+	padding: 0px 1px;
+	margin-left:5px;
+}
+.btn-gr li {
+	background: url(../images/default/setting/btn-bg-mid-green.gif) repeat-x;
+	display:inline;
+	height:15px;
+	padding:3px 3px 0px 3px;
+	display:block;
+}
+.btn-gr a {
+	float:left;
+	text-decoration:none;
+	display:block;
+}
+.btn-gr a.on {
+	color:#2e9800 !important;
+}
+.btn-gr a:hover {
+	color:#2e9800 !important;
+}
+
+
+
+
+
+
+/* Left Element : dashboard buttons */
+.dashboard_btn {
+	background:url(../images/default/setting/table-body.gif) repeat-y;
+	width:195px;
+	height:25px;
+	float:left;
+	padding-right:10px;
+}
+.dashboard_btn li {
+	display:inline
+}
+.dashboard_btn a {
+	float:right;
+	overflow:hidden;
+	height:0px;
+	width:18px;
+	padding-top:18px;
+	margin-right:2px;
+}
+.dashboard_plus a {
+	background: url(../images/default/setting/btn-plus-green.gif) no-repeat;
+}
+.dashboard_del a {
+	background: url(../images/default/setting/btn-del-green.gif) no-repeat;
+}
+.dashboard_modi a {
+	background: url(../images/default/setting/btn-modi-green.gif) no-repeat;
+}
+.dashboard_btn a:hover {
+	background-position:right top
+}

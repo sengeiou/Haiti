@@ -1,0 +1,744 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+    <!-- Language -->
+    <!-- Timezone -->
+    <!-- Code -->
+    <system.Country 
+        name="Korea"
+        code_2letter="KR"
+        code_3letter="KOR"
+        code_number="410"
+    />
+    <system.Supplier 
+        name="RAPA" 
+        country="Korea"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="Baghdad"
+        descr="Seoul"
+        telno=""
+        cd.pattern="###,###,###,###,##0.000"
+        cd.round="c"
+        md.pattern="###,###,###,###,##0.00"
+        md.round="r"
+    />
+    <system.Co2Formula name="전기탄소배출량" supplyTypeCode="3.1" unitUsage="100" co2emissions="42" co2factor="0.42" unit="KWh"/>  
+    <system.SupplyType
+        supplier="RAPA"
+        typeCode="3.1"
+        co2Formula="전기탄소배출량"
+        billDate="1"
+    />
+    
+    <system.Location 
+        name="서울"
+        orderNo="1"
+        parent=""
+        supplier="RAPA"
+    />
+    
+    
+    <system.Role name="admin" 
+        supplier="RAPA" 
+        systemAuthority="c" 
+        mtrAuthority="c" 
+        descr="Admin" 
+        hasDashboardAuth="true" 
+        customerRole="false" 
+        loginAuthority="true" />
+        
+    <system.Operator loginId="admin" 
+        aliasName="administrator" 
+        email="" 
+        failedLoginCount="0" 
+        name="RAPA-ADMIN"
+        password="hQXOwYy2SzvjPduK5ESBqwwaCAFQWFdQtJAQuQiM57NZ1duCOKDjMaIsPBTSx6iU01eHOPA933Zl7lKLk5yTvg=="
+        telNo="027810740"
+        loginDenied="false" 
+        role="admin"
+        showDefaultDashboard="true"
+        supplier="RAPA"/>
+        
+    <system.Dashboard descr="메인 보드" name="메인" orderNo="0" role="admin"/>
+    <system.Dashboard descr="시스템 보드" name="시스템" orderNo="1" role="admin"/>
+    <system.Dashboard descr="검침데이타 보드" name="검침데이터관리" orderNo="2" role="admin"/>
+    <system.Dashboard descr="장비 관리 보드" name="장비관리" orderNo="3" role="admin"/>
+    <system.Dashboard descr="알람 이벤트 보드" name="장애 이력" orderNo="4" role="admin"/>
+    
+    
+    <system.Gadget
+        descr="코드 관리 (코드 조회추가삭제변경)"
+        iconSrc="assets/images/gadget_ko/code.gif"
+        maxUrl="system/code_manager_max.do"
+        miniUrl="system/code_manager_mini.do"
+        name="코드관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system001"
+    />
+    <system.Gadget
+        descr="장비 제조사 모델 관리"
+        iconSrc="assets/images/gadget_ko/vendormodel.gif"
+        maxUrl="system/devicemodelMax.do"
+        miniUrl="system/devicemodelMini.do"
+        name="제조사 모델 관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system002"
+    />
+    <system.Gadget
+        descr="공급사 관리"
+        iconSrc="assets/images/gadget_ko/supplier.gif"
+        maxUrl="system/supplier/supplierMgmtMax.do"
+        miniUrl="system/supplier/supplierMgmtMini.do"
+        name="공급사관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system003"
+    />
+    <system.Gadget
+        descr="사용자 그룹 및 사용자 관리"
+        iconSrc="assets/images/gadget_ko/user.gif"
+        maxUrl="system/operatorMgmtMax.do"
+        miniUrl="system/operatorMgmtMini.do"
+        name="사용자관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system004"
+    />
+    <system.Gadget
+        descr="변경로그 가젯"
+        iconSrc="assets/images/gadget_ko/thumbnail.gif"
+        maxUrl="device/changeLogMaxGadget.do"
+        miniUrl="device/changeLogMiniGadget.do"
+        name="변경 로그"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system007"
+    />
+    <system.Gadget
+        descr="명령 이력 관리 가젯"
+        iconSrc="assets/images/gadget_ko/operation.gif"
+        maxUrl="device/operationLog/operationLogMaxGadget.do"
+        miniUrl="device/operationLog/operationLogMiniGadget.do"
+        name="명령 이력 및 설정"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system008"
+    />
+    <system.Gadget
+        descr="계약 관리 가젯"
+        iconSrc="assets/images/gadget_ko/customer.gif"
+        maxUrl="system/customerMax.do"
+        miniUrl="system/customerMini.do"
+        name="계약관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system010"
+    />
+    <system.Gadget
+        descr="리포트"
+        iconSrc="assets/images/gadget_ko/myReport.gif"
+        maxUrl="system/reportMgmtMax.do"
+        miniUrl="system/reportMgmtMini.do"
+        name="리포트"
+        miniHeight="500"
+        fullHieght="1000"   
+        gadgetCode="gadget.system011"   
+    />
+    <system.Gadget
+        descr="검침데이터 관리"
+        iconSrc="assets/images/gadget_ko/meteringdata.gif"
+        maxUrl="mvm/mvmMaxGadgetEM.do"
+        miniUrl="mvm/mvmMiniGadgetEM.do"
+        name="검침데이터 조회"
+        miniHeight="350"
+        fullHeight="1200"
+        gadgetCode="gadget.metering001.electricity"
+    />  
+    <system.Gadget
+        descr="검침 실패 가젯"
+        iconSrc="assets/images/gadget_ko/meteringfail.gif"
+        maxUrl="mvm/meteringFailureEmMaxGadget.do"
+        miniUrl="mvm/meteringFailureEmMiniGadget.do"
+        name="검침실패 조회"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering005"
+    />  
+    <system.Gadget
+        descr="LP 통계"
+        iconSrc="assets/images/gadget_ko/datagaps.gif"
+        maxUrl="mvm/dataGapsEmMaxGadget.do"
+        miniUrl="mvm/dataGapsEmMiniGadget.do"
+        name="LP 통계"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.metering008.electricity"
+    />
+    <system.Gadget
+        descr="미터관리"
+        iconSrc="assets/images/gadget_ko/meter.gif"
+        maxUrl="device/meterMaxGadget.do"
+        miniUrl="device/meterMiniGadget.do"
+        name="미터관리"
+        miniHeight="350"
+        fullHeight="1600"
+        gadgetCode="gadget.device003"
+    />
+    <system.Gadget
+        descr="모뎀관리"
+        iconSrc="assets/images/gadget_ko/modem.gif"
+        maxUrl="device/modemMaxGadget.do"
+        miniUrl="device/modemMiniGadget.do"
+        name="모뎀관리"
+        miniHeight="350"
+        fullHeight="1600"
+        gadgetCode="gadget.device002"
+    />  
+    <system.Gadget
+        descr="자산 등록(미터, 모뎀등의 장비 정보와 고객 정보 등록)"
+        iconSrc="assets/images/gadget_ko/devicereg.gif"
+        maxUrl="device/deviceRegistrationMaxGadget.do"
+        miniUrl="device/deviceRegistrationMiniGadget.do"
+        name="자산등록"
+        miniHeight="350"
+        fullHeight="700"
+        gadgetCode="gadget.device004"
+    /> 
+    <system.Gadget
+        descr="태스크 관리"
+        iconSrc="assets/images/gadget_ko/vee.gif"
+        maxUrl="system/schedule/scheduleManagementMaxGadget.do"
+        miniUrl="system/schedule/scheduleManagementMiniGadget.do"
+        name="태스크 관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system201"
+    />
+    <system.Gadget
+        descr="현재, 일별, 월별  TOU Data"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="mvm/mvmReportMaxGadget.do"
+        miniUrl="mvm/mvmReportMiniGadget.do"
+        name="TOU 데이터 조회"
+        miniHeight="500"
+        fullHieght="1000"   
+        gadgetCode="gadget.metering025" 
+    />
+    <system.Gadget
+        descr="이벤트 알람 가젯"
+        iconSrc="assets/images/gadget_ko/event.gif"
+        maxUrl="device/eventAlert/eventAlertLogMax.do"
+        miniUrl="device/eventAlert/eventAlertLogMini.do"
+        name="이벤트 알람 로그"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.device005"
+    />
+    <system.Gadget
+        descr="통신장비의 통신 로그 (송/송수신) "
+        iconSrc="assets/images/gadget_ko/commlog.gif"
+        maxUrl="device/commLog/commLogMaxGadget.do"
+        miniUrl="device/commLog/commLogMiniGadget.do"
+        name="통신 로그"
+        miniHeight="350"
+        fullHeight="1600"
+        gadgetCode="gadget.device006"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="메인"
+        gadget="검침데이터 조회"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="메인"
+        gadget="LP 통계"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="메인"
+        gadget="태스크 관리"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="메인"
+        gadget="통신 로그"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="검침데이터관리"
+        gadget="검침데이터  조회"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="검침데이터관리"
+        gadget="검침실패  조회"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="검침데이터관리"
+        gadget="LP 통계"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="검침데이터관리"
+        gadget="검침값 유효성 관리"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="검침데이터관리"
+        gadget="TOU 데이터 조회"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="시스템"
+        gadget="공급사관리"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="시스템"
+        gadget="사용자관리"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="시스템"
+        gadget="코드관리"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="시스템"
+        gadget="제조사 모델 관리"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="장비관리"
+        gadget="모뎀관리"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="장비관리"
+        gadget="미터관리"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="장비관리"
+        gadget="자산등록"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="장비관리"
+        gadget="계약관리"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="장애 이력"
+        gadget="변경 로그"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="장애 이력"
+        gadget="명령 이력 및 설정"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="장애 이력"
+        gadget="이벤트 알람 로그"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="장애 이력"
+        gadget="통신 로그"
+    />
+    
+    <!-- 이력 관리 대시보드 끝-->    
+    
+    <system.GadgetRole
+        gadget="코드관리"
+        role="admin"
+        supplier="RAPA"
+    />
+    <system.GadgetRole
+        gadget="제조사 모델 관리"
+        role="admin"
+        supplier="RAPA"
+    /> 
+    <system.GadgetRole
+        gadget="공급사관리"
+        role="admin"
+        supplier="RAPA"
+    />    
+    <system.GadgetRole
+        gadget="사용자관리"
+        role="admin"
+        supplier="RAPA"
+    /> 
+    <system.GadgetRole
+        gadget="변경 로그"
+        role="admin"
+        supplier="RAPA"
+    /> 
+    <system.GadgetRole
+        gadget="명령 이력 및 설정"
+        role="admin"
+        supplier="RAPA"
+    />       
+    <system.GadgetRole
+        gadget="계약관리"
+        role="admin"
+        supplier="RAPA"
+    />
+    <system.GadgetRole
+        gadget="리포트"
+        role="admin"
+        supplier="RAPA"
+    />
+    <system.GadgetRole
+        gadget="검침데이터 조회"
+        role="admin"
+        supplier="RAPA"
+    />
+    <system.GadgetRole
+        gadget="검침실패 조회"
+        role="admin"
+        supplier="RAPA"
+    />
+    <system.GadgetRole
+        gadget="검침데이터 누락"
+        role="admin"
+        supplier="RAPA"
+    /> 
+    <system.GadgetRole
+        gadget="TOU 데이터 조회"
+        role="admin"
+        supplier="RAPA"
+    />
+    <system.GadgetRole
+       gadget="미터관리"
+       role="admin"
+       supplier="RAPA"
+    />
+    <system.GadgetRole
+       gadget="모뎀관리"
+       role="admin"
+       supplier="RAPA"
+    />
+    <system.GadgetRole
+       gadget="자산등록"
+       role="admin"
+       supplier="RAPA"
+    />
+    <system.GadgetRole
+       gadget="태스크 관리"
+       role="admin"
+       supplier="RAPA"
+    />
+    <system.GadgetRole
+       gadget="이벤트 알람 로그"
+       role="admin"
+       supplier="RAPA"
+    />
+    <system.GadgetRole
+       gadget="통신 로그"
+       role="admin"
+       supplier="RAPA"
+    />
+    
+
+    <device.EventAlert eventAlertType='Alert' 
+        severity='Warning' 
+        name='Communication Alarm' 
+        descr='Communcation Failure or Restore' 
+        msgPattern='통신 경고' 
+        troubleAdvice='네트워크 점검' 
+        oid='205.1.0,205.20,205.3.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Equipment Installation' 
+        descr='Equipment installation' 
+        msgPattern='장비 설치' 
+        troubleAdvice='' 
+        oid='200.1.0,203.8.0,201.1.0,203.105.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Equipment De-Installation' 
+        descr='Equipment information deleted from System' 
+        msgPattern='장비 제거' 
+        troubleAdvice='' 
+        oid='200.2.0,201.2.0,203.106.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+
+    <device.EventAlert eventAlertType='Alert' 
+        severity='Major' 
+        name='Power Alarm' 
+        descr='Power Failure, Restore or Massive and Line Missing or Restore' 
+        msgPattern='전원 경고' 
+        troubleAdvice='' 
+        oid='200.14.0,200.15.0,203.107.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Invalid Equipment' 
+        descr='invalid meter' 
+        msgPattern='미식별 장비' 
+        troubleAdvice='' 
+        oid='' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Equipment Registration' 
+        descr='equipment is created automatically or installed.' 
+        msgPattern='장비 등록' 
+        troubleAdvice='' 
+        oid='' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Equipment Replacement' 
+        descr='It just does in metering action to replace meter with other meter' 
+        msgPattern='장비 교체' 
+        troubleAdvice='' 
+        oid='' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Equipment Notification' 
+        descr='Equipment Notification, Information, Waring or etc..' 
+        msgPattern='' 
+        troubleAdvice='' 
+        oid='203.10.0,212.1.0,200.29.0,210.1.0,203.100.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+        
+        
+    <system.DeviceVendor 
+        supplier="RAPA"
+        name="RAPA"
+        code="300"
+        address=""
+        descr="RAPA"
+    />
+    <system.DeviceModel 
+        deviceVendor="RAPA"
+        code="301"
+        deviceType="1.3.1.1"
+        name="CNM"
+    />
+    <system.DeviceModel 
+        deviceVendor="RAPA"
+        code="302"
+        deviceType="1.3.1.1"
+        name="DMP"
+    />
+    <system.DeviceModel 
+        deviceVendor="RAPA"
+        code="303"
+        deviceType="1.3.1.1"
+        name="DRC"
+    />
+    <system.DeviceModel 
+        deviceVendor="RAPA"
+        code="304"
+        deviceType="1.3.1.1"
+        name="LSK"
+    />  
+    <system.DeviceModel 
+        deviceVendor="RAPA"
+        code="305"
+        deviceType="1.3.1.1"
+        name="OMS"
+    />  
+    <system.DeviceModel 
+        deviceVendor="RAPA"
+        code="306"
+        deviceType="1.3.1.1"
+        name="MSM"
+    />
+    <system.DeviceModel 
+        deviceVendor="RAPA"
+        code="307"
+        deviceType="1.3.1.1"
+        name="PST"
+    />
+    <system.DeviceModel 
+        deviceVendor="RAPA"
+        code="308"
+        deviceType="1.3.1.1"
+        name="PYU"
+    />
+    <system.DeviceModel 
+        deviceVendor="RAPA"
+        code="309"
+        deviceType="1.3.1.1"
+        name="SCE"
+    />
+    <system.DeviceModel 
+        deviceVendor="RAPA"
+        code="310"
+        deviceType="1.3.1.1"
+        name="SDE"
+    />
+    <system.DeviceModel 
+        deviceVendor="RAPA"
+        code="311"
+        deviceType="1.3.1.1"
+        name="WZT"
+    />
+    <system.MeterConfig
+        name="CNM"
+        deviceModel="CNM"
+    />
+    <system.MeterConfig
+        name="DMP"
+        deviceModel="DMP"
+    />
+    <system.MeterConfig
+        name="DRC"
+        deviceModel="DRC"
+    />
+    <system.MeterConfig
+        name="LSK"
+        deviceModel="LSK"
+    />
+    <system.MeterConfig
+        name="MSM"
+        deviceModel="MSM"
+    />
+    <system.MeterConfig
+        name="OMS"
+        deviceModel="OMS"
+    />
+    <system.MeterConfig
+        name="PST"
+        deviceModel="PST"
+    />
+    <system.MeterConfig
+        name="PYU"
+        deviceModel="PYU"
+    />
+    <system.MeterConfig
+        name="SCE"
+        deviceModel="SCE"
+    />
+    <system.MeterConfig
+        name="SDE"
+        deviceModel="SDE"
+    />
+    <system.MeterConfig
+        name="WZT"
+        deviceModel="WZT"
+    />
+    
+
+    <mvm.DisplayChannel name="FAP" localName="유효전력량 LP값"        serviceType="Electricity" unit="Pulse" chMethod="SUM"/>
+    <mvm.DisplayChannel name="WC"  localName="결선체결 확인 LP값"      serviceType="Electricity" unit="Pulse" chMethod="SUM"/>    
+
+    <mvm.ChannelConfig meterConfig="CNM" channel="FAP" channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="CNM" channel="WC"  channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay"/>    
+
+    <mvm.ChannelConfig meterConfig="DMP" channel="FAP" channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="DMP" channel="WC"  channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay"/>    
+
+    <mvm.ChannelConfig meterConfig="DRC" channel="FAP" channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="DRC" channel="WC"  channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay"/>     
+
+    <mvm.ChannelConfig meterConfig="LSK" channel="FAP" channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="LSK" channel="WC"  channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay"/>    
+
+    <mvm.ChannelConfig meterConfig="MSM" channel="FAP" channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="MSM" channel="WC"  channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay"/>
+
+    <mvm.ChannelConfig meterConfig="OMS" channel="FAP" channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="OMS" channel="WC"  channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay"/> 
+
+    <mvm.ChannelConfig meterConfig="PST" channel="FAP" channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="PST" channel="WC"  channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay"/>    
+
+    <mvm.ChannelConfig meterConfig="PYU" channel="FAP" channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="PYU" channel="WC"  channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay"/>    
+
+    <mvm.ChannelConfig meterConfig="SCE" channel="FAP" channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="SCE" channel="WC"  channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay"/>    
+
+    <mvm.ChannelConfig meterConfig="SDE" channel="FAP" channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="SDE" channel="WC"  channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay"/>    
+
+    <mvm.ChannelConfig meterConfig="WZT" channel="FAP" channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay"/>
+    <mvm.ChannelConfig meterConfig="WZT" channel="WC"  channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay"/>      
+</dataset>

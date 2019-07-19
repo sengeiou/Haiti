@@ -1,0 +1,84 @@
+eventMcuInstall,OID,0,200.1.0,집중기 시작 이벤트
+eventMcuUninstall,OID,0,200.2.0,집중기 시작 이벤트
+eventMcuStartup,OID,0,200.3.0,집중기 시작 이벤트
+eventMcuShutdown,OID,0,200.4.0,집중기 시작 이벤트
+eventMcuChange,OID,0,200.10.0,집중기 설정 변경 이벤트
+eventMcuOamLogin,OID,0,200.11.0,OAM PC 로그인 이벤트
+eventMcuOamLogout,OID,0,200.12.0,OAM PC 로그아웃 이벤트
+eventMcuClockChange,OID,0,200.13.0,집중기 시간 변경
+eventMcuPowerFail,OID,0,200.14.0,집중기 정전 이벤트
+eventMcuPowerRestore,OID,0,200.15.0,집중기 정전 복구 이벤트
+eventMcuLowBattery,OID,0,200.16.0,집중기 배터리 잔량 부족 이벤트
+eventMcuLowBatteryRestore,OID,0,200.17.0,집중기 배터리 잔량 부족 이벤트
+eventMcuTempRange,OID,0,200.18.0,집중기 온도 범위 초과 이벤트
+eventMcuTempRangeResetore,OID,0,200.19.0,집중기 온도 범위 초과 이벤트
+eventMcuReset,OID,0,200.20.0,집중기 리셋 이벤트
+eventMcuFactoryDefault,OID,0,200.21.0,집중기 공장 초기화 이벤트
+eventMcuFirmwareUpdate,OID,0,200.22.0,집중기 펌웨어 업데이트 이벤트
+eventMcuMeteringStart,OID,0,200.100.0,검침 시작 이벤트
+eventMcuMeteringEnd,OID,0,200.101.0,검침 종료 이벤트
+eventMcuRecoveryStart,OID,0,200.102.0,실패 검침 시작 이벤트
+eventMcuRecoveryEnd,OID,0,200.103.0,실패 검침 종료 이벤트
+eventSinkInstall,OID,0,201.1.0,SINK 신규 설치 이벤트
+eventSinkUninstall,OID,0,201.2.0,SINK 제거 이벤트
+eventSinkConnect,OID,0,201.3.0,SINK 시작 이벤트
+eventSinkDisconnect,OID,0,201.4.0,SINK 종료 이벤트
+eventSinkChange,OID,0,201.5.0,SINK 설정 변경 이벤트
+eventSinkReset,OID,0,201.6.0,SINK 리셋 이벤트
+eventSinkError,OID,0,201.7.0,SINK 에러 이벤트
+eventMobileInstall,OID,0,202.1.0,MOBILE 설치 이벤트
+eventMobileChange,OID,0,202.2.0,MOBILE 변경 이벤트
+eventMobileReset,OID,0,202.3.0,MOBILE 리셋 이벤트
+eventMobileConnect,OID,0,202.4.0,MOBILE 연결 이벤트
+eventMobileDisconnect,OID,0,202.5.0,MOBILE 종료 이벤트
+eventSensorJoinNetwork,OID,0,203.1.0,센서 네트워크 접속 이벤트
+eventSensorLeaveNetwork,OID,0,203.2.0,센서 네트워크 분리 이벤트
+eventSensorInstall,OID,0,203.105.0,센서 설치 이벤트
+eventSensorUninstall,OID,0,203.106.0,센서 삭제 이벤트
+eventSensorChange,OID,0,203.3.0,센서 설정 변경 이벤트
+eventSensorConnect,OID,0,203.4.0,센서 연결 이벤트
+eventSensorDisconnect,OID,0,203.5.0,센서 종료 이벤트
+eventSensorTimeout,OID,0,203.6.0,센서 타임아웃 이벤트
+eventSensorBreaking,OID,0,203.7.0,센서의 단선 감지 이벤트
+eventUnknownSensor,OID,0,203.8.0,미등록 센서 이벤트
+eventSensorReset,OID,0,203.9.0,센서 Reset
+eventSensorLogPage,OID,0,203.100.0,센서 Event
+eventMalfCommandError,OID,0,204.1.0,FEP/OAM PC 명령어 오류
+eventMalfMeterReadError,OID,0,204.2.0,미터 검침 실패
+eventMalfUploadError,OID,0,204.3.0,검침 데이터 업로드 실패
+eventMalfDiskError,OID,0,204.4.0,플래쉬 메모리 임계치 초과 오류
+eventMalfDiskErrorRestore,OID,0,204.4.0,플래쉬 메모리 임계치 초과 오류
+eventMalfMemoryError,OID,0,204.5.0,메모리 임계치 초과 오류
+eventMalfMemoryErrorRestore,OID,0,204.5.0,메모리 임계치 초과 오류
+eventCommZRUError,OID,0,205.1.0,ZRU와의 통신 에러
+eventCommZMUError,OID,0,205.2.0,ZMU와의 통신 에러
+eventCommZEUError,OID,0,205.3.0,ZEU와의 통신 에러
+alarmMessage,OID,0,206.1.0,AU에서 발생한 알람 메시지
+eventManEcho,OID,0,255.1.0,FEP와의 통신 테스트
+eventSensorAlarm,OID,0,203.10.0,센서 Alarm Event
+eventSensorPageChanged,OID,0,203.11.0,센서 페이지 변경 이벤트
+eventSensorPageRead,OID,0,203.12.0,센서(개별) 페이지 읽기 이벤트
+eventSensorPageReadAll,OID,0,203.13.0,센서(개별) 페이지 읽기 이벤트
+eventSensorRecovery,OID,0,203.14.0,재 검침 요청에 대한 응답
+eventSynchSensorIndex,OID,0,208.1.0,센서 인덱스 동기화 시작
+eventInstall,OID,0,207.1.0,미터 센서 설치
+eventUninstall,OID,0,207.2.0,미터 센서 제거
+eventMassivePowerFail,OID,0,203.107.0,미터 대량 정전/복전
+eventSensorPulseApply,OID,0,203.108.0,센서 펄스 보정 적용 완료 이벤트
+eventEnergyLevelChange,OID,0,203.109.0,Device의 Energy Level 변경 이벤트
+eventModemAlarm,OID,0,210.1.0,고압모뎀정복전이벤트
+eventMeterError,OID,0,212.1.0,미터 에러 이벤트
+eventFlowAlarm,OID,0,213.1.0,순간유량 이벤트
+eventVoltageAlarm,OID,0,213.2.0,보정기 전지 전압 알람
+eventOTADownload,OID,0,214.1,집중기에서 서버의 파일 다운로드 성공/실패
+eventTransaction,OID,0,215.1.0,Transaction이 종료될 때 발생
+eventOTAStart,OID,0,214.2,OTA 작업이 시작될 때 발생
+eventOTAEnd,OID,0,214.3,OTA 작업이 끝났을 때 발생
+eventOTAResult,OID,0,214.4,개별 센서에 대한 OTA 결과를 전송
+eventAMUErrorStatus,OID,0,210.2,고압모뎀에러코드
+eventAMUPowerStatus,OID,0,210.3,고압모뎀정복전또는라인상태
+eventAMUBootUp,OID,0,210.4,고압모뎀bootup
+eventEndDeviceStatus,OID,0,216.1,DLC Result
+eventDRLevelChange,OID,0,216.2,DR Asset DR Level 변경 시 통보
+eventDLCConfirm,OID,0,216.3, DLC Confirm 사용자에 의한 DLC 승낙/거부
+eventIHD,OID,0,217.1.0, IHD Event

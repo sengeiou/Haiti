@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Location name="제주ICC" orderNo="1" parent="" supplier="제주ICC" />
+	<system.Location name="1층" orderNo="2" parent="제주ICC" supplier="제주ICC" />
+	<system.Location name="2층" orderNo="3" parent="제주ICC" supplier="제주ICC" />
+	<system.Location name="3층" orderNo="4" parent="제주ICC" supplier="제주ICC" />
+	<system.Location name="4층" orderNo="5" parent="제주ICC" supplier="제주ICC" />
+	<system.Location name="5층" orderNo="6" parent="제주ICC" supplier="제주ICC" />
+	<system.Location name="6층" orderNo="7" parent="제주ICC" supplier="제주ICC" />
+	<system.Location name="7층" orderNo="8" parent="제주ICC" supplier="제주ICC" />
+	<system.Location name="옥외" orderNo="9" parent="제주ICC" supplier="제주ICC" />
+	<system.Location name="공용" orderNo="10" parent="제주ICC" supplier="제주ICC" />
+	<system.Location name="임대매장" orderNo="11" parent="제주ICC" supplier="제주ICC" />
+</dataset>

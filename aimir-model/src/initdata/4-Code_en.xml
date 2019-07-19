@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <system.SupplyType
+        supplier="누리" 
+        typeCode="3.1"
+        cod2Formula="3.1"
+    />
+</dataset>

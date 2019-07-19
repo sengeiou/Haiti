@@ -1,0 +1,198 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+
+    <system.GadgetRole
+        gadget="빌딩 관리"
+        role="admin"
+        supplier="제주ICC"
+    />
+    <system.GadgetRole
+        gadget="설비 관리"
+        role="admin"
+        supplier="제주ICC"
+    />
+    <system.GadgetRole
+        gadget="빌딩 전기 사용량 모니터링"
+        role="admin"
+        supplier="제주ICC"
+    />
+    <system.GadgetRole
+        gadget="빌딩 가스 사용량 모니터링"
+        role="admin"
+        supplier="제주ICC"
+    />
+    <system.GadgetRole
+        gadget="빌딩 수도 사용량 모니터링"
+        role="admin"
+        supplier="제주ICC"
+    /> 
+    <system.GadgetRole
+        gadget="빌딩 등유 사용량 모니터링"
+        role="admin"
+        supplier="제주ICC"
+    /> 
+    <system.GadgetRole
+        gadget="계약전력과 Peak Demand"
+        role="admin"
+        supplier="제주ICC"
+    />
+    <system.GadgetRole
+        gadget="위치별 사용량 통계"
+        role="admin"
+        supplier="제주ICC"
+    />  
+
+    <system.GadgetRole 
+        gadget="설비별 사용량 통계"
+        role="admin"
+        supplier="제주ICC"
+    />
+    <system.GadgetRole
+        gadget="Zone별 사용량 통계"
+        role="admin"
+        supplier="제주ICC"
+    />
+    <system.GadgetRole
+        gadget="Zone 관리"
+        role="admin"
+        supplier="제주ICC"
+    />
+    <system.GadgetRole
+        gadget="전력 에너지 절감 목표"
+        role="admin"
+        supplier="제주ICC"
+    />
+    <system.GadgetRole
+        gadget="가스 에너지 절감 목표"
+        role="admin"
+        supplier="제주ICC"
+    />    
+    <system.GadgetRole
+        gadget="수도 에너지 절감 목표"
+        role="admin"
+        supplier="제주ICC"
+    />    
+    <system.GadgetRole
+        gadget="등유 에너지 절감 목표"
+        role="admin"
+        supplier="제주ICC"
+    />    
+    <system.GadgetRole
+        gadget="EMS 리포트"
+        role="admin"
+        supplier="제주ICC"
+    />
+
+   
+    <system.GadgetRole
+        gadget="코드관리"
+        role="admin"
+        supplier="제주ICC"
+    />
+    <system.GadgetRole
+        gadget="검침데이터 조회(전기)"
+        role="admin"
+        supplier="제주ICC"
+    />
+    <system.GadgetRole
+        gadget="검침데이터 조회(가스)"
+        role="admin"
+        supplier="제주ICC"
+    />  
+    <system.GadgetRole
+        gadget="검침데이터 조회(수도)"
+        role="admin"
+        supplier="제주ICC"
+    />  
+    <system.GadgetRole
+        gadget="검침데이터 조회(등유)"
+        role="admin"
+        supplier="제주ICC"
+    />  
+    <system.GadgetRole
+        gadget="공급사관리"
+        role="admin"
+        supplier="제주ICC"
+    />  
+    <system.GadgetRole
+        gadget="사용자관리"
+        role="admin"
+        supplier="제주ICC"
+    />
+    <system.GadgetRole
+        gadget="집중기관리"
+        role="admin"
+        supplier="제주ICC"
+    />
+    <system.GadgetRole
+        gadget="계약관리"
+        role="admin"
+        supplier="제주ICC"
+    />
+    <system.GadgetRole
+        gadget="검침데이터 누락(전기)"
+        role="admin"
+        supplier="제주ICC"
+    />
+    <system.GadgetRole
+        gadget="검침데이터 누락(가스)"
+        role="admin"
+        supplier="제주ICC"
+    />
+    <system.GadgetRole
+        gadget="검침데이터 누락(수도)"
+        role="admin"
+        supplier="제주ICC"
+    />
+    <system.GadgetRole
+        gadget="검침데이터 누락(등유)"
+        role="admin"
+        supplier="제주ICC"
+    />
+    
+    <system.GadgetRole
+        gadget="소비 랭킹(전기)"
+        role="admin"
+        supplier="제주ICC"
+    />    
+    <system.GadgetRole
+        gadget="소비 랭킹(가스)"
+        role="admin"
+        supplier="제주ICC"
+    />
+    <system.GadgetRole
+        gadget="소비 랭킹(수도)"
+        role="admin"
+        supplier="제주ICC"
+    />
+    <system.GadgetRole
+        gadget="소비 랭킹(등유)"
+        role="admin"
+        supplier="제주ICC"
+    />
+    <system.GadgetRole
+        gadget="미터관리"
+        role="admin"
+        supplier="제주ICC"
+    />               
+    <system.GadgetRole
+        gadget="자산등록"
+        role="admin"
+        supplier="제주ICC"
+    />  
+	<system.GadgetRole
+        gadget="수요관리"
+        role="admin"
+        supplier="제주ICC"
+    />    
+	<system.GadgetRole
+        gadget="수검침관리"
+        role="admin"
+        supplier="제주ICC"
+    />    
+    <system.GadgetRole
+        gadget="태양광에너지모니터링"
+        role="admin"
+        supplier="제주ICC"
+    />
+</dataset>

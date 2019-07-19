@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>     
+    <mvm.DisplayChannel name="Total Del Only F+H"       localName="Total Del Only F+H"      serviceType="Electricity" unit="kWh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Total Rcvd Only F+H"      localName="Total Rcvd Only F+H"     serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+    
+    <mvm.DisplayChannel name="Usage" localName="Usage" serviceType="Water" unit="m3" />
+
+</dataset>
+
+
+
+

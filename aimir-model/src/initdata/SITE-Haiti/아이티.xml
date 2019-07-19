@@ -1,0 +1,1437 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+    <!-- Language -->
+    <!-- Timezone -->
+    <!-- Code -->
+    
+    <system.Country 
+        name="Haiti"
+        code_2letter="HT"
+        code_3letter="HTI"
+        code_number="509"
+    />
+    
+    <system.Supplier 
+        name="EDH" 
+        country="Haiti"
+        lang="English"
+        timezone="America/Port-au-Prince"
+        address="Port-au-Prince"
+        descr="EDH"
+        telno=""
+        cd.pattern="###,###,###,###,##0.000"
+        cd.round="c"
+        md.pattern="###,###,###,###,##0.000"
+        md.round="r"
+    />
+    
+    <system.Co2Formula name="ElectricityCO2" supplyTypeCode="3.1" unitUsage="100" co2emissions="44.3" co2factor="0.443" unit="KWh"/>
+    
+    <system.SupplyType
+        supplier="EDH"
+        typeCode="3.1"
+        co2Formula="ElectricityCO2"
+        billDate="1"
+    />
+    
+    <system.Location 
+        name="Haiti"
+        orderNo="1"
+        parent=""
+        supplier="EDH"
+    />
+    
+    <system.Location 
+        name="West"
+        orderNo="1"
+        parent="Haiti"
+        supplier="EDH"
+    />
+    
+    <system.Location 
+        name="Port-au-Prince"
+        orderNo="1"
+        parent="West"
+        supplier="EDH"
+    />
+    
+    <system.Location 
+        name="Belvil"
+        orderNo="1"
+        parent="Port-au-Prince"
+        supplier="EDH"
+    />
+    
+    <system.Role name="admin" 
+        supplier="EDH" 
+        systemAuthority="c" 
+        mtrAuthority="c" 
+        descr="Admin" 
+        hasDashboardAuth="true" 
+        customerRole="false" 
+        loginAuthority="true" />
+        
+    <system.Role name="vendor" 
+        supplier="EDH" 
+        systemAuthority="r" 
+        mtrAuthority="r" 
+        descr="Vendor" 
+        hasDashboardAuth="true" 
+        customerRole="false" 
+        loginAuthority="true" />
+                
+    <system.Role name="customer" 
+        supplier="EDH" 
+        systemAuthority="r"
+        mtrAuthority="r" 
+        descr="Customer" 
+        hasDashboardAuth="true" 
+        customerRole="true" 
+        loginAuthority="true" />
+        
+    <system.Operator loginId="admin" 
+        aliasName="administrator" 
+        email="admin@edh.com" 
+        failedLoginCount="0" 
+        name="EDH"
+        password="hQXOwYy2SzvjPduK5ESBqwwaCAFQWFdQtJAQuQiM57NZ1duCOKDjMaIsPBTSx6iU01eHOPA933Zl7lKLk5yTvg=="
+        telNo="027810740"
+        loginDenied="false" 
+        role="admin"
+        showDefaultDashboard="true"
+        supplier="EDH"/>
+    
+    <system.Dashboard descr="Main Dashboard" name="Main" orderNo="0" role="admin"/>
+    <system.Dashboard descr="System Management Dashboard" name="System" orderNo="1" role="admin"/>
+    <system.Dashboard descr="Metering Management Dashboard" name="Metering" orderNo="2" role="admin"/>
+    <system.Dashboard descr="Device Management Dashboard" name="Device" orderNo="3" role="admin"/>
+    <system.Dashboard descr="Event and History Management Dashboard" name="Alarm Event" orderNo="4" role="admin"/>
+    
+    <system.Gadget
+        descr="Code Management"
+        iconSrc="assets/images/gadget_en/code.gif"
+        maxUrl="system/code_manager_max.do"
+        miniUrl="system/code_manager_mini.do"
+        name="Code Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system001"
+    />
+    <system.Gadget
+        descr="Metering Data(Electricity)"
+        iconSrc="assets/images/gadget_en/meteringdata.gif"
+        maxUrl="mvm/mvmMaxGadgetEM.do"
+        miniUrl="mvm/mvmMiniGadgetEM.do"
+        name="Metering Data"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering001"
+    />
+    <system.Gadget
+        descr="VEE (Metering Data Validation, Estimation, Editing)"
+        iconSrc="assets/images/gadget_en/vee.gif"
+        maxUrl="mvm/VEEManagementEmMaxGadget.do"
+        miniUrl="mvm/VEEManagementEmMiniGadget.do"
+        name="VEE Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering023"
+    />  
+    <system.Gadget
+        descr="Device Vendor Model"
+        iconSrc="assets/images/gadget_en/vendormodel.gif"
+        maxUrl="system/devicemodelMax.do"
+        miniUrl="system/devicemodelMini.do"
+        name="Device Vendor Model"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system002"
+    />  
+    <system.Gadget
+        descr="Supplier Management"
+        iconSrc="assets/images/gadget_en/supplier.gif"
+        maxUrl="system/supplier/supplierMgmtMax.do"
+        miniUrl="system/supplier/supplierMgmtMini.do"
+        name="Supplier Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system003"
+    />  
+    <system.Gadget
+        descr="User Management"
+        iconSrc="assets/images/gadget_en/user.gif"
+        maxUrl="system/operatorMgmtMax.do"
+        miniUrl="system/operatorMgmtMini.do"
+        name="User Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system004"
+    />
+    <system.Gadget
+        descr="Concentrator Management"
+        iconSrc="assets/images/gadget_en/mcu.gif"
+        maxUrl="device/mcuMaxGadget.do"
+        miniUrl="device/mcuMiniGadget.do"
+        name="Concentrator Management"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device001"
+    />
+    <system.Gadget
+        descr="Communication Log"
+        iconSrc="assets/images/gadget_en/commlog.gif"
+        maxUrl="device/commLog/commLogMaxGadget.do"
+        miniUrl="device/commLog/commLogMiniGadget.do"
+        name="Communication Log"
+        miniHeight="350"
+        fullHeight="1600"
+        gadgetCode="gadget.device006"
+    />
+    <system.Gadget
+        descr="Change Log"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="system/changeLogMaxGadget.do"
+        miniUrl="system/changeLogMiniGadget.do"
+        name="Change Log"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system007"
+    />
+    <system.Gadget
+        descr="Operation Management"
+        iconSrc="assets/images/gadget_en/operation.gif"
+        maxUrl="device/operationLog/operationLogMaxGadget.do"
+        miniUrl="device/operationLog/operationLogMiniGadget.do"
+        name="Operation Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system008"
+    />
+    <system.Gadget
+        descr="Event and Alarm"
+        iconSrc="assets/images/gadget_en/event.gif"
+        maxUrl="device/eventAlert/eventAlertLogMax.do"
+        miniUrl="device/eventAlert/eventAlertLogMini.do"
+        name="Event Alarm Log"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.device005"
+    />
+    <system.Gadget
+        descr="Metering Fail(Electricity)"
+        iconSrc="assets/images/gadget_en/meteringfail.gif"
+        maxUrl="mvm/meteringFailureEmMaxGadget.do"
+        miniUrl="mvm/meteringFailureEmMiniGadget.do"
+        name="Metering Fail"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering005"
+    />
+    <system.Gadget
+        descr="Customer and Contract"
+        iconSrc="assets/images/gadget_en/customer.gif"
+        maxUrl="system/customerMax.do"
+        miniUrl="system/customerMini.do"
+        name="Customer and Contract"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.system010"
+    />
+    <system.Gadget
+        descr="Data Gaps(Electricity)"
+        iconSrc="assets/images/gadget_en/datagaps.gif"
+        maxUrl="mvm/dataGapsEmMaxGadget.do"
+        miniUrl="mvm/dataGapsEmMiniGadget.do"
+        name="Data Gaps"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.metering008"
+    />
+    <system.Gadget
+        descr="Modem Management"
+        iconSrc="assets/images/gadget_en/modem.gif"
+        maxUrl="device/modemMaxGadget.do"
+        miniUrl="device/modemMiniGadget.do"
+        name="Modem Management"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device002"
+    />        
+    <system.Gadget
+        descr="Meter Management"
+        iconSrc="assets/images/gadget_en/meter.gif"
+        maxUrl="device/meterMaxGadget.do"
+        miniUrl="device/meterMiniGadget.do"
+        name="Meter Management"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device003"
+    />
+    <system.Gadget
+        descr="Asset Registration"
+        iconSrc="assets/images/gadget_en/devicereg.gif"
+        maxUrl="device/deviceRegistrationMaxGadget.do"
+        miniUrl="device/deviceRegistrationMiniGadget.do"
+        name="Asset Registration"
+        miniHeight="350"
+        fullHeight="700"
+        gadgetCode="gadget.device004"
+    /> 
+    <system.Gadget
+        descr="Meter Time Management"
+        iconSrc="assets/images/gadget_en/meteringtime.gif"
+        maxUrl="device/meterTimeMaxGadget.do"
+        miniUrl="device/meterTimeMiniGadget.do"
+        name="Meter Time Management"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device007"
+    />
+    <system.Gadget
+        descr="Power Quality Management"
+        iconSrc="assets/images/gadget_en/powerquality.gif"
+        maxUrl="mvm/powerQualityMaxGadget.do"
+        miniUrl="mvm/powerQualityMiniGadget.do"
+        name="Power Quality"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.metering021"
+    />
+    <system.Gadget
+        descr="Google Map For Device"
+        iconSrc="assets/images/gadget_en/googlemap.gif"
+        maxUrl="device/GoogleMapMax.do"
+        miniUrl="device/GoogleMapMini.do"
+        name="Google Map For Device"
+        miniHeight="500"
+        fullHeight="640"
+        gadgetCode="gadget.device008"
+    />     
+    <system.Gadget
+        descr="Group Management(Equipment, customers, users, and are grouped together.)"
+        iconSrc="assets/images/gadget_en/group.gif"
+        maxUrl="system/groupManagementMaxGadget.do"
+        miniUrl="system/groupManagementMiniGadget.do"
+        name="Group Management"
+        miniHeight="500"
+        fullHeight="1000"
+        gadgetCode="gadget.system009"
+    />
+    <system.Gadget
+        descr="Billing Report(Electricity), Daily, Monthly TOU Data"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="mvm/mvmReportMaxGadget.do"
+        miniUrl="mvm/mvmReportMiniGadget.do"
+        name="TOU Report"
+        miniHeight="380"
+        fullHieght="1000"   
+        gadgetCode="gadget.metering025" 
+    />
+   <system.Gadget
+        descr="Prepayment Customer Management"
+        iconSrc="assets/images/gadget_en/prepayCustomerMgmt.gif"
+        maxUrl="prepaymentMgmt/prepaymentMgmtOperatorMax.do"
+        miniUrl="prepaymentMgmt/prepaymentMgmtOperatorMini.do"
+        name="Prepayment Customer Management"
+        miniHeight="600"
+        fullHeight="800"
+        gadgetCode="gadget.system200"
+    />
+    <system.Gadget
+        descr="Task Management"
+        iconSrc="assets/images/gadget_ko/vee.gif"
+        maxUrl="system/schedule/scheduleManagementMaxGadget.do"
+        miniUrl="system/schedule/scheduleManagementMiniGadget.do"
+        name="Task Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system013"
+    />
+    <system.Gadget
+        descr="Vendor Prepayment Charge"
+        iconSrc="assets/images/gadget_ko/thumbnail.gif"
+        maxUrl="prepaymentMgmt/vendorPrepaymentChargeMaxGadget.do"
+        miniUrl="prepaymentMgmt/vendorPrepaymentChargeMiniGadget.do"
+        name="Vendor Prepayment Charge"
+        miniHeight="420"
+        fullHeight="800"
+        gadgetCode="gadget.system002"
+    />
+    <system.Gadget
+        descr="Deposit Management"
+        iconSrc="assets/images/gadget_ko/thumbnail.gif"
+        maxUrl="prepaymentMgmt/depositMgmtMax.do"
+        miniUrl="prepaymentMgmt/depositMgmtMini.do"
+        name="Deposit Management"
+        miniHeight="420"
+        fullHeight="800"
+        gadgetCode="gadget.prepay001"
+    />            
+    <system.Gadget
+        descr="Creating Customer Manager"
+        iconSrc="assets/images/gadget_ko/thumbnail.gif"
+        maxUrl="prepaymentMgmt/creatingCustomerMgmtMaxGadget.do"
+        miniUrl="system/customerMini.do"        
+        name="Creating Customer Manager"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system012"
+    />
+    <system.Gadget
+        descr="Consumption Ranking"
+        iconSrc="assets/images/gadget_en/consumptionrank.gif"
+        maxUrl="mvm/consumptionRankingEmMaxGadget.do"
+        miniUrl="mvm/consumptionRankingEmMiniGadget.do"
+        name="Consumption Ranking"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering012"
+    /> 
+    
+    <system.Gadget
+        descr="Meter Event Log"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="device/meterEventLogMax.do"
+        miniUrl="device/meterEventLogMini.do"
+        name="Meter Event Log"
+        miniHeight="500"
+        fullHieght="1000"   
+        gadgetCode="gadget.device013"   
+    />
+    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="Main"
+        gadget="Metering Data"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Main"
+        gadget="Prepayment Customer Management"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="Main"
+        gadget="Metering Fail"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="Main"
+        gadget="Customer and Contract"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="2"
+        dashboard="Main"
+        gadget="TOU Report"
+    />
+    
+    <!-- 검침데이터 관리 대시보드 시작-->       
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="Metering"
+        gadget="Customer and Contract"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="Metering"
+        gadget="Metering Data"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Metering"
+        gadget="Metering Fail"
+    />  
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="Metering"
+        gadget="Data Gaps"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="Metering"
+        gadget="Power Quality"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="Metering"
+        gadget="TOU Report"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="2"
+        dashboard="Metering"
+        gadget="VEE Management"
+    />
+    <!-- Metering 대시보드 끝-->
+    
+    <!-- 시스템 관리 대시보드 시작-->
+     <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="System"
+        gadget="Supplier Management"
+    />
+        <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="System"
+        gadget="User Management"
+    /> 
+        <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="System"
+        gadget="Device Vendor Model"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="System"
+        gadget="Code Management"
+    />
+    <system.DashboardGadget
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="System"
+        gadget="Group Management"
+    />
+    <system.DashboardGadget
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="System"
+        gadget="Task Management"
+    />
+    <!-- System 대시보드 끝-->
+    
+    <!-- 장비 관리 대시보드 시작-->
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="Device"
+        gadget="Concentrator Management"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="Device"
+        gadget="Meter Management"
+    />    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Device"
+        gadget="Modem Management"
+    />  
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="Device"
+        gadget="Asset Registration"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="Device"
+        gadget="Google Map For Device"
+    />   
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="Device"
+        gadget="Meter Time Management"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="2"
+        dashboard="Device"
+        gadget="Meter Event Log"
+    />   
+    
+    <!-- Device 대시보드 끝-->
+
+    <!-- 이력 관리 대시보드 시작--> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="Alarm Event"
+        gadget="Event Alarm Log"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="Alarm Event"
+        gadget="Communication Log"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Alarm Event"
+        gadget="Operation Management"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="Alarm Event"
+        gadget="Change Log"
+    />  
+    <!-- 이력 관리 대시보드 끝-->    
+    
+    <system.GadgetRole
+        gadget="Code Management"
+        role="admin"
+        supplier="EDH"
+    />
+    <system.GadgetRole
+        gadget="Metering Data"
+        role="admin"
+        supplier="EDH"
+    />
+    <system.GadgetRole
+        gadget="VEE Management"
+        role="admin"
+        supplier="EDH"
+    />
+    <system.GadgetRole
+        gadget="Device Vendor Model"
+        role="admin"
+        supplier="EDH"
+    />
+    <system.GadgetRole
+        gadget="Supplier Management"
+        role="admin"
+        supplier="EDH"
+    />  
+    <system.GadgetRole
+        gadget="User Management"
+        role="admin"
+        supplier="EDH"
+    />
+    <system.GadgetRole 
+        gadget="Concentrator Management"
+        role="admin"
+        supplier="EDH"
+    />
+    <system.GadgetRole
+        gadget="Communication Log"
+        role="admin"
+        supplier="EDH"
+    />
+    <system.GadgetRole
+        gadget="Change Log"
+        role="admin"
+        supplier="EDH"
+    />    
+    <system.GadgetRole
+        gadget="Operation Management"
+        role="admin"
+        supplier="EDH"
+    />  
+    <system.GadgetRole
+        gadget="Event Alarm Log"
+        role="admin"
+        supplier="EDH"
+    />    
+    <system.GadgetRole
+        gadget="Metering Fail"
+        role="admin"
+        supplier="EDH"
+    />
+    <system.GadgetRole
+        gadget="Customer and Contract"
+        role="admin"
+        supplier="EDH"
+    />    
+    <system.GadgetRole
+        gadget="Data Gaps"
+        role="admin"
+        supplier="EDH"
+    /> 
+    <system.GadgetRole
+        gadget="Modem Management"
+        role="admin"
+        supplier="EDH"
+    />    
+    <system.GadgetRole
+        gadget="Meter Management"
+        role="admin"
+        supplier="EDH"
+    />        
+    <system.GadgetRole
+        gadget="Device Registration"
+        role="admin"
+        supplier="EDH"
+    />
+    <system.GadgetRole
+        gadget="Meter Time Management"
+        role="admin"
+        supplier="EDH"
+    />
+    <system.GadgetRole
+        gadget="Power Quality"
+        role="admin"
+        supplier="EDH"
+    />
+    <system.GadgetRole
+        gadget="Google Map For Device"
+        role="admin"
+        supplier="EDH"
+    />     
+    <system.GadgetRole
+        gadget="Group Management"
+        role="admin"
+        supplier="EDH"
+    />
+    <system.GadgetRole
+       gadget="TOU Report"
+       role="admin"
+       supplier="EDH"
+    />
+    <system.GadgetRole
+       gadget="Prepayment Customer Management"
+       role="admin"
+       supplier="EDH"
+    />
+    <system.GadgetRole
+       gadget="Vendor Prepayment Charge"
+       role="admin"
+       supplier="EDH"
+    />
+    
+    <system.GadgetRole
+       gadget="Vendor Prepayment Charge"
+       role="vendor"
+       supplier="EDH"
+    />    
+    
+    <system.GadgetRole
+       gadget="Deposit Management"
+       role="admin"
+       supplier="EDH"
+    />        
+
+    <system.GadgetRole
+       gadget="Creating Customer Manager"
+       role="admin"
+       supplier="EDH"
+    />        
+    <system.GadgetRole
+       gadget="Consumption Ranking"
+       role="admin"
+       supplier="EDH"
+    />
+    <system.GadgetRole
+       gadget="Meter Event Log"
+       role="admin"
+       supplier="EDH"
+    />
+    	
+    <system.DeviceVendor 
+        supplier="EDH"
+        name="NURITelecom"
+        code="100"
+        address="B-10F Woolim Lions Valley 371-28 Gasandong Geumcheon-gu, Seoul, Korea, 153-786 Tel : +82.2.781.0770"
+        descr="Nuri Telecom Co.,Ltd."
+    />
+    
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="4"
+        deviceType="1.1.1.3"
+        name="NZC I211"
+        image="uploadImg/mcu/NZC-I212.jpg"
+    />
+    
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.1"   model="NZC I211"    level="2"   desc="Status Monitoring" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.2"   model="NZC I211"    level="2"   desc="Unit Scanning" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.3"   model="NZC I211"    level="2"   desc="Self Dignosis" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.8"   model="NZC I211"    level="2"   desc="Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.10"  model="NZC I211"    level="2"   desc="Reset" />
+    
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="5"
+        deviceType="1.1.1.4"
+        name="NZC O212"
+    />
+    
+    <device.OperationList  deviceTypeCode="1.1.1.4" operationCode="8.3.1"   model="NZC O212"    level="2"   desc="Status Monitoring" />
+    <device.OperationList  deviceTypeCode="1.1.1.4" operationCode="8.3.2"   model="NZC O212"    level="2"   desc="Unit Scanning" />
+    <device.OperationList  deviceTypeCode="1.1.1.4" operationCode="8.3.3"   model="NZC O212"    level="2"   desc="Self Dignosis" />
+    <device.OperationList  deviceTypeCode="1.1.1.4" operationCode="8.3.8"   model="NZC O212"    level="2"   desc="Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.1.1.4" operationCode="8.3.10"  model="NZC O212"    level="2"   desc="Reset" />
+
+    <!-- Repeater(indoor) -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="98"
+        deviceType="1.2.1.98"
+        name="NZR-I121RE"
+    />
+    
+    <system.ModemConfig 
+        name="NZR-I121RE"
+        parserName="com.aimir.fep.meter.parser.ZBRepeater"
+        saverName="com.aimir.fep.meter.saver.ZBRepeaterMDSaver"
+        deviceModel="NZR-I121RE"
+    /> 
+    
+    <device.OperationList  deviceTypeCode="1.2.1.98" operationCode="8.2.2"  model="NZR-I121RE"    level="2"   desc="Unit Scanning" />
+    <device.OperationList  deviceTypeCode="1.2.1.98" operationCode="8.2.5"  model="NZR-I121RE"    level="2"   desc="Event Log" />
+    
+    <!-- Repeater(outdoor) -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="98"
+        deviceType="1.2.1.98"
+        name="NZR-O121RE"
+    />
+    
+    <system.ModemConfig 
+        name="NZR-O121RE"
+        parserName="com.aimir.fep.meter.parser.ZBRepeater"
+        saverName="com.aimir.fep.meter.saver.ZBRepeaterMDSaver"
+        deviceModel="NZR-O121RE"
+    />
+    
+    <device.OperationList  deviceTypeCode="1.2.1.98" operationCode="8.2.2"  model="NZR-O121RE"    level="2"   desc="Unit Scanning" />
+    <device.OperationList  deviceTypeCode="1.2.1.98" operationCode="8.2.5"  model="NZR-O121RE"    level="2"   desc="Event Log" />
+
+    <mvm.Season
+        smonth="03"
+        sday="01"
+        emonth="05"
+        name="Spring"
+    />
+    <mvm.Season
+        smonth="06"
+        sday="01"
+        emonth="08"
+        name="Summer"
+    />
+    <mvm.Season
+        smonth="09"
+        sday="01"
+        emonth="11"
+        name="Autumn"
+    />
+    <mvm.Season
+        smonth="12"
+        sday="01"
+        emonth="02"
+        name="Winter"
+    />
+    
+    <system.TariffType supplier="EDH" serviceTypeCode="3.1" code="1" name="Home Power1" description="Home Power1"/>
+    <system.TariffType supplier="EDH" serviceTypeCode="3.1" code="2" name="Business Rate1" description="Business Rate1"/>
+    
+    
+    <system.TariffEM
+        supplier="EDH" 
+        yyyymmdd="20140101"
+        tariffType="Home Power1" 
+        supplySizeMin="0" 
+        supplySizeMax="50" 
+        condition1="&gt;"
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="0.809"
+        serviceCharge="0" />
+    <system.TariffEM
+        supplier="EDH" 
+        yyyymmdd="20140101"
+        tariffType="Home Power1" 
+        supplySizeMin="50" 
+        supplySizeMax="300" 
+        condition1="&gt;"
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="1.003"
+        serviceCharge="0" />
+    <system.TariffEM
+        supplier="EDH" 
+        yyyymmdd="20140101"
+        tariffType="Home Power1" 
+        supplySizeMin="300" 
+        supplySizeMax="600" 
+        condition1="&gt;"
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="1.322"
+        serviceCharge="0" />
+    <system.TariffEM
+        supplier="EDH" 
+        yyyymmdd="20140101"
+        tariffType="Home Power1" 
+        supplySizeMin="600" 
+        condition1="&gt;"
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="1.516"
+        serviceCharge="0" />
+
+    <system.TariffEM
+        supplier="EDH" 
+        yyyymmdd="20140101"
+        tariffType="Business Rate1" 
+        supplySizeUnit="kWh"
+        activeEnergyCharge="1.220"
+        serviceCharge="0" />
+        
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Attachment or Detachment' 
+                       descr='Attachment or Detachment' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='203.1.0,203.2.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Major' 
+                       name='Threshold Warning' 
+                       descr='Threshold Warning' 
+                       msgPattern='Threshold Usage=[$(event.eventAttrs.observedValue)] crossed the defined value[$(event.eventAttrs.thresholdValue)]' 
+                       troubleAdvice='Check System Performance' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='MCU Mobile Connect' 
+                       descr='MCU Mobile Connect' 
+                       msgPattern='MCU Mobile Connected' 
+                       troubleAdvice='' 
+                       oid='202.4.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Reset' 
+                       descr='Reset' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='200.20.0,203.9.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Warning' 
+                       name='Battery Alarm' 
+                       descr='Battery Low or Restore, Battery Charging Start or End.'
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='200.16.0,200.17.0,200.23.0,200.24.0' 
+                       monitor='SaveAndMonitor'
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event'
+                       severity='Information' 
+                       name='Equipment Installation' 
+                       descr='Equipment installation' 
+                       msgPattern='Install' 
+                       troubleAdvice='' 
+                       oid='200.1.0,203.8.0,201.1.0,203.105.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment De-Installation' 
+                       descr='Equipment information deleted from System' 
+                       msgPattern='Uninstall' 
+                       troubleAdvice='' 
+                       oid='200.2.0,201.2.0,203.106.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment Startup' 
+                       descr='Equipment Startup' 
+                       msgPattern='Startup' 
+                       troubleAdvice='' 
+                       oid='200.3.0,201.3.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment Shutdown' 
+                       descr='Equipment Shutdown' 
+                       msgPattern='Shutdown' 
+                       troubleAdvice='' 
+                       oid='200.4.0,201.4.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Major' 
+                       name='Power Alarm' 
+                       descr='Power Failure, Restore or Massive and Line Missing or Restore' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='200.14.0,200.15.0,203.107.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Time Synchronization Performed' 
+                       descr='Time Synchronization Performed' 
+                       msgPattern='Clock Synchronized Time[$(event.eventAttrs.sysTime)]' 
+                       troubleAdvice='' 
+                       oid='200.13.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment Registration' 
+                       descr='equipment is created automatically or installed.' 
+                       msgPattern='Equipment Registration' 
+                       troubleAdvice='' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment Replacement' 
+                       descr='It just does in metering action to replace meter with other meter' 
+                       msgPattern='From $(event.eventAttrs.equipType) [$(event.eventAttrs.oldEquipID)] To $(event.eventAttrs.equipType)[$(event.eventAttrs.newEquipID)]' 
+                       troubleAdvice='' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Warning' 
+                       name='Cover Alarm' 
+                       descr='Cover Open or Close' 
+                       msgPattern='Cover $(event.eventAttrs.caseState)' 
+                       troubleAdvice='' 
+                       oid='200.25.0,200.26.0,210.1' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment Notification' 
+                       descr='Equipment Notification, Information, Warning or etc..' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='203.10.0,212.1.0,200.29.0,210.1.0,203.100.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='OTA'
+                       descr='OTA Step' 
+                       msgPattern='$(event.eventAttrs.otaStep) $(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='214.1.0,214.2.0,214.3.0,214.4.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Warning' 
+                       name='EnergyLevelChanged' 
+                       descr='Energy Level of Meter is changed' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='203.109.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+                       
+    <!-- VEE Conditions -->
+    <mvm.VEEParameter 
+                    ruleType="Validation" 
+                    parameter="ZeroConsumption"
+                    localName="Zero Consumption" 
+                    useThreshold="false"  
+                    condition="value_00=0 or value_01=0 or value_02=0 or value_03=0 or value_04=0 or value_05=0 or value_06=0 or value_07=0 or value_08=0 or value_09=0 or value_10=0 or value_11=0 or value_12=0 or value_13=0 or value_14=0 or value_15=0 or value_16=0 or value_17=0 or value_18=0 or value_19=0 or value_20=0 or value_21=0 or value_22=0 or value_23=0"  
+                    item="Day"  
+                    />
+    <mvm.VEEParameter   
+                    ruleType="Validation"
+                    parameter="OutOfThreshold"
+                    localName="Out Of Threshold" 
+                    useThreshold="true"  
+                    item="Day"
+                    condition="value_00&gt;threshold or value_01&gt;threshold or value_02&gt;threshold or value_03&gt;threshold or value_04&gt;threshold or value_05&gt;threshold or value_06&gt;threshold or value_07&gt;threshold or value_08&gt;threshold or value_09&gt;threshold or value_10&gt;threshold or value_11&gt;threshold or value_12&gt;threshold or value_13&gt;threshold or value_14&gt;threshold or value_15&gt;threshold or value_16&gt;threshold or value_17&gt;threshold or value_18&gt;threshold or value_19&gt;threshold or value_20&gt;threshold or value_21&gt;threshold or value_22&gt;threshold or value_23&gt;threshold"
+                    />
+                    
+    <system.DeviceVendor 
+        supplier="EDH"
+        name="GE"
+        code="2"
+        address="http://www.ge.com"
+        descr="General Electric Company"
+    />
+    
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="1"
+        deviceType="1.2.1.1"
+        name="NAMR-P109SR"
+    />
+    
+    <system.DeviceModel 
+        deviceVendor="GE"
+        code="12"
+        deviceType="1.3.1.1"
+        name="I210+c"
+        image="uploadImg/meter/sm110.jpg"
+    />
+    
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="1p2w"
+        pulseConst="1"
+        name="I210+c"
+        deviceModel="I210+c"
+        parserName="com.aimir.fep.meter.parser.I210PlusCSeries"
+        saverName="com.aimir.fep.meter.saver.I210PlusCSeriesMDSaver"
+    />
+    
+    <system.ModemConfig 
+        name="NAMR-P109SR"
+        deviceModel="NAMR-P109SR"
+    /> 
+    
+    <mvm.DisplayChannel name="Total Del Only F+H"       localName="Total Del Only F+H"      serviceType="Electricity" unit="kWh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Total Rcvd Only F+H"      localName="Total Rcvd Only F+H"     serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+    
+    <mvm.ChannelConfig meterConfig="I210+c" channel="Total Del Only F+H"   channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="I210+c" channel="Total Rcvd Only F+H"  channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay" />
+    
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="I210+c"   level="2"   desc="On Demand Metering" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="I210+c"   level="2"   desc="Meter Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="I210+c"   level="2"   desc="Relay Switch" />
+    
+    <device.MeterEvent 
+                    id="STE.GE.I210+c.1"
+                    value="1"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="STE"  
+                    name="Power Down"
+                    descr="Power Down"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />  
+    <device.MeterEvent 
+                    id="STE.GE.I210+c.2"
+                    value="2"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="STE"  
+                    name="Power Up"
+                    descr="Power Up"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />  
+    <device.MeterEvent 
+                    id="STE.GE.I210+c.11"
+                    value="11"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="STE"  
+                    name="Meter Programmed"
+                    descr="Meter Programmed"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />              
+    <device.MeterEvent 
+                    id="STE.GE.I210+c.20"
+                    value="20"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="STE"  
+                    name="Demand Reset Occurred"
+                    descr="Demand Reset Occurred"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+     <device.MeterEvent 
+                    id="STE.GE.I210+c.32"
+                    value="32"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="STE"  
+                    name="Test Mode Start"
+                    descr="Test Mode Start"
+                    troubleAdvice="to test meter operation and site characteristics without effecting billing quantities or load profile data"
+                    support="true"
+                    meterType="EnergyMeter"
+                    />                  
+         <device.MeterEvent 
+                    id="STE.GE.I210+c.33"
+                    value="33"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="STE"  
+                    name="Test Mode Exit"
+                    descr="Test Mode Exit"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />              
+        <device.MeterEvent 
+                    id="STE.GE.I210+c.21"
+                    value="21"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="STE"  
+                    name="Self-read Occurred"
+                    descr="Self-read Occurred"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="MFE.GE.I210+c.16"
+                    value="16"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="MFE"  
+                    name="Under Voltage"
+                    descr="Under Voltage"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="MFE.GE.I210+c.17"
+                    value="17"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="MFE"  
+                    name="Under Voltage Condition Cleared"
+                    descr="Under Voltage Condition Cleared"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+                    
+        <device.MeterEvent 
+                    id="MFE.GE.I210+c.18"
+                    value="18"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="MFE"  
+                    name="Demand Overload"
+                    descr="Demand Overload"
+                    troubleAdvice="1. Rewire according to applicable diagram.
+                                   2. Check that voltage and current connectors are seated properly.Check the leads for damage.
+                                   3.Replace meter. "
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="MFE.GE.I210+c.19"
+                    value="19"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="MFE"  
+                    name="Demand Overload Condition Cleared"
+                    descr="Demand Overload Condition Cleared"
+                    troubleAdvice="The meter does not automatically clear the Demand Overload caution. The Demand Overload caution is cleared by a demand reset"
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="MFE.GE.I210+c.24"
+                    value="24"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="MFE"  
+                    name="Real Time Pricing Activation"
+                    descr="Real Time Pricing Activation"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="MFE.GE.I210+c.25"
+                    value="25"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="MFE"  
+                    name="Real Time Pricing Deactivation"
+                    descr="Real Time Pricing Deactivation"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="MFE.GE.I210+c.28"
+                    value="28"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="MFE"  
+                    name="Calibration Mode Activated"
+                    descr="Calibration Mode Activated"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="MFE.GE.I210+c.33"
+                    value="33"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="MFE"  
+                    name="DC detection condition"
+                    descr="DC detection condition"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="MFE.GE.I210+c.34"
+                    value="34"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="MFE"  
+                    name="DC detection condition cleared"
+                    descr="DC detection condition cleared"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="STS.GE.I210+c.20"
+                    value="20"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="STS"  
+                    name="Low battery"
+                    descr="Low battery"
+                    troubleAdvice="Replace battery."
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="STS.GE.I210+c.13"
+                    value="13"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="STS"  
+                    name="RAM error"
+                    descr="Meter did detect a RAM error"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="STS.GE.I210+c.14"
+                    value="14"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="STS"  
+                    name="ROM error"
+                    descr="Meter did detect a ROM error"
+                    troubleAdvice="Check for proper installation. Check for proper grounding. Call for factory for further assistance"
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="STS.GE.I210+c.16"
+                    value="16"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="STS"  
+                    name="Clock error"
+                    descr="Meter did detect a clock error"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="STS.GE.I210+c.17"
+                    value="17"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="STS"  
+                    name="Bad voltage"
+                    descr="Meter did detect a bad voltage"
+                    troubleAdvice=""
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+        <device.MeterEvent 
+                    id="STS.GE.I210+c.10"
+                    value="10"
+                    vendor="GE" 
+                    model="I210+c"  
+                    kind="STS"  
+                    name="Meter is unprogrammed"
+                    descr="Meter is unprogrammed"
+                    troubleAdvice="Program the meter."
+                    support="true"
+                    meterType="EnergyMeter"
+                    />
+                    
+</dataset>

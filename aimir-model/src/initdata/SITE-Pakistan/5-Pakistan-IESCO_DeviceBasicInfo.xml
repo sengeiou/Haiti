@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+
+	<!-- Device Model -->
+	<!-- Dummy Device -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="97"
+        deviceType="1.1.1.7"
+        name="DCU-DUMMY"
+        image="uploadImg/mcu/DCU-DUMMY.jpg"
+        description="Dummy DCU"
+    />    
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="98"
+        deviceType="1.2.1.255"
+        name="MODEM-DUMMY"
+        image="uploadImg/modem/MODEM-DUMMY.jpg"
+        description="Dummy Modem"
+    />
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="99"
+        deviceType="1.3.1.1"
+        name="METER-DUMMY"
+        image="uploadImg/meter/METER-DUMMY.jpg"
+        description="Dummy Meter"
+        mdsIdPattern="[a-zA-Z0-9]**"        
+    />    
+            
+    <!-- DCU -->
+    <system.DeviceModel
+        deviceVendor="NURITelecom"
+        code="1"
+        deviceType="1.1.1.7"
+        name="NDC-I531"
+        image="uploadImg/mcu/NDC-I531.jpg"
+        description="HD-PLC DCU"
+    />
+
+	<!-- Modem -->
+	<!-- PLC modem : CLOU-1P -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="2"
+        deviceType="1.2.1.18"
+        name="NAMR-C10ASR"
+        image="uploadImg/modem/NAMR-C10ASR.jpg"
+        description="PLC Modem : CLOU-1P"
+    />	
+	<!-- PLC modem : CLOU-3P -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="3"
+        deviceType="1.2.1.18"
+        name="NAMR-C10BSR"
+        image="uploadImg/modem/NAMR-C10BSR.jpg"
+        description="PLC Modem : CLOU-3P"
+    />	    
+        	
+	<!-- PLC modem : EDMI-1P/3P -->	
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="4"
+        deviceType="1.2.1.18"
+        name="NAMR-C109SR"
+        image="uploadImg/modem/NAMR-C109SR.jpg"
+        description="PLC Modem : EDMI-1P/3P"
+    />		
+    
+	<!-- PLC modem : Reallin-1P -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="5"
+        deviceType="1.2.1.18"
+        name="NAMR-C10CSR"
+        image="uploadImg/modem/NAMR-C10CSR.jpg"
+        description="PLC Modem : Reallin-1P"
+    />	
+	<!-- PLC modem : Reallin-3P -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="6"
+        deviceType="1.2.1.18"
+        name="NAMR-C10DSR"
+        image="uploadImg/modem/NAMR-C10DSR.jpg"
+        description="PLC Modem : Reallin-3P"
+    />	    	
+	
+
+    <!-- GPRS(3G) modem -->
+	<!-- 3G modem : CLOU-CT/VT -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="7"
+        deviceType="1.2.1.11"
+        name="NAMR-P400LT"
+        image="uploadImg/modem/NAMR-P400LT.jpg"
+        description="3G Modem : CLOU-CT/VT"
+    />	
+	<!-- 3G modem : EDMI-CT/VT -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="8"
+        deviceType="1.2.1.11"
+        name="NAMR-P401LT"
+        image="uploadImg/modem/NAMR-P401LT.jpg"
+        description="3G Modem : EDMI-CT/VT"
+    />		
+	<!-- 3G modem - Reallin -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="9"
+        deviceType="1.2.1.11"
+        name="NAMR-P402LT"
+        image="uploadImg/modem/NAMR-P402LT.jpg"
+        description="3G Modem : Reallin-CT/VT"
+    />	        
+            
+	<!-- Meter -->
+	<!-- EDMI -->    
+    <system.DeviceModel
+        deviceVendor="EDMI"
+        code="10"
+        deviceType="1.3.1.1"
+        name="EDMI_1P"
+        mdsIdPattern="[a-zA-Z0-9]**"
+        description="EDMI 1P"
+        image="uploadImg/meter/EDMI_1P.jpg"
+    />
+    <system.DeviceModel
+        deviceVendor="EDMI"
+        code="11"
+        deviceType="1.3.1.1"
+        name="EDMI_3P"
+        mdsIdPattern="[a-zA-Z0-9]**"
+        description="EDMI 3P"
+        image="uploadImg/meter/EDMI_3P.jpg"        
+    />    
+    <system.DeviceModel
+        deviceVendor="EDMI"
+        code="12"
+        deviceType="1.3.1.1"
+        name="EDMI_CT"
+        mdsIdPattern="[a-zA-Z0-9]**"
+        description="EDMI CT"
+        image="uploadImg/meter/EDMI_CT.jpg"        
+    />    
+    <system.DeviceModel
+        deviceVendor="EDMI"
+        code="13"
+        deviceType="1.3.1.1"
+        name="EDMI_CP"
+        mdsIdPattern="[a-zA-Z0-9]**"
+        description="EDMI CP"
+        image="uploadImg/meter/EDMI_CP.jpg"        
+    />      
+    <!-- CLOU -->
+    <!-- 1P -->
+    <system.DeviceModel
+        deviceVendor="CLOU"
+        code="14"
+        deviceType="1.3.1.1"
+        name="CL710K22"
+        mdsIdPattern="[a-zA-Z0-9]**"
+        description="CLOU 1P"
+        image="uploadImg/meter/clou_1p.jpg"        
+    />
+    <!-- 3P -->
+    <system.DeviceModel
+        deviceVendor="CLOU"	
+        code="15"
+        deviceType="1.3.1.1"
+        name="CL730S22"
+        mdsIdPattern="[a-zA-Z0-9]**"
+        description="CLOU 3P"
+        image="uploadImg/meter/clou_3p.jpg"        
+    />
+    <!-- CT -->
+    <system.DeviceModel
+        deviceVendor="CLOU"
+        code="16"
+        deviceType="1.3.1.1"
+        name="CL730D22H"
+        mdsIdPattern="[a-zA-Z0-9]**"
+        description="CLOU CT"
+        image="uploadImg/meter/clou_ct.jpg"        
+    />
+    <!-- CP (CT/VT) -->
+    <system.DeviceModel
+        deviceVendor="CLOU"
+        code="17"
+        deviceType="1.3.1.1"
+        name="CL730D22L"
+        mdsIdPattern="[a-zA-Z0-9]**"
+        description="CLOU CP(CT/VT)"
+        image="uploadImg/meter/clou_cp.jpg"        
+    />    
+    <!-- Reallin --> 
+    <system.DeviceModel
+        deviceVendor="REALLIN"
+        code="18"
+        deviceType="1.3.1.1"
+        name="REALLIN_1P"
+        mdsIdPattern="[a-zA-Z0-9]**"
+        description="REALLIN 1P"
+        image="uploadImg/meter/REALLIN_1P.jpg"        
+    />
+    <system.DeviceModel
+        deviceVendor="REALLIN"
+        code="19"
+        deviceType="1.3.1.1"
+        name="REALLIN_3P"
+        mdsIdPattern="[a-zA-Z0-9]**"
+        description="REALLIN 3P"
+        image="uploadImg/meter/REALLIN_3P.jpg"        
+    />
+    <system.DeviceModel
+        deviceVendor="REALLIN"
+        code="20"
+        deviceType="1.3.1.1"
+        name="REALLIN_CT"
+        mdsIdPattern="[a-zA-Z0-9]**"
+        description="REALLIN CT"
+        image="uploadImg/meter/REALLIN_CT.jpg"        
+    />
+    <system.DeviceModel
+        deviceVendor="REALLIN"
+        code="21"
+        deviceType="1.3.1.1"
+        name="REALLIN_CP"
+        mdsIdPattern="[a-zA-Z0-9]**"
+        description="REALLIN CP"
+        image="uploadImg/meter/REALLIN_CP.jpg"        
+    />    
+
+    
+    <!-- Meter Config -->
+    <!-- EDMI -->
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="1P"
+        pulseConst="100"
+        name="EDMI_1P"
+        deviceModel="EDMI_1P"
+        meterProtocol="DLMS"
+        parserName="com.aimir.fep.meter.parser.DLMSEdmi"
+        saverName="com.aimir.fep.meter.saver.DLMSEdmiMDSaver"
+    />    
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="3P"
+        pulseConst="100"
+        name="EDMI_3P"
+        deviceModel="EDMI_3P"
+        meterProtocol="DLMS"
+        parserName="com.aimir.fep.meter.parser.DLMSEdmi"
+        saverName="com.aimir.fep.meter.saver.DLMSEdmiMDSaver"
+    /> 
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="CT"
+        pulseConst="100"
+        name="EDMI_CT"
+        deviceModel="EDMI_CT"
+        meterProtocol="DLMS"
+        parserName="com.aimir.fep.meter.parser.DLMSEdmi"
+        saverName="com.aimir.fep.meter.saver.DLMSEdmiMDSaver"
+    /> 
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="CP"
+        pulseConst="100"
+        name="EDMI_CP"
+        deviceModel="EDMI_CP"
+        meterProtocol="DLMS"
+        parserName="com.aimir.fep.meter.parser.DLMSEdmi"
+        saverName="com.aimir.fep.meter.saver.DLMSEdmiMDSaver"
+    /> 
+               
+    <!-- CLOU --> 
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="1P"
+        pulseConst="100"
+        name="CL710K22"
+        deviceModel="CL710K22"
+        meterProtocol="DLMS"
+        parserName="com.aimir.fep.meter.parser.DLMSClou"
+        saverName="com.aimir.fep.meter.saver.DLMSClouMDSaver"
+    />   
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="3P"
+        pulseConst="100"
+        name="CL730S22"
+        deviceModel="CL730S22"
+        meterProtocol="DLMS"
+        parserName="com.aimir.fep.meter.parser.DLMSClou"
+        saverName="com.aimir.fep.meter.saver.DLMSClouMDSaver"
+    />   
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="CT"
+        pulseConst="100"
+        name="CL730D22H"
+        deviceModel="CL730D22H"
+        meterProtocol="DLMS"
+        parserName="com.aimir.fep.meter.parser.DLMSClou"
+        saverName="com.aimir.fep.meter.saver.DLMSClouMDSaver"
+    />   
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="CP"
+        pulseConst="100"
+        name="CL730D22L"
+        deviceModel="CL730D22L"
+        meterProtocol="DLMS"
+        parserName="com.aimir.fep.meter.parser.DLMSClou"
+        saverName="com.aimir.fep.meter.saver.DLMSClouMDSaver"
+    />               
+    
+    <!-- REALLIN -->
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="1P"
+        pulseConst="100"
+        name="REALLIN_1P"
+        deviceModel="REALLIN_1P"
+        meterProtocol="DLMS"
+        parserName="com.aimir.fep.meter.parser.DLMSReallin"
+        saverName="com.aimir.fep.meter.saver.DLMSReallinMDSaver"
+    />        
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="3P"
+        pulseConst="100"
+        name="REALLIN_3P"
+        deviceModel="REALLIN_3P"
+        meterProtocol="DLMS"
+        parserName="com.aimir.fep.meter.parser.DLMSReallin"
+        saverName="com.aimir.fep.meter.saver.DLMSReallinMDSaver"
+    />   
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="CT"
+        pulseConst="100"
+        name="REALLIN_CT"
+        deviceModel="REALLIN_CT"
+        meterProtocol="DLMS"
+        parserName="com.aimir.fep.meter.parser.DLMSReallin"
+        saverName="com.aimir.fep.meter.saver.DLMSReallinMDSaver"
+    />   
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="CP"
+        pulseConst="100"
+        name="REALLIN_CP"
+        deviceModel="REALLIN_CP"
+        meterProtocol="DLMS"
+        parserName="com.aimir.fep.meter.parser.DLMSReallin"
+        saverName="com.aimir.fep.meter.saver.DLMSReallinMDSaver"
+    />           
+    
+    <!-- Operation List -->       
+	<!-- DCU Command-->
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.1"	model="NDC-I531"	level="2"	desc="DCU Ping" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.2"	model="NDC-I531"	level="2"	desc="DCU Trace Route" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.3"	model="NDC-I531"	level="2"	desc="DCU Reset" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.4"	model="NDC-I531"	level="2"	desc="DCU Status Monitoring" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.5"	model="NDC-I531"	level="2"	desc="DCU OT" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.6"	model="NDC-I531"	level="2"	desc="DCU Schedule Get" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.7"	model="NDC-I531"	level="2"	desc="DCU Schedule Set" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.8"	model="NDC-I531"	level="2"	desc="DCU Schedule Delete" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.9"	model="NDC-I531"	level="2"	desc="DCU Schedule Execute" />	
+	
+	<!-- Modem Command-->
+	<!-- PLC modem -->
+ 	<device.OperationList  deviceTypeCode="1.2.1.18"  operationCode="8.2.3"   model="NAMR-C10ASR"    level="2"   desc="Modem OTA" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.18"  operationCode="8.2.3"   model="NAMR-C10BSR"    level="2"   desc="Modem OTA" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.18"  operationCode="8.2.3"   model="NAMR-C109SR"    level="2"   desc="Modem OTA" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.18"  operationCode="8.2.3"   model="NAMR-C10CSR"    level="2"   desc="Modem OTA" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.18"  operationCode="8.2.3"   model="NAMR-C10DSR"    level="2"   desc="Modem OTA" />
+ 	<!-- 3G modem -->
+ 	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.1"   model="NAMR-P400LT"    level="2"   desc="MModem Ping" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.2"   model="NAMR-P400LT"    level="2"   desc="Modem Trace Route" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.3"   model="NAMR-P400LT"    level="2"   desc="Modem OTA" /> 	 	
+ 	
+ 	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.1"   model="NAMR-P401LT"    level="2"   desc="MModem Ping" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.2"   model="NAMR-P401LT"    level="2"   desc="Modem Trace Route" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.3"   model="NAMR-P401LT"    level="2"   desc="Modem OTA" />
+ 	
+ 	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.1"   model="NAMR-P402LT"    level="2"   desc="MModem Ping" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.2"   model="NAMR-P402LT"    level="2"   desc="Modem Trace Route" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.3"   model="NAMR-P402LT"    level="2"   desc="Modem OTA" /> 	 	
+ 		
+ 		
+ 		
+	<!-- Meter Command-->
+	<!-- 1. EDMI_1P -->
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="EDMI_1P"    level="2"   paramType="2" desc="On Demand Metering(Meter)" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.2"   model="EDMI_1P"    level="2"   desc="Relay Status" />	
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="EDMI_1P"    level="2"   desc="Relay On" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="EDMI_1P"    level="2"   desc="Relay Off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="EDMI_1P"    level="2"   desc="Meter Time Synch" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.6"   model="EDMI_1P"    level="2"   desc="OBIS Get" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.7"   model="EDMI_1P"    level="2"   desc="OBIS Set" />
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="EDMI_1P"    level="2"   desc="Meter OTA" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="EDMI_1P"    level="2"   desc="Get Meter F/W Version" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="EDMI_1P"    level="2"   desc="Get Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.11"  model="EDMI_1P"    level="2"   desc="Set Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.12"  model="EDMI_1P"    level="2"   desc="Get Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.13"  model="EDMI_1P"    level="2"   desc="Set Current Load Limit" />	
+	<!-- 2. EDMI_3P -->
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="EDMI_3P"    level="2"   paramType="2" desc="On Demand Metering(Meter)" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.2"   model="EDMI_3P"    level="2"   desc="Relay Status" />	
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="EDMI_3P"    level="2"   desc="Relay On" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="EDMI_3P"    level="2"   desc="Relay Off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="EDMI_3P"    level="2"   desc="Meter Time Synch" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.6"   model="EDMI_3P"    level="2"   desc="OBIS Get" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.7"   model="EDMI_3P"    level="2"   desc="OBIS Set" />
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="EDMI_3P"    level="2"   desc="Meter OTA" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="EDMI_3P"    level="2"   desc="Get Meter F/W Version" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="EDMI_3P"    level="2"   desc="Get Tariff" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.11"  model="EDMI_3P"    level="2"   desc="Set Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.12"  model="EDMI_3P"    level="2"   desc="Get Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.13"  model="EDMI_3P"    level="2"   desc="Set Current Load Limit" />		
+	<!-- 3. EDMI_CT -->
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="EDMI_CT"    level="2"   paramType="2" desc="On Demand Metering(Meter)" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.2"   model="EDMI_CT"    level="2"   desc="Relay Status" />	
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="EDMI_CT"    level="2"   desc="Relay On" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="EDMI_CT"    level="2"   desc="Relay Off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="EDMI_CT"    level="2"   desc="Meter Time Synch" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.6"   model="EDMI_CT"    level="2"   desc="OBIS Get" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.7"   model="EDMI_CT"    level="2"   desc="OBIS Set" />
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="EDMI_CT"    level="2"   desc="Meter OTA" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="EDMI_CT"    level="2"   desc="Get Meter F/W Version" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="EDMI_CT"    level="2"   desc="Get Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.11"  model="EDMI_CT"    level="2"   desc="Set Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.12"  model="EDMI_CT"    level="2"   desc="Get Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.13"  model="EDMI_CT"    level="2"   desc="Set Current Load Limit" />		
+	<!-- 4. EDMI_CP -->
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="EDMI_CP"    level="2"   paramType="2" desc="On Demand Metering(Meter)" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.2"   model="EDMI_CP"    level="2"   desc="Relay Status" />	
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="EDMI_CP"    level="2"   desc="Relay On" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="EDMI_CP"    level="2"   desc="Relay Off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="EDMI_CP"    level="2"   desc="Meter Time Synch" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.6"   model="EDMI_CP"    level="2"   desc="OBIS Get" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.7"   model="EDMI_CP"    level="2"   desc="OBIS Set" />
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="EDMI_CP"    level="2"   desc="Meter OTA" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="EDMI_CP"    level="2"   desc="Get Meter F/W Version" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="EDMI_CP"    level="2"   desc="Get Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.11"  model="EDMI_CP"    level="2"   desc="Set Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.12"  model="EDMI_CP"    level="2"   desc="Get Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.13"  model="EDMI_CP"    level="2"   desc="Set Current Load Limit" />		
+
+	<!-- 1. CLOU_1P -->
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="CL710K22"    level="2"   paramType="2" desc="On Demand Metering(Meter)" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.2"   model="CL710K22"    level="2"   desc="Relay Status" />	
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="CL710K22"    level="2"   desc="Relay On" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="CL710K22"    level="2"   desc="Relay Off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="CL710K22"    level="2"   desc="Meter Time Synch" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.6"   model="CL710K22"    level="2"   desc="OBIS Get" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.7"   model="CL710K22"    level="2"   desc="OBIS Set" />
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="CL710K22"    level="2"   desc="Meter OTA" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="CL710K22"    level="2"   desc="Get Meter F/W Version" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="CL710K22"    level="2"   desc="Get Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.11"  model="CL710K22"    level="2"   desc="Set Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.12"  model="CL710K22"    level="2"   desc="Get Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.13"  model="CL710K22"    level="2"   desc="Set Current Load Limit" />	
+	<!-- 2. CLOU_3P -->
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="CL730S22"    level="2"   paramType="2" desc="On Demand Metering(Meter)" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.2"   model="CL730S22"    level="2"   desc="Relay Status" />	
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="CL730S22"    level="2"   desc="Relay On" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="CL730S22"    level="2"   desc="Relay Off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="CL730S22"    level="2"   desc="Meter Time Synch" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.6"   model="CL730S22"    level="2"   desc="OBIS Get" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.7"   model="CL730S22"    level="2"   desc="OBIS Set" />
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="CL730S22"    level="2"   desc="Meter OTA" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="CL730S22"    level="2"   desc="Get Meter F/W Version" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="CL730S22"    level="2"   desc="Get Tariff" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.11"  model="CL730S22"    level="2"   desc="Set Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.12"  model="CL730S22"    level="2"   desc="Get Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.13"  model="CL730S22"    level="2"   desc="Set Current Load Limit" />		
+	<!-- 3. CLOU_CT -->
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="CL730D22H"    level="2"   paramType="2" desc="On Demand Metering(Meter)" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.2"   model="CL730D22H"    level="2"   desc="Relay Status" />	
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="CL730D22H"    level="2"   desc="Relay On" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="CL730D22H"    level="2"   desc="Relay Off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="CL730D22H"    level="2"   desc="Meter Time Synch" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.6"   model="CL730D22H"    level="2"   desc="OBIS Get" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.7"   model="CL730D22H"    level="2"   desc="OBIS Set" />
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="CL730D22H"    level="2"   desc="Meter OTA" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="CL730D22H"    level="2"   desc="Get Meter F/W Version" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="CL730D22H"    level="2"   desc="Get Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.11"  model="CL730D22H"    level="2"   desc="Set Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.12"  model="CL730D22H"    level="2"   desc="Get Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.13"  model="CL730D22H"    level="2"   desc="Set Current Load Limit" />		
+	<!-- 4. CLOU_CP -->
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="CL730D22L"    level="2"   paramType="2" desc="On Demand Metering(Meter)" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.2"   model="CL730D22L"    level="2"   desc="Relay Status" />	
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="CL730D22L"    level="2"   desc="Relay On" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="CL730D22L"    level="2"   desc="Relay Off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="CL730D22L"    level="2"   desc="Meter Time Synch" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.6"   model="CL730D22L"    level="2"   desc="OBIS Get" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.7"   model="CL730D22L"    level="2"   desc="OBIS Set" />
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="CL730D22L"    level="2"   desc="Meter OTA" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="CL730D22L"    level="2"   desc="Get Meter F/W Version" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="CL730D22L"    level="2"   desc="Get Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.11"  model="CL730D22L"    level="2"   desc="Set Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.12"  model="CL730D22L"    level="2"   desc="Get Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.13"  model="CL730D22L"    level="2"   desc="Set Current Load Limit" />		
+	
+	<!-- 1. REALLIN_1P -->
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="REALLIN_1P"    level="2"   paramType="2" desc="On Demand Metering(Meter)" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.2"   model="REALLIN_1P"    level="2"   desc="Relay Status" />	
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="REALLIN_1P"    level="2"   desc="Relay On" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="REALLIN_1P"    level="2"   desc="Relay Off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="REALLIN_1P"    level="2"   desc="Meter Time Synch" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.6"   model="REALLIN_1P"    level="2"   desc="OBIS Get" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.7"   model="REALLIN_1P"    level="2"   desc="OBIS Set" />
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="REALLIN_1P"    level="2"   desc="Meter OTA" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="REALLIN_1P"    level="2"   desc="Get Meter F/W Version" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="REALLIN_1P"    level="2"   desc="Get Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.11"  model="REALLIN_1P"    level="2"   desc="Set Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.12"  model="REALLIN_1P"    level="2"   desc="Get Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.13"  model="REALLIN_1P"    level="2"   desc="Set Current Load Limit" />	
+	<!-- 2. REALLIN_3P -->
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="REALLIN_3P"    level="2"   paramType="2" desc="On Demand Metering(Meter)" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.2"   model="REALLIN_3P"    level="2"   desc="Relay Status" />	
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="REALLIN_3P"    level="2"   desc="Relay On" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="REALLIN_3P"    level="2"   desc="Relay Off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="REALLIN_3P"    level="2"   desc="Meter Time Synch" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.6"   model="REALLIN_3P"    level="2"   desc="OBIS Get" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.7"   model="REALLIN_3P"    level="2"   desc="OBIS Set" />
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="REALLIN_3P"    level="2"   desc="Meter OTA" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="REALLIN_3P"    level="2"   desc="Get Meter F/W Version" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="REALLIN_3P"    level="2"   desc="Get Tariff" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.11"  model="REALLIN_3P"    level="2"   desc="Set Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.12"  model="REALLIN_3P"    level="2"   desc="Get Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.13"  model="REALLIN_3P"    level="2"   desc="Set Current Load Limit" />		
+	<!-- 3. REALLIN_CT -->
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="REALLIN_CT"    level="2"   paramType="2" desc="On Demand Metering(Meter)" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.2"   model="REALLIN_CT"    level="2"   desc="Relay Status" />	
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="REALLIN_CT"    level="2"   desc="Relay On" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="REALLIN_CT"    level="2"   desc="Relay Off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="REALLIN_CT"    level="2"   desc="Meter Time Synch" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.6"   model="REALLIN_CT"    level="2"   desc="OBIS Get" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.7"   model="REALLIN_CT"    level="2"   desc="OBIS Set" />
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="REALLIN_CT"    level="2"   desc="Meter OTA" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="REALLIN_CT"    level="2"   desc="Get Meter F/W Version" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="REALLIN_CT"    level="2"   desc="Get Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.11"  model="REALLIN_CT"    level="2"   desc="Set Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.12"  model="REALLIN_CT"    level="2"   desc="Get Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.13"  model="REALLIN_CT"    level="2"   desc="Set Current Load Limit" />		
+	<!-- 4. REALLIN_CP -->
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="REALLIN_CP"    level="2"   paramType="2" desc="On Demand Metering(Meter)" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.2"   model="REALLIN_CP"    level="2"   desc="Relay Status" />	
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="REALLIN_CP"    level="2"   desc="Relay On" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="REALLIN_CP"    level="2"   desc="Relay Off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="REALLIN_CP"    level="2"   desc="Meter Time Synch" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.6"   model="REALLIN_CP"    level="2"   desc="OBIS Get" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.7"   model="REALLIN_CP"    level="2"   desc="OBIS Set" />
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="REALLIN_CP"    level="2"   desc="Meter OTA" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="REALLIN_CP"    level="2"   desc="Get Meter F/W Version" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="REALLIN_CP"    level="2"   desc="Get Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.11"  model="REALLIN_CP"    level="2"   desc="Set Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.12"  model="REALLIN_CP"    level="2"   desc="Get Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.13"  model="REALLIN_CP"    level="2"   desc="Set Current Load Limit" />		
+	
+	<!-- Display Channel -->
+    <mvm.DisplayChannel name="Active Energy Imp." localName="Active Energy Imp." serviceType="Electricity" unit="kWh" chMethod="MAX"/>
+    <mvm.DisplayChannel name="Active Energy Exp." localName="Active Energy Exp." serviceType="Electricity" unit="kWh" chMethod="MAX"/>
+    <mvm.DisplayChannel name="Reactive Energy Imp." localName="Reactive Energy Imp." serviceType="Electricity" unit="kVarh" chMethod="MAX"/>
+    <mvm.DisplayChannel name="Reactive Energy Exp." localName="Reactive Energy Exp." serviceType="Electricity" unit="kVarh" chMethod="MAX"/>	
+	
+	<!-- Meter Channel Config -->
+	<!-- 1. EDMI_1P -->
+    <mvm.ChannelConfig meterConfig="EDMI_1P" channel="Active Energy Imp." channelIndex="1" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="EDMI_1P" channel="Active Energy Exp." channelIndex="2" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="EDMI_1P" channel="Reactive Energy Imp." channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="EDMI_1P" channel="Reactive Energy Exp." channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />
+	<!-- 2. EDMI_3P -->
+    <mvm.ChannelConfig meterConfig="EDMI_3P" channel="Active Energy Imp." channelIndex="1" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="EDMI_3P" channel="Active Energy Exp." channelIndex="2" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="EDMI_3P" channel="Reactive Energy Imp." channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="EDMI_3P" channel="Reactive Energy Exp." channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />
+	<!-- 3. EDMI_CT -->
+    <mvm.ChannelConfig meterConfig="EDMI_CT" channel="Active Energy Imp." channelIndex="1" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="EDMI_CT" channel="Active Energy Exp." channelIndex="2" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="EDMI_CT" channel="Reactive Energy Imp." channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="EDMI_CT" channel="Reactive Energy Exp." channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />
+	<!-- 4. EDMI_CP -->
+    <mvm.ChannelConfig meterConfig="EDMI_CP" channel="Active Energy Imp." channelIndex="1" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="EDMI_CP" channel="Active Energy Exp." channelIndex="2" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="EDMI_CP" channel="Reactive Energy Imp." channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="EDMI_CP" channel="Reactive Energy Exp." channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />
+
+	<!-- 1. CLOU_1P -->
+    <mvm.ChannelConfig meterConfig="CL710K22" channel="Active Energy Imp." channelIndex="1" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="CL710K22" channel="Active Energy Exp." channelIndex="2" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="CL710K22" channel="Reactive Energy Imp." channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="CL710K22" channel="Reactive Energy Exp." channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />
+	<!-- 2. CLOU_3P -->
+    <mvm.ChannelConfig meterConfig="CL730S22" channel="Active Energy Imp." channelIndex="1" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="CL730S22" channel="Active Energy Exp." channelIndex="2" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="CL730S22" channel="Reactive Energy Imp." channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="CL730S22" channel="Reactive Energy Exp." channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />
+	<!-- 3. CLOU_CT -->
+    <mvm.ChannelConfig meterConfig="CL730D22H" channel="Active Energy Imp." channelIndex="1" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="CL730D22H" channel="Active Energy Exp." channelIndex="2" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="CL730D22H" channel="Reactive Energy Imp." channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="CL730D22H" channel="Reactive Energy Exp." channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />
+	<!-- 4. CLOU_CP -->
+    <mvm.ChannelConfig meterConfig="CL730D22L" channel="Active Energy Imp." channelIndex="1" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="CL730D22L" channel="Active Energy Exp." channelIndex="2" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="CL730D22L" channel="Reactive Energy Imp." channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="CL730D22L" channel="Reactive Energy Exp." channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />
+    
+	<!-- 1. REALLIN_1P -->
+    <mvm.ChannelConfig meterConfig="REALLIN_1P" channel="Active Energy Imp." channelIndex="1" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="REALLIN_1P" channel="Active Energy Exp." channelIndex="2" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="REALLIN_1P" channel="Reactive Energy Imp." channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="REALLIN_1P" channel="Reactive Energy Exp." channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />
+	<!-- 2. REALLIN_3P -->
+    <mvm.ChannelConfig meterConfig="REALLIN_3P" channel="Active Energy Imp." channelIndex="1" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="REALLIN_3P" channel="Active Energy Exp." channelIndex="2" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="REALLIN_3P" channel="Reactive Energy Imp." channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="REALLIN_3P" channel="Reactive Energy Exp." channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />
+	<!-- 3. REALLIN_CT -->
+    <mvm.ChannelConfig meterConfig="REALLIN_CT" channel="Active Energy Imp." channelIndex="1" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="REALLIN_CT" channel="Active Energy Exp." channelIndex="2" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="REALLIN_CT" channel="Reactive Energy Imp." channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="REALLIN_CT" channel="Reactive Energy Exp." channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />
+	<!-- 4. REALLIN_CP -->
+    <mvm.ChannelConfig meterConfig="REALLIN_CP" channel="Active Energy Imp." channelIndex="1" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="REALLIN_CP" channel="Active Energy Exp." channelIndex="2" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="REALLIN_CP" channel="Reactive Energy Imp." channelIndex="3" dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="REALLIN_CP" channel="Reactive Energy Exp." channelIndex="4" dataType="LpEM" displayType="SaveAndDisplay" />    
+
+</dataset>    

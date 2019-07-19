@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:property-placeholder location="config/schedule.properties"/>
+
+    <!-- Configurer that replaces ${...} placeholders with values from a properties file -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="initialSize" value="5"/>
+        <property name="maxActive" value="15"/>
+        <property name="maxIdle" value="10"/>
+        <!--  <property name="validationQuery" value="select 1 from dual"/> -->
+        <property name="testOnBorrow" value="true"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+    </bean>
+
+    <bean id="auditDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="initialSize" value="5"/>
+        <property name="maxActive" value="15"/>
+        <property name="maxIdle" value="10"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+    </bean>
+
+    <bean id="auditSessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="auditDataSource" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.bytecode.use_reflection_optimizer">false</prop>
+                <prop key="hibernate.use_sql_comments">true</prop>
+<!--                <prop key="hibernate.hbm2ddl.auto">update</prop> -->
+                <prop key="hibernate.connection.autocommit">false</prop>
+            </props>
+        </property>
+        <property name="annotatedClasses">
+            <list>
+                <value>com.aimir.model.system.AuditLog</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="auditLogInterceptor" class="com.aimir.audit.AuditLogInterceptor">
+        <property name="transactionManager" ref="auditTransactionManager"/>
+    </bean>
+    
+    <bean id="auditTransactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="auditSessionFactory"/>
+    </bean>
+
+    <bean id="sessionContextFactory" class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
+    	<property name="targetBeanName" value="sessionContext" />
+    </bean>
+    
+    <!-- Annotation Support Hibernate Session Factory -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="entityInterceptor" ref="auditLogInterceptor"/>   
+        <property name="dataSource" ref="dataSource" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.bytecode.use_reflection_optimizer">true</prop>
+                <prop key="hibernate.use_sql_comments">false</prop>
+                <!--<prop key="hibernate.hbm2ddl.auto">create-drop</prop>-->
+                <!--<prop key="hibernate.hbm2ddl.auto">create</prop> -->
+                <prop key="hibernate.hbm2ddl.auto">false</prop>
+                <prop key="hibernate.connection.autocommit">false</prop>
+                <!--<prop key="hibernate.query.substitutions">Y</prop>-->
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_second_level_cache">org.hibernate.cache.EhCacheProvider</prop>
+                <!-- Turn batching off for better error messages under PostgreSQL>-->
+                <!--prop key="hibernate.jdbc.batch_size">0</prop-->
+                <!-- 0:none, 1:read_uncommitted, 2:read_committed, 4:repeatable_read, 8:serializable -->
+                <prop key="hibernate.connection.isolation">4</prop>
+                <prop key="hibernate.transaction.flush_before_completion">true</prop>
+                <prop key="hibernate.transaction.auto_close_session">false</prop>
+            </props>
+        </property>
+        <property name="packagesToScan" value="com.aimir.model.*"/>
+    </bean>
+
+    <!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    <!-- Activates scanning of @Autowired -->            
+    <context:annotation-config/>
+
+    <!-- Scans for @Repository, @Service -->
+    <context:component-scan base-package="com.aimir">
+        <context:exclude-filter type="regex" expression="com\.aimir\.fep.*"/>
+    </context:component-scan>
+    
+    <!-- Enable @Transactional support -->
+    <tx:annotation-driven/>
+
+    <!-- Enable @AspectJ support -->
+    <aop:aspectj-autoproxy/>
+    
+    <!--  Schedule -->
+    <!-- <bean id="deleteSensorJob" class="com.aimir.schedule.job.DeleteSensorJob" /> -->
+    <bean id="MOEBalanceMonitorDemoTask" class="com.aimir.schedule.task.MOEBalanceMonitorDemoTask" />
+    <bean id="MOEBalanceMonitorDemo1Task" class="com.aimir.schedule.task.MOEBalanceMonitorDemo1Task" />
+    <bean id="MOEBlockDailyEMBillingInfoSaveTask" class="com.aimir.schedule.task.MOEBlockDailyEMBillingInfoSaveV2Task" />
+<!--     <bean id="BalanceMonitoringTask" class="com.aimir.schedule.task.BalanceMonitorV2Task"/>   -->
+    <bean id="prepaySendSMSTask" class="com.aimir.schedule.task.PrepaySendSMSMOETask"/>
+<!--    <bean id="sendUsageSMSTask" class="com.aimir.schedule.task.PrepaySendUsageSMSTask"/> -->
+    <bean id="mcuUnitScanningTask" class="com.aimir.schedule.task.McuUnitScanningTask"/>
+
+    <bean name="1_MOEBalanceMonitorDemoJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="com.aimir.schedule.job.MOEBalanceMonitorDemoJob"/>
+    </bean>
+    
+    <bean name="3_MOEBalanceMonitorDemoJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="com.aimir.schedule.job.MOEBalanceMonitorDemo1Job"/>
+    </bean>
+
+    <bean name="BlockTariffCalculateJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="com.aimir.schedule.job.MOEDailyBillingInfoSaveJob"/>
+    </bean>
+
+    <bean name="BalanceMonitoringJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="com.aimir.schedule.job.MOEBalanceMonitorJob"/>
+    </bean>
+
+    <bean name="PrepaySendSMSJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="com.aimir.schedule.job.PrepaySendSMSMOEJob"/>
+    </bean>
+
+<!--     <bean name="PrepaySendUsageSMSJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="com.aimir.schedule.job.PrepaySendUsageSMSJob"/>
+    </bean>
+    -->
+    <bean name="McuUnitScanningJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="com.aimir.schedule.job.McuUnitScanningJob"/>
+    </bean>
+
+    <!-- Simple Trigger 
+    <bean id="simpleTrigger"
+        class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+        
+        <property name="jobDetail" ref="runMeJob" />
+        <property name="repeatInterval" value="5000" />
+        <property name="startDelay" value="1000" />
+        
+    </bean>
+-->
+     
+    <bean id="blockTariffCalculateTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="BlockTariffCalculateJob"/>
+        <property name="cronExpression" value="0 0 * * * ?" />
+    </bean>
+
+    <bean id="balanceMonitoringTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="BalanceMonitoringJob"/>
+        <property name="cronExpression" value="0 15 * * * ?" />
+    </bean>
+
+    <bean id="prepaySendSMSTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="PrepaySendSMSJob"/>
+        <property name="cronExpression" value="0 30 10 * * ?" />
+    </bean>
+<!--     
+    <bean id="prepaySendUsageSMSTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="PrepaySendUsageSMSJob"/>
+        <property name="cronExpression" value="0 30 10 * * ?" />
+    </bean>    
+-->    
+    <bean id="moeBalanceMonitorDemoTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="1_MOEBalanceMonitorDemoJob"/>
+        <property name="cronExpression" value="0 0 0 1 3 ?" />
+    </bean>
+    
+    <bean id="moeBalanceMonitorDemo1Trigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="3_MOEBalanceMonitorDemoJob"/>
+        <property name="cronExpression" value="0 0 0 1 3 ?" />
+    </bean>    
+    
+    <bean id="mcuUnitScanningTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="McuUnitScanningJob"/>
+        <property name="cronExpression" value="0 15 0 ? * 1" />
+    </bean>    
+
+    <bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="jobDetails">
+            <list>
+	            <ref bean="BlockTariffCalculateJob" />  
+	            <ref bean="BalanceMonitoringJob" />  
+	            <ref bean="PrepaySendSMSJob" />   
+	    <!--        <ref bean="PrepaySendUsageSMSJob" />   -->
+	            <ref bean="1_MOEBalanceMonitorDemoJob" />
+	            <ref bean="3_MOEBalanceMonitorDemoJob" /> 
+	    <!--    <ref bean="McuUnitScanningJob" />   -->
+            </list>
+        </property>
+        
+        <property name="triggers">
+            <list>
+ 	            <ref bean="blockTariffCalculateTrigger" />    
+	            <ref bean="balanceMonitoringTrigger" />  
+	            <ref bean="prepaySendSMSTrigger" />
+     <!--       <ref bean="prepaySendUsageSMSTrigger" />  -->
+	            <ref bean="moeBalanceMonitorDemoTrigger" />
+	            <ref bean="moeBalanceMonitorDemo1Trigger" />
+	 <!--    	<ref bean="mcuUnitScanningTrigger" />   -->
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="mbeanExporter" class="org.springframework.jmx.export.MBeanExporter">
+       <property name="beans">
+           <map>
+               <entry key="Adapter:name=Scheduler" value-ref="schedulerFactory"/>
+           </map>
+       </property>
+       <property name="registrationBehaviorName" value="REGISTRATION_REPLACE_EXISTING"/>
+    </bean>
+</beans>

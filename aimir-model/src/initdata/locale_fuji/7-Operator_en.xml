@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Operator loginId="admin" aliasName="administrator" email="admin@nuritelecom.com" failedLoginCount="0" 
+        name="Nuritelecom" password="hQXOwYy2SzvjPduK5ESBqwwaCAFQWFdQtJAQuQiM57NZ1duCOKDjMaIsPBTSx6iU01eHOPA933Zl7lKLk5yTvg==" telNo="027810740" loginDenied="false" 
+        role="admin"
+        showDefaultDashboard="true"
+        supplier="NURI"/>
+        
+    <system.Operator loginId="customer" aliasName="customer" email="customer@nuritelecom.com" failedLoginCount="0" 
+        name="customer" password="jeZc3/DKvHt8VSnoUKM7SR8FXVh34XKh8+H3JVyYPY5AU5el9tCYKos+PN3Zv9IjPbmcdmbgkB/brPfEoy5gYA==" telNo="027810740" loginDenied="false" 
+        role="customer"
+        showDefaultDashboard="true"
+        supplier="NURI"/>
+</dataset>
+
+
+
+
+
+
+

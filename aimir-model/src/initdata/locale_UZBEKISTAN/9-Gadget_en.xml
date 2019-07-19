@@ -1,0 +1,572 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Gadget
+        descr="Code Management"
+        iconSrc="assets/images/gadget_en/code.gif"
+        maxUrl="system/code_manager_max.do"
+        miniUrl="system/code_manager_mini.do"
+        name="Code Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system001"
+    />
+    <system.Gadget
+        descr="Metering Data(Electricity)"
+        iconSrc="assets/images/gadget_en/meteringdata.gif"
+        maxUrl="mvm/mvmMaxGadgetEM.do"
+        miniUrl="mvm/mvmMiniGadgetEM.do"
+        name="Metering Data(Electricity)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering001"
+    />  
+    <system.Gadget
+        descr="Metering Data(Gas)"
+        iconSrc="assets/images/gadget_en/meteringdata.gif"
+        maxUrl="mvm/mvmMaxGadgetGM.do"
+        miniUrl="mvm/mvmMiniGadgetGM.do"
+        name="Metering Data(Gas)"
+        miniHeight="350"
+        fullHeight="1200"
+        gadgetCode="gadget.metering002"
+    /> 
+    <system.Gadget
+        descr="Metering Data(Water)"
+        iconSrc="assets/images/gadget_en/meteringdata.gif"
+        maxUrl="mvm/mvmMaxGadgetWM.do"
+        miniUrl="mvm/mvmMiniGadgetWM.do"
+        name="Metering Data(Water)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering003"
+    /> 
+    <system.Gadget
+        descr="Metering Data(Heat)"
+        iconSrc="assets/images/gadget_en/meteringdata.gif"
+        maxUrl="mvm/mvmMaxGadgetHM.do"
+        miniUrl="mvm/mvmMiniGadgetHM.do"
+        name="Metering Data(Heat)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering004"
+    /> 
+    <system.Gadget
+        descr="Device Vendor Model"
+        iconSrc="assets/images/gadget_en/vendormodel.gif"
+        maxUrl="system/devicemodelMax.do"
+        miniUrl="system/devicemodelMini.do"
+        name="Device Vendor Model"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system002"
+    />  
+    <system.Gadget
+        descr="Supplier Management"
+        iconSrc="assets/images/gadget_en/supplier.gif"
+        maxUrl="system/supplier/supplierMgmtMax.do"
+        miniUrl="system/supplier/supplierMgmtMini.do"
+        name="Supplier Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system003"
+    />  
+    <system.Gadget
+        descr="User Management"
+        iconSrc="assets/images/gadget_en/user.gif"
+        maxUrl="system/operatorMgmtMax.do"
+        miniUrl="system/operatorMgmtMini.do"
+        name="User Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system004"
+    />
+    <system.Gadget
+        descr="Concentrator Management"
+        iconSrc="assets/images/gadget_en/mcu.gif"
+        maxUrl="device/mcuMaxGadget.do"
+        miniUrl="device/mcuMiniGadget.do"
+        name="Concentrator Management"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device001"
+    />
+    <system.Gadget
+        descr="Capacity over the contract customers(Electricity)"
+        iconSrc="assets/images/gadget_en/abnormalcontract.gif"
+        maxUrl="mvm/abnormalContractUsageEmMaxGadget.do"
+        miniUrl="mvm/abnormalContractUsageEmMiniGadget.do"
+        name="Abnormal contract customers(Electricity)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering024"
+    />
+    <system.Gadget
+        descr="Communication Log"
+        iconSrc="assets/images/gadget_en/commlog.gif"
+        maxUrl="device/commLog/commLogMaxGadget.do"
+        miniUrl="device/commLog/commLogMiniGadget.do"
+        name="Communication Log"
+        miniHeight="350"
+        fullHeight="1600"
+        gadgetCode="gadget.device006"
+    />
+    <system.Gadget
+        descr="Memo"
+        iconSrc="assets/images/gadget_en/memo.gif"
+        maxUrl="system/memoMax.do"
+        miniUrl="system/memoMini.do"
+        name="Memo"
+        miniHeight="170"
+        fullHeight="800"
+        gadgetCode="gadget.system005"
+    />
+    <system.Gadget
+        descr="Notice"
+        iconSrc="assets/images/gadget_en/notice.gif"
+        maxUrl="system/noticeMax.do"
+        miniUrl="system/noticeMini.do"
+        name="Notice"
+        miniHeight="170"
+        fullHeight="800"
+        gadgetCode="gadget.system006"
+    />
+    
+    <system.Gadget
+        descr="Change Log"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="device/changeLogMaxGadget.do"
+        miniUrl="device/changeLogMiniGadget.do"
+        name="Change Log"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system007"
+    />
+    
+    <system.Gadget
+        descr="Operation Management"
+        iconSrc="assets/images/gadget_en/operation.gif"
+        maxUrl="device/operationLog/operationLogMaxGadget.do"
+        miniUrl="device/operationLog/operationLogMiniGadget.do"
+        name="Operation Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system008"
+    />
+    
+    <system.Gadget
+        descr="Event and Alarm"
+        iconSrc="assets/images/gadget_en/event.gif"
+        maxUrl="device/eventAlert/eventAlertLogMax.do"
+        miniUrl="device/eventAlert/eventAlertLogMini.do"
+        name="Event Alarm Log"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.device005"
+    />
+    
+    <system.Gadget
+        descr="Metering Fail(Electricity)"
+        iconSrc="assets/images/gadget_en/meteringfail.gif"
+        maxUrl="mvm/meteringFailureEmMaxGadget.do"
+        miniUrl="mvm/meteringFailureEmMiniGadget.do"
+        name="Metering Fail(Electricity)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering005"
+    />
+    <system.Gadget
+        descr="Metering Fail(Heat)"
+        iconSrc="assets/images/gadget_en/meteringfail.gif"
+        maxUrl="mvm/meteringFailureHmMaxGadget.do"
+        miniUrl="mvm/meteringFailureHmMiniGadget.do"
+        name="Metering Fail(Heat)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering006"
+    />
+    <system.Gadget
+        descr="Metering Fail(Gas)"
+        iconSrc="assets/images/gadget_en/meteringfail.gif"
+        maxUrl="mvm/meteringFailureGmMaxGadget.do"
+        miniUrl="mvm/meteringFailureGmMiniGadget.do"
+        name="Metering Fail(Gas)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering007"
+    />
+    <system.Gadget
+        descr="Metering Fail(Water)"
+        iconSrc="assets/images/gadget_en/meteringfail.gif"
+        maxUrl="mvm/meteringFailureWmMaxGadget.do"
+        miniUrl="mvm/meteringFailureWmMiniGadget.do"
+        name="Metering Fail(Water)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering008"
+    />
+    <system.Gadget
+        descr="Customer and Contract"
+        iconSrc="assets/images/gadget_en/customer.gif"
+        maxUrl="system/customerMax.do"
+        miniUrl="system/customerMini.do"
+        name="Customer and Contract"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.system010"
+    />
+    
+    <system.Gadget
+        descr="Data Gaps(Electricity)"
+        iconSrc="assets/images/gadget_en/datagaps.gif"
+        maxUrl="mvm/dataGapsEmMaxGadget.do"
+        miniUrl="mvm/dataGapsEmMiniGadget.do"
+        name="Data Gaps(Electricity)"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.metering008"
+    />
+    <system.Gadget
+        descr="Data Gaps(Gas)"
+        iconSrc="assets/images/gadget_en/datagaps.gif"
+        maxUrl="mvm/dataGapsGmMaxGadget.do"
+        miniUrl="mvm/dataGapsGmMiniGadget.do"
+        name="Data Gaps(Gas)"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.metering009"
+    />
+    <system.Gadget
+        descr="Data Gaps(Water)"
+        iconSrc="assets/images/gadget_en/datagaps.gif"
+        maxUrl="mvm/dataGapsWmMaxGadget.do"
+        miniUrl="mvm/dataGapsWmMiniGadget.do"
+        name="Data Gaps(Water)"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.metering010"
+    />
+    <system.Gadget
+        descr="Data Gaps(Heat)"
+        iconSrc="assets/images/gadget_en/datagaps.gif"
+        maxUrl="mvm/dataGapsHmMaxGadget.do"
+        miniUrl="mvm/dataGapsHmMiniGadget.do"
+        name="Data Gaps(Heat)"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.metering011"
+    />
+    <system.Gadget
+        descr="Consumption Ranking(Electricity)"
+        iconSrc="assets/images/gadget_en/consumptionrank.gif"
+        maxUrl="mvm/consumptionRankingEmMaxGadget.do"
+        miniUrl="mvm/consumptionRankingEmMiniGadget.do"
+        name="Consumption Ranking(Electricity)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering012"
+    />    
+    <system.Gadget
+        descr="Consumption Ranking(Gas)"
+        iconSrc="assets/images/gadget_en/consumptionrank.gif"
+        maxUrl="mvm/consumptionRankingGmMaxGadget.do"
+        miniUrl="mvm/consumptionRankingGmMiniGadget.do"
+        name="Consumption Ranking(Gas)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering013"
+    />
+    <system.Gadget
+        descr="Consumption Ranking(Water)"
+        iconSrc="assets/images/gadget_en/consumptionrank.gif"
+        maxUrl="mvm/consumptionRankingWmMaxGadget.do"
+        miniUrl="mvm/consumptionRankingWmMiniGadget.do"
+        name="Consumption Ranking(Water)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering014"
+    />
+    <system.Gadget
+        descr="Consumption Ranking(Heat)"
+        iconSrc="assets/images/gadget_en/consumptionrank.gif"
+        maxUrl="mvm/consumptionRankingHmMaxGadget.do"
+        miniUrl="mvm/consumptionRankingHmMiniGadget.do"
+        name="Consumption Ranking(Heat)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering015"
+    />
+    <system.Gadget
+        descr="Modem Management"
+        iconSrc="assets/images/gadget_en/modem.gif"
+        maxUrl="device/modemMaxGadget.do"
+        miniUrl="device/modemMiniGadget.do"
+        name="Modem Management"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device002"
+    />        
+
+    <system.Gadget
+        descr="Meter Management"
+        iconSrc="assets/images/gadget_en/meter.gif"
+        maxUrl="device/meterMaxGadget.do"
+        miniUrl="device/meterMiniGadget.do"
+        name="Meter Management"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device003"
+    />
+        
+    <system.Gadget
+        descr="Device Registration"
+        iconSrc="assets/images/gadget_en/devicereg.gif"
+        maxUrl="device/deviceRegistrationMaxGadget.do"
+        miniUrl="device/deviceRegistrationMiniGadget.do"
+        name="Device Registration"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device004"
+    /> 
+    
+    <system.Gadget
+        descr="Meter Time Management"
+        iconSrc="assets/images/gadget_en/meteringtime.gif"
+        maxUrl="device/meterTimeMaxGadget.do"
+        miniUrl="device/meterTimeMiniGadget.do"
+        name="Meter Time Management"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device007"
+    />
+    
+    <system.Gadget
+        descr="Electricity sales"
+        iconSrc="assets/images/gadget_en/sales.gif"
+        maxUrl="mvm/elecBillingMaxGadget.do"
+        miniUrl="mvm/elecBillingMiniGadget.do"
+        name="Energy Management(Electricity)"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.metering016"
+    />  
+    <system.Gadget
+        descr="Gas sales"
+        iconSrc="assets/images/gadget_en/sales.gif"
+        maxUrl="mvm/gasBillingMaxGadget.do"
+        miniUrl="mvm/gasBillingMiniGadget.do"
+        name="Energy Management(Gas)"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.metering017"
+    />  
+    <system.Gadget
+        descr="Water sales"
+        iconSrc="assets/images/gadget_en/sales.gif"
+        maxUrl="mvm/waterBillingMaxGadget.do"
+        miniUrl="mvm/waterBillingMiniGadget.do"
+        name="Energy Management(Water)"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.metering018"
+    />  
+    <system.Gadget
+        descr="Heat sales"
+        iconSrc="assets/images/gadget_en/sales.gif"
+        maxUrl="mvm/heatBillingMaxGadget.do"
+        miniUrl="mvm/heatBillingMiniGadget.do"
+        name="Energy Management(Heat)"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.metering019"
+    />      
+    <system.Gadget
+        descr="Demand Management"
+        iconSrc="assets/images/gadget_en/demand.gif"
+        maxUrl="mvm/demandManagementMax.do"
+        miniUrl="mvm/demandManagementMini.do"
+        name="Demand Management"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.metering020"
+    />    
+    <system.Gadget
+        descr="Power Quality Management"
+        iconSrc="assets/images/gadget_en/powerquality.gif"
+        maxUrl="mvm/powerQualityMaxGadget.do"
+        miniUrl="mvm/powerQualityMiniGadget.do"
+        name="Power Quality"
+        miniHeight="500"
+        fullHeight="1548"
+        gadgetCode="gadget.metering021"
+    />
+    <system.Gadget
+        descr="Power Outage Management"
+        iconSrc="assets/images/gadget_ko/poweralarm.gif"
+        maxUrl="device/powerAlarmLogMaxGadget.do"
+        miniUrl="device/powerAlarmLogMiniGadget.do"
+        name="Power Outage Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.device009"
+    /> 
+    <system.Gadget
+        descr="Metring SLA"
+        iconSrc="assets/images/gadget_en/meteringsla.gif"
+        maxUrl="mvm/meteringSLAMaxGadget.do"
+        miniUrl="mvm/meteringSLAMiniGadget.do"
+        name="Metring SLA"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering022"
+    />  
+    <system.Gadget
+        descr="Google Map For Device"
+        iconSrc="assets/images/gadget_en/googlemap.gif"
+        maxUrl="device/GoogleMapMax.do"
+        miniUrl="device/GoogleMapMini.do"
+        name="Google Map For Device"
+        miniHeight="500"
+        fullHeight="640"
+        gadgetCode="gadget.device008"
+    />     
+    <system.Gadget
+        descr="Power Fail Restore Alarm Line Missing Alarm"
+        iconSrc="assets/images/gadget_en/poweralarm.gif"
+        maxUrl="device/powerAlarmLogMaxGadget.do"
+        miniUrl="device/powerAlarmLogMiniGadget.do"
+        name="PowerAlarmLog"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.descr.device009"
+    />  
+    <system.Gadget
+        descr="Circuit Breaker Management(Electricity supply block or resume)"
+        iconSrc="assets/images/gadget_en/circuitbreaker.gif"
+        maxUrl="system/supplyCapacityMaxGadget.do"
+        miniUrl="system/supplyCapacityMiniGadget.do"
+        name="Circuit Breaker Management"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.descr.device010"
+    />   
+    <system.Gadget
+        descr="VEE (Metering Data Validation, Estimation, Editing)"
+        iconSrc="assets/images/gadget_en/vee.gif"
+        maxUrl="mvm/VEEManagementEmMaxGadget.do"
+        miniUrl="mvm/VEEManagementEmMiniGadget.do"
+        name="VEE Management(Electricity)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering023"
+    />  
+    <system.Gadget
+        descr="VEE (Metering Data Validation, Estimation, Editing)"
+        iconSrc="assets/images/gadget_en/vee.gif"
+        maxUrl="mvm/VEEManagementGmMaxGadget.do"
+        miniUrl="mvm/VEEManagementGmMiniGadget.do"
+        name="VEE Management(Gas)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering023"
+    /> 
+    <system.Gadget
+        descr="VEE (Metering Data Validation, Estimation, Editing)"
+        iconSrc="assets/images/gadget_en/vee.gif"
+        maxUrl="mvm/VEEManagementWmMaxGadget.do"
+        miniUrl="mvm/VEEManagementWmMiniGadget.do"
+        name="VEE Management(Water)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering023"
+    /> 
+    <system.Gadget
+        descr="VEE (Metering Data Validation, Estimation, Editing)"
+        iconSrc="assets/images/gadget_en/vee.gif"
+        maxUrl="mvm/VEEManagementHmMaxGadget.do"
+        miniUrl="mvm/VEEManagementHmMiniGadget.do"
+        name="VEE Management(Heat)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering023"
+    />   
+    <system.Gadget
+        descr="Modem Battery Management (Battery voltage Log)"
+        iconSrc="assets/images/gadget_en/batterylog.gif"
+        maxUrl="device/batteryLogMaxGadget.do"
+        miniUrl="device/batteryLogMiniGadget.do"
+        name="Battery Log"
+        miniHeight="350"
+        fullHeight="1200"
+        gadgetCode="gadget.device011"
+    />    
+    <system.Gadget
+        descr="Group Management(Equipment, customers, users, and are grouped together.)"
+        iconSrc="assets/images/gadget_en/group.gif"
+        maxUrl="system/groupManagementMiniGadget.do"
+        miniUrl="system/groupManagementMiniGadget.do"
+        name="Group Management"
+        miniHeight="500"
+        fullHeight="1000"
+        gadgetCode="gadget.system009"
+    />
+    <system.Gadget
+        descr="Load Management(Load Control, Limit, Shed, DR customer and so on)"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="device/loadManagementMaxGadget.do"
+        miniUrl="device/loadManagementMiniGadget.do"
+        name="Load Management"
+        miniHeight="500"
+        fullHieght="1000"
+        gadgetCode="gadget.device012"   
+    />
+    <system.Gadget
+        descr="Firmware Distribute, Upgrade, File Management"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="device/firmware/firmwareMgmtMaxGadget.do"
+        miniUrl="device/firmware/firmwareMgmtMiniGadget.do"
+        name="Firmware Management"
+        miniHeight="500"
+        fullHieght="1000"   
+        gadgetCode="gadget.device014"
+    />
+    <system.Gadget
+        descr="Billing Report(Electricity), Daily, Monthly TOU Data"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="mvm/mvmReportMaxGadget.do"
+        miniUrl="mvm/mvmReportMiniGadget.do"
+        name="TOU Report(Electricity)"
+        miniHeight="500"
+        fullHieght="1000"   
+        gadgetCode="gadget.metering025" 
+    />
+    <system.Gadget
+        descr="Meter Event Log"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="device/meterEventLogMax.do"
+        miniUrl="device/meterEventLogMini.do"
+        name="Meter Event Log"
+        miniHeight="500"
+        fullHieght="1000"   
+        gadgetCode="gadget.device013"   
+    />
+   <system.Gadget
+        descr="Prepayment Customer Management"
+        iconSrc="assets/images/gadget_en/prepayCustomerMgmt.gif"
+        maxUrl="prepaymentMgmt/prepaymentMgmtOperatorMax.do"
+        miniUrl="prepaymentMgmt/prepaymentMgmtOperatorMini.do"
+        name="Prepayment Customer Management"
+        miniHeight="600"
+        fullHeight="800"
+        gadgetCode="gadget.system200"
+    />
+    <system.Gadget
+        descr="Energy Balance Monitoring"
+        iconSrc="assets/images/gadget_en/thumbnail.gif"
+        maxUrl="system/energyBalanceMonitoringMax.do"
+        miniUrl="system/energyBalanceMonitoringMini.do"
+        name="Energy Balance Monitoring"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.system201"
+    />
+</dataset>

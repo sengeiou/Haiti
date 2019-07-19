@@ -1,0 +1,89 @@
+DROP TABLE DAY_EM;
+DROP TABLE DAY_WM;
+DROP TABLE DAY_GM;
+DROP TABLE DAY_HM;
+
+DECLARE
+  STMT_DDL VARCHAR2(4000);
+BEGIN
+  FOR TABLENAME IN (select 'EM' as name from dual union select 'GM' as name from dual union select 'WM' from dual union select 'HM' from dual)
+  LOOP
+    STMT_DDL := 'CREATE TABLE DAY_'||TABLENAME.name||' '||CHR(10)||
+                '( '||CHR(10)||
+                '  BASEVALUE      NUMBER(19,4),  '||CHR(10)||
+                '  CONTRACT_ID    NUMBER(10),    '||CHR(10)||
+                '  DAY_TYPE       NUMBER(10) ,   '||CHR(10)||
+                '  DEVICE_ID      VARCHAR2(20) , '||CHR(10)||
+                '  DEVICE_TYPE    VARCHAR2(255), '||CHR(10)||
+                '  ENDDEVICE_ID   NUMBER(10),    '||CHR(10)||
+                '  FULL_LOCATION  VARCHAR2(255), '||CHR(10)||
+                '  LOCATION_ID    NUMBER(10),    '||CHR(10)||
+                '  METER_ID       NUMBER(10),    '||CHR(10)||
+                '  METERINGTYPE   NUMBER(10),    '||CHR(10)||
+                '  MODEM_ID       NUMBER(10),    '||CHR(10)||
+                '  SEND_RESULT    VARCHAR2(255), '||CHR(10)||
+                '  SIC            VARCHAR2(20),  '||CHR(10)||
+                '  SUPPLIER_ID    NUMBER(10),    '||CHR(10)||
+                '  TOTAL          NUMBER(19,4),  '||CHR(10)||
+                '  MDEV_ID        VARCHAR2(20) NOT NULL,  '||CHR(10)||
+                '  MDEV_ID_LAST   VARCHAR2(1 CHAR) GENERATED ALWAYS AS (SUBSTR(MDEV_ID,LENGTH(MDEV_ID),1)) VIRTUAL, '||CHR(10)||
+                '  MDEV_TYPE      VARCHAR2(20) NOT NULL,  '||CHR(10)||
+                '  DST            NUMBER(38)   DEFAULT 0, '||CHR(10)||
+                '  YYYYMMDD       VARCHAR2(8)  NOT NULL,  '||CHR(10)||
+                '  CHANNEL        NUMBER(10)   NOT NULL,  '||CHR(10);
+    FOR IDX IN 0..23
+    LOOP
+      STMT_DDL := STMT_DDL || '  VALUE_'||TRIM(TO_CHAR(IDX,'00'))||' NUMBER(19,4), '||CHR(10);
+    END LOOP;
+    STMT_DDL := STMT_DDL || '  WRITEDATE VARCHAR2(14), '||CHR(10)||
+                            '  CONSTRAINT DAY_'||TABLENAME.name||'_PK PRIMARY KEY (YYYYMMDD,CHANNEL,DST,MDEV_ID,MDEV_TYPE), '||CHR(10)||
+                            '  CONSTRAINT DAY_'||TABLENAME.name||'_ENDDEVICE_ID_FK FOREIGN KEY(ENDDEVICE_ID) REFERENCES ENDDEVICE(ID), '||CHR(10)||
+                            '  CONSTRAINT DAY_'||TABLENAME.name||'_LOCATION_ID_FK FOREIGN KEY(LOCATION_ID) REFERENCES LOCATION(ID), '||CHR(10)||
+                            '  CONSTRAINT DAY_'||TABLENAME.name||'_SUPPLIER_ID_FK FOREIGN KEY(SUPPLIER_ID) REFERENCES SUPPLIER(ID), '||CHR(10)||
+                            '  CONSTRAINT DAY_'||TABLENAME.name||'_MODEM_ID_FK FOREIGN KEY(MODEM_ID) REFERENCES MODEM(ID), '||CHR(10)||
+                            '  CONSTRAINT DAY_'||TABLENAME.name||'_METER_ID_FK FOREIGN KEY(METER_ID) REFERENCES METER(ID), '||CHR(10)||
+                            '  CONSTRAINT DAY_'||TABLENAME.name||'_CONTRACT_ID_FK FOREIGN KEY(CONTRACT_ID) REFERENCES CONTRACT(ID) '||CHR(10)||
+                            ') '||CHR(10)||
+                            'PARTITION BY RANGE(YYYYMMDD) '||CHR(10)||
+                            'SUBPARTITION BY LIST (MDEV_ID_LAST) '||CHR(10)||
+                            '   SUBPARTITION TEMPLATE '||CHR(10)||
+                            '   ( '||CHR(10)||
+                            '      SUBPARTITION ID0 VALUES (''0''), '||CHR(10)||
+                            '      SUBPARTITION ID1 VALUES (''1''), '||CHR(10)||
+                            '      SUBPARTITION ID2 VALUES (''2''), '||CHR(10)||
+                            '      SUBPARTITION ID3 VALUES (''3''), '||CHR(10)||
+                            '      SUBPARTITION ID4 VALUES (''4''), '||CHR(10)||
+                            '      SUBPARTITION ID5 VALUES (''5''), '||CHR(10)||
+                            '      SUBPARTITION ID6 VALUES (''6''), '||CHR(10)||
+                            '      SUBPARTITION ID7 VALUES (''7''), '||CHR(10)||
+                            '      SUBPARTITION ID8 VALUES (''8''), '||CHR(10)||
+                            '      SUBPARTITION ID9 VALUES (''9''), '||CHR(10)||
+                            '      SUBPARTITION IDA VALUES (DEFAULT) '||CHR(10)||
+                            '   ) '||CHR(10)||
+                            '( '||CHR(10)||
+                            '  PARTITION PART'||TO_CHAR(CURRENT_DATE,'YYYYMMDD')||' VALUES LESS THAN ('''||TO_CHAR(CURRENT_DATE+1,'YYYYMMDD')||''') '||CHR(10)||
+                            ') TABLESPACE AIMIRPART';
+    EXECUTE IMMEDIATE STMT_DDL;
+  END LOOP;
+  
+  FOR TABLENAME IN (select 'EM' as name from dual union select 'GM' as name from dual union select 'WM' from dual union select 'HM' from dual)
+  LOOP
+    STMT_DDL := 'CREATE INDEX DAY_'||TABLENAME.name||'_IDX_01 ON DAY_'||TABLENAME.name||'(MDEV_ID,YYYYMMDD,MDEV_TYPE,DST,CHANNEL,FULL_LOCATION) LOCAL TABLESPACE AIMIRPART';
+    EXECUTE IMMEDIATE STMT_DDL;
+  END LOOP;
+END;
+/
+
+INSERT INTO PARTITION_CONTROL (ID,PARTITIONINGINTERVAL,SQLCOMMAND,STARTDATETRUNCATE,ITERATIONS,STARTDATEOFFSET,ACTIVE) values ('DAY_EM','DAILY','ALTER TABLE DAY_EM ADD PARTITION PART{STARTDATE} VALUES LESS THAN(''{NEXTPERIODDATE}'') update indexes','dd',10,0,1);
+INSERT INTO PARTITION_CONTROL (ID,PARTITIONINGINTERVAL,SQLCOMMAND,STARTDATETRUNCATE,ITERATIONS,STARTDATEOFFSET,ACTIVE) values ('DAY_WM','DAILY','ALTER TABLE DAY_WM ADD PARTITION PART{STARTDATE} VALUES LESS THAN(''{NEXTPERIODDATE}'') update indexes','dd',10,0,1);
+INSERT INTO PARTITION_CONTROL (ID,PARTITIONINGINTERVAL,SQLCOMMAND,STARTDATETRUNCATE,ITERATIONS,STARTDATEOFFSET,ACTIVE) values ('DAY_GM','DAILY','ALTER TABLE DAY_GM ADD PARTITION PART{STARTDATE} VALUES LESS THAN(''{NEXTPERIODDATE}'') update indexes','dd',10,0,1);
+INSERT INTO PARTITION_CONTROL (ID,PARTITIONINGINTERVAL,SQLCOMMAND,STARTDATETRUNCATE,ITERATIONS,STARTDATEOFFSET,ACTIVE) values ('DAY_HM','DAILY','ALTER TABLE DAY_HM ADD PARTITION PART{STARTDATE} VALUES LESS THAN(''{NEXTPERIODDATE}'') update indexes','dd',10,0,1);
+
+INSERT INTO PARTITION_CONTROL (ID,PARTITIONINGINTERVAL,SQLCOMMAND,STARTDATETRUNCATE,ITERATIONS,STARTDATEOFFSET,ACTIVE) values ('DAY_EM DROP','DAILY','ALTER TABLE DAY_EM DROP PARTITION PART{STARTDATE} update indexes','dd',15,-365,1);
+INSERT INTO PARTITION_CONTROL (ID,PARTITIONINGINTERVAL,SQLCOMMAND,STARTDATETRUNCATE,ITERATIONS,STARTDATEOFFSET,ACTIVE) values ('DAY_WM DROP','DAILY','ALTER TABLE DAY_WM DROP PARTITION PART{STARTDATE} update indexes','dd',15,-365,1);
+INSERT INTO PARTITION_CONTROL (ID,PARTITIONINGINTERVAL,SQLCOMMAND,STARTDATETRUNCATE,ITERATIONS,STARTDATEOFFSET,ACTIVE) values ('DAY_GM DROP','DAILY','ALTER TABLE DAY_GM DROP PARTITION PART{STARTDATE} update indexes','dd',15,-365,1);
+INSERT INTO PARTITION_CONTROL (ID,PARTITIONINGINTERVAL,SQLCOMMAND,STARTDATETRUNCATE,ITERATIONS,STARTDATEOFFSET,ACTIVE) values ('DAY_HM DROP','DAILY','ALTER TABLE DAY_HM DROP PARTITION PART{STARTDATE} update indexes','dd',15,-365,1);
+
+
+
+commit work;

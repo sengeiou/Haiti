@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 	
+    <system.ModemConfig 
+        name="SaudiGsm"
+        parserName="com.aimir.fep.meter.parser.ActarisSCE8711"
+        saverName="com.aimir.fep.meter.saver.ActarisSCE8711MDSaver"
+        deviceModel="SaudiGsm"
+    />
+    <system.ModemConfig 
+        name="SaudiPlc"
+        parserName="com.aimir.fep.meter.parser.ActarisSCE8711"
+        saverName="com.aimir.fep.meter.saver.ActarisSCE8711MDSaver"
+        deviceModel="SaudiPlc"
+    />
+</dataset>

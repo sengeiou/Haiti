@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="에너지 사용량"
+        gadget="공지사항"
+    />  
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="에너지 사용량"
+        gadget="메모"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="에너지 사용량"
+        gadget="메인통합"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="에너지 사용량"
+        gadget="전기 사용량"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="2"
+        dashboard="에너지 사용량"
+        gadget="가스 사용량"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="2"
+        dashboard="에너지 사용량"
+        gadget="수도 사용량"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="2"
+        dashboard="에너지 사용량"
+        gadget="에너지 사용 요금"
+    />
+</dataset>

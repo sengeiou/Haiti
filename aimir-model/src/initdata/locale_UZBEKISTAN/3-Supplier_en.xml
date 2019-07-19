@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+    <system.Supplier 
+        name="ORGRES" 
+        country="UZ"
+        lang="uz"
+        timezone="Asia/Tashkent"
+        address="Tashkent"
+        descr="ORGRES. PUBLIC CORPORATION"
+        telno="2736809"
+        cd.pattern="###,###,###,###,###0.0000"
+        cd.round="f"
+        md.pattern="###,###,###,###,###0.0000"
+        md.round="r"
+    />
+</dataset>
+

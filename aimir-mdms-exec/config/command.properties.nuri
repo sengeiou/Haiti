@@ -1,0 +1,125 @@
+#fep commandGW interface URL
+fep.jmxrmi=service:jmx:rmi:///jndi/rmi://localhost:1099/jmxrmi
+fep.jmxrmi.Lan=service:jmx:rmi:///jndi/rmi://localhost:1099/jmxrmi
+fep.jmxrmi.GPRS=service:jmx:rmi:///jndi/rmi://localhost:1099/jmxrmi
+#schedule.jmxrmi=service:jmx:rmi:///jndi/rmi://187.1.10.58:1999/jmxrmi
+schedule.jmxrmi=service:jmx:rmi:///jndi/rmi://localhost:1999/jmxrmi
+activemq.jmxrmi=service:jmx:rmi:///jndi/rmi://localhost:1616/jmxrmi
+fep.ws=http://122.199.180.17:8081/services/CommandWS?wsdl
+fep.ws.LAN=http://122.199.180.17:8081/services/CommandWS?wsdl
+fep.ws.GPRS=http://122.199.180.17:8081/services/CommandWS?wsdl
+fep.ws.IP=http://122.199.180.17:8081/services/CommandWS?wsdl
+fep.ws.timeout=180000
+
+# ActiveMQ : Stomp URL using web socket
+activemq.stomp=ws://localhost:61614
+
+#////////////////////////////////////////////////////////////////
+# Firmware Management
+# by cch
+#////////////////////////////////////////////////////////////////
+firmware.window.dir=C:\/fw
+firmware.window.tooldir=C:\/fw
+firmware.window.tempdir=C:\/fw/temp
+
+#firmware.dir=/home/aimir/aimiramm
+firmware.dir=/opt/aimir4
+
+firmware.tooldir=/home/aimir/aimiramm/fw
+firmware.tempdir=/home/aimir/aimiramm/fw/temp
+firmware.enableGzip=true
+firmware.filename.defaultStart=SWAMM
+firmware.mes.distributeFw.title=[$aimir.mes.distribute.fw$]
+firmware.mes.distributeFW.content=[$aimir.mes.ditribute.fw$]<br>From : [$src.firmware$]<br>To : [$target.firmware$]
+firmware.checkRevision=3265
+#hibernate.dialect=org.hibernate.dialect.DerbyDialect
+hibernate.dialect=org.hibernate.dialect.Oracle10gDialect
+#hibernate.dialect=org.hibernate.dialect.SQLServerDialect
+supplier.logo.filename=/images/ECG_logo.gif
+#supplier.logo.filename=/images/HAITI_logo.jpg
+os.name=window
+
+############### Send SMS Info Start #####################
+#----------------- SPASA Send SMS Info Start ------------#
+smsClassPath=com.aimir.fep.util.sms.SendSMSSpasa
+#smsClassPath=com.aimir.fep.util.sms.SendSMSTest
+#Ghana v3     => baseUrl=http://api.smsgh.com/v3/  id=hvdeisrn   pass=paoofmoc   msgOriginator=ECG
+#Spasa    => baseUrl=https://www.xml2sms.gsm.co.za/send?  id=spasaussd   pass=sp4s4sms
+prepay.sms.baseUrl=https://www.xml2sms.gsm.co.za/send?
+prepay.sms.id=spasaussd
+prepay.sms.pass=sp4s4sms
+prepay.sms.msgOriginator=
+#prepay.sms.id=
+#prepay.sms.pass=1234
+#Thailand => baseUrl=https://www.xml2sms.gsm.co.za/send?  id=spasaussd   pass=sp4s4sms
+sms.phonelist=
+sms.hostname=127.0.0.1
+sms.port=81
+sms.path=getmsg.php
+sms.from=MEATH12345
+#----------------- SPASA Send SMS Info End   ------------#
+
+#----------------- KEMCO Send SMS Info Start ------------#
+kemco.server.sms.serverIpAddr=187.1.30.111
+kemco.server.sms.serverPort=8198
+kemco.server.sms.encription=false
+#kemco.smsClassPath=com.aimir.fep.util.sms.SendSMSKEMCO
+kemco.smsClassPath=com.aimir.fep.util.sms.SendSMSKEMCOGabia
+kemco.sms.id=aimir
+kemco.sms.key=1234
+#----------------- KEMCO Send SMS Info End   ------------#
+
+#----------------- MOE Send SMS Info Start ------------#
+#moe.server.sms.serverIpAddr=211.232.103.234
+moe.server.sms.serverIpAddr=187.1.25.250
+moe.server.sms.serverPort=8198
+moe.smsClassPath=com.aimir.fep.util.sms.SendSMSMOE
+moe.sms.id=asdf
+moe.sms.key=asdf
+moe.sms.send.number=02-1234-1234
+moe.firmware.window.dir=C:/fw
+moe.firmware.dir=/aimir/aimiramm/aimir-fep-exec/app/fw
+#----------------- MOE Send SMS Info End   ------------#
+
+#----------------- SORIA Send SMS Info Start ------------#
+soria.server.sms.serverIpAddr=187.1.25.250
+soria.server.sms.serverPort=8198
+soria.smsClassPath=com.aimir.fep.util.sms.SendSMSSORIA
+soria.sms.id=asdf
+soria.sms.key=asdf
+soria.sms.send.number=02-1234-1234
+soria.firmware.window.dir=C:/fw
+soria.firmware.dir=/home/qc/aimiramm/aimir-web/target/aimir-web-3.0.1/uploadImg/fw
+
+http://187.1.25.250:8085/aimir-web/uploadImg/mcu/NDCU-I212.jpg
+
+#----------------- SORIA Send SMS Info End   ------------#
+############### Send SMS Info End   #####################
+
+##prepay setting
+#Whether partpayment(true or false)
+partpayment.use=
+#prepay init data setting
+prepay.init.credit=
+prepay.init.arrears=
+prepay.init.alertBalance=
+
+# minute
+com.sun.xml.ws.connect.timeout=1
+com.sun.xml.ws.request.timeout=3
+
+GG.sms.port=8900
+GG.sms.ipAddr=187.1.10.58
+
+# event alarm interval
+event.alert.interval=3000
+
+# event alarm Cleared/Cleared Manually Data remove interval
+event.alert.remove.interval=20000
+
+#report's location setting in deposit Management
+deposit.location.info=1,2,Region
+activemq.broker.url=tcp://localhost:61616
+
+#POC TEST Webservice
+poc.test.ws=http://187.1.10.200:8083

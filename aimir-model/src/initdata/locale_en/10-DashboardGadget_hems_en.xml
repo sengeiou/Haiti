@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="My Report"
+        gadget="Report"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Dashboard"
+        gadget="Energy Consumption"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="2"
+        dashboard="Dashboard"
+        gadget="Gas Consumption"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="2"
+        dashboard="Dashboard"
+        gadget="Water Consumption"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="2"
+        dashboard="Dashboard"
+        gadget="Power Saving Goal Management"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="2"
+        dashboard="Dashboard"
+        gadget="Gas Saving Goal Management"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="2"
+        dashboard="Dashboard"
+        gadget="Water Saving Goal Management"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="2"
+        dashboard="Dashboard"
+        gadget="HomeDevice Management"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="2"
+        dashboard="Dashboard"
+        gadget="Demand Response Management"
+    />  
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="2"
+        dashboard="Dashboard"
+        gadget="Power Prepayment Management"
+    />
+     <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="2"
+        dashboard="Dashboard"
+        gadget="Gas Prepayment Management"
+    /> 
+     <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="2"
+        dashboard="Dashboard"
+        gadget="Water Prepayment Management"
+    /> 
+</dataset>

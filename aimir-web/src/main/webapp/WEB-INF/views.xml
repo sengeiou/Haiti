@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- ajax view JSON rendering -->
+	<bean name="lenient" class="net.sf.json.util.CycleDetectionStrategy$LenientCycleDetectionStrategy"/>
+	
+	<bean name="jsonConfig" class="net.sf.json.JsonConfig">
+	   <property name="cycleDetectionStrategy" ref="lenient" />
+	</bean>
+	
+	<bean name="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView" >
+	   <property name="jsonConfig" ref="jsonConfig" />
+	</bean>
+
+	<!-- ajax view XML rendering -->
+	<bean id="xmlView" class="org.springframework.web.servlet.view.xml.MarshallingView">
+		<property name="marshaller">
+			<bean class="org.springframework.oxm.xstream.XStreamMarshaller">
+				<property name="autodetectAnnotations" value="true" />
+				<property name="encoding" value="UTF-8" />
+				<property name="aliases">
+					<props>
+					</props>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean name="kmlView" class="com.aimir.web.servlet.view.KmlView" />
+	
+    <bean id="download" class="com.aimir.bo.common.FileDownloadView" />
+
+    <bean name="treeJsonView" class="com.aimir.web.servlet.view.TreeJsonView" >
+       <property name="jsonConfig" ref="jsonConfig" />
+    </bean>
+
+</beans>

@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Gadget
+        descr="코드 관리 (코드 조회추가삭제변경)"
+        iconSrc="assets/images/gadget_ko/code.gif"
+        maxUrl="system/code_manager_max.do"
+        miniUrl="system/code_manager_mini.do"
+        name="코드관리"
+        miniHeight="350"
+        fullHeight="800"
+    />
+    <system.Gadget
+        descr="검침데이터 관리(전기)"
+        iconSrc="assets/images/gadget_ko/meteringdata.gif"
+        maxUrl="mvm/mvmMaxGadgetEM.do"
+        miniUrl="mvm/mvmMiniGadgetEM.do"
+        name="검침데이터 조회(전기)"
+        miniHeight="350"
+        fullHeight="1200"
+    />  
+    <system.Gadget
+        descr="장비 제조사 모델 관리"
+        iconSrc="assets/images/gadget_ko/vendormodel.gif"
+        maxUrl="system/devicemodelMax.do"
+        miniUrl="system/devicemodelMini.do"
+        name="제조사 모델 관리"
+        miniHeight="350"
+        fullHeight="800"
+    />  
+    <system.Gadget
+        descr="사용자 그룹 및 사용자 관리"
+        iconSrc="assets/images/gadget_ko/user.gif"
+        maxUrl="system/operatorMgmtMax.do"
+        miniUrl="system/operatorMgmtMini.do"
+        name="사용자관리"
+        miniHeight="350"
+        fullHeight="800"
+    />
+    <system.Gadget
+        descr="집중기 목록 상세정보 관리"
+        iconSrc="assets/images/gadget_ko/mcu.gif"
+        maxUrl="device/mcuMaxGadget.do"
+        miniUrl="device/mcuMiniGadget.do"
+        name="집중기관리"
+        miniHeight="350"
+        fullHeight="800"
+    />
+    <system.Gadget
+        descr="통신장비의 통신 로그 (송/송수신) "
+        iconSrc="assets/images/gadget_ko/commlog.gif"
+        maxUrl="device/commLog/commLogMaxGadget.do"
+        miniUrl="device/commLog/commLogMiniGadget.do"
+        name="통신 로그"
+        miniHeight="350"
+        fullHeight="1600"
+    />
+    <system.Gadget
+        descr="변경로그 가젯"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="device/changeLogMaxGadget.do"
+        miniUrl="device/changeLogMiniGadget.do"
+        name="변경 로그"
+        miniHeight="350"
+        fullHeight="800"
+    />
+    <system.Gadget
+        descr="명령 이력 관리 가젯"
+        iconSrc="assets/images/gadget_ko/operation.gif"
+        maxUrl="device/operationLog/operationLogMaxGadget.do"
+        miniUrl="device/operationLog/operationLogMiniGadget.do"
+        name="명령 이력 및 설정"
+        miniHeight="350"
+        fullHeight="800"
+    />
+    <system.Gadget
+        descr="이벤트 알람 가젯"
+        iconSrc="assets/images/gadget_ko/event.gif"
+        maxUrl="device/eventAlert/eventAlertLogMax.do"
+        miniUrl="device/eventAlert/eventAlertLogMini.do"
+        name="이벤트 알람 로그"
+        miniHeight="500"
+        fullHeight="800"
+    />
+    
+    <system.Gadget
+        descr="검침 실패 가젯(전기)"
+        iconSrc="assets/images/gadget_ko/meteringfail.gif"
+        maxUrl="mvm/meteringFailureEmMaxGadget.do"
+        miniUrl="mvm/meteringFailureEmMiniGadget.do"
+        name="검침 실패(전기)"
+        miniHeight="350"
+        fullHeight="800"
+    />
+    <system.Gadget
+        descr="모뎀관리"
+        iconSrc="assets/images/gadget_ko/modem.gif"
+        maxUrl="device/modemMaxGadget.do"
+        miniUrl="device/modemMiniGadget.do"
+        name="모뎀관리"
+        miniHeight="350"
+        fullHeight="800"
+    />    
+
+    <system.Gadget
+        descr="미터 관리"
+        iconSrc="assets/images/gadget_ko/meter.gif"
+        maxUrl="device/meterMaxGadget.do"
+        miniUrl="device/meterMiniGadget.do"
+        name="미터관리"
+        miniHeight="350"
+        fullHeight="800"
+    />               
+    <system.Gadget
+        descr="장비 등록"
+        iconSrc="assets/images/gadget_ko/devicereg.gif"
+        maxUrl="device/deviceRegistrationMaxGadget.do"
+        miniUrl="device/deviceRegistrationMiniGadget.do"
+        name="장비 등록"
+        miniHeight="350"
+        fullHeight="1548"
+    />  
+    <system.Gadget
+        descr="전력 품질 관리"
+        iconSrc="assets/images/gadget_ko/powerquality.gif"
+        maxUrl="mvm/powerQulaityMaxGadget.do"
+        miniUrl="mvm/powerQulaityMiniGadget.do"
+        name="전력 품질"
+        miniHeight="350"
+        fullHeight="1548"
+    />    
+</dataset>

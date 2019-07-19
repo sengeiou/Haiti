@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+    <groupId>com.aimir</groupId>
+    <artifactId>aimir-parent</artifactId>
+    <version>3.3</version>
+    <relativePath>../aimir-parent/pom.xml</relativePath>
+    </parent>
+  
+    <groupId>com.aimir</groupId>
+    <artifactId>aimir-simulator-exec</artifactId>
+    <packaging>jar</packaging>
+    <version>3.3</version>
+    <description></description>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <tasks>
+                        <property name="runtime_classpath" refid="maven.runtime.classpath"/>
+                        <echo message="runtime classpath: ${runtime_classpath}"/>
+                        <mkdir dir="${basedir}/${fepName}"/>
+                        <java dir="${basedir}/${fepName}"
+                              classname="com.aimir.test.fep.pattern.metering.${testClassName}"
+                              fork="true"
+                              maxmemory="1024M"
+                              >
+                            <jvmarg value="-server"/>
+                            <jvmarg value="-XX:PermSize=256M"/>
+                            <jvmarg value="-XX:MaxPermSize=1024M"/>
+                            <sysproperty key="name" value="${fepName}"/>
+                            <sysproperty key="file.encoding" value="UTF-8"/>
+                            <sysproperty key="log4j.configuration" value="log4j.properties"/>
+                            <arg value="-dcuCount"/>
+                            <arg value="${dcuCount}"/>
+                            <arg value="-nodeCount"/>
+                            <arg value="${nodeCount}"/>
+                            <arg value="-threadCount"/>
+                            <arg value="${threadCount}"/>
+							<arg value="-fepIp"/>
+                            <arg value="${fepIp}"/>
+							<arg value="-fepPort"/>
+                            <arg value="${fepPort}"/>
+							<arg value="-lpCount"/>
+                            <arg value="${lpCount}"/>
+                            <arg value="-lpPeriod"/>
+                            <arg value="${lpPeriod}"/>
+							<arg value="-threadSleep"/>
+                            <arg value="${threadSleep}"/>
+                            <arg value="-startDcuId"/>
+                            <arg value="${startDcuId}"/>
+                            <classpath>
+                                <pathelement path=".:${runtime_classpath}"/>
+                            </classpath>
+                        </java>
+                    </tasks>
+                </configuration>
+            </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>${maven-bundle-plugin.version}</version>
+        <extensions>true</extensions>
+      </plugin>
+        </plugins>
+    </build>
+    
+   <dependencies>
+    <!-- =============== -->
+        <!--    Logging API  -->
+        <!-- =============== -->
+        <!-- Apache Log4J API -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>mail</artifactId>
+                    <groupId>javax.mail</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jmxtools</artifactId>
+                    <groupId>com.sun.jdmk</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jmxri</artifactId>
+                    <groupId>com.sun.jmx</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jms</artifactId>
+                    <groupId>javax.jms</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        
+            <!-- Jakarta Commons-Logging -->
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>${commons-logging.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>logkit</groupId>
+                    <artifactId>logkit</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>avalon-framework</groupId>
+                    <artifactId>avalon-framework</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>commons-pool</groupId>
+            <artifactId>commons-pool</artifactId>
+            <version>${commons-pool.version}</version>
+        </dependency>
+        
+            <dependency>
+      <groupId>concurrent</groupId>
+      <artifactId>concurrent</artifactId>
+      <version>${concurrent.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>${commons-collections.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.quartz-scheduler</groupId>
+      <artifactId>quartz</artifactId>
+      <version>${quartz.version}</version>
+    </dependency>
+    <!--  
+        <dependency>
+      <groupId>commons-dbcp</groupId>
+      <artifactId>commons-dbcp</artifactId>
+      <version>1.4</version>
+    </dependency>
+    -->
+    <dependency>
+        <groupId>commons-beanutils</groupId>
+        <artifactId>commons-beanutils</artifactId>
+        <version>${commons-beanutils.version}</version>
+        <type>jar</type>
+    </dependency>
+    
+    <dependency>
+        <groupId>org.apache.mina</groupId>
+        <artifactId>mina-core</artifactId>
+        <version>${mina.version}</version>
+        <type>jar</type>
+     </dependency>
+     <dependency>
+        <groupId>org.apache.mina</groupId>
+        <artifactId>mina-transport-serial</artifactId>
+        <version>${mina.version}</version>
+        <scope>compile</scope>
+     </dependency>
+     <dependency>
+      <groupId>com.aimir</groupId>
+      <artifactId>aimir-model</artifactId>
+      <version>${aimir.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.aimir</groupId>
+      <artifactId>aimir-fep</artifactId>
+      <version>${aimir.version}</version>
+    </dependency>
+	
+	<dependency>
+      <groupId>com.aimir</groupId>
+      <artifactId>aimir-simulator</artifactId>
+      <version>${aimir.version}</version>
+    </dependency>
+	
+    </dependencies>
+</project>

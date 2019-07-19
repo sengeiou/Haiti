@@ -1,0 +1,1169 @@
+/* CommonFlex.css파일은 디자이너와 협의 없이   "삭제" 하지 마세요 (HJ Lee, KJ Park) */
+/* 기본폰트 : 한글 - 돋움, 영문 - Tahoma, 사이즈 - 11 */
+ 
+/* 폰트스타일 (공통)   ------------------------------------------------------------------------------------------  */
+DataGrid, DataGridHeader, AdvancedDataGrid, NestedDataGrid, DateField, Tree, ComboBox, Legend, LegendItem, 
+PieChart, ColumnChart, LineChart, Panel, Button, Label, DateField, ComboBox, AxisRenderer, ToolTip, TextInput,
+{
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+    color: #434343; 
+    font-size: 12;
+}
+.fontSetColorA
+{   
+    color: #434343;
+}
+.textBlue
+{
+    color: #0f7cd0; 
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+    font-size: 12;
+}
+.textBlueBold
+{
+    color: #0f7cd0; 
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+    font-size: 12;
+    font-weight:bold;
+}
+.textBlue12ptBold
+{
+    color: #0f7cd0; 
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+    font-size: 12;
+    font-weight:bold;
+}
+.textBlue12pt
+{
+    color: #0f7cd0; 
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+    font-size: 12;
+    font-weight:normal;
+}
+.textLightBlue12ptBold
+{
+    color: #2c95ff; 
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+    font-size: 12;
+    font-weight:bold;
+}
+.textLightGray
+{
+    color: #8e8e8e;
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+    font-size: 11;
+}
+.textLightGray9pt
+{
+    color: #8e8e8e;
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+    font-size: 9;
+}
+.textLightGrayBold
+{
+    color: #8e8e8e;
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+    font-size: 12;
+    font-weight:bold;
+}
+.textGray
+{
+    color: #676767;
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+    font-size: 12;
+}
+.textGrayBold
+{
+    color: #676767;
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+    font-size: 12;
+    font-weight:bold;
+}
+.textGray9pt
+{
+    color: #676767;
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+    font-size: 9;
+} 
+.textGray10pt
+{
+    color: #676767;
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+    font-size: 10;
+}   
+.textGray12ptBold
+{
+    color: #434343;
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+    font-size: 12;
+    font-weight:bold;
+}
+.textDarkGrayBold
+{
+    color: #434343;
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+    font-size: 12;
+    font-weight:bold;
+}
+.textRed
+{
+    color: #FC0000; 
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+    font-size: 11;
+}
+.textRedBold
+{
+    color: #FC0000; 
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+    font-size: 12;
+    font-weight:bold;
+}
+.textRed10ptBold
+{
+    color: #FC0000; 
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+    font-size: 10;
+    font-weight:bold;
+}
+.textRed12ptBold
+{
+    color: #FC0000; 
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+    font-size: 12;
+    font-weight:bold;
+}
+.textBlack12
+{
+    color: #000000; 
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+    font-size: 12;
+    font-weight:normal;
+}
+
+.textBlackBold
+{
+    color: #000000; 
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+    font-size: 12;
+    font-weight:bold;
+}
+
+.textLightBlueBold
+{
+	font-weight: bold;
+	color:#81BEE7;
+}
+
+
+/* 패널 스타일 (공통)   ------------------------------------------------------------------------------------------  */
+Panel
+{
+    horizontalScrollPolicy:off; 
+    verticalScrollPolicy:off;
+    border-style:none;
+    corner-radius:0;
+    /* roundedBottomCorners: true; */    
+}
+Panel.Popup
+{
+    border-style:solid; 
+    border-color:#AEAEAE; 
+    theme-color:#009DFF;
+    border-thickness:2;
+    corner-radius:8;
+}
+
+
+/* 캔버스 스타일 (공통)   ------------------------------------------------------------------------------------------  */
+Canvas.dashboardSetDevider
+{
+    /* 대쉬보드 셋팅 세로구분선  배경이미지  */
+    background-image:Embed(source='../images/vline_dotted_green.gif');
+	backgroundSize: auto;
+}
+
+
+
+/* 그리드챠트에 사용하는 배경 (공통)   ------------------------------------------------------------------------------------------  */
+Application
+{   
+    backgroundGradientAlphas:1.0, 1.0; 
+    backgroundGradientColors:#FFFFFF, #FFFFFF;
+    horizontalScrollPolicy:off; 
+    verticalScrollPolicy:off;
+    backgroundColor: #ffffff;
+}
+.blueBackground
+{
+    background-image: Embed(source='../images/grid_body_bg01.jpg');
+}
+.whiteBackground
+{
+    /* alternatingItemColors: #FFFFFF, #FFFFFF;  */
+    backgroundAlpha: 1.0;
+    backgroundColor:#FFFFFF;
+}
+.transfBackground
+{
+    background-alpha:0;
+    background-gradient-alphas:0, 0;
+}
+
+
+
+
+/* 그리드스타일 (공통)   ------------------------------------------------------------------------------------------  */
+DataGrid, NestedDataGrid, AdvancedDataGrid, Tree
+{
+    headerStyleName: advancedDataGridHeader;
+    verticalScrollBarStyleName: advancedDataGridVerticalScrollBar;
+    header-background-skin: Embed(source='../images/grid_head_bg01.jpg');
+    headerSeparatorSkin: Embed(source="../images/grid_head_bg_line.jpg");
+    folderOpenIcon: Embed(source="../images/ic_folder_opened.png");
+    folderClosedIcon: Embed(source="../images/ic_folder_closed.png");
+    disclosureOpenIcon: Embed(source="../images/ic_minus.png");
+    disclosureClosedIcon: Embed(source="../images/ic_plus.png");
+    border-color:#CCCFD0;
+    border-style:solid;
+    border-thickness:1;
+    verticalGridLineColor: #D3E7F7;
+    horizontalGridLines: true;
+    horizontalGridLineColor: #D3E7F7;
+    horizontalScrollPolicy:off; 
+    backgroundAlpha: 0.0;
+    backgroundDisabledColor: #FFFCFC;
+    textRollOverColor: #434343;
+} 
+Tree
+{
+    textRollOverColor: #f56b03;
+    text-selected-color: #f56b03;
+}
+.advancedDataGridHeader
+{
+    /* 그리드헤더 스타일      */
+    font-weight: bold;
+    text-align: center;
+    color: #434343; 
+}
+.advancedDataGridVerticalScrollBar
+{   
+    /* 그리드 스크롤바 스타일      */
+   cornerRadius: 0;
+   fillColors: #ffffff, #cccccc, #ffffff, #eeeeee;
+   trackColors: #eeeeee, #f7f7f7;
+   themeColor: #009dff;
+   borderColor: #cccccc;
+   iconColor: #666666;
+   thumbOffset: 1;
+   highlightAlphas: 0.3, 0;  
+   fillAlphas: 0.3, 0.3, 0, 0;
+}
+
+
+
+
+
+/* 레전드 스타일 (공통)   ------------------------------------------------------------------------------------------  */
+Legend
+{
+    /* 레전드 스타일 (공통) */
+    marker-height:3;
+    marker-width:8;
+    font-weight:normal;
+}
+LegendItem
+{
+    /* 레전드 텍스트 스타일 (공통) */
+    font-weight:normal;
+    color:#676767;
+}
+.legendBox
+{
+    /* 레전드 외에 사용가능한 박스 스타일(Aimir) */ 
+    padding-top: 4;
+    padding-bottom: 4;
+    padding-left: 5;
+    padding-right: 5;
+    background-color:#F3F2EC;
+    borderColor: #EFEDE0;
+    borderStyle: solid;    
+}
+
+.legendBoxWht
+{
+    /* 레전드 외에 사용가능한 박스 스타일(Aimir) */ 
+    padding-top: 4;
+    padding-bottom: 4;
+    padding-left: 5;
+    padding-right: 5;
+    background-color:#ffffff;
+    borderColor: #ffffff;
+    borderStyle: solid;    
+}
+
+Legend.legendBoxH
+{
+    /* 레전드 스타일 가로형 (Aimir) */ 
+    horizontal-gap:10;
+    paddingTop: -1;
+    background-color:#F3F2EC;
+    borderColor: #EFEDE0;
+    borderStyle: solid;    
+}
+Legend.legendBoxV
+{
+    /* 레전드 스타일 세로형 (Aimir) */
+    verticalGap: 3;
+    padding-top: 10;
+    padding-bottom: 10;
+    padding-left: 10;
+    padding-right: 10;
+    background-color:#F3F2EC;
+    borderColor: #EFEDE0;
+    borderStyle: solid;
+}
+Legend.legendBoxVInside
+{
+    /* 레전드 스타일 세로형 (Aimir : 고객정보가젯) */
+    verticalGap: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 10;
+    padding-right: 10;
+}
+Legend.legendBoxVInsideBorder
+{
+    /* 레전드 스타일 세로형 (Aimir : 고객정보가젯 레전드의 보더) */
+    padding-top: 5;
+    padding-bottom: 5;
+    padding-left: 5;
+    padding-right: 5;
+    background-color:#F3F2EC;
+    borderColor: #FFFFFF;
+    borderStyle: solid;
+}
+
+
+
+/* 챠트 스타일 (Aimir, Bems)   ------------------------------------------------------------------------------------------  */
+.chartUnitV
+{
+    /* 챠트 (세로)데이터 단위 및 디자인 (Aimir) */
+    color:#808080; 
+    tick-length:5;
+    tick-placement:inside;
+   
+}
+.chartUnitH
+{
+    /* 챠트 (가로)단위 및 디자인 (Aimir) */
+    color:#808080; 
+    can-drop-labels:true;
+    
+}
+.bmDataNumV
+{
+    /* 챠트 (세로)단위 및 디자인 (Bems) */
+    tick-length:5;
+    tick-placement:inside;
+}
+.bmDataNumH
+{
+    /* 챠트 (가로)단위 및 디자인 (Bems) */
+    can-drop-labels:true;
+    
+}
+
+.bmDataNumNoneV
+{
+    /* 챠트 (세로)단위 및 디자인 (Bems) */
+   tick-placement:none;
+}
+.bmDataNumNoneH
+{
+    /* 챠트 (가로)단위 및 디자인 (Bems) */
+    can-drop-labels:true;
+    tick-placement:none;
+}
+
+
+.bmDataNumSmall
+{
+    /* 챠트 단위 : 숫자 ONLY (Bems) */
+    fontFamily:verdana;
+    fontSize:8;
+}
+    
+
+
+
+
+/* 챠트의 막대그래프 가로폭 범위제한 (공통)   ------------------------------------------------------------------------------------------  */
+.columnWidth50
+{
+    max-column-width:50;
+}
+.columnWidth40
+{
+    max-column-width:40;
+}
+.columnWidth30
+{
+    max-column-width:30;
+}
+.columnWidth20
+{
+    max-column-width:20;
+}
+.columnWidth10
+{
+    max-column-width:10;
+}
+.barWidthDefault
+{
+ barWidthRatio:0.3 ;
+}
+
+/* Progress Bar 스타일 (공통)   ------------------------------------------------------------------------------------------  */
+ProgressBar
+{
+    labelPlacement:center;
+    textIndent:45;
+    barColor:#63CE28;
+    textAlign:right;
+    trackHeight:6; 
+    /* y:10;
+    x:20; */
+    border-color: #ffffff;
+    font-family: Tahoma;
+    font-size: 9;
+    font-weight: normal;
+    color: #0f7cd0;
+    verticalGap: -2;
+    padding-left:10;
+    padding-top:2;
+    cornerRadius: 1;
+    background-color:white;
+   /*   background-gradient-alphas:1;
+    background-gradient-colors:none;  */
+    trackColors: #E6E7E8, #DDDFE1;
+}
+ProgressBar.ProgressBarGreen    {   barColor:#63CE28;   }
+ProgressBar.ProgressBarRed      {   barColor:#ff0c3c;   }
+ProgressBar.ProgressBarBlue     {   barColor:#0f7cd0;   }
+Label.ProgressBarLabel          {   text-indent:10;     }
+HBox.ProgressBarHBox
+{
+    horizontalScrollPolicy:off;
+    border-style:solid;
+    border-color:#CCCFD0; 
+    background-color:white; 
+    height:29;
+    padding-top:4;
+    padding-bottom:2;
+    border-thickness:1;
+}
+
+
+
+
+
+/* 화면명 : 대쉬보드 셋팅(Dashboard Setting) (공통) ------------------------------------------------------------------------------------------  */
+TileList.dashboardSetThumMini    {
+    /* 썸네일 이미지 목록  */
+    verticalScrollBarStyleName: advancedDataGridVerticalScrollBar;
+    border-thickness:0;
+	leading: 0;
+	paddingLeft: 0;
+	paddingTop: 0;
+	paddingRight: 0;
+	paddingBottom: 0;
+}
+TileList.dashboardSetTag    {
+    /* 태그 목록   */
+    border-thickness:0;
+    
+}
+TextInput.dashboardsetEdit, NumericStepper.dashboardsetEdit    {
+    /* 수정창  */
+    border-color:#dcdcdc;
+    border-style:solid;
+    border-thickness:1;
+    color: #676767;
+}
+TextInput.dashboardsetSearch    {
+    /* 검색창  */
+    border-color:white;
+    border-style:solid;
+    border-thickness:1;
+    color:#acacac;
+}
+.dashboardsetSearchBox    {
+    /* 검색창 보더박스  */
+    border-color:#d2d2d2;
+    border-style:solid;
+    border-thickness:1;
+}
+TitleWindow {
+    backgroundAlpha: 0;
+	font-family: dotum, tahoma;
+	color: #0d7dd1; 
+	font-size: 12;
+} 
+
+
+
+
+/* 콤포넌트 스타일 (공통)   ------------------------------------------------------------------------------------------  */
+DateField
+{   
+    font-size:11;
+    border-color:#8ecae1;
+    border-style:solid;
+    border-thickness:1;
+    disabledColor: #CACACA;
+}
+TextInput   {
+    font-size:12;
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, MS Gothic, MS PGothic;
+}
+ComboBox
+{   
+    font-size:12;
+    border-color:#8ecae1;
+    border-style:solid;
+    border-thickness:1;
+    font-weight: normal;
+}
+Button
+{
+    /* blue */
+    color: #0f7cd0;
+    textRollOverColor: #0f7cd0;
+    textSelectedColor: #0f7cd0;
+    cornerRadius: 2;
+    borderColor: #b4d3f0;
+    themeColor: #00ccff;
+    highlightAlphas: 1, 1;
+    fillAlphas: 1, 1, 1, 1;
+    fillColors: #ffffff, #e3f4ff, #ffffff, #e3f4ff;
+    font-weight:normal;
+    paddingLeft: 3;
+    paddingRight: 3;
+    paddingBottom: 0;
+    letterSpacing: 0;
+}
+.buttonOrange
+{
+    /* blue */
+    color: #E06103;
+    textRollOverColor: #E06103;
+    textSelectedColor: #E06103;
+    cornerRadius: 2;
+    borderColor: #F3B782;
+    themeColor: #F3B782;
+    highlightAlphas: 1, 1;
+    fillAlphas: 1, 1, 1, 1;
+    fillColors: #ffffff, #F9F0E8, #ffffff, #F9F0E8;
+    font-weight:normal;
+    paddingLeft: 3;
+    paddingRight: 3;
+    paddingBottom: 0;
+    letterSpacing: 0;
+}
+HSlider
+{
+    borderColor: #2C95FE;
+    fillAlphas: 0.0, 0.0, 0.0, 0.0;
+    themeColor: #67B3FE;
+    tickOffset: -5;
+    tickLength: 5;
+}
+HSlider.default
+    /* 기본스타일 슬라이드 바  */
+{   
+    tickColor: #9ebfdc;
+    fillAlphas: 1, 1, 1, 1;  
+    fillColors: #ffffff, #ffffff, #9ebfdc, #9ebfdc;  
+    trackColors: #9ebfdc, #9ebfdc;             
+    borderColor: #4aabff;
+    showTrackHighlight: true;
+    themeColor: #9ebfdc;
+}
+HSlider.gray
+    /* 회색 슬라이드 바  */
+{   
+    tickColor: #9ebfdc;
+    fillAlphas: 1, 1, 1, 1;  
+    fillColors: #ffffff, #ffffff, #cacfd3, #cacfd3;  
+    trackColors: #cacfd3, #cacfd3;             
+    borderColor: #76828d;
+    showTrackHighlight: true;
+    themeColor: #9ebfdc;
+}
+HSlider.dashboardSet
+    /* 대쉬보드 셋팅 슬라이드 바  */
+{   
+    tickColor: #41a0fe;
+    fillAlphas: 1, 1, 1, 1;  
+    fillColors: #ffffff, #ffffff, #41a0fe, #41a0fe;  
+    trackColors: #41a0fe, #41a0fe;             
+    borderColor: #41a0fe;
+    showTrackHighlight: true;
+    themeColor: #d9f0ba;
+}
+HSlider.dashboardSet
+    /* 대쉬보드 셋팅 슬라이드 바  */
+{	
+    tickColor: #41a0fe;
+    tickOffset: -5;
+    tickLength: 5;
+    fillAlphas: 1, 1, 1, 1;  
+    fillColors: #ffffff, #ffffff, #41a0fe, #41a0fe;  
+    trackColors: #41a0fe, #41a0fe;             
+    borderColor: #41a0fe;
+    showTrackHighlight: true;
+    themeColor: #d9f0ba;
+}
+ToggleButtonBar 
+{   
+    /* 페이징 토글 버튼 */
+    buttonHeight: 25;
+    horizontalGap: 2;
+    buttonStyleName: "mytoggleButtonBarButtonStyle";
+    firstButtonStyleName: "mytoggleButtonBarButtonStyle";
+    lastButtonStyleName: "mytoggleButtonBarButtonStyle";
+    selectedButtonTextStyleName: "mytoggleButtonBarSelectedButtonStyle";
+}
+.mytoggleButtonBarButtonStyle  
+{
+	/* 페이징 토글 버튼 */
+    highlightAlphas: 0, 0;
+    fillAlphas: 0, 0, 0, 0;
+    font-family: tahoma;
+    font-size: 10;
+    corner-radius:0;
+    border-color: #b4d3f0;
+}
+ScrollableAxisRenderer 
+{
+    /* 줌스크롤바 스타일 정의 */
+    scrollBarUpArrowUpSkin:     Embed(source='../flex_scroll_skins.swf', symbol='ScrollArrowUp_upSkin');
+    scrollBarDownArrowUpSkin:   Embed(source='../flex_scroll_skins.swf', symbol='ScrollArrowDown_upSkin');
+    scrollBarUpArrowOverSkin:   Embed(source='../flex_scroll_skins.swf', symbol='ScrollArrowUp_overSkin');
+    scrollBarDownArrowOverSkin: Embed(source='../flex_scroll_skins.swf', symbol='ScrollArrowDown_overSkin');
+    scrollBarUpArrowDownSkin:   Embed(source='../flex_scroll_skins.swf', symbol='ScrollArrowUp_downSkin');
+    scrollBarDownArrowDownSkin: Embed(source='../flex_scroll_skins.swf', symbol='ScrollArrowDown_downSkin');
+    
+    scrollBarThumbUpSkin:   Embed(source='../flex_scroll_skins.swf', symbol='ScrollThumb_upSkin');
+    scrollBarThumbOverSkin: Embed(source='../flex_scroll_skins.swf', symbol='ScrollThumb_overSkin');
+    scrollBarThumbDownSkin: Embed(source='../flex_scroll_skins.swf', symbol='ScrollThumb_downSkin');
+}
+.blueBorder
+    /* 블루라인 테두리 보더   */
+{
+    border-color:#B4D3F0;
+    border-style:solid;
+    border-thickness:1;
+}
+
+.boxGray
+{
+    /* 박스 스타일(Gray) */ 
+    padding-top: 4;
+    padding-bottom: 4;
+    padding-left: 5;
+    padding-right: 5;
+    background-color:#f2f3f7;
+    borderColor: #e6eaef;
+    borderStyle: solid;    
+}
+.boxGrayBorder
+{
+    /* 보더있는 박스 스타일( 맥스가젯  파이챠트 BG박스로 사용 ) */ 
+    background-color:#f9f9f9;
+    borderColor: #eeeeee;
+    borderStyle: solid;    
+}
+
+
+/* 여백처리 (BEMS)   ------------------------------------------------------------------------------------------  */
+.canvasMargin10
+{
+	top:10; bottom:10; left:10; right:10;
+}
+.canvasMarginSide10
+{
+	top:0; bottom:10; left:10; right:10;
+}
+.chartPadding5
+{
+	padding-top		: 5;
+	padding-bottom	: 5;
+	padding-left	: 5;
+	padding-right	: 5;
+
+}
+
+.spaceBorder
+{
+	padding-top		: 8;
+	padding-bottom	: 8;
+	padding-left	: 8;
+	padding-right	: 8;
+}
+
+.chartBorderGray
+{
+	border-color	: #eaeaea;
+	border-style 	: solid;
+	border-thickness: 1;
+
+}
+
+.chartPaddingTop20
+{
+	padding-top		: 20;
+}
+.chartPaddingBottom10
+{
+	padding-bottom		: 10;
+}
+
+.chartPadding10
+{
+	padding-top		: 10;
+	padding-bottom	: 10;
+	padding-left	: 10;
+	padding-right	: 10;
+
+}
+.margin10
+{
+	margin-top		: 10;
+	margin-bottom	: 10;
+	margin-left		: 10;
+	margin-right	: 10;
+
+}
+
+
+/* Line (BEMS)     -----------------------------------------------------------------------------------------   */
+.tapBorderDefault
+{
+	border-color:#BBD7F1;border-thickness:1; 
+}
+
+.tapBorderSide
+{
+	border-color:#BBD7F1;
+	border-thickness-bottom: 0;
+	border-thickness-left: 1;
+	border-thickness-right: 1;
+	border-thickness-top: 1;
+}
+
+.gridBorderWhite
+{
+	border-color:#ffffff;
+	border-thickness-bottom: 0;
+	border-thickness-left: 0;
+	border-thickness-right: 0;
+	border-thickness-top: 0;
+	top: 0;
+	left: 0;
+}
+.gridBorderGray
+{ 
+	borderColor: #CCCFD0;
+	borderThickness: 1;
+	borderStyle: solid;
+	verticalGap: 0;
+}
+
+.gridBorderBlue
+{ 
+	borderColor: #BBD7F1;
+	borderThickness: 1;
+	borderStyle: solid;
+	verticalGap: 0;
+}
+
+.borderBlue
+{ 
+	borderColor: #BBD7F1;
+	borderThickness: 1;
+	borderStyle: solid;
+	verticalGap: 0;
+}
+
+/* TabNavigator (BEMS)     -----------------------------------------------------------------------------------------   */
+TabNavigator.bemsTab {
+   borderColor: #bbd7f1;
+   tabStyleName: "myTabs";
+   firstTabStyleName: "myTabs";
+   lastTabStyleName: "myTabs";
+   selectedTabTextStyleName: "mySelectedTabs";
+}
+
+.myTabs {
+   cornerRadius: 0;
+   highlightAlphas: 0, 0.2;
+   fillAlphas: 1, 1;
+   fillColors: #ffffff, #daeaf8;
+   backgroundAlpha: 1;
+   borderColor: #bbd7f1;
+   color: #0f7cd0;
+   textRollOverColor: #0f7cd0;
+
+}
+
+.mySelectedTabs {
+   color: #0f7cd0;
+   textRollOverColor: #0f7cd0;
+   fontWeight: normal;
+}
+
+/* Tree (BEMS)     -----------------------------------------------------------------------------------------   */ 
+
+ToolTip {cornerRadius:2;  backgroundColor:#ffffff; color:#000000;}  
+   
+Tree.bemsTree
+{
+	color: #434343;
+    border-color:#bbd7f1;
+    border-style:solid;
+    border-thickness:1;
+    header-background-skin: Embed(source='../images/grid_head_bg01.jpg');
+    verticalGridLineColor: #000000;
+    headerStyleName: advancedDataGridHeader;
+    horizontalGridLines: true;
+    horizontalGridLineColor: #D3E7F7;
+    verticalScrollBarStyleName: advancedDataGridVerticalScrollBar;
+    horizontalScrollPolicy:off; 
+    backgroundAlpha: 1;
+    backgroundDisabledColor: #FFFCFC;
+    font-weight: normal;
+    textRollOverColor: #434343;
+    headerSeparatorSkin: Embed(source="../images/grid_head_bg_line.jpg");
+    folderOpenIcon: Embed(source="../images/ic_bldg_opened.gif");
+    folderClosedIcon: Embed(source="../images/ic_bldg_closed.gif");
+    disclosureOpenIcon: Embed(source="../images/ic_minus_bems.gif");
+    disclosureClosedIcon: Embed(source="../images/ic_plus_bems.gif");
+    corner-radius:0;
+    textRollOverColor: #009dff;
+    text-selected-color: #000000;
+    default-leaf-icon:Embed(source="../images/ic_bldg.gif");
+    thumb-offset:1;
+    fillAlphas: 0.42, 0.91, 0.75, 0.65;
+}
+
+
+Tree.reportTree
+{
+	color: #434343;
+    border-color:#bbd7f1;
+    border-style:solid;
+    border-thickness:1;
+    header-background-skin: Embed(source='../images/grid_head_bg01.jpg');
+    verticalGridLineColor: #000000;
+    headerStyleName: advancedDataGridHeader;
+    horizontalGridLines: true;
+    horizontalGridLineColor: #D3E7F7;
+    verticalScrollBarStyleName: advancedDataGridVerticalScrollBar;
+    horizontalScrollPolicy:off; 
+    backgroundAlpha: 1;
+    backgroundDisabledColor: #FFFCFC;
+    font-weight: normal;
+    textRollOverColor: #434343;
+    headerSeparatorSkin: Embed(source="../images/grid_head_bg_line.jpg");
+    folderOpenIcon: Embed(source="../images/ic_report_opened.gif");
+    folderClosedIcon: Embed(source="../images/ic_report_closed.gif");
+    disclosureOpenIcon: Embed(source="../images/ic_minus_bems.gif");
+    disclosureClosedIcon: Embed(source="../images/ic_plus_bems.gif");
+    corner-radius:0;
+    textRollOverColor: #009dff;
+    text-selected-color: #000000;
+    default-leaf-icon:Embed(source="../images/ic_report.gif");
+    thumb-offset:1;
+    fillAlphas: 0.42, 0.91, 0.75, 0.65;
+}
+
+
+
+
+/* consumptionMonitoringMaxGadget (BEMS)   ------------------------------------------------------------------   */
+.cmVboxValue
+{
+	padding-top:30;
+	padding-right:0;
+	padding-bottom:10;
+}
+
+.totalUsageDefault
+{
+       	horizontalCenter:0; 
+        verticalCenter:0;  
+        textAlign: center;  
+        fontWeight:bold;
+        color:#0557C3;
+        fontSize:14;
+        fontFamily:tahoma;
+        padding-top:5;
+}
+
+.totalUsageElec
+{
+       	horizontalCenter:0; 
+        verticalCenter:0;  
+        textAlign: center;  
+        fontWeight:bold;
+        color:#0557C3;
+        fontSize:14;
+        fontFamily:tahoma;
+        padding-top:10;
+}
+
+.totalUsageGas
+{
+       	horizontalCenter:0; 
+        verticalCenter:0;  
+        textAlign: center;  
+        fontWeight:bold;
+        color:#F06600;
+        fontSize:14;
+        fontFamily:tahoma;
+        padding-top:12;
+}
+
+.totalUsageWater
+{
+       	horizontalCenter:0; 
+        verticalCenter:0;  
+        textAlign: center;  
+        fontWeight:bold;
+        color:#57A826;
+        fontSize:14;
+        fontFamily:tahoma;
+        padding-top:12;
+}
+
+        	
+.bmTitleElec
+{
+	padding-top:4;
+	background-color:#D8EAF8;
+	color:#598ACC;
+	text-align:center;
+	
+}
+.bmTitleGas
+{
+	padding-top:4;
+	background-color:#FBEEDD;
+	color:#EA9F44;
+	text-align:center;
+	
+}
+
+.bmTitleWater
+{
+	padding-top:4;
+	background-color:#E0EEC6;
+	color:#91BE3A;
+	text-align:center;
+	
+}
+
+.bmSubTitle
+{
+	
+	background-color:#F0F0F0;
+	horizontalCenter:0; 
+	verticalCenter:0;  
+	paddingBottom:1; 
+	paddingTop:1;  
+	textAlign: center;
+	color:#888888;
+	
+}
+
+.bmValue
+{
+	horizontalCenter:0; 
+	verticalCenter:0;  
+	paddingBottom:1; 
+	paddingTop:1;  
+	textAlign: center;
+}
+
+.bmBgWhite
+{
+	background-color:#ffffff;
+}
+
+.bmLineGray
+{
+	border-sides: top ; 
+	border-thickness: 1;
+	border-color: #E0E0E0;
+	border-style: solid;
+}
+
+.bmLineGrayLast
+{
+	border-sides: top ; 
+	border-thickness: 1;
+	border-color: #E0E0E0;
+	border-style: solid;
+}
+
+.bmTableBorderElec 		
+{
+		border-sides: top, bottom, left, right; 
+		background-color: #ffffff; 
+		border-color :#81BEE7;
+		border-thickness: 1;
+		border-style: solid;
+}	
+
+.bmTableBorderGas 		
+{
+		border-sides: top, bottom, left, right; 
+		background-color: #ffffff; 
+		border-color :#EFA345;
+		border-thickness: 1;
+		border-style: solid;
+}
+
+.bmTableBorderWater 		
+{
+		border-sides: top, bottom, left, right; 
+		background-color: #ffffff; 
+		border-color :#7AC642;
+		border-thickness: 1;
+		border-style: solid;
+}
+
+/* Energy  (BEMS)   ------------------------------------------------------------------   */
+
+.bgSrrowCo2	{background-image:Embed(source='../images/bg_srrow_co2.png');}
+.bgSrrowE1	{background-image:Embed(source='../images/bg_srrow_e01.png');}
+.bgSrrowE2	{background-image:Embed(source='../images/bg_srrow_e02.png');}
+.bgSrrowE3	{background-image:Embed(source='../images/bg_srrow_e03.png');}
+.bgSrrowE4	{background-image:Embed(source='../images/bg_srrow_e04.png');}
+.bgSrrowE5	{background-image:Embed(source='../images/bg_srrow_e05.png');}
+
+
+.spaceLrb	{top:0;	left:10;	right:10;	bottom:10;}
+
+
+
+.bgLegendNow			{background-image:Embed(source='../images/bglegendnow_01.gif');}
+.bgLegendLast			{background-image:Embed(source='../images/bglegendlast_01.gif');}
+.bgLegendHeatHumidMax	{background-image:Embed(source='../images/bglegend-heatHumidMax.gif');}
+.bgLegendHeatHumidMini	{background-image:Embed(source='../images/bglegend-heatHumidMini.gif');} 
+
+
+/* building Management Max (BEMS)   -------------------------------------------------------   */
+.textBlackBold
+{
+	color:black;
+	fontWeight:bold;
+	fontSize:12;
+	vertical-align:middle; 
+
+}
+.textBlackBoldBg
+{
+	horizontalAlign:center;
+	borderColor:#ffffff;
+ 	borderThickness:0;
+}
+
+.textWhiteNormal
+{
+	color:#ffffff;
+	fontWeight:normal;
+	padding-top:2;
+	padding-bottom:0;
+}
+.textWhiteNormalBg
+{
+ 	horizontalAlign:center;
+ 	backgroundColor:#B8B9C0;
+ 	verticalAlign:middle;
+ 	color:#ffffff;
+ 	borderColor:#ffffff;
+ 	borderThickness:0;
+}
+
+.blueBorder
+    /* 블루라인 테두리 보더   */
+{
+    border-color:#B4D3F0;
+    border-style:solid;
+    border-thickness:1;
+}
+.noticeStyle
+{
+	border-color:#B4D3F0;
+    border-style:solid;
+    border-thickness:1;
+    height:19;
+    corner-radius:1;
+    vertical-align: middle;
+}
+
+.borderDarkBlue
+{
+	border-color:#81BEE7;
+    border-style:solid;
+    border-thickness:1;
+    vertical-align: middle;
+    vertical-gap:0;
+    horizontal-gap:0;
+}
+
+.blueBorderBottom
+{
+	border-sides: bottom ; 
+	border-thickness: 1;
+	border-color: #c6dded;
+	border-style: solid;
+	vertical-align: middle;
+	border-style:solid;
+	text-align: center;
+    
+}
+
+.bluebg
+{
+	background-color:#EEF3F9;
+	text-align:center;
+	vertical-align:middle;
+	font-weight: bold;
+	color:#81BEE7;
+	padding-left:3;
+	padding-right:3;
+	
+}
+
+
+
+/* mcuTypeByLocationChart (집중기관리)  */ /* 차후에 삭제  */
+/*Panel.mcuTypeByLocationChart, .mcuTypeByCommStateChart, .locationByMCUTypeChart ,.locationByCommStateChart, .commStateByMCUTypeChart, .commStateByLocationChart, .commLogChart
+{   background-color: transparent;
+    border-color: transparent;
+    border-style:solid;
+    border-thickness:0;
+    color: #0f7cd0;
+    font-size: 12;
+    border-alpha: 0.0;
+    border-thickness-right: 10;
+    border-thickness-bottom: 0;
+    border-thickness-left: 10;
+    border-thickness-top: 0;
+}
+*/

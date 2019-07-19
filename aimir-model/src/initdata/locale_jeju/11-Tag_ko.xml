@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Tag
+        tag="시스템"
+        gadget="코드관리"
+    />
+    <system.Tag
+        tag="코드"
+        gadget="코드관리"
+    />  
+    
+    
+    <system.Tag
+        tag="검침데이터 "
+        gadget="검침데이터 조회(전기)"
+
+    />  
+    <system.Tag
+        tag="제조사 모델 관리"
+        gadget="제조사 모델 관리"
+
+    />  
+    <system.Tag
+        tag="공급사 관리"
+        gadget="공급사 관리"
+
+    />  
+    <system.Tag
+        tag="사용자관리"
+        gadget="사용자관리"
+
+    />
+    <system.Tag
+        tag="집중기관리"
+        gadget="집중기관리"
+
+    />
+    <system.Tag
+        tag="계약용량 이상 고객"
+        gadget="계약용량 이상 고객(전기)"
+
+    />
+    <system.Tag
+        tag="통신 로그"
+        gadget="통신 로그"
+
+    />
+    <system.Tag
+        tag="메모"
+        gadget="사용자 메모"
+
+    />
+    <system.Tag
+        tag="공지사항"
+        gadget="공지사항"
+    />
+	
+	<system.Tag
+        tag="이벤트"
+        gadget="이벤트 알람 로그"
+    />
+    <system.Tag
+        tag="장애"
+        gadget="이벤트 알람 로그"
+    />
+    
+    <system.Tag
+        tag="검침 실패"
+        gadget="검침 실패(전기)"
+
+    />
+    
+    <system.Tag
+        tag="고객"
+        gadget="고객 및 계약 관리"
+    />
+    <system.Tag
+        tag="계약"
+        gadget="고객 및 계약 관리"
+    />
+    
+    <system.Tag
+        tag="주기별 데이터 누락"
+        gadget="주기별 데이터 누락 관리(전기)"
+
+    />
+    
+    <system.Tag
+        tag="소비 랭킹"
+
+        gadget="소비 랭킹(전기)"
+
+    />    
+
+    <system.Tag
+        tag="모뎀관리"
+        gadget="모뎀관리"
+
+    />        
+
+    <system.Tag
+        tag="미터관리"
+        gadget="미터관리"
+
+    />
+        
+    <system.Tag
+        tag="장비 등록"
+        gadget="장비 등록"
+    /> 
+    
+    <system.Tag
+        tag="미터 시간 관리"
+        gadget="미터 시간 관리"
+    />
+    
+    <system.Tag
+        tag="빌링데이타"
+        gadget="전기 판매 실적"
+
+    />  
+     
+	<system.Tag
+        tag="피크관리"
+        gadget="수요 관리"
+
+    />    
+    <system.Tag
+        tag="전력 품질"
+        gadget="전력 품질"
+
+    /> 
+ 
+    <system.Tag
+        tag="장비 구글 맵"
+        gadget="장비 구글 맵"
+    /> 
+    <system.Tag
+        tag="구글맵"
+        gadget="장비 구글 맵"
+    />
+    
+    
+</dataset>

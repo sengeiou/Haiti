@@ -1,0 +1,295 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.GadgetRole
+        gadget="Code Management"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Metering Data(Electricity)"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Metering Data(Gas)"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Metering Data(Water)"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Metering Data(Heat)"
+        role="admin"
+        supplier="NURI"
+    /> 
+    <system.GadgetRole
+        gadget="Device Vendor Model"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Supplier Management"
+        role="admin"
+        supplier="NURI"
+    />  
+    <system.GadgetRole
+        gadget="User Management"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole 
+        gadget="Concentrator Management"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Abnormal contract customers(Electricity)"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Communication Log"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Memo"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Notice"
+        role="admin"
+        supplier="NURI"
+    />    
+    <system.GadgetRole
+        gadget="Change Log"
+        role="admin"
+        supplier="NURI"
+    />    
+    <system.GadgetRole
+        gadget="Operation Management"
+        role="admin"
+        supplier="NURI"
+    />  
+    <system.GadgetRole
+        gadget="Event Alarm Log"
+        role="admin"
+        supplier="NURI"
+    />    
+    <system.GadgetRole
+        gadget="Metering Fail(Electricity)"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Metering Fail(Heat)"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Metering Fail(Gas)"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Metering Fail(Water)"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Customer and Contract"
+        role="admin"
+        supplier="NURI"
+    />    
+    <system.GadgetRole
+        gadget="Data Gaps(Electricity)"
+        role="admin"
+        supplier="NURI"
+    /> 
+    <system.GadgetRole
+        gadget="Data Gaps(Gas)"
+        role="admin"
+        supplier="NURI"
+    /> 
+    <system.GadgetRole
+        gadget="Data Gaps(Water)"
+        role="admin"
+        supplier="NURI"
+    /> 
+    <system.GadgetRole
+        gadget="Data Gaps(Heat)"
+        role="admin"
+        supplier="NURI"
+    />    
+    <system.GadgetRole
+        gadget="Consumption Ranking(Electricity)"
+        role="admin"
+        supplier="NURI"
+    />   
+    <system.GadgetRole
+        gadget="Consumption Ranking(Gas)"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Consumption Ranking(Water)"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Consumption Ranking(Heat)"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Modem Management"
+        role="admin"
+        supplier="NURI"
+    />    
+    <system.GadgetRole
+        gadget="Meter Management"
+        role="admin"
+        supplier="NURI"
+    />        
+    <system.GadgetRole
+        gadget="Device Registration"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Meter Time Management"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Energy Management(Electricity)"
+        role="admin"
+        supplier="NURI"
+    /> 
+    <system.GadgetRole
+        gadget="Energy Management(Gas)"
+        role="admin"
+        supplier="NURI"
+    /> 
+    <system.GadgetRole
+        gadget="Energy Management(Water)"
+        role="admin"
+        supplier="NURI"
+    /> 
+    <system.GadgetRole
+        gadget="Energy Management(Heat)"
+        role="admin"
+        supplier="NURI"
+    />     
+    <system.GadgetRole
+        gadget="Demand Management"
+        role="admin"
+        supplier="NURI"
+    />   
+    <system.GadgetRole
+        gadget="Power Quality"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Metring SLA"
+        role="admin"
+        supplier="NURI"
+    />  
+    <system.GadgetRole
+        gadget="Google Map For Device"
+        role="admin"
+        supplier="NURI"
+    />     
+    <system.GadgetRole
+        gadget="PowerAlarmLog"
+        role="admin"
+        supplier="NURI"
+    /> 
+    <system.GadgetRole
+        gadget="Circuit Breaker Management"
+        role="admin"
+        supplier="NURI"
+    />  
+    <system.GadgetRole
+        gadget="VEE Management(Electricity)"
+        role="admin"
+        supplier="NURI"
+    />    
+    <system.GadgetRole
+        gadget="VEE Management(Gas)"
+        role="admin"
+        supplier="NURI"
+    />   
+    <system.GadgetRole
+        gadget="VEE Management(Water)"
+        role="admin"
+        supplier="NURI"
+    />   
+    <system.GadgetRole
+        gadget="VEE Management(Heat)"
+        role="admin"
+        supplier="NURI"
+    />   
+    
+    <system.GadgetRole
+        gadget="Battery Log"
+        role="admin"
+        supplier="NURI"
+    />   
+    <system.GadgetRole
+        gadget="Group Management"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="HomeGroup Management"
+        role="admin"
+        supplier="NURI"
+     />
+    <system.GadgetRole
+       gadget="Load Management"
+       role="admin"
+       supplier="NURI"
+    />
+    <system.GadgetRole
+       gadget="Firmware Management"
+       role="admin"
+       supplier="NURI"
+    />
+    <system.GadgetRole
+       gadget="TOU Report(Electricity)"
+       role="admin"
+       supplier="NURI"
+    />
+    <system.GadgetRole
+       gadget="Meter Event Log"
+       role="admin"
+       supplier="NURI"
+    />
+    <system.GadgetRole
+       gadget="Prepayment Customer Management"
+       role="admin"
+       supplier="NURI"
+    />
+    <system.GadgetRole
+       gadget="Energy Balance Monitoring"
+       role="admin"
+       supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Headend Management"
+        role="admin"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Log Analysis"
+        role="admin"
+        supplier="NURI"
+    />   
+    
+</dataset>

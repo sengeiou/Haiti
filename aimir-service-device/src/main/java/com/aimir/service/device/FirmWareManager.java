@@ -1,0 +1,73 @@
+package com.aimir.service.device;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.aimir.model.device.Firmware;
+import com.aimir.model.device.FirmwareBoard;
+import com.aimir.model.device.FirmwareCodi;
+import com.aimir.model.device.FirmwareHistory;
+import com.aimir.model.device.FirmwareIssue;
+import com.aimir.model.device.FirmwareIssueHistory;
+import com.aimir.model.device.FirmwareMCU;
+import com.aimir.model.device.FirmwareModem;
+import com.aimir.model.device.FirmwareTrigger;
+import com.aimir.model.system.Location;
+import com.aimir.model.system.Supplier;
+
+public interface FirmWareManager {
+	
+//	public Map<String, Object> getMainTree();
+	public void addFirmWare(Firmware firmware);
+	public void addFirmWareTrigger(FirmwareTrigger trigger);
+    public void addFirmWareFile(Map<String, Object> condition) throws Exception;
+	public void addFirmWareMCU(FirmwareMCU firmware,FirmwareBoard firmwareBoard) throws Exception ;
+	public void updateFirmWareMCU(FirmwareMCU firmware,FirmwareBoard firmwareBoard) throws Exception ;
+	public void addFirmWareModem(FirmwareModem firmware,FirmwareBoard firmwareBoard) throws Exception ;
+	public void updateFirmWareModem(FirmwareModem firmware,FirmwareBoard firmwareBoard) throws Exception ;
+	public void addFirmWareCodi(FirmwareCodi firmware,FirmwareBoard firmwareBoard) throws Exception ;
+	public void updateFirmWareCodi(FirmwareCodi firmware,FirmwareBoard firmwareBoard) throws Exception ;
+	public List<Object> getFirmwareList(String equip_kind ,String devicemodel_id,String firstResults,String maxResults, String supplierId,String equip_type);
+	public String getFirmwareListCNT(String equip_kind ,String devicemodel_id,String supplierId,String equip_type);
+	public Supplier getSupplierId(int frm_supplier);
+	public String getEquipCnt(Map<String, Object> param);
+	public List<Object> getStatisticsStr(Map<String, Object> condition);
+	public String getDistriButeMcuIdCnt(Map<String, Object> param, String location_id,String location_name);
+	public List<Object> getdistributeMcuIdDivList(Map<String, Object> param, String location_id,String location_name);
+//	public List<Object> getdistributeMcuIdList(Map<String, Object> param, String location_id,String location_name);
+	public String getDistriButeModemListCnt(Map<String, Object> param, String mcuId);
+	public List<Object> getDistriButeModemList(Map<String, Object> param, String mcuId);
+	public List<Object> distributeWriterStatus(Map<String, Object> param);
+	public List<Object> distributeStatus(Map<String, Object> param);
+	public List<Location> getLocationAllList();
+	public List<Object> distributeStatusDetail(Map<String, Object> param);
+	public String getFirmwareFileMgmListCNT(String equip_kind ,String devicemodel_id, String supplierId, String equip_type) ;
+	public List<Object> getFirmwareFileMgmList(String equip_kind ,String devicemodel_id, String firstResults,String maxResults,String supplierId, String equip_type) ;
+	public void insertFirmHistory(FirmwareHistory firmwareHistory, Map<String, Object> param)throws Exception;
+	public void insertModemFirmHistory(FirmwareHistory firmwareHistory, Map<String, Object> param, ArrayList  sendArrayEquipList)throws Exception;
+	public void createTrigger(FirmwareTrigger firmwaretrigger)throws Exception;
+	public String getTriggerListStep1CNT(Map<String, Object> condition)throws Exception;
+	public List<Object> getTriggerListStep1(Map<String, Object> condition)throws Exception;
+	public List<Object> getTriggerListStep2(Map<String, Object> condition)throws Exception;
+	public List<Object> getReDistList(HashMap<String, Object> condition);
+	public FirmwareTrigger getFirmwareTrigger(String tr_id)throws Exception;
+	public void updateFirmwareHistory(FirmwareHistory firmwareHistory, ArrayList updateFirmwareHistory)throws Exception;
+	public List<Integer> getChildren(int locationid);
+	public String checkExistFirmware(String equip_kind,String equip_type,String hwVersion,String fwVersion,String build,String arm,String vendor, String modelId);
+	public Firmware findByFileName(String fileName);
+	public Firmware findByFileUrlPath(String filePath);
+	public String getMcuBuildByFirmware(Map<String, Object> param);
+	public String getIDbyMcuSysId(String sys_id);
+	public void addFirmWareModem(FirmwareModem firmware);
+	public List<Object> getFirmwareFileList(Map<String, Object> condition) throws Exception;
+	public List<Object> getFirmwareIssueList(Map<String, Object> condition) throws Exception;
+	public List<Object> getFirmwareIssueHistoryList(Map<String, Object> condition) throws Exception;
+	public void deleteFirmware(String firmwareId) throws Exception;
+	public void deleteFirmwareLogical(String firmwareId) throws Exception;
+	public void updateFirmWareFile(Map<String, Object> condition) throws Exception;
+	public void addFirmwareIssueHistory(FirmwareIssueHistory firmwareIssueHistory);
+	public void addFirmwareIssue(FirmwareIssue firmwareIssue);
+	public Firmware getById(int parseInt);
+}

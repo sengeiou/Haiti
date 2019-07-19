@@ -1,0 +1,360 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Gadget
+        descr="코드 관리 (코드 조회추가삭제변경)"
+        iconSrc="assets/images/gadget_ko/code.gif"
+        maxUrl="system/code_manager_max.do"
+        miniUrl="system/code_manager_mini.do"
+        name="코드관리"
+        miniHeight="350"
+        fullHeight="800"
+    />
+    <system.Gadget
+        descr="검침데이터 관리(전기)"
+        iconSrc="assets/images/gadget_ko/meteringdata.gif"
+        maxUrl="mvm/mvmMaxGadgetEM.do"
+        miniUrl="mvm/mvmMiniGadgetEM.do"
+        name="검침데이터 조회(전기)"
+        miniHeight="350"
+        fullHeight="1200"
+    />  
+    <system.Gadget
+        descr="검침데이터 관리(수도)"
+        iconSrc="assets/images/gadget_ko/meteringdata.gif"
+        maxUrl="mvm/mvmMaxGadgetWM.do"
+        miniUrl="mvm/mvmMiniGadgetWM.do"
+        name="검침데이터 조회(수도)"
+        miniHeight="350"
+        fullHeight="1200"
+    />  
+    <system.Gadget
+        descr="장비 제조사 모델 관리"
+        iconSrc="assets/images/gadget_ko/vendormodel.gif"
+        maxUrl="system/devicemodelMax.do"
+        miniUrl="system/devicemodelMini.do"
+        name="제조사 모델 관리"
+        miniHeight="350"
+        fullHeight="800"
+    />  
+    <system.Gadget
+        descr="공급사 관리"
+        iconSrc="assets/images/gadget_ko/supplier.gif"
+        maxUrl="system/supplier/supplierMgmtMax.do"
+        miniUrl="system/supplier/supplierMgmtMini.do"
+        name="공급사 관리"
+        miniHeight="350"
+        fullHeight="800"
+    />  
+    <system.Gadget
+        descr="사용자 그룹 및 사용자 관리"
+        iconSrc="assets/images/gadget_ko/user.gif"
+        maxUrl="system/operatorMgmtMax.do"
+        miniUrl="system/operatorMgmtMini.do"
+        name="사용자관리"
+        miniHeight="350"
+        fullHeight="800"
+    />
+    <system.Gadget
+        descr="집중기 목록 상세정보 관리"
+        iconSrc="assets/images/gadget_ko/mcu.gif"
+        maxUrl="device/mcuMaxGadget.do"
+        miniUrl="device/mcuMiniGadget.do"
+        name="집중기관리"
+        miniHeight="350"
+        fullHeight="800"
+    />
+    <system.Gadget
+        descr="계약용량 이상 고객(전기)"
+        iconSrc="assets/images/gadget_ko/abnormalcontract.gif"
+        maxUrl="mvm/abnormalContractUsageEmMaxGadget.do"
+        miniUrl="mvm/abnormalContractUsageEmMiniGadget.do"
+        name="계약용량 이상 고객(전기)"
+        miniHeight="350"
+        fullHeight="800"
+    />
+    <system.Gadget
+        descr="통신장비의 통신 로그 (송/송수신) "
+        iconSrc="assets/images/gadget_ko/commlog.gif"
+        maxUrl="device/commLog/commLogMaxGadget.do"
+        miniUrl="device/commLog/commLogMiniGadget.do"
+        name="통신 로그"
+        miniHeight="350"
+        fullHeight="1600"
+    />
+    <system.Gadget
+        descr="사용자 메모 가젯"
+        iconSrc="assets/images/gadget_ko/memo.gif"
+        maxUrl="system/memoMax.do"
+        miniUrl="system/memoMini.do"
+        name="사용자 메모"
+        miniHeight="170"
+        fullHeight="800"
+    />
+    <system.Gadget
+        descr="공지 사항 가젯"
+        iconSrc="assets/images/gadget_ko/notice.gif"
+        maxUrl="system/noticeMax.do"
+        miniUrl="system/noticeMini.do"
+        name="공지사항"
+        miniHeight="170"
+        fullHeight="800"
+    />
+    
+    <system.Gadget
+        descr="변경로그 가젯"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="device/changeLogMaxGadget.do"
+        miniUrl="device/changeLogMiniGadget.do"
+        name="변경 로그"
+        miniHeight="350"
+        fullHeight="800"
+    />
+    
+    <system.Gadget
+        descr="명령 이력 관리 가젯"
+        iconSrc="assets/images/gadget_ko/operation.gif"
+        maxUrl="device/operationLog/operationLogMaxGadget.do"
+        miniUrl="device/operationLog/operationLogMiniGadget.do"
+        name="명령 이력 및 설정"
+        miniHeight="350"
+        fullHeight="800"
+    />
+	
+	<system.Gadget
+        descr="이벤트 알람 가젯"
+        iconSrc="assets/images/gadget_ko/event.gif"
+        maxUrl="device/eventAlert/eventAlertLogMax.do"
+        miniUrl="device/eventAlert/eventAlertLogMini.do"
+        name="이벤트 알람 로그"
+        miniHeight="500"
+        fullHeight="800"
+    />
+    
+    <system.Gadget
+        descr="검침 실패 가젯(전기)"
+        iconSrc="assets/images/gadget_ko/meteringfail.gif"
+        maxUrl="mvm/meteringFailureEmMaxGadget.do"
+        miniUrl="mvm/meteringFailureEmMiniGadget.do"
+        name="검침 실패(전기)"
+        miniHeight="350"
+        fullHeight="800"
+    />
+    
+    <system.Gadget
+        descr="고객 및 계약 관리 가젯"
+        iconSrc="assets/images/gadget_ko/customer.gif"
+        maxUrl="system/customerMax.do"
+        miniUrl="system/customerMini.do"
+        name="고객 및 계약 관리"
+        miniHeight="350"
+        fullHeight="800"
+    />
+    
+    <system.Gadget
+        descr="주기별 데이터 누락(전기)"
+        iconSrc="assets/images/gadget_ko/datagaps.gif"
+        maxUrl="mvm/dataGapsEmMaxGadget.do"
+        miniUrl="mvm/dataGapsEmMiniGadget.do"
+        name="주기별 데이터 누락 관리"
+        miniHeight="500"
+        fullHeight="800"
+    />
+    
+    <system.Gadget
+        descr="소비 랭킹(전기)"
+        iconSrc="assets/images/gadget_ko/consumptionrank.gif"
+        maxUrl="mvm/consumptionRankingEmMaxGadget.do"
+        miniUrl="mvm/consumptionRankingEmMiniGadget.do"
+        name="소비 랭킹(전기)"
+        miniHeight="350"
+        fullHeight="800"
+    />    
+    <!-- 
+    <system.Gadget
+        descr="소비 랭킹(가스)"
+        iconSrc="assets/images/gadget_ko/consumptionrank.gif"
+        maxUrl="mvm/consumptionRankingGmMaxGadget.do"
+        miniUrl="mvm/consumptionRankingGmMiniGadget.do"
+        name="소비 랭킹(가스)"
+        miniHeight="350"
+        fullHeight="800"
+    />
+    <system.Gadget
+        descr="소비 랭킹(수도)"
+        iconSrc="assets/images/gadget_ko/consumptionrank.gif"
+        maxUrl="mvm/consumptionRankingWmMaxGadget.do"
+        miniUrl="mvm/consumptionRankingWmMiniGadget.do"
+        name="소비 랭킹(수도)"
+        miniHeight="350"
+        fullHeight="800"
+    />
+    <system.Gadget
+        descr="소비 랭킹(열량)"
+        iconSrc="assets/images/gadget_ko/consumptionrank.gif"
+        maxUrl="mvm/consumptionRankingHmMaxGadget.do"
+        miniUrl="mvm/consumptionRankingHmMiniGadget.do"
+        name="소비 랭킹(열량)"
+        miniHeight="350"
+        fullHeight="800"
+    />
+     -->
+    <system.Gadget
+        descr="모뎀관리"
+        iconSrc="assets/images/gadget_ko/modem.gif"
+        maxUrl="device/modemMaxGadget.do"
+        miniUrl="device/modemMiniGadget.do"
+        name="모뎀관리"
+        miniHeight="350"
+        fullHeight="800"
+    />    
+
+    <system.Gadget
+        descr="미터 관리"
+        iconSrc="assets/images/gadget_ko/meter.gif"
+        maxUrl="device/meterMaxGadget.do"
+        miniUrl="device/meterMiniGadget.do"
+        name="미터관리"
+        miniHeight="350"
+        fullHeight="800"
+    />               
+    <system.Gadget
+        descr="장비 등록"
+        iconSrc="assets/images/gadget_ko/devicereg.gif"
+        maxUrl="device/deviceRegistrationMaxGadget.do"
+        miniUrl="device/deviceRegistrationMiniGadget.do"
+        name="장비 등록"
+        miniHeight="350"
+        fullHeight="1548"
+    />  
+    <system.Gadget
+        descr="미터 시간 관리"
+        iconSrc="assets/images/gadget_ko/meteringtime.gif"
+        maxUrl="device/meterTimeMaxGadget.do"
+        miniUrl="device/meterTimeMiniGadget.do"
+        name="미터 시간 관리"
+        miniHeight="350"
+        fullHeight="1548"
+    />
+    <system.Gadget
+        descr="전기 판매 실적"
+        iconSrc="assets/images/gadget_ko/sales.gif"
+        maxUrl="mvm/elecBillingMaxGadget.do"
+        miniUrl="mvm/elecBillingMiniGadget.do"
+        name="전기 판매 실적"
+        miniHeight="350"
+        fullHeight="1548"
+    />
+    <!-- 
+    <system.Gadget
+        descr="가스 판매 실적"
+        iconSrc="assets/images/gadget_ko/sales.gif"
+        maxUrl="mvm/gasBillingMaxGadget.do"
+        miniUrl="mvm/gasBillingMiniGadget.do"
+        name="가스 판매 실적"
+        miniHeight="350"
+        fullHeight="1548"
+    />  
+    <system.Gadget
+        descr="수도 판매 실적"
+        iconSrc="assets/images/gadget_ko/sales.gif"
+        maxUrl="mvm/waterBillingMaxGadget.do"
+        miniUrl="mvm/waterBillingMiniGadget.do"
+        name="수도 판매 실적"
+        miniHeight="350"
+        fullHeight="1548"
+    />  
+    <system.Gadget
+        descr="열 판매 실적"
+        iconSrc="assets/images/gadget_ko/sales.gif"
+        maxUrl="mvm/heatBillingMaxGadget.do"
+        miniUrl="mvm/heatBillingMiniGadget.do"
+        name="열 판매 실적"
+        miniHeight="350"
+        fullHeight="1548"
+    />  
+     -->
+	<system.Gadget
+        descr="수요 관리 최대 부하 관리"
+        iconSrc="assets/images/gadget_ko/demand.gif"
+        maxUrl="mvm/demandManagementMax.do"
+        miniUrl="mvm/demandManagementMini.do"
+        name="수요 관리"
+        miniHeight="350"
+        fullHeight="1548"
+    />    
+    <system.Gadget
+        descr="전력 품질 관리"
+        iconSrc="assets/images/gadget_ko/powerquality.gif"
+        maxUrl="mvm/powerQualityMaxGadget.do"
+        miniUrl="mvm/powerQualityMiniGadget.do"
+        name="전력 품질"
+        miniHeight="350"
+        fullHeight="1548"
+    />    
+    <system.Gadget
+        descr="검침 서비스 분석"
+        iconSrc="assets/images/gadget_ko/meteringsla.gif"
+        maxUrl="mvm/meteringSLAMaxGadget.do"
+        miniUrl="mvm/meteringSLAMiniGadget.do"
+        name="검침 서비스 분석"
+        miniHeight="350"
+        fullHeight="800"
+    />  
+    <system.Gadget
+        descr="장비 맵 구글 연동 가젯"
+        iconSrc="assets/images/gadget_ko/googlemap.gif"
+        maxUrl="device/GoogleMapMax.do"
+        miniUrl="device/GoogleMapMini.do"
+        name="장비 구글 맵"
+        miniHeight="500"
+        fullHeight="640"
+    />
+    
+    <system.Gadget
+        descr="정전 발생 복구 및 결상 발생 복구 이력"
+        iconSrc="assets/images/gadget_ko/poweralarm.gif"
+        maxUrl="device/powerAlarmLogMaxGadget.do"
+        miniUrl="device/powerAlarmLogMiniGadget.do"
+        name="정전로그"
+        miniHeight="350"
+        fullHeight="800"
+    /> 
+    <system.Gadget
+        descr="공급 차단 재개 관리 전기 미터의 전기 공급 차단 및 재개 이력등의 정보를 제공"
+        iconSrc="assets/images/gadget_ko/circuitbreaker.gif"
+        maxUrl="system/supplyCapacityMaxGadget.do"
+        miniUrl="system/supplyCapacityMiniGadget.do"
+        name="공급 차단재개"
+        miniHeight="500"
+        fullHeight="800"
+    /> 
+    <system.Gadget
+        descr="검침데이터 유효성 체크 , 검침데이터 예측 , 검침데이터 수정 등의 관리"
+        iconSrc="assets/images/gadget_ko/vee.gif"
+        maxUrl="mvm/VEEManagementEmMaxGadget.do"
+        miniUrl="mvm/VEEManagementEmMiniGadget.do"
+        name="VEE Management"
+        miniHeight="350"
+        fullHeight="800"
+    />
+    <!-- 
+    <system.Gadget
+        descr="모뎀의 배터리 로그 관리 (배터리 전압 로그 등)"
+        iconSrc="assets/images/gadget_ko/batterylog.gif"
+        maxUrl="device/batteryLogMaxGadget.do"
+        miniUrl="device/batteryLogMiniGadget.do"
+        name="배터리 로그"
+        miniHeight="350"
+        fullHeight="1200"
+    /> 
+     -->
+    <system.Gadget
+        descr="그룹관리 (장비, 고객, 사용자 등을 그룹핑한다.)"
+        iconSrc="assets/images/gadget_ko/group.gif"
+        maxUrl="system/groupManagementMiniGadget.do"
+        miniUrl="system/groupManagementMiniGadget.do"
+        name="그룹 관리"
+        miniHeight="500"
+        fullHeight="1000"
+    /> 
+</dataset>

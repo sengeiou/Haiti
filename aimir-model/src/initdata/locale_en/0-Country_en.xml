@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Country 
+		name="AALAND ISLANDS"
+		code_2letter="AX"
+		code_3letter="ALA"
+		code_number="248"
+	/>
+    <system.Country 
+        name="KOREA, REPUBLIC OF"
+        code_2letter="KR"
+        code_3letter="KOR"
+        code_number="410"
+    />
+	<system.Country 
+        name="PHILIPPINES"
+        code_2letter="PH"
+        code_3letter="PHL"
+        code_number="608"
+    />
+	<system.Country 
+        name="PARAGUAY"
+        code_2letter="PY"
+        code_3letter="PRY"
+        code_number="600"
+    />
+	<system.Country 
+        name="EGYPT"
+        code_2letter="EG"
+        code_3letter="EGY"
+        code_number="818"
+    />
+	<system.Country 
+        name="ITALY"
+        code_2letter="IT"
+        code_3letter="ITA"
+        code_number="380"
+    />
+	<system.Country 
+        name="UNITED KINGDOM"
+        code_2letter="GB"
+        code_3letter="GBR"
+        code_number="826"
+    />
+	<system.Country 
+        name="SPAIN"
+        code_2letter="ES"
+        code_3letter="ESP"
+        code_number="724"
+    />
+	<system.Country 
+        name="SWEDEN"
+        code_2letter="SE"
+        code_3letter="SWE"
+        code_number="752"
+    />
+	<system.Country 
+        name="SAUDI ARABIA"
+        code_2letter="SA"
+        code_3letter="SAU"
+        code_number="682"
+    />
+	<system.Country 
+        name="SOUTH AFRICA"
+        code_2letter="ZA"
+        code_3letter="ZAF"
+        code_number="710"
+    />
+	<system.Country 
+        name="UZBEKISTAN"
+        code_2letter="UZ"
+        code_3letter="UZB"
+        code_number="860"
+    />
+    <system.Country 
+        name="Haiti"
+        code_2letter="HT"
+        code_3letter="HTI"
+        code_number="509"
+    />
+</dataset>

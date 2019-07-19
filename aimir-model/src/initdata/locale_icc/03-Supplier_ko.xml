@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+    <system.Supplier 
+        name="제주ICC" 
+        country="KR"
+        lang="ko"
+        timezone="Asia/Seoul"
+        address="제주특별자치도 서귀포시 중문관광로 224"
+        descr="제주국제컨벤션센터"
+        telno="064-735-1000"
+        cd.pattern="###,###,##0"
+        cd.round="f"
+        md.pattern="###,###,##0.000"
+        md.round="r"
+	area="62125"
+    />
+</dataset>

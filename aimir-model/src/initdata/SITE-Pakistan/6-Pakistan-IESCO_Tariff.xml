@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset> 
+
+
+    <!-- Sri Lanka CEB TARIFF  --> 
+    <system.TariffType supplier="CEB" serviceTypeCode="3.1" code="11" name="Domestic"   numberOfBlocks ="5" description="Domestic Bill Determinant for prepaid"/>
+    <system.TariffType supplier="CEB" serviceTypeCode="3.1" code="21" name="Industrial" numberOfBlocks ="3" description="Industrial Bill Determinant for prepaid"/>
+    <system.TariffType supplier="CEB" serviceTypeCode="3.1" code="31" name="General"    numberOfBlocks ="3" description="General Bill Determinant for prepaid"/>
+    <system.TariffType supplier="CEB" serviceTypeCode="3.1" code="34" name="Government" numberOfBlocks ="2" description="Government Bill Determinant for prepaid"/>
+    <system.TariffType supplier="CEB" serviceTypeCode="3.1" code="41" name="Hotel"      numberOfBlocks ="2" description="Hotel Bill Determinant for prepaid"/>
+    <system.TariffType supplier="CEB" serviceTypeCode="3.1" code="51" name="Religious"  numberOfBlocks ="5" description="Religious Bill Determinant for prepaid"/>
+ 
+ 
+    <!-- activeEnergyCharge => Unit Charge,	serviceCharge => Fixed Charge -->
+      
+    <!-- 1. Domestic -->
+    <system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Max Unit of block A"   value="30" />           
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Max Unit of block B"   value="60" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Max Unit of block 1"   value="60" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Max Unit of block 2"   value="90" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Max Unit of block 3"   value="120" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Max Unit of block 4"   value="180" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Unit charge of block A"   value="2.5" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Unit charge of block B"   value="4.85" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Unit charge of block 1"   value="7.85" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Unit charge of block 2"   value="10" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Unit charge of block 3"   value="27.75" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Unit charge of block 4"   value="32" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Unit charge of block 5"   value="45" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Fixed charge of block A"   value="30" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Fixed charge of block B"   value="60" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Fixed charge of block 1"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Fixed charge of block 2"   value="90" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Fixed charge of block 3"   value="480" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Fixed charge of block 4"   value="480" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Fixed charge of block 5"   value="540" />
+	
+    <!-- 2. Industrial -->
+    <system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Max Unit of block A"   value="0" />           
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Max Unit of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Max Unit of block 1"   value="300" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Max Unit of block 2"   value="600" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Max Unit of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Max Unit of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Unit charge of block A"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Unit charge of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Unit charge of block 1"   value="10.8" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Unit charge of block 2"   value="12.2" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Unit charge of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Unit charge of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Unit charge of block 5"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Fixed charge of block A"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Fixed charge of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Fixed charge of block 1"   value="600" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Fixed charge of block 2"   value="600" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Fixed charge of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Fixed charge of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Fixed charge of block 5"   value="0" />
+	
+    <!-- 2. General -->
+    <system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Max Unit of block A"   value="0" />           
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Max Unit of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Max Unit of block 1"   value="300" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Max Unit of block 2"   value="600" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Max Unit of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Max Unit of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Unit charge of block A"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Unit charge of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Unit charge of block 1"   value="18.3" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Unit charge of block 2"   value="22.85" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Unit charge of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Unit charge of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Unit charge of block 5"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Fixed charge of block A"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Fixed charge of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Fixed charge of block 1"   value="240" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Fixed charge of block 2"   value="240" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Fixed charge of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Fixed charge of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Fixed charge of block 5"   value="0" />
+	
+    <!-- 3. Government -->
+    <system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Max Unit of block A"   value="0" />           
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Max Unit of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Max Unit of block 1"   value="180" />           
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Max Unit of block 2"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Max Unit of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Max Unit of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Unit charge of block A"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Unit charge of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Unit charge of block 1"   value="14.65" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Unit charge of block 2"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Unit charge of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Unit charge of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Unit charge of block 5"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Fixed charge of block A"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Fixed charge of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Fixed charge of block 1"   value="600" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Fixed charge of block 2"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Fixed charge of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Fixed charge of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Fixed charge of block 5"   value="0" />
+	
+    <!-- 4. Hotel -->
+    <system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Max Unit of block A"   value="0" />           
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Max Unit of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Max Unit of block 1"   value="600" />           
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Max Unit of block 2"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Max Unit of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Max Unit of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Unit charge of block A"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Unit charge of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Unit charge of block 1"   value="21.5" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Unit charge of block 2"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Unit charge of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Unit charge of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Unit charge of block 5"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Fixed charge of block A"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Fixed charge of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Fixed charge of block 1"   value="600" />           
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Fixed charge of block 2"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Fixed charge of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Fixed charge of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Fixed charge of block 5"   value="0" />
+	
+    <!-- 6. Religious -->
+    <system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Max Unit of block A"   value="0" />           
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Max Unit of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Max Unit of block 1"   value="30" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Max Unit of block 2"   value="90" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Max Unit of block 3"   value="120" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Max Unit of block 4"   value="180" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Unit charge of block A"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Unit charge of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Unit charge of block 1"   value="1.9" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Unit charge of block 2"   value="2.8" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Unit charge of block 3"   value="6.75" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Unit charge of block 4"   value="7.5" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Unit charge of block 5"   value="9.4" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Fixed charge of block A"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Fixed charge of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Fixed charge of block 1"   value="30" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Fixed charge of block 2"   value="60" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Fixed charge of block 3"   value="180" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Fixed charge of block 4"   value="180" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Fixed charge of block 5"   value="240" />
+	
+	
+</dataset>
+	

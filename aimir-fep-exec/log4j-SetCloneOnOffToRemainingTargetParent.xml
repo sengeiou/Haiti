@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">  
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">  
+
+    <!-- Consol Appender -->  
+    <appender name="stdout" class="org.apache.log4j.ConsoleAppender">  
+        <layout class="org.apache.log4j.PatternLayout">  
+            <param name="ConversionPattern" value="%d %-5p [%l] %x - %m%n"/>  
+        </layout>  
+    </appender>  
+ 
+    <!-- Batch Appender -->  
+    <appender name="batchOut" class="org.apache.log4j.RollingFileAppender">  
+        <param name="file" value="log/SetCloneOnOffToRemainingTargetParent.log"/>  
+        <param name="append" value="true"/>
+        <param name="maxFileSize" value="10MB"/>
+        <param name="maxBackupIndex" value="10"/>
+        <layout class="org.apache.log4j.PatternLayout">  
+            <param name="ConversionPattern" value="%d %-5p [%l] %x - %m%n"/>  
+        </layout>  
+    </appender>  
+ 
+    <!-- Aimir Logger -->
+    <logger name="com.aimir" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="stdout" />
+        <appender-ref ref="batchOut" />
+    </logger>
+
+    <!-- Root Logger -->
+    <root>  
+        <level value="INFO"/>  
+        <appender-ref ref="batchOut"/>  
+    </root>  
+</log4j:configuration>  

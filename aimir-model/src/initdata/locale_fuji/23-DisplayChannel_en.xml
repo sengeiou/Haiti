@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+
+    <mvm.DisplayChannel name="Total Del Only F+H"		localName="Total Del Only F+H"		serviceType="Electricity" unit="kWh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Total Rcvd Only F+H"		localName="Total Rcvd Only F+H"		serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+
+    <mvm.DisplayChannel name="Active Energy Imp."        localName="Active Energy Imp."        serviceType="Electricity" unit="kWh" chMethod="SUM"/>
+	<mvm.DisplayChannel name="Active Energy Exp."        localName="Active Energy Exp."        serviceType="Electricity" unit="kWh" chMethod="SUM"/>
+	<mvm.DisplayChannel name="Reactive Energy Imp."        localName="Reactive Energy Imp."        serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+	<mvm.DisplayChannel name="Reactive Energy Exp."        localName="Reactive Energy Exp."        serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Reactive Energy Imp. Lead"      localName="RReactive Energy Imp. Lead"      serviceType="Electricity" unit="kVarh" chMethod="SUM"/>   
+    <mvm.DisplayChannel name="Reactive Energy Imp. Lag"      localName="Reactive Energy Imp. Lag"      serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Reactive Energy Exp. Lead"      localName="Reactive Energy Exp. Lead"      serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Reactive Energy Exp. Lag"      localName="Reactive Energy Exp. Lag"      serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+
+    <mvm.DisplayChannel name="Active Power Imp."        localName="Active Power Imp."        serviceType="Electricity" unit="kW" chMethod="SUM"/>
+	<mvm.DisplayChannel name="Active Power Exp."        localName="Active Power Exp."        serviceType="Electricity" unit="kW" chMethod="SUM"/>
+	<mvm.DisplayChannel name="Reactive Power Imp."      localName="Reactive Power Imp."      serviceType="Electricity" unit="kVar" chMethod="SUM"/>   
+    <mvm.DisplayChannel name="Reactive Power Exp."      localName="Reactive Power Exp."      serviceType="Electricity" unit="kVar" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Reactive Power Imp. Lead"      localName="Reactive Power Imp. Lead"      serviceType="Electricity" unit="kVar" chMethod="SUM"/>   
+    <mvm.DisplayChannel name="Reactive Power Imp. Lag"      localName="Reactive Power Imp. Lag"      serviceType="Electricity" unit="kVar" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Reactive Power Exp. Lead"      localName="Reactive Power Exp. Lead"      serviceType="Electricity" unit="kVar" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Reactive Power Exp. Lag"      localName="Reactive Power Exp. Lag"      serviceType="Electricity" unit="kVar" chMethod="SUM"/>
+
+
+    <mvm.DisplayChannel name="Active Energy"        localName="Active Energy"        serviceType="Electricity" unit="kWh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Reactive Energy"      localName="Reactive Energy"      serviceType="Electricity" unit="kVarh" chMethod="SUM"/>    
+    <mvm.DisplayChannel name="Received Only"        localName="Received Only"        serviceType="Electricity" unit="kWh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Lead During Received" localName="Lead During Received" serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Lag During Received"  localName="Lag During Received"  serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Lead During Delivery" localName="Lead During Delivery" serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Active Power"         localName="Active Power"         serviceType="Electricity" unit="kW" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Reactive Power"       localName="Reactive Power"       serviceType="Electricity" unit="kVar" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Received Only"        localName="Received Only"        serviceType="Electricity" unit="kW" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Lead During Received" localName="Lead During Received" serviceType="Electricity" unit="kVar" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Lag During Received"  localName="Lag During Received"  serviceType="Electricity" unit="kVar" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Lead During Delivery" localName="Lead During Delivery" serviceType="Electricity" unit="kVar" chMethod="SUM"/>  
+    <mvm.DisplayChannel name="Power Factor"         localName="Power Factor"        serviceType="Electricity" unit="%" chMethod="AVG"/> 
+    
+    <mvm.DisplayChannel name="Usage" localName="Usage" serviceType="Gas" unit="m3" />
+    <mvm.DisplayChannel name="Usage" localName="Usage" serviceType="Water" unit="m3" />
+    
+    <mvm.DisplayChannel name="Hourly Heat"            localName="Hourly Heat"            serviceType="Heating" unit="Gcal" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Cumulative Heat"        localName="Cumulative Heat"        serviceType="Heating" unit="Gcal" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Instant Flow"           localName="Instant Flow"           serviceType="Heating" unit="m3" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Cumulative Flow"        localName="Cumulative Flow"        serviceType="Heating" unit="m3" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Flow[m3]*T1"            localName="Flow[m3]*T1"            serviceType="Heating" unit="m3" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Flow[m3]*T2"            localName="Flow[m3]*T2"            serviceType="Heating" unit="m3" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Supply Temperature"     localName="Supply Temperature"     serviceType="Heating" unit="C" chMethod="AVG"/>
+    <mvm.DisplayChannel name="Retrieve Temperature"   localName="Retrieve Temperature"   serviceType="Heating" unit="C" chMethod="AVG"/>
+    <mvm.DisplayChannel name="Temperature Difference" localName="Temperature Difference" serviceType="Heating" unit="C" chMethod="AVG"/>
+	<mvm.DisplayChannel name="Total Del Only F+H"     localName="Total Del Only F+H"        serviceType="Electricity" unit="kWh" />
+	<mvm.DisplayChannel name="Total Rcvd Only F+H"    localName="Total Rcvd Only F+H"        serviceType="Electricity" unit="kWh" />
+
+
+    <mvm.DisplayChannel name="Power Factor Total AVG"         localName="Power Factor Total AVG"        serviceType="Electricity" unit="%" chMethod="AVG"/> 
+    <mvm.DisplayChannel name="Voltage Ph-A AVG"         localName="Voltage Ph-A AVG"        serviceType="Electricity" unit="V" chMethod="AVG"/> 
+	<mvm.DisplayChannel name="Voltage Ph-C AVG"         localName="Voltage Ph-C AVG"        serviceType="Electricity" unit="V" chMethod="AVG"/> 
+	<mvm.DisplayChannel name="Current Ph-A AVG"         localName="Current Ph-A AVG"        serviceType="Electricity" unit="A" chMethod="AVG"/> 
+	<mvm.DisplayChannel name="Current Ph-C AVG"         localName="Current Ph-C AVG"        serviceType="Electricity" unit="A" chMethod="AVG"/> 
+    <mvm.DisplayChannel name="Voltage Ph-A THD MAX"         localName="Voltage Ph-A THD MAX"        serviceType="Electricity" unit="%" chMethod="AVG"/> 
+	<mvm.DisplayChannel name="Voltage Ph-C THD MAX"         localName="Voltage Ph-C THD MAX"        serviceType="Electricity" unit="%" chMethod="AVG"/> 
+	<mvm.DisplayChannel name="Current Ph-A THD MAX"         localName="Current Ph-A THD MAX"        serviceType="Electricity" unit="%" chMethod="AVG"/> 
+	<mvm.DisplayChannel name="Current Ph-C THD MAX"         localName="Current Ph-C THD MAX"        serviceType="Electricity" unit="%" chMethod="AVG"/> 
+	<mvm.DisplayChannel name="Phase Angle Ph-A AVG"         localName="Phase Angle Ph-A AVG"        serviceType="Electricity" unit="" chMethod="AVG"/> 
+	<mvm.DisplayChannel name="Phase Angle Ph-C AVG"         localName="Phase Angle Ph-C AVG"        serviceType="Electricity" unit="" chMethod="AVG"/> 
+
+
+
+	<mvm.DisplayChannel name="Power Factor Ph-A"         localName="Power Factor Ph-A"        serviceType="Electricity" unit="%" chMethod="AVG"/> 
+	<mvm.DisplayChannel name="Power Factor Ph-B"         localName="Power Factor Ph-B"        serviceType="Electricity" unit="%" chMethod="AVG"/> 
+	<mvm.DisplayChannel name="Power Factor Ph-C"         localName="Power Factor Ph-C"        serviceType="Electricity" unit="%" chMethod="AVG"/> 
+	<mvm.DisplayChannel name="Power Factor Total"         localName="Power Factor Total"        serviceType="Electricity" unit="%" chMethod="AVG"/> 
+	<mvm.DisplayChannel name="Voltage Ph-A THD AVG"         localName="Voltage Ph-A THD AVG"        serviceType="Electricity" unit="%" chMethod="AVG"/> 
+	<mvm.DisplayChannel name="Voltage Ph-B THD AVG"         localName="Voltage Ph-B THD AVG"        serviceType="Electricity" unit="%" chMethod="AVG"/> 
+	<mvm.DisplayChannel name="Voltage Ph-C THD AVG"         localName="Voltage Ph-C THD AVG"        serviceType="Electricity" unit="%" chMethod="AVG"/> 
+	<mvm.DisplayChannel name="Current Ph-A THD AVG"         localName="Current Ph-A THD AVG"        serviceType="Electricity" unit="%" chMethod="AVG"/> 
+	<mvm.DisplayChannel name="Current Ph-B THD AVG"         localName="Current Ph-B THD AVG"        serviceType="Electricity" unit="%" chMethod="AVG"/> 
+	<mvm.DisplayChannel name="Current Ph-C THD AVG"         localName="Current Ph-C THD AVG"        serviceType="Electricity" unit="%" chMethod="AVG"/> 
+
+	<mvm.DisplayChannel name="VAh (selectable)"		localName="VAh (selectable)"      serviceType="Electricity" unit="VAh" chMethod="AVG"/>   
+
+    <mvm.DisplayChannel name="Active Energy (QI+QIV)"		localName="Active Energy (QI+QIV)"	serviceType="Electricity" unit="kWh" 	chMethod="SUM"/>
+    <mvm.DisplayChannel name="Reactive Energy QI"			localName="Reactive Energy QI"		serviceType="Electricity" unit="kVarh" 	chMethod="SUM"/>
+    <mvm.DisplayChannel name="Reactive Energy QIV"			localName="Reactive Energy QIV"		serviceType="Electricity" unit="kVarh" 	chMethod="SUM"/>
+    <mvm.DisplayChannel name="Apparent Energy (QI+QIV)"		localName="Apparent Energy"			serviceType="Electricity" unit="kVah" 	chMethod="SUM"/>
+    
+    <mvm.DisplayChannel name="Voltage"		localName="Voltage"		serviceType="Electricity" unit="V" chMethod="AVG"/>
+</dataset>
+
+
+
+

@@ -1,0 +1,333 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+    <!-- mx2 MODEM -->
+    <system.ModemConfig 
+        name="NAMR-P114GP_MX2"
+        parserName="com.aimir.fep.meter.parser.MX2"
+        saverName="com.aimir.fep.meter.saver.MX2Saver"
+        deviceModel="NAMR-P114GP_MX2"
+    />
+    <system.ModemConfig 
+        name="PS110-MX2"
+        parserName="com.aimir.fep.meter.parser.MX2"
+        saverName="com.aimir.fep.meter.saver.MX2Saver"
+        deviceModel="PS110-MX2"
+    />
+	<system.ModemConfig 
+        name="NAMR-P114EC_MX2"
+        parserName="com.aimir.fep.meter.parser.MX2"
+        saverName="com.aimir.fep.meter.saver.MX2Saver"
+        deviceModel="NAMR-P114EC_MX2"
+    />
+	<system.ModemConfig 
+        name="NAMR-P114EC_Mk6N"
+        parserName="com.aimir.fep.meter.parser.Mk6N"
+        saverName="com.aimir.fep.meter.saver.Mk6NMDSaver"
+        deviceModel="NAMR-P114EC_Mk6N"
+    />
+	<system.ModemConfig 
+        name="NAMR-P114EC_Mk10E"
+        parserName="com.aimir.fep.meter.parser.Mk10"
+        saverName="com.aimir.fep.meter.saver.Mk10MDSaver"
+        deviceModel="NAMR-P114EC_Mk10E"
+    />
+	<system.ModemConfig 
+        name="NAMR-P114EC_Mk10A"
+        parserName="com.aimir.fep.meter.parser.Mk10"
+        saverName="com.aimir.fep.meter.saver.Mk10MDSaver"
+        deviceModel="NAMR-P114EC_Mk10A"
+    />
+	<system.ModemConfig 
+        name="NAMR-P114EC_A1800"
+        parserName="com.aimir.fep.meter.parser.A1800"
+        saverName="com.aimir.fep.meter.saver.A1800MDSaver"
+        deviceModel="NAMR-P114EC_A1800"
+    />
+
+
+
+
+
+    <!-- repeater parser start-->
+    <system.ModemConfig 
+        name="NZR-I121SR"
+        parserName="com.aimir.fep.meter.parser.ZBRepeater"
+        saverName="com.aimir.fep.meter.saver.ZBRepeaterMDSaver"
+        deviceModel="NZR-I121SR"
+    />
+    <system.ModemConfig 
+        name="NZR-O121SR"
+        parserName="com.aimir.fep.meter.parser.ZBRepeater"
+        saverName="com.aimir.fep.meter.saver.ZBRepeaterMDSaver"
+        deviceModel="NZR-O121SR"
+    />
+    <system.ModemConfig 
+        name="NZR-O121RE"
+        parserName="com.aimir.fep.meter.parser.ZBRepeater"
+        saverName="com.aimir.fep.meter.saver.ZBRepeaterMDSaver"
+        deviceModel="NZR-O121RE"
+    />
+    <system.ModemConfig 
+        name="NZR-I121RE"
+        parserName="com.aimir.fep.meter.parser.ZBRepeater"
+        saverName="com.aimir.fep.meter.saver.ZBRepeaterMDSaver"
+        deviceModel="NZR-I121RE"
+    /> 
+    <!-- repeater parser end -->
+    <system.ModemConfig 
+        name="NAMR-P109SR"
+        parserName="com.aimir.fep.meter.parser.SM110"
+        saverName="com.aimir.fep.meter.saver.SM110MDSaver"
+        deviceModel="NAMR-P109SR"
+    /> 
+    <system.ModemConfig 
+        name="NAMR-P110SR"
+        parserName="com.aimir.fep.meter.parser.Kamstrup382"
+        saverName="com.aimir.fep.meter.saver.Kamstrup382MDSaver"
+        deviceModel="NAMR-P110SR"
+    />   
+    <system.ModemConfig 
+        name="NAMR-201SR"
+        parserName="com.aimir.fep.meter.parser.SM110"
+        saverName="com.aimir.fep.meter.saver.SM110MDSaver"
+        deviceModel="NAMR-201SR"
+    />
+    <system.ModemConfig 
+        name="NAMR-202SR"
+        parserName="com.aimir.fep.meter.parser.kV2c"
+        saverName="com.aimir.fep.meter.saver.kV2cMDSaver"
+        deviceModel="NAMR-202SR"
+    />  
+
+    <system.ModemConfig 
+        name="NAPC-G115SR"
+        parserName="com.aimir.fep.meter.parser.ZEUPLS"
+        saverName="com.aimir.fep.meter.saver.ZEUPLS2MDSaver"
+        deviceModel="NAPC-G115SR"
+    />
+    
+    <system.ModemConfig 
+        name="NAPC-W105SR"
+        parserName="com.aimir.fep.meter.parser.ZEUPLS"
+        saverName="com.aimir.fep.meter.saver.ZEUPLS2MDSaver"
+        deviceModel="NAPC-W105SR"
+    />
+    <system.ModemConfig 
+        name="NHMU-Z1240"
+        parserName="com.aimir.fep.meter.parser.ZEUPLS2"
+        saverName="com.aimir.fep.meter.saver.ZEUPLS2MDSaver"
+        deviceModel="NHMU-Z1240"
+    />
+    
+    <system.ModemConfig 
+        name="NACD-E15"
+        parserName="com.aimir.fep.meter.parser.ZEUPLS2"
+        saverName="com.aimir.fep.meter.saver.ZEUPLS2MDSaver"
+        deviceModel="NACD-E15"
+    />
+
+    <system.ModemConfig 
+        name="NAMR-H101MG"
+        parserName="com.aimir.fep.meter.parser.MBus"
+        saverName="com.aimir.fep.meter.saver.MBusMDSaver"
+        deviceModel="NAMR-H101MG"
+    />
+
+    <system.ModemConfig 
+        name="NAMR-P112GP_Kamstrup351"
+        parserName="com.aimir.fep.meter.parser.Kamstrup351B"
+        saverName="com.aimir.fep.meter.saver.Kamstrup351BMDSaver"
+        deviceModel="NAMR-P112GP_Kamstrup351"
+    />
+    
+        <system.ModemConfig 
+        name="NAMR-P112GP_KMP"
+        parserName="com.aimir.fep.meter.parser.NURI_KamstrupKMP"
+        saverName="com.aimir.fep.meter.saver.NURI_KamstrupKMPMDSaver"
+        deviceModel="NAMR-P112GP_KMP"
+    />
+    
+    <!-- 
+    <system.ModemConfig 
+        name="NPG-P111-Mk6N"
+        parserName="com.aimir.fep.meter.parser.Mk6N"
+        saverName="com.aimir.fep.meter.saver.Mk6NMDSaver"
+        deviceModel="NPG-P111"
+    />
+    <system.ModemConfig 
+        name="NPG-P111-A2RL"
+        parserName="com.aimir.fep.meter.parser.A2RL"
+        saverName="com.aimir.fep.meter.saver.A2RLMDSaver"
+        deviceModel="NPG-P111"
+    />
+    <system.ModemConfig 
+        name="NPG-P111-NURI_kV2C"
+        parserName="com.aimir.fep.meter.parser.NURI_kV2C"
+        saverName="com.aimir.fep.meter.saver.NURI_kV2CMDSaver"
+        deviceModel="NPG-P111"
+    />
+    <system.ModemConfig 
+        name="NPG-P111-LK3410CP_005"
+        parserName="com.aimir.fep.meter.parser.LK3410CP_005"
+        saverName="com.aimir.fep.meter.saver.LK3410CP_005MDSaver"
+        deviceModel="NPG-P111"
+    />   
+
+    
+    <system.ModemConfig 
+        name="CDM-C211 V2-LGRW3410"
+        parserName="com.aimir.fep.meter.parser.LGRW3410"
+        saverName="com.aimir.fep.meter.saver.LGRW3410MDSaver"
+        deviceModel="CDM-C211 V2"
+    />   
+    <system.ModemConfig 
+        name="CDM-C211 V2-LK1210DRB"
+        parserName="com.aimir.fep.meter.parser.LK1210DRB"
+        saverName="com.aimir.fep.meter.saver.LK1210DRBMDSaver"
+        deviceModel="CDM-C211 V2"
+    />
+    <system.ModemConfig 
+        name="CDM-C211 V2-LK3410DRB"
+        parserName="com.aimir.fep.meter.parser.LK3410DRB"
+        saverName="com.aimir.fep.meter.saver.LK3410DRBMDSaver"
+        deviceModel="CDM-C211 V2"
+    />
+    <system.ModemConfig 
+        name="CDM-C211 V2-KDH"
+        parserName="com.aimir.fep.meter.parser.KDH"
+        saverName="com.aimir.fep.meter.saver.KDHMDSaver"
+        deviceModel="CDM-C211 V2"
+    />
+    <system.ModemConfig 
+        name="CDM-C211 V2-Kamstrup601"
+        parserName="com.aimir.fep.meter.parser.NURI_Kamstrup601"
+        saverName="com.aimir.fep.meter.saver.NURI_Kamstrup601MDSaver"
+        deviceModel="CDM-C211 V2"
+    />
+    
+         -->  
+  <system.ModemConfig 
+        name="NJ34-212-THI"
+        parserName="com.aimir.fep.meter.parser.DLMS"
+        saverName="com.aimir.fep.meter.saver.DLMSMDSaver"
+        deviceModel="NJ34-212-THI"
+    />
+   <system.ModemConfig 
+        name="PLC Modem"
+        parserName="com.aimir.fep.meter.parser.plc.PLCData"
+        saverName="com.aimir.fep.meter.saver.PLCMDSaver"
+        deviceModel="PLC Modem"
+    />
+    <system.ModemConfig 
+        name="NAMR-P112GP_ElsterA1700"
+        parserName="com.aimir.fep.meter.parser.ElsterA1700"
+        saverName="com.aimir.fep.meter.saver.ElsterA1700MDSaver"
+        deviceModel="NAMR-P112GP_ElsterA1700"
+    />
+
+    <system.ModemConfig 
+        name="NAPC-G116SR"
+        parserName="com.aimir.fep.meter.parser.ZEUPLS2"
+        saverName="com.aimir.fep.meter.saver.ZEUPLS2MDSaver"
+        deviceModel="NAPC-G116SR"
+    />
+
+    <system.ModemConfig 
+        name="NAPC-W104SR"
+        parserName="com.aimir.fep.meter.parser.ZEUPLS2"
+        saverName="com.aimir.fep.meter.saver.ZEUPLS2MDSaver"
+        deviceModel="NAPC-W104SR"
+    />
+    
+    <system.ModemConfig 
+        name="PS110-A1800"
+        parserName="com.aimir.fep.meter.parser.A1800"
+        saverName="com.aimir.fep.meter.saver.A1800MDSaver"
+        deviceModel="PS110-A1800"
+    />
+    <system.ModemConfig 
+        name="NAMR-P114GP_A1800"
+        parserName="com.aimir.fep.meter.parser.A1800"
+        saverName="com.aimir.fep.meter.saver.A1800MDSaver"
+        deviceModel="NAMR-P114GP_A1800"
+    />
+    <system.ModemConfig 
+        name="PS110-Mk10"
+        parserName="com.aimir.fep.meter.parser.Mk10"
+        saverName="com.aimir.fep.meter.saver.Mk10MDSaver"
+        deviceModel="PS110-Mk10"
+    />
+    <system.ModemConfig 
+        name="NAMR-P114GP_Mk10"
+        parserName="com.aimir.fep.meter.parser.Mk10"
+        saverName="com.aimir.fep.meter.saver.Mk10MDSaver"
+        deviceModel="NAMR-P114GP_Mk10"
+    />
+    <system.ModemConfig 
+        name="CommHub"
+        parserName="com.aimir.fep.meter.parser.DLMSKepco"
+        saverName="com.aimir.fep.meter.saver.DLMSKepcoMDSaver"
+        deviceModel="CommHub"
+    />
+    <system.ModemConfig 
+        name="NAMR-P201SR"
+        parserName="com.aimir.fep.meter.parser.ZEUPLS2"
+        saverName="com.aimir.fep.meter.saver.ZEUPLS2MDSaver"
+        deviceModel="NAMR-P201SR"
+    />
+    <system.ModemConfig 
+        name="NAMR-P108SR"
+
+        parserName="com.aimir.fep.meter.parser.Aidon5530_2"
+        saverName="com.aimir.fep.meter.saver.Aidon5530_2MDSaver"
+        deviceModel="NAMR-P108SR"
+    />
+    <!-- 오사키 WFD 계량기  -->
+    <system.ModemConfig 
+        name="NAMR-P10ASR"
+        parserName="com.aimir.fep.meter.parser.WFD1"
+        saverName="com.aimir.fep.meter.saver.WFD1MDSaver"
+        deviceModel="NAMR-P10ASR"
+    />
+    <system.ModemConfig 
+        name="NAMR-P10BSR"
+        parserName="com.aimir.fep.meter.parser.RDataParser"
+        saverName="com.aimir.fep.meter.saver.SXRMDSaver"
+        deviceModel="NAMR-P10BSR"
+    />    
+    
+    <system.ModemConfig 
+        name="Water_15mm"
+        parserName="com.aimir.fep.meter.parser.ZEUPLS2"
+        saverName="com.aimir.fep.meter.saver.ZEUPLS2MDSaver"
+        deviceModel="Water_15mm"
+    />
+    <system.ModemConfig 
+        name="NAMR-P112GP_ElsterA1140"
+        parserName="com.aimir.fep.meter.parser.ElsterA1140"
+        saverName="com.aimir.fep.meter.saver.ElsterA1140MDSaver"
+        deviceModel="NAMR-P112GP_ElsterA1140"
+    />
+
+    <system.ModemConfig 
+        name="NAPC-W202"
+        parserName="com.aimir.fep.meter.parser.NAPC_W202"
+        saverName="com.aimir.fep.meter.saver.NAPC_W202Saver"
+        deviceModel="NAPC-W202"
+    /> 
+    <system.ModemConfig 
+        name="NAMR-P111SR"
+        parserName="com.aimir.fep.meter.parser.DLMS"
+        saverName="com.aimir.fep.meter.saver.DLMSMDSaver"
+        deviceModel="NAMR-P111SR"
+    />
+    
+    <!-- WaterMeter for spasa -->    
+    <system.ModemConfig 
+        name="NAPC-W202SR"
+        parserName="com.aimir.fep.meter.parser.UMC2000G4R"
+        saverName="com.aimir.fep.meter.saver.UMC2000G4RMDSaver"
+        deviceModel="NAPC-W202SR"
+    />
+
+</dataset>

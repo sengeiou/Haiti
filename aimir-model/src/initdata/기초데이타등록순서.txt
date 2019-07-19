@@ -1,0 +1,26 @@
+공통 (사이트마다 정보가 다르지만 AMI, HEMS, BEMS 공통으로 들어가는 정보)
+0. Code, Country, Language, Timezone, Season, EventAlert, MeterEvent, DisplayChannel
+1. Supplier, CO2Formula
+2. Location, TariffType, DeviceVendor, SupplyType
+3. Role, TOURate, DeviceModel, Tariff (EM, GM, WM, etc)
+4. Operator, OperationList, MeterConfig, ModemConfig
+5. Dashboard, ChannelConfig
+6. Gadget 
+7. DashboardGadget
+8. Tag
+9. GadgetRole
+
+아래 정보는 가젯을 통해서도 등록이 가능해야 함.
+장비
+1. MCU, Modem, Meter, EndDevice
+
+AMI
+1. Customer
+2. Contract
+
+BEMS
+1. ContractCapacity
+2. SupplyTypeLocation
+
+HEMS
+

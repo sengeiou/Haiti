@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<operations>
+	<operation code="8.1.1" name="On Demand Metering">
+		<btext>검침 요청</btext>
+		<savers>
+			<saver name="cmdSendSMS">cmdSMS</saver>
+			<saver name="cmdOnDemandMeter3">cmdOnDemandMeter</saver>
+			<saver name="cmdOnDemandMeterAsync">cmdOnDemandMeter</saver>
+			<saver name="cmdOnDemandMeter2">cmdOnDemandMeter</saver>
+			<saver name="cmdOnDemandMBus">cmdOnDemandMBus</saver>
+			<saver name="cmdAsynchronousCall">cmdOnDemandMeter</saver>
+			<saver name="cmdOnDemandMeter2">cmdOnDemandMeter</saver>
+		</savers>
+	</operation>
+	
+	<!-- 
+		com.aimir.bo.command.CmdController 이곳에서 
+		switch를 status, on, off 로 분기하도록 작업하기 이전에
+		쌓였던 데이터를 조회하기 위해 추가된 코드임.
+	 -->
+	<operation code="8.1.4" name="Relay Switch">
+		<btext>Relay Switch</btext>
+		<savers>
+			<saver name="Aidon5530_2MDSaver">cmdAidonMCCB</saver>
+			<saver name="Aidon5530MDSaver">cmdAidonMCCB</saver>
+			<saver name="DLMSGtypeMDSaver">cmdOnDemandMeter</saver>
+            <saver name="DLMSNamjunMDSaver">cmdOnDemandMeter</saver>
+			<saver name="I210PlusCSeriesMDSaver">cmdOnDemandMeter</saver>
+			<saver name="Kamstrup162MDSaver">cmdKamstrupCID</saver>
+			<saver name="KamstrupOmniPowerMDSaver">cmdKamstrupCID</saver>
+			<saver name="KamstrupV2MDSaver">cmdKamstrupCID</saver>
+			<saver name="SM110MDSaver">cmdOnDemandMeter</saver>
+			<saver name="SXRMDSaver">cmdGetEnergyLevel</saver>
+
+			<saver name="UMC2000G4RMDSaver">cmdKDGetMeterStatus</saver> <!-- status인 경우 -->
+			<!-- <saver name="UMC2000G4RMDSaver">cmdKDValveControl</saver>  off, on 인 경우 -->
+
+			<saver name="UMC2000W4RMDSaver">cmdKDGetMeterStatus</saver> <!-- status인 경우 -->
+			<!-- <saver name="UMC2000W4RMDSaver">cmdKDValveControl</saver>  off, on 인 경우 -->			
+		</savers>
+	</operation>	
+	
+	<operation code="8.1.8" name="Relay Status">
+		<btext>Relay Status</btext>
+		<savers>
+			<saver name="Aidon5530_2MDSaver">cmdAidonMCCB</saver>
+			<saver name="Aidon5530MDSaver">cmdAidonMCCB</saver>
+			<saver name="DLMSGtypeMDSaver">cmdOnDemandMeter</saver>
+            <saver name="DLMSNamjunMDSaver">cmdOnDemandMeter</saver>
+			<saver name="I210PlusCSeriesMDSaver">cmdOnDemandMeter</saver>
+			<saver name="Kamstrup162MDSaver">cmdKamstrupCID</saver>
+			<saver name="KamstrupOmniPowerMDSaver">cmdKamstrupCID</saver>
+			<saver name="KamstrupV2MDSaver">cmdKamstrupCID</saver>
+			<saver name="SM110MDSaver">cmdOnDemandMeter</saver>
+			<saver name="SXRMDSaver">cmdGetEnergyLevel</saver>
+			<saver name="UMC2000G4RMDSaver">cmdKDGetMeterStatus</saver>
+			<saver name="UMC2000W4RMDSaver">cmdKDGetMeterStatus</saver>
+		</savers>
+	</operation>
+	
+	<operation code="8.1.10" name="Relay off">
+		<btext>Relay off</btext>
+		<savers>
+			<saver name="Aidon5530_2MDSaver">cmdAidonMCCB</saver>
+			<saver name="Aidon5530MDSaver">cmdAidonMCCB</saver>
+			<saver name="DLMSGtypeMDSaver">cmdOnDemandMeter</saver>
+			<saver name="DLMSNamjunMDSaver">cmdOnDemandMeter</saver>
+			<saver name="I210PlusCSeriesMDSaver">cmdOnDemandMeter</saver>
+			<saver name="Kamstrup162MDSaver">cmdKamstrupCID</saver>
+			<saver name="KamstrupOmniPowerMDSaver">cmdKamstrupCID</saver>
+			<saver name="KamstrupV2MDSaver">cmdKamstrupCID</saver>
+			<saver name="SM110MDSaver">cmdOnDemandMeter</saver>
+			<saver name="SXRMDSaver">cmdGetEnergyLevel</saver>
+			<saver name="UMC2000G4RMDSaver">cmdKDValveControl</saver>
+			<saver name="UMC2000W4RMDSaver">cmdKDValveControl</saver>
+		</savers>
+	</operation>		
+	
+	<operation code="8.1.9" name="Relay on">
+		<btext>Relay on</btext>
+		<savers>
+			<saver name="Aidon5530_2MDSaver">cmdAidonMCCB</saver>
+			<saver name="Aidon5530MDSaver">cmdAidonMCCB</saver>
+			<saver name="DLMSGtypeMDSaver">cmdOnDemandMeter</saver>
+            <saver name="DLMSNamjunMDSaver">cmdOnDemandMeter</saver>
+			<saver name="I210PlusCSeriesMDSaver">cmdOnDemandMeter</saver>
+			<saver name="Kamstrup162MDSaver">cmdKamstrupCID</saver>
+			<saver name="KamstrupOmniPowerMDSaver">cmdKamstrupCID</saver>
+			<saver name="KamstrupV2MDSaver">cmdKamstrupCID</saver>
+			<saver name="SM110MDSaver">cmdOnDemandMeter</saver>
+			<saver name="SXRMDSaver">cmdGetEnergyLevel</saver>
+			<saver name="UMC2000G4RMDSaver">cmdKDValveControl</saver>
+			<saver name="UMC2000W4RMDSaver">cmdKDValveControl</saver>
+		</savers>
+	</operation>
+	
+	<operation code="8.1.3" name="Meter Time Synchronization">
+		<btext>Meter Time Sync</btext>
+		<savers>
+			<saver name="Aidon5530_2MDSaver">cmdSyncMeterTime</saver>
+			<saver name="Aidon5530MDSaver">cmdSyncMeterTime</saver>
+			<saver name="DLMSGtypeMDSaver">cmdOnDemandMeter</saver>
+            <saver name="DLMSNamjunMDSaver">cmdOnDemandMeter</saver>
+			<saver name="ElsterA1140MDSaver">cmdSMS</saver>
+			<saver name="I210PlusCSeriesMDSaver">cmdSyncMeterTime</saver>
+			<saver name="Kamstrup162MDSaver">cmdKamstrupCID</saver>
+			<saver name="Kamstrup351BMDSaver">cmdOnDemandMeter</saver>
+			<saver name="KamstrupOmniPowerMDSaver">cmdKamstrupCID</saver>
+			<saver name="KamstrupV2MDSaver">cmdKamstrupCID</saver>
+			<saver name="MX2Saver">cmdSMS</saver>
+			<saver name="SM110MDSaver">cmdSyncMeterTime</saver>
+			<saver name="SXRMDSaver">cmdSyncMeterTime</saver>
+		</savers>
+	</operation>		
+</operations>

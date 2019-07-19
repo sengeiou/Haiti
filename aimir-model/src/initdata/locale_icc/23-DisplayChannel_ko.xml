@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+	<mvm.DisplayChannel name="Active Power" localName="Active Power" serviceType="Electricity" unit="kW" chMethod="SUM"/>
+	<mvm.DisplayChannel name="Reactive Power" localName="Reactive Power" serviceType="Electricity" unit="kVar" chMethod="SUM"/>   
+</dataset>
+
+
+
+

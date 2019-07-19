@@ -1,0 +1,105 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!-- saved from url=(0029)http://www.helpandmanual.com/ -->
+<head>
+   <title>Meter Time Management</title>
+   <meta name="generator" content="Help &amp; Manual" />
+   <meta name="keywords" content="" />
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+   <meta http-equiv="Content-Style-Type" content="text/css" />
+   <link type="text/css" href="default.css" rel="stylesheet" />
+<script type="text/javascript" src="helpman_topicinit.js"></script>
+<!-- Redirect browser to frame page if page is not in the content frame. -->
+<script type="text/javascript">
+<!--
+if (location.search.lastIndexOf("toc=0")<=0) {
+  if (parent.frames.length==0) { parent.location.href="index.html?meter_time_management.htm"; }
+  else { parent.quicksync('a4.9'); }
+}
+//-->
+</script>
+<script type="text/javascript" src="highlight.js"></script></head>
+<body style="margin: 0px 0px 0px 0px; background: #FFFFFF;" onload="highlight();">
+<div id="hmpopupDiv" style="visibility:hidden; position:absolute; z-index:1000; "></div>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="5" bgcolor="#D0D0D0">
+  <tr valign="middle">
+    <td align="left">
+      <p class="p_Heading1"><span class="f_Heading1">Meter Time Management</span></p>
+
+    </td>
+    <td align="right">
+     <span style="font-size: 9pt">
+     <a href="chapter_2.htm">Top</a>&nbsp;
+     <a href="circuit_breaker_management2.htm">Previous</a>&nbsp;
+     <a href="alarm_event.htm">Next</a>
+     </span>
+    </td>
+  </tr>
+</table>
+
+
+<!-- Placeholder for topic body. -->
+<table width="100%" border="0" cellspacing="0" cellpadding="5"><tr valign="top"><td align="left">
+<p>미터와 서버시간과의 오차 정보, 미터 타임 설정 이력, 미터 타임 설정에 대한 임계치 설정 등의 서비스 제공</p>
+<p>&nbsp;</p>
+<div style="text-align: left; text-indent: 0px; padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px;"><table border="0" cellpadding="0" cellspacing="0" style="line-height: normal;"><tr style="vertical-align:baseline" valign="baseline"><td width="13"><span style="font-size: 10pt; font-family: 'Arial Unicode MS', 'Lucida Sans Unicode', 'Arial'; color: #000000;">&#8226;</span></td><td>Mini Gadget<br>
+&nbsp;</td></tr></table></div><p><img src="embim79.gif" width="414" height="354" vspace="1" hspace="1" border="0" alt=""></p>
+<p>&nbsp;</p>
+<p><img src="embim80.gif" width="416" height="356" vspace="1" hspace="1" border="0" alt=""></p>
+<p>&nbsp;</p>
+<div style="text-align: left; text-indent: 0px; padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px;"><table border="0" cellpadding="0" cellspacing="0" style="line-height: normal;"><tr style="vertical-align:baseline" valign="baseline"><td width="13"><span style="font-size: 10pt; font-family: 'Arial Unicode MS', 'Lucida Sans Unicode', 'Arial'; color: #000000;">&#8226;</span></td><td>Max Gadget<br>
+<img src="embim81.png" width="627" height="332" vspace="1" hspace="1" border="0" alt=""></td></tr></table></div><p>미터 시간차를 구간별로 그래프로 표시해줌 </p>
+<p>일치, 1~12시간, 12~24시간, 24시간 이상은 </p>
+<p>임의로 나눠 놓은 구간으로 추후에 사이트 별로 의미 있는 구간으로 변경될 수 있음</p>
+<p>엑셀 출력 기능을 제공합니다.</p>
+<p>&nbsp;</p>
+<p>x축: 오늘 이전 7일간의 날짜 </p>
+<p>y축 : 각 날짜에 실행한 전체 타임 싱크 커맨드를 Status(Success, Failure, Invalid Argument, Communication Fail)에 따라서 개수를 구함 </p>
+<p>&nbsp;</p>
+<p>목적: 날짜 별로 시도한 총 타임 싱크 수와 성공 실패 여부를 직관적으로 파악할 수 있도록 함</p>
+<p>&nbsp;</p>
+<p>미터 시간 동기화가 가능한 계량기 목록의 타임 시간 차를 목록으로 표현함 </p>
+<p>&nbsp;</p>
+<p>좌측에는 시간차 구간별 그래프 </p>
+<p>우측에는 Compliance여부에 따른 그래프를 그려줌 </p>
+<p>Compliance(30일 이내에 시간 동기화를 한적이 있는 미터를 Compliance한 미터로 정의함)</p>
+<p>&nbsp;</p>
+<p>Time Diff.나 Compliance 검색 조건이 존재하는 경우 </p>
+<p>그래프는 그냥 해당하는 조건에 대해서 그린다. </p>
+<p>Ex) </p>
+<p>- Time Diff가 12~24로 선택된 경우 </p>
+<p>원형 그래프에는 Time Diff가 12~24인 전체 미터 개수를 표시 </p>
+<p>&nbsp;</p>
+<p>- Compliance가 Yes 인 경우 </p>
+<p>차트에는 Compliance가 Yes인 전체 개수를 표시</p>
+<p>&nbsp;</p>
+<p>Method가 All인 경우는 </p>
+<p>Auto- 날짜 별 시간차의 백분율 그래프 </p>
+<p>Manual- 날짜 별 Status 상태 그래프를 보여줌</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Method가 Auto인 경우 </p>
+<p>(I210, kv2c 검침 데이터에 포함되어 있는 시간 동기화 로그) </p>
+<p>&nbsp;</p>
+<p>좌측에는 요일 별 시간차 그래프를 </p>
+<p>우측에는 미터를 MCU 별로 그룹핑해서 시간 차이가 가장 많이 나는 베스트 10개의 MCU를 그래프로 표시하고, 각각의 MCU에서 각각의 시간차에 속하는 미터의 개수를 그래프로 표현함</p>
+<p>&nbsp;</p>
+<p>Method가 Command 인 경우 </p>
+<p>(유저가 UI상에서 타임 동기화를 실행) </p>
+<p>좌측에는 동기화의 Status별 그래프를 </p>
+<p>우측에는 해당 검색 기간 중 Status의 백분율을 표현합니다.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><img src="embim82.png" width="628" height="271" vspace="1" hspace="1" border="0" alt=""></p>
+<p>&nbsp;</p>
+<p>기 설정된 MCU의 미터 타임 싱크 Threshold 목록을 표시하고 각각의 MCU, 그룹 MCU에 대해 특정 Threshold를 설정 가능한 페이지</p>
+<p>Threshold 값을 설정하고 싶은 MCU의 체크박스를 선택한 후 Threshold 버튼을 클릭하면 Threshold Setting 레이어가 뜬다.</p>
+<p>&nbsp;</p>
+<p>엑셀 출력 기능을 제공합니다.</p>
+
+</td></tr></table>
+
+</body>
+</html>

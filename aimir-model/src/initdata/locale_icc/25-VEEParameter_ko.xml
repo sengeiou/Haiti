@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+
+    <mvm.VEEParameter 
+    				ruleType="Validation"
+    				parameter="NegativeConsumption"
+    				localName="Negative Consumption" 
+    				useThreshold="false"  
+    				item="Day"  
+    				condition="value_00&lt;0 or value_01&lt;0 or value_02&lt;0 or value_03&lt;0 or value_04&lt;0 or value_05&lt;0 or value_06&lt;0 or value_07&lt;0 or value_08&lt;0 or value_09&lt;0 or value_10&lt;0 or value_11&lt;0 or value_12&lt;0 or value_13&lt;0 or value_14&lt;0 or value_15&lt;0 or value_16&lt;0 or value_17&lt;0 or value_18&lt;0 or value_19&lt;0 or value_20&lt;0 or value_21&lt;0 or value_22&lt;0 or value_23&lt;0 "  
+    				/>
+    <mvm.VEEParameter 
+    				ruleType="Validation" 
+        			parameter="ZeroConsumption"
+    				localName="Zero Consumption" 
+    				useThreshold="false"  
+    				condition="value_00=0 or value_01=0 or value_02=0 or value_03=0 or value_04=0 or value_05=0 or value_06=0 or value_07=0 or value_08=0 or value_09=0 or value_10=0 or value_11=0 or value_12=0 or value_13=0 or value_14=0 or value_15=0 or value_16=0 or value_17=0 or value_18=0 or value_19=0 or value_20=0 or value_21=0 or value_22=0 or value_23=0"  
+    				item="Day"  
+    				/>
+    				    				
+    <mvm.VEEParameter 
+    				ruleType="Validation" 
+        			parameter="DataGaps"
+    				localName="Data Gaps" 
+    				useThreshold="false"  
+    				condition="value_00=null or value_01=null or value_02=null or value_03=null or value_04=null or value_05=null or value_06=null or value_07=null or value_08=null or value_09=null or value_10=null or value_11=null or value_12=null or value_13=null or value_14=null or value_15=null or value_16=null or value_17=null or value_18=null or value_19=null or value_20=null or value_21=null or value_22=null or value_23=null"  
+    				item="Day"  
+    				/>
+    <mvm.VEEParameter   
+    				ruleType="Validation"
+        			parameter="AbnormalHighUsage"
+    				localName="Abnormal High Usage" 
+    				useThreshold="true"  
+    				item="Day"  
+    				threshold1="50"
+    				thresholdCondition1="&gt;"
+    				threshold2="500"
+    				thresholdCondition2="&lt;"
+    				thresholdItem="Average"
+    				thresholdPeriod="LastMonth"
+    				/>
+    <mvm.VEEParameter   
+    				ruleType="Validation"
+        			parameter="AbnormalHighDemand"
+    				localName="Abnormal High Demand" 
+    				useThreshold="true"  
+    				item="Day"  
+    				threshold1="50"
+    				thresholdCondition1="&gt;"
+    				threshold2="500"
+    				thresholdCondition2="&lt;"
+    				thresholdItem="Maximum"
+    				thresholdPeriod="LastMonth"
+    				/>
+     <mvm.VEEParameter   
+    				ruleType="Validation"
+        			parameter="AbnormalLowUsage"
+    				localName="Abnormal Low Usage" 
+    				useThreshold="true"  
+    				item="Day"  
+    				threshold1="50"
+    				thresholdCondition1="&gt;"
+    				threshold2="500"
+    				thresholdCondition2="&lt;"
+    				thresholdItem="Average"
+    				thresholdPeriod="LastMonth"
+    				/>
+    <mvm.VEEParameter   
+    				ruleType="Validation"
+        			parameter="AbnormalLowDemand"
+    				localName="Abnormal Low Demand" 
+    				useThreshold="true"  
+    				item="Day"  
+    				threshold1="50"
+    				thresholdCondition1="&gt;"
+    				threshold2="500"
+    				thresholdCondition2="&lt;"
+    				thresholdItem="Minimum"
+    				thresholdPeriod="LastMonth"
+    				/>  
+    				<!-- 
+    <mvm.VEEParameter  
+    				ruleType="Validation" 
+        			parameter="AbnormalPowerFactor"
+    				localName="Abnormal Power Factor" 
+    				useThreshold="true"  
+    				item="LoadProfile"  
+    				threshold2="80"
+    				thresholdCondition2="&gt;"
+    				/>
+    <mvm.VEEParameter   
+    				ruleType="Validation"
+        			parameter="AbnormalLoadFactor"
+    				localName="Abnormal Load Factor" 
+    				useThreshold="true"  
+    				item="LoadProfile"  
+    				threshold2="80"
+    				thresholdCondition2="&gt;"
+    				/>
+    				
+    				 -->
+    <mvm.VEEParameter  
+    				ruleType="Validation" 
+        			parameter="AbnormalMeterTime"
+    				localName="Abnormal Meter Time" 
+    				useThreshold="false"  
+    				item="Meter"  
+    				condition="timeDiff > 60"  
+    				/>
+    <mvm.VEEParameter   
+    				ruleType="Validation"
+        			parameter="AbnormalMeterId"
+    				localName="Abnormal Meter Id" 
+    				useThreshold="false"  
+    				item="EventAlertLog"
+    				condition="eventAlert.name = 'Invalid Equipment'"
+    				/>
+	<mvm.VEEParameter   
+    				ruleType="Validation"
+        			parameter="OutOfThreshold"
+    				localName="Out Of Threshold" 
+    				useThreshold="true"  
+    				item="Day"
+    				condition="value_00&gt;threshold or value_01&gt;threshold or value_02&gt;threshold or value_03&gt;threshold or value_04&gt;threshold or value_05&gt;threshold or value_06&gt;threshold or value_07&gt;threshold or value_08&gt;threshold or value_09&gt;threshold or value_10&gt;threshold or value_11&gt;threshold or value_12&gt;threshold or value_13&gt;threshold or value_14&gt;threshold or value_15&gt;threshold or value_16&gt;threshold or value_17&gt;threshold or value_18&gt;threshold or value_19&gt;threshold or value_20&gt;threshold or value_21&gt;threshold or value_22&gt;threshold or value_23&gt;threshold"
+    				/>
+</dataset>

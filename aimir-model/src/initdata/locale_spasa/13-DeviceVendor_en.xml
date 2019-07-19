@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+    <system.DeviceVendor 
+        supplier="Spasa"
+        name="Unknown"
+        code="0"
+        address=""
+        descr="Unknown"
+    />
+    <system.DeviceVendor 
+        supplier="Spasa"
+        name="NURITelecom"
+        code="100"
+        address="B-10F Woolim Lions Valley 371-28 Gasandong Geumcheon-gu, Seoul, Korea, 153-786 Tel : +82.2.781.0770"
+        descr="NURI Telecom Co.,Ltd."
+    />
+    <system.DeviceVendor 
+        supplier="Spasa"
+        name="GE"
+        code="2"
+        address="http://www.ge.com"
+        descr="General Electric Company"
+    />
+    <system.DeviceVendor 
+        supplier="Spasa"
+        name="Sensus"
+        code="33"
+        address="http://www.sensus.com/"
+        descr="Sensus"
+    />
+</dataset>

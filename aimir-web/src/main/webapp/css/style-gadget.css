@@ -1,0 +1,8 @@
+@charset "UTF-8";
+/* 기본 테마 CSS - 반드시 존재해야합니다. */
+/*@import url(/aimir-web/js/extjs/resources/css/ext-all.css);*/
+@import url(/aimir-web/themes/css/ext-all.css);
+
+/* 테마 CSS */
+/* @import url(/aimir-web/themes/css/xtheme-gray.css); */
+/* @import url(/aimir-web/themes/css/xtheme-green.css); */

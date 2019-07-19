@@ -1,0 +1,75 @@
+<EnergySavingReport>
+  <Monthly>
+    <emMonthlyReport>
+      <Row month="201001" usage="0.000" goalUsage="646991.328" toe="0.000" goalToe="139.103" reduceUsageRate="0.000" reduceCo2="-342905.403" effectedUsage="-646991.328" effectedToe="-139.103" goal="20.0" />
+      <Row month="201002" usage="0.000" goalUsage="638968.780" toe="0.000" goalToe="137.378" reduceUsageRate="0.000" reduceCo2="-338653.453" effectedUsage="-638968.780" effectedToe="-137.378" goal="20.0" />
+      <Row month="201003" usage="0.000" goalUsage="543501.235" toe="0.000" goalToe="116.852" reduceUsageRate="0.000" reduceCo2="-288055.654" effectedUsage="-543501.235" effectedToe="-116.852" goal="20.0" />
+      <Row month="201004" usage="0.000" goalUsage="624875.903" toe="0.000" goalToe="134.348" reduceUsageRate="0.000" reduceCo2="-331184.229" effectedUsage="-624875.903" effectedToe="-134.348" goal="20.0" />
+      <Row month="201005" usage="0.000" goalUsage="590498.496" toe="0.000" goalToe="126.957" reduceUsageRate="0.000" reduceCo2="-312964.202" effectedUsage="-590498.496" effectedToe="-126.957" goal="20.0" />
+      <Row month="201006" usage="0.000" goalUsage="634216.896" toe="0.000" goalToe="136.356" reduceUsageRate="0.000" reduceCo2="-336134.954" effectedUsage="-634216.896" effectedToe="-136.356" goal="20.0" />
+      <Row month="201007" usage="0.000" goalUsage="622661.184" toe="0.000" goalToe="133.872" reduceUsageRate="0.000" reduceCo2="-330010.427" effectedUsage="-622661.184" effectedToe="-133.872" goal="20.0" />
+      <Row month="201008" usage="0.000" goalUsage="667746.547" toe="0.000" goalToe="143.565" reduceUsageRate="0.000" reduceCo2="-353905.670" effectedUsage="-667746.547" effectedToe="-143.565" goal="20.0" />
+      <Row month="201009" usage="0.000" goalUsage="665778.816" toe="0.000" goalToe="143.142" reduceUsageRate="0.000" reduceCo2="-352862.772" effectedUsage="-665778.816" effectedToe="-143.142" goal="20.0" />
+      <Row month="201010" usage="501.199" goalUsage="597431.808" toe="0.107" goalToe="128.447" reduceUsageRate="-99.916" reduceCo2="-316426.349" effectedUsage="-596930.608" effectedToe="-128.340" goal="20.0" />
+      <Row month="201011" usage="742934.000" goalUsage="621100.223" toe="159.730" goalToe="133.536" reduceUsageRate="19.615" reduceCo2="-14237.097" effectedUsage="121833.776" effectedToe="26.194" goal="20.0" />
+      <Row month="201012" usage="671062.829" goalUsage="588869.568" toe="144.278" goalToe="126.606" reduceUsageRate="13.957" reduceCo2="-27570.231" effectedUsage="82193.261" effectedToe="17.671" goal="20.0" />
+    </emMonthlyReport>
+    <wmMonthlyReport>
+      <Row month="201001" usage="0.000" goalUsage="4657.439" toe="0.000" goalToe="0.784" reduceUsageRate="0.000" reduceCo2="-2733.917" effectedUsage="-4657.439" effectedToe="-0.784" goal="0.0" />
+      <Row month="201002" usage="0.000" goalUsage="4657.632" toe="0.000" goalToe="0.784" reduceUsageRate="0.000" reduceCo2="-2734.030" effectedUsage="-4657.632" effectedToe="-0.784" goal="0.0" />
+      <Row month="201003" usage="0.000" goalUsage="4206.719" toe="0.000" goalToe="0.708" reduceUsageRate="0.000" reduceCo2="-2469.344" effectedUsage="-4206.719" effectedToe="-0.708" goal="0.0" />
+      <Row month="201004" usage="0.000" goalUsage="4657.680" toe="0.000" goalToe="0.784" reduceUsageRate="0.000" reduceCo2="-2734.058" effectedUsage="-4657.680" effectedToe="-0.784" goal="0.0" />
+      <Row month="201005" usage="0.000" goalUsage="4507.199" toe="0.000" goalToe="0.758" reduceUsageRate="0.000" reduceCo2="-2645.726" effectedUsage="-4507.199" effectedToe="-0.758" goal="0.0" />
+      <Row month="201006" usage="0.000" goalUsage="4657.680" toe="0.000" goalToe="0.784" reduceUsageRate="0.000" reduceCo2="-2734.058" effectedUsage="-4657.680" effectedToe="-0.784" goal="0.0" />
+      <Row month="201007" usage="0.000" goalUsage="4507.199" toe="0.000" goalToe="0.758" reduceUsageRate="0.000" reduceCo2="-2645.726" effectedUsage="-4507.199" effectedToe="-0.758" goal="0.0" />
+      <Row month="201008" usage="0.000" goalUsage="4657.439" toe="0.000" goalToe="0.784" reduceUsageRate="0.000" reduceCo2="-2733.917" effectedUsage="-4657.439" effectedToe="-0.784" goal="0.0" />
+      <Row month="201009" usage="0.000" goalUsage="4657.680" toe="0.000" goalToe="0.784" reduceUsageRate="0.000" reduceCo2="-2734.058" effectedUsage="-4657.680" effectedToe="-0.784" goal="0.0" />
+      <Row month="201010" usage="0.000" goalUsage="4507.199" toe="0.000" goalToe="0.758" reduceUsageRate="0.000" reduceCo2="-2645.726" effectedUsage="-4507.199" effectedToe="-0.758" goal="0.0" />
+      <Row month="201011" usage="813.599" goalUsage="4657.680" toe="0.136" goalToe="0.784" reduceUsageRate="-82.542" reduceCo2="-2359.267" effectedUsage="-3844.080" effectedToe="-0.647" goal="0.0" />
+      <Row month="201012" usage="1552.195" goalUsage="4507.199" toe="0.261" goalToe="0.758" reduceUsageRate="-65.564" reduceCo2="-674.876" effectedUsage="-2955.004" effectedToe="-0.497" goal="0.0" />
+    </wmMonthlyReport>
+    <gmMonthlyReport>
+      <Row month="201001" usage="0.000" goalUsage="1094.423" toe="0.000" goalToe="1.045" reduceUsageRate="0.000" reduceCo2="-3969.475" effectedUsage="-1094.423" effectedToe="-1.045" goal="0.0" />
+      <Row month="201002" usage="0.000" goalUsage="1094.688" toe="0.000" goalToe="1.045" reduceUsageRate="0.000" reduceCo2="-3970.433" effectedUsage="-1094.688" effectedToe="-1.045" goal="0.0" />
+      <Row month="201003" usage="0.000" goalUsage="988.511" toe="0.000" goalToe="0.944" reduceUsageRate="0.000" reduceCo2="-3585.333" effectedUsage="-988.511" effectedToe="-0.944" goal="0.0" />
+      <Row month="201004" usage="0.000" goalUsage="1094.399" toe="0.000" goalToe="1.045" reduceUsageRate="0.000" reduceCo2="-3969.388" effectedUsage="-1094.399" effectedToe="-1.045" goal="0.0" />
+      <Row month="201005" usage="0.000" goalUsage="1059.119" toe="0.000" goalToe="1.011" reduceUsageRate="0.000" reduceCo2="-3841.428" effectedUsage="-1059.119" effectedToe="-1.011" goal="0.0" />
+      <Row month="201006" usage="0.000" goalUsage="1059.119" toe="0.000" goalToe="1.011" reduceUsageRate="0.000" reduceCo2="-3841.428" effectedUsage="-1059.119" effectedToe="-1.011" goal="0.0" />
+      <Row month="201007" usage="0.000" goalUsage="1094.399" toe="0.000" goalToe="1.045" reduceUsageRate="0.000" reduceCo2="-3969.388" effectedUsage="-1094.399" effectedToe="-1.045" goal="0.0" />
+      <Row month="201008" usage="0.000" goalUsage="1094.423" toe="0.000" goalToe="1.045" reduceUsageRate="0.000" reduceCo2="-3969.475" effectedUsage="-1094.423" effectedToe="-1.045" goal="0.0" />
+      <Row month="201009" usage="0.000" goalUsage="1094.399" toe="0.000" goalToe="1.045" reduceUsageRate="0.000" reduceCo2="-3969.388" effectedUsage="-1094.399" effectedToe="-1.045" goal="0.0" />
+      <Row month="201010" usage="0.000" goalUsage="1059.119" toe="0.000" goalToe="1.011" reduceUsageRate="0.000" reduceCo2="-3841.428" effectedUsage="-1059.119" effectedToe="-1.011" goal="0.0" />
+      <Row month="201011" usage="5764.400" goalUsage="1094.399" toe="5.505" goalToe="1.045" reduceUsageRate="426.873" reduceCo2="11370.627" effectedUsage="4670.000" effectedToe="4.459" goal="0.0" />
+      <Row month="201012" usage="24692.092" goalUsage="1059.119" toe="23.580" goalToe="1.011" reduceUsageRate="2231.633" reduceCo2="674165.277" effectedUsage="23632.972" effectedToe="22.569" goal="0.0" />
+    </gmMonthlyReport>
+  </Monthly>
+  <Yearly>
+    <emYearlyReport>
+      <Row year="2010" usage="1414498.029" goalUsage="7442640.787" toe="304.117" goalToe="1600.167" reduceUsageRate="-80.994" reduceCo2="-3344910.447" effectedUsage="-6028142.757" effectedToe="-1296.050" period="1" avgUsage="9303300.984" goal="20.0" />
+    </emYearlyReport>
+    <emYearlyChart>
+      <Row xField="1년 평균" value="9303300.984" order="1" />
+      <Row xField="목표" value="7442640.787" order="2" />
+      <Row xField="예상" value="0" order="3" />
+      <Row xField="2010" value="1414498.029" order="4" />
+    </emYearlyChart>
+    <wmYearlyReport>
+      <Row year="2010" usage="1552.195" goalUsage="4507.199" toe="0.261" goalToe="0.758" reduceUsageRate="-65.564" reduceCo2="-674.876" effectedUsage="-2955.004" effectedToe="-0.497" period="1" avgUsage="4507.199" goal="0.0" />
+    </wmYearlyReport>
+    <wmYearlyChart>
+      <Row xField="1년 평균" value="4507.199" order="1" />
+      <Row xField="목표" value="4507.199" order="2" />
+      <Row xField="예상" value="0" order="3" />
+      <Row xField="2010" value="1552.195" order="4" />
+    </wmYearlyChart>
+    <gmYearlyReport>
+      <Row year="2010" usage="24692.092" goalUsage="1059.119" toe="23.580" goalToe="1.011" reduceUsageRate="2231.633" reduceCo2="674165.277" effectedUsage="23632.972" effectedToe="22.569" period="1" avgUsage="1059.119" goal="0.0" />
+    </gmYearlyReport>
+    <gmYearlyChart>
+      <Row xField="1년 평균" value="1059.119" order="1" />
+      <Row xField="목표" value="1059.119" order="2" />
+      <Row xField="예상" value="0" order="3" />
+      <Row xField="2010" value="24692.092" order="4" />
+    </gmYearlyChart>
+  </Yearly>
+</EnergySavingReport>

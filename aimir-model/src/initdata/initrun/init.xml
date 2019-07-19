@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset> 
+
+	<!-- Modem -->
+	<!-- PLC modem : CLOU-1P -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="2"
+        deviceType="1.2.1.18"
+        name="NAMR-C10ASR"
+        image="uploadImg/modem/NAMR-C10ASR.jpg"
+        description="PLC Modem : CLOU-1P"
+    />	
+	<!-- PLC modem : CLOU-3P -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="3"
+        deviceType="1.2.1.18"
+        name="NAMR-C10BSR"
+        image="uploadImg/modem/NAMR-C10BSR.jpg"
+        description="PLC Modem : CLOU-3P"
+    />	    
+        	
+	<!-- PLC modem : EDMI-1P/3P -->	
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="4"
+        deviceType="1.2.1.18"
+        name="NAMR-C109SR"
+        image="uploadImg/modem/NAMR-C109SR.jpg"
+        description="PLC Modem : EDMI-1P/3P"
+    />		
+    
+	<!-- PLC modem : Reallin-1P -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="5"
+        deviceType="1.2.1.18"
+        name="NAMR-C10CSR"
+        image="uploadImg/modem/NAMR-C10CSR.jpg"
+        description="PLC Modem : Reallin-1P"
+    />	
+	<!-- PLC modem : Reallin-3P -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="6"
+        deviceType="1.2.1.18"
+        name="NAMR-C10DSR"
+        image="uploadImg/modem/NAMR-C10DSR.jpg"
+        description="PLC Modem : Reallin-3P"
+    />	    	
+	
+
+    <!-- GPRS(3G) modem -->
+	<!-- 3G modem : CLOU-CT/VT -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="7"
+        deviceType="1.2.1.11"
+        name="NAMR-P400LT"
+        image="uploadImg/modem/NAMR-P400LT.jpg"
+        description="3G Modem : CLOU-CT/VT"
+    />	
+	<!-- 3G modem : EDMI-CT/VT -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="8"
+        deviceType="1.2.1.11"
+        name="NAMR-P401LT"
+        image="uploadImg/modem/NAMR-P401LT.jpg"
+        description="3G Modem : EDMI-CT/VT"
+    />		
+	<!-- 3G modem - Reallin -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="9"
+        deviceType="1.2.1.11"
+        name="NAMR-P402LT"
+        image="uploadImg/modem/NAMR-P402LT.jpg"
+        description="3G Modem : Reallin-CT/VT"
+    />	   
+    
+
+	<!-- Modem Command-->
+	<!-- PLC modem -->
+ 	<device.OperationList  deviceTypeCode="1.2.1.18"  operationCode="8.2.3"   model="NAMR-C10ASR"    level="2"   desc="Modem OTA" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.18"  operationCode="8.2.3"   model="NAMR-C10BSR"    level="2"   desc="Modem OTA" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.18"  operationCode="8.2.3"   model="NAMR-C109SR"    level="2"   desc="Modem OTA" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.18"  operationCode="8.2.3"   model="NAMR-C10CSR"    level="2"   desc="Modem OTA" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.18"  operationCode="8.2.3"   model="NAMR-C10DSR"    level="2"   desc="Modem OTA" />
+ 	<!-- 3G modem -->
+ 	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.1"   model="NAMR-P400LT"    level="2"   desc="MModem Ping" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.2"   model="NAMR-P400LT"    level="2"   desc="Modem Trace Route" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.3"   model="NAMR-P400LT"    level="2"   desc="Modem OTA" /> 	 	
+ 	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.1"   model="NAMR-P401LT"    level="2"   desc="MModem Ping" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.2"   model="NAMR-P401LT"    level="2"   desc="Modem Trace Route" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.3"   model="NAMR-P401LT"    level="2"   desc="Modem OTA" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.1"   model="NAMR-P402LT"    level="2"   desc="MModem Ping" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.2"   model="NAMR-P402LT"    level="2"   desc="Modem Trace Route" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.11" operationCode="8.2.3"   model="NAMR-P402LT"    level="2"   desc="Modem OTA" /> 	 	
+ 		
+ 		    
+    
+</dataset>    

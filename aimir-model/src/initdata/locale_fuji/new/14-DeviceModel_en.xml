@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+
+    
+    <!--  I210+C, I210+, I210+N Zigbee GE Fuji-->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="225"
+        deviceType="1.2.1.1"
+        name="NAMR-P10CSR"
+    />
+
+    <system.DeviceModel 
+        deviceVendor="GEFM"
+        code="205"
+        deviceType="1.3.1.1"
+        name="Azos GFI"
+        image="uploadImg/meter/i210_elec.jpg"
+    />
+
+
+</dataset>

@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+<!--  남아공 Tariff Start -->
+    <system.TariffEM supplier="Spasa" tariffType="Business Rate1"  yyyymmdd="20140501" activeEnergyCharge="1.22" />
+	<system.TariffEM supplier="Spasa" tariffType="Home Power1"  yyyymmdd="20140501"   activeEnergyCharge="0.80" supplySizeMin="0" condition1="&lt;=" condition2="&lt;=" supplySizeMax="50"/>
+	<system.TariffEM supplier="Spasa" tariffType="Home Power1"  yyyymmdd="20140501"   activeEnergyCharge="0.94" supplySizeMin="50" condition1="&lt;" condition2="&lt;=" supplySizeMax="350"/> 
+	<system.TariffEM supplier="Spasa" tariffType="Home Power1"  yyyymmdd="20140501"   activeEnergyCharge="1.20" supplySizeMin="350" condition1="&lt;" condition2="&lt;=" supplySizeMax="600"/>
+	<system.TariffEM supplier="Spasa" tariffType="Home Power1"  yyyymmdd="20140501"   activeEnergyCharge="1.37" supplySizeMin="600" condition1="&gt;"/>
+</dataset>

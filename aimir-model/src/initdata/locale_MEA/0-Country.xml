@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+	<system.Country 
+        name="THAILAND"
+        code_2letter="TH"
+        code_3letter="THA"
+        code_number="764"
+    />
+	<system.Country 
+        name="JAPAN"
+        code_2letter="JP"
+        code_3letter="JPN"
+        code_number="392"
+    />
+    <system.Country 
+        name="KOREA, REPUBLIC OF"
+        code_2letter="KR"
+        code_3letter="KOR"
+        code_number="410"
+    />
+</dataset>

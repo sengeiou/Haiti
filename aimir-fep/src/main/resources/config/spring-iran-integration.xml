@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:util="http://www.springframework.org/schema/util" 
+    xmlns:batch="http://www.springframework.org/schema/batch"
+    xmlns:integration="http://www.springframework.org/schema/integration"
+    xmlns:int-ftp="http://www.springframework.org/schema/integration/ftp"    
+    xmlns:int-file="http://www.springframework.org/schema/integration/file"    
+    xmlns:int="http://www.springframework.org/schema/integration"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+    http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file.xsd    
+    http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+    http://www.springframework.org/schema/integration/ftp http://www.springframework.org/schema/integration/ftp/spring-integration-ftp.xsd">
+
+    <context:component-scan base-package="com.aimir.fep.integration.iran" />
+
+    <context:property-placeholder location="/config/iran-integration.properties" />    
+	
+	<bean id="ftpClientFactory"
+    class="org.springframework.integration.ftp.session.DefaultFtpSessionFactory">
+    	<property name="host" value="${mdm.iran.ftp.host}"/>
+    	<property name="port" value="${mdm.iran.ftp.port}"/>
+    	<property name="username" value="${mdm.iran.ftp.username}"/>
+    	<property name="password" value="${mdm.iran.ftp.password}"/>    
+	</bean>
+        
+    <int:channel id="ftpChannel"/>
+
+	<int-ftp:outbound-channel-adapter  
+				id="ftpOutbound"
+				channel="ftpChannel"
+				remote-directory="${mdm.iran.batch.dest.dir}"
+				session-factory="ftpClientFactory"
+				charset="UTF-8">		
+	</int-ftp:outbound-channel-adapter>
+	
+	
+       
+</beans>

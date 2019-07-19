@@ -1,0 +1,357 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="Main"
+        gadget="Notice"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="Main"
+        gadget="Metering Fail(Electricity)"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Main"
+        gadget="Abnormal contract customers(Electricity)"
+    />    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="Main"
+        gadget="Memo"
+    />    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="Main"
+        gadget="Customer and Contract"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="Main"
+        gadget="Metering Data(Electricity)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="2"
+        dashboard="Main"
+        gadget="Consumption Ranking(Electricity)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="3"
+        dashboard="Main"
+        gadget="Demand Management"
+    />
+    
+    <!-- 검침데이터 관리 대시보드 시작-->       
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="Metering"
+        gadget="Customer and Contract"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="Metering"
+        gadget="Metering Data(Electricity)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Metering"
+        gadget="Metering Fail(Electricity)"
+    />  
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="Metering"
+        gadget="Data Gaps(Electricity)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="Metering"
+        gadget="Abnormal contract customers(Electricity)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="Metering"
+        gadget="Consumption Ranking(Electricity)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="2"
+        dashboard="Metering"
+        gadget="Consumption Ranking(Gas)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="2"
+        dashboard="Metering"
+        gadget="Consumption Ranking(Water)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="2"
+        dashboard="Metering"
+        gadget="Billing Data(Electricity)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="3"
+        dashboard="Metering"
+        gadget="Energy Management(Gas)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="3"
+        dashboard="Metering"
+        gadget="Energy Management(Water)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="3"
+        dashboard="Metering"
+        gadget="Energy Management(Heat)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="4"
+        dashboard="Metering"
+        gadget="Metring SLA"
+    />   
+        <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="4"
+        dashboard="Metering"
+        gadget="Power Quality"
+    />  
+    
+        <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="4"
+        dashboard="Metering"
+        gadget="VEE Management(Electricity)"
+    />                            
+    <!-- Metering 대시보드 끝-->
+    
+    <!-- 시스템 관리 대시보드 시작-->
+        <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="System"
+        gadget="Supplier Management"
+    />
+        <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="System"
+        gadget="User Management"
+    /> 
+        <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="System"
+        gadget="Device Vendor Model"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="System"
+        gadget="Code Management"
+    />
+    <system.DashboardGadget
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="System"
+        gadget="Group Management"
+    />
+    <!-- System 대시보드 끝-->
+    
+    <!-- 장비 관리 대시보드 시작-->
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="Device"
+        gadget="Modem Management"
+    />    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="Device"
+        gadget="Concentrator Management"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Device"
+        gadget="Meter Management"
+    />    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="Device"
+        gadget="Asset Registration"
+    /> 
+  
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="Device"
+        gadget="Battery Log"
+    />
+       <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="Device"
+        gadget="PowerAlarmLog"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="2"
+        dashboard="Device"
+        gadget="Google Map For Device"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="2"
+        dashboard="Device"
+        gadget="Circuit Breaker Management"
+    />   
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="2"
+        dashboard="Device"
+        gadget="Meter Time Management"
+    />   
+    
+    <!-- Device 대시보드 끝-->
+
+    <!-- 이력 관리 대시보드 시작--> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="Alarm Event"
+        gadget="Event Alarm Log"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="Alarm Event"
+        gadget="Communication Log"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Alarm Event"
+        gadget="Operation Management"
+    />    
+    <!-- 이력 관리 대시보드 끝-->    
+    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="System"
+        gadget="Prepayment Customer Management"
+    />
+
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="System"
+        gadget="Energy Balance Monitoring"
+    />
+    
+</dataset>

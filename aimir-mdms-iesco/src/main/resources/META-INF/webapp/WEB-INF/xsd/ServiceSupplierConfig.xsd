@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:a="http://langdale.com.au/2005/Message#" xmlns:sawsdl="http://www.w3.org/ns/sawsdl" targetNamespace="http://iec.ch/TC57/2011/ServiceSupplierConfig#" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="http://langdale.com.au/2005/Message#" xmlns:m="http://iec.ch/TC57/2011/ServiceSupplierConfig#">
+<xs:annotation>
+<xs:documentation/>
+</xs:annotation>
+<xs:element name="ServiceSupplierConfig" type="m:ServiceSupplierConfig"/>
+<xs:complexType name="ServiceSupplierConfig">
+<xs:sequence>
+<xs:element name="ServiceSupplier" type="m:ServiceSupplier" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ConfigurationEvent" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ConfigurationEvent">
+<xs:annotation>
+<xs:documentation>Used to report details on creation, change or deletion of an entity or its configuration.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="mRID" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#IdentifiedObject.mRID">
+<xs:annotation>
+<xs:documentation>A Model Authority issues mRIDs. Given that each Model Authority has a unique id and this id is part of the mRID, then the mRID is globally unique.</xs:documentation>
+<xs:documentation>Global uniqeness is easily achived by using a UUID for the mRID. It is strongly recommended to do this.</xs:documentation>
+<xs:documentation>For CIMXML data files the mRID is mapped to rdf:ID or rdf:about attributes that identifies CIM object elements.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="createdDateTime" minOccurs="0" maxOccurs="1" type="xs:dateTime" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ActivityRecord.createdDateTime">
+<xs:annotation>
+<xs:documentation>Date and time this activity record has been created (different from the 'status.dateTime', which is the time of a status change of the associated object, if applicable).</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="effectiveDateTime" minOccurs="0" maxOccurs="1" type="xs:dateTime" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ConfigurationEvent.effectiveDateTime">
+<xs:annotation>
+<xs:documentation>Date and time this event has or will become effective.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="effectiveEndDateTime" minOccurs="0" maxOccurs="1" type="xs:dateTime" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ConfigurationEvent.effectiveEndDateTime">
+<xs:annotation>
+<xs:documentation>Date and time this event has or will end being effective.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="modifiedBy" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ConfigurationEvent.modifiedBy">
+<xs:annotation>
+<xs:documentation>Source/initiator of modification.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="reason" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ActivityRecord.reason">
+<xs:annotation>
+<xs:documentation>Reason for event resulting in this activity record, typically supplied when user initiated.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="remark" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ConfigurationEvent.remark">
+<xs:annotation>
+<xs:documentation>Free text remarks.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="severity" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ActivityRecord.severity">
+<xs:annotation>
+<xs:documentation>Severity level of event resulting in this activity record.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="type" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ActivityRecord.type">
+<xs:annotation>
+<xs:documentation>Type of event resulting in this activity record.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Names" minOccurs="0" maxOccurs="unbounded" type="m:Name" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#IdentifiedObject.Names">
+<xs:annotation>
+<xs:documentation>All names of this identified object.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="status" minOccurs="0" maxOccurs="1" type="m:Status" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ActivityRecord.status">
+<xs:annotation>
+<xs:documentation>Information on consequence of event resulting in this activity record.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ElectronicAddress" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ElectronicAddress">
+<xs:annotation>
+<xs:documentation>Electronic address information.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="email1" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ElectronicAddress.email1">
+<xs:annotation>
+<xs:documentation>Primary email address.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="email2" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ElectronicAddress.email2">
+<xs:annotation>
+<xs:documentation>Alternate email address.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="lan" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ElectronicAddress.lan">
+<xs:annotation>
+<xs:documentation>Address on local area network.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="mac" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ElectronicAddress.mac">
+<xs:annotation>
+<xs:documentation>MAC (Media Access Control) address.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="password" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ElectronicAddress.password">
+<xs:annotation>
+<xs:documentation>Password needed to log in.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="radio" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ElectronicAddress.radio">
+<xs:annotation>
+<xs:documentation>Radio address.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="userID" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ElectronicAddress.userID">
+<xs:annotation>
+<xs:documentation>User ID needed to log in, which can be for an individual person, an organisation, a location, etc.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="web" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ElectronicAddress.web">
+<xs:annotation>
+<xs:documentation>World wide web address.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Name" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Name">
+<xs:annotation>
+<xs:documentation>The Name class provides the means to define any number of human readable  names for an object. A name is &lt;b&gt;not&lt;/b&gt; to be used for defining inter-object relationships. For inter-object relationships instead use the object identification 'mRID'.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Name.name">
+<xs:annotation>
+<xs:documentation>Any free text that name the object.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="NameType" minOccurs="0" maxOccurs="1" type="m:NameType" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Name.NameType">
+<xs:annotation>
+<xs:documentation>Type of this name.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="NameType" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#NameType">
+<xs:annotation>
+<xs:documentation>Type of name. Possible values for attribute 'name' are implementation dependent but standard profiles may specify types. An enterprise may have multiple IT systems each having its own local name for the same object, e.g. a planning system may have different names from an EMS. An object may also have different names within the same IT system, e.g. localName and aliasName as defined in CIM version 14. Their definitions from CIM14 are</xs:documentation>
+<xs:documentation>The localName is a human readable name of the object. It is only used with objects organized in a naming hierarchy. localName: A free text name local to a node in a naming hierarchy similar to a file directory structure. A power system related naming hierarchy may be: Substation, VoltageLevel, Equipment etc. Children of the same parent in such a hierarchy have names that typically are unique among them.</xs:documentation>
+<xs:documentation>aliasName: A free text alternate name typically used in tabular reports where the column width is limited.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="description" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#NameType.description">
+<xs:annotation>
+<xs:documentation>Description of the name type.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#NameType.name">
+<xs:annotation>
+<xs:documentation>Name of the name type.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="NameTypeAuthority" minOccurs="0" maxOccurs="1" type="m:NameTypeAuthority" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#NameType.NameTypeAuthority">
+<xs:annotation>
+<xs:documentation>Authority responsible for managing names of this type.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="NameTypeAuthority" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#NameTypeAuthority">
+<xs:annotation>
+<xs:documentation>Authority responsible for creation and management of names of a given type; typically an organization or an enterprise system.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="description" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#NameTypeAuthority.description">
+<xs:annotation>
+<xs:documentation>Description of the name type authority.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#NameTypeAuthority.name">
+<xs:annotation>
+<xs:documentation>Name of the name type authority.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Organisation" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Organisation">
+<xs:annotation>
+<xs:documentation>Organisation that might have roles as utility, contractor, supplier, manufacturer, customer, etc.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="mRID" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#IdentifiedObject.mRID">
+<xs:annotation>
+<xs:documentation>A Model Authority issues mRIDs. Given that each Model Authority has a unique id and this id is part of the mRID, then the mRID is globally unique.</xs:documentation>
+<xs:documentation>Global uniqeness is easily achived by using a UUID for the mRID. It is strongly recommended to do this.</xs:documentation>
+<xs:documentation>For CIMXML data files the mRID is mapped to rdf:ID or rdf:about attributes that identifies CIM object elements.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="electronicAddress" minOccurs="0" maxOccurs="1" type="m:ElectronicAddress" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Organisation.electronicAddress">
+<xs:annotation>
+<xs:documentation>Electronic address.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Names" minOccurs="0" maxOccurs="unbounded" type="m:Name" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#IdentifiedObject.Names">
+<xs:annotation>
+<xs:documentation>All names of this identified object.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="phone1" minOccurs="0" maxOccurs="1" type="m:TelephoneNumber" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Organisation.phone1">
+<xs:annotation>
+<xs:documentation>Phone number.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="phone2" minOccurs="0" maxOccurs="1" type="m:TelephoneNumber" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Organisation.phone2">
+<xs:annotation>
+<xs:documentation>Additional phone number.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="postalAddress" minOccurs="0" maxOccurs="1" type="m:PostalAddress" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Organisation.postalAddress">
+<xs:annotation>
+<xs:documentation>Postal address, potentially different than 'streetAddress' (e.g., another city).</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="streetAddress" minOccurs="0" maxOccurs="1" type="m:StreetAddress" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Organisation.streetAddress">
+<xs:annotation>
+<xs:documentation>Street address.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="PostalAddress" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#PostalAddress">
+<xs:annotation>
+<xs:documentation>General purpose postal address information.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="poBox" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#PostalAddress.poBox">
+<xs:annotation>
+<xs:documentation>Post office box.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="postalCode" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#PostalAddress.postalCode">
+<xs:annotation>
+<xs:documentation>Postal code for the address.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="streetDetail" minOccurs="0" maxOccurs="1" type="m:StreetDetail" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#PostalAddress.streetDetail">
+<xs:annotation>
+<xs:documentation>Street detail.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="townDetail" minOccurs="0" maxOccurs="1" type="m:TownDetail" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#PostalAddress.townDetail">
+<xs:annotation>
+<xs:documentation>Town detail.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ServiceSupplier" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ServiceSupplier">
+<xs:annotation>
+<xs:documentation>Organisation that provides services to customers.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="mRID" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#IdentifiedObject.mRID">
+<xs:annotation>
+<xs:documentation>A Model Authority issues mRIDs. Given that each Model Authority has a unique id and this id is part of the mRID, then the mRID is globally unique.</xs:documentation>
+<xs:documentation>Global uniqeness is easily achived by using a UUID for the mRID. It is strongly recommended to do this.</xs:documentation>
+<xs:documentation>For CIMXML data files the mRID is mapped to rdf:ID or rdf:about attributes that identifies CIM object elements.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="issuerIdentificationNumber" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ServiceSupplier.issuerIdentificationNumber">
+<xs:annotation>
+<xs:documentation>Unique transaction reference prefix number issued to an entity by the International Standards Organisation for the purpose of tagging onto electronic financial transactions, as defined in ISO/IEC 7812-1 and ISO/IEC 7812-2.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="kind" minOccurs="0" maxOccurs="1" type="m:SupplierKind" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#ServiceSupplier.kind">
+<xs:annotation>
+<xs:documentation>Kind of supplier.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ConfigurationEvents" minOccurs="0" maxOccurs="1" type="m:ConfigurationEvent" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#OrganisationRole.ConfigurationEvents">
+<xs:annotation>
+<xs:documentation>All configuration events created for this organisation role.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Names" minOccurs="0" maxOccurs="unbounded" type="m:Name" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#IdentifiedObject.Names">
+<xs:annotation>
+<xs:documentation>All names of this identified object.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Organisation" minOccurs="0" maxOccurs="1" type="m:Organisation" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#OrganisationRole.Organisation">
+<xs:annotation>
+<xs:documentation>Organisation having this role.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Status" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Status">
+<xs:annotation>
+<xs:documentation>Current status information relevant to an entity.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="dateTime" minOccurs="0" maxOccurs="1" type="xs:dateTime" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Status.dateTime">
+<xs:annotation>
+<xs:documentation>Date and time for which status 'value' applies.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="reason" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Status.reason">
+<xs:annotation>
+<xs:documentation>Reason code or explanation for why an object went to the current status 'value'.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="remark" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Status.remark">
+<xs:annotation>
+<xs:documentation>Pertinent information regarding the current 'value', as free form text.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="value" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#Status.value">
+<xs:annotation>
+<xs:documentation>Status value at 'dateTime'; prior status changes may have been kept in instances of activity records associated with the object to which this status applies.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="StreetAddress" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#StreetAddress">
+<xs:annotation>
+<xs:documentation>General purpose street address information.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="status" minOccurs="0" maxOccurs="1" type="m:Status" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#StreetAddress.status">
+<xs:annotation>
+<xs:documentation>Status of this address.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="streetDetail" minOccurs="0" maxOccurs="1" type="m:StreetDetail" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#StreetAddress.streetDetail">
+<xs:annotation>
+<xs:documentation>Street detail.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="townDetail" minOccurs="0" maxOccurs="1" type="m:TownDetail" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#StreetAddress.townDetail">
+<xs:annotation>
+<xs:documentation>Town detail.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="StreetDetail" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#StreetDetail">
+<xs:annotation>
+<xs:documentation>Street details, in the context of address.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="addressGeneral" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#StreetDetail.addressGeneral">
+<xs:annotation>
+<xs:documentation>Additional address information, for example a mailstop.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="buildingName" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#StreetDetail.buildingName">
+<xs:annotation>
+<xs:documentation>(if applicable) In certain cases the physical location of the place of interest does not have a direct point of entry from the street, but may be located inside a larger structure such as a building, complex, office block, apartment, etc.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="code" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#StreetDetail.code">
+<xs:annotation>
+<xs:documentation>(if applicable) Utilities often make use of external reference systems, such as those of the town-planner's department or surveyor general's mapping system, that allocate global reference codes to streets.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#StreetDetail.name">
+<xs:annotation>
+<xs:documentation>Name of the street.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="number" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#StreetDetail.number">
+<xs:annotation>
+<xs:documentation>Designator of the specific location on the street.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="prefix" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#StreetDetail.prefix">
+<xs:annotation>
+<xs:documentation>Prefix to the street name. For example: North, South, East, West.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="suffix" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#StreetDetail.suffix">
+<xs:annotation>
+<xs:documentation>Suffix to the street name. For example: North, South, East, West.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="suiteNumber" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#StreetDetail.suiteNumber">
+<xs:annotation>
+<xs:documentation>Number of the apartment or suite.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="type" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#StreetDetail.type">
+<xs:annotation>
+<xs:documentation>Type of street. Examples include: street, circle, boulevard, avenue, road, drive, etc.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="withinTownLimits" minOccurs="0" maxOccurs="1" type="xs:boolean" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#StreetDetail.withinTownLimits">
+<xs:annotation>
+<xs:documentation>True if this street is within the legal geographical boundaries of the specified town (default).</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="SupplierKind" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#SupplierKind">
+<xs:annotation>
+<xs:documentation>Kind of supplier.</xs:documentation>
+</xs:annotation>
+<xs:restriction base="xs:string">
+<xs:enumeration value="other">
+<xs:annotation/>
+</xs:enumeration>
+<xs:enumeration value="retailer">
+<xs:annotation/>
+</xs:enumeration>
+<xs:enumeration value="utility">
+<xs:annotation/>
+</xs:enumeration>
+<xs:enumeration value="utilityAndRetailer">
+<xs:annotation/>
+</xs:enumeration>
+</xs:restriction>
+</xs:simpleType>
+<xs:complexType name="TelephoneNumber" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#TelephoneNumber">
+<xs:annotation>
+<xs:documentation>Telephone number.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="areaCode" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#TelephoneNumber.areaCode">
+<xs:annotation>
+<xs:documentation>Area or region code.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="cityCode" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#TelephoneNumber.cityCode">
+<xs:annotation>
+<xs:documentation>(if applicable) City code.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="countryCode" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#TelephoneNumber.countryCode">
+<xs:annotation>
+<xs:documentation>Country code.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="extension" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#TelephoneNumber.extension">
+<xs:annotation>
+<xs:documentation>(if applicable) Extension for this telephone number.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="localNumber" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#TelephoneNumber.localNumber">
+<xs:annotation>
+<xs:documentation>Main (local) part of this telephone number.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="TownDetail" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#TownDetail">
+<xs:annotation>
+<xs:documentation>Town details, in the context of address.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="code" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#TownDetail.code">
+<xs:annotation>
+<xs:documentation>Town code.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="country" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#TownDetail.country">
+<xs:annotation>
+<xs:documentation>Name of the country.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="county" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#TownDetail.county">
+<xs:annotation>
+<xs:documentation>Name of the county.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#TownDetail.name">
+<xs:annotation>
+<xs:documentation>Town name.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="section" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#TownDetail.section">
+<xs:annotation>
+<xs:documentation>Town section. For example, it is common for there to be 36 sections per township.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="stateOrProvince" minOccurs="0" maxOccurs="1" type="xs:string" sawsdl:modelReference="http://iec.ch/TC57/2010/CIM-schema-cim15#TownDetail.stateOrProvince">
+<xs:annotation>
+<xs:documentation>Name of the state or province.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

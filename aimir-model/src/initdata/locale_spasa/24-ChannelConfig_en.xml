@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+
+    <mvm.ChannelConfig meterConfig="SM110" channel="Total Del Only F+H"        channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="SM110" channel="Total Rcvd Only F+H"          channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay" />
+        
+    <mvm.ChannelConfig meterConfig="SM150P" channel="Usage"     channelIndex="1"   dataType="LpWM" displayType="SaveAndDisplay" />
+
+</dataset>
+

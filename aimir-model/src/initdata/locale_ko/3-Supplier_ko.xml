@@ -1,0 +1,242 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+    <system.Supplier 
+        name="누리" 
+        country="대한민국"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="서울 금천구 가산동 371-28번지 우림라이온스밸리 B동 10층"
+        descr="누리텔레콤"
+        telno="02-781-0777"
+        cd.pattern="###,###,##0.#0"
+        cd.round="f"
+        md.pattern="###,###,##0.#0"
+        md.round="r"
+    />
+
+    <system.Supplier 
+        name="삼천리"
+        country="대한민국"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="서울 영등포구 여의도동 35-6"
+        descr="삼천리"
+        telno="02-368-3300"
+        cd.pattern="0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />
+ 
+    <system.Supplier 
+        name="대한" 
+        country="대한민국"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="서울 강남구 남부순환로 3165(대치동27-1)"
+        descr="대한도시가스"
+        telno="02-3410-8000"
+        cd.pattern="0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    /> 
+
+    <system.Supplier 
+        name="서울" 
+        country="대한민국"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="서울 강서구 염창동 281"
+        descr="서울도시가스"
+        telno="1588-5788"
+        cd.pattern="0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />
+    
+    <system.Supplier 
+        name="해양"
+        country="대한민국"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="광주광역시 광산구 하남산단외로 283(하남동 500-3번지)"
+        descr="해양도시가스"
+        telno="1544-1115"
+        cd.pattern="0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    /> 
+    
+    <system.Supplier 
+        name="강남" 
+        country="대한민국"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="서울 구로구 고척동 66-2"
+        descr="강남도시가스"
+        telno="02-2680-4700"
+        cd.pattern="0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />
+    
+    <system.Supplier 
+        name="서라벌"
+        country="대한민국"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="경상북도 경주시 용강동 1275-2(공단두림길 159)"
+        descr="서라벌도시가스"
+        telno="(054)776-5111"
+        cd.pattern="0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />  
+    
+    <system.Supplier 
+        name="경남"
+        country="대한민국"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="경상남도 창원시 웅남동 55-5번지"
+        descr="경남에너지주식회사"
+        telno="(055)260-4000"
+        cd.pattern="0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    /> 
+    <!--진해수도 못찾았음-->
+    <system.Supplier 
+        name="진해수도"
+        country="대한민국"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address=""
+        descr=""
+        telno=""
+        cd.pattern="0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    /> 
+    <!--광명수도 확실한지 모르겠음-->
+    <system.Supplier 
+        name="광명수도"
+        country="대한민국"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="경기도 광명시 노온사동 2-1번지"
+        descr="광명상하수도사업소"
+        telno="(02)2680-2114"
+        cd.pattern="0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    /> 
+    
+    <system.Supplier 
+        name="수완"
+        country="대한민국"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="광주광역시 광산구 수완동 1149번지"
+        descr="수완에너지"
+        telno="(060)959-0095"
+        cd.pattern="0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    /> 
+    <!--광명 집단에너지 못찾았음  -->  
+    <system.Supplier 
+        name="광명 집단에너지"
+        country="대한민국"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address=""
+        descr=""
+        telno=""
+        cd.pattern="0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />  
+    
+    <system.Supplier 
+        name="인천"
+        country="대한민국"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="인천광역시 서구 가좌동 178-24"
+        descr="인천도시가스"
+        telno="1600-0002"
+        cd.pattern="0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />  
+    
+    <system.Supplier 
+        name="충남"
+        country="대한민국"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="대전광역시 중구 중촌동 210"
+        descr="충남도시가스"
+        telno="1599-0009"
+        cd.pattern="0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />
+    
+ 	<system.Supplier 
+        name="휴세스"
+        country="대한민국"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="서울 영등포구 여의도동 35-6"
+        descr="휴세스"
+        telno="(02)368-5000"
+        cd.pattern="0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />  
+    
+    <system.Supplier 
+        name="중부"
+        country="대한민국"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="충남 아산시 음봉면 신동리 420-12"
+        descr="중부도시가스"
+        telno="1544-0041"
+        cd.pattern="0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />  
+    
+    <system.Supplier 
+        name="한전"
+        country="대한민국"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="서울 강남구 영동대로 41번지(삼성동167번지)"
+        descr="한국전력공사"
+        telno="3456-3114"
+        cd.pattern="0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />
+
+    
+</dataset>

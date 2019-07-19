@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+  <device.OperationConstraint 
+        deviceTypeCode="1.1.1.4"
+        operationCode="8.3.2"
+        model="NZC O312"
+        field1="sysSWRevision"
+        condition1="&lt;"
+        value1="3120"
+        field2="sysSWRevision"
+        condition2="&gt;"
+        value2="3140"
+        desc="Unit Scanning"
+    />
+  <device.OperationConstraint 
+        deviceTypeCode="1.1.1.4"
+        operationCode="8.3.2"
+        model="NZC O312"
+        field1="protocolType"
+        condition1="=!"
+        value1="3120"
+        field2="SMS protocolType"
+        condition2="!="
+        value2="PLC"
+        desc="Unit Scanning"
+    />
+</dataset>

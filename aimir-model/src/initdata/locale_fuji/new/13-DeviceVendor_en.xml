@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+
+    <system.DeviceVendor 
+        supplier="NURI"
+        name="GEFM"
+        code="42"
+        address="http://www.ge.com"
+        descr="GE-FUJI"
+    />
+
+</dataset>

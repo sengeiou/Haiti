@@ -1,0 +1,858 @@
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,p,blockquote,th,td,textarea,option,button,select,input, select, span { 
+    margin:0; 
+    padding:0;
+    color:#434343; 
+}
+/*공통
+
+    font-size:12px;
+    font-family: dotum,'돋움', arial, helvetica, clean, sans-serif, "meiryo ui", MS Gothic, MS PGothic;
+    color:#434343;
+    }
+
+input, select, span	{ 
+    font-size:12px;
+    font-family:dotum,'돋움', arial, helvetica, clean, sans-serif,"meiryo ui", MS Gothic, MS PGothic;
+    }
+a  { 
+    font-family:dotum,'돋움', arial, helvetica, clean, sans-serif,"meiryo ui", MS Gothic, MS PGothic;
+    text-decoration:none;
+    color:#434343;
+    }
+a:hover{
+    font-family:dotum,'돋움', arial, helvetica, clean, sans-serif,"meiryo ui", MS Gothic, MS PGothic;
+    text-decoration:none;
+    color:#0f7cd0
+    }
+*/
+textarea	{overflow:auto;}
+img,body,html{border:0;}
+address,caption,cite,code,dfn,em,var{font-style:normal; font-weight:normal;}
+ol,ul,li{list-style:none}
+q:before,q:after{content:''}
+a,img,input,button {outline: none !important}       /* 클릭시 링크자국 제거  */
+html{overflow:hidden;}      /* IE에서 나타나는 미니가젯 내부 스크롤바 제거 */
+form{margin:0} 
+table 			{border-collapse:collapse;}
+
+
+/* Modal Window --------------------------------------------------------------------------------------------*/
+html, body	{height:100%;margin:0}
+.mw			{position:fixed;_position:absolute;top:0;left:0;width:100%;height:100%}
+.mw .bg		{position:absolute;top:0;left:0;width:100%;height:100%;background:#666;opacity:.5;filter:alpha(opacity=50)}
+.mw .fg		{position:absolute;top:50%;left:50%;margin:-100px 0 0 -200px;padding:10px;border:4px solid #0D70B9;background:#fff}
+.mw .fgbox{border:8px solid #fff}
+.ico_close	{background: url(../images/firmware/ico_close.gif) no-repeat; margin:0;width:15px; height:15px; cursor:pointer}
+
+/*  Input Box + Calendar (Aimir)   -----------------------------------------------------------------------------------------------------*/
+
+/*input.day 			{width:55px; text-align:center}*/
+input.day           {width:65px; text-align:center}
+input.metering-fail-max-contract_no, input.metering-fail-max-meter_id, input.metering-fail-max-equip_no		{width:150px;}
+button.back, button.next    
+{
+    background:url(../images/default/setting/btn-arrow-back.gif) no-repeat center center;   
+    width:20px; height:20px; border:0px;
+    float:left; cursor:pointer;
+}
+button.next 
+{
+    background:url(../images/default/setting/btn-arrow-next.gif) no-repeat center center;   
+}
+
+button.sm, button.sm_current    
+{   
+    width:auto; height:18px;
+    float:left; cursor:pointer;
+    padding-left:6px;  #padding-left:1px;
+    padding-right:5px; #padding-right:1px;
+    background-color:#fff; border:1px solid #c3d6e9;
+    margin-right:4px; /* font-size:11px;  */
+}
+button.sm_current   {color:#0f7cd0;}
+button.thelast		{margin-right:0;}
+.dashedline 
+{
+    margin:1px 12px 4px 12px;
+	height:1px;
+    background:url(../images/default/setting/dashedline.gif) repeat-x !important; 
+}
+.dashedline-dark 
+{
+    margin:1px 12px 3px 12px; #margin:1px 12px 5px 12px;
+	height:1px; background:url(../images/default/setting/dashedline-dark.gif) repeat-x !important; 
+}
+
+
+/*  Search Option (Aimir)   -----------------------------------------------------------------------------------------------------*/
+#hourly *, #daily *, #period *, #weekly *, #monthly *, #monthlyPeriod *, #weekdaily *, #seasonal *, #yearly *, #rately *, #lpintervals *,
+#hourly *, #div_daily *, #div_period *, #div_weekly *, #div_monthly *, #div_monthlyPeriod *, #div_weekdaily *, #div_seasonal *, #div_yearly *,   
+#hourlyType5 *, #dailyType5 *, #periodType5 *, #weeklyType5 *, #monthlyType5 *, #monthlyPeriodType5 * , #weekdailyType5 *, #seasonalType5 *, #yearlyType5 *,
+#hourly8 *, #daily8 *, #period8 *, #weekly8 *, #monthly8 *, #monthlyPeriod8 * , #weekdaily8 *, #seasonal8 *, #yearly8 *
+{
+    float:left; display:inline;
+}
+
+#hourly, #daily, #period, #weekly , #monthly , #monthlyPeriod ,#weekdaily , #seasonal, #yearly, #rately, #lpintervals,
+#hourly, #div_daily, #div_period, #div_weekly , #div_monthly , #div_monthlyPeriod ,#div_weekdaily , #div_seasonal, #div_yearly, 
+#hourlyType5, #dailyType5, #periodType5, #weeklyType5 , #monthlyType5 , #monthlyPeriodType5 , #weekdailyType5 , #seasonalType5 , #yearlyType5,
+#hourly8, #daily8, #period8, #weekly8 , #monthly8 , #monthlyPeriod8 , #weekdaily8 , #seasonal8 , #yearly8
+{
+    display:block;	clear:both;
+    height:12px; 	padding-top:6px;
+}
+
+#hourly li, #daily li, #period li, #weekly li, #monthlyPeriod li ,#weekdaily li, #seasonal li, #yearly li, #rately li, #lpintervals li
+{
+  float:left;
+}
+
+
+
+#hourly label, #daily label, #period label, #weekly label, #monthly label, #monthlyPeriod label, #weekdaily label, #seasonal label, #yearly label, #rately label, #lpintervals label,
+#hourly label, #div_daily label, #div_period label, #div_weekly label, #div_monthly label, #div_monthlyPeriod label, #div_weekdaily label, #div_seasonal label, #div_yearly label,
+#hourlyType5 label, #dailyType5 label, #periodType5 label, #weeklyType5 label, #monthlyType5 label, #monthlyPeriodType5 label, #weekdailyType5 label, #seasonalType5 label, #yearlyType5 label,
+#hourly8 label, #daily8 label, #period8 label, #weekly8 label, #monthly8 label, #monthlyPeriod8 label, #weekdaily8 label, #seasonal8 label, #yearly8 label
+{
+    /* font-weight:bold; color:#0f7cd0;  */
+    padding:4px 6px 0px 0px;
+}
+
+#weekly label.descr, #monthly label.descr, #monthlyPeriod label.descr, #weekdaily label.descr, #seasonal label.descr, #yearly label.descr, #rately label.descr, #lpintervals label.descr,
+#weekly label.descr, #div_monthly label.descr, #div_monthlyPeriod label.descr, #div_weekdaily label.descr, #div_seasonal label.descr, #div_yearly label.descr,
+#hourlyType5 label.descr, #dailyType5 label.descr, #periodType5 label.descr, #weeklyType5 label.descr , #monthlyType5 label.descr, #monthlyPeriodType5 label.descr,
+#weekdailyType5 label.descr, #seasonalType5 label.descr , #yearlyType5 label.descr,
+#hourly8 label.descr, #daily8 label.descr, #period8 label.descr, #weekly8 label.descr , #monthly8 label.descr, #monthlyPeriod8 label.descr,
+#weekdaily8 label.descr, #seasonal8 label.descr , #yearly8 label.descr
+{
+    font-weight:normal; color:#434343; /* font-size:11px; */
+    padding:4px 3px 0px 0;
+}
+
+#hourly select.sm,#period select.sm, #weekly select.sm, #monthly select.sm, #monthlyPeriod select.sm, #weekdaily select.sm, #seasonal select.sm, #yearly select.sm, #rately select.sm, #lpintervals select.sm,
+#hourly select.sm,#div_period select.sm, #div_weekly select.sm, #div_monthly select.sm, #div_monthlyPeriod select.sm, #div_weekdaily select.sm, #div_seasonal select.sm, #div_yearly select.sm,  
+#hourlyType5 select.sm, #dailyType5 select.sm, #periodType5 select.sm, #weeklyType5 select.sm, #monthlyType5 select.sm, #monthlyPeriodType5 select.sm, #weekdailyType5 select.sm,
+#seasonalType5 select.sm, #yearlyType5 select.sm,
+#hourly8 select.sm, #daily8 select.sm, #period8 select.sm, #weekly8 select.sm, #monthly8 select.sm, #monthlyPeriod8 select.sm, #weekdaily8 select.sm, #seasonal8 select.sm, #yearly8 select.sm
+{
+    width:38px;/* width:37px; */
+}
+#hourly select, #daily select, #period select, #weekly select, #monthly select, #monthlyPeriod select, #weekdaily select, #seasonal select, #yearly select, #rately select, #lpintervals select,
+#hourly select, #div_daily select, #div_period select, #div_weekly select, #div_monthly select, #div_monthlyPeriod select, #div_weekdaily select, #div_seasonal select, #div_yearly select,
+#hourlyType5 select, #dailyType5 select, #periodType5 select, #weeklyType5  select, #monthlyType5 select, #monthlyPeriodType5 select, #weekdailyType5  select, #seasonalType5  select, #yearlyType5 select,
+#hourly8 select, #daily8 select, #period8 select, #weekly8  select, #monthly8 select, #monthlyPeriod8 select, #weekdaily8  select, #seasonal8  select, #yearly8 select
+{
+    width:52px;/*width:55px;*/
+}
+#hourly select *, #daily select *, #period select *, #weekly select *, #monthly select *, #monthlyPeriod select *, #weekdaily select *, #seasonal select *, #yearly select *, #rately select *, #lpintervals select *,
+#hourly select *, #div_daily select *, #div_period select *, #div_weekly select *, #div_monthly select *, #div_monthlyPeriod select *, #div_weekdaily select *, #div_seasonal select *, #div_yearly select *,
+#hourlyType5 select *, #dailyType5 select *, #periodType5 select *, #weeklyType5 select *, #monthlyType5 select *, #monthlyPeriodType5 select *, #weekdailyType5  select *, #seasonalType5 select * , #yearlyType5 select *,
+#hourly8 select *, #daily8 select *, #period8 select *, #weekly8 select *, #monthly8 select *, #monthlyPeriod8 select *, #weekdaily8  select *, #seasonal8 select * , #yearly8 select *
+{
+    float:none !important; 
+    display:block !important;
+    height:14px;
+    padding-top:4px;
+}
+
+
+
+.ui_datetab li{ float:left}
+.ui_datetab_text{height:20px; line-height:20px}
+.ui_datetab_height{height:50px;}
+
+select.date-w50		{width:50px !important;}
+select.date-w60		{width:60px !important;}
+select.date-w80		{width:80px !important;}
+select.date-w90		{width:90px !important;}
+.align  			{float:left; display:inline;}
+.align li.btnleft   {padding-left:36px; padding-bottom:3px;}
+.between    
+{
+    border:1px solid transparent;
+	background-color:transparent !important;
+    width:11px !important;
+    text-align:center;
+    padding-top:3px;
+}
+.date-space   	{width:1px; border:1px solid transparent;}
+.space5   		{width:3px; border:1px solid transparent;}
+.space10   		{width:10px;border:1px solid transparent;}
+.space20   		{width:20px;border:1px solid transparent;}
+.space30   		{width:30px;border:1px solid transparent;}
+
+div.buttontype  {background:transparent !important;}
+
+div.buttontype #hourly, div.buttontype #daily, div.buttontype #period, div.buttontype #weekly, div.buttontype #monthly, div.buttontype #monthlyPeriod, div.buttontype #weekdaily, div.buttontype #seasonal, div.buttontype #yearly, div.buttontype #rately, div.buttontype #lpintervals,
+div.buttontype #div_hourly, div.buttontype #div_daily, div.buttontype #div_period, div.buttontype #div_weekly, div.buttontype #div_monthly, div.buttontype #div_monthlyPeriod, div.buttontype #div_weekdaily, div.buttontype #div_seasonal, div.buttontype #div_yearly,
+div.buttontype #hourlyType5, div.buttontype #dailyType5, div.buttontype #periodType5, div.buttontype #weeklyType5 , div.buttontype #monthlyType5 , div.buttontype #monthlyPeriodType5 , div.buttontype #weekdailyType5 , div.buttontype #seasonalType5 , div.buttontype #yearlyType5,
+div.buttontype #hourly8, div.buttontype #daily8, div.buttontype #period8, div.buttontype #weekly8 , div.buttontype #monthly8 , div.buttontype #monthlyPeriod8 , div.buttontype #weekdaily8 , div.buttontype #seasonal8 , div.buttontype #yearly8 
+{
+    padding-left:0px !important;
+    padding-top:5px !important;
+}
+ul.buttontype li    
+{
+    border:1px solid #c3d6e9!important;
+    margin-right:4px !important;
+}
+
+ul.buttontype a 
+{
+    padding-top:1px !important;
+    padding-bottom:1px !important;  
+    height:14px !important;
+    width:auto !important;
+    padding-left:4px !important;
+    padding-right:4px !important;
+    float:left !important;
+    border:0px !important;
+    background-color:#fff!important;
+    color:#434343 !important;
+    /* font-size:11px !important; */
+}
+ul.buttontype a.current, ul.buttontype a:hover  
+{   
+    color:#0f7cd0 !important;
+}
+.btn-putin a	
+{
+    background:url(../images/default/setting/btn-putin.gif);   
+	width:0; height:0; margin:0; padding:18px 0 0 18px; display:block; float:left; overflow:hidden; 
+}
+.btn-putout a	
+{
+    background:url(../images/default/setting/btn-putout.gif);   
+	width:0; height:0; margin:5px 0 0 0; padding:18px 0 0 18px; display:block; float:left; overflow:hidden;
+}
+
+/*   Search Box (Aimir) ------------------------------------------------------------------------*/
+
+.search-s1 {                /* 검색박스 : 코드관리  */
+    float:left;
+    display:block;
+}
+.search-s1 li   {
+    display:inline !important;
+    float:left;
+}
+.search-s1 ul   {
+    float:left;
+    display:inline !important;
+    border:1px solid #b4d3f0;   
+	background-color:white;
+    width:173px;
+    height:19px;
+}
+.search-s1 ul.search-s1-result  {
+    border:1px solid transparent;
+    background-color:transparent;
+    width:90px;
+    height:18px;
+    padding-left:10px;
+    float:left;
+    display:inline;
+}
+.search-s1-result li, .result-text    {
+    /* font-size:11px; */
+    padding-top:3px;
+    color:#434343;
+}
+.search-s1-result font, .result-num  {
+    color:#FC0000;
+    /* font-size:11px !important; */
+    display:inline;
+    float:left;
+    text-indent:3px;
+	margin:3px 2px 0 2px;
+}
+
+
+.search-s1 ul.search-s1-result2  {
+    border:1px solid transparent;
+    background-color:transparent;
+    width:200px;
+    height:18px;
+    display:inline;
+    float:left;
+ }
+
+.search-s1-result2 font, .result-num  {
+    color:#FC0000;
+    display:inline;
+    float:left;
+    text-indent:3px;
+	margin:3px 2px 0 2px;
+}
+
+.search-s1-input    {
+	width:80%;
+}
+.search-s1-input input    {
+    border:0px;
+    width:100%;
+}
+.search-s1-btn{
+    background:url(../images/default/button/btn_input_search.png) no-repeat;    
+    background-color:white;
+    width:20px;
+    height:18px;
+    float:right !important;
+    display:inline !important;
+    
+}
+.search-s1-btn a{
+    width:19px;
+    height:18px;
+}
+
+/**/
+
+#searchForm fieldset#vendor-tree, #searchForm-max fieldset#vendor-tree, .foldertree_border .foldertree  {
+    width:100%; 
+    height:300px; 
+    display:block;
+    position:relative; 
+   /* top:5px;
+    float:right;*/
+}
+
+.foldertree_border .foldertree	{
+	overflow:auto;
+    overflow-x:hidden;
+    height:490px; 
+}
+#searchForm-max fieldset#vendor-tree    {
+    height:650px; 
+}
+#vendor-tree{border:0 solid transparent !important;}
+
+#basic_html     {
+    width:100%;  
+    height:100%;
+    overflow:auto;
+    overflow-x:hidden;
+}
+#basic_html2    {
+    width:100%;  
+    height:300px;
+    overflow-y:auto;
+    
+}
+
+fieldset#vendor-tree
+
+/*   Common Buttons(Aimir)  ------------------------------------------------------------------------*/
+
+#btn *, .btn *, #btn-right *   {width:auto !important; /* font-size:11px */;}
+#btn, .btn, #btn-right   			{height:18px; padding:1px;}
+
+#btn-right 						{margin-right:10px; float:right;}
+#btn-putinout                      {margin-top :60px;margin-left:10px; float:left;}
+#btn ul, .btn ul 
+{
+    background: url(../images/default/setting/btn-bg-edge.gif) repeat-x;
+    float:left;
+    padding: 0px 1px;
+    margin-left:5px;
+}
+
+.btn-channel ul 
+{
+    clear:both !important;
+	margin-left:0px !important;
+}
+#btn-right ul
+{
+    background: url(../images/default/setting/btn-bg-edge.gif) repeat-x;
+    float:right;
+    padding: 0px 1px;
+    margin-left:5px;
+}
+
+#btn-bottom ul 
+{
+    background: url(../images/default/setting/btn-bg-edge.gif) repeat-x;
+    float:bottom;
+    padding: 0px 1px;
+    margin-left:5px;
+}
+
+#btn li, .btn li, #btn-right li ,  #btn-bottom li
+{
+    background: url(../images/default/setting/btn-bg-mid.gif) repeat-x;
+    display:inline;
+    height:18px;
+    padding:3px 5px 0px 5px ;
+    display:block;
+}
+#btn a, .btn a, #btn-right a 
+{
+    color:#434343 !important;
+    float:left;
+    text-decoration:none;
+    font-weight:normal;
+    display:block;
+	cursor:pointer;
+}
+#btn a.on, .btn a.on, #btn-right a.on 
+{
+    color:#0f7cd0 !important;
+}
+#btn a.on-bold, .btn a.on-bold, #btn-right a.on-bold 
+{
+    color:#0f7cd0 !important;
+	font-weight:bold;
+}
+#btn a:hover, .btn a:hover, #btn-right a:hover 
+{
+    color:#0f7cd0 !important;
+}
+#btn a.on-green-bold, .btn a.on-green-bold, #btn-right a.on-green-bold,  .on-green-bold a:hover 
+{
+	color:#2da021 !important;
+	font-weight:bold;
+}
+li.btn_group_right	
+{
+	width:100px;
+	position:relative;
+	right:-245px;
+	display:inline;
+}
+.btn_topright	
+{
+	position:absolute !important;
+	top:4px;
+	right:15px;
+	z-index:200;
+}
+
+/*  Gadget Buttons(Aimir)   ------------------------------------------------------------------------*/
+
+#gadget_btn, .gadget_btn      
+{
+	width:auto !important;
+    height:21px;
+    float:right;
+    padding-right:0px;
+}
+#gadget_btn_left 
+{
+	width:auto !important;
+    height:21px;
+    float:left;
+    padding-right:0px;
+	display:block;
+}
+#gadget_btn ul, .gadget_btn ul     
+{
+	width:auto !important;
+	display:block;
+    float:right;
+}
+#gadget_btn_left ul	
+{
+	width:auto !important;
+	display:block;
+    float:left;
+}
+#gadget_btn li, #gadget_btn_left li, .gadget_btn li     
+{
+    display:inline;	
+	width:21px;
+}
+#gadget_btn a, .gadget_btn a
+{
+    float:right;
+    overflow:hidden;
+    height:0px;
+    width:18px;
+    padding-top:18px;
+    margin-left:2px;
+}
+#gadget_btn_left a	
+{
+    float:left;
+    overflow:hidden;
+    height:0px;
+    width:18px;
+    padding-top:18px;
+    margin-left:2px;
+}
+#gadget_plus a 	{background: url(../images/default/setting/btn-plus.gif) no-repeat;}
+#gadget_del a 	{background: url(../images/default/setting/btn-del.gif) no-repeat;}
+#gadget_modi a 	{background: url(../images/default/setting/btn-modi.gif) no-repeat;}
+#gadget_btn a:hover, .gadget_btn a:hover, #gadget_btn_left a:hover 
+{
+    background-position:right top
+}
+#btn-sm-del a 
+{
+    width:23px;
+    height:15px;
+    background: url(../images/default/setting/btn-sm-del.gif) no-repeat;
+}
+#btn-sm-add a 
+{
+    width:23px;
+    height:15px;
+    background: url(../images/default/setting/btn-sm-add.gif) no-repeat;
+}
+#btn-sm-edit a 
+{
+    width:23px;
+    height:15px;
+    background: url(../images/default/setting/btn-sm-edit.gif) no-repeat;
+}
+
+/*--tree--*/
+ #customerTreeDiv	{
+	position:absolute;
+	width:80%;
+	border:0px solid #D2D2D2;
+}
+
+#treeDiv	{
+	/*position:absolute;*/
+	width:100%;
+	border:none;
+	overflow-y:auto;
+}
+
+.tree-billing	{	/* 빌링가젯 내의 트리에 적용 */
+	position:absolute;
+	top:110px;
+	left:15px;
+	/*z-index:200;*/
+}
+.tree-billing-mini	{	
+	top:85px;
+	left:12px;
+}
+
+/*공통 Tree*/
+.tree-billing.auto{
+	z-index:200;
+	position:absolute;
+	background-color:white;
+	border:1px solid #b4d3f0;
+	width:auto;
+	height:auto;
+	margin-top:-1px;
+	padding:0 10px 5px 5px;
+	min-height:50px;
+	min-width:140px;
+	max-height:150px;
+	overflow-y:auto;
+}
+.tree-billing.auto2{
+	z-index:200;
+	position:absolute;
+	background-color:white;
+	border:1px solid #b4d3f0;
+	width:auto;
+	height:auto;
+	margin-top:-1px;
+	padding:0 10px 5px 5px;
+	min-height:50px;
+	min-width:140px;
+}
+.tree-billing.auto ul{
+	padding:8px 0px 10px 0;
+	*padding:0.2em 0px 10px 0;
+	margin:0 0 0 10px;
+}
+.tree-billing.auto ul li{
+	/* margin:0 0 5px -6px; */
+	padding:0 0 0 10px;
+}
+.tree-billing.auto2 ul{
+	padding:10px 0px 10px 6px;
+	*padding:0.2em 0px 10px 6px;
+	margin:0 0 0 4px;
+}
+.tree-billing.auto2 ul li{
+	margin:0 0 5px -6px;
+	padding:0 0 0 10px;
+}
+.area-tree-billing	{	/*선불관리 */
+	position:absolute;
+	z-index:200;
+	background:#fff;
+	border:1px solid #b4d3f0;
+	margin-top:-1px;
+	padding:3px;
+	overflow-y:auto;
+}
+.area-tree-billing ul li{
+	padding:0 0 0 10px;
+}
+
+/* color button    hj Lee*/
+.btn_blu,.btn_blu a,.btn_blu button,.btn_blu input 
+		{
+		position:relative; 
+		display:inline-block; 
+		text-decoration:none; 
+		height:18px;
+		white-space:nowrap; 
+		background:url(../images/default/setting/btn_default_bg.gif) no-repeat; 
+		vertical-align:middle; 
+		color:#0f7cd0;  
+		font-weight:normal;
+		padding-right:2px
+		}
+.btn_blu a,.btn_blu button,.btn_blu input
+		{
+		left:2px; 
+		overflow:visible; 
+		padding:3px 7px 3px 4px; 
+		background-position:right top; 
+		cursor:pointer; 
+		_vertical-align:top; 
+		}
+.btn_blu input 
+		{
+		padding-top:2px;_padding-top:0;
+		}
+.btn_blu *:hover 
+		{
+		color:#0c6eba; 
+		text-decoration:none; 
+		font-weight:normal; 
+		}
+
+.btn_bluebold,.btn_bluebold a,.btn_bluebold button,.btn_bluebold input 
+		{
+		position:relative; 
+		display:inline-block; 
+		text-decoration:none; 
+		height:18px;
+		white-space:nowrap; 
+		background:url(../images/default/setting/btn_default_bg.gif) no-repeat; 
+		vertical-align:middle; 
+		color:#0f7cd0;  
+		font-weight:bold;
+		padding-right:2px
+		}
+.btn_bluebold a,.btn_bluebold button,.btn_bluebold input
+		{
+		left:2px; 
+		overflow:visible; 
+		padding:3px 7px 3px 4px; 
+		background-position:right top; 
+		cursor:pointer; 
+		_vertical-align:top; 
+		}
+.btn_bluebold input 
+		{
+		padding-top:2px;_padding-top:0;
+		}
+.btn_bluebold *:hover 
+		{
+		color:#0c6eba; 
+		text-decoration:none; 
+		font-weight:bold; 
+		}
+		
+.btn_bluegreen,.btn_bluegreen a,.btn_bluegreen button,.btn_bluegreen input 
+		{
+		position:relative; 
+		display:inline-block; 
+		text-decoration:none; 
+		height:18px;
+		white-space:nowrap; 
+		background:url(../images/default/setting/btn_default_bg.gif) no-repeat; 
+		vertical-align:middle; 
+		color:#2da021;  
+		font-weight:bold;
+		padding-right:2px
+		}
+.btn_bluegreen a,.btn_bluegreen button,.btn_bluegreen input 
+		{
+		left:2px; 
+		overflow:visible; 
+		padding:3px 7px 3px 4px; 
+		background-position:right top; 
+		cursor:pointer; 
+		_vertical-align:top; 
+		}
+.btn_bluegreen input 
+		{
+		padding-top:2px;_padding-top:0;
+		}
+.btn_bluegreen *:hover 
+		{
+		color:#2da021; 
+		text-decoration:none; 
+		font-weight:bold; 
+		}
+		
+.btn_org,.btn_org a,.btn_org button,.btn_org input 
+		{
+		position:relative; 
+		display:inline-block; 
+		text-decoration:none; 
+		height:18px;
+		white-space:nowrap; 
+		background:url(../images/default/setting/btn_org_bg.gif) no-repeat; 
+		vertical-align:middle; 
+		color:#E06103; 
+		font-weight:normal;
+		padding-right:2px
+		}
+.btn_org a,.btn_org button,.btn_org input 
+		{
+		left:2px; 
+		overflow:visible; 
+		padding:3px 7px 4px 4px; 
+		background-position:right top; 
+		cursor:pointer; 
+		_vertical-align:top; 
+		}
+.btn_org input 
+		{
+		padding-top:2px;_padding-top:0;
+		}
+.btn_org *:hover 
+		{
+		color:#CA5702; 
+		text-decoration:none; 
+		font-weight:normal; 
+		}
+
+.btn_gry,.btn_gry a,.btn_gry button,.btn_gry input 
+		{
+		position:relative; 
+		display:inline-block; 
+		text-decoration:none; 
+		height:18px;
+		white-space:nowrap; 
+		background:url(../images/default/setting/btn_gry_bg.gif) no-repeat; 
+		vertical-align:middle; 
+		color:#7D8C99; 
+		font-weight:normal;
+		padding-right:2px
+		}
+.btn_gry a,.btn_gry button,.btn_gry input 
+		{
+		left:2px; 
+		overflow:visible; 
+		padding:4px 7px 4px 4px\9;padding:3px 7px 4px 4px; 
+		background-position:right top; 
+		cursor:pointer; 
+		_vertical-align:top; 
+		}
+.btn_gry input 
+		{
+		padding-top:2px;_padding-top:0;
+		}
+.btn_gry *:hover 
+		{
+		color:#6A7A88; 
+		text-decoration:none; 
+		font-weight:normal; 
+		}
+
+.smallfile			{background:url(../images/default/setting/ico_smallfile.gif) no-repeat center center; width:10px; height:10px; cursor:pointer;}
+.filespace			{margin:1px 4px 1px 2px; text-align: absmiddle;}
+.smallfile_report	{background:url(../images/default/setting/ico_smallfile.gif) no-repeat center center; width:10px; height:10px; cursor:pointer;margin:4px 0 5px 0}
+
+/*  Navigation   ---------------------------------------------------------------------------------------------*/
+#bldgNavi 						{margin:10px 10px 0 10px;}
+#bldgNavi .slide_left			{float:left; width:15px; height:65px;vertical-align:middle; padding-top:65px; cursor:pointer;}
+#bldgNavi .slide_left span		{background:url(../images/default/setting/ic-slide-left.gif) no-repeat; width:9px; height:11px;margin:0 3px;cursor:pointer;}
+#bldgNavi .search  				{float:left; width:160px;overflow-y:none; overflow-x:hidden;}
+#bldgNavi .slide_right			{float:left; width:15px; height:65px;vertical-align:middle;padding-top:65px;cursor:pointer;}
+#bldgNavi .slide_right span		{background:url(../images/default/setting/ic-slide-right.gif) no-repeat; width:9px; height:11px; margin:0 3px;cursor:pointer;}
+
+#bldgNavi .topAll  				{width:100%; display:inline-block; padding:0 0 10px 0;}
+#bldgNavi .info     			{width:auto;}
+#bldgNavi .info2     			{width:auto; margin:0 10px 0 20px; }
+#bldgNavi .stacked     			{width:auto; float:left; }
+
+#bldgNavi .info table     		{width:100%;}
+#bldgNavi .info table th		{color:#000;padding:3px 0 3px 0; text-align:right;}	
+#bldgNavi .info table td		{padding:0 0 0 5px;}	
+#bldgNavi .info table th.tit	{border-bottom:1px solid #B4D3F0;  text-align:left;}
+
+#bldgNavi .info2 table     		{width:100%;}
+#bldgNavi .info2 table th		{color:#000;padding:3px 0 3px 0; }
+#bldgNavi .info2 table td		{padding:0 0 0 5px;}	
+#bldgNavi .info2 table th.tit	{border-bottom:1px solid #B4D3F0; text-align:left;}
+
+table.billing {width:auto;}
+table.billing th {padding:2px 5px 2px 0; font-weight:normal; text-align:left; vertical-align:middle;}
+table.billing td {text-align:left;padding:2px 20px 2px 0; vertical-align:middle;}
+table.billing td.mini {text-align:left;padding:2px 2px 2px 0; vertical-align:middle;}
+table.billing th.last {padding:10px 5px 2px 0; font-weight:normal; text-align:left; vertical-align:middle;}
+table.billing td.last {text-align:left;padding:10px 20px 2px 0; vertical-align:middle;}
+
+.downloadbox {overflow-y:scroll;overflow-x:hidden; border:1px solid #e0e0e0;clear:both; height:222px;*height:216px;padding:2px 0 0 0;margin:10px} 
+table.download th {padding:4px 5px 4px 0; font-weight:bold; text-align:center; vertical-align:middle;border-bottom:1px dotted #ddd}
+table.download td {text-align:left;padding:4px 5px 4px 0; vertical-align:middle;border-bottom:1px dotted #ddd}
+table.download td.button {text-align:right;padding:4px 20px 4px 0; vertical-align:middle;border-bottom:1px dotted #ddd}
+.popup_title{width:auto; background:#81bee7; color:#fff; font-weight:bold; padding:8px 0 8px 10px; overflow:hidden}
+
+.download_zip{margin:10px 20px; overflow:hidden}
+.download_zip li.file{float:left;color:#2da021; font-weight:bold;margin:4px 0 0 0}
+.download_zip li.downbtn{float:right;margin:0 30px 0 0;*margin:0 13px 0 0}
+
+.nodata{overflow:hidden ;  margin:20px auto; width:300px}
+.nodata li.text{color:#FC0000; text-align:center;margin-top:20px}
+.nodata li.close{text-align:center;margin-top:30px}
+
+.input_button{background:#e2eef6; border:1px solid #b9dbf1; color:#0f7cd0; *padding:2px 0 1px 0;padding:3px 5px 2px 5px}
+.icon_download{background: url(../images/customer/icon_download.gif) no-repeat; width:14px; height:13px;padding:0 10px 0 0;}
+
+.h180				{height:180px; }
+.h190				{height:190px; }
+.Tbu_bold			{font-weight:bold; color:#0f7cd0;}
+.ml170              {margin:0 0 0 170px;}
+.Tbk_bold11			{font-weight:bold; color:#000;}
+.mt2   				{margin-top:2px;}
+.pt10   			{padding-top:10px;}
+.billsearch			{overflow:auto; height:60px;}			
+.reportSelect li	{overflow:hidden; margin:2px 0}
+.reportSelect li.tit{overflow:hidden; margin:0 0 8px 0; color:#0f7cd0; font-weight:bold}
+.checkbox			{
+					border:1px solid transparent;
+					width:14px;	height:14px;*width:18px;*height:18px; *margin-top:3px;margin-top:0;margin-top:-2px\9;
+					}
+.radio_space{border:1px solid transparent;margin:-1px 4px 4px 4px;*margin:2px 4px 4px 4px;*padding:4px 0 0 0;background-color:transparent !important;}
+@media screen and (-webkit-min-device-pixel-ratio:0) {.radio_space{ margin:1px 4px 4px 4px}}/*crome,safari hack*/
+.radio_space, x:-moz-any-link, x:default { margin:1px 4px 4px 4px} /*firefox hack*/	
+
+.checkbox_space{border:1px solid transparent;margin:-1px 6px 4px 6px;*margin:2px 6px 4px 6px;*padding:4px 0 0 0}
+@media screen and (-webkit-min-device-pixel-ratio:0) {.checkbox_space{ margin:1px 10px 4px 10px}}/*crome,safari hack*/
+.checkbox_space, x:-moz-any-link, x:default { margin:1px 10px 4px 10px} /*firefox hack*/	
+
+
+.radio_space2{border:1px solid transparent;margin:-1px 1px 4px 1px;*margin:3px 2px 4px 2px;}
+@media screen and (-webkit-min-device-pixel-ratio:0) {.radio_space2{ margin:3px 4px 4px 4px}}/*crome,safari hack*/
+.radio_space2, x:-moz-any-link, x:default { margin:3px 4px 4px 4px} /*firefox hack*/	
+
+.checkbox_space2{border:1px solid transparent;margin:-1px 2px 4px 2px;*margin:4px 2px 4px 2px;}
+@media screen and (-webkit-min-device-pixel-ratio:0) {.checkbox_space2{ margin:2px 10px 4px 10px}}/*crome,safari hack*/
+.checkbox_space2, x:-moz-any-link, x:default { margin:2px 10px 4px 10px} /*firefox hack*/
+
+.radio_space3{border:1px solid transparent;margin:2px 1px 0 1px}
+.trans_input			{border:1px solid transparent;}
+
+/* TOU Report 에서 Select box 아래부분이 짤려 높이를 줄이는 용도로 사용 */
+td.tou_report_tarifftype div.selectbox-wrapper{
+	max-height:150px;
+}
+
+
+a.btn_blue{display:inline-block;padding-left:2px;background:url(../images/customer/bg_button.png) no-repeat left top;color:#0f7cd0 !important;
+			line-height:20px;text-decoration:none;white-space:nowrap;cursor:pointer;margin-left:3px}
+a.btn_blue span{display:block;padding:1px 6px 0 4px; background:url(../images/customer/bg_button.png) no-repeat right top;color:#0f7cd0  }
+a.btn_blue strong{display:block;padding:0px 2px 0 2px; }
+a.btn_blue *:hover{color:#0f7cd0; text-decoration:none }
+a.btn_green{display:inline-block;padding-left:2px;background:url(../images/customer/bg_button.png) no-repeat left top;color: #45d06b !important;
+    line-height:20px;text-decoration:none;white-space:nowrap;cursor:pointer;margin-left:3px}
+a.btn_green span{display:block;padding:1px 6px 0 4px; background:url(../images/customer/bg_button.png) no-repeat right top;color:#45d06b  }
+a.btn_green strong{display:block;padding:0px 2px 0 2px; }
+a.btn_green *:hover{color:#45d06b; text-decoration:none }

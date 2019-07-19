@@ -1,0 +1,241 @@
+    <Style id="dcuIconBlue">
+      <IconStyle>
+        <Icon>
+          <href>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAB9ElEQVR42q1WSy8DURS+f8KGeMTG/7CVWIlHE7QzDTozpMW9Q1jYiBASUgsiKPGKIjQVbSOIingGqUdKqJBYEVtWR2+Tlo72zi3zJWdzc+b77r3nnO8OQgyYbPZCUSEdokw2i0tn37OK3oBGSfnoq1VRA9H1dnODvQBlCkosKGQpTqgXVgUvmMSWfC5yQcI1vMTaEG2tJja5TNS/kidOI+EWw3euDYuEq37duVHk8aiua8pLCFgl4mYl9w2OZH4KWZ3n2v3kjBsorm5uk9YHhl0wveBlisRamPY5K+nj4xPi+Cmy4t2BEZdbr+BtiA5RuoSpuWXQInz3AFt753xtK2E/+jmh2tgIbEMq3EeeuARM5u4XxEpY9vggHS6vw1wiTIGuHiewwCOCqHGxEkJXYabI7OJq2m9r6zufEXVFlkC52QORx6eU5CdnIR0TVH2ItpLeMefdHnCOuiC4fwQXoRvYCR7AgHNM93oEGWNEbZaVtOYLgn/7GIKHIdjcPQVvYB88/j2uAldamnNj00zHOl1S79A49DsnkqIvuqY7AzKZTngRNSajza6mwZGT5KjUYo2za1KW8k2Ijrbjv+TRwjYyXzWLDVcYvnMtaPVFicxwv8UycVUKSnbGfxcxIUVttcp4XZDUyPcAkQdRVr30Sn8VU4MvhOBkkp+tIFMAAAAASUVORK5CYII=</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="dcuIconPurple"><!--UnKnown-->
+      <IconStyle>
+        <Icon>
+          <href>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABuElEQVR42mNgwAOCEjOVErNKqpOySvc4+i55385Q/B+EvUJnvEnKLtuVmFlSmZBRoMBAKgAZnJBdugZmICGcnFW8IigqW54ow+PTi+KINRgdJ6QVRuE1PCGzpJxcw2E4MaO4mOouR8dx6cWRGGFOLcNhODQ2TQ5uQVJGyWp8irsmzCA9PjJLlxPl+uU9k/6DwPUly1DEe6cs+L8nIR2/JaAkDErn+BT9+PHzPwygWzJjwWq8FiRlFFcwgDIRLgVb84r/o4Obt+8RHUxAC3YyIOdQbBgbuHv/EVEWRMS3PGMgpAgXuN43gShL8FrQ0D75Pz5AjCUMoIILn4JrQEPwAbwZLq3qMQOoVMSnKCxh0//7Dx6RbDg4krPKdjCAkhIxYTl55gIwfSMlDZIPJs8mnNkyiksZQMUstYsJGPaPyJKFlqKly3Ep6pw493/P5HkouAsoRrBUzSxZBC+LQAUT1Qu7uAxplBIVVMRSsbgOwVonACuLQkoNT8gsysVbq8WlF4VT3eXoABT7SRmlS4iuJjNLFvhFJEmR3LoAWQTUXJKUWbw1MbP0PrwVkV16D1gKbwEFKUZkogEAE7gLwt7TTJMAAAAASUVORK5CYII=</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="dcuIconGray"><!--Power Down -->
+      <IconStyle>
+        <Icon>
+          <href>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAB9klEQVR42q1WW0sCQRSe31F0oX/Sa1BBdLEg291Ad1aCcne7vvQQRFFQ2IMRlYVlZEWJkUpWZERXKuyCRRkFPQW91tNpB1J003Gs/eC8DGe/b3bOnO8MQhTU8LiMl5Q+QVK3yyvdH+FwGEhU1DnfBVtniMdKDye2l6J8QYg5m7qSIMwVrZK8VNNkK2Eib7HazazE+uAsHU1Ucg4rXX8lTwQvyrLhO9eH2So3/jpzo8gTUddsKU4KCKLipSUPjznzrwdWPUy7n3V7geDm7j5tfXTCBfNLfroIucLkntOSPj+/IIFUkTX/HjhdXqqAIMrdiDRRtoS5xVXQI/bwBDsHl0zHpAkEUWqH6mMrtAuZ8Bh/YRIwtQy8IVrCqi8A2XB9G2MSoQr0DzqABhYRRIyLlhC9iVFFFpbXszecpfcVEVekCdRzPog/v2QkP7uI0ossdQYQuUq5ftPj9YFj0gWRwxO4it7BXuQIRh1TuZtNlFVEbJaWtBGIQHD3FCLHUdjePwd/6BB8wQOmAlebpKIfF1U92ZKGxqdhxDGTFsPaWk5Xxcp80ouIMRludmaxMM1RicUaaNe1GWeCNiw6/kvOYXsbdaqZrfYGw3euB6m+IKpu5jGJFVeVSSjI+3VBhLSPFQHLmzxW48lXhE190lzYT470VzF1+AatC88x/x7eeAAAAABJRU5ErkJggg==</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="dcuIconOrange"><!-- Comm.Error -->
+      <IconStyle>
+        <Icon>
+          <href>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABuElEQVR42mNgwAOCEjOVErNKqpOySvc4+i55/zia4T8Ie4XOeJOUXbYrMbOkMiGjQIGBVAAyOCG7dA3MQEI4Oat4RVBUtjxRhsenF8URazA6TkgrjMJreEJmSTm5hsNwYkZxMdVdjo7j0osjMcKcWobDcGhsmhzcgqSMktX4FHdNmEF6fGSWLifK9ct7Jv0HgetLlqGI905Z8H9PQjp+S0BJGJTO8Sn68ePnfxhAt2TGgtV4LUjKKK5gAGUiXAq25hX/Rwc3b98jOpiAFuxkQM6h2DA2cPf+I6IsiIhvecZASBEucL1vAlGW4LWgoX3yf3yAGEsYQAUXPgXXgIbgA3gzXFrVYwZQqYhPUVjCpv/3Hzwi2XBwJGeV7WAAJSViwnLyzAVg+kZKGiQfTJ5NOLNlFJcygIpZahcTMOwfkSULLUVLl+NS1Dlx7v+eyfNQcBdQjGCpmlmyCF4WgQomqhd2cRnSKCUqqIilYnEdgrVOAFYWhZQanpBZlIu3VotLLwqnusvRASj2kzJKlxBdTWaWLPCLSJIiuXUBsgiouSQps3hrYmbpfXgrIrv0HrAU3gIKUozIRAMAyKZrprXoaLMAAAAASUVORK5CYII=</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="dcuIconRed"><!-- Security.Error -->
+      <IconStyle>
+        <Icon>
+          <href>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABuElEQVR42mNgwAOCEjOVErNKqpOySvc4+i55f4+B4T8Ie4XOeJOUXbYrMbOkMiGjQIGBVAAyOCG7dA3MQEI4Oat4RVBUtjxRhsenF8URazA6TkgrjMJreEJmSTm5hsNwYkZxMdVdjo7j0osjMcKcWobDcGhsmhzcgqSMktX4FHdNmEF6fGSWLifK9ct7Jv0HgetLlqGI905Z8H9PQjp+S0BJGJTO8Sn68ePnfxhAt2TGgtV4LUjKKK5gAGUiXAq25hX/Rwc3b98jOpiAFuxkQM6h2DA2cPf+I6IsiIhvecZASBEucL1vAlGW4LWgoX3yf3yAGEsYQAUXPgXXgIbgA3gzXFrVYwZQqYhPUVjCpv/3Hzwi2XBwJGeV7WAAJSViwnLyzAVg+kZKGiQfTJ5NOLNlFJcygIpZahcTMOwfkSULLUVLl+NS1Dlx7v+eyfNQcBdQjGCpmlmyCF4WgQomqhd2cRnSKCUqqIilYnEdgrVOAFYWhZQanpBZlIu3VotLLwqnusvRASj2kzJKlxBdTWaWLPCLSJIiuXUBsgiouSQps3hrYmbpfXgrIrv0HrAU3gIKUozIRAMAbWHkNyqx+voAAAAASUVORK5CYII=</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="meterIconBlue">
+      <IconStyle>
+        <Icon>
+          <href>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAiklEQVR42mNgQIAoIF4NxGegdCCSHAMzEC81M4v6n56++n9V1RkwbWgY+B8oPhOmKM3WNu3/zJn/MbCFRSxIYSxI0YHi4gNYFRUW7gUp2gtS9LC9/SFWRc3Nt0GKbhNtUizIbmyKjIxCQIpCYI6fD/JdVtZGsO8yMtbBfDeNAQ2AwmkjNJzWIYcTAMk+i9OhipcQAAAAAElFTkSuQmCC</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="meterIconGreen">
+      <IconStyle>
+        <Icon>
+          <href>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAiElEQVR42mNgQIAoIF4NxGegdCCSHAMzEC81izL7n746/X/VmSowbRho+B8oPhOmKM02zfb/TCzQItYCpDAWpOhA8YFirIoK9xaCFO0FKXrY/rAdq6Lm280gRbeJNikWZDc2RUYhRiBFITDHzwf5LmtjFth3GesyYL6bxoAGQOG0ERpO65DDCQDX7ovT++K9KQAAAABJRU5ErkJggg==</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="meterIconPurple">
+      <IconStyle>
+        <Icon>
+          <href>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAi0lEQVR42mNgQIAoIF4NxGegdCCSHAMzEC+NMov6vzp99f8zVWfAdKBh4H+g+EyYorQ027T//2f+x8CxFrEghbEgRQcOFB/Aqmhv4V6Qor0gRQ8ftj/Equh2822QottEmxQLshubohCjEJCiEJjj54N8tzFrI9h36zLWwXw3jQENgMJpIzSc1iGHEwBt95qDejjnKAAAAABJRU5ErkJggg==</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="meterIconYellow">
+      <IconStyle>
+        <Icon>
+          <href>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAi0lEQVR42mNgQIAoIF4NxGegdCCSHAMzEC+NijL7v3p1+v8zZ6rAdGCg4X+g+EyYorS0NNv////PxMCxsRYghbEgRQcOHCjGqmjv3kKQor0gRQ8fPmzHquj27WaQottEmxQLshubopAQI5CiEJjj54N8t3FjFth369ZlwHw3jQENgMJpIzSc1iGHEwB8p5qDBbsHtAAAAABJRU5ErkJggg==</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="meterIconRed">
+      <IconStyle>
+        <Icon>
+          <href>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAiklEQVR42mNgQIAoIF4NxGegdCCSHAMzEC+NUlH5v9rF5f+ZoCAwHaig8B8oPhOmKC1NU/P//7Q0DByrqgpSGAtSdOCAry9WRXt9fECK9oIUPXwYFYVV0e2ICJCi20SbFAuyG5uiECUlkKIQmOPng3y30d0d7Lt1bm4w301jQAOgcNoIDad1yOEEAFm9fSv/VqtJAAAAAElFTkSuQmCC</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="line-0288D1-1-nodesc-normal">
+      <LineStyle>
+        <color>ffD18802</color>
+        <width>1</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-0288D1-1-nodesc-highlight">
+      <LineStyle>
+        <color>ffD18802</color>
+        <width>2.0</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-0288D1-1-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-0288D1-1-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-0288D1-1-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-3949AB-1-nodesc-normal">
+      <LineStyle>
+        <color>ffAB4939</color>
+        <width>2</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-3949AB-1-nodesc-highlight">
+      <LineStyle>
+        <color>ffAB4939</color>
+        <width>3.0</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-3949AB-1-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-3949AB-1-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-3949AB-1-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-880E4F-3-nodesc-normal">
+      <LineStyle>
+        <color>ff4F0E88</color>
+        <width>3</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-880E4F-3-nodesc-highlight">
+      <LineStyle>
+        <color>ff4F0E88</color>
+        <width>4.0</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-880E4F-3-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-880E4F-3-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-880E4F-3-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-9C27B0-2-nodesc-normal">
+      <LineStyle>
+        <color>ffB0279C</color>
+        <width>4</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-9C27B0-2-nodesc-highlight">
+      <LineStyle>
+        <color>ffB0279C</color>
+        <width>4.0</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-9C27B0-2-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-9C27B0-2-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-9C27B0-2-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-A52714-3-nodesc-normal">
+      <LineStyle>
+        <color>ff1427A5</color>
+        <width>4</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-A52714-3-nodesc-highlight">
+      <LineStyle>
+        <color>ff1427A5</color>
+        <width>4.0</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-A52714-3-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-A52714-3-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-A52714-3-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-FF5252-4-nodesc-normal">
+      <LineStyle>
+        <color>ff5252FF</color>
+        <width>4</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-FF5252-4-nodesc-highlight">
+      <LineStyle>
+        <color>ff5252FF</color>
+        <width>4.0</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-FF5252-4-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-FF5252-4-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-FF5252-4-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+  </Document>
+</kml>
+

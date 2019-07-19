@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Dashboard descr="System" name="System" orderNo="0" role="admin"/>
+    <system.Dashboard descr="MTS"    name="MTR"    orderNo="1" role="admin"/>
+    <system.Dashboard descr="NMS"    name="NMS"    orderNo="2" role="admin"/>
+</dataset>

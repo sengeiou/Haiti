@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+   
+    <!-- EnergyMeter -->
+
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="1p2w"
+        pulseConst="1"
+        name="SM110"
+        deviceModel="SM110"
+        parserName="com.aimir.fep.meter.parser.SM110"
+        saverName="com.aimir.fep.meter.saver.SM110MDSaver"
+    />
+
+    <!-- WaterMeter -->    
+    <system.MeterConfig 
+        pulseConst="100"
+        name="SM150P"
+        deviceModel="SM150P"
+        parserName="com.aimir.fep.meter.parser.UMC2000G4R"
+        saverName="com.aimir.fep.meter.saver.UMC2000G4RMDSaver"
+    />
+</dataset>

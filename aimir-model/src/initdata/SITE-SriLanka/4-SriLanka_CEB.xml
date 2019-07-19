@@ -1,0 +1,1316 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+    <!-- en/Country -->
+	<!-- en/Language -->
+    <!-- en/Timezone -->
+    <!-- SriLanka_Code_en -->
+    
+	<system.Supplier 
+        name="CEB" 
+        country="SRI LANKA"
+        lang="English"
+        timezone="Asia/Colombo"
+        address="Colombo"
+        descr="Colombo"
+        telno=""
+        cdPattern="###,###,###,###,##0.000"
+        cdRound="c"
+        cdGroupingSeperator="."
+        cdDecimalSeperator=","
+        mdPattern="###,###,###,###,##0.000"
+        mdRound="r"
+        mdGroupingSeperator="."
+        mdDecimalSeperator=","
+        image="images/utility_logo/CEB_logo.jpg"
+        licenceUse="1"
+        licenceMeterCount="30000"
+        orgPatternRate = "wh"
+    />
+
+    <system.Co2Formula name="ElectricityCO2" supplyTypeCode="3.1" unitUsage="100" co2emissions="44.3" co2factor="0.443" unit="KWh"/>
+    <system.Co2Formula name="WaterCO2" supplyTypeCode="3.2" unitUsage="100" co2emissions="66" co2factor="0.66" unit="m3"/>
+    <system.Co2Formula name="GasCO2" supplyTypeCode="3.3" unitUsage="100" co2emissions="224" co2factor="2.24" unit="m3"/>
+    <system.Co2Formula name="HeatCO2" supplyTypeCode="3.4" unitUsage="100" co2emissions="42.4" co2factor="0.424" unit="㎥"/>
+    <system.Co2Formula name="VolumeCorrectorCO2" supplyTypeCode="3.5" unitUsage="100" co2emissions="1.0" co2factor="0.0" unit="㎥"/>
+    
+    <system.SupplyType
+        supplier="CEB"
+        typeCode="3.1"
+        co2Formula="ElectricityCO2"
+        billDate="1"
+    />
+    
+    <system.Location  name="North" orderNo="1" parent="" supplier="CEB"/>
+	<system.Location  name="Middle" orderNo="2" parent="" supplier="CEB"/>
+	<system.Location  name="South" orderNo="3" parent="" supplier="CEB"/>
+       
+    <system.Role name="admin" 
+        supplier="CEB" 
+        systemAuthority="c" 
+        mtrAuthority="c" 
+        descr="Admin" 
+        hasDashboardAuth="true" 
+        customerRole="false" 
+        loginAuthority="true" />
+<!--         
+    <system.Role name="vendor" 
+        supplier="CEB" 
+        systemAuthority="r" 
+        mtrAuthority="r" 
+        descr="Vendor" 
+        hasDashboardAuth="true" 
+        customerRole="false" 
+        loginAuthority="true" />
+
+    <system.Role name="Integration" 
+        supplier="CEB" 
+        systemAuthority="r"
+        mtrAuthority="r" 
+        descr="Integration" 
+        hasDashboardAuth="true" 
+        customerRole="true" 
+        loginAuthority="true" />
+-->                
+    <system.Role name="customer" 
+        supplier="CEB" 
+        systemAuthority="r"
+        mtrAuthority="r" 
+        descr="Customer" 
+        hasDashboardAuth="true" 
+        customerRole="true" 
+        loginAuthority="true" />
+
+    <system.Operator loginId="admin" 
+        aliasName="administrator" 
+        email="" 
+        failedLoginCount="0" 
+        name="CEB"
+        password="hQXOwYy2SzvjPduK5ESBqwwaCAFQWFdQtJAQuQiM57NZ1duCOKDjMaIsPBTSx6iU01eHOPA933Zl7lKLk5yTvg=="
+        telNo=""
+        loginDenied="false" 
+        role="admin"
+        systemAuthority="c"
+        mtrAuthority="c" 
+        showDefaultDashboard="true"
+        supplier="CEB"/>
+    
+    <system.Dashboard descr="Main Dashboard" name="Main" orderNo="0" role="admin"/>
+    <system.Dashboard descr="System Management Dashboard" name="System" orderNo="1" role="admin"/>
+    <system.Dashboard descr="Metering Management Dashboard" name="Metering" orderNo="2" role="admin"/>
+    <system.Dashboard descr="Device Management Dashboard" name="Device" orderNo="3" role="admin"/>
+    <system.Dashboard descr="Event and History Management Dashboard" name="Alarm Event" orderNo="4" role="admin"/>
+
+	<!-- System -->
+    <system.Gadget
+        descr="Code Management"
+        iconSrc="assets/images/gadget_en/code.gif"
+        maxUrl="system/code_manager_max.do"
+        miniUrl="system/code_manager_mini.do"
+        name="Code Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system001"
+    />
+    <system.Gadget
+        descr="Device Vendor Model"
+        iconSrc="assets/images/gadget_en/vendormodel.gif"
+        maxUrl="system/devicemodelMax_CEB.do"
+        miniUrl="system/devicemodelMini.do"
+        name="Device Vendor Model"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system002"
+    />   
+    <system.Gadget
+        descr="Supplier Management"
+        iconSrc="assets/images/gadget_en/supplier.gif"
+        maxUrl="system/supplier/supplierMgmtMax_CEB.do"
+        miniUrl="system/supplier/supplierMgmtMini.do"
+        name="Supplier Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system003"
+    />      
+    <system.Gadget
+        descr="User Management"
+        iconSrc="assets/images/gadget_en/user.gif"
+        maxUrl="system/operatorMgmtMax_CEB.do"
+        miniUrl="system/operatorMgmtMini_CEB.do"
+        name="User Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system004"
+    />
+   <system.Gadget
+        descr="Group Management(Equipment, customers, users, and are grouped together.)"
+        iconSrc="assets/images/gadget_en/group.gif"
+        maxUrl="system/groupManagementMaxGadget.do"
+        miniUrl="system/groupManagementMiniGadget.do"
+        name="Group Management"
+        miniHeight="500"
+        fullHeight="1000"
+        gadgetCode="gadget.system005"
+    />   
+    <system.Gadget
+        descr="Customer and Contract"
+        iconSrc="assets/images/gadget_en/customer.gif"
+        maxUrl="system/customerMax_CEB.do"
+        miniUrl="system/customerMini_CEB.do"
+        name="Customer and Contract"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.system006"
+    />        
+    <system.Gadget
+        descr="Asset Registration"
+        iconSrc="assets/images/gadget_en/devicereg.gif"
+        maxUrl="device/deviceRegistrationMaxGadget.do"
+        miniUrl="device/deviceRegistrationMiniGadget.do"
+        name="Asset Registration"
+        miniHeight="350"
+        fullHeight="700"
+        gadgetCode="gadget.system007"
+    />     
+    
+    <!-- Metering -->
+    <system.Gadget
+        descr="Metering Data(Electricity)"
+        iconSrc="assets/images/gadget_en/meteringdata.gif"
+        maxUrl="mvm/mvmMaxGadgetEM_CEB.do"
+        miniUrl="mvm/mvmMiniGadgetEM_CEB.do"
+        name="Metering Data(Electricity)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering001"
+    />   
+    <system.Gadget
+        descr="Metering Fail(Electricity)"
+        iconSrc="assets/images/gadget_en/meteringfail.gif"
+        maxUrl="mvm/meteringFailureEmMaxGadget.do"
+        miniUrl="mvm/meteringFailureEmMiniGadget.do"
+        name="Metering Fail"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering002"
+    />
+    <system.Gadget
+        descr="Power Quality Management"
+        iconSrc="assets/images/gadget_en/powerquality.gif"
+        maxUrl="mvm/powerQualityMaxGadget.do"
+        miniUrl="mvm/powerQualityMiniGadget.do"
+        name="Power Quality"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.metering003"
+    />
+    <system.Gadget
+        descr="Metering Statistics"
+        iconSrc="assets/images/gadget_en/thumbnail.gif"
+        maxUrl="system/SLAMax_EVN.do"
+        miniUrl="system/SLAMini_EVN.do"
+        name="Metering Statistics"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.metering004"
+    />    
+    <!-- Device -->
+    <system.Gadget
+        descr="Concentrator Management"
+        iconSrc="assets/images/gadget_en/mcu.gif"
+        maxUrl="device/mcuMaxGadget_CEB.do"   
+        miniUrl="device/mcuMiniGadget_CEB.do" 
+        name="Concentrator Management"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device001"
+    />
+    <system.Gadget
+        descr="Modem Management"
+        iconSrc="assets/images/gadget_en/modem.gif"
+        maxUrl="device/modemMaxGadget_CEB.do"
+        miniUrl="device/modemMiniGadget_CEB.do"
+        name="Modem Management"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device002"
+    />    
+    <system.Gadget
+        descr="Meter Management"
+        iconSrc="assets/images/gadget_en/meter.gif"
+        maxUrl="device/meterMaxGadget_CEB.do"
+        miniUrl="device/meterMiniGadget_CEB.do"
+        name="Meter Management"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device003"
+    />     
+    <system.Gadget
+        descr="Meter Time Management"
+        iconSrc="assets/images/gadget_en/meteringtime.gif"
+        maxUrl="device/meterTimeMaxGadget.do"
+        miniUrl="device/meterTimeMiniGadget.do"
+        name="Meter Time Management"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.device004"
+    />    
+    <system.Gadget
+        descr="Google Map For Device"
+        iconSrc="assets/images/gadget_en/googlemap.gif"
+        maxUrl="device/GoogleMapMax.do"
+        miniUrl="device/GoogleMapMini.do"
+        name="Google Map For Device"
+        miniHeight="500"
+        fullHeight="640"
+        gadgetCode="gadget.device005"
+    />     
+    <system.Gadget
+        descr="Firmware Management"
+        iconSrc="assets/images/gadget_en/thumbnail.gif"
+        maxUrl="device/firmware/firmwareMaxGadget_CEB.do"
+        miniUrl="device/firmware/firmwareMiniGadget_CEB.do"
+        name="Firmware Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.device006"
+    />
+    <system.Gadget
+        descr="Network Monitoring"
+        iconSrc="assets/images/gadget_en/thumbnail.gif"
+        maxUrl="mvm/networkMonitoringMaxGadget.do"
+        miniUrl="mvm/networkMonitoringMiniGadget.do"
+        name="Network Monitoring"
+        miniHeight="350"
+        fullHeight="900"
+        gadgetCode="gadget.device007"
+    />    
+    
+	<!-- Alarm & Event -->
+    <system.Gadget
+        descr="Event and Alarm"
+        iconSrc="assets/images/gadget_en/event.gif"
+        maxUrl="device/eventAlert/eventAlertLogMax.do"
+        miniUrl="device/eventAlert/eventAlertLogMini.do"
+        name="Event Alarm Log"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.eventalarm001"
+    />        
+   <system.Gadget
+        descr="Meter Event Log"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="device/meterEventLogMax.do"
+        miniUrl="device/meterEventLogMini.do"
+        name="Meter Event Log"
+        miniHeight="500"
+        fullHieght="1000"   
+        gadgetCode="gadget.eventalarm002"   
+    />   
+    <system.Gadget
+        descr="Communication Log"
+        iconSrc="assets/images/gadget_en/commlog.gif"
+        maxUrl="device/commLog/commLogMaxGadget.do"
+        miniUrl="device/commLog/commLogMiniGadget.do"
+        name="Communication Log"
+        miniHeight="350"
+        fullHeight="1600"
+        gadgetCode="gadget.eventalarm003"
+    /> 
+    <system.Gadget
+        descr="Change Log"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="system/changeLogMaxGadget.do"
+        miniUrl="system/changeLogMiniGadget.do"
+        name="Change Log"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.eventalarm004"
+    />
+    <system.Gadget
+        descr="Operation Management"
+        iconSrc="assets/images/gadget_en/operation.gif"
+        maxUrl="device/operationLog/operationLogMaxGadget.do"
+        miniUrl="device/operationLog/operationLogMiniGadget.do"
+        name="Operation Management"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.eventalarm005"
+    />
+  
+
+	
+    <!-- 메인 대시보드 시작 -->
+    <system.DashboardGadget
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="Main"
+        gadget="Metering Data(Electricity)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="Main"
+        gadget="Network Monitoring"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Main"
+        gadget="Event Alarm Log"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="Main"
+        gadget="Meter Event Log"
+    />
+    <!-- 메인 대시보드 끝 -->
+      
+    <!-- 시스템 관리 대시보드 시작-->
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="System"
+        gadget="Code Management"
+    />    
+     <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="System"
+        gadget="Device Vendor Model"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="System"
+        gadget="Supplier Management"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="System"
+        gadget="User Management"
+    /> 
+    <system.DashboardGadget
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="System"
+        gadget="Group Management"
+    />
+    <system.DashboardGadget
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="System"
+        gadget="Customer and Contract"
+    />
+    <system.DashboardGadget
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="2"
+        dashboard="System"
+        gadget="Asset Registration"
+    />    
+    <!-- System 대시보드 끝-->
+            
+    <!-- 검침데이터 관리 대시보드 시작-->
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="Metering"
+        gadget="Metering Data(Electricity)"
+    />               
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="Metering"
+        gadget="Metering Fail"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Metering"
+        gadget="Power Quality"
+    />
+    <!-- Metering 대시보드 끝-->
+    
+    <!-- 장비 관리 대시보드 시작-->
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="Device"
+        gadget="Concentrator Management"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="Device"
+        gadget="Modem Management"
+    />    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Device"
+        gadget="Meter Management"
+    />      
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="Device"
+        gadget="Meter Time Management"
+    />     
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="Device"
+        gadget="Google Map For Device"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="Device"
+        gadget="Firmware Management"
+    />  
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="2"
+        dashboard="Device"
+        gadget="Network Monitoring"
+    />         	
+    <!-- Device 대시보드 끝-->
+
+    <!-- 이력 관리 대시보드 시작--> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="Alarm Event"
+        gadget="Event Alarm Log"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="Alarm Event"
+        gadget="Meter Event Log"
+    />          
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Alarm Event"
+        gadget="Communication Log"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="Alarm Event"
+        gadget="Change Log"
+    />          
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="Alarm Event"
+        gadget="Operation Management"
+    /> 
+    <!-- 이력 관리 대시보드 끝-->    
+	
+	<!-- Gadget Roll 설정 시작 -->
+	<system.GadgetRole gadget="Code Management" 			role="admin" supplier="CEB" />
+	<system.GadgetRole gadget="Device Vendor Model" 		role="admin" supplier="CEB" />
+	<system.GadgetRole gadget="Supplier Management" 		role="admin" supplier="CEB" />
+	<system.GadgetRole gadget="User Management" 			role="admin" supplier="CEB" />
+	<system.GadgetRole gadget="Group Management" 			role="admin" supplier="CEB" />
+	<system.GadgetRole gadget="Customer and Contract" 		role="admin" supplier="CEB" />
+	<system.GadgetRole gadget="Asset Registration" 			role="admin" supplier="CEB" />
+	<system.GadgetRole gadget="Metering Data(Electricity)"  role="admin" supplier="CEB" />
+	<system.GadgetRole gadget="Metering Fail" 			    role="admin" supplier="CEB" />
+	<system.GadgetRole gadget="Power Quality" 			    role="admin" supplier="CEB" />
+	<system.GadgetRole gadget="Concentrator Management" 	role="admin" supplier="CEB" />
+	<system.GadgetRole gadget="Modem Management" 			role="admin" supplier="CEB" />
+	<system.GadgetRole gadget="Meter Management" 			role="admin" supplier="CEB" />
+	<system.GadgetRole gadget="Meter Time Management" 		role="admin" supplier="CEB" />
+	<system.GadgetRole gadget="Google Map For Device" 		role="admin" supplier="CEB" />
+	<system.GadgetRole gadget="Firmware Management"  		role="admin" supplier="CEB" />
+	<system.GadgetRole gadget="Network Monitoring" 	 		role="admin" supplier="CEB" />
+	<system.GadgetRole gadget="Event Alarm Log" 	 		role="admin" supplier="CEB" />
+	<system.GadgetRole gadget="Meter Event Log" 	 		role="admin" supplier="CEB" />
+	<system.GadgetRole gadget="Communication Log"    		role="admin" supplier="CEB" />
+	<system.GadgetRole gadget="Change Log" 			 		role="admin" supplier="CEB" />
+	<system.GadgetRole gadget="Operation Management" 		role="admin" supplier="CEB" />
+	<!-- Gadget Roll 설정 끝   -->
+
+
+    <system.DeviceVendor 
+        supplier="CEB"
+        name="NURITelecom"
+        code="100"
+        address="B-10F Woolim Lions Valley 371-28 Gasandong Geumcheon-gu, Seoul, Korea, 153-786 Tel : +82.2.781.0770"
+        descr="Nuri Telecom Co.,Ltd."
+    />
+    <system.DeviceVendor 
+        supplier="CEB"
+        name="LSIS"
+        code="6"
+        address="http://kr.lsis.biz/"
+        descr="LSIS"
+    />
+    
+    <!-- PLC DCU -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="1"
+        deviceType="1.1.1.7"
+        name="NDC-I221"
+        image="uploadImg/mcu/NDC-I221.jpg"
+    />    
+    <!-- Zigbee DCU -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="2"
+        deviceType="1.1.1.7"
+        name="NDC-I121"
+        image="uploadImg/mcu/NDC-I121.jpg"
+    />
+    <!-- Dummy DCU -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="99"
+        deviceType="1.1.1.7"
+        name="DCU-DUMMY"
+        image="uploadImg/mcu/DCU-DUMMY.jpg"
+    />
+
+    <!-- PLC modem -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="1"
+        deviceType="1.2.1.18"
+        name="NAMR-C107SR"
+        image="uploadImg/modem/NAMR-C107SR.jpg"
+    />
+    <!-- Zigbee modem -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="2"
+        deviceType="1.2.1.1"
+        name="NAMR-P121SR"
+        image="uploadImg/modem/NAMR-P121SR.jpg"
+    />
+    <!-- Dummy modem : DeviceType - Unknown-->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="99"
+        deviceType="1.2.1.255"
+        name="MODEM-DUMMY"
+        image="uploadImg/modem/MODEM-DUMMY.jpg"
+    />
+        
+    <!-- Meter -->
+    <system.DeviceModel 
+        deviceVendor="LSIS"
+        code="1"
+        deviceType="1.3.1.1"
+        name="LSKLIR1210DR-100"        
+        image="uploadImg/meter/LSKLIR1210DR-100.jpg"
+        description="1P DR"
+        mdsIdPattern="[a-zA-Z0-9]*"
+    />
+    <system.DeviceModel 
+        deviceVendor="LSIS"
+        code="2"
+        deviceType="1.3.1.1"
+        name="LSKLIR3410DR-100"
+        image="uploadImg/meter/LSKLIR3410DR-100.jpg"
+        description="3P DR"
+        mdsIdPattern="[a-zA-Z0-9]*"
+    />
+    <system.DeviceModel 
+        deviceVendor="LSIS"
+        code="99"
+        deviceType="1.3.1.1"
+        name="METER-DUMMY"
+        image="uploadImg/meter/METER-DUMMY.jpg"
+        description="Dummy Meter"
+        mdsIdPattern="[a-zA-Z0-9]*"
+    />
+        
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="1P"
+        pulseConst="1000"
+        meterProtocol="DLMS"
+        name="LSKLIR1210DR-100"
+        deviceModel="LSKLIR1210DR-100"
+        parserName="com.aimir.fep.meter.parser.DLMSLSSmartMeterForCEB"
+        saverName="com.aimir.fep.meter.saver.DLMSLSSmartMeterSaverForCEB"
+    />   
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="3P"
+        pulseConst="1600"
+        meterProtocol="DLMS"
+        name="LSKLIR3410DR-100"
+        deviceModel="LSKLIR3410DR-100"
+        parserName="com.aimir.fep.meter.parser.DLMSLSSmartMeterForCEB"
+        saverName="com.aimir.fep.meter.saver.DLMSLSSmartMeterSaverForCEB"
+    />   
+    <system.MeterConfig
+        meterClass="1.0"
+        phase="3P"
+        pulseConst="1600"
+        meterProtocol="DLMS"
+        name="METER-DUMMY"
+        deviceModel="METER-DUMMY"
+        parserName="com.aimir.fep.meter.parser.DLMSLSSmartMeterForCEB"
+        saverName="com.aimir.fep.meter.saver.DLMSLSSmartMeterSaverForCEB"
+    />   
+       
+    <!-- DCU Command-->
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.1"	model="NDC-I221"	level="2"	desc="Ping" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.2"	model="NDC-I221"	level="2"	desc="Traceroute" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.3"	model="NDC-I221"	level="2"	desc="DCU Reset" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.4"	model="NDC-I221"	level="2"	desc="DCU OTA" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.5"	model="NDC-I221"	level="2"	desc="Get DCU Schedule" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.6"	model="NDC-I221"	level="2"	desc="Set DCU Schedule" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.7"	model="NDC-I221"	level="2"	desc="Delete DCU Schedule" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.8"	model="NDC-I221"	level="2"	desc="Execute DCU Schedule" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.9"	model="NDC-I221"	level="2"	desc="Status Monitoring" />
+
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.1"	model="NDC-I121"	level="2"	desc="Ping" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.2"	model="NDC-I121"	level="2"	desc="Traceroute" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.3"	model="NDC-I121"	level="2"	desc="DCU Reset" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.4"	model="NDC-I121"	level="2"	desc="DCU OTA" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.5"	model="NDC-I121"	level="2"	desc="Get DCU Schedule" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.6"	model="NDC-I121"	level="2"	desc="Set DCU Schedule" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.7"	model="NDC-I121"	level="2"	desc="Delete DCU Schedule" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.8"	model="NDC-I121"	level="2"	desc="Execute DCU Schedule" />
+	<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.9"	model="NDC-I121"	level="2"	desc="Status Monitoring" />	
+    
+	<!-- 미터 Command-->
+	<!-- 1. LSKLIR1210DR-100 -->
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="LSKLIR1210DR-100"    level="2"   paramType="2" desc="On Demand Metering" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.2"   model="LSKLIR1210DR-100"    level="2"   desc="Meter Time Synchronization" />	
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="LSKLIR1210DR-100"    level="2"   desc="Relay Status" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="LSKLIR1210DR-100"    level="2"   desc="Relay on" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="LSKLIR1210DR-100"    level="2"   desc="Relay off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.6"   model="LSKLIR1210DR-100"    level="2"   desc="Meter OTA" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.7"   model="LSKLIR1210DR-100"    level="2"   desc="Get Meter F/W Version" />
+<!-- 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="LSKLIR1210DR-100"    level="2"   desc="Get Billing Cycle" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="LSKLIR1210DR-100"    level="2"   desc="Set Billing Cycle" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="LSKLIR1210DR-100"    level="2"   desc="Get Meter Demand Period" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.11"  model="LSKLIR1210DR-100"    level="2"   desc="Set Meter Demand Period" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.12"  model="LSKLIR1210DR-100"    level="2"   desc="Get Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.13"  model="LSKLIR1210DR-100"    level="2"   desc="Set Current Load Limit" /> -->
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.14"  model="LSKLIR1210DR-100"    level="2"   desc="Get Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.15"  model="LSKLIR1210DR-100"    level="2"   desc="Set Tariff" />
+	<!-- PBS Command -->
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.16"  model="LSKLIR1210DR-100"    level="2"   desc="PBS On" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.17"  model="LSKLIR1210DR-100"    level="2"   desc="PBS Off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.18"  model="LSKLIR1210DR-100"    level="2"   desc="PBS Status" />  
+	  	       
+    <!-- 2. LSKLIR3410DR-100 -->
+ 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="LSKLIR3410DR-100"    level="2"   paramType="2" desc="On Demand Metering" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.2"   model="LSKLIR3410DR-100"    level="2"   desc="Meter Time Synchronization" />	
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="LSKLIR3410DR-100"    level="2"   desc="Relay Status" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="LSKLIR3410DR-100"    level="2"   desc="Relay on" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.5"   model="LSKLIR3410DR-100"    level="2"   desc="Relay off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.6"   model="LSKLIR3410DR-100"    level="2"   desc="Meter OTA" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.7"   model="LSKLIR3410DR-100"    level="2"   desc="Get Meter F/W Version" />
+<!-- 	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="LSKLIR3410DR-100"    level="2"   desc="Get Billing Cycle" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="LSKLIR3410DR-100"    level="2"   desc="Set Billing Cycle" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="LSKLIR3410DR-100"    level="2"   desc="Get Meter Demand Period" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.11"  model="LSKLIR3410DR-100"    level="2"   desc="Set Meter Demand Period" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.12"  model="LSKLIR3410DR-100"    level="2"   desc="Get Current Load Limit" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.13"  model="LSKLIR3410DR-100"    level="2"   desc="Set Current Load Limit" /> -->
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.14"  model="LSKLIR3410DR-100"    level="2"   desc="Get Tariff" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.15"  model="LSKLIR3410DR-100"    level="2"   desc="Set Tariff" /> 
+	<!-- PBS Command -->
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.16"  model="LSKLIR3410DR-100"    level="2"   desc="PBS On" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.17"  model="LSKLIR3410DR-100"    level="2"   desc="PBS Off" />
+	<device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.18"  model="LSKLIR3410DR-100"    level="2"   desc="PBS Status" />  
+	
+	<!-- 모뎀 Command -->				
+ 	<device.OperationList  deviceTypeCode="1.2.1.1"  operationCode="8.2.1"   model="NAMR-P121SR"    level="2"   desc="Modem OTA" />
+ 	<device.OperationList  deviceTypeCode="1.2.1.18" operationCode="8.2.1"   model="NAMR-C107SR"    level="2"   desc="Modem OTA" />
+
+    <!-- Display channel 설정 -->
+    <mvm.DisplayChannel name="CO2"                              localName="CO2"                                serviceType="Electricity" unit="Kg"    chMethod="MAX"/>
+    <mvm.DisplayChannel name="Cumulative active energy -import" localName="Cumulative active energy -import"   serviceType="Electricity" unit="kWh"   chMethod="MAX"/>  
+    <mvm.DisplayChannel name="Total import apparent energy (QI+QIV)" localName="Total import apparent energy (QI+QIV)" serviceType="Electricity" unit="kVAh" chMethod="MAX"/>
+    <mvm.DisplayChannel name="Total reactive energy (QI)" localName="Total reactive energy (QI)"   serviceType="Electricity" unit="KVarh"   chMethod="MAX"/>
+    <mvm.DisplayChannel name="Total reactive energy (QIV)" localName="Total reactive energy (QIV)" serviceType="Electricity" unit="kVarh" chMethod="MAX"/>
+    <mvm.DisplayChannel name="L1 average voltage" localName="L1 average voltage"           serviceType="Electricity" unit="kmV"   chMethod="MAX"/>
+    <mvm.DisplayChannel name="L1 average current" localName="L1 average current"           serviceType="Electricity" unit="kmA"   chMethod="MAX"/>
+    <mvm.DisplayChannel name="L2 average voltage" localName="L2 average voltage"           serviceType="Electricity" unit="kmV"   chMethod="MAX"/>
+    <mvm.DisplayChannel name="L2 average current" localName="L2 average current"           serviceType="Electricity" unit="kmA"   chMethod="MAX"/>
+    <mvm.DisplayChannel name="L3 average voltage" localName="L3 average voltage"           serviceType="Electricity" unit="kmV"   chMethod="MAX"/>
+    <mvm.DisplayChannel name="L3 average current" localName="L3 average current"           serviceType="Electricity" unit="kmA"   chMethod="MAX"/>
+    <mvm.DisplayChannel name="15 min energy of PBS1" localName="15 min energy of PBS1"           serviceType="Electricity" unit="kWh"   chMethod="MAX"/>
+    <mvm.DisplayChannel name="15 min power of PBS1"  localName="15 min power of PBS1"           serviceType="Electricity" unit="kW"   chMethod="MAX"/>
+    <mvm.DisplayChannel name="15 min energy of PBS2" localName="15 min energy of PBS2"           serviceType="Electricity" unit="kWh"   chMethod="MAX"/>
+    <mvm.DisplayChannel name="15 min power of PBS2"  localName="15 min power of PBS2"           serviceType="Electricity" unit="kW"   chMethod="MAX"/>
+    <mvm.DisplayChannel name="15 min energy of PBS3" localName="15 min energy of PBS3"           serviceType="Electricity" unit="kWh"   chMethod="MAX"/>
+    <mvm.DisplayChannel name="15 min power of PBS3"  localName="15 min power of PBS3"           serviceType="Electricity" unit="kW"   chMethod="MAX"/>    
+
+    <mvm.ChannelConfig meterConfig="LSKLIR1210DR-100" channel="CO2"                                   channelIndex="0"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR1210DR-100" channel="Cumulative active energy -import"      channelIndex="1"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR1210DR-100" channel="Total import apparent energy (QI+QIV)" channelIndex="2"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR1210DR-100" channel="Total reactive energy (QI)"            channelIndex="3"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR1210DR-100" channel="Total reactive energy (QIV)"           channelIndex="4"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR1210DR-100" channel="L1 average voltage"                 channelIndex="5"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR1210DR-100" channel="L1 average current"                 channelIndex="6"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR1210DR-100" channel="15 min energy of PBS1"                 channelIndex="7"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR1210DR-100" channel="15 min power of PBS1"  				  channelIndex="8"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR1210DR-100" channel="15 min energy of PBS2" 				  channelIndex="9"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR1210DR-100" channel="15 min power of PBS2"  				  channelIndex="10"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR1210DR-100" channel="15 min energy of PBS3" 				  channelIndex="11"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR1210DR-100" channel="15 min power of PBS3"  			      channelIndex="12"  dataType="LpEM" displayType="SaveAndDisplay" />    
+    
+    <mvm.ChannelConfig meterConfig="LSKLIR3410DR-100" channel="CO2"                                   channelIndex="0"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR3410DR-100" channel="Cumulative active energy -import"      channelIndex="1"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR3410DR-100" channel="Total import apparent energy (QI+QIV)" channelIndex="2"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR3410DR-100" channel="Total reactive energy (QI)"            channelIndex="3"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR3410DR-100" channel="Total reactive energy (QIV)"           channelIndex="4"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR3410DR-100" channel="L1 average voltage"                 channelIndex="5"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR3410DR-100" channel="L1 average current"                 channelIndex="6"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR3410DR-100" channel="L2 average voltage"                 channelIndex="7"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR3410DR-100" channel="L2 average current"                 channelIndex="8"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR3410DR-100" channel="L3 average voltage"                 channelIndex="9"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR3410DR-100" channel="L3 average current"                 channelIndex="10"  dataType="LpEM" displayType="SaveAndDisplay" />    
+    <mvm.ChannelConfig meterConfig="LSKLIR3410DR-100" channel="15 min energy of PBS1"                 channelIndex="11"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR3410DR-100" channel="15 min power of PBS1"  				  channelIndex="12"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR3410DR-100" channel="15 min energy of PBS2" 				  channelIndex="13"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR3410DR-100" channel="15 min power of PBS2"  				  channelIndex="14"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR3410DR-100" channel="15 min energy of PBS3" 				  channelIndex="15"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSKLIR3410DR-100" channel="15 min power of PBS3"  			      channelIndex="16"  dataType="LpEM" displayType="SaveAndDisplay" />   
+
+    <mvm.ChannelConfig meterConfig="METER-DUMMY" channel="CO2"                                   channelIndex="0"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="METER-DUMMY" channel="Cumulative active energy -import"      channelIndex="1"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="METER-DUMMY" channel="Total import apparent energy (QI+QIV)" channelIndex="2"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="METER-DUMMY" channel="Total reactive energy (QI)"            channelIndex="3"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="METER-DUMMY" channel="Total reactive energy (QIV)"           channelIndex="4"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="METER-DUMMY" channel="L1 average voltage"                 channelIndex="5"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="METER-DUMMY" channel="L1 average current"                 channelIndex="6"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="METER-DUMMY" channel="L2 average voltage"                 channelIndex="7"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="METER-DUMMY" channel="L2 average current"                 channelIndex="8"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="METER-DUMMY" channel="L3 average voltage"                 channelIndex="9"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="METER-DUMMY" channel="L3 average current"                 channelIndex="10"  dataType="LpEM" displayType="SaveAndDisplay" />    
+    <mvm.ChannelConfig meterConfig="METER-DUMMY" channel="15 min energy of PBS1"                 channelIndex="11"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="METER-DUMMY" channel="15 min power of PBS1"  				  channelIndex="12"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="METER-DUMMY" channel="15 min energy of PBS2" 				  channelIndex="13"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="METER-DUMMY" channel="15 min power of PBS2"  				  channelIndex="14"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="METER-DUMMY" channel="15 min energy of PBS3" 				  channelIndex="15"  dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="METER-DUMMY" channel="15 min power of PBS3"  			      channelIndex="16"  dataType="LpEM" displayType="SaveAndDisplay" />   
+        
+    <mvm.Season syear="2018" smonth="02" sday="01" eyear="2018" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2018" smonth="05" sday="01" eyear="2018" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2018" smonth="10" sday="01" eyear="2018" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2018" smonth="11" sday="01" eyear="2019" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2019" smonth="02" sday="01" eyear="2019" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2019" smonth="05" sday="01" eyear="2019" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2019" smonth="10" sday="01" eyear="2019" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2019" smonth="11" sday="01" eyear="2020" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2020" smonth="02" sday="01" eyear="2020" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2020" smonth="05" sday="01" eyear="2020" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2020" smonth="10" sday="01" eyear="2020" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2020" smonth="11" sday="01" eyear="2021" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2021" smonth="02" sday="01" eyear="2021" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2021" smonth="05" sday="01" eyear="2021" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2021" smonth="10" sday="01" eyear="2021" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2021" smonth="11" sday="01" eyear="2022" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2022" smonth="02" sday="01" eyear="2022" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2022" smonth="05" sday="01" eyear="2022" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2022" smonth="10" sday="01" eyear="2022" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2022" smonth="11" sday="01" eyear="2023" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2023" smonth="02" sday="01" eyear="2023" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2023" smonth="05" sday="01" eyear="2023" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2023" smonth="10" sday="01" eyear="2023" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2023" smonth="11" sday="01" eyear="2024" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2024" smonth="02" sday="01" eyear="2024" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2024" smonth="05" sday="01" eyear="2024" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2024" smonth="10" sday="01" eyear="2024" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2024" smonth="11" sday="01" eyear="2025" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2025" smonth="02" sday="01" eyear="2025" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2025" smonth="05" sday="01" eyear="2025" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2025" smonth="10" sday="01" eyear="2025" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2025" smonth="11" sday="01" eyear="2026" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2026" smonth="02" sday="01" eyear="2026" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2026" smonth="05" sday="01" eyear="2026" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2026" smonth="10" sday="01" eyear="2026" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2026" smonth="11" sday="01" eyear="2027" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2027" smonth="02" sday="01" eyear="2027" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2027" smonth="05" sday="01" eyear="2027" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2027" smonth="10" sday="01" eyear="2027" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2027" smonth="11" sday="01" eyear="2028" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2028" smonth="02" sday="01" eyear="2028" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2028" smonth="05" sday="01" eyear="2028" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2028" smonth="10" sday="01" eyear="2028" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2028" smonth="11" sday="01" eyear="2029" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2029" smonth="02" sday="01" eyear="2029" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2029" smonth="05" sday="01" eyear="2029" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2029" smonth="10" sday="01" eyear="2029" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2029" smonth="11" sday="01" eyear="2030" emonth="01" eday="31" name="Winter"/>
+
+    <mvm.Season syear="2030" smonth="02" sday="01" eyear="2030" emonth="04" eday="30" name="Spring"/>
+    <mvm.Season syear="2030" smonth="05" sday="01" eyear="2030" emonth="09" eday="30" name="Summer"/>
+    <mvm.Season syear="2030" smonth="10" sday="01" eyear="2030" emonth="10" eday="31" name="Autumn"/>
+    <mvm.Season syear="2030" smonth="11" sday="01" eyear="2031" emonth="01" eday="31" name="Winter"/>
+
+  
+    
+    
+    <!-- Sri Lanka CEB TARIFF  --> 
+    <system.TariffType supplier="CEB" serviceTypeCode="3.1" code="11" name="Domestic"   numberOfBlocks ="5" description="Domestic Bill Determinant for prepaid"/>
+    <system.TariffType supplier="CEB" serviceTypeCode="3.1" code="21" name="Industrial" numberOfBlocks ="3" description="Industrial Bill Determinant for prepaid"/>
+    <system.TariffType supplier="CEB" serviceTypeCode="3.1" code="31" name="General"    numberOfBlocks ="3" description="General Bill Determinant for prepaid"/>
+    <system.TariffType supplier="CEB" serviceTypeCode="3.1" code="34" name="Government" numberOfBlocks ="2" description="Government Bill Determinant for prepaid"/>
+    <system.TariffType supplier="CEB" serviceTypeCode="3.1" code="41" name="Hotel"      numberOfBlocks ="2" description="Hotel Bill Determinant for prepaid"/>
+    <system.TariffType supplier="CEB" serviceTypeCode="3.1" code="51" name="Religious"  numberOfBlocks ="5" description="Religious Bill Determinant for prepaid"/>
+ 
+ 
+    <!-- activeEnergyCharge => Unit Charge,	serviceCharge => Fixed Charge -->
+      
+    <!-- 1. Domestic -->
+    <system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Max Unit of block A"   value="30" />           
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Max Unit of block B"   value="60" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Max Unit of block 1"   value="60" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Max Unit of block 2"   value="90" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Max Unit of block 3"   value="120" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Max Unit of block 4"   value="180" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Unit charge of block A"   value="2.5" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Unit charge of block B"   value="4.85" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Unit charge of block 1"   value="7.85" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Unit charge of block 2"   value="10" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Unit charge of block 3"   value="27.75" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Unit charge of block 4"   value="32" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Unit charge of block 5"   value="45" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Fixed charge of block A"   value="30" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Fixed charge of block B"   value="60" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Fixed charge of block 1"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Fixed charge of block 2"   value="90" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Fixed charge of block 3"   value="480" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Fixed charge of block 4"   value="480" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Domestic" blockName="Fixed charge of block 5"   value="540" />
+	
+    <!-- 2. Industrial -->
+    <system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Max Unit of block A"   value="0" />           
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Max Unit of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Max Unit of block 1"   value="300" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Max Unit of block 2"   value="600" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Max Unit of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Max Unit of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Unit charge of block A"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Unit charge of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Unit charge of block 1"   value="10.8" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Unit charge of block 2"   value="12.2" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Unit charge of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Unit charge of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Unit charge of block 5"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Fixed charge of block A"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Fixed charge of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Fixed charge of block 1"   value="600" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Fixed charge of block 2"   value="600" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Fixed charge of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Fixed charge of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Industrial" blockName="Fixed charge of block 5"   value="0" />
+	
+    <!-- 2. General -->
+    <system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Max Unit of block A"   value="0" />           
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Max Unit of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Max Unit of block 1"   value="300" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Max Unit of block 2"   value="600" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Max Unit of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Max Unit of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Unit charge of block A"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Unit charge of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Unit charge of block 1"   value="18.3" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Unit charge of block 2"   value="22.85" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Unit charge of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Unit charge of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Unit charge of block 5"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Fixed charge of block A"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Fixed charge of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Fixed charge of block 1"   value="240" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Fixed charge of block 2"   value="240" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Fixed charge of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Fixed charge of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="General" blockName="Fixed charge of block 5"   value="0" />
+	
+    <!-- 3. Government -->
+    <system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Max Unit of block A"   value="0" />           
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Max Unit of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Max Unit of block 1"   value="180" />           
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Max Unit of block 2"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Max Unit of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Max Unit of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Unit charge of block A"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Unit charge of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Unit charge of block 1"   value="14.65" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Unit charge of block 2"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Unit charge of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Unit charge of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Unit charge of block 5"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Fixed charge of block A"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Fixed charge of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Fixed charge of block 1"   value="600" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Fixed charge of block 2"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Fixed charge of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Fixed charge of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Government" blockName="Fixed charge of block 5"   value="0" />
+	
+    <!-- 4. Hotel -->
+    <system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Max Unit of block A"   value="0" />           
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Max Unit of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Max Unit of block 1"   value="600" />           
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Max Unit of block 2"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Max Unit of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Max Unit of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Unit charge of block A"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Unit charge of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Unit charge of block 1"   value="21.5" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Unit charge of block 2"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Unit charge of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Unit charge of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Unit charge of block 5"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Fixed charge of block A"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Fixed charge of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Fixed charge of block 1"   value="600" />           
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Fixed charge of block 2"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Fixed charge of block 3"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Fixed charge of block 4"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Hotel" blockName="Fixed charge of block 5"   value="0" />
+	
+    <!-- 6. Religious -->
+    <system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Max Unit of block A"   value="0" />           
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Max Unit of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Max Unit of block 1"   value="30" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Max Unit of block 2"   value="90" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Max Unit of block 3"   value="120" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Max Unit of block 4"   value="180" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Unit charge of block A"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Unit charge of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Unit charge of block 1"   value="1.9" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Unit charge of block 2"   value="2.8" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Unit charge of block 3"   value="6.75" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Unit charge of block 4"   value="7.5" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Unit charge of block 5"   value="9.4" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Fixed charge of block A"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Fixed charge of block B"   value="0" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Fixed charge of block 1"   value="30" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Fixed charge of block 2"   value="60" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Fixed charge of block 3"   value="180" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Fixed charge of block 4"   value="180" />
+	<system.TariffCEB supplier="CEB" yyyymmdd="20180101" tariffType="Religious" blockName="Fixed charge of block 5"   value="240" />
+	
+
+    <device.EventAlert eventAlertType='Event'
+                       severity='Information' 
+                       name='Equipment Installation' 
+                       descr='Equipment is created automatically or installed.'  
+                       msgPattern='Installation' 
+                       troubleAdvice='' 
+                       oid='LK_200.1.0, LK_220.1.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+
+    <device.EventAlert eventAlertType='Event'
+                       severity='Information' 
+                       name='Equipment UnInstallation' 
+                       descr='Equipment UnInstallation'  
+                       msgPattern='UnInstallation' 
+                       troubleAdvice='' 
+                       oid='LK_220.2.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>                       
+
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment Registration' 
+                       descr='Equipment Registration' 
+                       msgPattern='Registration' 
+                       troubleAdvice='' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+                       
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment Replacement' 
+                       descr='Equipment Replacement' 
+                       msgPattern='Type $(event.eventAttrs.equipType) Frome $(event.eventAttrs.oldEquipID), To=$(event.eventAttrs.newEquipID)' 
+                       troubleAdvice='' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>                       
+                       
+    <device.EventAlert eventAlertType='Event'
+                       severity='Information' 
+                       name='DCU Startup' 
+                       descr='DCU Startup'  
+                       msgPattern='System UpTime = ${event.eventAttrs.sysUptime}' 
+                       troubleAdvice='' 
+                       oid='LK_200.2.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+
+    <device.EventAlert eventAlertType='Event'
+                       severity='Information' 
+                       name='DCU Reboot' 
+                       descr='Reboot reason (1: LowBattery, 2: User, 3: Malfunction, 4: Recovery, 5: Scheduled, 255: Unknown)'  
+                       msgPattern='Reboot Reason = ${event.eventAttrs.reason}' 
+                       troubleAdvice='' 
+                       oid='LK_200.3.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+
+    <device.EventAlert eventAlertType='Event'
+                       severity='Critical' 
+                       name='DCU Power off' 
+                       descr='Power off reason (1: LowBattery, 2: User, 3: Malfunction, 4: Recovery, 5: Scheduled, 255: Unknown)'  
+                       msgPattern='Power off Reason = ${event.eventAttrs.reason}' 
+                       troubleAdvice='' 
+                       oid='LK_200.4.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+                       
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Major' 
+                       name='DCU IP Change detect' 
+                       descr='DCU IP Change detect' 
+                       msgPattern='From $(event.eventAttrs.oldIp) To $(event.eventAttrs.newIp), Message=$(event.eventAttrs.message)'
+                       troubleAdvice='' 
+                       oid='LK_200.12.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+                       
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Major' 
+                       name='Network status change(Up)' 
+                       descr='Network status change(Up)' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='LK_200.13.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+                       
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Major' 
+                       name='Network status change(Down)' 
+                       descr='Network status change(Down)' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='LK_200.14.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>                       
+                                              
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Critical' 
+                       name='DCU Low battery detect' 
+                       descr='DCU Low battery detect' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='LK_200.21.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>                         
+                       
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Critical' 
+                       name='DCU Low battery restore' 
+                       descr='DCU Low battery restore' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='LK_200.22.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>   
+                         
+     <device.EventAlert eventAlertType='Event' 
+                       severity='Critical' 
+                       name='Power Fail' 
+                       descr='Power Fail' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='LK_200.23.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+
+     <device.EventAlert eventAlertType='Event' 
+                       severity='Critical' 
+                       name='Power Restore' 
+                       descr='Power Restore' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='LK_200.24.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+
+	<device.EventAlert eventAlertType='Event' 
+                       severity='Critical' 
+                       name='DCU Battery Out detect' 
+                       descr='DCU Battery Out detect' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='LK_200.27.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>   
+                       
+	<device.EventAlert eventAlertType='Event' 
+                       severity='Normal' 
+                       name='Join node' 
+                       descr='Join node' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='LK_210.1.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>                          
+                                              
+	<device.EventAlert eventAlertType='Event' 
+                       severity='Normal' 
+                       name='Path Discovery' 
+                       descr='Path Discovery' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='LK_210.2.0'
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>   
+                       
+	<device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='PLC Node LQI' 
+                       descr='PLC Node LQI' 
+                       msgPattern='LQI = $(event.eventAttrs.lqi)' 
+                       troubleAdvice='' 
+                       oid='LK_210.3.0'
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>                                                                     
+                                              
+	<device.EventAlert eventAlertType='Event' 
+                       severity='Normal' 
+                       name='Route Discovery' 
+                       descr='Route Discovery' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='LK_210.4.0'
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+                       
+      <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='OTA Start'
+                       descr='OTA Start' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='LK_223.1.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>                     
+                       
+      <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='OTA End'
+                       descr='OTA End' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='LK_223.2.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+                                                
+    <device.EventAlert eventAlertType='Event'
+                       severity='Warning' 
+                       name='Excessive Number of Device Registrationn' 
+                       descr='Excessive Number of Device Registration' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>                       
+
+
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Warning' 
+                       name='Meter Drive Status Alarm' 
+                       descr='Meter Drive Status Alarm Message' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+                       
+   <device.EventAlert eventAlertType='Alert' 
+                       severity='Warning' 
+                       name='PBS Status Alarm' 
+                       descr='PBS Status Alarm Message' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>                       
+
+   <device.EventAlert eventAlertType='Alert' 
+                       severity='Warning' 
+                       name='Meter Status Alarm' 
+                       descr='Meter Status Alarm Message' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>         
+
+</dataset>

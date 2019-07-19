@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+
+<!-- MCU -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="4"
+        deviceType="1.1.1.3"
+        name="NZC I211"
+    />
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="5"
+        deviceType="1.1.1.4"
+        name="NZC O312"
+    />
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="5"
+        deviceType="1.1.1.4"
+        name="NZC O201"
+    />
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="7"
+        deviceType="1.1.1.4"
+        name="NPC O301"
+    />
+    
+<!-- Modem -->
+     
+    <!-- Repeater(indoor) -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="98"
+        deviceType="1.2.1.98"
+        name="NZR-O121RE"
+    />
+    <!-- Repeater(outdoor) -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="98"
+        deviceType="1.2.1.98"
+        name="NZR-I121RE"
+    />
+    
+    <!-- Energy Meter Modem -->
+    <!--  GE SM110 -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="1"
+        deviceType="1.2.1.1"
+        name="NAMR-P109SR"
+    />
+    <!-- Sensus(Water) Modem -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="5"
+        deviceType="1.2.1.5"
+        name="NAPC-W202SR"
+    />
+    
+    <!-- EnergyMeter -->
+    <system.DeviceModel 
+        deviceVendor="GE"
+        code="12"
+        deviceType="1.3.1.1"
+        name="SM110"
+    />
+
+    <!-- WaterMeter -->    
+    <system.DeviceModel 
+        deviceVendor="Sensus"
+        code="0"
+        deviceType="1.3.1.2"
+        name="SM150P"
+    />
+</dataset>

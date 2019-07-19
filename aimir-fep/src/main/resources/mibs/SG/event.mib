@@ -1,0 +1,3 @@
+eventModemInstall,OID,0,200.1.0,Modem Install Event (eventParentModem)
+eventChildInformation,OID,0,201.1.0,child information
+eventNMSInformation,OID,0,202.1.0,subgiga nms information

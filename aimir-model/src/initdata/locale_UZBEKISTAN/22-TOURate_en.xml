@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+<!--  NURI Tariff Start -->
+    <system.TOURate tariffType="1001" peakType="OFF_PEAK" season="Spring" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1001" peakType="PEAK" season="Spring" localName="Peak" startTime="09" endTime="23" />
+    <system.TOURate tariffType="1001" peakType="OFF_PEAK" season="Summer" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1001" peakType="PEAK" season="Summer" localName="Peak" startTime="09" endTime="23" />    
+    <system.TOURate tariffType="1001" peakType="OFF_PEAK" season="Autumn" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1001" peakType="PEAK" season="Autumn" localName="Peak" startTime="09" endTime="23" />    
+    <system.TOURate tariffType="1001" peakType="OFF_PEAK" season="Winter" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1001" peakType="PEAK" season="Winter" localName="Peak" startTime="09" endTime="23" />
+    
+    <system.TOURate tariffType="1002" peakType="OFF_PEAK" season="Spring" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1002" peakType="PEAK" season="Spring" localName="Peak" startTime="09" endTime="18" />
+    <system.TOURate tariffType="1002" peakType="CRITICAL_PEAK" season="Spring" localName="Critical Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1002" peakType="OFF_PEAK" season="Summer" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1002" peakType="PEAK" season="Summer" localName="Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1002" peakType="CRITICAL_PEAK" season="Summer" localName="Critical Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1002" peakType="OFF_PEAK" season="Autumn" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1002" peakType="PEAK" season="Autumn" localName="Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1002" peakType="CRITICAL_PEAK" season="Autumn" localName="Critical Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1002" peakType="OFF_PEAK" season="Winter" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1002" peakType="PEAK" season="Winter" localName="Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1002" peakType="CRITICAL_PEAK" season="Winter" localName="Critical Peak" startTime="18" endTime="23" />
+        
+    <system.TOURate tariffType="1003" peakType="OFF_PEAK" season="Spring" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1003" peakType="PEAK" season="Spring" localName="Peak" startTime="09" endTime="18" />
+    <system.TOURate tariffType="1003" peakType="CRITICAL_PEAK" season="Spring" localName="Critical Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1003" peakType="OFF_PEAK" season="Summer" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1003" peakType="PEAK" season="Summer" localName="Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1003" peakType="CRITICAL_PEAK" season="Summer" localName="Critical Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1003" peakType="OFF_PEAK" season="Autumn" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1003" peakType="PEAK" season="Autumn" localName="Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1003" peakType="CRITICAL_PEAK" season="Autumn" localName="Critical Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1003" peakType="OFF_PEAK" season="Winter" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1003" peakType="PEAK" season="Winter" localName="Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1003" peakType="CRITICAL_PEAK" season="Winter" localName="Critical Peak" startTime="18" endTime="23" />
+    
+    <system.TOURate tariffType="1004" peakType="OFF_PEAK" season="Spring" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1004" peakType="CRITICAL_PEAK" season="Spring" localName="Critical Peak" startTime="09" endTime="18" />
+    <system.TOURate tariffType="1004" peakType="PEAK" season="Spring" localName="Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1004" peakType="OFF_PEAK" season="Summer" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1004" peakType="CRITICAL_PEAK" season="Summer" localName="Critical Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1004" peakType="PEAK" season="Summer" localName="Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1004" peakType="OFF_PEAK" season="Autumn" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1004" peakType="CRITICAL_PEAK" season="Autumn" localName="Critical Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1004" peakType="PEAK" season="Autumn" localName="Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1004" peakType="OFF_PEAK" season="Winter" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1004" peakType="CRITICAL_PEAK" season="Winter" localName="Critical Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1004" peakType="PEAK" season="Winter" localName="Peak" startTime="18" endTime="23" />
+    
+    <system.TOURate tariffType="1005" peakType="OFF_PEAK" season="Spring" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1005" peakType="CRITICAL_PEAK" season="Spring" localName="Critical Peak" startTime="09" endTime="18" />
+    <system.TOURate tariffType="1005" peakType="PEAK" season="Spring" localName="Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1005" peakType="OFF_PEAK" season="Summer" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1005" peakType="CRITICAL_PEAK" season="Summer" localName="Critical Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1005" peakType="PEAK" season="Summer" localName="Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1005" peakType="OFF_PEAK" season="Autumn" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1005" peakType="CRITICAL_PEAK" season="Autumn" localName="Critical Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1005" peakType="PEAK" season="Autumn" localName="Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1005" peakType="OFF_PEAK" season="Winter" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1005" peakType="CRITICAL_PEAK" season="Winter" localName="Critical Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1005" peakType="PEAK" season="Winter" localName="Peak" startTime="18" endTime="23" />
+    
+    <system.TOURate tariffType="1006" peakType="OFF_PEAK" season="Spring" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1006" peakType="CRITICAL_PEAK" season="Spring" localName="Critical Peak" startTime="09" endTime="18" />
+    <system.TOURate tariffType="1006" peakType="PEAK" season="Spring" localName="Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1006" peakType="OFF_PEAK" season="Summer" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1006" peakType="CRITICAL_PEAK" season="Summer" localName="Critical Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1006" peakType="PEAK" season="Summer" localName="Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1006" peakType="OFF_PEAK" season="Autumn" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1006" peakType="CRITICAL_PEAK" season="Autumn" localName="Critical Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1006" peakType="PEAK" season="Autumn" localName="Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1006" peakType="OFF_PEAK" season="Winter" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1006" peakType="CRITICAL_PEAK" season="Winter" localName="Critical Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1006" peakType="PEAK" season="Winter" localName="Peak" startTime="18" endTime="23" />
+    
+    <system.TOURate tariffType="1007" peakType="OFF_PEAK" season="Spring" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1007" peakType="CRITICAL_PEAK" season="Spring" localName="Critical Peak" startTime="09" endTime="18" />
+    <system.TOURate tariffType="1007" peakType="PEAK" season="Spring" localName="Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1007" peakType="OFF_PEAK" season="Summer" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1007" peakType="CRITICAL_PEAK" season="Summer" localName="Critical Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1007" peakType="PEAK" season="Summer" localName="Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1007" peakType="OFF_PEAK" season="Autumn" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1007" peakType="CRITICAL_PEAK" season="Autumn" localName="Critical Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1007" peakType="PEAK" season="Autumn" localName="Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1007" peakType="OFF_PEAK" season="Winter" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1007" peakType="CRITICAL_PEAK" season="Winter" localName="Critical Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1007" peakType="PEAK" season="Winter" localName="Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1008" peakType="OFF_PEAK" season="Spring" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1008" peakType="PEAK" season="Spring" localName="Peak" startTime="09" endTime="18" />
+    <system.TOURate tariffType="1008" peakType="CRITICAL_PEAK" season="Spring" localName="Critical Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1008" peakType="OFF_PEAK" season="Summer" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1008" peakType="PEAK" season="Summer" localName="Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1008" peakType="CRITICAL_PEAK" season="Summer" localName="Critical Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1008" peakType="OFF_PEAK" season="Autumn" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1008" peakType="PEAK" season="Autumn" localName="Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1008" peakType="CRITICAL_PEAK" season="Autumn" localName="Critical Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1008" peakType="OFF_PEAK" season="Winter" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1008" peakType="PEAK" season="Winter" localName="Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1008" peakType="CRITICAL_PEAK" season="Winter" localName="Critical Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1009" peakType="OFF_PEAK" season="Spring" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1009" peakType="PEAK" season="Spring" localName="Peak" startTime="09" endTime="18" />
+    <system.TOURate tariffType="1009" peakType="CRITICAL_PEAK" season="Spring" localName="Critical Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1009" peakType="OFF_PEAK" season="Summer" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1009" peakType="PEAK" season="Summer" localName="Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1009" peakType="CRITICAL_PEAK" season="Summer" localName="Critical Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1009" peakType="OFF_PEAK" season="Autumn" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1009" peakType="PEAK" season="Autumn" localName="Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1009" peakType="CRITICAL_PEAK" season="Autumn" localName="Critical Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1009" peakType="OFF_PEAK" season="Winter" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1009" peakType="PEAK" season="Winter" localName="Peak" startTime="09" endTime="18"  />
+    <system.TOURate tariffType="1009" peakType="CRITICAL_PEAK" season="Winter" localName="Critical Peak" startTime="18" endTime="23" />    
+    <system.TOURate tariffType="1015" peakType="OFF_PEAK" season="Spring" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1015" peakType="PEAK" season="Spring" localName="Peak" startTime="09" endTime="23" />
+    <system.TOURate tariffType="1015" peakType="OFF_PEAK" season="Summer" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1015" peakType="PEAK" season="Summer" localName="Peak" startTime="09" endTime="23" />    
+    <system.TOURate tariffType="1015" peakType="OFF_PEAK" season="Autumn" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1015" peakType="PEAK" season="Autumn" localName="Peak" startTime="09" endTime="23" />    
+    <system.TOURate tariffType="1015" peakType="OFF_PEAK" season="Winter" localName="Off-Peak" startTime="23" endTime="09" />
+    <system.TOURate tariffType="1015" peakType="PEAK" season="Winter" localName="Peak" startTime="09" endTime="23" />
+<!--  NURI  Tariff End --> 
+
+    
+</dataset>

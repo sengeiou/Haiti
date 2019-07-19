@@ -1,0 +1,43 @@
+/*korea*/
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,p,blockquote,th,td,textarea,option,button,span 
+{ 
+font-size:12px;
+font-family: dotum,'돋움', Arial, Tahoma, Helvetica, sans-serif;
+}
+
+/*English*/
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,p,blockquote,th,td,textarea,option,button,span 
+{ 
+font-size:12px;
+
+font-family: Arial, Tahoma, Verdana, Helvetica, sans-serif, "Lucida Grande", "Lucida Sans Unicode";
+}
+
+/*japan*/
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,p,blockquote,th,td,textarea,option,button,span 
+{ 
+font-size:12px;
+font-family: "meiryo ui", MS Gothic, MS PGothic, Osaka, "ヒラギノ角ゴ Pro W3", Arial, Tahoma,  sans-serif;
+}
+
+/*spain*/
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,p,blockquote,th,td,textarea,option,button,span 
+{ 
+font-size:12px;
+font-family: Arial, Helvetica, clean, sans-serif;
+}
+
+/*sweden*/
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,p,blockquote,th,td,textarea,option,button,span 
+{ 
+font-size:12px;
+font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+/*arabic*/
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,p,blockquote,th,td,textarea,option,button,span 
+{ 
+font-size:11px;
+font-family: Tahoma, "Arabic transparent", "Traditional Arabic", "Simplified Arabic", Arial, "Times New Roman";
+}
+

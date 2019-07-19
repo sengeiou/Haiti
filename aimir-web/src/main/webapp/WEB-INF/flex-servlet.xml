@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:flex="http://www.springframework.org/schema/flex"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/flex
+        http://www.springframework.org/schema/flex/spring-flex-1.5.xsd"> 
+
+    <!-- Activates mapping of Spring Annotation -->    
+    <context:component-scan base-package="com.aimir">
+        <context:exclude-filter type="regex" expression="com\.aimir\.fep\..*"/>
+    </context:component-scan>
+
+    <!-- Handler Mapping -->
+    <bean id="simpleUrlHandlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <value>*=_messageBroker</value>
+        </property>        
+    </bean>
+    <bean id="_messageBroker" class="org.springframework.flex.core.MessageBrokerFactoryBean"/>
+    <bean class="org.springframework.flex.servlet.MessageBrokerHandlerAdapter"/>
+    
+    <!-- system Manager -->
+    <bean id="dashboardGadgetManager" class="com.aimir.service.system.impl.DashboardGadgetManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+    <bean id="gadgetManager" class="com.aimir.service.system.impl.GadgetManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+    <bean id="supplierManager" class="com.aimir.service.system.impl.SupplierManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+	<bean id="tagManager" class="com.aimir.service.system.impl.TagManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+    <bean id="supplierMgmtManager" class="com.aimir.service.system.impl.SupplierMgmtManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+    <bean id="groupMgmtManager" class="com.aimir.service.system.impl.GroupMgmtManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+    
+    <!-- code manager : kimminsu -->
+    <bean id="codeManager" class="com.aimir.service.system.impl.CodeManagerImpl" >
+        <flex:remoting-destination />
+    </bean>    
+    <!-- customer manager : kimminsu -->
+    <bean id="customerManager" class="com.aimir.service.system.impl.CustomerManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+    <bean id="operatorManager" class="com.aimir.service.system.impl.OperatorManagerImpl" >
+        <flex:remoting-destination />
+    </bean>    
+    <bean id="contractChangeLogManager" class="com.aimir.service.system.impl.ContractChangeLogManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+    <bean id="prepaymentLogManager" class="com.aimir.service.system.impl.PrepaymentLogManagerImpl" >
+        <flex:remoting-destination />
+    </bean>       
+    <bean id="noticeManager" class="com.aimir.service.system.impl.NoticeManagerImpl" >
+        <flex:remoting-destination />
+    </bean>       
+        
+    <!-- mvm Manager -->
+    <bean id="meteringRateManager" class="com.aimir.service.mvm.impl.MeteringRateManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+    <bean id="searchMeteringDataManager" class="com.aimir.service.mvm.impl.SearchMeteringDataManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+    <bean id="mvmDetailViewManager" class="com.aimir.service.mvm.impl.MvmDetailViewManagerImpl" >
+        <flex:remoting-destination />
+    </bean> 
+    <bean id="mvmChartViewManager" class="com.aimir.service.mvm.impl.MvmChartViewManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+    <bean id="comparisonChartManager" class="com.aimir.service.mvm.impl.ComparisonChartManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+        
+    <bean id="dataGapsManager" class="com.aimir.service.mvm.impl.DataGapsManagerImpl" >
+        <flex:remoting-destination />
+    </bean>  
+    
+    <bean id="meteringFailureManager" class="com.aimir.service.mvm.impl.MeteringFailureManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+    
+    <bean id="consumptionRankingManager" class="com.aimir.service.mvm.impl.ConsumptionRankingManagerImpl" >
+        <flex:remoting-destination />
+    </bean>   
+    
+    <bean id="demandManagementManager" class="com.aimir.service.mvm.impl.DemandManagementManagerImpl" >
+        <flex:remoting-destination />
+    </bean>    
+    
+    <bean id="powerQualityManager" class="com.aimir.service.mvm.impl.PowerQualityManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+    
+    <bean id="vEEManager" class="com.aimir.service.mvm.impl.VEEManagerImpl" >
+        <flex:remoting-destination />
+    </bean>  
+
+    <!-- device Manager -->
+    <bean id="mcuManager" class="com.aimir.service.device.impl.MCUManagerImpl" >
+        <flex:remoting-destination />
+    </bean>    
+    <bean id="mcuInstallImgManager" class="com.aimir.service.device.impl.MCUInstallImgManagerImpl" >
+        <flex:remoting-destination />
+    </bean> 
+	<bean id="eventAlertLogManager" class="com.aimir.service.device.impl.EventAlertLogManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+    <bean id="batteryLogManager" class="com.aimir.service.device.impl.BatteryLogManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+    <bean id="loadMgmtManager" class="com.aimir.service.device.impl.LoadMgmtManagerImpl">
+    	<flex:remoting-destination />
+	</bean>
+	
+	<!-- BEMS -->
+	<bean id="endDeviceManager" class="com.aimir.service.device.impl.EndDeviceManagerImpl" >
+        <flex:remoting-destination />
+    </bean>  
+	
+	<bean id="endDeviceLogManager" class="com.aimir.service.device.impl.EndDeviceLogManagerImpl" >
+        <flex:remoting-destination />
+    </bean> 
+	
+	<bean id="contractCapacityManager" class="com.aimir.service.system.impl.ContractCapacityManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+
+	<!-- contract energy and peak demand -->
+    <bean id="contractEnergyPeakDemandManager" class="com.aimir.service.system.impl.ContractEnergyPeakDemandManagerImpl" >
+        <flex:remoting-destination />
+    </bean>  
+    
+    <bean id="consumptionMonitoringEmManager" class="com.aimir.service.system.impl.ConsumptionMonitoringEmManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+    <bean id="consumptionMonitoringGmManager" class="com.aimir.service.system.impl.ConsumptionMonitoringGmManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+    <bean id="consumptionMonitoringWmManager" class="com.aimir.service.system.impl.ConsumptionMonitoringWmManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+	<bean id="temperatureHumidityManager" class="com.aimir.service.mvm.impl.TemperatureHumidityManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+    
+    <bean id="facilityUsageMonitoringManager" class="com.aimir.service.mvm.impl.FacilityUsageMonitoringManagerImpl" >
+        <flex:remoting-destination />
+    </bean> 
+	
+	<bean id="locationUsageStatisticManager" class="com.aimir.service.system.impl.LocationUsageStatisticManagerImpl" >
+        <flex:remoting-destination />
+    </bean> 
+	
+	<bean id="energySavingGoalManager" class="com.aimir.service.system.impl.EnergySavingGoalManagerImpl" >
+        <flex:remoting-destination />
+    </bean> 
+        
+    <bean id="energySavingGoal2Manager" class="com.aimir.service.system.impl.EnergySavingGoal2ManagerImpl" >
+        <flex:remoting-destination />
+    </bean> 
+    
+    <bean id="zoneManager" class="com.aimir.service.system.impl.ZoneManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+    <bean id="locationManager" class="com.aimir.service.system.impl.LocationManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+    <bean id="powerAlarmLogManager" class="com.aimir.service.device.impl.PowerAlarmLogManagerImpl" >
+        <flex:remoting-destination />
+    </bean>        
+    <bean id="commonController" class="com.aimir.bo.common.CommonController" >
+        <flex:remoting-destination />
+    </bean>
+    <bean id="emsReportManager" class="com.aimir.service.mvm.impl.EmsReportManagerImpl" >
+        <flex:remoting-destination />
+    </bean>
+</beans>

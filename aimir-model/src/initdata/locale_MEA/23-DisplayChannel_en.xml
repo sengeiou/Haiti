@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+    <!-- mx2 -->
+    <mvm.DisplayChannel name="Active Energy Imp."      localName="Act. E. Imp."      serviceType="Electricity" unit="kWh" chMethod="SUM"/>   
+    <mvm.DisplayChannel name="Active Energy Exp."      localName="Act. E. Exp."      serviceType="Electricity" unit="kWh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Reactive Energy Imp. Lead"      localName="React. D. Imp. Lead"      serviceType="Electricity" unit="kvarH" chMethod="SUM"/>   
+    <mvm.DisplayChannel name="Reactive Energy Imp. Lag"      localName="React. D. Imp. Lag"      serviceType="Electricity" unit="kvarH" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Reactive Energy Exp. Lead"      localName="React. D. Exp. Lead"      serviceType="Electricity" unit="kvarH" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Reactive Energy Exp. Lag"      localName="React. D. Exp. Lag"      serviceType="Electricity" unit="kvarH" chMethod="SUM"/>
+    <mvm.DisplayChannel name="VAh (selectable)"		localName="VAh (selectable)"      serviceType="Electricity" unit="kVAh" chMethod="AVG"/>   
+	<!-- mx2 demand -->
+	<mvm.DisplayChannel name="Active Demand Imp."      localName="Act. D. Imp."      serviceType="Electricity" unit="kVar" chMethod="SUM"/>   
+    <mvm.DisplayChannel name="Active Demand Exp."      localName="Act. D. Exp."      serviceType="Electricity" unit="kVar" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Reactive Demand Imp. Lead"      localName="React. D. Imp. Lead"      serviceType="Electricity" unit="kVar" chMethod="SUM"/>   
+    <mvm.DisplayChannel name="Reactive Demand Imp. Lag"      localName="React. D. Imp. Lag"      serviceType="Electricity" unit="kVar" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Reactive Demand Exp. Lead"      localName="React. D. Exp. Lead"      serviceType="Electricity" unit="kVar" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Reactive Demand Exp. Lag"      localName="React. D. Exp. Lag"      serviceType="Electricity" unit="kVar" chMethod="SUM"/>
+    <mvm.DisplayChannel name="VA (selectable)"		localName="VA (selectable)"      serviceType="Electricity" unit="VA" chMethod="AVG"/> 
+
+</dataset>
+
+
+
+

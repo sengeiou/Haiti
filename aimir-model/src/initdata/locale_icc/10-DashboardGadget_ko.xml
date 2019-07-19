@@ -1,0 +1,319 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="에너지모니터링"
+        gadget="빌딩 전기 사용량 모니터링"
+    />
+   <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="에너지모니터링"
+        gadget="빌딩 가스 사용량 모니터링"
+    />
+   <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="2"
+        dashboard="에너지모니터링"
+        gadget="빌딩 수도 사용량 모니터링"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="에너지모니터링"
+        gadget="빌딩 등유 사용량 모니터링"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="에너지모니터링"
+        gadget="태양광에너지모니터링"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="통계분석"
+        gadget="위치별 사용량 통계"
+    />
+    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="2"
+        dashboard="통계분석"
+        gadget="설비별 사용량 통계"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="통계분석"
+        gadget="Zone별 사용량 통계"
+    />        
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="통계분석"
+        gadget="EMS 리포트"
+    /> 
+    
+	<system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="수요반응"
+        gadget="계약전력과 Peak Demand"
+    />
+    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="2"
+        dashboard="수요반응"
+        gadget="전력 에너지 절감 목표"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="수요반응"
+        gadget="가스 에너지 절감 목표"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="수요반응"
+        gadget="수도 에너지 절감 목표"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="수요반응"
+        gadget="등유 에너지 절감 목표"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="3"
+        dashboard="수요반응"
+        gadget="수요관리"
+    />
+
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="검침데이터관리"
+        gadget="수검침관리"
+    />
+
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="검침데이터관리"
+        gadget="검침데이터 조회(전기)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="2"
+        dashboard="검침데이터관리"
+        gadget="검침데이터 조회(가스)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="2"
+        dashboard="검침데이터관리"
+        gadget="검침데이터 조회(수도)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="2"
+        dashboard="검침데이터관리"
+        gadget="검침데이터 조회(등유)"
+    />
+
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="검침데이터관리"
+        gadget="검침데이터 누락(전기)"
+    />
+
+  <system.DashboardGadget
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="검침데이터관리"
+        gadget="검침데이터 누락(가스)"
+    />
+
+    <system.DashboardGadget
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="검침데이터관리"
+        gadget="검침데이터 누락(수도)"
+    />
+
+    <system.DashboardGadget
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="검침데이터관리"
+        gadget="검침데이터 누락(등유)"
+    />
+
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="3"
+        dashboard="통계분석"
+        gadget="소비 랭킹(전기)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="3"
+        dashboard="통계분석"
+        gadget="소비 랭킹(가스)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="4"
+        dashboard="통계분석"
+        gadget="소비 랭킹(수도)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="4"
+        dashboard="통계분석"
+        gadget="소비 랭킹(등유)"
+    />
+
+        <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="환경설정"
+        gadget="공급사관리"
+    />
+        <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="환경설정"
+        gadget="사용자관리"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="환경설정"
+        gadget="코드관리"
+    />
+    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="설비관리"
+        gadget="집중기관리"
+    />    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="설비관리"
+        gadget="미터관리"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="설비관리"
+        gadget="자산등록"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="환경설정"
+        gadget="빌딩 관리"
+    />
+   <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="설비관리"
+        gadget="설비 관리"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="2"
+        dashboard="설비관리"
+        gadget="Zone 관리"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="환경설정"
+        gadget="계약관리"
+    />
+</dataset>

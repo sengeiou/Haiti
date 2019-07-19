@@ -1,0 +1,1061 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+<system.Country 
+        name="대한민국"
+        code_2letter="KR"
+        code_3letter="KOR"
+        code_number="410"
+    />
+<system.Language 
+		name="한글"
+		code_2letter="ko"
+		code_3letter="kor"
+	/>
+<system.Language 
+		name="영어"
+		code_2letter="en"
+		code_3letter="eng"
+	/>
+<system.Supplier 
+        name="광명" 
+        country="대한민국"
+        lang="한글"
+        timezone="Asia/Seoul"
+        address="광명시"
+        descr="광명시 수도"
+        telno="02-781-0777"
+        cd.pattern="###,###,##0.#0"
+        cd.round="f"
+        md.pattern="###,###,##0.#0"
+        md.round="r"
+    />
+    
+    <system.Co2Formula name="WaterCO2" supplyTypeCode="3.2" unitUsage="100" co2emissions="42.4" co2factor="0.424" unit="KWh"/>
+    
+    <system.SupplyType
+        supplier="광명"
+        typeCode="3.2"
+        co2Formula="WaterCO2"
+        billDate="1"
+    />
+    
+<system.Location 
+        name="광명시"
+        orderNo="1"
+        parent=""
+        supplier="광명"
+    />
+    <system.Location 
+        name="하안동"
+        orderNo="1"
+        parent="광명시"
+        supplier="광명"
+    />
+    <system.Location 
+        name="노온사동"
+        orderNo="2"
+        parent="광명시"
+        supplier="광명"
+    />
+        <system.Location 
+        name="철산동"
+        orderNo="3"
+        parent="광명시"
+        supplier="광명"
+    />
+        <system.Location 
+        name="자동차매매단지"
+        orderNo="4"
+        parent="광명시"
+        supplier="광명"
+    />
+    
+    <system.Role name="admin" supplier="광명" systemAuthority="c" mtrAuthority="c" 
+    descr="관리자권한" hasDashboardAuth="true" customerRole="false" loginAuthority="true" />
+    
+    <system.Operator loginId="admin" aliasName="관리자" email="admin@nuritelecom.com" failedLoginCount="0" 
+        name="관리자" password="hQXOwYy2SzvjPduK5ESBqwwaCAFQWFdQtJAQuQiM57NZ1duCOKDjMaIsPBTSx6iU01eHOPA933Zl7lKLk5yTvg==" telNo="027810777" loginDenied="false" 
+        role="admin"
+        showDefaultDashboard="true"
+        supplier="광명"/>
+        
+    <system.Dashboard descr="Metering Management Dashboard" name="검침데이터 관리" orderNo="0" role="admin"/>
+    <system.Dashboard descr="System Management Dashboard" name="시스템 관리" orderNo="1" role="admin"/>
+    <system.Dashboard descr="Device Management Dashboard" name="장비 관리" orderNo="2" role="admin"/>
+    
+    <system.Gadget
+        descr="코드 관리 (코드 조회추가삭제변경)"
+        iconSrc="assets/images/gadget_ko/code.gif"
+        maxUrl="system/code_manager_max.do"
+        miniUrl="system/code_manager_mini.do"
+        name="코드관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system001"
+    />
+    <system.Gadget
+        descr="장비 제조사 모델 관리"
+        iconSrc="assets/images/gadget_ko/vendormodel.gif"
+        maxUrl="system/devicemodelMax.do"
+        miniUrl="system/devicemodelMini.do"
+        name="제조사 모델 관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system002"
+    />  
+    <system.Gadget
+        descr="공급사 관리"
+        iconSrc="assets/images/gadget_ko/supplier.gif"
+        maxUrl="system/supplier/supplierMgmtMax.do"
+        miniUrl="system/supplier/supplierMgmtMini.do"
+        name="공급사 관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system003"
+    />  
+    <system.Gadget
+        descr="사용자 그룹 및 사용자 관리"
+        iconSrc="assets/images/gadget_ko/user.gif"
+        maxUrl="system/operatorMgmtMax.do"
+        miniUrl="system/operatorMgmtMini.do"
+        name="사용자관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system004"
+    />
+    <system.Gadget
+        descr="변경로그 가젯"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="device/changeLogMaxGadget.do"
+        miniUrl="device/changeLogMiniGadget.do"
+        name="변경 로그"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system007"
+    />
+    <system.Gadget
+        descr="명령 이력 관리 가젯"
+        iconSrc="assets/images/gadget_ko/operation.gif"
+        maxUrl="device/operationLog/operationLogMaxGadget.do"
+        miniUrl="device/operationLog/operationLogMiniGadget.do"
+        name="명령 이력 및 설정"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system008"
+    />
+    <system.Gadget
+        descr="그룹관리 (장비, 고객, 사용자 등을 그룹핑한다.)"
+        iconSrc="assets/images/gadget_ko/group.gif"
+        maxUrl="system/groupManagementMaxGadget.do"
+        miniUrl="system/groupManagementMiniGadget.do"
+        name="그룹 관리"
+        miniHeight="500"
+        fullHeight="1000"
+        gadgetCode="gadget.system009"
+    />
+    <system.Gadget
+        descr="고객 및 계약 관리 가젯"
+        iconSrc="assets/images/gadget_ko/customer.gif"
+        maxUrl="system/customerMax.do"
+        miniUrl="system/customerMini.do"
+        name="고객 및 계약 관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.system010"
+    />
+    <system.Gadget
+        descr="검침데이터 관리(수도)"
+        iconSrc="assets/images/gadget_en/meteringdata.gif"
+        maxUrl="mvm/mvmMaxGadgetWM.do"
+        miniUrl="mvm/mvmMiniGadgetWM.do"
+        name="검침데이터 조회(수도)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering001.water"
+    /> 
+    <system.Gadget
+        descr="검침 실패 가젯(수도)"
+        iconSrc="assets/images/gadget_en/meteringfail.gif"
+        maxUrl="mvm/meteringFailureWmMaxGadget.do"
+        miniUrl="mvm/meteringFailureWmMiniGadget.do"
+        name="검침 실패(수도)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering005.water"
+    />
+    <system.Gadget
+        descr="주기별 데이터 누락(수도)"
+        iconSrc="assets/images/gadget_en/datagaps.gif"
+        maxUrl="mvm/dataGapsWmMaxGadget.do"
+        miniUrl="mvm/dataGapsWmMiniGadget.do"
+        name="주기별 데이터 누락(수도)"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.metering008.water"
+    />
+    <system.Gadget
+        descr="수도 판매 실적"
+        iconSrc="assets/images/gadget_ko/sales.gif"
+        maxUrl="mvm/waterBillingMaxGadget.do"
+        miniUrl="mvm/waterBillingMiniGadget.do"
+        name="수도 판매 실적"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.metering016.water"
+    />  
+    <system.Gadget
+        descr="수도 검침데이터 유효성 체크 , 검침데이터 예측 , 검침데이터 수정 등의 관리"
+        iconSrc="assets/images/gadget_en/vee.gif"
+        maxUrl="mvm/VEEManagementWmMaxGadget.do"
+        miniUrl="mvm/VEEManagementWmMiniGadget.do"
+        name="검침값 유효성 관리(수도)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering023.water"
+    /> 
+    <system.Gadget
+        descr="집중기 목록 상세정보 관리"
+        iconSrc="assets/images/gadget_ko/mcu.gif"
+        maxUrl="device/mcuMaxGadget.do"
+        miniUrl="device/mcuMiniGadget.do"
+        name="집중기관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.device001"
+    />
+    <system.Gadget
+        descr="모뎀관리"
+        iconSrc="assets/images/gadget_ko/modem.gif"
+        maxUrl="device/modemMaxGadget.do"
+        miniUrl="device/modemMiniGadget.do"
+        name="모뎀관리"
+        miniHeight="350"
+        fullHeight="1600"
+        gadgetCode="gadget.device002"
+    />    
+    <system.Gadget
+        descr="미터 관리"
+        iconSrc="assets/images/gadget_ko/meter.gif"
+        maxUrl="device/meterMaxGadget.do"
+        miniUrl="device/meterMiniGadget.do"
+        name="미터관리"
+        miniHeight="350"
+        fullHeight="1600"
+        gadgetCode="gadget.device003"
+    />               
+    <system.Gadget
+        descr="자산 등록(미터, 모뎀등의 장비 정보와 고객 정보 등록)"
+        iconSrc="assets/images/gadget_ko/devicereg.gif"
+        maxUrl="device/deviceRegistrationMaxGadget.do"
+        miniUrl="device/deviceRegistrationMiniGadget.do"
+        name="자산 등록"
+        miniHeight="350"
+        fullHeight="700"
+        gadgetCode="gadget.device004"
+    />  
+    <system.Gadget
+        descr="통신장비의 통신 로그 (송/송수신) "
+        iconSrc="assets/images/gadget_ko/commlog.gif"
+        maxUrl="device/commLog/commLogMaxGadget.do"
+        miniUrl="device/commLog/commLogMiniGadget.do"
+        name="통신 로그"
+        miniHeight="350"
+        fullHeight="1600"
+        gadgetCode="gadget.device006"
+    />
+    <system.Gadget
+        descr="모뎀의 배터리 로그 관리 (배터리 전압 로그 등)"
+        iconSrc="assets/images/gadget_ko/batterylog.gif"
+        maxUrl="device/batteryLogMaxGadget.do"
+        miniUrl="device/batteryLogMiniGadget.do"
+        name="배터리 로그"
+        miniHeight="350"
+        fullHeight="1200"
+        gadgetCode="gadget.device011"
+    /> 
+    <system.Gadget
+        descr="블락별 사용량 통계"
+        iconSrc="bems/assets/images/bems_gadget_ko/zoneUsageMini.gif"
+        maxUrl="bems/zoneUsageMonitoringMaxGadget.do"
+        miniUrl="bems/zoneUsageMonitoringMiniGadget.do"
+        name="블락별 사용량 통계"
+        miniHeight="500"
+        fullHeight="800"
+    gadgetCode="gadget.bems010"
+    />
+    
+    <system.Gadget
+        descr="블락 관리"
+        iconSrc="bems/assets/images/bems_gadget_ko/zoneMgmtMini.gif"
+        maxUrl="bems/zoneMgmtMaxGadget.do"
+        miniUrl="bems/zoneMgmtMiniGadget.do"
+        name="블락 관리"
+        miniHeight="350"
+        fullHeight="800"
+    gadgetCode="gadget.bems011"
+    />
+    <system.Gadget
+        descr="수검침관리기능"
+        iconSrc="assets/images/gadget_ko/thumbnail.gif"
+        maxUrl="mvm/ManualMeteringMax.do"
+        miniUrl="mvm/ManualMeteringMini.do"
+        name="수검침관리"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering026"
+   />
+   <system.Gadget
+        descr="수도 사용량 모니터링"
+        iconSrc="bems/assets/images/bems_gadget_ko/wmMonitoringMini.gif"
+        maxUrl="bems/consumptionMonitoringWmMaxGadget.do"
+        miniUrl="bems/consumptionMonitoringWmMiniGadget.do"
+        name="수도 사용량 모니터링"
+        miniHeight="350"
+        fullHeight="800"
+    gadgetCode="gadget.bems005"
+    />
+    
+    <system.GadgetRole
+        gadget="코드관리"
+        role="admin"
+        supplier="광명"
+    />
+    <system.GadgetRole
+        gadget="검침데이터 조회(수도)"
+        role="admin"
+        supplier="광명"
+    />  
+    <system.GadgetRole
+        gadget="제조사 모델 관리"
+        role="admin"
+        supplier="광명"
+    />  
+    <system.GadgetRole
+        gadget="공급사 관리"
+        role="admin"
+        supplier="광명"
+    />  
+    <system.GadgetRole
+        gadget="사용자관리"
+        role="admin"
+        supplier="광명"
+    />
+    <system.GadgetRole
+        gadget="집중기관리"
+        role="admin"
+        supplier="광명"
+    />
+    <system.GadgetRole
+        gadget="통신 로그"
+        role="admin"
+        supplier="광명"
+    />
+    <system.GadgetRole
+        gadget="변경 로그"
+        role="admin"
+        supplier="광명"
+    />
+    <system.GadgetRole
+        gadget="명령 이력 및 설정"
+        role="admin"
+        supplier="광명"
+    />
+    <system.GadgetRole
+        gadget="검침 실패(수도)"
+        role="admin"
+        supplier="광명"
+    />
+    <system.GadgetRole
+        gadget="고객 및 계약 관리"
+        role="admin"
+        supplier="광명"
+    />
+    <system.GadgetRole
+        gadget="주기별 데이터 누락(수도)"
+        role="admin"
+        supplier="광명"
+    />
+    <system.GadgetRole
+        gadget="모뎀관리"
+        role="admin"
+        supplier="광명"
+    />    
+    <system.GadgetRole
+        gadget="미터관리"
+        role="admin"
+        supplier="광명"
+    />               
+    <system.GadgetRole
+        gadget="자산 등록"
+        role="admin"
+        supplier="광명"
+    />  
+    <system.GadgetRole
+        gadget="수도 판매 실적"
+        role="admin"
+        supplier="광명"
+    />  
+    <system.GadgetRole
+        gadget="검침값 유효성 관리(수도)"
+        role="admin"
+        supplier="광명"
+    />
+    <system.GadgetRole
+        gadget="배터리 로그"
+        role="admin"
+        supplier="광명"
+    /> 
+    <system.GadgetRole
+        gadget="그룹 관리"
+        role="admin"
+        supplier="광명"
+    />
+    <system.GadgetRole
+        gadget="수도 사용량 모니터링"
+        role="admin"
+        supplier="광명"
+    /> 
+    <system.GadgetRole
+        gadget="블락별 사용량 통계"
+        role="admin"
+        supplier="광명"
+    />
+    <system.GadgetRole
+        gadget="블락 관리"
+        role="admin"
+        supplier="광명"
+    />
+    <system.GadgetRole
+        gadget="수검침관리"
+        role="admin"
+        supplier="광명"
+    /> 
+    
+    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="시스템 관리"
+        gadget="고객 및 계약 관리"
+    />
+    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="2"
+        dashboard="검침데이타 관리"
+        gadget="검침데이터 조회(수도)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="검침데이터 관리"
+        gadget="주기별 데이터 누락(수도)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="2"
+        dashboard="검침데이터 관리"
+        gadget="검침 실패(수도)"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="5"
+        dashboard="검침데이터 관리"
+        gadget="수도 판매 실적"
+    />
+    <!-- 시스템 관리 대시보드 시작-->
+        <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="시스템 관리"
+        gadget="공급사 관리"
+    />
+        <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="시스템 관리"
+        gadget="사용자관리"
+    /> 
+        <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="시스템 관리"
+        gadget="제조사 모델 관리"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="시스템 관리"
+        gadget="코드관리"
+    />
+    <system.DashboardGadget
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="시스템 관리"
+        gadget="그룹 관리"
+    />
+    <!-- 시스템 관리 대시보드 끝-->
+    
+    <!-- 장비 관리 대시보드 시작-->
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="장비 관리"
+        gadget="집중기관리"
+    />    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="장비 관리"
+        gadget="모뎀관리"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="장비 관리"
+        gadget="미터관리"
+    /> 
+
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="자산 관리"
+        gadget="자산 등록"
+    /> 
+  
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="장비 관리"
+        gadget="배터리 로그"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="시스템 관리"
+        gadget="통신 로그"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="시스템 관리"
+        gadget="명령 이력 및 설정"
+    />
+    
+    <system.DeviceVendor 
+        supplier="광명"
+        name="누리텔레콤"
+        code="100"
+        address="서울시 서초구 방배동 사평대로 16 누리빌딩 781-0777"
+        descr="누리텔레콤"
+    />
+    <system.DeviceVendor 
+        supplier="광명"
+        name="신한정밀"
+        code="100"
+        address=""
+        descr="신한정밀"
+    />
+    <system.DeviceVendor 
+        supplier="광명"
+        name="신한메카트로닉스"
+        code="100"
+        address=""
+        descr="신한메카트로닉스"
+    />
+    <system.DeviceVendor 
+        supplier="광명"
+        name="Acatals"
+        code="100"
+        address=""
+        descr="Acatals"
+    />
+    
+    <!-- 집중기 -->
+    <system.DeviceModel 
+        deviceVendor="누리텔레콤"
+        code="4"
+        deviceType="1.1.1.3"
+        name="NZC I211"
+        image="uploadImg/mcu/NZC-I212.jpg"
+    />
+    <system.DeviceModel 
+        deviceVendor="누리텔레콤"
+        code="5"
+        deviceType="1.1.1.4"
+        name="NZC O312"
+    />
+    
+    <!-- 리피터  -->
+    <system.DeviceModel 
+        deviceVendor="누리텔레콤"
+        code="98"
+        deviceType="1.2.1.98"
+        name="NZR-O121RE"
+    />
+    
+    <!-- 수도모뎀 -->
+    <system.DeviceModel 
+        deviceVendor="누리텔레콤"
+        code="5"
+        deviceType="1.2.1.5"
+        name="NAPC-W105SR"
+    />
+    
+    <!-- 수도계량기 -->
+    <system.DeviceModel 
+        deviceVendor="신한정밀"
+        code="0"
+        deviceType="1.3.1.2"
+        name="디지탈(신한정밀)"
+    />
+    <system.DeviceModel 
+        deviceVendor="신한정밀"
+        code="1"
+        deviceType="1.3.1.2"
+        name="기계식(신한정밀)"
+    />
+    <system.DeviceModel 
+        deviceVendor="신한메카트로닉스"
+        code="2"
+        deviceType="1.3.1.2"
+        name="디지탈(신한메카)"
+    />
+    <system.DeviceModel 
+        deviceVendor="신한메카트로닉스"
+        code="3"
+        deviceType="1.3.1.2"
+        name="기계식(신한메카)"
+    />
+    <system.DeviceModel 
+        deviceVendor="Acatals"
+        code="4"
+        deviceType="1.3.1.2"
+        name="디지탈(Acatals)"
+    />
+    <system.DeviceModel 
+        deviceVendor="Acatals"
+        code="5"
+        deviceType="1.3.1.2"
+        name="기계식(Acatals)"
+    />
+    
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase=""
+        pulseConst="100"
+        name="디지탈(신한정밀)"
+        deviceModel="디지탈(신한정밀)"
+        parserName="com.aimir.fep.meter.parser.ZEUPLS2"
+        saverName="com.aimir.fep.meter.saver.ZEUPLS2MDSaver"
+    />
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase=""
+        pulseConst="100"
+        name="기계식(신한정밀)"
+        deviceModel="기계식(신한정밀)"
+        parserName="com.aimir.fep.meter.parser.ZEUPLS2"
+        saverName="com.aimir.fep.meter.saver.ZEUPLS2MDSaver"
+    />
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase=""
+        pulseConst="100"
+        name="디지탈(신한메카)"
+        deviceModel="디지탈(신한메카)"
+        parserName="com.aimir.fep.meter.parser.ZEUPLS2"
+        saverName="com.aimir.fep.meter.saver.ZEUPLS2MDSaver"
+    />
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase=""
+        pulseConst="100"
+        name="기계식(신한메카)"
+        deviceModel="기계식(신한메카)"
+        parserName="com.aimir.fep.meter.parser.ZEUPLS2"
+        saverName="com.aimir.fep.meter.saver.ZEUPLS2MDSaver"
+    />
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase=""
+        pulseConst="100"
+        name="디지탈(Acatals)"
+        deviceModel="디지탈(Acatals)"
+        parserName="com.aimir.fep.meter.parser.ZEUPLS2"
+        saverName="com.aimir.fep.meter.saver.ZEUPLS2MDSaver"
+    />
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase=""
+        pulseConst="100"
+        name="기계식(Acatals)"
+        deviceModel="기계식(Acatals)"
+        parserName="com.aimir.fep.meter.parser.ZEUPLS2"
+        saverName="com.aimir.fep.meter.saver.ZEUPLS2MDSaver"
+    />
+    
+    <system.ModemConfig 
+        name="NZR-O121RE"
+        parserName="com.aimir.fep.meter.parser.ZBRepeater"
+        saverName="com.aimir.fep.meter.saver.ZBRepeaterMDSaver"
+        deviceModel="NZR-O121RE"
+    /> 
+    
+    <system.ModemConfig 
+        name="NAPC-W105SR"
+        parserName="com.aimir.fep.meter.parser.ZEUPLS"
+        saverName="com.aimir.fep.meter.saver.ZEUPLS2MDSaver"
+        deviceModel="NAPC-W105SR"
+    />
+    
+    <mvm.DisplayChannel name="Usage" localName="사용량" serviceType="Water" unit="m3" chMethod="SUM"/>
+    
+    <mvm.ChannelConfig meterConfig="디지탈(신한정밀)" channel="Usage" channelIndex="1" dataType="LpWM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="기계식(신한정밀)" channel="Usage" channelIndex="1" dataType="LpWM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="디지탈(신한메카)" channel="Usage" channelIndex="1" dataType="LpWM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="기계식(신한메카)" channel="Usage" channelIndex="1" dataType="LpWM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="디지탈(Acatals)" channel="Usage" channelIndex="1" dataType="LpWM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="기계식(Acatals)" channel="Usage" channelIndex="1" dataType="LpWM" displayType="SaveAndDisplay" />
+    
+    <mvm.Season
+        smonth="04"
+        sday="01"
+        emonth="05"
+        name="봄"
+    />
+    <mvm.Season
+        smonth="06"
+        sday="01"
+        emonth="08"
+        name="여름"
+    />
+    <mvm.Season
+        smonth="09"
+        sday="01"
+        emonth="10"
+        name="가을"
+    />
+    <mvm.Season
+        smonth="11"
+        sday="01"
+        emonth="03"
+        name="겨울"
+    />
+    
+    <device.EventAlert eventAlertType='Alert' 
+        severity='Warning' 
+        name='Communication Alarm' 
+        descr='Communcation Failure or Restore' 
+        msgPattern='통신 경고' 
+        troubleAdvice='네트워크 점검' 
+        oid='205.1.0,205.20,205.3.0' 
+        monitor='NoMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+        severity='Major' 
+        name='Threshold Warning' 
+        descr='Out of threshold range' 
+        msgPattern='임계치 경고' 
+        troubleAdvice='' 
+        oid='' 
+        monitor='NoMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+        severity='Information' 
+        name='Leak Alarm' 
+        descr='Leak Alarm' 
+        msgPattern='누전(누수) 경고' 
+        troubleAdvice='$(event.eventAttrs.message)' 
+        oid='' 
+        monitor='NoMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+        severity='Information' 
+        name='Flow Alarm' 
+        descr='Flow Alarm' 
+        msgPattern='유량 경고' 
+        troubleAdvice='$(event.eventAttrs.message)' 
+        oid='213.1.0' 
+        monitor='NoMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Reset' 
+        descr='Reset' 
+        msgPattern='리셋' 
+        troubleAdvice='' 
+        oid='200.20.0,203.9.0' 
+        monitor='NoMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+        severity='Major' 
+        name='Battery Alarm' 
+        descr='Battery Low or Restore, Battery Charging Start or End.' 
+        msgPattern='$(event.eventAttrs.message)' 
+        troubleAdvice='' 
+        oid='200.16.0,200.17.0,200.23.0,200.24.0' 
+        monitor='NoMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Equipment Installation' 
+        descr='Equipment installation' 
+        msgPattern='장비 설치' 
+        troubleAdvice='' 
+        oid='200.1.0,203.8.0,201.1.0,203.105.0' 
+        monitor='NoMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Equipment De-Installation' 
+        descr='Equipment information deleted from System' 
+        msgPattern='장비 제거' 
+        troubleAdvice='' 
+        oid='200.2.0,201.2.0,203.106.0' 
+        monitor='NoMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Equipment Startup' 
+        descr='Equipment Startup' 
+        msgPattern='시작' 
+        troubleAdvice='' 
+        oid='200.3.0,201.3.0' 
+        monitor='NoMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Equipment ShutDown' 
+        descr='Equipment ShutDown' 
+        msgPattern='셧다운' 
+        troubleAdvice='' 
+        oid='200.4.0,201.4.0' 
+        monitor='NoMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Equipment Registration' 
+        descr='equipment is created automatically or installed.' 
+        msgPattern='장비 등록' 
+        troubleAdvice='' 
+        oid='' 
+        monitor='NoMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Equipment Replacement' 
+        descr='It just does in metering action to replace meter with other meter' 
+        msgPattern='장비 교체' 
+        troubleAdvice='' 
+        oid='' 
+        monitor='NoMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Magnetic Tamper' 
+        descr='Magnetic Tamper' 
+        msgPattern='자성 경고' 
+        troubleAdvice='' 
+        oid='' 
+        monitor='NoMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+        severity='Major' 
+        name='Case Alarm' 
+        descr='Case Open or Close' 
+        msgPattern='덮개 경고' 
+        troubleAdvice='' 
+        oid='200.25.0,200.26.0,210.1' 
+        monitor='NoMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Equipment Notification' 
+        descr='Equipment Notification, Information, Waring or etc..' 
+        msgPattern='' 
+        troubleAdvice='' 
+        oid='203.10.0,212.1.0,200.29.0,210.1.0,203.100.0' 
+        monitor='NoMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Attachment or Detachment' 
+        descr='Attachment or Detachment' 
+        msgPattern='$(event.eventAttrs.message)' 
+        troubleAdvice='' 
+        oid='203.1.0,203.2.0' 
+        monitor='SaveAndMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+        severity='Information' 
+        name='Pulse Cut' 
+        descr='Pulse Cut' 
+        msgPattern='단선 경고' 
+        troubleAdvice='' 
+        oid='' 
+        monitor='NoMonitor' 
+        timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+         severity='Warning' 
+         name='Tilt Alarm'
+         descr='Tilt Alarm or Handling Meter' 
+         msgPattern='$(event.eventAttrs.message)' 
+         troubleAdvice='' 
+         oid='' 
+         monitor='SaveAndMonitor' 
+         timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+         severity='Warning' 
+         name='Back Pulse Alarm'
+         descr='Back Pulse Alarm' 
+         msgPattern='$(event.eventAttrs.message)' 
+         troubleAdvice='' 
+         oid='' 
+         monitor='SaveAndMonitor' 
+         timeout='840'/>
+         
+<device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.1"   model="NZC I211"    level="2"   desc="상태 점검" />
+<device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.2"   model="NZC I211"    level="2"   desc="정보 획득" />
+<device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.20"  model="NZC I211"    level="2"   desc="자가 테스트" />
+<device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.4"   model="NZC I211"    level="2"   desc="원격파일접근" />
+<device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.5"   model="NZC I211"    level="2"   desc="설정정보백업" />
+<device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.6"   model="NZC I211"    level="2"   desc="설정정보세팅" />
+<device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.7"   model="NZC I211"    level="2"   desc="검침데이타복구" />
+<device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.8"   model="NZC I211"    level="2"   desc="시간동기화" />
+<device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.10"  model="NZC I211"    level="2"   desc="리셋" />
+<device.OperationList  deviceTypeCode="1.1.1.4" operationCode="8.3.1"   model="NZC O312"    level="2"   desc="상태 점검" />
+<device.OperationList  deviceTypeCode="1.1.1.4" operationCode="8.3.2"   model="NZC O312"    level="2"   desc="정보 획득" />
+<device.OperationList  deviceTypeCode="1.1.1.4" operationCode="8.3.4"   model="NZC O312"    level="2"   desc="원격파일접근" />
+<device.OperationList  deviceTypeCode="1.1.1.4" operationCode="8.3.7"   model="NZC O312"    level="2"   desc="검침데이타복구" />
+<device.OperationList  deviceTypeCode="1.1.1.4" operationCode="8.3.8"   model="NZC O312"    level="2"   desc="시간동기화" />
+<device.OperationList  deviceTypeCode="1.1.1.4" operationCode="8.3.10"  model="NZC O312"    level="2"   desc="리셋" />
+<device.OperationList  deviceTypeCode="1.1.1.4" operationCode="8.3.3"   model="NZC O312"    level="2"   desc="자가진단" />
+<device.OperationList  deviceTypeCode="1.2.1.5" operationCode="8.2.6"   model="NAPC-W105SR" level="2"   desc="LP로그조회" />
+<device.OperationList  deviceTypeCode="1.2.1.5" operationCode="8.2.5"   model="NAPC-W105SR" level="2"   desc="이벤트로그조회" />
+<device.OperationList  deviceTypeCode="1.2.1.5" operationCode="8.2.2"   model="NAPC-W105SR" level="2"   desc="정보획득" />
+<device.OperationList  deviceTypeCode="1.2.1.98" operationCode="8.2.2"  model="Repeater"    level="2"   desc="정보획득" />
+<device.OperationList  deviceTypeCode="1.2.1.98" operationCode="8.2.5"  model="Repeater"    level="2"   desc="이벤트로그조회" />
+<device.OperationList  deviceTypeCode="1.3.1.2" operationCode="8.1.1"   model="디지탈(신한정밀)"   level="2"   desc="온디맨드 검침" />
+<device.OperationList  deviceTypeCode="1.3.1.2" operationCode="8.1.1"   model="기계식(신한정밀)"   level="2"   desc="온디맨드 검침" />
+<device.OperationList  deviceTypeCode="1.3.1.2" operationCode="8.1.1"   model="디지탈(신한메카)"   level="2"   desc="온디맨드 검침" />
+<device.OperationList  deviceTypeCode="1.3.1.2" operationCode="8.1.1"   model="기계식(신한메카)"   level="2"   desc="온디맨드 검침" />
+<device.OperationList  deviceTypeCode="1.3.1.2" operationCode="8.1.1"   model="디지탈(Acatals)"   level="2"   desc="온디맨드 검침" />
+<device.OperationList  deviceTypeCode="1.3.1.2" operationCode="8.1.1"   model="기계식(Acatals)"   level="2"   desc="온디맨드 검침" />
+
+<mvm.VEEParameter 
+                    ruleType="Validation"
+                    parameter="NegativeConsumption"
+                    localName="마이너스 사용량" 
+                    useThreshold="false"  
+                    item="Day"  
+                    condition="value_00&lt;0 or value_01&lt;0 or value_02&lt;0 or value_03&lt;0 or value_04&lt;0 or value_05&lt;0 or value_06&lt;0 or value_07&lt;0 or value_08&lt;0 or value_09&lt;0 or value_10&lt;0 or value_11&lt;0 or value_12&lt;0 or value_13&lt;0 or value_14&lt;0 or value_15&lt;0 or value_16&lt;0 or value_17&lt;0 or value_18&lt;0 or value_19&lt;0 or value_20&lt;0 or value_21&lt;0 or value_22&lt;0 or value_23&lt;0 "  
+                    />
+    <mvm.VEEParameter 
+                    ruleType="Validation" 
+                    parameter="ZeroConsumption"
+                    localName="0 사용량" 
+                    useThreshold="false"  
+                    condition="value_00=0 or value_01=0 or value_02=0 or value_03=0 or value_04=0 or value_05=0 or value_06=0 or value_07=0 or value_08=0 or value_09=0 or value_10=0 or value_11=0 or value_12=0 or value_13=0 or value_14=0 or value_15=0 or value_16=0 or value_17=0 or value_18=0 or value_19=0 or value_20=0 or value_21=0 or value_22=0 or value_23=0"  
+                    item="Day"  
+                    />
+                                        
+    <mvm.VEEParameter 
+                    ruleType="Validation" 
+                    parameter="DataGaps"
+                    localName="주기데이타 빠짐" 
+                    useThreshold="false"  
+                    condition="value_00=null or value_01=null or value_02=null or value_03=null or value_04=null or value_05=null or value_06=null or value_07=null or value_08=null or value_09=null or value_10=null or value_11=null or value_12=null or value_13=null or value_14=null or value_15=null or value_16=null or value_17=null or value_18=null or value_19=null or value_20=null or value_21=null or value_22=null or value_23=null"  
+                    item="Day"  
+                    />
+    <mvm.VEEParameter   
+                    ruleType="Validation"
+                    parameter="AbnormalHighUsage"
+                    localName="비정상 높은 사용량" 
+                    useThreshold="true"  
+                    item="Day"  
+                    threshold1="50"
+                    thresholdCondition1="&gt;"
+                    threshold2="500"
+                    thresholdCondition2="&lt;"
+                    thresholdItem="Average"
+                    thresholdPeriod="LastMonth"
+                    />
+     <mvm.VEEParameter   
+                    ruleType="Validation"
+                    parameter="AbnormalLowUsage"
+                    localName="비정상 낮은 사용량" 
+                    useThreshold="true"  
+                    item="Day"  
+                    threshold1="50"
+                    thresholdCondition1="&gt;"
+                    threshold2="500"
+                    thresholdCondition2="&lt;"
+                    thresholdItem="Average"
+                    thresholdPeriod="LastMonth"
+                    />
+    <mvm.VEEParameter  
+                    ruleType="Validation" 
+                    parameter="AbnormalMeterTime"
+                    localName="비정상 미터 시간" 
+                    useThreshold="false"  
+                    item="Meter"  
+                    condition="timeDiff > 60"  
+                    />
+    <mvm.VEEParameter   
+                    ruleType="Validation"
+                    parameter="AbnormalMeterId"
+                    localName="인식불가미터" 
+                    useThreshold="false"  
+                    item="EventAlertLog"
+                    condition="eventAlert.name = 'Invalid Equipment'"
+                    />
+    <mvm.VEEParameter   
+                    ruleType="Validation"
+                    parameter="OutOfThreshold"
+                    localName="임계치 초과" 
+                    useThreshold="true"  
+                    item="Day"
+                    condition="value_00&gt;threshold or value_01&gt;threshold or value_02&gt;threshold or value_03&gt;threshold or value_04&gt;threshold or value_05&gt;threshold or value_06&gt;threshold or value_07&gt;threshold or value_08&gt;threshold or value_09&gt;threshold or value_10&gt;threshold or value_11&gt;threshold or value_12&gt;threshold or value_13&gt;threshold or value_14&gt;threshold or value_15&gt;threshold or value_16&gt;threshold or value_17&gt;threshold or value_18&gt;threshold or value_19&gt;threshold or value_20&gt;threshold or value_21&gt;threshold or value_22&gt;threshold or value_23&gt;threshold"
+                    />
+                    
+<system.Co2Formula supplyTypeCode="3.1" unitUsage="100" co2emissions="42.4" co2factor="0.424" unit="KWh"/>
+    <system.Co2Formula supplyTypeCode="3.2" unitUsage="100" co2emissions="58.6" co2factor="0.586" unit="㎥"/>
+    <system.Co2Formula supplyTypeCode="3.3" unitUsage="100" co2emissions="36" co2factor="0.36" unit="N㎥"/>
+    <system.Co2Formula supplyTypeCode="3.4" unitUsage="100" co2emissions="42.4" co2factor="0.424" unit="㎥"/>
+    <system.Co2Formula supplyTypeCode="3.6" unitUsage="100" co2emissions="42.4" co2factor="0.424" unit="㎥"/>
+</dataset>

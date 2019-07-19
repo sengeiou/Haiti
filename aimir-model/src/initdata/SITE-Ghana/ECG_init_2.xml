@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+
+    <system.Supplier 
+        name="ECG" 
+        country="Ghana"
+        lang="Ga"
+        timezone="Africa/Accra"
+        address="Africa"
+        descr="ECG"
+        telno=""
+        cd.pattern="###,###,###,###,##0.000"
+        cd.round="c"
+        md.pattern="###,###,###,###,##0.000"
+        md.round="r"
+    />
+	
+	<system.SupplyType
+        supplier="ECG"
+        typeCode="3.1"
+        co2Formula="ElectricityCO2"
+        billDate="1"
+    />		
+	
+
+</dataset>

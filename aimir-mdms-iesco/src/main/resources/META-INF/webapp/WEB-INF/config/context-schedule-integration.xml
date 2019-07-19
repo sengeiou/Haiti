@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+ xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+ xmlns:tx="http://www.springframework.org/schema/tx"
+ xmlns:util="http://www.springframework.org/schema/util" 
+ xmlns:batch="http://www.springframework.org/schema/batch"
+ xmlns:integration="http://www.springframework.org/schema/integration" 
+ xmlns:int-ftp="http://www.springframework.org/schema/integration/ftp"
+ xmlns:int-sftp="http://www.springframework.org/schema/integration/sftp"
+ xmlns:int-file="http://www.springframework.org/schema/integration/file"    
+ xmlns:int="http://www.springframework.org/schema/integration"
+ xmlns:task="http://www.springframework.org/schema/task"
+ xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/util 
+        http://www.springframework.org/schema/beans/spring-util-4.0.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd		
+    	http://www.springframework.org/schema/batch 
+    	http://www.springframework.org/schema/batch/spring-batch-3.0.xsd    	
+    	http://www.springframework.org/schema/integration 
+    	http://www.springframework.org/schema/integration/spring-integration-4.3.xsd
+    	http://www.springframework.org/schema/integration/file 
+    	http://www.springframework.org/schema/integration/file/spring-integration-file-4.3.xsd
+    	http://www.springframework.org/schema/integration/ftp 
+    	http://www.springframework.org/schema/integration/ftp/spring-integration-ftp-4.3.xsd
+    	http://www.springframework.org/schema/integration/sftp 
+    	http://www.springframework.org/schema/integration/sftp/spring-integration-sftp-4.3.xsd
+    	http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task-4.3.xsd">
+        
+    <!-- job context -->
+  	<bean id="jobRepository"
+		class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+		<property name="transactionManager" ref="jobTransactionManager" />
+  	</bean>
+
+  	<bean id="jobTransactionManager"
+		class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
+
+  	<bean id="jobLauncher"
+		class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository" />
+  	</bean>
+  	
+  	<bean id="step" class="org.springframework.batch.core.scope.StepScope" />
+  	 
+	<!--  FTP Settings -->
+    <bean id="ftpClientFactory" class="org.springframework.integration.ftp.session.DefaultFtpSessionFactory">
+		<property name="host" value="${mdms.ftp.host}"/>
+		<property name="port" value="${mdms.ftp.port}"/>
+		<property name="username" value="${mdms.ftp.username}"/>				
+		<property name="password" value="${mdms.ftp.password}"/>		
+	</bean>
+	
+	<int:channel id="ftpChannel" />
+	
+	<int-ftp:outbound-channel-adapter 
+		session-factory="ftpClientFactory"
+		channel="ftpChannel"		
+		remote-directory-expression="headers['remoteDir']"
+		auto-create-directory="true"
+		charset="UTF-8"
+	/>
+	<!--  FTP Settings -->
+		
+	<!--  SFTP Settings -->
+    <bean id="sftpSessionFactory"
+        class="org.springframework.integration.sftp.session.DefaultSftpSessionFactory">
+        <property name="host" value="${mdms.sftp.host}" />
+        <property name="port" value="${mdms.sftp.port}" />
+        <property name="user" value="${mdms.sftp.username}" />
+        <!--  <property name="password" value="${mdms.sftp.password}" />-->
+        <property name="privateKey" value="${mdms.sftp.privateKey}"/>	
+        <property name="allowUnknownKeys" value="true" />        
+    </bean>
+    
+    <int:channel id="sftpChannel" />
+	
+	<int-sftp:outbound-channel-adapter
+        id="sftpOutbound" 
+        channel="sftpChannel" 
+        remote-directory-expression="headers['remoteDir']"
+        session-factory="sftpSessionFactory" />
+        
+	<!--  SFTP Settings -->
+     
+    <!--
+	<task:scheduled-tasks>	
+		  
+		<task:scheduled ref="mdmBatchDataRunScheduler" method="run" cron="0 */10 * * * *" />
+		
+		<task:scheduled ref="mdmDataLPRunScheduler" method="run" cron="0 */10 * * * *" />
+		
+		<task:scheduled ref="mdmDataDailyRunScheduler" method="run" cron="0 */10 * * * *" />
+		
+		<task:scheduled ref="mdmDataMonthlyRunScheduler" method="run" cron="0 */10 * * * *" />
+		
+		<task:scheduled ref="mdmDataEventRunScheduler" method="run" cron="0 */10 * * * *" />  
+		    	
+    	<task:scheduled ref="transferRunScheduler" method="run" cron="0 */10 * * * *" />
+    	    	
+    </task:scheduled-tasks>
+    -->   
+    
+</beans> 

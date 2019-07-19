@@ -1,0 +1,42 @@
+Module Name : SetCloneOnOffToRemainingTargetParent
+Module Description : Clone OTA를 진행시 가끔 Clone전파가 되지 않고 중간에 멈추는 경우가 있다.
+                     이럴경우에는 전파가 되지 않은 모뎀부터 다시 Clone 전파를 하도록 해당 모뎀의 Parent에 Command를 내려줘야하며 이때 사용하는 Tool이다.
+Package : aimir-fep/src/main/java/com/aimir/fep/tool/SetCloneOnOffToRemainingTargetParent.java
+          aimir-fep/src/main/resources/spring-SetCloneOnOffToRemainingTargetParent.xml
+		  aimir-fep-exec/config/fmp-SetCloneOnOffToRemainingTargetParent.properties
+		  aimir-fep-exec/log4j-SetCloneOnOffToRemainingTargetParent.xml
+		  aimir-fep-exec/pom-SetCloneOnOffToRemainingTargetParent.xml
+		  aimir-fep-exec/start-SetCloneOnOffToRemainingTargetParent.sh
+		  aimir-fep-exec/stop-SetCloneOnOffToRemainingTargetParent.sh
+
+Execute Description
+Tool : start-SetCloneOnOffToRemainingTargetParent.sh
+Parameters : 
+	 1. cloneCode
+	 	- 클론 코드가 맞아야지 클론을 On/Off 에 대한 명령어를 실행한다.코드에 따라 동작이 다르다.
+	       0314 : 클론시 자신의 이미지를 사용한다.(자동전파 X)
+	       0315 : 클론시 자신의 이미지를 사용한다.(자동전파 O)  ==> Modem Clone On/Off
+	       8798 : 클론시 타장비 이미지를 사용한다.(자동전파 X)
+	       8799 : 클론시 타장비 이미지를 사용한다.(자동전파 O)  ==> Meter Clone On/Off
+	 2. cloneCount
+	     - 클론을 실행할 시간 값을 의미하며, 단위는 15분이다. 
+	       해당 값은 0, 20 ~ 96 까지 값일 때 유효한 값으로 받아 들인다.(그 외에 값은 에러 처리) 
+	          Ex) 96 값을 설정 시 24시간 동안 클론 운영. 
+	       클론을 종료시키고자 하면 0의 값을 준다.
+	 3. fwVersion
+	     - Clone OTA 하고자 하는 펌웨어 버전.
+	       Command Target 선정시 fwVersion 보다 낮은 Device만 Target으로 선정하게 된다.
+	 4. executeType
+	     - DCU : DCU가 Clone On/Off 실행
+	     - HES : HES가 Clone On/Off 실행
+    ** 보다 자세한 내용은 NI Protocol document 참조할것.
+Parameters Ex)
+	### Properties ####
+	cloneCode=0315
+	cloneCount=96
+	fwVersion=1.22
+	executeType=DCU
+	####################
+		 
+	  
+

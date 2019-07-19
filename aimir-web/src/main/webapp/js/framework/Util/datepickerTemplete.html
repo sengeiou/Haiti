@@ -1,0 +1,113 @@
+<div class="dynamic-date-tabs">
+<ul class="date-tab-menu buttontype">
+    <li data-tabtype="hourly" class="li-hourly"><a href="#tab-hourly" data-fmt-message="aimir.hourly"></a></li>
+    <li data-tabtype="daily" class="li-daily"><a href="#tab-daily" data-fmt-message="aimir.daily"></a></li>
+    <li data-tabtype="period" class="li-period"><a href="#tab-period" data-fmt-message="aimir.period"></a></li>
+    <li data-tabtype="weekly" class="li-weekly"><a href="#tab-weekly" data-fmt-message="aimir.weekly"></a></li>
+    <li data-tabtype="monthly" class="li-monthly"><a href="#tab-monthly" data-fmt-message="aimir.monthly"></a></li>
+    <li data-tabtype="monthlyPeriod" class="li-monthlyPeriod"><a href="#tab-monthlyPeriod" data-fmt-message="aimir.monthlyPeriod"></a></li>
+    <li data-tabtype="weekdaily" class="li-weekdaily"><a href="#tab-weekdaily" data-fmt-message="aimir.weekdaily"></a></li>
+    <li data-tabtype="seasonal" class="li-seasonal"><a href="#tab-seasonal" data-fmt-message="aimir.seasonal"></a></li>
+    <li data-tabtype="yearly" class="li-yearly"><a href="#tab-yearly" data-fmt-message="aimir.yearly"></a></li>
+</ul>
+<div id="tab-hourly" class="tab-item">
+    <ul>
+        <li><input name="hourly-sdate" class="day" type="text" readonly="readonly"></li>
+        <li class="date-space"></li>
+        <li><select name="hourly-shour" class="sm"></select></li>
+        <li><span>~</span></li>
+        <li><input name="hourly-edate" class="day" type="text" readonly="readonly"></li>
+        <li class="date-space"></li>
+        <li><select name="hourly-ehour" class="sm"></select></li>
+    </ul>
+</div>
+<div id="tab-daily" class="tab-item">
+    <ul>
+        <li><button type="button" class="back"></button></li>
+        <li><input name="daily-day" type="text" class="day" readonly="readonly"></li>
+        <li><button type="button" class="next"></button></li>
+    </ul>
+</div>
+<div id="tab-period" class="tab-item">
+    <ul>
+        <li><input name="period-sdate" class="day" type="text" readonly="readonly"></li>
+        <li><input value="~" class="between" type="text"></li>
+        <li><input name="period-edate" class="day" type="text" readonly="readonly"></li>
+    </ul>
+</div>
+<div id="tab-weekly" class="tab-item">
+    <ul>
+        <li><select name="weekly-year" class="year-selector"></select></li>
+        <li><label class="descr" data-fmt-message="aimir.year1"></label></li>
+        <li class="date-space"></li>
+        <li><select name="weekly-month" class="month-selector"></select></li>
+        <li><label class="descr" data-fmt-message="aimir.day.mon"></label></li>
+        <li class="date-space"></li>
+        <li><select name="weekly-week" class="week-selector"></select></li>
+        <li><label class="descr" data-fmt-message="aimir.week"></label></li>
+    </ul>
+</div>
+
+<div id="tab-monthly" class="tab-item">
+    <ul>
+        <li><button type="button" class="back"></button></li>
+        <li><select name="monthly-year" class="year-selector"></select></li>
+        <li><label class="descr" data-fmt-message="aimir.year1"></label></li>
+        <li class="date-space"></li>
+        <li><select name="monthly-month" class="month-selector"></select></li>
+        <li><label class="descr" data-fmt-message="aimir.day.mon"></label></li>
+        <li><button type="button" class="next"></button></li>
+    </ul>
+</div>
+
+<div id="tab-monthlyPeriod" class="tab-item">
+    <ul>
+        <li><select name="monthlyPeriod-syear" class="year-selector"></select></li>
+        <li><label class="descr" data-fmt-message="aimir.year1"></label></li>
+        <li class="date-space"></li>
+        <li><select name="monthlyPeriod-smonth" class="month-selector"></select></li>
+        <li><label class="descr" data-fmt-message="aimir.day.mon"></label></li>
+        <li><input value="~" class="between" type="text"></li>
+        <li><select name="monthlyPeriod-eyear" class="year-selector"></select></li>
+        <li><label class="descr" data-fmt-message="aimir.year1"></label></li>
+        <li class="date-space"></li>
+        <li><select name="monthlyPeriod-emonth" class="month-selector"></select></li>
+        <li><label class="descr" data-fmt-message="aimir.day.mon"></label></li>
+    </ul>
+</div>
+
+<div id="tab-weekdaily" class="tab-item">
+    <ul>
+        <li><select name="weekdaily-year" class="year-selector"></select></li>
+        <li><label class="descr" data-fmt-message="aimir.year1"></label></li>
+        <li class="date-space"></li>
+        <li><select name="weekdaily-month" class="month-selector"></select></li>
+        <li><label class="descr" data-fmt-message="aimir.day.mon"></label></li>
+        <li class="date-space"></li>
+        <li><select name="weekdaily-week" class="week-selector"></select></li>
+        <li><label class="descr" data-fmt-message="aimir.week"></label></li>
+        <li class="date-space"></li>
+        <li><select name="weekdaily-weekday" class="season-selector"></select></li>
+    </ul>
+</div>
+
+<div id="tab-seasonal" class="tab-item">
+    <ul>
+        <li><select name="seasonal-year" class="year-selector"></select></li>
+        <li><label class="descr" data-fmt-message="aimir.year1"></label></li>
+        <li class="date-space"></li>
+        <li><select name="seasonal-value" class="season-selector"></select></li>
+    </ul>
+</div>
+
+<div id="tab-yearly" class="tab-item">
+    <ul>
+        <li><select name="yearly-year" class="year-selector"></select></li>
+        <li><label class="descr" data-fmt-message="aimir.year1"></label></li>
+    </ul>
+</div>
+
+<input type="hidden" name="searchDateType" />
+<input type="hidden" name="searchDate" />
+
+</div>

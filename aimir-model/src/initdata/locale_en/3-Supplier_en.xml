@@ -1,0 +1,368 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+    <system.Supplier 
+        name="NURI" 
+        country="KOREA, REPUBLIC OF"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="Seoul"
+        descr="Nuri Telecom"
+        telno="02-781-0777"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />
+
+    <system.Supplier 
+        name="SAMCHULLY"
+        country="KOREA, REPUBLIC OF"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="Seoul"
+        descr="Samchully"
+        telno="02-368-3300"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />
+ 
+    <system.Supplier 
+        name="DAEHAN" 
+        country="KOREA, REPUBLIC OF"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="Seoul"
+        descr="Daehan City Gas"
+        telno="02-3410-8000"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    /> 
+
+    <system.Supplier 
+        name="SEOUL" 
+        country="KOREA, REPUBLIC OF"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="Seoul"
+        descr="Seoul City Gas"
+        telno="1588-5788"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />
+    
+    <system.Supplier 
+        name="HAEYANG"
+        country="KOREA, REPUBLIC OF"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="Gwangju"
+        descr="Hae Yang City Gas"
+        telno="1544-1115"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    /> 
+    
+    <system.Supplier 
+        name="KANGNAM" 
+        country="KOREA, REPUBLIC OF"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="Seoul"
+        descr="Kang Nam City Gas"
+        telno="02-2680-4700"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />
+    
+    <system.Supplier 
+        name="SEORABEOL"
+        country="KOREA, REPUBLIC OF"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="Gyeongju"
+        descr="Seorabeol Ciy Gas"
+        telno="(054)776-5111"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />  
+    
+    <system.Supplier 
+        name="KYUNGNAM"
+        country="KOREA, REPUBLIC OF"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="Changwon"
+        descr="Kyungnam Energy"
+        telno="(055)260-4000"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    /> 
+    <!--진해수도 못찾았음-->
+    <system.Supplier 
+        name="Jinhae"
+        country="KOREA, REPUBLIC OF"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address=""
+        descr=""
+        telno=""
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    /> 
+    <!--광명수도는 영문,주소 모르겠음-->
+    <system.Supplier 
+        name="Gwangmyeong"
+        country="KOREA, REPUBLIC OF"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="Gwangmyeong"
+        descr="Gwangmyeong"
+        telno="(02)2680-2114"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    /> 
+    
+    <system.Supplier 
+        name="SUWAN"
+        country="KOREA, REPUBLIC OF"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="Gwangju"
+        descr="Suwan Energy"
+        telno="(060)959-0095"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    /> 
+    <!--광명 집단에너지 못찾았음  -->
+    <system.Supplier 
+        name="광명 집단에너지"
+        country="KOREA, REPUBLIC OF"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address=""
+        descr=""
+        telno=""
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />  
+    
+    <system.Supplier 
+        name="INCHEON"
+        country="KOREA, REPUBLIC OF"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="Incheon"
+        descr="Incheon City Gas"
+        telno="1600-0002"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />  
+    
+    <system.Supplier 
+        name="CHUNGNAM"
+        country="KOREA, REPUBLIC OF"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="Daejeon"
+        descr="Chungnam City Gas"
+        telno="1599-0009"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />
+     
+    <system.Supplier 
+        name="HUCES"
+        country="KOREA, REPUBLIC OF"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="Seoul"
+        descr="Huces"
+        telno="(02)368-5000"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />  
+    
+    <system.Supplier 
+        name="JUNGBU"
+        country="KOREA, REPUBLIC OF"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="Asan"
+        descr="Jungbu City Gas"
+        telno="1544-0041"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />  
+    
+    <system.Supplier 
+        name="KEPCO"
+        country="KOREA, REPUBLIC OF"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="Seoul"
+        descr="Korea Electric Power Corporation"
+        telno="3456-3114"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />
+
+
+      
+    <system.Supplier
+        name="GOTEBORG"
+        country="SWEDEN"
+        lang="Swedish"
+        timezone="Europe/Stockholm" 
+        address="Sweden"
+        descr="Goteborg Energy"
+        telno="+46(0)31-62-62-62"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />
+       
+    <system.Supplier 
+        name="GASNATURAL"
+        country="SPAIN"
+        lang="Spanish"
+        timezone="Europe/Madrid"
+        address="Spain"
+        descr="Gas Natural SDG"
+        telno="+34-93-402-58-97"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />
+    
+    <system.Supplier 
+        name="SSE" 
+        country="UNITED KINGDOM"
+        lang="English"
+        timezone="Europe/London"
+        address="United Kingdom"
+        descr="Scottish and Southern Energy"
+        telno="+44(0)1738-456-000"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />
+    
+    <system.Supplier 
+        name="EDF" 
+        country="UNITED KINGDOM"
+        lang="English"
+        timezone="Europe/London"
+        address="United Kingdom"
+        descr="Edf Energy"
+        telno="+44(0)20-7242-9050"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />
+    
+    <system.Supplier 
+        name="ITALGAS" 
+        country="ITALY"
+        lang="Italian"
+        timezone="Europ/Rome"
+        address="Italy"
+        descr="Italgas"
+        telno="+39-900-900-999"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />
+    
+    <system.Supplier 
+        name="EEHC" 
+        country="EGYPT"
+        lang="Egyptian"
+        timezone="Africa/Cairo"
+        address="Egypt"
+        descr="Egyptian Electricity Holding Company"
+        telno="+20(0)2-2403-0681"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />
+    
+    <system.Supplier 
+        name="ANDE" 
+        country="PARAGUAY"
+        lang="Spanish"
+        timezone="America/Asuncion"
+        address="Paraguay"
+        descr="Administración Nacional de Electricidad"
+        telno="+595(0)21-211-001-20"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />
+    
+    <system.Supplier 
+        name="MERALCO" 
+        country="PHILIPPINES"
+        lang="Tagalog"
+        timezone="Aisa/Manila"
+        address="Philippins"
+        descr="Manila Electric Company"
+        telno="+63-16211"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />
+    
+	<system.Supplier 
+        name="SHINHAN" 
+        country="KOREA, REPUBLIC OF"
+        lang="Korean"
+        timezone="Asia/Seoul"
+        address="Incheon"
+        descr="SHINHAN-PRECISION CO., LTD"
+        telno="032-865-0410"
+        cd.pattern="0.0"
+        cd.round="f"
+        md.pattern="0.000"
+        md.round="r"
+    />
+</dataset>

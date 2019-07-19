@@ -1,0 +1,868 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset> 
+    <!-- 0-Country_en.xml -->
+	<!-- 1-Language_en.xml -->
+    <!-- 2-timezone_en.xls -->
+    <!-- 3-Pakistan-IESCO_Code_en.xml -->
+    
+	<system.Supplier 
+        name="IESCO" 
+        country="PAKISTAN"
+        lang="English"
+        timezone="Asia/Karachi"
+        address="Islamabad"
+        descr="Islamabad Electric Supply Company"
+        telno=""
+        cdPattern="###,###,###,###,##0.000"
+        cdRound="c"
+        cdGroupingSeperator="."
+        cdDecimalSeperator=","
+        mdPattern="###,###,###,###,##0.000"
+        mdRound="r"
+        mdGroupingSeperator="."
+        mdDecimalSeperator=","
+        image="images/utility_logo/IESCO_logo.jpg"
+        licenceUse="1"
+        licenceMeterCount="1000"
+        orgPatternRate = "kwh"
+    />
+    
+    <system.Co2Formula name="ElectricityCO2" supplyTypeCode="3.1" unitUsage="100" co2emissions="44.3" co2factor="0.443" unit="KWh"/>
+    <system.Co2Formula name="WaterCO2" supplyTypeCode="3.2" unitUsage="100" co2emissions="66" co2factor="0.66" unit="m3"/>
+    <system.Co2Formula name="GasCO2" supplyTypeCode="3.3" unitUsage="100" co2emissions="224" co2factor="2.24" unit="m3"/>
+    <system.Co2Formula name="HeatCO2" supplyTypeCode="3.4" unitUsage="100" co2emissions="42.4" co2factor="0.424" unit="㎥"/>
+    <system.Co2Formula name="VolumeCorrectorCO2" supplyTypeCode="3.5" unitUsage="100" co2emissions="1.0" co2factor="0.0" unit="㎥"/>
+    
+    <system.SupplyType
+        supplier="IESCO"
+        typeCode="3.1"
+        co2Formula="ElectricityCO2"
+        billDate="1"
+    />
+
+    <system.Location  name="Cantt-Saddar" orderNo="1" parent="" geocode="1" supplier="IESCO"/>
+	<system.Location  name="Raja Bazar" orderNo="2" parent="" geocode="2" supplier="IESCO"/>
+	<system.Location  name="Commercial Market Satellite Town" orderNo="3" parent="" geocode="3" supplier="IESCO"/>
+	    
+	
+    <system.Role name="admin" 
+        supplier="IESCO" 
+        systemAuthority="c" 
+        mtrAuthority="c" 
+        descr="Admin" 
+        hasDashboardAuth="true" 
+        customerRole="false" 
+        loginAuthority="true" />
+         
+    <system.Role name="vendor" 
+        supplier="IESCO" 
+        systemAuthority="r" 
+        mtrAuthority="r" 
+        descr="Vendor" 
+        hasDashboardAuth="true" 
+        customerRole="false" 
+        loginAuthority="true" />
+
+    <system.Role name="Integration" 
+        supplier="IESCO" 
+        systemAuthority="r"
+        mtrAuthority="r" 
+        descr="Integration" 
+        hasDashboardAuth="true" 
+        customerRole="true" 
+        loginAuthority="true" />
+                
+    <system.Role name="customer" 
+        supplier="IESCO" 
+        systemAuthority="r"
+        mtrAuthority="r" 
+        descr="Customer" 
+        hasDashboardAuth="true" 
+        customerRole="true" 
+        loginAuthority="true" />	
+	
+    <system.Operator loginId="admin"
+        aliasName="administrator"
+        email="admin@iesco.com"
+        failedLoginCount="0"
+        name="IESCO"
+        password="hQXOwYy2SzvjPduK5ESBqwwaCAFQWFdQtJAQuQiM57NZ1duCOKDjMaIsPBTSx6iU01eHOPA933Zl7lKLk5yTvg=="
+        telNo=""
+        loginDenied="false"
+        role="admin"
+        showDefaultDashboard="true"
+        supplier="IESCO"/>
+
+    <system.Operator loginId="integration"
+        aliasName="IntegrationSystem"
+        email="admin@iesco.com"
+        failedLoginCount="0"
+        name="IntegrationSystem"
+        password="hQXOwYy2SzvjPduK5ESBqwwaCAFQWFdQtJAQuQiM57NZ1duCOKDjMaIsPBTSx6iU01eHOPA933Zl7lKLk5yTvg=="
+        telNo=""
+        loginDenied="true"
+        role="admin"
+        showDefaultDashboard="false"
+        supplier="IESCO"/>	
+
+    <system.Dashboard descr="Main Dashboard" name="Main" orderNo="0" role="admin"/>
+    <system.Dashboard descr="System Management Dashboard" name="System" orderNo="1" role="admin"/>
+    <system.Dashboard descr="Metering Management Dashboard" name="Metering" orderNo="2" role="admin"/>
+    <system.Dashboard descr="Device Management Dashboard" name="Device" orderNo="3" role="admin"/>
+    <system.Dashboard descr="Event and History Management Dashboard" name="Alarm Event" orderNo="4" role="admin"/>
+
+    <!-- 1. System Management -->
+    <system.Gadget
+	        descr="Code Management"
+	        iconSrc="assets/images/gadget_en/code.gif"
+	        maxUrl="system/code_manager_max.do"
+	        miniUrl="system/code_manager_mini.do"
+	        name="Code Management"
+	        miniHeight="350"
+	        fullHeight="800"
+	        gadgetCode="gadget.system001"
+    />
+    <system.Gadget
+            descr="Device Vendor Model"
+            iconSrc="assets/images/gadget_en/vendormodel.gif"
+            maxUrl="system/devicemodelMax.do"
+            miniUrl="system/devicemodelMini.do"
+            name="Device Vendor Model"
+            miniHeight="350"
+            fullHeight="800"
+            gadgetCode="gadget.system002"
+    />
+    <system.Gadget
+            descr="Supplier Management"
+            iconSrc="assets/images/gadget_en/supplier.gif"
+            maxUrl="system/supplier/supplierMgmtMax.do"
+            miniUrl="system/supplier/supplierMgmtMini.do"
+            name="Supplier Management"
+            miniHeight="350"
+            fullHeight="800"
+            gadgetCode="gadget.system003"
+    />    
+    <system.Gadget
+            descr="User Management"
+            iconSrc="assets/images/gadget_en/user.gif"
+            maxUrl="system/operatorMgmtMax.do"
+            miniUrl="system/operatorMgmtMini.do"
+            name="User Management"
+            miniHeight="350"
+            fullHeight="800"
+            gadgetCode="gadget.system004"
+    />
+   <system.Gadget
+	        descr="Group Management(Equipment, customers, users, and are grouped together.)"
+	        iconSrc="assets/images/gadget_en/group.gif"
+	        maxUrl="system/groupManagementMaxGadget.do"
+	        miniUrl="system/groupManagementMiniGadget.do"
+	        name="Group Management"
+	        miniHeight="500"
+	        fullHeight="1100"
+	        gadgetCode="gadget.system005"
+    />           
+    <system.Gadget
+            descr="Task Management"
+            iconSrc="assets/images/gadget_ko/vee.gif"
+            maxUrl="system/schedule/scheduleManagementMaxGadget.do"
+            miniUrl="system/schedule/scheduleManagementMiniGadget.do"
+            name="Task Management"
+            miniHeight="350"
+            fullHeight="800"
+            gadgetCode="gadget.system006"
+    />
+    <system.Gadget
+	        descr="Customer and Contract"
+	        iconSrc="assets/images/gadget_en/customer.gif"
+	        maxUrl="system/customerMax.do"
+	        miniUrl="system/customerMini.do"
+	        name="Customer and Contract"
+	        miniHeight="350"
+	        fullHeight="1548"
+	        gadgetCode="gadget.system007"
+    />      
+    <system.Gadget
+	        descr="Asset Registration"
+	        iconSrc="assets/images/gadget_en/devicereg.gif"
+	        maxUrl="device/deviceRegistrationMaxGadget.do"
+	        miniUrl="device/deviceRegistrationMiniGadget.do"
+	        name="Asset Registration"
+	        miniHeight="350"
+	        fullHeight="700"
+	        gadgetCode="gadget.system008"
+    /> 
+
+    <!-- 2. Metering Data Management -->
+    <system.Gadget
+        descr="Metering Data(Electricity)"
+        iconSrc="assets/images/gadget_en/meteringdata.gif"
+        maxUrl="mvm/mvmMaxGadgetEM.do"
+        miniUrl="mvm/mvmMiniGadgetEM.do"
+        name="Metering Data(Electricity)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering001"
+    />
+     <system.Gadget
+        descr="Metering Fail(Electricity)"
+        iconSrc="assets/images/gadget_en/meteringfail.gif"
+        maxUrl="mvm/meteringFailureEmMaxGadget.do"
+        miniUrl="mvm/meteringFailureEmMiniGadget.do"
+        name="Metering Fail(Electricity)"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering002"
+    />
+    <system.Gadget
+        descr="Data Gaps(Electricity)"
+        iconSrc="assets/images/gadget_en/datagaps.gif"
+        maxUrl="mvm/dataGapsEmMaxGadget.do"
+        miniUrl="mvm/dataGapsEmMiniGadget.do"
+        name="Data Gaps(Electricity)"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.metering003"
+    />    
+    <system.Gadget
+        descr="Power Quality Management"
+        iconSrc="assets/images/gadget_en/powerquality.gif"
+        maxUrl="mvm/powerQualityMaxGadgetSoria.do"
+        miniUrl="mvm/powerQualityMiniGadget.do"
+        name="Power Quality"
+        miniHeight="350"
+        fullHeight="1548"
+        gadgetCode="gadget.metering004"
+    />
+    <system.Gadget
+        descr="Metering Statistics"
+        iconSrc="assets/images/gadget_en/thumbnail.gif"
+        maxUrl="system/SLAMax_EVN.do"
+        miniUrl="system/SLAMini_EVN.do"
+        name="Metering Statistics"
+        miniHeight="500"
+        fullHeight="800"
+        gadgetCode="gadget.metering005"
+    />    
+    
+    <!-- 3. Device Management -->
+    <system.Gadget
+	        descr="Concentrator Management"
+	        iconSrc="assets/images/gadget_en/mcu.gif"
+	        maxUrl="device/mcuMaxGadget.do"
+	        miniUrl="device/mcuMiniGadget.do"
+	        name="Concentrator Management"
+	        miniHeight="350"
+	        fullHeight="1548"
+	        gadgetCode="gadget.device001"
+    />
+    <system.Gadget
+            descr="Modem Management"
+            iconSrc="assets/images/gadget_en/modem.gif"
+            maxUrl="device/modemMaxGadget.do"
+            miniUrl="device/modemMiniGadget.do"
+            name="Modem Management"
+            miniHeight="350"
+            fullHeight="1548"
+            gadgetCode="gadget.device002"
+    />    
+    <system.Gadget
+            descr="Meter Management"
+            iconSrc="assets/images/gadget_en/meter.gif"
+            maxUrl="device/meterMaxGadget.do"
+            miniUrl="device/meterMiniGadget.do"
+            name="Meter Management"
+            miniHeight="350"
+            fullHeight="1548"
+            gadgetCode="gadget.device003"
+    />    
+    <system.Gadget
+            descr="Meter Time Management"
+            iconSrc="assets/images/gadget_en/meteringtime.gif"
+            maxUrl="device/meterTimeMaxGadget.do"
+            miniUrl="device/meterTimeMiniGadget.do"
+            name="Meter Time Management"
+            miniHeight="350"
+            fullHeight="1548"
+            gadgetCode="gadget.device004"
+    />    
+    <system.Gadget
+            descr="Firmware Management"
+            iconSrc="assets/images/gadget_ko/thumbnail.gif"
+            maxUrl="device/firmware/firmwareMaxGadget.do"
+            miniUrl="device/firmware/firmwareMiniGadget.do"
+            name="Firmware Management"
+            miniHeight="350"
+            fullHeight="1200"
+            gadgetCode="gadget.device005"
+    />
+    <system.Gadget
+            descr="Google Map For Device"
+            iconSrc="assets/images/gadget_en/googlemap.gif"
+            maxUrl="device/GoogleMapMax.do"
+            miniUrl="device/GoogleMapMini.do"
+            name="NMS"
+            miniHeight="500"
+            fullHeight="950"
+            gadgetCode="gadget.device006"
+    />
+    <system.Gadget
+	        descr="Network Monitoring"
+	        iconSrc="assets/images/gadget_en/thumbnail.gif"
+	        maxUrl="mvm/networkMonitoringMaxGadget.do"
+	        miniUrl="mvm/networkMonitoringMiniGadget.do"
+	        name="Network Monitoring"
+	        miniHeight="350"
+	        fullHeight="900"
+	        gadgetCode="gadget.device007"
+    />
+
+
+
+    <!-- 4. Alarm & Event -->
+    <system.Gadget
+	        descr="Event and Alarm"
+	        iconSrc="assets/images/gadget_en/event.gif"
+	        maxUrl="device/eventAlert/eventAlertLogMax.do"
+	        miniUrl="device/eventAlert/eventAlertLogMini.do"
+	        name="Event Alarm Log"
+	        miniHeight="500"
+	        fullHeight="800"
+	        gadgetCode="gadget.eventalarm001"
+    />
+    <system.Gadget
+	        descr="Meter Event Log"
+	        iconSrc="assets/images/wid_thum.gif"
+	        maxUrl="device/meterEventLogMax.do"
+	        miniUrl="device/meterEventLogMini.do"
+	        name="Meter Event Log"
+	        miniHeight="350"
+	        fullHeight="850"
+	        gadgetCode="gadget.eventalarm002"
+    />
+    <system.Gadget
+            descr="Communication Log"
+            iconSrc="assets/images/gadget_en/commlog.gif"
+            maxUrl="device/commLog/commLogMaxGadget.do"
+            miniUrl="device/commLog/commLogMiniGadget.do"
+            name="Communication Log"
+            miniHeight="350"
+            fullHeight="1600"
+            gadgetCode="gadget.eventalarm003"
+    />
+    <system.Gadget
+            descr="Change Log"
+            iconSrc="assets/images/wid_thum.gif"
+            maxUrl="system/changeLogMaxGadget.do"
+            miniUrl="system/changeLogMiniGadget.do"
+            name="Change Log"
+            miniHeight="350"
+            fullHeight="800"
+            gadgetCode="gadget.eventalarm004"
+    />
+    <system.Gadget
+            descr="Operation Management"
+            iconSrc="assets/images/gadget_en/operation.gif"
+            maxUrl="device/operationLog/operationLogMaxGadget.do"
+            miniUrl="device/operationLog/operationLogMiniGadget.do"
+            name="Operation Management"
+            miniHeight="350"
+            fullHeight="800"
+            gadgetCode="gadget.eventalarm005"
+    />    
+    <system.Gadget
+	        descr="Power Fail Restore Alarm Line Missing Alarm"
+	        iconSrc="assets/images/gadget_en/poweralarm.gif"
+	        maxUrl="device/powerAlarmLogMaxGadget.do"
+	        miniUrl="device/powerAlarmLogMiniGadget.do"
+	        name="Power Alarm Log"
+	        miniHeight="350"
+	        fullHeight="800"
+	        gadgetCode="gadget.eventalarm006"
+    />
+    
+    
+    <!-- DashBoard Position : Main -->
+  	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="0" gridY="0" dashboard="Main"
+		gadget="Concentrator Management" />    
+ 	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="1" gridY="0" dashboard="Main"
+		gadget="Modem Management" />
+ 	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="2" gridY="0" dashboard="Main"
+		gadget="Meter Management" />
+	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="0" gridY="1" dashboard="Main"
+		gadget="Metering Data(Electricity)" />		
+ 	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="1" gridY="1" dashboard="Main"
+		gadget="Event Alarm Log" />
+ 	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="2" gridY="1" dashboard="Main"
+		gadget="Meter Event Log" />
+				
+    <!-- DashBoard Position : System -->
+	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="0" gridY="0" dashboard="System"
+		gadget="Code Management" />        
+	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="1" gridY="0" dashboard="System"
+		gadget="Supplier Management" />
+	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="2" gridY="0" dashboard="System"
+		gadget="Group Management" />
+	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="0" gridY="1" dashboard="System"
+		gadget="Device Vendor Model" />    		
+	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="1" gridY="1" dashboard="System"
+		gadget="User Management" />
+	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="2" gridY="1" dashboard="System"
+		gadget="Task Management" />
+	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="0" gridY="2" dashboard="System"
+		gadget="Customer and Contract" />		
+	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="1" gridY="2" dashboard="System"
+		gadget="Asset Registration" />	
+				  		      
+    <!-- DashBoard Position : Metering -->
+	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="0" gridY="0" dashboard="Metering"
+		gadget="Metering Data(Electricity)" />
+	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="1" gridY="0" dashboard="Metering"
+		gadget="Metering Fail(Electricity)" />   
+	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="2" gridY="0" dashboard="Metering"
+		gadget="Data Gaps(Electricity)" /> 		
+	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="0" gridY="1" dashboard="Metering"
+		gadget="Power Quality" /> 	
+	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="1" gridY="1" dashboard="Metering"
+		gadget="Metering Statistics" /> 	
+								      
+    <!-- DashBoard Position : Device -->
+ 	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="0" gridY="0" dashboard="Device"
+		gadget="Concentrator Management" />    
+ 	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="1" gridY="0" dashboard="Device"
+		gadget="Modem Management" />
+ 	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="2" gridY="0" dashboard="Device"
+		gadget="Meter Management" />   
+ 	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="0" gridY="1" dashboard="Device"
+		gadget="Meter Time Management" />
+ 	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="1" gridY="1" dashboard="Device"
+		gadget="Firmware Management" />
+ 	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="2" gridY="1" dashboard="Device"
+		gadget="NMS" />
+ 	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="0" gridY="2" dashboard="Device"
+		gadget="Network Monitoring" />
+    
+    <!-- DashBoard Position : Alarm Event -->
+ 	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="0" gridY="0" dashboard="Alarm Event"
+		gadget="Event Alarm Log" />
+ 	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="1" gridY="0" dashboard="Alarm Event"
+		gadget="Meter Event Log" />
+ 	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="2" gridY="0" dashboard="Alarm Event"
+		gadget="Communication Log" />
+ 	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="0" gridY="1" dashboard="Alarm Event"
+		gadget="Change Log" />
+ 	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="1" gridY="1" dashboard="Alarm Event"
+		gadget="Operation Management" />
+ 	<system.DashboardGadget collapsible="false"
+		layout="fit" gridX="2" gridY="1" dashboard="Alarm Event"
+		gadget="Power Alarm Log" />						
+						  
+	<!-- Gadget Roll 설정 시작 -->
+	<system.GadgetRole gadget="Code Management" 			role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Device Vendor Model" 		role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Supplier Management" 		role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="User Management" 			role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Group Management" 			role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Task Management" 			role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Customer and Contract" 		role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Asset Registration" 			role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Metering Data(Electricity)"  role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Metering Fail(Electricity)"  role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Data Gaps(Electricity)"      role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Power Quality" 			    role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Metering Statistics" 	    role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Concentrator Management" 	role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Modem Management" 			role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Meter Management" 			role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Meter Time Management" 		role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Firmware Management"  		role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Google Map For Device" 		role="admin" supplier="IESCO" />	
+	<system.GadgetRole gadget="Network Monitoring" 	 		role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Event Alarm Log" 	 		role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Meter Event Log" 	 		role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Communication Log"    		role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Change Log" 			 		role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Operation Management" 		role="admin" supplier="IESCO" />
+	<system.GadgetRole gadget="Power Alarm Log" 	    	role="admin" supplier="IESCO" />
+	<!-- Gadget Roll 설정 끝   -->
+	
+	<!-- Device Vendor -->
+    <system.DeviceVendor
+        supplier="IESCO"
+        name="NURITelecom"
+        code="255"
+        address="16, Sapyeong-daero, Seocho-gu, Seoul, Republic of Korea"
+        descr="Nuri Telecom Co.,Ltd."
+    />
+    <system.DeviceVendor
+        supplier="IESCO"
+        name="EDMI"
+        code="10"
+        address="Floor 5, Building 5, Zhong Yuntai Industrial Park, Tang Tou 1st Road Shi Yan, Bao An, Shenzhen"
+        descr="EDMI"
+    />
+    <system.DeviceVendor
+        supplier="IESCO"
+        name="CLOU"
+        code="45"
+        address="Baoshen Rd 518057 Guangdong"
+        descr="CLOU"
+    />	    
+    <system.DeviceVendor
+        supplier="IESCO"
+        name="REALLIN"
+        code="46"
+        address="2F,Building3,No.202 Zhenzhong Rd,Sandun Technology Park Xihu District, Hangzhou"
+        descr="REALLIN"
+    />	
+
+    <mvm.Season
+        smonth="03"
+        sday="01"
+        emonth="05"
+        name="Spring"
+    />
+    <mvm.Season
+        smonth="06"
+        sday="01"
+        emonth="08"
+        name="Summer"
+    />
+    <mvm.Season
+        smonth="09"
+        sday="01"
+        emonth="11"
+        name="Autumn"
+    />
+    <mvm.Season
+        smonth="12"
+        sday="01"
+        emonth="02"
+        name="Winter"
+    />
+    
+    
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment Shutdown' 
+                       descr='Equipment Shutdown' 
+                       msgPattern='Shutdown reason[$(event.eventAttrs.message)]' 
+                       troubleAdvice='' 
+                       oid='PH_200.57.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment Startup' 
+                       descr='Equipment Startup' 
+                       msgPattern='Startup' 
+                       troubleAdvice='' 
+                       oid='200.3.0,201.3.0,PH_200.2.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment Reboot' 
+                       descr='Equipment Reboot' 
+                       msgPattern='Reboot reason[$(event.eventAttrs.message)]' 
+                       troubleAdvice='' 
+                       oid='PH_200.58.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Warning' 
+                       name='Communication Alarm' 
+                       descr='Communication Alarm' 
+                       msgPattern='Communication Target=[$(event.eventAttrs.message)]' 
+                       troubleAdvice='Check Communication Line' 
+                       oid='205.1.0,205.20,205.3.0,PH_200.67.0,PH_200.68.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Major' 
+                       name='Threshold Warning' 
+                       descr='Threshold Warning' 
+                       msgPattern='Kind=[$(event.eventAttrs.kind)] Threshold Usage=[$(event.eventAttrs.observedValue)] crossed the defined value[$(event.eventAttrs.thresholdValue)]' 
+                       troubleAdvice='Check System Performance' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Major' 
+                       name='Malfunction Warning' 
+                       descr='Malfunction Warning' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='Check System' 
+                       oid='204.4.0,204.5.0,204.6.0,204.7.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Warning' 
+                       name='Pressure Alarm' 
+                       descr='Pressure Alarm' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Warning' 
+                       name='Voltage Alarm' 
+                       descr='Voltage Alarm' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='213.2.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='DCU Mobile Connect' 
+                       descr='DCU Mobile Connect' 
+                       msgPattern='DCU Mobile Connected' 
+                       troubleAdvice='' 
+                       oid='202.4.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Reset' 
+                       descr='Reset' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='200.20.0,203.9.0,PH_200.55.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event'
+                       severity='Information' 
+                       name='Equipment Installation' 
+                       descr='Equipment installation' 
+                       msgPattern='Install' 
+                       troubleAdvice='' 
+                       oid='200.1.0,203.8.0,201.1.0,203.105.0,PH_200.1.0,PH_220.1.0,PH_240.1.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment De-Installation' 
+                       descr='Equipment information deleted from System' 
+                       msgPattern='Uninstall' 
+                       troubleAdvice='' 
+                       oid='200.2.0,201.2.0,203.106.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Major' 
+                       name='Power Alarm' 
+                       descr='Power Failure, Restore or Massive and Line Missing or Restore' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='200.14.0,200.15.0,203.107.0,PH_200.60.0,PH_200.61.0,PH_200.51.0,PH_200.52.0,PH_200.73.0,PH_200.74.0,PH_200.75.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Factory Default Setting' 
+                       descr='Factory default Configuration Changed' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='200.21.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment Configuration Changed' 
+                       descr='Equipment Configuration Chagned' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='200.10.0,201.5.0,203.3.0,PH_200.35.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Major' 
+                       name='Meter Value Alarm' 
+                       descr='Meter Value Incorrect or Illegal, Meter Read Fail' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Time Synchronization Performed' 
+                       descr='Time Synchronization Performed' 
+                       msgPattern='Clock Synchronized Time[$(event.eventAttrs.message)]' 
+                       troubleAdvice='' 
+                       oid='200.13.0,PH_200.54.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment Registration' 
+                       descr='equipment is created automatically or installed.' 
+                       msgPattern='Equipment Registration' 
+                       troubleAdvice='' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Warning' 
+                       name='Cover Alarm' 
+                       descr='Cover Open or Close' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='200.25.0,200.26.0,210.1,PH_200.33.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment Notification' 
+                       descr='Equipment Notification, Information, Warning or etc..' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='203.10.0,212.1.0,200.29.0,210.1.0,203.100.0,PH_200.17.0,PH_240.2.0,PH_240.3.0,PH_200.15.0,PH_200.16.0,PH_220.2.0,PH_200.12.0,PH_200.13.0,PH_200.14.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Warning' 
+                       name='EnergyLevelChanged' 
+                       descr='Energy Level of Meter is changed' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='203.109.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Attachment or Detachment' 
+                       descr='Attachment or Detachment' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='203.1.0,203.2.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='OTA'
+                       descr='OTA Step' 
+                       msgPattern='$(event.eventAttrs.otaStep) $(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='214.1.0,214.2.0,214.3.0,214.4.0,PH_200.59.0,PH_200.63.0,PH_200.64.0,PH_200.65.0,PH_200.66.0,PH_200.31.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Critical' 
+                       name='Security Alarm'
+                       descr='Security Alarm' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='PH_200.38.0,PH_200.17.0,PH_200.18.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Major' 
+                       name='Invalid Frame'
+                       descr='Invalid Frame (CRC or ArrayIndexOutOf)' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Minor' 
+                       name='Traffic Alarm'
+                       descr='Packet attack' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='PH_200.34.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+	<device.EventAlert eventAlertType='Event' 
+                       severity='Minor' 
+                       name='Snmp Trap Event' 
+                       descr='SNMP TRAP by SnmpManagerAdapter' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       oid='' 
+                       monitor='Save' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Major' 
+                       name='Meter Alarm' 
+                       descr='This alarm is for Meter' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       oid='PH_200.53.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>                       
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='IF4 Protocol Notification' 
+                       descr='IF4 Protocol Notification' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='PH_200.100.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Self Test' 
+                       descr='Self Test' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='PH_200.56.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Equipment Replacement' 
+                       descr='The modem(or meter) connected to the meter(modem) has been replaced by another meter(modem).' 
+                       msgPattern='Device Type=[$(event.eventAttrs.equipType)] old [$(event.eventAttrs.oldEquipID)] replaced to new [$(event.eventAttrs.newEquipID)]' 
+                       troubleAdvice='' 
+                       oid='' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Event' 
+                       severity='Information' 
+                       name='Modem Rejected' 
+                       descr='Modem Rejected' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='PH_200.19.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>    
+
+
+    <!-- 5-Pakistan-IESCO_DeviceBasicInfo.xml -->
+	<!-- 6-Pakistan-IESCO_Tariff.xml -->
+	
+	                               
+</dataset>    

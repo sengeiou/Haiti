@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:jms="http://www.springframework.org/schema/jms" xmlns:oxm="http://www.springframework.org/schema/oxm"
+  xmlns:util="http://www.springframework.org/schema/util" xmlns:batch="http://www.springframework.org/schema/batch"
+  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xsd 
+    http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+    http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-3.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+  <context:component-scan base-package="com.aimir.mars.integration.bulkreading.xml.service" />
+
+  <context:property-placeholder location="classpath:config/jdbc.properties,classpath:config/mars.properties" />
+
+  <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSource" />
+  </bean>
+
+  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+    destroy-method="close">
+    <property name="driverClassName" value="${jdbc.driverClassName}" />
+    <property name="url" value="${jdbc.url}" />
+    <property name="username" value="${jdbc.username}" />
+    <property name="password" value="${jdbc.password}" />
+    <property name="initialSize" value="5" />
+    <property name="maxActive" value="10" />
+    <property name="maxIdle" value="10" />
+    <!-- <property name="validationQuery" value="select 1 from dual"/> -->
+    <property name="testOnBorrow" value="true" />
+    <property name="testOnReturn" value="false" />
+    <property name="testWhileIdle" value="true" />
+    <property name="timeBetweenEvictionRunsMillis" value="60000" />
+  </bean>
+
+  <tx:annotation-driven transaction-manager="transactionManager" />
+
+  <!-- bean for initializing datasource transaction manager -->
+  <bean id="transactionManager"
+    class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource" />
+  </bean>
+
+  <!-- Message converter - automatically marshalls and unmarshalls messages 
+    using the provided marshaller / unmarshaller -->
+  <bean id="oxmMessageConverter"
+    class="org.springframework.jms.support.converter.MarshallingMessageConverter">
+    <property name="marshaller" ref="marshaller" />
+    <property name="unmarshaller" ref="marshaller" />
+  </bean>
+
+  <!-- Spring's JAXB implementation of marshaller - provided a class the 
+    JAXB generated class -->
+  <oxm:jaxb2-marshaller id="marshaller">
+    <oxm:class-to-be-bound
+      name="com.aimir.mars.integration.bulkreading.xml.data.MeterReadingsType" />
+  </oxm:jaxb2-marshaller>
+
+  <!-- The ActiveMQ JMS Configuration start -->
+  <bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+    <property name="brokerURL" value="${HES.integration.jms.brokerURL}" />
+  </bean>
+
+  <bean id="cachingConnectionFactory"
+    class="org.springframework.jms.connection.CachingConnectionFactory">
+    <property name="targetConnectionFactory" ref="jmsConnectionFactory" />
+    <property name="sessionCacheSize" value="5" />
+  </bean>
+  <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <property name="connectionFactory" ref="jmsConnectionFactory" />
+    <property name="messageConverter" ref="oxmMessageConverter" />
+  </bean>
+  <bean id="destination" class="org.apache.activemq.command.ActiveMQQueue">
+    <constructor-arg value="${HES.MV.jms.destination}" />
+  </bean>
+  <!-- The ActiveMQ JMS Configuration end -->
+
+  <!-- bean job repository -->
+  <bean id="jobRepository"
+    class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+    <property name="transactionManager" ref="transactionManager" />
+  </bean>
+
+  <!-- bean for lauching the job -->
+  <bean id="jobLauncher"
+    class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+    <property name="jobRepository" ref="jobRepository" />
+  </bean>
+
+  <!-- beans for defining the job and its steps. configure its readers and 
+    writers -->
+  <batch:job id="soriaIntegrationMVTask" restartable="${batch.job.restartable}">
+
+    <batch:step id="mv_generate_outbound" next="mv_remove_delivery">
+      <batch:tasklet ref="generateOutboundTasklet" />
+    </batch:step>
+    <batch:step id="mv_remove_delivery" next="mv_send_metervalue">
+      <batch:tasklet ref="removeDeliveryTasklet" />
+    </batch:step>
+    <batch:step id="mv_send_metervalue" next="mv_remove_outbound">
+      <batch:tasklet ref="sendMeterValueTasklet" />
+    </batch:step>
+    <batch:step id="mv_remove_outbound">
+      <batch:tasklet ref="removeOutboundTasklet" />
+    </batch:step>
+
+  </batch:job>
+
+  <bean id="generateOutboundTasklet"
+    class="com.aimir.mars.integration.bulkreading.xml.service.GenerateMVOutboundTasklet">
+  </bean>
+
+  <bean id="removeDeliveryTasklet"
+    class="com.aimir.mars.integration.bulkreading.xml.service.RemoveMVDeliveryTasklet">
+  </bean>
+
+  <bean id="sendMeterValueTasklet"
+    class="com.aimir.mars.integration.bulkreading.xml.service.SendMeterValueTasklet">
+  </bean>
+
+  <bean id="removeOutboundTasklet"
+    class="com.aimir.mars.integration.bulkreading.xml.service.RemoveMVOutboundTasklet">
+  </bean>
+
+</beans>

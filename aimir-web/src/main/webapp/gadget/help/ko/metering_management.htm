@@ -1,0 +1,79 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!-- saved from url=(0029)http://www.helpandmanual.com/ -->
+<head>
+   <title>Metering Management</title>
+   <meta name="generator" content="Help &amp; Manual" />
+   <meta name="keywords" content="" />
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+   <meta http-equiv="Content-Style-Type" content="text/css" />
+   <link type="text/css" href="default.css" rel="stylesheet" />
+<script type="text/javascript" src="helpman_topicinit.js"></script>
+<!-- Redirect browser to frame page if page is not in the content frame. -->
+<script type="text/javascript">
+<!--
+if (location.search.lastIndexOf("toc=0")<=0) {
+  if (parent.frames.length==0) { parent.location.href="index.html?metering_management.htm"; }
+  else { parent.quicksync('a1.2.5.2'); }
+}
+//-->
+</script>
+<script type="text/javascript" src="highlight.js"></script></head>
+<body style="margin: 0px 0px 0px 0px; background: #FFFFFF;" onload="highlight();">
+<div id="hmpopupDiv" style="visibility:hidden; position:absolute; z-index:1000; "></div>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="5" bgcolor="#C0C0C0">
+  <tr valign="middle">
+    <td align="left">
+      <p style="margin: 5px 0px 0px 0px;"><span class="f_Heading1">Metering Management</span></p>
+
+    </td>
+    <td align="right">
+     <span style="font-size: 9pt">
+     <a href="chapter_2.htm">Top</a>&nbsp;
+     <a href="system_management.htm">Previous</a>&nbsp;
+     <a href="analysis_of_metering_data.htm">Next</a>
+     </span>
+    </td>
+  </tr>
+</table>
+
+
+<!-- Placeholder for topic body. -->
+<table width="100%" border="0" cellspacing="0" cellpadding="5"><tr valign="top"><td align="left">
+<p style="margin: 10px 10px 0px 5px;"><img src="icon_arrow.gif" width="20" height="15" border="0" alt="icon_arrow"><span style="font-size: 9pt; font-weight: bold; color: #40579b;">Data Collection &amp; Transmission</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="color: #000000;">&nbsp;</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="font-size: 9pt;">각 각의 단말기 (Terminal Unit)는 설정된 검침 스케줄에 따라 계량기로부터 조회 또는 Pulse Counting을 통해 검침 데이터를 수집하며 전송 스케줄에 따라 집중기로 전송합니다. </span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="font-size: 9pt;">이 전송 스케줄을 변경함으로써 매시간마다 또는 특정 시간에만 전송하게 할 수 있습니다.</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="color: #000000;">&nbsp;</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="font-size: 9pt;">집중기 또한 검침 데이터 전송 스케줄 설정에 따라 단말기로부터 수집한 검침 데이터를 수신 즉시 전송하거나 전송 시간을 다르게 할 수 있습니다.</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="color: #000000;">&nbsp;</span></p>
+<p style="margin: 0px 10px 0px 5px;"><img src="icon_arrow.gif" width="20" height="15" border="0" alt="icon_arrow"><span style="font-size: 9pt; font-weight: bold; color: #40579b;">Local Storage</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="color: #000000;">&nbsp;</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="font-size: 9pt;">단 말기로부터 수신 또는 수집한 검침 데이터는 보관 주기에 따라 검침 데이터를 센서 및 집중기에서 저장, 보관하게 됩니다. </span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="font-size: 9pt;">서버와의 통신(GPRS/CDMA)이 비정상적이어서 집중기가 데이터를 전송하지 못한 경우는 NACS에서 Missing Data에 대한 Collection명령을 수행합니다.</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="color: #000000;">&nbsp;</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="color: #000000;">&nbsp;</span></p>
+<p style="margin: 0px 10px 0px 5px;"><img src="icon_arrow.gif" width="20" height="15" border="0" alt="icon_arrow"><span style="font-size: 9pt; font-weight: bold; color: #40579b;">Central Storage</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="color: #000000;">&nbsp;</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="font-size: 9pt;">집 중기로부터 수신 또는 수집한 검침 데이터는 NACS 서버의 Front-End 모듈을 통해 Central Database에 저장되어 보관됩니다. </span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="font-size: 9pt;">보관주기는 년 단위까지이며 보관 주기 이전의 데이터는 File로 export 될 수 있습니다.</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="color: #000000;">&nbsp;</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="font-size: 9pt;">&nbsp;</span></p>
+<p style="margin: 0px 10px 0px 5px;"><img src="icon_arrow.gif" width="20" height="15" border="0" alt="icon_arrow"><span style="font-size: 9pt; font-weight: bold; color: #40579b;">Meter Data Correction &amp; Completion</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="color: #000000;">&nbsp;</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="font-size: 9pt;">집 중기로부터 수신한 검침 데이터에 대해 아래와 같은 항목에 대한 유효성(Validation) 검사를 수행하여 비정상적인 데이터로 판명 시 관련 Event를 관발생시켜리자가 쉽게 인지할 수 있도록 하며 또한 검침 데이터 조회 화면을 통해 관리자가 해당 값을 수동으로 수정할 수 있습니다.</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="font-size: 9pt;"> 이 때 수정된 값 및 명령 관련 정보는 이력으로 저장됩니다.</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="color: #000000;">&nbsp;</span></p>
+<div style="text-align: left; text-indent: 0px; padding: 0px 0px 0px 0px; margin: 0px 10px 0px 10px;"><table border="0" cellpadding="0" cellspacing="0" style="line-height: normal;"><tr style="vertical-align:baseline" valign="baseline"><td width="13"><span style="font-size: 9pt; font-family: 'Arial Unicode MS', 'Lucida Sans Unicode', 'Arial'; color: #40579b;">&#9633;</span></td><td><span style="font-size: 9pt; color: #40579b;"> Meter Identification Check</span></td></tr></table></div><div style="text-align: left; text-indent: 0px; padding: 0px 0px 0px 0px; margin: 0px 10px 0px 10px;"><table border="0" cellpadding="0" cellspacing="0" style="line-height: normal;"><tr style="vertical-align:baseline" valign="baseline"><td width="13"><span style="font-size: 9pt; font-family: 'Arial Unicode MS', 'Lucida Sans Unicode', 'Arial'; color: #40579b;">&#9633;</span></td><td><span style="font-size: 9pt; color: #40579b;"> Negative reading for TOU data</span></td></tr></table></div><div style="text-align: left; text-indent: 0px; padding: 0px 0px 0px 0px; margin: 0px 10px 0px 10px;"><table border="0" cellpadding="0" cellspacing="0" style="line-height: normal;"><tr style="vertical-align:baseline" valign="baseline"><td width="13"><span style="font-size: 9pt; font-family: 'Arial Unicode MS', 'Lucida Sans Unicode', 'Arial'; color: #40579b;">&#9633;</span></td><td><span style="font-size: 9pt; color: #40579b;"> Zero consumption check for active meter</span></td></tr></table></div><p style="margin: 0px 10px 0px 10px;"><span style="color: #000000;">&nbsp;</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="color: #000000;">&nbsp;</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="color: #000000;">&nbsp;</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="color: #000000;">&nbsp;</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="color: #000000;">&nbsp;</span></p>
+<p style="margin: 0px 10px 0px 10px;"><span style="color: #000000;">&nbsp;</span></p>
+
+</td></tr></table>
+
+</body>
+</html>

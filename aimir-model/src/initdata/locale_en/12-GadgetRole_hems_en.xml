@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+    <system.GadgetRole
+        gadget="Report"
+        role="customer"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Energy Consumption"
+        role="customer"
+        supplier="NURI"
+    />    
+    <system.GadgetRole
+        gadget="Gas Consumption"
+        role="customer"
+        supplier="NURI"
+    />    
+    <system.GadgetRole
+        gadget="Water Consumption"
+        role="customer"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Power Saving Goal Management"
+        role="customer"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Gas Saving Goal Management"
+        role="customer"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Water Saving Goal Management"
+        role="customer"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="HomeDevice Management"
+        role="customer"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Demand Response Management"
+        role="customer"
+        supplier="NURI"
+    /> 
+    <system.GadgetRole
+        gadget="Power Prepayment Customer"
+        role="customer"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Gas Prepayment Customer"
+        role="customer"
+        supplier="NURI"
+    />
+    <system.GadgetRole
+        gadget="Water Prepayment Management"
+        role="customer"
+        supplier="NURI"
+    />                   
+</dataset>

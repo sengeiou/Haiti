@@ -1,0 +1,782 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+<!-- Device -->
+<system.Code code="1" name="Device" descr="Device" order="1" parent=""/>
+
+<!-- DCU -->
+<system.Code code="1.1" name="MCU" descr="MCU" order="1" parent="1"/>
+  <!-- DCU Type -->
+  <system.Code code="1.1.1" name="MCUType" descr="MCU Type" order="1" parent="1.1"/>
+  <system.Code code="1.1.1.7" name="DCU" descr="DCU" order="3" parent="1.1.1"/>
+  
+  <!-- DCU HW Version -->
+  <system.Code code="1.1.2" name="HWVer" descr="HW Version" order="2" parent="1.1"/>
+  <system.Code code="1.1.2.1" name="1.0" descr="1.0" order="1" parent="1.1.2"/>
+  <system.Code code="1.1.2.2" name="1.1" descr="1.1" order="2" parent="1.1.2"/>
+  <system.Code code="1.1.2.3" name="1.2" descr="1.2" order="3" parent="1.1.2"/>
+  <system.Code code="1.1.2.4" name="1.3" descr="1.3" order="4" parent="1.1.2"/>
+  <system.Code code="1.1.2.5" name="1.4" descr="1.4" order="5" parent="1.1.2"/>
+  <system.Code code="1.1.2.6" name="1.5" descr="1.5" order="6" parent="1.1.2"/>
+  <system.Code code="1.1.2.7" name="1.6" descr="1.6" order="7" parent="1.1.2"/>
+  <system.Code code="1.1.2.8" name="1.7" descr="1.7" order="8" parent="1.1.2"/>
+  <system.Code code="1.1.2.9" name="1.8" descr="1.8" order="9" parent="1.1.2"/>
+  <system.Code code="1.1.2.10" name="1.9" descr="1.9" order="10" parent="1.1.2"/>
+  <system.Code code="1.1.2.11" name="2.0" descr="2.0" order="11" parent="1.1.2"/>
+  
+  <!-- DCU SW Version -->
+  <system.Code code="1.1.3" name="SWVer" descr="SW Version" order="3" parent="1.1"/>
+  <system.Code code="1.1.3.1" name="1.0" descr="1.0" order="1" parent="1.1.3"/>
+  <system.Code code="1.1.3.2" name="1.1" descr="1.1" order="2" parent="1.1.3"/>
+  <system.Code code="1.1.3.3" name="1.2" descr="1.2" order="3" parent="1.1.3"/>
+  <system.Code code="1.1.3.4" name="1.3" descr="1.3" order="4" parent="1.1.3"/>
+  <system.Code code="1.1.3.5" name="1.4" descr="1.4" order="5" parent="1.1.3"/>
+  <system.Code code="1.1.3.6" name="1.5" descr="1.5" order="6" parent="1.1.3"/>
+  <system.Code code="1.1.3.7" name="1.6" descr="1.6" order="7" parent="1.1.3"/>
+  <system.Code code="1.1.3.8" name="1.7" descr="1.7" order="8" parent="1.1.3"/>
+  <system.Code code="1.1.3.9" name="1.8" descr="1.8" order="9" parent="1.1.3"/>
+  <system.Code code="1.1.3.10" name="1.9" descr="1.9" order="10" parent="1.1.3"/>
+  <system.Code code="1.1.3.11" name="2.0" descr="2.0" order="11" parent="1.1.3"/>
+  <system.Code code="1.1.3.12" name="3.0" descr="3.0" order="12" parent="1.1.3"/>
+  <system.Code code="1.1.3.13" name="NG3A1" descr="NG3A1" order="13" parent="1.1.3"/>
+  <system.Code code="1.1.3.14" name="3.1" descr="3.1" order="14" parent="1.1.3"/>
+
+  <!-- DCU Status -->
+  <system.Code code="1.1.4" name="DCUStatus" descr="DCUStatus" order="4" parent="1.1"/>
+  <system.Code code="1.1.4.1" name="Normal" descr="Normal" order="1" parent="1.1.4"/>
+  <system.Code code="1.1.4.2" name="Delete" descr="Delete" order="2" parent="1.1.4"/>
+  
+<!-- Modem -->
+<system.Code code="1.2" name="Modem" descr="Modem" order="2" parent="1"/>
+  <!-- Modem Type -->
+  <system.Code code="1.2.1" name="ModemType" descr="Modem Type" order="1" parent="1.2"/>
+  <system.Code code="1.2.1.1" name="ZRU" descr="ZRU" order="2" parent="1.2.1"/>  <!-- ZigBee -->
+  <system.Code code="1.2.1.18" name="PLCIU" descr="PLCIU" order="16" parent="1.2.1"/>
+  <system.Code code="1.2.1.255" name="Unknown" descr="Unknown" order="99" parent="1.2.1"/>
+  
+  <!-- Modem Alarm Flag -->
+  <system.Code code="1.2.2" name="ModemAlarmFlag" descr="ModemAlarmFlag" order="2" parent="1.2"/>
+  <system.Code code="1.2.2.1" name="Disable" descr="Disable" order="1" parent="1.2.2"/>
+  <system.Code code="1.2.2.2" name="Enable" descr="Enable" order="2" parent="1.2.2"/>
+  
+  <!-- Modem FW Build Version -->
+  <system.Code code="1.2.3" name="ModemFWBuildVer" descr="ModemFWBuildVer" order="3" parent="1.2"/>
+  <system.Code code="1.2.3.1" name="4" descr="4" order="1" parent="1.2.3"/>
+  <system.Code code="1.2.3.2" name="6" descr="6" order="2" parent="1.2.3"/>
+  <system.Code code="1.2.3.3" name="7" descr="7" order="3" parent="1.2.3"/>
+  <system.Code code="1.2.3.4" name="0B" descr="0B" order="4" parent="1.2.3"/>
+  <system.Code code="1.2.3.5" name="14" descr="14" order="5" parent="1.2.3"/>
+  <system.Code code="1.2.3.6" name="15" descr="15" order="6" parent="1.2.3"/>
+  <system.Code code="1.2.3.7" name="20" descr="20" order="7" parent="1.2.3"/>
+  <system.Code code="1.2.3.8" name="21" descr="20" order="8" parent="1.2.3"/>
+  <system.Code code="1.2.3.9" name="22" descr="22" order="9" parent="1.2.3"/>
+  
+  <!-- Modem HW Version -->
+  <system.Code code="1.2.4" name="ModemHWVer" descr="ModemHWVer" order="4" parent="1.2"/>
+  <system.Code code="1.2.4.1" name="1.0" descr="1.0" order="1" parent="1.2.4"/>
+  <system.Code code="1.2.4.2" name="1.1" descr="1.1" order="2" parent="1.2.4"/>
+  <system.Code code="1.2.4.3" name="1.2" descr="1.2" order="3" parent="1.2.4"/>
+  <system.Code code="1.2.4.4" name="1.3" descr="1.3" order="4" parent="1.2.4"/>
+  <system.Code code="1.2.4.5" name="1.4" descr="1.4" order="5" parent="1.2.4"/>
+  <system.Code code="1.2.4.6" name="1.5" descr="1.5" order="6" parent="1.2.4"/>
+  <system.Code code="1.2.4.7" name="1.6" descr="1.6" order="7" parent="1.2.4"/>
+  <system.Code code="1.2.4.8" name="1.7" descr="1.7" order="8" parent="1.2.4"/>
+  <system.Code code="1.2.4.9" name="1.8" descr="1.8" order="9" parent="1.2.4"/>
+  <system.Code code="1.2.4.10" name="1.9" descr="1.9" order="10" parent="1.2.4"/>
+  <system.Code code="1.2.4.11" name="2.0" descr="2.0" order="11" parent="1.2.4"/>
+  <system.Code code="1.2.4.12" name="2.3" descr="2.3" order="12" parent="1.2.4"/>
+  
+  <!-- Modem Node Type -->
+  <system.Code code="1.2.5" name="ModemNodeType" descr="ModemNodeType" order="5" parent="1.2"/>
+  <system.Code code="1.2.5.1" name="Battery" descr="Battery" order="1" parent="1.2.5"/>
+  <system.Code code="1.2.5.2" name="AC" descr="AC" order="2" parent="1.2.5"/>
+  
+  <!-- Modem SW Version -->
+  <system.Code code="1.2.6" name="ModemSWVer" descr="ModemSWVer" order="6" parent="1.2"/>
+  <system.Code code="1.2.6.1" name="1.0" descr="1.0" order="1" parent="1.2.6"/>
+  <system.Code code="1.2.6.2" name="1.1" descr="1.1" order="2" parent="1.2.6"/>
+  <system.Code code="1.2.6.3" name="1.2" descr="1.2" order="3" parent="1.2.6"/>
+  <system.Code code="1.2.6.4" name="1.3" descr="1.3" order="4" parent="1.2.6"/>
+  <system.Code code="1.2.6.5" name="1.4" descr="1.4" order="5" parent="1.2.6"/>
+  <system.Code code="1.2.6.6" name="1.5" descr="1.5" order="6" parent="1.2.6"/>
+  <system.Code code="1.2.6.7" name="1.6" descr="1.6" order="7" parent="1.2.6"/>
+  <system.Code code="1.2.6.8" name="1.7" descr="1.7" order="8" parent="1.2.6"/>
+  <system.Code code="1.2.6.9" name="1.8" descr="1.8" order="9" parent="1.2.6"/>
+  <system.Code code="1.2.6.10" name="1.9" descr="1.9" order="10" parent="1.2.6"/>
+  <system.Code code="1.2.6.11" name="2.0" descr="2.0" order="11" parent="1.2.6"/>
+  <system.Code code="1.2.6.12" name="2.1" descr="2.1" order="12" parent="1.2.6"/>
+  <system.Code code="1.2.6.13" name="2.2" descr="2.2" order="13" parent="1.2.6"/>
+  
+  <!-- Modem Sleep Mode -->
+  <system.Code code="1.2.7" name="ModemSleepMode" descr="ModemSleepMode" order="7" parent="1.2"/>
+  <system.Code code="1.2.7.1" name="BreakDown" descr="BreakDown" order="1" parent="1.2.7"/>
+  <system.Code code="1.2.7.2" name="Delete" descr="Delete" order="2" parent="1.2.7"/>
+  <system.Code code="1.2.7.3" name="Normal" descr="Normal" order="3" parent="1.2.7"/>
+  <system.Code code="1.2.7.4" name="Repair" descr="Repair" order="4" parent="1.2.7"/>
+  
+  <!-- Modem Battery Status -->
+  <system.Code code="1.2.8" name="ModemBatteryStatus" descr="ModemBatteryStatus" order="8" parent="1.2"/>
+  <system.Code code="1.2.8.1" name="Normal" descr="Normal" order="1" parent="1.2.8"/>
+  <system.Code code="1.2.8.2" name="Abnormal" descr="Abnormal" order="2" parent="1.2.8"/>
+  <system.Code code="1.2.8.3" name="Replacement" descr="Replacement" order="3" parent="1.2.8"/>
+  <system.Code code="1.2.8.4" name="UnKnown" descr="UnKnown" order="4" parent="1.2.8"/>
+  
+  <!-- Modem Last Reset system.Code -->
+  <system.Code code="1.2.9" name="ModemLastResetsystem.Code" descr="ModemLastResetsystem.Code" order="9" parent="1.2"/>
+  <system.Code code="1.2.9.1" name="Unknown" descr="Unknown" order="1" parent="1.2.9"/>
+  <system.Code code="1.2.9.2" name="Recognizing Low Level in Reset Pin" descr="Recognizing Low Level in Reset Pin" order="2" parent="1.2.9"/>
+  <system.Code code="1.2.9.3" name="Detecting low voltage supplied than of operating voltage" descr="Detecting low voltage supplied than of operating voltage" order="3" parent="1.2.9"/>
+  <system.Code code="1.2.9.4" name="Generation of watch-dog timer overflow" descr="Generation of watch-dog timer overflow" order="4" parent="1.2.9"/>
+  <system.Code code="1.2.9.5" name="Detecting low voltage supplied than 2.7V by BOD(Brown Out Detector)" descr="Detecting low voltage supplied than 2.7V by BOD(Brown Out Detector)" order="5" parent="1.2.9"/>
+  <system.Code code="1.2.9.6" name="Input logical value '1' to JTAG Reset register" descr="Input logical value '1' to JTAG Reset register" order="6" parent="1.2.9"/>
+  <system.Code code="1.2.9.7" name="Detecting unexpectable error by self-diagnostic program" descr="Detecting unexpectable error by self-diagnostic program" order="7" parent="1.2.9"/>
+  <system.Code code="1.2.9.8" name="Target Memory address went off the range of memory" descr="Target Memory address went off the range of memory" order="8" parent="1.2.9"/>
+  <system.Code code="1.2.9.9" name="Data stack went off the range" descr="Data stack went off the range" order="9" parent="1.2.9"/>
+  <system.Code code="1.2.9.10" name="Reset by Boot loader" descr="Reset by Boot loader" order="10" parent="1.2.9"/>
+  <system.Code code="1.2.9.11" name="Reset by remote" descr="Reset by remote" order="11" parent="1.2.9"/>
+  <system.Code code="1.2.9.12" name="Self reset 1 for recovery" descr="Self reset 1 for recovery" order="12" parent="1.2.9"/>
+  <system.Code code="1.2.9.13" name="Self reset 2 for recovery" descr="Self reset 2 for recovery" order="13" parent="1.2.9"/>
+  <system.Code code="1.2.9.14" name="Self reset 3 for recovery" descr="Self reset 3 for recovery" order="14" parent="1.2.9"/>
+  <system.Code code="1.2.9.15" name="Self reset 4 for recovery" descr="Self reset 4 for recovery" order="15" parent="1.2.9"/>
+  <system.Code code="1.2.9.16" name="Self reset 5 for recovery" descr="Self reset 5 for recovery" order="16" parent="1.2.9"/>
+  <system.Code code="1.2.9.17" name="Self reset 6 for recovery" descr="Self reset 6 for recovery" order="17" parent="1.2.9"/>
+  
+  <!-- Modem Reset Reason -->
+  <system.Code code="1.2.10" name="ModemResetReason" descr="ModemResetReason" order="10" parent="1.2"/>
+  <system.Code code="1.2.10.1" name="Unknown" descr="Unknown" order="1" parent="1.2.10"/>
+  <system.Code code="1.2.10.2" name="External" descr="External" order="2" parent="1.2.10"/>
+  <system.Code code="1.2.10.3" name="PowerOn" descr="PowerOn" order="3" parent="1.2.10"/>
+  <system.Code code="1.2.10.4" name="Watch-dog" descr="Watch-dog" order="4" parent="1.2.10"/>
+  <system.Code code="1.2.10.5" name="Brownout" descr="Brownout" order="5" parent="1.2.10"/>
+  <system.Code code="1.2.10.6" name="JTAG" descr="JTAG" order="6" parent="1.2.10"/>
+  <system.Code code="1.2.10.7" name="Assert" descr="Assert" order="7" parent="1.2.10"/>
+  <system.Code code="1.2.10.8" name="RStack" descr="RStack" order="8" parent="1.2.10"/>
+  <system.Code code="1.2.10.9" name="CStack" descr="CStack" order="9" parent="1.2.10"/>
+  <system.Code code="1.2.10.10" name="Boot Loader" descr="Boot Loader" order="10" parent="1.2.10"/>
+  <system.Code code="1.2.10.11" name="PC Rollover" descr="PC Rollover" order="11" parent="1.2.10"/>
+  <system.Code code="1.2.10.12" name="Software" descr="Software" order="12" parent="1.2.10"/>
+  <system.Code code="1.2.10.13" name="Protfail" descr="Protfail" order="13" parent="1.2.10"/>
+  <system.Code code="1.2.10.14" name="Flash Verify Fail" descr="Flash Verify Fail" order="14" parent="1.2.10"/>
+  <system.Code code="1.2.10.15" name="Flash Write Inhibit" descr="Flash Write Inhibit" order="15" parent="1.2.10"/>
+  <system.Code code="1.2.10.16" name="Factory Setting" descr="Factory Setting" order="16" parent="1.2.10"/>
+  <system.Code code="1.2.10.17" name="MR Switch" descr="MR Switch" order="17" parent="1.2.10"/>
+  <system.Code code="1.2.10.18" name="Fixed Interval" descr="Fixed Interval" order="18" parent="1.2.10"/>
+  <system.Code code="1.2.10.19" name="Soft Remote" descr="Soft Remote" order="19" parent="1.2.10"/>
+  <system.Code code="1.2.10.20" name="AMR Fail" descr="AMR Fail" order="20" parent="1.2.10"/>
+  <system.Code code="1.2.10.21" name="Delete Bind Fail" descr="Delete Bind Fail" order="21" parent="1.2.10"/>
+  <system.Code code="1.2.10.22" name="Network Scan Fail" descr="Network Scan Fail" order="22" parent="1.2.10"/>
+  
+  <!--  Modem Power Type -->
+  <system.Code code="1.2.11" name="ModemPowerType" descr="ModemPowerType" order="11" parent="1.2"/>
+  <system.Code code="1.2.11.0" name="Unknown" descr="Unknown" order="1" parent="1.2.11"/>
+  <system.Code code="1.2.11.1" name="Line" descr="Line" order="2" parent="1.2.11"/>
+  <system.Code code="1.2.11.2" name="Battery" descr="Battery" order="3" parent="1.2.11"/>
+  <system.Code code="1.2.11.4" name="Solar" descr="Solar" order="4" parent="1.2.11"/>
+
+<!-- Meter -->
+<system.Code code="1.3" name="Meter" descr="Meter" order="3" parent="1"/>
+  <!-- Meter Type -->
+  <system.Code code="1.3.1" name="MeterType" descr="Meter Type" order="1" parent="1.3"/>
+    <!-- EnergyMeter -->
+    <system.Code code="1.3.1.1" name="EnergyMeter" descr="EnergyMeter" order="1" parent="1.3.1"/>
+      <!-- Element -->
+      <system.Code code="1.3.1.1.1" name="Element" descr="Element" order="1" parent="1.3.1.1"/>
+      <system.Code code="1.3.1.1.1.1" name="Unknown" descr="Unknown" order="1" parent="1.3.1.1.1"/>
+      <system.Code code="1.3.1.1.1.2" name="1P" descr="1P" order="2" parent="1.3.1.1.1"/>
+      <system.Code code="1.3.1.1.1.3" name="3P" descr="3P" order="3" parent="1.3.1.1.1"/>
+    
+   
+  <!-- Meter Resolution -->
+  <system.Code code="1.3.2" name="MeterResolution" descr="MeterResolution" order="2" parent="1.3"/>
+  <system.Code code="1.3.2.1" name="Unknown" descr="Unknown" order="1" parent="1.3.2"/>
+  <system.Code code="1.3.2.2" name="Minute" descr="Minute" order="2" parent="1.3.2"/>
+  <system.Code code="1.3.2.3" name="Hour" descr="Hour" order="3" parent="1.3.2"/>
+  <system.Code code="1.3.2.4" name="Day" descr="Day" order="4" parent="1.3.2"/>
+  <system.Code code="1.3.2.5" name="Month" descr="Month" order="5" parent="1.3.2"/>
+  
+  <!-- Meter status -->
+  <system.Code code="1.3.3" name="MeterStatus" descr="MeterStatus" order="3" parent="1.3"/>
+  <system.Code code="1.3.3.1" name="Normal" descr="Normal" order="1" parent="1.3.3"/>
+  <system.Code code="1.3.3.2" name="BreakDown" descr="BreakDown" order="2" parent="1.3.3"/>
+  <system.Code code="1.3.3.3" name="Repair" descr="Repair" order="3" parent="1.3.3"/>
+  <system.Code code="1.3.3.4" name="CutOff" descr="CutOff" order="4" parent="1.3.3"/>
+  <system.Code code="1.3.3.5" name="PowerDown" descr="PowerDown" order="5" parent="1.3.3"/>
+  <system.Code code="1.3.3.8" name="NewRegistered" descr="NewRegistered" order="8" parent="1.3.3"/>
+  <system.Code code="1.3.3.9" name="Delete" descr="Delete" order="9" parent="1.3.3"/>
+  <system.Code code="1.3.3.10" name="Activation" descr="Activation" order="10" parent="1.3.3"/>
+  <system.Code code="1.3.3.11" name="Dectivation" descr="Deactivation" order="11" parent="1.3.3"/>
+  <system.Code code="1.3.3.12" name="FAIL" descr="FAIL" order="12" parent="1.3.3"/>
+  <system.Code code="1.3.3.13" name="ReadyForReconnection" descr="ReadyForReconnection" order="13" parent="1.3.3"/>
+  
+  <!-- Meter Event Type -->
+  <!--  
+  <system.Code code="1.3.4" name="MeterEventType" descr="MeterEventType" order="4" parent=""/>
+  <system.Code code="1.3.4.1" name="MFE" descr="Manufacture Event" order="1" parent=""/>
+  <system.Code code="1.3.4.2" name="MFS" descr="Manufacture Status" order="2" parent=""/>
+  <system.Code code="1.3.4.3" name="PAR" descr="Parameter" order="3" parent=""/>
+  <system.Code code="1.3.4.4" name="STE" descr="Standard Event" order="4" parent=""/>
+  <system.Code code="1.3.4.5" name="STS" descr="Status" order="5" parent=""/>
+  -->
+  <!-- Meter Upload Type -->
+  <system.Code code="1.3.5" name="MeterUploadType" descr="MeterUploadType" order="5" parent="1.3"/>
+  <system.Code code="1.3.5.1" name="Unknown" descr="Unknown" order="1" parent="1.3.5"/>
+  <system.Code code="1.3.5.2" name="Immediately" descr="Immediately" order="2" parent="1.3.5"/>
+  <system.Code code="1.3.5.3" name="Daily" descr="Daily" order="3" parent="1.3.5"/>
+  <system.Code code="1.3.5.4" name="Weekly" descr="Weekly" order="4" parent="1.3.5"/>
+  <system.Code code="1.3.5.5" name="Hourly" descr="Hourly" order="5" parent="1.3.5"/>
+  
+  <!-- Meter SW Version -->
+  <system.Code code="1.3.6" name="MeterSWVer" descr="MeterSWVer" order="6" parent="1.3"/>
+  <system.Code code="1.3.6.1" name="1.0" descr="1.0" order="1" parent="1.3.6"/>
+  <system.Code code="1.3.6.2" name="1.1" descr="1.1" order="2" parent="1.3.6"/>
+  <system.Code code="1.3.6.3" name="1.2" descr="1.2" order="3" parent="1.3.6"/>
+  <system.Code code="1.3.6.4" name="1.3" descr="1.3" order="4" parent="1.3.6"/>
+  <system.Code code="1.3.6.5" name="1.4" descr="1.4" order="5" parent="1.3.6"/>
+  <system.Code code="1.3.6.6" name="1.5" descr="1.5" order="6" parent="1.3.6"/>
+  <system.Code code="1.3.6.7" name="1.6" descr="1.6" order="7" parent="1.3.6"/>
+  <system.Code code="1.3.6.8" name="1.7" descr="1.7" order="8" parent="1.3.6"/>
+  <system.Code code="1.3.6.9" name="1.8" descr="1.8" order="9" parent="1.3.6"/>
+  <system.Code code="1.3.6.10" name="1.9" descr="1.9" order="10" parent="1.3.6"/>
+  <system.Code code="1.3.6.11" name="2.0" descr="2.0" order="11" parent="1.3.6"/>
+  <system.Code code="1.3.6.12" name="2.1" descr="2.1" order="12" parent="1.3.6"/>
+  <system.Code code="1.3.6.13" name="2.2" descr="2.2" order="13" parent="1.3.6"/>
+
+  <!-- Meter HW Version -->
+  <system.Code code="1.3.7" name="MeterHWVer" descr="MeterHWVer" order="7" parent="1.3"/>
+  <system.Code code="1.3.7.1" name="1.0" descr="1.0" order="1" parent="1.3.7"/>
+  <system.Code code="1.3.7.2" name="1.1" descr="1.1" order="2" parent="1.3.7"/>
+  <system.Code code="1.3.7.3" name="1.2" descr="1.2" order="3" parent="1.3.7"/>
+  <system.Code code="1.3.7.4" name="1.3" descr="1.3" order="4" parent="1.3.7"/>
+  <system.Code code="1.3.7.5" name="1.4" descr="1.4" order="5" parent="1.3.7"/>
+  <system.Code code="1.3.7.6" name="1.5" descr="1.5" order="6" parent="1.3.7"/>
+  <system.Code code="1.3.7.7" name="1.6" descr="1.6" order="7" parent="1.3.7"/>
+  <system.Code code="1.3.7.8" name="1.7" descr="1.7" order="8" parent="1.3.7"/>
+  <system.Code code="1.3.7.9" name="1.8" descr="1.8" order="9" parent="1.3.7"/>
+  <system.Code code="1.3.7.10" name="1.9" descr="1.9" order="10" parent="1.3.7"/>
+  <system.Code code="1.3.7.11" name="2.0" descr="1.9" order="11" parent="1.3.7"/>
+  <system.Code code="1.3.7.12" name="2.3" descr="2.3" order="12" parent="1.3.7"/>
+  
+  
+  
+<system.Code code="2" name="Contract" descr="Contract" order="2" parent=""/>
+<system.Code code="2.1" name="Status" descr="Status" order="1" parent="2"/>
+<system.Code code="2.1.0" name="Normal" descr="Normal" order="1" parent="2.1"/>
+<system.Code code="2.1.1" name="Temporary Pause" descr="Temporary Pause" order="2" parent="2.1"/>
+<system.Code code="2.1.2" name="Pause" descr="Pause" order="3" parent="2.1"/>
+<system.Code code="2.1.3" name="Termination" descr="Termination" order="4" parent="2.1"/>
+<system.Code code="2.1.4" name="Suspended" descr="Suspended" order="5" parent="2.1"/>
+
+<system.Code code="2.2" name="Payment" descr="Payment" order="2" parent="2"/>
+<system.Code code="2.2.0" name="postpay" descr="postpay" order="1" parent="2.2"/>
+<system.Code code="2.2.1" name="prepay" descr="prepay" order="2" parent="2.2"/>
+<system.Code code="2.2.2" name="emergency credit" descr="emergency credit" order="3" parent="2.2"/>
+
+<system.Code code="2.2.0.1" name="Payment Status" descr="Payment Status" order="1" parent="2.2.0"/>
+<system.Code code="2.2.0.1.0" name="Paid" descr="Paid" order="1" parent="2.2.0.1"/>
+<system.Code code="2.2.0.1.1" name="Unpaid" descr="Unpaid" order="2" parent="2.2.0.1"/>
+
+
+<system.Code code="2.2.1.0" name="Payment Type" descr="Payment Type" order="1" parent="2.2.1"/>
+<system.Code code="2.2.1.0.0" name="Credit" descr="Credit" order="1" parent="2.2.1.0"/>
+<system.Code code="2.2.1.0.1" name="Debit" descr="Debit" order="2" parent="2.2.1.0"/>
+
+<system.Code code="2.2.1.1" name="Emergency" descr="Emergency" order="2" parent="2.2.1"/>
+<system.Code code="2.2.1.1.0" name="YES" descr="YES" order="1" parent="2.2.1.1"/>
+<system.Code code="2.2.1.1.1" name="NO" descr="NO" order="2" parent="2.2.1.1"/>
+
+<system.Code code="2.2.1.2" name="Prepayment Status" descr="Prepayment Status" order="3" parent="2.2.1"/>
+<system.Code code="2.2.1.2.0" name="Charged" descr="Charged" order="1" parent="2.2.1.2"/>
+<system.Code code="2.2.1.2.1" name="Lack of charge" descr="Lack of charge" order="2" parent="2.2.1.2"/>
+
+<!-- BEMS -->
+<system.Code code="2.3" name="Contract kind" descr="Contract kind" order="3" parent="2"/>
+<system.Code code="2.3.0" name="Electricity" descr="Electricity" order="1" parent="2.3"/>
+<system.Code code="2.3.0.0" name="Residential row" descr="Residential row" order="1" parent="2.3.0"/>
+<system.Code code="2.3.0.1" name="Residential high" descr="Residential high" order="2" parent="2.3.0"/>
+<system.Code code="2.3.0.2" name="General(A)" descr="General(A)" order="3" parent="2.3.0"/>
+<system.Code code="2.3.0.3" name="General(B)" descr="General(B)" order="4" parent="2.3.0"/>
+<system.Code code="2.3.0.4" name="Educational" descr="Educational" order="5" parent="2.3.0"/>
+<system.Code code="2.3.0.5" name="industrial(A)" descr="industrial(A)" order="6" parent="2.3.0"/>
+<system.Code code="2.3.0.6" name="industrial(B)" descr="industrial(B)" order="7" parent="2.3.0"/>
+<system.Code code="2.3.0.7" name="industrial(C)" descr="industrial(C)" order="8" parent="2.3.0"/>
+<system.Code code="2.3.0.8" name="Agricultural" descr="Agricultural" order="9" parent="2.3.0"/>
+<system.Code code="2.3.0.9" name="Street lighting" descr="Street lighting" order="10" parent="2.3.0"/>
+<system.Code code="2.3.0.10" name="Midnight power" descr="Midnight power" order="11" parent="2.3.0"/>
+
+
+<!-- Energy -->
+<system.Code code="3" name="Energy" descr="Energy" order="3" parent=""/>
+  <system.Code code="3.1" name="Electricity" descr="Electricity" order="1" parent="3"/>
+
+<!-- Communication -->
+<system.Code code="4" name="Comm" descr="Comm" order="4" parent=""/>
+  <!-- CommStatus -->
+  <system.Code code="4.1" name="CommStatus" descr="CommStatus" order="1" parent="4"/>
+  <system.Code code="4.1.1" name="Failed" descr="Failed" order="1" parent="4.1"/>
+  <system.Code code="4.1.2" name="Success" descr="Success" order="2" parent="4.1"/>
+
+  <!-- Connection Status Reason -->
+  <system.Code code="4.2" name="ConnectionStatusReason" descr="ConnectionStatusReason" order="2" parent="4"/>
+
+  <!-- Connection Status Type -->
+  <system.Code code="4.3" name="ConnectionStatusType" descr="ConnectionStatusType" order="3" parent="4"/>
+  <system.Code code="4.3.1" name="disconnected" descr="disconnected" order="1" parent="4.3"/>
+  <system.Code code="4.3.2" name="connected" descr="connected" order="2" parent="4.3"/>
+
+  <!-- Network Type -->
+  <system.Code code="4.4" name="NetworkType" descr="NetworkType" order="4" parent="4"/>
+  <system.Code code="4.4.1" name="RFD" descr="RFD" order="1" parent="4.4"/>
+  <system.Code code="4.4.2" name="FFD" descr="FFD" order="2" parent="4.4"/>
+  <system.Code code="4.4.3" name="Unknown" descr="Unknown" order="3" parent="4.4"/>
+
+  <!-- Protocol Type -->
+  <system.Code code="4.6" name="ProtocolType" descr="ProtocolType" order="6" parent="4"/>
+  <system.Code code="4.6.3" name="GPRS" descr="GPRS" order="3" parent="4.6"/>
+  <system.Code code="4.6.5" name="LAN" descr="LAN" order="5" parent="4.6"/>
+  <system.Code code="4.6.6" name="ZigBee" descr="ZigBee" order="6" parent="4.6"/>
+  <system.Code code="4.6.9" name="PLC" descr="PLC" order="9" parent="4.6"/>
+  <system.Code code="4.6.14" name="IP" descr="IP" order="14" parent="4.6"/>
+
+
+  <!-- SVC Field -->
+  <system.Code code="4.9" name="HeaderSVC" descr="HeaderSVC" order="9" parent="4"/>
+  <system.Code code="4.9.M" name="(M)Metering" descr="Measurement Metering Data Delivery Service (V1.0)" order="1" parent="4.9"/>
+  <system.Code code="4.9.N" name="(N)Metering" descr="Measurement Metering Data Delivery Service (V2.0)" order="2" parent="4.9"/>
+  <system.Code code="4.9.S" name="(S)Metering" descr="Measurement Metering Data Delivery Service (V3.0)" order="3" parent="4.9"/>
+  <system.Code code="4.9.R" name="(R)Metering" descr="Measurement Metering Data Delivery Service (V4.0)" order="4" parent="4.9"/>
+  <system.Code code="4.9.G" name="(G)Metering" descr="Measurement Metering Data Delivery Service (V5.0)" order="5" parent="4.9"/>
+  <system.Code code="4.9.P" name="(P)Partial" descr="Partial Frame" order="6" parent="4.9"/>
+  <system.Code code="4.9.C" name="(C)Command" descr="Command Service" order="7" parent="4.9"/>
+  <system.Code code="4.9.A" name="(A)Alarm" descr="Alarm Message Delivery Service" order="8" parent="4.9"/>
+  <system.Code code="4.9.B" name="(B)Event" descr="Event Message Delivery Service (B)" order="9" parent="4.9"/>
+  <system.Code code="4.9.E" name="(E)Event" descr="Event Message Delivery Service (E)" order="10" parent="4.9"/>
+  
+  <!-- Sender/Receiver Type -->
+  <system.Code code="4.10" name="Sender/Receiver Type" descr="Sender/Receiver Type" order="10" parent="4"/>
+  <system.Code code="4.10.1" name="FEP" descr="FEP" order="1" parent="4.10"/>
+  <system.Code code="4.10.2" name="DCU" descr="DCU" order="2" parent="4.10"/>
+  <system.Code code="4.10.3" name="Modem" descr="Modem" order="3" parent="4.10"/>
+  <system.Code code="4.10.4" name="EnergyMeter" descr="EnergyMeter" order="4" parent="4.10"/>
+  <system.Code code="4.10.5" name="AlarmUnit" descr="AlarmUnit" order="5" parent="4.10"/>
+  <system.Code code="4.10.10" name="ZRU" descr="ZRU" order="10" parent="4.10"/>
+  <system.Code code="4.10.13" name="ZBRepeater" descr="ZBRepeater" order="12" parent="4.10"/>
+  <system.Code code="4.10.15" name="MMIU" descr="MMIU" order="14" parent="4.10"/>
+  <system.Code code="4.10.17" name="Operator" descr="Operator" order="16" parent="4.10"/>
+  <system.Code code="4.10.18" name="Customer" descr="Customer" order="17" parent="4.10"/>
+  <system.Code code="4.10.19" name="Schedule Job" descr="Schedule Job" order="18" parent="4.10"/>
+
+  <!-- Interface Type -->
+  <system.Code code="4.11" name="Interface Type" descr="Interface Type" order="11" parent="4"/>
+  <system.Code code="4.11.1" name="IF1" descr="IF1" order="1" parent="4.11"/>
+  <system.Code code="4.11.2" name="IF2" descr="IF2" order="2" parent="4.11"/>
+  <system.Code code="4.11.3" name="IF3" descr="IF3" order="3" parent="4.11"/>
+  <system.Code code="4.11.4" name="Unknown" descr="Unknown" order="4" parent="4.11"/>
+  <system.Code code="4.11.5" name="IF4/5" descr="IF4/5" order="5" parent="4.11"/>
+  <system.Code code="4.11.6" name="IF6" descr="IF6" order="6" parent="4.11"/>
+  <system.Code code="4.11.7" name="IF7" descr="IF7" order="7" parent="4.11"/>
+  <system.Code code="4.11.8" name="IF8" descr="IF8" order="8" parent="4.11"/>
+  <system.Code code="4.11.9" name="IF9" descr="IF9" order="9" parent="4.11"/>
+  <system.Code code="4.11.10" name="AMU" descr="AMU" order="10" parent="4.11"/>
+  <system.Code code="4.11.11" name="TNG" descr="TNG" order="11" parent="4.11"/>
+  
+
+  <!-- Data Frame SVC -->
+  <system.Code code="4.12" name="DataSVC" descr="SVC for data frame" order="12" parent="4"/>
+  <system.Code code="4.12.1" name="Electricity" descr="Electricity" order="1" parent="4.12"/>
+  <system.Code code="4.12.2" name="Gas" descr="Gas" order="2" parent="4.12"/>
+  <system.Code code="4.12.3" name="Water" descr="Water" order="3" parent="4.12"/>
+  <system.Code code="4.12.4" name="WarmWater" descr="Warm Water" order="4" parent="4.12"/>
+  <system.Code code="4.12.5" name="Cooling" descr="Cooling Meter" order="5" parent="4.12"/>
+  <system.Code code="4.12.6" name="Heating" descr="Heating" order="6" parent="4.12"/>
+  <system.Code code="4.12.7" name="Volume" descr="Volume Corrector" order="7" parent="4.12"/>
+  <system.Code code="4.12.8" name="ColdWater" descr="Cold Water" order="8" parent="4.12"/>
+  <system.Code code="4.12.9" name="SmokeDetector" descr="Smoke Detector" order="9" parent="4.12"/>
+  <system.Code code="4.12.10" name="InterfaceDevice" descr="Interface Device" order="10" parent="4.12"/>
+  <system.Code code="4.12.11" name="EnvSensor" descr="Complex environment sensor" order="11" parent="4.12"/>
+  
+<!-- Power -->
+<system.Code code="5" name="Power" descr="Power" order="5" parent=""/>
+  <!-- Parity -->
+  <system.Code code="5.1" name="Parity" descr="Parity" order="1" parent="5"/>
+  <system.Code code="5.1.1" name="None" descr="None" order="1" parent="5.1"/>
+  <system.Code code="5.1.2" name="Odd" descr="Odd" order="2" parent="5.1"/>
+  <system.Code code="5.1.3" name="Even" descr="Even" order="3" parent="5.1"/>
+
+  <!-- Power Type -->
+  <system.Code code="5.2" name="UnKnown" descr="UnKnown" order="2" parent="5"/>
+  <system.Code code="5.2.1" name="Line" descr="Line" order="1" parent="5.2"/>
+  <system.Code code="5.2.2" name="Battery" descr="Battery" order="2" parent="5.2"/>
+  <system.Code code="5.2.3" name="Solar" descr="Solar" order="3" parent="5.2"/>
+  
+  <!-- Power Outage Type -->
+  <system.Code code="5.3" name="PowerOutageType" descr="PowerOutageType" order="3" parent="5"/>
+  <system.Code code="5.3.1" name="Outage" descr="Outage" order="1" parent="5.3"/>
+  <system.Code code="5.3.2" name="Recovery" descr="Recovery" order="2" parent="5.3"/>
+  
+  <!-- Pwd Type -->
+  <system.Code code="5.4" name="PwrType" descr="PwrType" order="4" parent="5"/>
+  <system.Code code="5.4.1" name="SMPS" descr="SMPS" order="1" parent="5.4"/>
+  <system.Code code="5.4.2" name="Battery" descr="Battery" order="2" parent="5.4"/>
+
+  <!-- Metering Data Correction Type -->
+  <system.Code code="6.5" name="MTRCorrection.Type"       descr="Metering Data Correction Type"   order="6"  parent="6" />
+  <system.Code code="6.5.0"  name="Correct"               descr="Correct"                         order="1"  parent="6.5" />
+  <system.Code code="6.5.1"  name="EnteredManually"      descr="Entered manually"                order="2"  parent="6.5" />
+  <system.Code code="6.5.2"  name="Missing"               descr="Missing"                         order="3"  parent="6.5" />
+  <system.Code code="6.5.3"  name="Uncertain"             descr="Uncertain"                       order="4"  parent="6.5" />
+  <system.Code code="6.5.4"  name="EstimatedReplaced" descr="Estimated or replaced"           order="5"  parent="6.5" />
+  <system.Code code="6.5.5"  name="Rollback"              descr="Rollback"                        order="6"  parent="6.5" />
+  <system.Code code="6.5.6"  name="Fail"                  descr="Fail"                            order="7"  parent="6.5" />
+  <system.Code code="6.5.7"  name="Overflow"              descr="Overflow"                        order="8"  parent="6.5" />
+  <system.Code code="6.5.8"  name="NotValid"             descr="Not Valid"                       order="9"  parent="6.5" />
+  <system.Code code="6.5.9"  name="NotSupported"         descr="Not Supported"                   order="10" parent="6.5" />
+  <system.Code code="6.5.10" name="NotAvailable"         descr="Not Available"                   order="11" parent="6.5" />
+  <system.Code code="6.5.11" name="InvalidMethod"        descr="Invalid Method"                  order="12" parent="6.5" />
+  <system.Code code="6.5.12" name="LossOfPrecision"     descr="Loss of Precision"               order="13" parent="6.5" />
+  <system.Code code="6.5.13" name="InternalError"        descr="Internal Error"                  order="14" parent="6.5" />
+  <system.Code code="6.5.14" name="DoesNotExist"        descr="Does Not Exist"                  order="15" parent="6.5" />
+  <system.Code code="6.5.15" name="PowerFail"            descr="Power Fail"                      order="16" parent="6.5" />
+  <system.Code code="6.5.16" name="DemandReset"          descr="Demand Reset"                    order="17" parent="6.5" />
+        
+  <!-- Rank Range -->
+  <system.Code code="6.19" name="Rank Range" descr="Rank Range" order="7" parent="6"/>
+  <system.Code code="6.19.0" name="10" descr="10"  order="1"  parent="6.19"/>
+  <system.Code code="6.19.1" name="20" descr="20"  order="2"  parent="6.19"/>
+  <system.Code code="6.19.2" name="30" descr="30"  order="3"  parent="6.19"/>
+  <system.Code code="6.19.3" name="40" descr="40"  order="4"  parent="6.19"/>
+  <system.Code code="6.19.4" name="50" descr="50"  order="5"  parent="6.19"/>
+  <system.Code code="6.19.5" name="60" descr="60"  order="6"  parent="6.19"/>
+  <system.Code code="6.19.6" name="70" descr="70"  order="7"  parent="6.19"/>
+  <system.Code code="6.19.7" name="80" descr="80"  order="8"  parent="6.19"/>
+  <system.Code code="6.19.8" name="90" descr="90"  order="9"  parent="6.19"/>
+  <system.Code code="6.19.9" name="100" descr="100" order="10" parent="6.19"/>
+    
+    
+<!-- System -->
+<system.Code code="7" name="System" descr="System" order="7" parent=""/>
+  <!-- Attribute Type -->
+  <system.Code code="7.1" name="AttributeType" descr="AttributeType" order="1" parent="7"/>
+  <system.Code code="7.1.1" name="Integer" descr="Integer" order="1" parent="7.1"/>
+  <system.Code code="7.1.2" name="Float" descr="Float" order="2" parent="7.1"/>
+  <system.Code code="7.1.3" name="String" descr="String" order="3" parent="7.1"/>
+  
+  <!-- Auto Reset Flag -->
+  <system.Code code="7.2" name="AutoResetFlag" descr="AutoResetFlag" order="2" parent="7"/>
+  <system.Code code="7.2.1" name="Disable" descr="Disable" order="1" parent="7.2"/>
+  <system.Code code="7.2.2" name="Enable" descr="Enable" order="2" parent="7.2"/>
+  
+  <!-- Data Bits system.Code -->
+  <system.Code code="7.3" name="DataBitssystem.Code" descr="DataBitssystem.Code" order="3" parent="7"/>
+  <system.Code code="7.3.1" name="Unknown" descr="Unknown" order="1" parent="7.3"/>
+  <system.Code code="7.3.2" name="1" descr="1" order="2" parent="7.3"/>
+  <system.Code code="7.3.3" name="2" descr="2" order="3" parent="7.3"/>
+  <system.Code code="7.3.4" name="3" descr="3" order="4" parent="7.3"/>
+  <system.Code code="7.3.5" name="4" descr="4" order="5" parent="7.3"/>
+  <system.Code code="7.3.6" name="5" descr="5" order="6" parent="7.3"/>
+  <system.Code code="7.3.7" name="6" descr="6" order="7" parent="7.3"/>
+  <system.Code code="7.3.8" name="7" descr="7" order="8" parent="7.3"/>
+  <system.Code code="7.3.9" name="8" descr="8" order="9" parent="7.3"/>
+  
+  <!-- Stop Bits system.Code -->
+  <!--  
+  <system.Code code="" name="StopBitssystem.Code" descr="" order="" parent=""/>
+  <system.Code code="" name="Unknown" descr="" order="" parent=""/>
+  <system.Code code="" name="1" descr="" order="" parent=""/>
+  <system.Code code="" name="1.5" descr="" order="" parent=""/>
+  <system.Code code="" name="2" descr="" order="" parent=""/>
+  -->
+  
+  <!-- Function Type -->
+  <system.Code code="7.4" name="FunctionType" descr="FunctionType" order="4" parent="7"/>
+  <system.Code code="7.4.1" name="FEP" descr="FEP" order="1" parent="7.4"/>
+  <system.Code code="7.4.2" name="DCU" descr="DCU" order="2" parent="7.4"/>
+  <system.Code code="7.4.3" name="Modem" descr="Modem" order="3" parent="7.4"/>
+  <system.Code code="7.4.4" name="Electricity Meter" descr="Electricity Meter" order="4" parent="7.4"/>
+  <system.Code code="7.4.5" name="Water Meter" descr="Water Meter" order="5" parent="7.4"/>
+  <system.Code code="7.4.6" name="Alarm System" descr="Alarm System" order="6" parent="7.4"/>
+  <system.Code code="7.4.7" name="Gas Meter" descr="Gas Meter" order="7" parent="7.4"/>
+  <system.Code code="7.4.8" name="Heat Meter" descr="Heat Meter" order="8" parent="7.4"/>
+  <system.Code code="7.4.9" name="Volume Corrector" descr="Volume Corrector" order="9" parent="7.4"/>
+  
+  <!-- Flow Control -->
+  <system.Code code="7.5" name="FlowControl" descr="FlowControl" order="5" parent="7"/>
+  <system.Code code="7.5.1" name="None" descr="None" order="1" parent="7.5"/>
+  <system.Code code="7.5.2" name="Xon/Xoff" descr="Xon/Xoff" order="2" parent="7.5"/>
+  <system.Code code="7.5.3" name="Hardware" descr="Hardware" order="3" parent="7.5"/>
+
+
+  <!-- Status system.Code -->
+  <system.Code code="7.8" name="Statussystem.Code" descr="Statussystem.Code" order="8" parent="7"/>
+  <system.Code code="7.8.1" name="Open" descr="Open" order="1" parent="7.8"/>
+  <system.Code code="7.8.2" name="Cleared" descr="Cleared" order="2" parent="7.8"/>
+  <system.Code code="7.8.3" name="Acknowledged" descr="Acknowledged" order="3" parent="7.8"/>
+
+  <!-- System Class -->
+  <system.Code code="7.9" name="SystemClass" descr="SystemClass" order="9" parent="7"/>
+  <system.Code code="7.9.1" name="FEP" descr="FEP" order="1" parent="7.9"/>
+  <system.Code code="7.9.2" name="DCU" descr="DCU" order="2" parent="7.9"/>
+  <system.Code code="7.9.3" name="EnergyMeter" descr="EnergyMeter" order="3" parent="7.9"/>
+  <system.Code code="7.9.4" name="AlarmUnit" descr="AlarmUnit" order="4" parent="7.9"/>
+  <system.Code code="7.9.5" name="VolumeCorrector" descr="VolumeCorrector" order="5" parent="7.9"/>
+  <system.Code code="7.9.6" name="WaterMeter" descr="WaterMeter" order="6" parent="7.9"/>
+  <system.Code code="7.9.7" name="GasMeter" descr="GasMeter" order="7" parent="7.9"/>
+  <system.Code code="7.9.8" name="HeatMeter" descr="HeatMeter" order="8" parent="7.9"/>
+  <system.Code code="7.9.9" name="ZEUMBus" descr="ZEUMBus" order="9" parent="7.9"/>
+  <system.Code code="7.9.10" name="ZRU" descr="ZRU" order="10" parent="7.9"/>
+  <system.Code code="7.9.11" name="ZMU" descr="ZMU" order="11" parent="7.9"/>
+  <system.Code code="7.9.12" name="ZBRepeater" descr="ZBRepeater" order="12" parent="7.9"/>
+  <system.Code code="7.9.13" name="ZEUPLS" descr="ZEUPLS" order="13" parent="7.9"/>
+  <system.Code code="7.9.14" name="MMIU" descr="MMIU" order="14" parent="7.9"/>
+  <system.Code code="7.9.15" name="IEIU" descr="IEIU" order="15" parent="7.9"/>
+  <system.Code code="7.9.16" name="UserGroup" descr="UserGroup" order="16" parent="7.9"/>
+
+  <!-- Target Class -->
+  <system.Code code="7.13" name="TargetClass" descr="TargetClass" order="13" parent="7"/>
+  <system.Code code="7.13.1" name="FEP" descr="FEP" order="1" parent="7.13"/>
+  <system.Code code="7.13.2" name="DCU" descr="DCU" order="2" parent="7.13"/>
+  <system.Code code="7.13.3" name="Modem" descr="Modem" order="3" parent="7.13"/>
+  <system.Code code="7.13.4" name="EnergyMeter" descr="EnergyMeter" order="4" parent="7.13"/>
+  <system.Code code="7.13.5" name="VolumeCorrector" descr="VolumeCorrector" order="5" parent="7.13"/>
+  <system.Code code="7.13.6" name="AlarmUnit" descr="AlarmUnit" order="6" parent="7.13"/>
+  <system.Code code="7.13.7" name="WaterMeter" descr="WaterMeter" order="7" parent="7.13"/>
+  <system.Code code="7.13.8" name="GasMeter" descr="GasMeter" order="8" parent="7.13"/>
+  <system.Code code="7.13.9" name="HeatMeter" descr="HeatMeter" order="9" parent="7.13"/>
+  <system.Code code="7.13.10" name="ZEU-MBus" descr="ZEU-MBus" order="10" parent="7.13"/>
+  <system.Code code="7.13.11" name="ZRU" descr="ZRU" order="11" parent="7.13"/>
+  <system.Code code="7.13.12" name="ZMU" descr="ZMU" order="12" parent="7.13"/>
+  <system.Code code="7.13.13" name="PLC" descr="PLC" order="13" parent="7.13"/>
+  <system.Code code="7.13.14" name="ZBRepeater" descr="ZBRepeater" order="14" parent="7.13"/>
+  <system.Code code="7.13.15" name="ZEU-PLS" descr="ZEU-PLS" order="15" parent="7.13"/>
+  <system.Code code="7.13.16" name="MMIU" descr="MMIU" order="16" parent="7.13"/>
+  <system.Code code="7.13.17" name="IEIU" descr="IEIU" order="17" parent="7.13"/>
+  <system.Code code="7.13.18" name="Operator" descr="Operator" order="18" parent="7.13"/>
+  <system.Code code="7.13.19" name="Customer" descr="Customer" order="19" parent="7.13"/>
+  <system.Code code="7.13.20" name="MaintainUser" descr="MaintainUser" order="20" parent="7.13"/>
+  <system.Code code="7.13.21" name="Role" descr="Role" order="21" parent="7.13"/>
+  <system.Code code="7.13.22" name="system.Code" descr="system.Code" order="22" parent="7.13"/>
+  <system.Code code="7.13.23" name="Schedule Job" descr="Schedule Job" order="23" parent="7.13"/>
+  <system.Code code="7.13.24" name="Modem" descr="Modem" order="24" parent="7.13"/>
+  <system.Code code="7.13.25" name="Meter" descr="Meter" order="25" parent="7.13"/>
+  <system.Code code="7.13.26" name="IHD" descr="IHD" order="26" parent="7.13"/>
+  <system.Code code="7.13.27" name="ACD" descr="ACD" order="27" parent="7.13"/>
+  <system.Code code="7.13.28" name="HMU" descr="HMU" order="28" parent="7.13"/>
+  <system.Code code="7.13.29" name="Contract" descr="Contract" order="29" parent="7.13"/>
+  <system.Code code="7.13.30" name="SolarPowerMeter" descr="SolarPowerMeter" order="30" parent="7.13"/>
+  <system.Code code="7.13.31" name="SubGiga" descr="SubGiga" order="31" parent="7.13"/>
+  <system.Code code="7.13.32" name="LTE" descr="LTE" order="32" parent="7.13"/>
+  <system.Code code="7.13.33" name="Inverter" descr="Inverter" order="33" parent="7.13"/>
+  
+   
+  <!-- Equipment Command -->
+<system.Code code="8" name="Command" descr="Command" order="8" parent=""/>
+  <!-- Meter Command -->
+  <system.Code code="8.1" name="Meter Command" descr="Meter Command" order="1" parent="8"/>
+  <system.Code code="8.1.1" name="On Demand Metering" descr="On Demand Metering" order="1" parent="8.1"/>
+  <system.Code code="8.1.2" name="Meter Time Synchronization" descr="Meter Time Synchronization" order="2" parent="8.1"/>
+  <system.Code code="8.1.3" name="Relay Status" descr="Relay Status" order="3" parent="8.1"/>
+  <system.Code code="8.1.4" name="Relay on" descr="Relay on" order="4" parent="8.1"/>
+  <system.Code code="8.1.5" name="Relay off" descr="Relay off" order="5" parent="8.1"/>
+  <system.Code code="8.1.6" name="Meter OTA" descr="Meter OTA" order="6" parent="8.1"/>
+  <system.Code code="8.1.7" name="Get Meter F/W Version" descr="Get Meter F/W Version" order="7" parent="8.1"/>  
+  <system.Code code="8.1.8" name="Get Billing Cycle" descr="Get Billing Cycle" order="8" parent="8.1"/>
+  <system.Code code="8.1.9" name="Set Billing Cycle" descr="Set Billing Cycle" order="9" parent="8.1"/>
+  <system.Code code="8.1.10" name="Get Meter Demand Period" descr="Get Meter Demand Period" order="10" parent="8.1"/>
+  <system.Code code="8.1.11" name="Set Meter Demand Period" descr="Set Meter Demand Period" order="11" parent="8.1"/>
+  <system.Code code="8.1.12" name="Get Current Load Limit" descr="Get Current Load Limit" order="12" parent="8.1"/>     
+  <system.Code code="8.1.13" name="Set Current Load Limit" descr="Set Current Load Limit" order="13" parent="8.1"/>     
+  <system.Code code="8.1.14" name="Get Tariff" descr="Get Meter Tariff" order="14" parent="8.1"/>
+  <system.Code code="8.1.15" name="Set Tariff" descr="Set Meter Tariff" order="15" parent="8.1"/>
+  <!-- PBS Command -->
+  <system.Code code="8.1.16" name="PBS On" descr="PBS On" order="16" parent="8.1"/>
+  <system.Code code="8.1.17" name="PBS Off" descr="PBS Off" order="17" parent="8.1"/>
+  <system.Code code="8.1.18" name="PBS Status" descr="PBS Status" order="18" parent="8.1"/>
+  <!--  Meter Param Get/Set -->
+  <system.Code code="8.1.19" name="Get Meter Parameter" descr="Get Meter Parameter" order="19" parent="8.1"/>
+  <system.Code code="8.1.20" name="Set Meter Parameter" descr="Set Meter Parameter" order="20" parent="8.1"/>
+  
+  
+  <!-- Modem Command -->
+  <system.Code code="8.2" name="Modem Command" descr="Modem Command" order="2" parent="8"/>
+  <system.Code code="8.2.1" name="Modem OTA" descr="Modem OTA" order="1" parent="8.2"/>
+
+
+  <!-- DCU Command -->
+  <system.Code code="8.3" name="DCU Command" descr="DCU Command" order="3" parent="8"/>
+  <system.Code code="8.3.1" name="Ping" descr="Ping" order="1" parent="8.3"/>
+  <system.Code code="8.3.2" name="Traceroute" descr="Traceroute" order="2" parent="8.3"/>
+  <system.Code code="8.3.3" name="DCU Reset" descr="DCU Reset" order="3" parent="8.3"/>    
+  <system.Code code="8.3.4" name="DCU OTA" descr="DCU OTA" order="4" parent="8.3"/>
+  <system.Code code="8.3.5" name="Get DCU Schedule" descr="Get DCU Schedule" order="5" parent="8.3"/>
+  <system.Code code="8.3.6" name="Set DCU Schedule" descr="Set DCU Schedule" order="6" parent="8.3"/>
+  <system.Code code="8.3.7" name="Delete DCU Schedule" descr="Delete DCU Schedule" order="7" parent="8.3"/>
+  <system.Code code="8.3.8" name="Execute DCU Schedule" descr="Execute DCU Schedule" order="8" parent="8.3"/>
+  <system.Code code="8.3.9" name="Status Monitoring" descr="Status Monitoring" order="9" parent="8.3"/>
+  
+  
+  <system.Code code="10" name="EventAlert" descr="EventAlert" order="10" parent=""/>
+  <system.Code code="10.1" name="Event" descr="Event" order="1" parent="10"/>
+  <system.Code code="10.2" name="Alert" descr="Event" order="2" parent="10"/>
+  
+  <system.Code code="11" name="CustomerType" descr="CustomerType" order="11" parent=""/>   
+  <system.Code code="11.0" name="Unknown" descr="Unknown" order="1" parent="11"/>
+  <system.Code code="11.1" name="Factory" descr="Factory" order="2" parent="11"/>
+  <system.Code code="11.2" name="Home" descr="Home" order="3" parent="11"/>
+  <system.Code code="11.3" name="Soho" descr="Soho" order="4" parent="11"/>
+  <system.Code code="11.E10L" name="Residential Service House" descr="Residential Service House" order="5" parent="11"/>
+  <system.Code code="11.E1MH" name="Residential Service Apartment" descr="Residential Service Apartment" order="6" parent="11"/>
+  <system.Code code="11.E1SH" name="Residential Service Apartment" descr="Residential Service Apartment" order="7" parent="11"/>
+  <system.Code code="11.E2AH1" name="General Service(A) High-Voltage(I)" descr="General Service(A) High-Voltage(I)" order="8" parent="11"/>
+  <system.Code code="11.E2AH2" name="General Service(A) High-Voltage(II)" descr="General Service(A) High-Voltage(II)" order="9" parent="11"/>
+  <system.Code code="11.E2AL" name="General Service(A) Low-Voltage" descr="General Service(A) Low-Voltage" order="10" parent="11"/>
+  <system.Code code="11.E2BH1" name="General Service(B) (I)" descr="General Service(B) (I)" order="11" parent="11"/>
+  <system.Code code="11.E2BH2" name="General Service(B) (II)" descr="General Service(B) (II)" order="12" parent="11"/>
+  <system.Code code="11.E30H1" name="Educational Service High-Voltage(I)" descr="Educational Service High-Voltage(I)" order="13" parent="11"/>
+  <system.Code code="11.E30H2" name="Educational Service High-Voltage(II)" descr="Educational Service High-Voltage(II)" order="14" parent="11"/>
+  <system.Code code="11.E30L" name="Educational Service Low-Voltage" descr="Educational Service Low-Voltage" order="15" parent="11"/>
+  <system.Code code="11.E4AH1" name="Industrial Service(A) High(I)" descr="Industrial Service(A) High(I)" order="16" parent="11"/>
+  <system.Code code="11.E4AH2" name="Industrial Service(A) High(II)" descr="Industrial Service(A) High(II)" order="17" parent="11"/>
+  <system.Code code="11.E4AL" name="Industrial Service(A) Low" descr="Industrial Service(A) Low" order="18" parent="11"/>
+  <system.Code code="11.E4BH1" name="Industrial Service(B) (I)" descr="Industrial Service(B) (I)" order="19" parent="11"/>
+  <system.Code code="11.E4BH2" name="Industrial Service(B) (II)" descr="Industrial Service(B) (II)" order="20" parent="11"/>
+  <system.Code code="11.E5C" name="Agricultural Service" descr="Agricultural Service" order="21" parent="11"/>
+  <system.Code code="11.E6AL" name="Street Lights Service(A)" descr="Street Lights Service(A)" order="22" parent="11"/>
+  <system.Code code="11.E6BH" name="Street Lights Service(B)" descr="Street Lights Service(B)" order="23" parent="11"/>
+  <system.Code code="11.E7AL" name="Temporaty Power Service(A) Low-Voltage" descr="Temporaty Power Service(A) Low-Voltage" order="24" parent="11"/>
+  <system.Code code="11.E7BH1" name="Temporaty Power Service(B) High-Voltage(I)" descr="Temporaty Power Service(B) High-Voltage(I)" order="25" parent="11"/>
+  <system.Code code="11.E7BH2" name="Temporaty Power Service(B) High-Voltage(II)" descr="Temporaty Power Service(B) High-Voltage(II)" order="26" parent="11"/>
+  <system.Code code="11.E7BL" name="Temporaty Power Service(B) Low-Voltage" descr="Temporaty Power Service(B) Low-Voltage" order="27" parent="11"/>
+  <system.Code code="11.E9A" name="Night Thermal-Storage Power Service(A)" descr="Night Thermal-Storage Power Service(A)" order="28" parent="11"/>
+  <system.Code code="11.E9B" name="Night Thermal-Storage Power Service(B)" descr="Night Thermal-Storage Power Service(B)" order="29" parent="11"/>
+  <system.Code code="11.H11" name="Residential Service House(II)" descr="Residential Service House(II)" order="30" parent="11"/>
+  <system.Code code="11.H21" name="Residential Service Office" descr="Residential Service Office" order="31" parent="11"/>
+  <system.Code code="11.H22" name="Residential Service Office Factory" descr="Residential Service Office Factory" order="32" parent="11"/>
+  <system.Code code="11.H31" name="Residential Service for  public institution" descr="Residential Service for  public institution" order="33" parent="11"/>
+  <system.Code code="11.H32" name="Residential Service for wellfare facilities" descr="Residential Service for wellfare facilities" order="34" parent="11"/>
+  
+  <!-- EVN customerType 
+  <system.Code code="11.1" name="Sản xuất" descr="Manufacturer" order="1" parent="11"/>
+  <system.Code code="11.2" name="Thương mại - Dịch vụ" descr="Commercial" order="2" parent="11"/>
+  <system.Code code="11.3" name="Nông - Lâm - Ngư nghiệp" descr="Agriculture" order="3" parent="11"/>
+  <system.Code code="11.4" name="Thắp sáng sinh hoạt" descr="Residental" order="4" parent="11"/>
+  <system.Code code="11.5" name="Khác" descr="Other" order="4" parent="11"/>
+  --> 
+  
+  
+  
+  <system.Code code="12" name="PowerAlarmLevel" descr="PowerAlarmLevel" order="12" parent=""/>
+    <system.Code code="12.1" name="Long Outage(More than 1 hour)" descr="Long Outage(More than 1 hour)" order="1" parent="12"/>
+        <system.Code code="12.1.1" name="24" descr="24" order="1" parent="12.1"/>
+        <system.Code code="12.1.2" name="12" descr="12" order="2" parent="12.1"/>
+        <system.Code code="12.1.3" name="6" descr="12" order="3" parent="12.1"/>
+        <system.Code code="12.1.4" name="1" descr="1" order="4" parent="12.1"/>          
+    <system.Code code="12.2" name="Short Outage(Less than 1 hour)" descr="Short Outage(Less than 1 hour)" order="2" parent="12"/>
+        <system.Code code="12.2.1" name="30" descr="30" order="1" parent="12.2"/>
+        <system.Code code="12.2.2" name="15" descr="15" order="2" parent="12.2"/>
+        <system.Code code="12.2.3" name="5" descr="5" order="3" parent="12.2"/>
+        <system.Code code="12.2.4" name="0" descr="0" order="4" parent="12.2"/>
+        
+        
+  <system.Code code="13" name="Electronics" descr="Electric Device Category" order="13" parent=""/>
+    <system.Code code="13.1" name="Computer" descr="Computer" order="1" parent="13"/>
+    <system.Code code="13.2" name="Monitor" descr="Monitor" order="2" parent="13"/>
+    <system.Code code="13.3" name="Office Equipment" descr="Office Equipment" order="3" parent="13"/>
+    <system.Code code="13.4" name="TV" descr="TV" order="4" parent="13"/>  
+    <system.Code code="13.5" name="AV" descr="AV" order="5" parent="13"/>
+    <system.Code code="13.6" name="Home Audio" descr="Home Audio" order="6" parent="13"/>  
+    <system.Code code="13.7" name="Washing machine" descr="Washing machine" order="7" parent="13"/> 
+    <system.Code code="13.8" name="Refrigerator" descr="Refrigerator" order="8" parent="13"/> 
+    <system.Code code="13.9" name="Air conditioning" descr="Air conditioning" order="9" parent="13"/>
+    <system.Code code="13.10" name="Electric fan" descr="Electric fan" order="10" parent="13"/>
+    <system.Code code="13.11" name="Radiators" descr="Radiators" order="11" parent="13"/>
+    <system.Code code="13.12" name="Other" descr="ETC" order="12" parent="13"/>
+    
+  <system.Code code="14" name="SIC" descr="Standard Industry Classification" order="11" parent=""/>
+      <system.Code code="14.0" name="Unknown" descr="Unknown" order="1" parent="14"/>
+      <system.Code code="14.1" name="Factory" descr="Factory" order="2" parent="14"/>
+      <system.Code code="14.2" name="Home" descr="Home" order="3" parent="14"/>
+      <system.Code code="14.3" name="Soho" descr="Soho" order="4" parent="14"/>
+      <system.Code code="14.E10L" name="Residential Service House" descr="Residential Service House" order="5" parent="14"/>
+      <system.Code code="14.E1MH" name="Residential Service Apartment" descr="Residential Service Apartment" order="6" parent="14"/>
+      <system.Code code="14.E1SH" name="Residential Service Apartment" descr="Residential Service Apartment" order="7" parent="14"/>
+      <system.Code code="14.E2AH1" name="General Service(A) High-Voltage(I)" descr="General Service(A) High-Voltage(I)" order="8" parent="14"/>
+      <system.Code code="14.E2AH2" name="General Service(A) High-Voltage(II)" descr="General Service(A) High-Voltage(II)" order="9" parent="14"/>
+      <system.Code code="14.E2AL" name="General Service(A) Low-Voltage" descr="General Service(A) Low-Voltage" order="10" parent="14"/>
+      <system.Code code="14.E2BH1" name="General Service(B) (I)" descr="General Service(B) (I)" order="11" parent="14"/>
+      <system.Code code="14.E2BH2" name="General Service(B) (II)" descr="General Service(B) (II)" order="12" parent="14"/>
+      <system.Code code="14.E30H1" name="Educational Service High-Voltage(I)" descr="Educational Service High-Voltage(I)" order="13" parent="14"/>
+      <system.Code code="14.E30H2" name="Educational Service High-Voltage(II)" descr="Educational Service High-Voltage(II)" order="14" parent="14"/>
+      <system.Code code="14.E30L" name="Educational Service Low-Voltage" descr="Educational Service Low-Voltage" order="15" parent="14"/>
+      <system.Code code="14.E4AH1" name="Industrial Service(A) High(I)" descr="Industrial Service(A) High(I)" order="16" parent="14"/>
+      <system.Code code="14.E4AH2" name="Industrial Service(A) High(II)" descr="Industrial Service(A) High(II)" order="17" parent="14"/>
+      <system.Code code="14.E4AL" name="Industrial Service(A) Low" descr="Industrial Service(A) Low" order="18" parent="14"/>
+      <system.Code code="14.E4BH1" name="Industrial Service(B) (I)" descr="Industrial Service(B) (I)" order="19" parent="14"/>
+      <system.Code code="14.E4BH2" name="Industrial Service(B) (II)" descr="Industrial Service(B) (II)" order="20" parent="14"/>
+      <system.Code code="14.E5C" name="Agricultural Service" descr="Agricultural Service" order="21" parent="14"/>
+      <system.Code code="14.E6AL" name="Street Lights Service(A)" descr="Street Lights Service(A)" order="22" parent="14"/>
+      <system.Code code="14.E6BH" name="Street Lights Service(B)" descr="Street Lights Service(B)" order="23" parent="14"/>
+      <system.Code code="14.E7AL" name="Temporaty Power Service(A) Low-Voltage" descr="Temporaty Power Service(A) Low-Voltage" order="24" parent="14"/>
+      <system.Code code="14.E7BH1" name="Temporaty Power Service(B) High-Voltage(I)" descr="Temporaty Power Service(B) High-Voltage(I)" order="25" parent="14"/>
+      <system.Code code="14.E7BH2" name="Temporaty Power Service(B) High-Voltage(II)" descr="Temporaty Power Service(B) High-Voltage(II)" order="26" parent="14"/>
+      <system.Code code="14.E7BL" name="Temporaty Power Service(B) Low-Voltage" descr="Temporaty Power Service(B) Low-Voltage" order="27" parent="14"/>
+      <system.Code code="14.E9A" name="Night Thermal-Storage Power Service(A)" descr="Night Thermal-Storage Power Service(A)" order="28" parent="14"/>
+      <system.Code code="14.E9B" name="Night Thermal-Storage Power Service(B)" descr="Night Thermal-Storage Power Service(B)" order="29" parent="14"/>
+      <system.Code code="14.H11" name="Residential Service House(II)" descr="Residential Service House(II)" order="30" parent="14"/>
+      <system.Code code="14.H21" name="Residential Service Office" descr="Residential Service Office" order="31" parent="14"/>
+      <system.Code code="14.H22" name="Residential Service Office Factory" descr="Residential Service Office Factory" order="32" parent="14"/>
+      <system.Code code="14.H31" name="Residential Service for  public institution" descr="Residential Service for  public institution" order="33" parent="14"/>
+      <system.Code code="14.H32" name="Residential Service for wellfare facilities" descr="Residential Service for wellfare facilities" order="34" parent="14"/>
+      
+    <system.Code code="15" name="Municipality Code" descr="Municipality Code" order="15" parent=""/>
+    
+    <!-- Customer&Contract -->
+   <system.Code code="16" name="CustomerSearch" descr="CustomerSearch" order="16" parent=""/>
+   <system.Code code="16.1" name="Customer" descr="Customer" order="1" parent="16"/>
+   <system.Code code="16.2" name="Contract" descr="Contract" order="2" parent="16"/>
+ 
+
+   
+   <!-- PrepaymentLog -->
+   <system.Code code="18" name="PayType" descr="Payment Type" order="18" parent=""/>
+		<system.Code code="18.1" name="Cash" descr="Cash" order="0" parent="18"/>
+		<system.Code code="18.2" name="Check" descr="Check" order="1" parent="18"/>
+		<system.Code code="18.3" name="Card" descr="Card" order="2" parent="18"/>
+		<system.Code code="18.4" name="Mobile" descr="Mobile" order="3" parent="18"/>
+      <system.Code code="18.5" name="Vending System" descr="Vending System" order="4" parent="18"/>
+   
+   <!-- EBS Device -->
+   <system.Code code="19" name="EBS System" descr="Energy Balance Monitoring System" order="19" parent=""/>
+   <system.Code code="19.1" name="Device Type" descr="Device Type for EBS" order="1" parent="19"/>
+   <system.Code code="19.1.1" name="Main Incomer" descr="Main Incomer" order="1" parent="19.1"/> 
+   <system.Code code="19.1.2" name="Incomer" descr="Incomer" order="2" parent="19.1"/> 
+   <system.Code code="19.1.3" name="Feeder" descr="Feeder" order="3" parent="19.1"/> 
+   <system.Code code="19.1.4" name="Bulk" descr="Bulk" order="4" parent="19.1"/> 
+   <system.Code code="19.1.5" name="Mini Sub" descr="Mini Substation" order="5" parent="19.1"/>  
+   
+   
+   
+  <system.Code code="20" name="PowerCompany" descr="PowerCompany" order="20" parent=""/>
+ 
+  <!-- EVN Electrical company (16) : customerType --> 
+  <system.Code code="PE0100" name="Điện Lực Sài Gòn" descr="Saigon Electrical company" order="1" parent="20"/>
+  <system.Code code="PE0200" name="Điện Lực Phú Thọ" descr="Phú thọ Power" order="2" parent="20"/>
+  <system.Code code="PE0300" name="Điện Lực Chợ Lớn" descr="Chợ lớn Electrical company" order="3" parent="20"/>
+  <system.Code code="PE0400" name="Điện Lực Gia Định" descr="Gia Định Electrical company" order="4" parent="20"/>
+  <system.Code code="PE0500" name="Điện Lực Tân Thuận" descr="Tân Thuận Electrical company" order="5" parent="20"/>
+  <system.Code code="PE0600" name="Điện Lực Bình Phú" descr="Bình phú Electrical company" order="6" parent="20"/>
+  <system.Code code="PE0700" name="Điện Lực Tân Phú" descr="Tân phú Electrical company" order="7" parent="20"/>
+  <system.Code code="PE0800" name="Điện Lực Hóc Môn" descr="Hóc Môn Electrical company" order="8" parent="20"/>
+  <system.Code code="PE0900" name="Điện Lực Củ Chi" descr="Củ Chi Electrical company" order="9" parent="20"/>
+  <system.Code code="PE1000" name="Điện Lực Thủ Đức" descr="Thủ Đức Electrical company" order="10" parent="20"/>
+  <system.Code code="PE1100" name="Điện Lực Duyên Hải" descr="Duyên Hải Electrical company" order="11" parent="20"/>
+  <system.Code code="PE1200" name="Điện Lực Thủ Thiêm" descr="Thủ Thiêm Electrical company" order="12" parent="20"/>
+  <system.Code code="PE1300" name="Điện Lực Gò Vấp" descr="Gò Vấp Electrical company" order="13" parent="20"/>
+  <system.Code code="PE1400" name="Điện Lực Tân Bình" descr="Tân Bình Electrical company" order="14" parent="20"/>
+  <system.Code code="PE1500" name="Điện Lực Bình Chánh" descr="Bình Chánh Electrical company" order="15" parent="20"/>
+  <system.Code code="PE1600" name="Điện Lực An Phú Đông" descr="Phú Đông Electrical company" order="16" parent="20"/>
+  
+  <system.Code code="21" name="CustomerServiceType" descr="CustomerServiceType" order="21" parent=""/>
+ 
+  <system.Code code="21.1" name="Customer" descr="Customer" order="1" parent="21"/>
+  <system.Code code="21.2" name="Internal point" descr="Internal point" order="2" parent="21"/>
+  
+   
+</dataset>

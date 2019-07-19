@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+
+    <mvm.ChannelConfig meterConfig="SM110" channel="Total Del Only F+H"        channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="SM110" channel="Total Rcvd Only F+H"          channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay" />
+        
+    <mvm.ChannelConfig meterConfig="Aidon5530" channel="Active Energy"        channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="Aidon5530" channel="Active Power"          channelIndex="2"   dataType="LpEM" displayType="DisplayOnly" />
+    
+    <mvm.ChannelConfig meterConfig="Kamstrup382" channel="Active Energy"        channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="Kamstrup382" channel="Active Power"          channelIndex="2"   dataType="LpEM" displayType="DisplayOnly" />
+    
+    <mvm.ChannelConfig meterConfig="kV2c" channel="Active Energy"        channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="kV2c" channel="Reactive Energy"      channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay" />    
+    <mvm.ChannelConfig meterConfig="kV2c" channel="Received Only"        channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="kV2c" channel="Lead During Received" channelIndex="4"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="kV2c" channel="Lag During Received"  channelIndex="5"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="kV2c" channel="Lead During Delivery" channelIndex="6"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="kV2c" channel="Active Power"         channelIndex="7"   dataType="LpEM" displayType="DisplayOnly" />
+    <mvm.ChannelConfig meterConfig="kV2c" channel="Reactive Power"       channelIndex="8"   dataType="LpEM" displayType="DisplayOnly" />
+    <mvm.ChannelConfig meterConfig="kV2c" channel="Received Only"        channelIndex="9"   dataType="LpEM" displayType="DisplayOnly" />
+    <mvm.ChannelConfig meterConfig="kV2c" channel="Lead During Received" channelIndex="10"  dataType="LpEM" displayType="DisplayOnly" />
+    <mvm.ChannelConfig meterConfig="kV2c" channel="Lag During Received"  channelIndex="11"  dataType="LpEM" displayType="DisplayOnly" />
+    <mvm.ChannelConfig meterConfig="kV2c" channel="Lead During Delivery" channelIndex="12"  dataType="LpEM" displayType="DisplayOnly" />    
+    
+    <mvm.ChannelConfig meterConfig="Kamstrup601" channel="Hourly Heat"            channelIndex="1" dataType="LpHM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="Kamstrup601" channel="Cumulative Heat"        channelIndex="2" dataType="LpHM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="Kamstrup601" channel="Instant Flow"           channelIndex="3" dataType="LpHM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="Kamstrup601" channel="Cumulative Flow"        channelIndex="4" dataType="LpHM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="Kamstrup601" channel="Flow[m3]*T1"            channelIndex="5" dataType="LpHM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="Kamstrup601" channel="Flow[m3]*T2"            channelIndex="6" dataType="LpHM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="Kamstrup601" channel="Supply Temperature"     channelIndex="7" dataType="LpHM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="Kamstrup601" channel="Retrieve Temperature"   channelIndex="8" dataType="LpHM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="Kamstrup601" channel="Temperature Difference" channelIndex="9" dataType="LpHM" displayType="SaveAndDisplay" />
+
+
+
+    <mvm.ChannelConfig meterConfig="Kamstrup351" channel="Active Energy Exp."				channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="Kamstrup351" channel="Active Energy Imp."				channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="Kamstrup351" channel="Reactive Energy Exp."		channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="Kamstrup351" channel="Reactive Energy Imp."		channelIndex="4"   dataType="LpEM" displayType="SaveAndDisplay" />
+
+    <mvm.ChannelConfig meterConfig="A1700" channel="Active Energy Imp."			channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="A1700" channel="Active Energy Exp."			channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="A1700" channel="Reactive Energy Imp. Lead"	channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="A1700" channel="Reactive Energy Exp. Lag"     channelIndex="4"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="A1700" channel="Reactive Energy Imp. Lead"	channelIndex="5"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="A1700" channel="Reactive Energy Exp. Lag"     channelIndex="6"   dataType="LpEM" displayType="SaveAndDisplay" />
+
+    <mvm.ChannelConfig meterConfig="LSK-0114" channel="Active Energy (QI+QIV)"   	channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSK-0114" channel="Reactive Energy QI"     		channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSK-0114" channel="Reactive Energy QIV"     	channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSK-0114" channel="Apparent Energy (QI+QIV)"    channelIndex="4"   dataType="LpEM" displayType="SaveAndDisplay" />     
+    
+    <mvm.ChannelConfig meterConfig="LSK-0115" channel="Active Energy (QI+QIV)"   	channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSK-0115" channel="Reactive Energy QI"     		channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSK-0115" channel="Reactive Energy QIV"   		channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="LSK-0115" channel="Apparent Energy (QI+QIV)"    channelIndex="4"   dataType="LpEM" displayType="SaveAndDisplay" />
+</dataset>
+

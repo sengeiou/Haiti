@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">  
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">  
+    <!-- 콘솔 로그 -->  
+    <appender name="stdout" class="org.apache.log4j.ConsoleAppender">  
+        <!-- 패턴 레이아웃 설정.. -->  
+        <layout class="org.apache.log4j.PatternLayout">  
+            <param name="ConversionPattern" value="%d %-5p [%l] %x - %m%n"/>  
+        </layout>  
+    </appender>  
+ 
+    <!--  feph 메인 로그 -->  
+    <appender name="fephout" class="org.apache.log4j.RollingFileAppender">  
+        <param name="file" value="log/MBBOTARetryTaskLog.log"/>  
+        <param name="append" value="true"/>
+        <param name="maxFileSize" value="20MB"/>
+        <param name="maxBackupIndex" value="20"/>
+        <layout class="org.apache.log4j.PatternLayout">  
+            <param name="ConversionPattern" value="%d %-5p [%l] %x - %m%n"/>  
+        </layout>  
+    </appender>  
+    <logger name="com.aimir" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="fephout" />
+        <appender-ref ref="stdout" />
+    </logger> 
+    
+    <logger name="com.aimir.command" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="commandout" />
+    </logger> 
+ 
+    <!-- root 로거 기본 설정 -->
+    <root>  
+        <level value="INFO"/>  
+        <appender-ref ref="fephout"/>  
+    </root>  
+</log4j:configuration>  

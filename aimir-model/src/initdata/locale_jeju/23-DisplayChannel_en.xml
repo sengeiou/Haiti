@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+
+<!-- MCU -->
+    <mvm.DisplayChannel name="Active Energy"        localName="Active Energy"        serviceType="Electricity" unit="kWh" />
+    <mvm.DisplayChannel name="Reactive Energy"      localName="Reactive Energy"      serviceType="Electricity" unit="kVarh" />    
+    <mvm.DisplayChannel name="Received Only"        localName="Received Only"        serviceType="Electricity" unit="kWh" />
+    <mvm.DisplayChannel name="Lead During Received" localName="Lead During Received" serviceType="Electricity" unit="kVarh" />
+    <mvm.DisplayChannel name="Lag During Received"  localName="Lag During Received"  serviceType="Electricity" unit="kVarh" />
+    <mvm.DisplayChannel name="Lead During Delivery" localName="Lead During Delivery" serviceType="Electricity" unit="kVarh" />
+    <mvm.DisplayChannel name="Active Power"         localName="Active Power"         serviceType="Electricity" unit="kW" />
+    <mvm.DisplayChannel name="Reactive Power"       localName="Reactive Power"       serviceType="Electricity" unit="kVar" />
+    <mvm.DisplayChannel name="Received Only"        localName="Received Only"        serviceType="Electricity" unit="kW" />
+    <mvm.DisplayChannel name="Lead During Received" localName="Lead During Received" serviceType="Electricity" unit="kVar" />
+    <mvm.DisplayChannel name="Lag During Received"  localName="Lag During Received"  serviceType="Electricity" unit="kVar" />
+    <mvm.DisplayChannel name="Lead During Delivery" localName="Lead During Delivery" serviceType="Electricity" unit="kVar" />  
+    <mvm.DisplayChannel name="Power Factor"         localName="Power Factor"        serviceType="Electricity" unit="%" /> 
+    
+    <mvm.DisplayChannel name="Usage" localName="Usage" serviceType="Gas" unit="m3" />
+    <mvm.DisplayChannel name="Usage" localName="Usage" serviceType="Water" unit="m3" />
+    
+    <mvm.DisplayChannel name="Hourly Heat"            localName="Hourly Heat"            serviceType="Heating" unit="Gcal" />
+    <mvm.DisplayChannel name="Cumulative Heat"        localName="Cumulative Heat"        serviceType="Heating" unit="Gcal" />
+    <mvm.DisplayChannel name="Instant Flow"           localName="Instant Flow"           serviceType="Heating" unit="m3" />
+    <mvm.DisplayChannel name="Cumulative Flow"        localName="Cumulative Flow"        serviceType="Heating" unit="m3" />
+    <mvm.DisplayChannel name="Flow[m3]*T1"            localName="Flow[m3]*T1"            serviceType="Heating" unit="m3" />
+    <mvm.DisplayChannel name="Flow[m3]*T2"            localName="Flow[m3]*T2"            serviceType="Heating" unit="m3" />
+    <mvm.DisplayChannel name="Supply Temperature"     localName="Supply Temperature"     serviceType="Heating" unit="C" />
+    <mvm.DisplayChannel name="Retrieve Temperature"   localName="Retrieve Temperature"   serviceType="Heating" unit="C" />
+    <mvm.DisplayChannel name="Temperature Difference" localName="Temperature Difference" serviceType="Heating" unit="C" />
+	<mvm.DisplayChannel name="Total Del Only F+H"     localName="순방향 유효 사용량"        serviceType="Electricity" unit="kWh" />
+	<mvm.DisplayChannel name="Total Rcvd Only F+H"    localName="역방향 유효 사용량"        serviceType="Electricity" unit="kWh" />
+
+</dataset>
+
+
+
+

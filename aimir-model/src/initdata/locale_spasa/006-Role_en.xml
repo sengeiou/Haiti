@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Role name="admingroup" supplier="Spasa" systemAuthority="w" mtrAuthority="w" descr="Admin" hasDashboardAuth="true" customerRole="false" loginAuthority="true" />
+</dataset>

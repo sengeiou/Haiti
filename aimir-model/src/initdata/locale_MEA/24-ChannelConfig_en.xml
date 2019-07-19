@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+<!-- mx2 -->
+	<mvm.ChannelConfig meterConfig="MX2" channel="Active Energy Imp."			channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="MX2" channel="Active Energy Exp."			channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="MX2" channel="Reactive Energy Imp. Lag"		channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="MX2" channel="Reactive Energy Exp. Lead"    channelIndex="4"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="MX2" channel="Reactive Energy Exp. Lag"		channelIndex="5"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="MX2" channel="Reactive Energy Imp. Lead"    channelIndex="6"   dataType="LpEM" displayType="SaveAndDisplay" />
+	<mvm.ChannelConfig meterConfig="MX2" channel="VAh (selectable)"				channelIndex="7"   dataType="LpEM" displayType="SaveAndDisplay" />
+
+<!-- mx2 demand -->
+    <mvm.ChannelConfig meterConfig="MX2" channel="Active Demand Imp."			channelIndex="8"   dataType="LpEM" displayType="SaveAndDisplay" />
+	<mvm.ChannelConfig meterConfig="MX2" channel="Active Demand Exp."			channelIndex="9"   dataType="LpEM" displayType="SaveAndDisplay" />
+	<mvm.ChannelConfig meterConfig="MX2" channel="Reactive Demand Imp. Lag"			channelIndex="10"   dataType="LpEM" displayType="SaveAndDisplay" />
+	<mvm.ChannelConfig meterConfig="MX2" channel="Reactive Demand Exp. Lead"			channelIndex="11"   dataType="LpEM" displayType="SaveAndDisplay" />
+	<mvm.ChannelConfig meterConfig="MX2" channel="Reactive Demand Exp. Lag"			channelIndex="12"   dataType="LpEM" displayType="SaveAndDisplay" />
+	<mvm.ChannelConfig meterConfig="MX2" channel="Reactive Demand Imp. Lead"			channelIndex="13"   dataType="LpEM" displayType="SaveAndDisplay" />
+	<mvm.ChannelConfig meterConfig="MX2" channel="VA (selectable)"			channelIndex="14"   dataType="LpEM" displayType="SaveAndDisplay" />
+
+</dataset>
+

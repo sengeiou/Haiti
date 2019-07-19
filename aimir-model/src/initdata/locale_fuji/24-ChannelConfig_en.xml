@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset> 
+
+    <mvm.ChannelConfig meterConfig="SM110" channel="Total Del Only F+H"        channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="SM110" channel="Total Rcvd Only F+H"          channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay" />
+  
+  <mvm.ChannelConfig meterConfig="I210+c" channel="Active Energy"        channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
+  <mvm.ChannelConfig meterConfig="I210+c" channel="Reactive Energy"          channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay" />
+  <mvm.ChannelConfig meterConfig="I210+c" channel="Voltage"          channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay" />
+
+  <mvm.ChannelConfig meterConfig="I210+cn" channel="Active Energy"        channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
+  <mvm.ChannelConfig meterConfig="I210+cn" channel="Reactive Energy"          channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay" />
+  <mvm.ChannelConfig meterConfig="I210+cn" channel="Voltage"          channelIndex="3"   dataType="LpEM" displayType="SaveAndDisplay" />
+</dataset>
+

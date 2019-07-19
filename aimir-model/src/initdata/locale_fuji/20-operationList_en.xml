@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+<device.OperationList  deviceTypeCode="1.1.1.3"	operationCode="8.3.1"	model="NZC I211"	level="2"	desc="Status Monitoring" />
+<device.OperationList  deviceTypeCode="1.1.1.3"	operationCode="8.3.2"	model="NZC I211"	level="2"	desc="Unit Scanning" />
+<device.OperationList  deviceTypeCode="1.1.1.3"	operationCode="8.3.20"	model="NZC I211"	level="2"	desc="Self Test" />
+<device.OperationList  deviceTypeCode="1.1.1.3"	operationCode="8.3.4"	model="NZC I211"	level="2"	desc="Remote File Access" />
+<device.OperationList  deviceTypeCode="1.1.1.3"	operationCode="8.3.5"	model="NZC I211"	level="2"	desc="Configuration Backup" />
+<device.OperationList  deviceTypeCode="1.1.1.3"	operationCode="8.3.6"	model="NZC I211"	level="2"	desc="Configuration Setting" />
+<device.OperationList  deviceTypeCode="1.1.1.3"	operationCode="8.3.7"	model="NZC I211"	level="2"	desc="Metering Data Recovery" />
+<device.OperationList  deviceTypeCode="1.1.1.3"	operationCode="8.3.8"	model="NZC I211"	level="2"	desc="Time Synchronization" />
+<device.OperationList  deviceTypeCode="1.1.1.3"	operationCode="8.3.10"	model="NZC I211"	level="2"	desc="Reset" />
+<device.OperationList  deviceTypeCode="1.1.1.4"	operationCode="8.3.1"	model="NZC O312"	level="2"	desc="Status Monitoring" />
+<device.OperationList  deviceTypeCode="1.1.1.4"	operationCode="8.3.2"	model="NZC O312"	level="2"	desc="Unit Scanning" />
+<device.OperationList  deviceTypeCode="1.1.1.4"	operationCode="8.3.4"	model="NZC O312"	level="2"	desc="Remote File Access" />
+<device.OperationList  deviceTypeCode="1.1.1.4"	operationCode="8.3.7"	model="NZC O312"	level="2"	desc="Metering Data Recovery" />
+<device.OperationList  deviceTypeCode="1.1.1.4"	operationCode="8.3.8"	model="NZC O312"	level="2"	desc="Time Synchronization" />
+<device.OperationList  deviceTypeCode="1.1.1.4"	operationCode="8.3.10"	model="NZC O312"	level="2"	desc="Reset" />
+<device.OperationList  deviceTypeCode="1.1.1.4"	operationCode="8.3.3"	model="NZC O312"	level="2"	desc="elf Dignosis" />
+<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.11"	model="DCU"	level="2"	desc="Req. Electric Transformer Conf." />
+<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.12"	model="DCU"	level="2"	desc="Req. IRM Status" />
+<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.13"	model="DCU"	level="2"	desc="Set IRM Configuration" />
+<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.14"	model="DCU"	level="2"	desc="Req. Demand" />
+<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.15"	model="DCU"	level="2"	desc="Req. Metering" />
+<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.16"	model="DCU"	level="2"	desc="Req. LP" />
+<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.17"	model="DCU"	level="2"	desc="Req. PowerOutage" />
+<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.18"	model="DCU"	level="2"	desc="Req. Meter Comm. State" />
+<device.OperationList  deviceTypeCode="1.1.1.7"	operationCode="8.3.19"	model="DCU"	level="2"	desc="Req. Meter Status" />
+<device.OperationList  deviceTypeCode="1.2.1.2"	operationCode="8.2.3"	model="NAMR-202SR"	level="2"	desc="Status Monitoring" />
+<device.OperationList  deviceTypeCode="1.2.1.2"	operationCode="8.2.2"	model="NAMR-202SR"	level="2"	desc="Unit Scanning" />
+<device.OperationList  deviceTypeCode="1.2.1.2"	operationCode="8.2.5"	model="NAMR-202SR"	level="2"	desc="Event Log" />
+<device.OperationList  deviceTypeCode="1.2.1.2"	operationCode="8.2.6"	model="NAMR-202SR"	level="2"	desc="LP Log" />
+<device.OperationList  deviceTypeCode="1.2.1.5"	operationCode="8.2.6"	model="NAPC-G115SR"	level="2"	desc="LP Log" />
+<device.OperationList  deviceTypeCode="1.2.1.5"	operationCode="8.2.5"	model="NAPC-G115SR"	level="2"	desc="Event Log" />
+<device.OperationList  deviceTypeCode="1.2.1.5"	operationCode="8.2.2"	model="NAPC-G115SR"	level="2"	desc="Unit Scanning" />
+<device.OperationList  deviceTypeCode="1.2.1.5"	operationCode="8.2.7"	model="NAPC-G115SR"	level="2"	desc="Battery Log" />
+<device.OperationList  deviceTypeCode="1.2.1.5"	operationCode="8.2.1"	model="NAPC-G115SR"	level="2"	desc="Reset" />
+<device.OperationList  deviceTypeCode="1.2.1.5"	operationCode="8.2.3"	model="NAPC-G115SR"	level="2"	desc="Status Monitoring" />
+<device.OperationList  deviceTypeCode="1.2.1.5"	operationCode="8.2.6"	model="NAPC-W105SR"	level="2"	desc="LP Log" />
+<device.OperationList  deviceTypeCode="1.2.1.5"	operationCode="8.2.5"	model="NAPC-W105SR"	level="2"	desc="Event Log" />
+<device.OperationList  deviceTypeCode="1.2.1.5"	operationCode="8.2.2"	model="NAPC-W105SR"	level="2"	desc="Unit Scanning" />
+<device.OperationList  deviceTypeCode="1.2.1.13" operationCode="8.2.8"	model="IEIU"	level="2"	desc="Modem Information" />
+<device.OperationList  deviceTypeCode="1.2.1.13" operationCode="8.2.1"	model="IEIU"	level="2"	desc="Reset" />
+<device.OperationList  deviceTypeCode="1.2.1.13" operationCode="8.2.9"	model="IEIU"	level="2"	desc="Zigbee Node Search" />
+<device.OperationList  deviceTypeCode="1.2.1.14" operationCode="8.2.2"	model="ZEU-MBUS"	level="2"	desc="Unit Scanning" />
+<device.OperationList  deviceTypeCode="1.2.1.98" operationCode="8.2.2"	model="Repeater"	level="2"	desc="Unit Scanning" />
+<device.OperationList  deviceTypeCode="1.2.1.98" operationCode="8.2.5"	model="Repeater"	level="2"	desc="Event Log" />
+<device.OperationList  deviceTypeCode="1.3.1.1"	operationCode="8.1.1"	model="SM110"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.1"	operationCode="8.1.3"	model="SM110"	level="2"	desc="Meter Time Synchronization" />
+<device.OperationList  deviceTypeCode="1.3.1.1"	operationCode="8.1.4"	model="SM110"	level="2"	desc="Relay Switch" />
+<device.OperationList  deviceTypeCode="1.3.1.1"	operationCode="8.1.1"	model="Mk6N"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.1"	operationCode="8.1.1"	model="LK3410DRB-120"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.1"	operationCode="8.1.1"	model="LK3405Cx"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.1"	operationCode="8.1.1"	model="kV2c"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.1"	operationCode="8.1.3"	model="kV2c"	level="2"	desc="Meter Time Synchronization" />
+<device.OperationList  deviceTypeCode="1.3.1.1"	operationCode="8.1.1"	model="Kamstrup 382"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.1"	operationCode="8.1.5"	model="Kamstrup 382"	level="2"	desc="Remote Control" />
+<device.OperationList  deviceTypeCode="1.3.1.1"	operationCode="8.1.1"	model="I210"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.1"	operationCode="8.1.3"	model="I210"	level="2"	desc="Meter Time Synchronization" />
+<device.OperationList  deviceTypeCode="1.3.1.1"	operationCode="8.1.4"	model="I210"	level="2"	desc="Relay Switch" />
+<device.OperationList  deviceTypeCode="1.3.1.1"	operationCode="8.1.1"	model="I210P"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.1"	operationCode="8.1.1"	model="Aidon 5530"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.1"	operationCode="8.1.6"	model="Aidon 5530"	level="2"	desc="Device Controls with MCCB" />
+<device.OperationList  deviceTypeCode="1.3.1.4"	operationCode="8.1.1"	model="Multical Compact"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.4"	operationCode="8.1.1"	model="Multical 401"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.4"	operationCode="8.1.1"	model="KDH"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.4"	operationCode="8.1.1"	model="Kamstrup 601"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.5"	operationCode="8.1.1"	model="SEVC"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.5"	operationCode="8.1.3"	model="SEVC"	level="2"	desc="Meter Time Synchronization" />
+<device.OperationList  deviceTypeCode="1.3.1.5"	operationCode="8.1.1"	model="SEVC-D"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.5"	operationCode="8.1.3"	model="SEVC-D"	level="2"	desc="Meter Time Synchronization" />
+<device.OperationList  deviceTypeCode="1.3.1.5"	operationCode="8.1.1"	model="Nexcorr"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.5"	operationCode="8.1.3"	model="Nexcorr"	level="2"	desc="Meter Time Synchronization" />
+<device.OperationList  deviceTypeCode="1.3.1.5"	operationCode="8.1.1"	model="GasMicro"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.5"	operationCode="8.1.3"	model="GasMicro"	level="2"	desc="Meter Time Synchronization" />
+<device.OperationList  deviceTypeCode="1.3.1.5"	operationCode="8.1.1"	model="EK88"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.5"	operationCode="8.1.3"	model="EK88"	level="2"	desc="Meter Time Synchronization" />
+<device.OperationList  deviceTypeCode="1.3.1.5"	operationCode="8.1.1"	model="EK260"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.5"	operationCode="8.1.3"	model="EK260"	level="2"	desc="Meter Time Synchronization" />
+<device.OperationList  deviceTypeCode="1.3.1.5"	operationCode="8.1.1"	model="Corrus"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.5"	operationCode="8.1.3"	model="Corrus"	level="2"	desc="Meter Time Synchronization" />
+<device.OperationList  deviceTypeCode="1.3.1.5"	operationCode="8.1.1"	model="555"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.5"	operationCode="8.1.3"	model="555"	level="2"	desc="Meter Time Synchronization" />
+<device.OperationList  deviceTypeCode="1.3.1.5"	operationCode="8.1.1"	model="999"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.5"	operationCode="8.1.3"	model="999"	level="2"	desc="Meter Time Synchronization" />
+
+<!-- Add Meter Operation for MDIS Start -->
+<device.OperationList deviceTypeCode="1.3.1.1"  operationCode="8.1.1"   model="SMW1"  level="2"   desc="On Demand Metering"  />
+<device.OperationList deviceTypeCode="1.3.1.1"  operationCode="8.1.3"   model="SMW1"  level="2"   desc="Meter Time Synchronization" />
+<device.OperationList deviceTypeCode="1.3.1.1"  operationCode="8.1.8"   model="SMW1"  level="2"   desc="Relay Status" />	
+<device.OperationList deviceTypeCode="1.3.1.1"  operationCode="8.1.9"   model="SMW1"  level="2"   desc="Relay on" />
+<device.OperationList deviceTypeCode="1.3.1.1"  operationCode="8.1.10"  model="SMW1"  level="2"   desc="Relay off" />
+<device.OperationList deviceTypeCode="1.3.1.1"  operationCode="8.1.11"  model="SMW1"  level="2"   desc="Tampering Clear" />
+<device.OperationList deviceTypeCode="1.3.1.1"  operationCode="8.1.12"  model="SMW1"  level="2"   desc="Get Tampering" />
+<device.OperationList deviceTypeCode="1.3.1.1"  operationCode="8.1.13"  model="SMW1"  level="2"   desc="Get SW Ver" />
+<device.OperationList deviceTypeCode="1.3.1.1"  operationCode="8.1.14"  model="SMW1"  level="2"   desc="Set prepaid rate" />
+<device.OperationList deviceTypeCode="1.3.1.1"  operationCode="8.1.15"  model="SMW1"  level="2"   desc="Get prepaid deposit" />
+<device.OperationList deviceTypeCode="1.3.1.1"  operationCode="8.1.16"  model="SMW1"  level="2"   desc="Add prepaid deposit" />
+<device.OperationList deviceTypeCode="1.3.1.1"  operationCode="8.1.20"  model="SMW1"  level="2"   desc="Set LP1 timing" />
+<device.OperationList deviceTypeCode="1.3.1.1"  operationCode="8.1.21"  model="SMW1"  level="2"   desc="Set LP2 timing" />
+<device.OperationList deviceTypeCode="1.3.1.1"  operationCode="8.1.22"  model="SMW1"  level="2"   desc="Set MeterDirection" />
+<device.OperationList deviceTypeCode="1.3.1.1"  operationCode="8.1.23"  model="SMW1"  level="2"   desc="Set Meter Kind" />
+<device.OperationList deviceTypeCode="1.3.1.1"  operationCode="8.1.24"  model="SMW1"  level="2"   desc="Set Prepaid Alert" />
+<device.OperationList deviceTypeCode="1.3.1.1"  operationCode="8.1.25"  model="SMW1"  level="2"   desc="Set Meter Display Items" />
+<device.OperationList deviceTypeCode="1.3.1.1"  operationCode="8.1.26"  model="SMW1"  level="2"   desc="Set Meter Reset" />
+<!-- Add Meter Operation for MDIS Start -->
+
+<device.OperationList  deviceTypeCode="1.3.1.1"	operationCode="8.1.1"	model="LSK-0114"	level="2"	desc="On Demand Metering" />
+<device.OperationList  deviceTypeCode="1.3.1.1"	operationCode="8.1.1"	model="LSK-0114"	level="2"	desc="On Demand Metering" />
+
+</dataset>

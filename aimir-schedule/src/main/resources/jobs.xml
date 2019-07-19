@@ -1,0 +1,1380 @@
+<?xml version='1.0' encoding='utf-8'?>
+<quartz xmlns="http://www.opensymphony.com/quartz/JobSchedulingData"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.opensymphony.com/quartz/JobSchedulingData
+  http://www.opensymphony.com/quartz/xml/job_scheduling_data_1_8.xsd"
+  version="1.8">
+
+  <calendar class-name="org.quartz.impl.calendar.HolidayCalendar" replace="true">
+    <name>holidayCalendar</name>
+    <description>HolidayCalendar</description>
+    <base-calendar class-name="org.quartz.impl.calendar.WeeklyCalendar">
+      <name>weeklyCalendar</name>
+      <description>WeeklyCalendar</description>
+      <base-calendar class-name="org.quartz.impl.calendar.AnnualCalendar">
+        <name>annualCalendar</name>
+        <description>AnnualCalendar</description>
+      </base-calendar>
+    </base-calendar>
+  </calendar>
+  <job>
+    <job-detail>
+      <name>DeleteSensorJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Retry excecution of cmdDeleteSensor fail per day</description>
+      <job-class>nuri.aimir.scheduler.job.DeleteSensorJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>DeleteSensorTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Retry excecution of cmdDeleteSensor fail per day</description>
+        <job-name>DeleteSensorJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 0 0 * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>RecollectMeteringJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Request recollect LP metering data of yesterday for empty LP</description>
+      <job-class>nuri.aimir.scheduler.job.RecollectMeteringJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map allows-transient-data="true">
+        <entry>
+          <key>retry</key>
+          <value>10</value>
+        </entry>
+        <entry>
+          <key>option.default</key>
+          <value>0</value>
+        </entry>
+        <entry>
+          <key>option.2</key>
+          <value>16</value>
+          <!-- GE:default(-1), selfread(0), current(1), previous(2), relay(3), event(10), measurement(12), demand(16) -->
+        </entry>
+        <entry>
+          <key>savePeriod.default</key>
+          <value>30</value>
+        </entry>
+        <entry>
+          <key>savePeriod.2</key>
+          <value>40</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>RecollectMeteringTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Request recollect LP metering data for empty LP</description>
+        <job-name>RecollectMeteringJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 30 17 * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>RecollectPulseMeteringJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Request recollect LP metering data for pulse meter for 40 days</description>
+      <job-class>nuri.aimir.scheduler.job.RecollectPulseMeteringJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map allows-transient-data="true">
+        <entry>
+          <key>retryCount</key>
+          <value>3</value>
+        </entry>
+        <entry>
+          <key>savePeriod.default</key>
+          <value>40</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>RecollectPulseMeteringTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description/>
+        <job-name>RecollectPulseMeteringJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 0 1 1 * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>RecollectMBusMeteringJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Request recollect LP metering data for pulse meter for 40 days</description>
+      <job-class>nuri.aimir.scheduler.job.RecollectMBusMeteringJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map allows-transient-data="true">
+        <entry>
+          <key>retryCount</key>
+          <value>3</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>RecollectPMBusMeteringTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description/>
+        <job-name>RecollectMBusMeteringJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 0 1 1 * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>SetSensorAlarmFlagJob</name>
+      <group>AimirJobScheduler</group>
+      <description>set sensor alarm flag</description>
+      <job-class>nuri.aimir.scheduler.job.SetSensorAlarmFlagJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map allows-transient-data="true">
+        <entry>
+          <key>alarmFlag</key>
+          <value>1</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>SetSensorAlarmFlagTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description/>
+        <job-name>SetSensorAlarmFlagJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 0 1 1 * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>MeteringStatHourJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Metering statistics per hour</description>
+      <job-class>nuri.aimir.scheduler.job.MeteringStatHourJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map allows-transient-data="true">
+        <entry>
+          <key>runEM</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>runWM</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>runGM</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>runHM</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>runVC</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>checkRepeater</key>
+          <value>true</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>MeteringStatHourTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for metering statistics per hour</description>
+        <job-name>MeteringStatHourJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 0 * * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>MeteringStatDayJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Metering statistics per day</description>
+      <job-class>nuri.aimir.scheduler.job.MeteringStatDayJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map allows-transient-data="true">
+        <entry>
+          <key>runEM</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>runWM</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>runGM</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>runHM</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>runVC</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>checkRepeater</key>
+          <value>true</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>MeteringStatDayTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for metering statistics per day</description>
+        <job-name>MeteringStatDayJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 0 * * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>MeteringStatMonthJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Metering statistics per month</description>
+      <job-class>nuri.aimir.scheduler.job.MeteringStatMonthJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map allows-transient-data="true">
+        <entry>
+          <key>runEM</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>runWM</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>runGM</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>runHM</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>runVC</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>checkRepeater</key>
+          <value>true</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>MeteringStatMonthTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for metering statistics per month</description>
+        <job-name>MeteringStatMonthJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 0 0 1 * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>MeteringStatYearJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Metering statistics per year</description>
+      <job-class>nuri.aimir.scheduler.job.MeteringStatYearJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map allows-transient-data="true">
+        <entry>
+          <key>runEM</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>runWM</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>runGM</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>runHM</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>runVC</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>checkRepeater</key>
+          <value>true</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>MeteringStatYearTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for metering statistics per year</description>
+        <job-name>MeteringStatYearJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 0 0 1 1 ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>EquipStatJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Equipment Statistiscs</description>
+      <job-class>nuri.aimir.scheduler.job.EquipStatJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map allows-transient-data="true">
+        <entry>
+          <key>runEM</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>runWM</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>runGM</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>runHM</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>runVC</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>runMCU</key>
+          <value>false</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>EquipStatTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for Equipment Statistiscs</description>
+        <job-name>EquipStatJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 0 0 * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>ImportPdaDataJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Import pda data</description>
+      <job-class>nuri.aimir.scheduler.job.ImportPdaDataJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>ImportPdaDataTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for import pda data</description>
+        <job-name>ImportPdaDataJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 * * * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>SystemErrStatJob</name>
+      <group>AimirJobScheduler</group>
+      <description>System Error Stat</description>
+      <job-class>nuri.aimir.scheduler.job.SystemErrStatJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>SystemErrStatDataTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for system err stat</description>
+        <job-name>SystemErrStatJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 0 * * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+    <job>
+    <job-detail>
+      <name>SensorUnitScanningJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Sensor Unit Scanning</description>
+      <job-class>nuri.aimir.scheduler.job.SensorUnitScanningJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>SensorUnitScanningDataTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for Sensor UnitS canning</description>
+        <job-name>SensorUnitScanningJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>00 50 12 * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>InventoryLoaderJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Inventory Loader Job</description>
+      <job-class>nuri.nas.service.cm.invload.InventoryLoader</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>InventoryLoaderTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for Inventory Loader</description>
+        <job-name>InventoryLoaderJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 0/10 * * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>OnDemandJob</name>
+      <group>AimirJobScheduler</group>
+      <description>On-Demand</description>
+      <job-class>nuri.aimir.scheduler.job.OnDemandJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>OnDemandTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for On-Demand</description>
+        <job-name>OnDemandJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 * * * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+<!-- UK SSE,EDF used...
+  <job>
+    <job-detail>
+      <name>EDRPMeterReadingJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Meter Reading for SSE</description>
+      <job-class>nuri.aimir.scheduler.job.EDRPMeterReadingJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map allows-transient-data="true">
+        <entry>
+           <key>systemId</key>
+           <value>GE1</value>
+        </entry>
+        <entry>
+          <key>isSended</key>
+          <value>false</value>
+        </entry>
+        <entry>
+          <key>localDir</key>
+          <value>/tmp</value>
+        </entry>
+        <entry>
+          <key>remoteDir</key>
+          <value>/tmp/remote</value>
+        </entry>
+        <entry>
+          <key>remoteGetDir</key>
+          <value>/tmp</value>
+        </entry>
+        <entry>
+          <key>hostname</key>
+          <value>127.0.0.1</value>
+        </entry>
+        <entry>
+          <key>username</key>
+          <value>aimir</value>
+        </entry>
+        <entry>
+          <key>password</key>
+          <value>aimiramm</value>
+        </entry>
+        <entry>
+          <key>publicKey</key>
+          <value></value>
+        </entry>
+        <entry>
+          <key>publicKeyPasswd</key>
+          <value></value>
+        </entry>
+        <entry>
+          <key>proxyHost</key>
+          <value></value>
+        </entry>
+        <entry>
+          <key>proxyPort</key>
+          <value></value>
+        </entry>
+        <entry>
+          <key>isEDF</key>
+          <value>false</value>
+        </entry>
+        <entry>
+          <key>isToday</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>registerDecimalFormat</key>
+          <value>00000</value>
+        </entry>
+        <entry>
+          <key>intervalDecimalFormat</key>
+          <value>#.000</value>
+        </entry>
+        <entry>
+          <key>isUTC</key>
+          <value>false</value>
+        </entry>
+        <entry>
+          <key>registerRetrieveMax</key>
+          <value>83500</value>
+        </entry>
+        <entry>
+          <key>intervalRetrieveMax</key>
+          <value>3600</value>
+        </entry>
+        <entry>
+          <key>manualSendFromDate</key>
+          <value></value>
+        </entry>
+        <entry>
+          <key>manualSendToDate</key>
+          <value></value>
+        </entry>
+        <entry>
+          <key>isSendedEmail</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>fromEmail</key>
+          <value>aimir@localhost.localdomain</value>
+        </entry>
+        <entry>
+          <key>toEmail</key>
+          <value>Stephen.Barclay@scottish-southern.co.uk;Ian.Lansley@scottish-southern.co.uk</value>
+        </entry>
+        <entry>
+          <key>ccEmail</key>
+          <value>derek.symon@ge.com;ian.witherspoon@ge.com;lucky@nuritelecom.com;jdpark89@nuritelecom.com;elevas@nuritelecom.com</value>
+        </entry>
+        <entry>
+          <key>bccEmail</key>
+          <value></value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>EDRPMeterReadingTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for Meter Reading</description>
+        <job-name>EDRPMeterReadingJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 0 * * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+-->
+<!-- Sweden HTS used...
+  <job>
+    <job-detail>
+      <name>SE_MMIU_ServerIPSetJob</name>
+      <group>AimirJobScheduler</group>
+      <description>MMIU Recovery for Sweden</description>
+      <job-class>nuri.aimir.scheduler.job.SE_MMIU_ServerIPSetJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map allows-transient-data="true">
+        <entry>
+          <key>serverIp</key>
+          <value>172.30.152.160</value>
+        </entry>
+        <entry>
+          <key>serverPort</key>
+          <value>8000</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>SE_MMIU_ServerIPSetJobTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for Sweden MMIU</description>
+        <job-name>SE_MMIU_ServerIPSetJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 0 14 * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>SE_F57_IntegrateJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Meter Reading for Sweden F57</description>
+      <job-class>nuri.aimir.scheduler.job.SE_F57_IntegrateJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map allows-transient-data="true">
+        <entry>
+          <key>isSended</key>
+          <value>false</value>
+        </entry>
+        <entry>
+          <key>localDir</key>
+          <value>/tmp</value>
+        </entry>
+        <entry>
+          <key>remoteDir</key>
+          <value>/home/aimir/integrate/outbound</value>
+        </entry>
+        <entry>
+          <key>hostname</key>
+          <value>127.0.0.1</value>
+        </entry>
+        <entry>
+          <key>username</key>
+          <value>aimir</value>
+        </entry>
+        <entry>
+          <key>password</key>
+          <value>aimiramm</value>
+        </entry>
+        <entry>
+          <key>delimiter</key>
+          <value>;</value>
+        </entry>
+       </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>SE_F57_IntegrateJobTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for Sweden F57</description>
+        <job-name>SE_F57_IntegrateJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 0 4,5-23 * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>SE_F60_InsertJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Report for Sweden F60</description>
+      <job-class>nuri.aimir.scheduler.job.SE_F60_InsertJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map allows-transient-data="true">
+        <entry>
+          <key>startDate</key>
+          <value></value>
+        </entry>
+        <entry>
+          <key>function</key>
+          <value>mvms.INBOUND_QUEUE_PACKAGE.enqueue</value>
+        </entry>
+        <entry>
+          <key>threadCount</key>
+          <value>5</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>SE_F60_InsertJobTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for Sweden F60</description>
+        <job-name>SE_F60_InsertJob</job-name>
+        <job-group>nAimirJobScheduler</job-group>
+        <cron-expression>0 0 4-23 * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>SE_F60_ExecuteJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Report for Sweden F60</description>
+      <job-class>nuri.aimir.scheduler.job.SE_F60_ExecuteJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map allows-transient-data="true">
+        <entry>
+          <key>function</key>
+          <value>mvms.INBOUND_QUEUE_PACKAGE.enqueue</value>
+        </entry>
+        <entry>
+          <key>threadCount</key>
+          <value>5</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>SE_F60_ExecuteJobTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for Sweden F60</description>
+        <job-name>SE_F60_ExecuteJob</job-name>
+        <job-group>nAimirJobScheduler</job-group>
+        <cron-expression>0 0 4-23 * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>SE_F60_IntegrateJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Report for Sweden F60</description>
+      <job-class>nuri.aimir.scheduler.job.SE_F60_IntegrateJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map allows-transient-data="true">
+        <entry>
+          <key>meterType</key>
+          <value>12_SM110;11_5530;2_KAMSTRUP382</value>
+        </entry>
+        <entry>
+          <key>function</key>
+          <value>htsopera.f60_aimir_queue_package.enqueue</value> --><!-- GE --><!--
+          <value>htsoperaler.f60_aimir_queue_package.enqueue</value> --><!-- Lerum --><!--
+          <value>htsmvms.f60_aimir_queue_package.enqueue</value>--><!--  Lerum --><!--
+          <value>mvms.INBOUND_QUEUE_PACKAGE.enqueue</value>--><!-- NEW BOTH --><!--
+        </entry>
+        <entry>
+          <key>checkLogic</key>
+          <value>ge</value>
+          <value>lerum</value>
+        </entry>
+        <entry>
+          <key>userDate</key>
+          <value></value>
+        </entry>
+        <entry>
+          <key>threadCount</key>
+          <value>5</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>SE_F60_IntegrateJobTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for Sweden F60</description>
+        <job-name>SE_F60_IntegrateJob</job-name>
+        <job-group>nAimirJobScheduler</job-group>
+        <cron-expression>0 0 4-23 * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>SE_F60_Preday_IntegrateJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Report for Sweden F60</description>
+      <job-class>nuri.aimir.scheduler.job.SE_F60_Preday_IntegrateJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map allows-transient-data="true">
+        <entry>
+          <key>meterType</key>
+          <value>12_SM110;11_5530</value>
+        </entry>
+        <entry>
+          <key>function</key>
+          <value>htsopera.f60_aimir_queue_package.enqueue</value> --><!-- GE --><!--
+          <value>htsoperaler.f60_aimir_queue_package.enqueue</value> --><!-- Lerum --><!--
+          <value>htsmvms.f60_aimir_queue_package.enqueue</value>--><!--  Lerum --><!--
+        </entry>
+        <entry>
+          <key>checkLogic</key>
+          <value>ge</value>
+          <value>lerum</value>
+        </entry>
+        <entry>
+          <key>userDate</key>
+          <value></value>
+        </entry>
+        <entry>
+          <key>threadCount</key>
+          <value>5</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>SE_F60_Preday_IntegrateJobTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for Sweden F60</description>
+        <job-name>SE_F60_Preday_IntegrateJob</job-name>
+        <job-group>nAimirJobScheduler</job-group>
+        <cron-expression>0 0 4-23 2* * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>SE_F60Support_IntegrateJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Report for Sweden F60 Support</description>
+      <job-class>nuri.aimir.scheduler.job.SE_F60Support_IntegrateJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map allows-transient-data="true">
+        <entry>
+          <key>meterType</key>
+          <value>12_SM110;11_5530</value>
+        </entry>
+        <entry>
+          <key>function</key>
+          <value>htsopera.f60_aimir_queue_package.enqueue</value> --><!-- GE --><!--
+          <value>htsoperaler.f60_aimir_queue_package.enqueue</value> --><!-- Lerum --><!--
+          <value>htsmvms.f60_aimir_queue_package.enqueue</value>--><!--  Lerum --><!--
+        </entry>
+        <entry>
+          <key>checkLogic</key>
+          <value>ge</value>
+          <value>lerum</value>
+        </entry>
+        <entry>
+          <key>threadCount</key>
+          <value>5</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>SE_F60Support_IntegrateJobTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for Sweden F60</description>
+        <job-name>SE_F60Support_IntegrateJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>30 30 15 * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>SE_FXX_ReciveDataJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Meter Reading for Sweden FXX Received Data Processing</description>
+      <job-class>nuri.aimir.scheduler.job.SE_FXX_ReciveDataJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map allows-transient-data="true">
+        <entry>
+          <key>integreateDir</key>
+          <value>/home/aimir/integrate</value>
+        </entry>
+        <entry>
+          <key>inBoundDir</key>
+          <value>/home/aimir/integrate/inbound</value>
+        </entry>
+        <entry>
+          <key>outBoundDir</key>
+          <value>/home/aimir/integrate/outbound</value>
+        </entry>
+        <entry>
+          <key>resultDir</key>
+          <value>/home/aimir/integrate/result</value>
+        </entry>
+        <entry>
+          <key>delimiter</key>
+          <value>;</value>
+        </entry>
+        <entry>
+          <key>locNameType</key>
+          <value>2</value> --><!-- 1(ID, GE postno) 2(Name, Lerum Name) --><!--
+        </entry>
+        <entry>
+          <key>processF51</key>
+          <value>false</value>
+        </entry>
+        <entry>
+          <key>processF52</key>
+          <value>false</value>
+        </entry>
+        <entry>
+          <key>processF53</key>
+          <value>false</value>
+        </entry>
+        <entry>
+          <key>processF54</key>
+          <value>false</value>
+        </entry>
+        <entry>
+          <key>processF57</key>
+          <value>false</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>SE_FXX_ReciveDataJobTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for Sweden F57</description>
+        <job-name>SE_FXX_ReciveDataJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>30 * * * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+-->
+  <job>
+    <job-detail>
+      <name>LPMeteringStatisticsJob</name>
+      <group>AimirJobScheduler</group>
+      <description>LPMeteringStatistics</description>
+      <job-class>nuri.aimir.scheduler.job.LPMeteringStatisticsJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>LPMeteringStatisticsTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for LPMeteringStatistics</description>
+        <job-name>LPMeteringStatisticsJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 0 * * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>SensorJoinDefaultSetJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Sensor Join Default Setting</description>
+      <job-class>nuri.aimir.scheduler.job.SensorJoinDefaultSetJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>SensorJoinDefaultSetTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for Sensor Join Default Set</description>
+        <job-name>SensorJoinDefaultSetJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 40 * * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>DBTuningJob</name>
+      <group>AimirJobScheduler</group>
+      <description>DB Tuning</description>
+      <job-class>nuri.aimir.scheduler.job.DBTuningJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+       <job-data-map allows-transient-data="true">
+        <entry>
+          <key>dbType</key>
+          <value>oracle</value>
+        </entry>
+        <entry>
+          <key>dbUser</key>
+          <value>aimir</value>
+        </entry>
+        <entry>
+          <key>processCount</key>
+          <value>2</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>DBTuningJobTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for DB Tuning</description>
+        <job-name>DBTuningJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>30 30 3 1,5,10,15,20,25,30 * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>PreMTRMainStatJob</name>
+      <group>AimirJobScheduler</group>
+      <description>PreMTRMainStatJob</description>
+      <job-class>nuri.aimir.scheduler.job.PreMTRMainStatJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>PreMTRMainStatJobTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for PreMTRMainStat</description>
+        <job-name>PreMTRMainStatJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 10,40 * * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>CommLogStatJob</name>
+      <group>AimirJobScheduler</group>
+      <description>CommLogStatJob</description>
+      <job-class>nuri.aimir.scheduler.job.CommLogStatJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>CommLogStatJobTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for CommLogStatJob</description>
+        <job-name>CommLogStatJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 40 7,12,15 * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>  
+  <job>
+    <job-detail>
+      <name>LPMeteringStatV2Job</name>
+      <group>AimirJobScheduler</group>
+      <description>LPMeteringStatV2Job</description>
+      <job-class>nuri.aimir.scheduler.job.LPMeteringStatV2Job</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>LPMeteringStatV2JobTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for LPMeteringStatV2Job</description>
+        <job-name>LPMeteringStatV2Job</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 20 7,11,16 * * ?</cron-expression>
+      </cron>
+    </trigger>
+  </job>  
+<!-- Paraguy Billing
+  <job>
+    <job-detail>
+      <name>ANDEBillingFileJob</name>
+      <group>AimirJobScheduler</group>
+      <description>ANDE Billing File Job</description>
+      <job-class>nuri.aimir.scheduler.job.ANDEBillingFileJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map allows-transient-data="true">
+        <entry>
+          <key>isSended</key>
+          <value>false</value>
+        </entry>
+        <entry>
+          <key>localDir</key>
+          <value>/tmp</value>
+        </entry>
+        <entry>
+          <key>remoteDir</key>
+          <value>/tmp/remote</value>
+        </entry>
+        <entry>
+          <key>hostname</key>
+          <value>127.0.0.1</value>
+        </entry>
+        <entry>
+          <key>username</key>
+          <value>aimir</value>
+        </entry>
+        <entry>
+          <key>password</key>
+          <value>aimiramm</value>
+        </entry>
+        <entry>
+          <key>reportLocation</key>
+          <value>ASUNCION,CAPIATA</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>ANDEBillingFileJobTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for ANDE Billing File</description>
+        <job-name>ANDEBillingFileJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 3 7 * * ? </cron-expression>
+      </cron>
+    </trigger>
+  </job>
+-->
+<!-- Suwan energy
+  <job>
+    <job-detail>
+      <name>SUWAN_EBSS_IntegrateJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Suwan Billing File Job</description>
+      <job-class>nuri.aimir.scheduler.job.SUWAN_EBSS_IntegrateJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map allows-transient-data="true">
+        <entry>
+          <key>contractInfo</key>
+          <value>SACB_AMR_SND_SA</value>
+        </entry>
+        <entry>
+          <key>electricMeterInfo</key>
+          <value>SACB_AMR_SND_MTR_E</value>
+        </entry>
+        <entry>
+          <key>heatMeterInfo</key>
+          <value>SACB_AMR_SND_MTR_H</value>
+        </entry>
+        <entry>
+          <key>defaultDurDays</key>
+          <value>30</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>SUWAN_EBSS_IntegrateJobTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for Suwan EBSS-NURI Integrate</description>
+        <job-name>SUWAN_EBSS_IntegrateJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 0 7,23 * * ? </cron-expression>
+      </cron>
+    </trigger>
+  </job>
+  <job>
+    <job-detail>
+      <name>SUWAN_EBSS_BillingSaveJob</name>
+      <group>AimirJobScheduler</group>
+      <description>Suwan Billing Data Save Job</description>
+      <job-class>nuri.aimir.scheduler.job.SUWAN_EBSS_BillingSaveJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>SUWAN_EBSS_BillingSaveJobTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for Suwan EBSS-NURI Billing Save</description>
+        <job-name>SUWAN_EBSS_BillingSaveJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 0 7,23 * * ? </cron-expression>
+      </cron>
+    </trigger>
+  </job>
+-->
+<!--
+  <job>
+    <job-detail>
+      <name>INCHEON_ERP_HourSaveJob</name>
+      <group>AimirJobScheduler</group>
+      <description>INCHEON ERP Hour Save Job</description>
+      <job-class>nuri.aimir.scheduler.job.INCHEON_ERP_HourSaveJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>INCHEON_ERP_HourSaveJobTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for INCHEON ERP Hour Save</description>
+        <job-name>INCHEON_ERP_HourSaveJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 0 7,15 * * ? </cron-expression>
+      </cron>
+    </trigger>
+  </job>
+ -->
+ 
+ <!--
+  <job>
+    <job-detail>
+      <name>INCHEON_ERP_IntegrateJob</name>
+      <group>AimirJobScheduler</group>
+      <description>INCHEON ERP IntegrateJob</description>
+      <job-class>nuri.aimir.scheduler.job.INCHEON_ERP_IntegrateJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>INCHEON_ERP_IntegrateJobTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for INCHEON ERP IntegrateJob</description>
+        <job-name>INCHEON_ERP_IntegrateJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 0 7,15 * * ? </cron-expression>
+      </cron>
+    </trigger>
+  </job>
+ -->
+ <!-- 
+   <job>
+    <job-detail>
+      <name>KWANGMUNGBillingFileJob</name>
+      <group>AimirJobScheduler</group>
+      <description>KWANGMUNG Billing File Job</description>
+      <job-class>nuri.aimir.scheduler.job.KWANGMUNGBillingFileJob</job-class>
+      <volatility>false</volatility>
+      <durability>false</durability>
+      <recover>false</recover>
+      <job-data-map allows-transient-data="true">
+        <entry>
+          <key>emailFromName</key>
+          <value>nuritelecom</value>
+        </entry>
+        <entry>
+          <key>emailFrom</key>
+          <value>aimir@nuritelecom.com</value>
+        </entry>
+        <entry>
+          <key>emailTo</key>
+          <value>aimir@nuritelecom.com,</value>
+        </entry>
+        <entry>
+          <key>localDir</key>
+          <value>/tmp/</value>
+        </entry>        
+        <entry>
+          <key>meteringDay</key>
+          <value>01</value>
+        </entry>
+        <entry>
+          <key>meteringYearMonth</key>
+          <value></value>
+        </entry>        
+        <entry>
+          <key>meteringStatus</key>
+          <value></value>
+        </entry>
+        <entry>
+          <key>customerId</key>
+          <value></value>
+        </entry>
+        <entry>
+          <key>locationId</key>
+          <value></value>
+        </entry>
+        <entry>
+          <key>isSendEmail</key>
+          <value>true</value>
+        </entry>
+      </job-data-map>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>KWANGMUNGBillingFileJobTrigger</name>
+        <group>AimirJobScheduler</group>
+        <description>Trigger for KWANGMUNG Billing File</description>
+        <job-name>KWANGMUNGBillingFileJob</job-name>
+        <job-group>AimirJobScheduler</job-group>
+        <cron-expression>0 0 3 2 * ? </cron-expression>
+      </cron>
+    </trigger>
+  </job>
+   -->
+    <!--job>
+        <job-detail>
+            <name>KWANGMYUNG_BlockStatJob</name>
+            <group>AimirJobScheduler</group>
+            <description>KWANGMYUNG_BlockStatJob</description>
+            <job-class>nuri.aimir.scheduler.job.KWANGMYUNG_BlockStatJob</job-class>
+            <volatility>false</volatility>
+            <durability>false</durability>
+            <recover>false</recover>
+        </job-detail>
+        <trigger>
+            <cron>
+                <name>KWANGMYUNG_BlockStatJobTrigger</name>
+                <group>AimirJobScheduler</group>
+                <description>Trigger for KWANGMYUNG_BlockStatJob</description>
+                <job-name>KWANGMYUNG_BlockStatJob</job-name>
+                <job-group>AimirJobScheduler</job-group>
+                <cron-expression>0 0 10 * * ?</cron-expression>
+            </cron>
+        </trigger>
+    </job-->
+</quartz>
+

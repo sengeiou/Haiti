@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.GadgetRole
+        gadget="빌딩 관리"
+        role="admin"
+        supplier="누리"
+    />
+    <system.GadgetRole
+        gadget="설비 관리"
+        role="admin"
+        supplier="누리"
+    />
+    <system.GadgetRole
+        gadget="빌딩 전력 사용량 모니터링"
+        role="admin"
+        supplier="누리"
+    />
+    <system.GadgetRole
+        gadget="빌딩 가스 사용량 모니터링"
+        role="admin"
+        supplier="누리"
+    />
+    <system.GadgetRole
+        gadget="빌딩 수도 사용량 모니터링"
+        role="admin"
+        supplier="누리"
+    /> 
+    <system.GadgetRole
+        gadget="계약전력과 Peak Demand"
+        role="admin"
+        supplier="누리"
+    />
+    <system.GadgetRole
+        gadget="위치별 사용량 통계"
+        role="admin"
+        supplier="누리"
+    />  
+    <system.GadgetRole
+        gadget="에너지 절감 목표"
+        role="admin"
+        supplier="누리"
+    />
+    <system.GadgetRole 
+        gadget="설비별 사용량 통계"
+        role="admin"
+        supplier="누리"
+    />
+    <system.GadgetRole
+        gadget="Zone별 사용량 통계"
+        role="admin"
+        supplier="누리"
+    />
+    <system.GadgetRole
+        gadget="Zone 관리"
+        role="admin"
+        supplier="누리"
+    />
+    <system.GadgetRole
+        gadget="전력 에너지 절감 목표 2"
+        role="admin"
+        supplier="누리"
+    />
+    <system.GadgetRole
+        gadget="가스 에너지 절감 목표 2"
+        role="admin"
+        supplier="누리"
+    />    
+    <system.GadgetRole
+        gadget="수도 에너지 절감 목표 2"
+        role="admin"
+        supplier="누리"
+    />    
+    <system.GadgetRole
+        gadget="EMS 리포트"
+        role="admin"
+        supplier="누리"
+    />
+    <system.GadgetRole
+        gadget="열량 에너지 절감 목표 2"
+        role="admin"
+        supplier="누리"
+    />    
+    <system.GadgetRole
+        gadget="빌딩 열량 사용량 모니터링"
+        role="admin"
+        supplier="누리"
+    /> 
+    <system.GadgetRole
+        gadget="수검침관리"
+        role="admin"
+        supplier="누리"
+    /> 
+</dataset>

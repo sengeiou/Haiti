@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="BEMS"
+        gadget="빌딩 전력 사용량 모니터링"
+    />
+   <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="BEMS"
+        gadget="빌딩 가스 사용량 모니터링"
+    />
+   <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="2"
+        dashboard="BEMS"
+        gadget="빌딩 수도 사용량 모니터링"
+    />
+	<system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="BEMS"
+        gadget="계약전력과 Peak Demand"
+    />
+        
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="BEMS"
+        gadget="위치별 사용량 통계"
+    />
+    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="2"
+        dashboard="BEMS"
+        gadget="설비별 사용량 통계"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="BEMS"
+        gadget="Zone별 사용량 통계"
+    />        
+    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="BEMS"
+        gadget="빌딩 관리"
+    />
+   <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="2"
+        dashboard="BEMS"
+        gadget="설비 관리"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="2"
+        dashboard="BEMS"
+        gadget="Zone 관리"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="BEMS"
+        gadget="EMS 리포트"
+    /> 
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="BEMS"
+        gadget="에너지 절감 목표"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="2"
+        dashboard="BEMS"
+        gadget="전력 에너지 절감 목표 2"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="BEMS"
+        gadget="가스 에너지 절감 목표 2"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="BEMS"
+        gadget="수도 에너지 절감 목표 2"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="2"
+        dashboard="BEMS"
+        gadget="열량 에너지 절감 목표 2"
+    />
+    <system.DashboardGadget
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="2"
+        dashboard="BEMS"
+        gadget="빌딩 열량 사용량 모니터링"
+    />
+    <system.DashboardGadget
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="2"
+        dashboard="BEMS"
+        gadget="수검침관리"
+    />
+
+
+
+</dataset>

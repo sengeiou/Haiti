@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<dataset>  
+    <system.Dashboard descr="에너지 사용량(사용량 정보, 과금)" name="에너지 사용량" orderNo="0" role="customer"/>
+</dataset>

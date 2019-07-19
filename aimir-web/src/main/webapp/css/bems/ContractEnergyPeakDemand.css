@@ -1,0 +1,74 @@
+.max #top-wrapper {}
+
+.max #bottom-wrapper { padding: 7px; }
+
+.max #peek-demand-info { float: left; width: 32%; }
+
+.max #peek-demand-dr-history { float: right; width: 67%; padding-left: 1px; }
+
+.max #dr-detail .form-table { width: 100%; }
+.max #dr-detail .form-table th { background-color: #EEF3F9; border-bottom: 1px solid #E6EAEF; }
+.max #dr-detail .x-panel-body {	padding: 10px 0px; }
+
+.max .form-table .buttons-area { height: 45px; text-align: right; }
+
+.max .drconfig-view-items { margin-bottom: 10px; }
+
+.max .dr-config-left { float: left; width: 50%; }
+.max .dr-config-right { float: right; width: 49%; }
+
+/* 계약전력 및 수요전력 인풋 폼 위치조정 */
+.input_dot { margin-top: -5px; }
+
+select#fm_status { width: 250px; }
+
+.dr-scenario-selector {	width: 200px !important; }
+
+.max #dr-config .table-body-noheader { border: solid 1px #99BBE8; }
+
+.max .dr-config-table thead td:hover { border-left:1px solid; border-right:1px solid; border-left-color:#aaccf6; border-right-color:#aaccf6; background: repeat-x left bottom; background-color:#ebf3fd; background-image:url(/aimir-web/themes/images/default/grid/grid3-hrow-over.gif); }
+.max .dr-config-table tbody td { height: 30px; text-align: center; }
+.max .dr-config-table .threshold { display: inline; float: none; }
+.max .dr-config-table select.threshold { display: inline; float: none !important; padding-left: 2px;}
+.max .dr-config-table .dr-config-col-no { width: 10%; }
+.max .dr-config-table .dr-config-col-dr-title { width: 20%; }
+.max .dr-config-table .dr-config-col-event { width: 20%; }
+.max .dr-config-table .dr-config-col-scenario { width: 30%; }
+.max .dr-config-table .dr-config-col-apply { width: 20%; }
+.max .dr-config-table .dr-scenario-selector { margin-left: 2px; }
+.max table tr.critical-threshhold-form { background-color: #FAFAFA; border-bottom: solid 1px #dcdcdc; }
+
+#peek-demand-dr-history-tabs div.tab-content { padding: 0px; }
+#peek-demand-dr-history-tabs div.dynamic-date-tabs { background: none; }
+
+#dr-detail { max-height: 415px;	overflow: auto; }
+#dr-detail-scenario-form div.tagList li input {	*margin-top: -2px; border: none !important; }
+#dr-detail-scenario-form div.tagList li:hover {	border: 2px solid #99BBE8; padding: 3px 5px 1px 5px; }
+#dr-detail-scenario-form div.tagList label { color: #0F7CD0; }
+#dr-detail-scenario-form div.tagList input { display: inline; zoom: 1; width: 20px; }
+#dr-detail-scenario-form .click-guide { 
+	-webkit-transition: all 0.4s ease-in-out;
+	-moz-transition: all 0.4s ease-in-out;
+	-o-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;
+	padding: 1%; border-radius: 4px; border: solid 1px white; cursor: pointer; margin-bottom: 3px; padding-left: 10px; font-weight: bold; 
+}
+#dr-detail-scenario-form .click-guide:hover { border-color: #A9BFD3; background-image: url(/aimir-web/js/extjs/resources/images/default/toolbar/bg.gif); padding-left: 25px; }
+
+#tag-layer-popup { position: fixed; display: none; z-index: 99999; border: solid 1px #99BBE8; background: white; overflow: hidden; }
+#tag-layer-popup select { height: 100%; width: 100%; padding: 2px; }
+#tag-layer-popup select option { margin: 3px 0px; border: solid 1px #e8e8e8; padding: 2px; font-weight: bold; }
+#tag-layer-popup select option.odd { background-color: white; }
+#tag-layer-popup select option.even { background-color: #eaeaea; }
+#tag-layer-popup .control-bar { padding: 4px 6px; position: relative; top: 0px; border-bottom: solid 1px #99BBE8; }
+#tag-layer-popup .tags { position: relative; width: 48%; height: 60%; min-height: 140px; margin-top: 1%; margin-left: 1%; margin-bottom: 30px; }
+#tag-layer-popup .tags div.tag-info { padding: 1px 5px; font-weight: bold; }
+#tag-layer-popup .total-tags { float: left; }
+#tag-layer-popup .apply-tags { float: right; }
+#tag-layer-popup .in-out-control { clear: both; padding: 1px; margin: 2%; position: relative; }
+#tag-layer-popup .in-out-control ul { overflow: hidden; position: absolute; right: 0px; }
+#tag-layer-popup li.in, #tag-layer-popup li.out { width: 18px; height: 18px; float: left; margin-right: 10px; cursor: pointer; }
+#tag-layer-popup li.in { background: url(/aimir-web/themes/images/default/setting/btn-putout.gif); }
+#tag-layer-popup li.out { background: url(/aimir-web/themes/images/default/setting/btn-putin.gif);	}
+#tag-layer-popup li.in:hover, #tag-layer-popup li.out:hover { background-position: -18px 0;	}
+#tag-layer-popup li.in-btn, #tag-layer-popup li.out-btn { float: left; margin-right: 5px; cursor: pointer; }
