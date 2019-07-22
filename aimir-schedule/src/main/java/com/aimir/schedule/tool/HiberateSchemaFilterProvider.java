@@ -43,8 +43,11 @@ public class HiberateSchemaFilterProvider implements SchemaFilterProvider {
 
 		@Override
 		public boolean includeTable(Table table) {
-			if(table.getName().toLowerCase().contains("day_em_view") || //DayEMView.Class
-					table.getName().toLowerCase().contains("month_em_view")) //MonthEMView.class
+			if(table.getName().toLowerCase().contains("day_em_view") || table.getName().toLowerCase().contains("month_em_view") || 
+				table.getName().toLowerCase().contains("day_gm_view") || table.getName().toLowerCase().contains("month_gm_view") ||
+				table.getName().toLowerCase().contains("day_wm_view") || table.getName().toLowerCase().contains("month_wm_view") ||
+				table.getName().toLowerCase().contains("day_tm_view") || table.getName().toLowerCase().contains("month_tm_view") ||
+				table.getName().toLowerCase().contains("day_hm_view") || table.getName().toLowerCase().contains("month_hm_view")) 
 			{
 				return false;
 			}

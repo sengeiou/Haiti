@@ -41,7 +41,7 @@
     </bean>
     
     <!-- Audit Log Support Hibernate Session Factory -->
-    <bean id="auditSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+    <bean id="auditSessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="auditDataSource" />
         <property name="hibernateProperties">
             <props>
