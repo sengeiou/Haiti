@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.aimir.constants.CommonConstants.MeteringType;
 import com.aimir.fep.protocol.fmp.datatype.WORD;
 import com.aimir.fep.protocol.fmp.exception.FMPEncodeException;
 import com.aimir.fep.protocol.nip.frame.GeneralFrame.NetworkType;
@@ -24,7 +25,8 @@ public class MDData extends ServiceData
     public WORD  cnt = new WORD();
     private final Integer serviceType = new Integer(3);
     private NetworkType networkType;
-
+    private MeteringType meteringType = MeteringType.Normal;
+    
     /**
      * constructor
      */
@@ -92,6 +94,17 @@ public class MDData extends ServiceData
     public void setNetworkType(NetworkType networkType) {
         this.networkType = networkType;
     }
+    
+    public MeteringType getMeteringType() {
+    	if(meteringType == null)
+    		meteringType = MeteringType.Normal;
+    		
+		return meteringType;
+	}
+
+	public void setMeteringType(MeteringType meteringType) {
+		this.meteringType = meteringType;
+	}
 
     public String getProtocolType() {
         if (networkType == NetworkType.MBB)
@@ -140,6 +153,7 @@ public class MDData extends ServiceData
         StringBuffer sb = new StringBuffer();
         sb.append("MeasurementData Service Header\n");
         sb.append("cnt=").append(getCnt()).append(',');
+        sb.append("meteringType=").append(meteringType.name()).append(',');
         if(mdData != null)
         {
             //sb.append("mdData=[").append(Hex.decode(mdData))

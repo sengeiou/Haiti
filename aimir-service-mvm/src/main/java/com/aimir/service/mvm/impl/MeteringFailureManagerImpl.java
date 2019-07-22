@@ -25,9 +25,11 @@ import com.aimir.dao.mvm.MeteringDataDao;
 import com.aimir.dao.mvm.MeteringDayDao;
 import com.aimir.dao.system.LocationDao;
 import com.aimir.dao.system.SupplierDao;
+import com.aimir.dao.view.DayEMViewDao;
 import com.aimir.model.mvm.DayEM;
 import com.aimir.model.system.Location;
 import com.aimir.model.system.Supplier;
+import com.aimir.model.view.DayEMView;
 import com.aimir.service.mvm.MeteringFailureManager;
 import com.aimir.service.mvm.bean.FailureMeterData;
 import com.aimir.service.mvm.bean.FailureMeteringData;
@@ -69,6 +71,9 @@ public class MeteringFailureManagerImpl implements MeteringFailureManager{
 
     @Autowired
     MeteringDayDao meteringDayDao;
+    
+    @Autowired
+    DayEMViewDao dayEMViewDao;
 
     Map<String, Object> totalData;
     Map<String, Object> successData;
@@ -575,8 +580,12 @@ public class MeteringFailureManagerImpl implements MeteringFailureManager{
 	// 미터의 검침데이터 목록을 조회한다.
 	public List<FailureMeteringData> getMeteringFailureMeteringData(Map<String,Object> params){
 		
+		/* OPF-610 정규화 관련 처리로 인한 주석
 		List<DayEM> grid = dayEMDao.getMeteringFailureMeteringData(params);
-
+		*/
+		
+		List<DayEMView> grid = dayEMViewDao.getMeteringFailureMeteringData(params);
+		
 		List<FailureMeteringData> failureMeteringDataList = new ArrayList<FailureMeteringData>();
 		FailureMeteringData failureMeteringData = null;
 		
@@ -588,7 +597,8 @@ public class MeteringFailureManagerImpl implements MeteringFailureManager{
 		
 		Supplier supplier = supplierDao.get(supplierId);
 
-		for(DayEM dayEM:grid){
+		for(DayEMView dayEM : grid){
+		//for(DayEM dayEM : grid){ OPF-610 정규화 관련 처리로 인한 주석
 			failureMeteringData = new FailureMeteringData();
 			failureMeteringData.setMeteringDate(TimeLocaleUtil.getLocaleDate(dayEM.getYyyymmdd() , supplier.getLang().getCode_2letter(), supplier.getCountry().getCode_2letter()));
 			failureMeteringData.setMeteringValue(dayEM.getTotal().toString());

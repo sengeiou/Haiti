@@ -7,7 +7,7 @@ import java.text.DecimalFormat;
  * LP Data Class
  *
  */
-public class LPData implements java.io.Serializable
+public class LPData implements Comparable<LPData>, java.io.Serializable
 {
 
     /**
@@ -239,6 +239,11 @@ public class LPData implements java.io.Serializable
 
 	public void setBaseValue(double baseValue) {
 		this.baseValue = baseValue;
+	}
+
+	@Override
+	public int compareTo(LPData o) {
+		return datetime.compareTo(o.datetime);
 	}
     
     

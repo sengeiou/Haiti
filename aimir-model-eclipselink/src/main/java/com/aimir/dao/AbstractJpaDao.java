@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -16,9 +17,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
+import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+import javax.persistence.StoredProcedureQuery;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -29,7 +32,6 @@ import javax.persistence.criteria.Selection;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.eclipse.persistence.config.QueryHints;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,44 +54,6 @@ public abstract class AbstractJpaDao<T, ID extends Serializable>
     protected EntityManager em;
 
     private Class<T> entityClass;
-    
-    private enum HintQueryParameters {
-    	METERINGDATA("MeteringData", "", "" ),
-    	MeteringDataEM("MeteringDataEM", "METERINGDATA_EM", "METERINGDATA_EM_PK"),
-    	MeteringDataWM("MeteringDataWM","METERINGDATA_WM", "METERINGDATA_WM_PK"),
-    	MeteringDataGM("MeteringDataGM","METERINGDATA_GM", "METERINGDATA_GM_PK"),
-    	MeteringDataHM("MeteringDataHM","METERINGDATA_HM", "METERINGDATA_HM_PK"),
-    	MeteringDataNM("MeteringDataNM","METERINGDATA_NM", "METERINGDATA_NM_PK"),
-    	MeteringDataSPM("MeteringDataSPM", "METERINGDATA_SPM", "METERINGDATA_SPM_PK"),
-    	
-    	MeterEventLog("MeterEventLog", "METEREVENT_LOG", "METEREVENT_LOG_PK" ),
-    	PowerQuality("PowerQuality", "POWER_QUALITY", "POWER_QUALITY_PK"),
-    	
-    	BillingDayEM("BillingDayEM", "BILLING_DAY_EM", "BILLING_DAY_EM_PK"),
-    	BillingMonthEM("BillingMonthEM", "BILLING_MONTH_EM", "BILLING_MONTH_EM_PK"),
-    	RealTimeBillingEM("RealTimeBillingEM", "REALTIME_BILLING_EM", "REALTIME_BILLING_EM_PK");
-    	
-    	private String entityClz;
-    	private String tableClz;
-    	private String indexClz;
-    	
-    	private HintQueryParameters(String entityClz, String tableClz, String indexClz) {
-    		this.entityClz = entityClz;
-    		this.tableClz = tableClz;
-    		this.indexClz = indexClz;
-    	}
-
-		public static HintQueryParameters getItem(String clz) {
-    		for (HintQueryParameters hp : HintQueryParameters.values()) {
-    			if(hp.entityClz.equals(clz)) {
-    				return hp;
-    			}
-    		}
-    		
-    		return null;
-    	}
-    }
-    
     
     public AbstractJpaDao() {
         ParameterizedType genericSuperclass = (ParameterizedType) getClass()
@@ -160,7 +124,7 @@ public abstract class AbstractJpaDao<T, ID extends Serializable>
         List<T> results;
         //AdditionalCriteria property
         String emACmdevId = null;
-        if(getEntityClass().getSimpleName().startsWith("Lp")) {
+        if(getEntityClass().getSimpleName().startsWith("Lp") || getEntityClass().getSimpleName().startsWith("MeteringData")) {
             for(Condition con : conditions) {
                  if( con.getField().equals("id.mdevId") ){
                     emACmdevId = con.getValue()[0].toString();
@@ -191,8 +155,8 @@ public abstract class AbstractJpaDao<T, ID extends Serializable>
 
         cq.where(predicates.toArray(new Predicate[] {}));
         TypedQuery<T> q = em.createQuery(cq);
-
-        if(getEntityClass().getSimpleName().startsWith("Lp")) {
+        
+        if(getEntityClass().getSimpleName().startsWith("Lp") || getEntityClass().getSimpleName().startsWith("MeteringData")) {
             if(emACmdevId != null) {
                 q.setParameter("mdevId", emACmdevId);
             } else {
@@ -324,50 +288,6 @@ public abstract class AbstractJpaDao<T, ID extends Serializable>
         return entity;
     }
     
-    //OPF-649 DB Normalization
-    @Transactional(propagation = Propagation.REQUIRED)
-	public T addIgnoreDupWithHint(T entity) {
-		try {
-			HintQueryParameters hintClass = HintQueryParameters.getItem(getEntityClass().getSimpleName());
-			log.debug("## EntityClass:" + getEntityClass().getName() + " | hintQuery:"+hintClass + " | T Class:" + entity.getClass().getName());
-			
-			StringBuilder sb = new StringBuilder();
-			sb.append("/*+ IGNORE_ROW_ON_DUPKEY_INDEX(");
-			
-			switch(hintClass) {
-				case METERINGDATA:
-					HintQueryParameters subClass = HintQueryParameters.getItem(entity.getClass().getSimpleName());
-					switch(subClass) {
-					case MeteringDataEM:
-					case MeteringDataWM:
-					case MeteringDataGM:
-					case MeteringDataHM:
-					case MeteringDataSPM:
-						sb.append(subClass.tableClz).append(", ").append(subClass.indexClz).append(") */");
-						break;					
-					default:
-						break;
-					}
-				case MeterEventLog:
-					sb.append(hintClass.tableClz).append(", ").append(hintClass.indexClz).append(") */");
-					break;
-				case PowerQuality:
-					sb.append(hintClass.tableClz).append(", ").append(hintClass.indexClz).append(") */");
-					break;
-				default:
-					break;
-			}
-			
-			em.setProperty(QueryHints.HINT, sb.toString());			
-			T aEntity = em.merge(entity);
-			
-		}catch(Exception e) {
-			log.error(e, e);
-		}
-		
-		return entity;
-	}
-
 	/* code s */
     public T codeAdd(T entity) {
         em.setFlushMode(FlushModeType.AUTO);
@@ -546,8 +466,13 @@ public abstract class AbstractJpaDao<T, ID extends Serializable>
         em.detach(entity);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public void merge(Object entity) {
-        em.merge(entity);
+    	try {
+            em.merge(entity);
+        } catch (Exception e) {
+            log.error(e, e);
+        }
     }
 
     public void refresh(Object entity) {
@@ -559,8 +484,28 @@ public abstract class AbstractJpaDao<T, ID extends Serializable>
             saveOrUpdate(t);
         }
     }
+    
+    @Transactional(propagation = Propagation.REQUIRED)
+	public String callProcedure(Map<String, Object> parameter) {
+    	
+    	String procedureName = parameter.get("PROCEDURE_NAME").toString();
+    	String param = parameter.get("THREAD_NUM").toString();
+    	
+    	if(procedureName == null || procedureName.isEmpty()) 
+    		return "";
+    	
+    	StoredProcedureQuery spq  = em.createStoredProcedureQuery(procedureName);
+    	spq.registerStoredProcedureParameter("THREAD_NUM", String.class, ParameterMode.IN);
+    	spq.registerStoredProcedureParameter("P_RESULT", String.class, ParameterMode.OUT);
+    	spq.setParameter("THREAD_NUM", param);
+    	spq.execute();
+    	
+    	String result = (String) spq.getOutputParameterValue("P_RESULT");
+    	    	
+    	return result;
+	}
 
-    public List<T> findByExample(T exampleInstance, String[] excludeProperty) {
+	public List<T> findByExample(T exampleInstance, String[] excludeProperty) {
         // TODO Auto-generated method stub
         return null;
     }

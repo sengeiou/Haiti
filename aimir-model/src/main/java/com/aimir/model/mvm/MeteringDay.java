@@ -103,91 +103,26 @@ public abstract class MeteringDay implements JSONString {
 	@Column(name="device_id",length=20)
 	@ColumnInfo(name="통신장비 아이디", descr="집중기아이디 혹은 모뎀아이디 수검침일경우 장비 아이디 없기 때문에 널 허용")
 	private String deviceId;
-
-    @ColumnInfo(name="지역아이디", descr="지역 테이블의 ID나  NULL")
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="location_id")
-    @ReferencedBy(name="name")
-    private Location location;
-    
-    @Column(name="location_id", nullable=true, updatable=false, insertable=false)
-    private Integer locationId;
     
 	@Column(name = "device_type")
 	@Enumerated(EnumType.STRING)
 	@ColumnInfo(name="장비타입", descr="집중기, 모뎀")
 	private DeviceType deviceType;
 	
-	@ColumnInfo(name="일 총사용량")
-	private Double total;
-	
 	@ColumnInfo(name="검침시작값")
 	private Double baseValue;
 	
-	@ColumnInfo(name="검침값", descr="00~01(h)")
-	private Double value_00;	
-	@ColumnInfo(name="검침값", descr="01~02(h)")
-	private Double value_01;
-	@ColumnInfo(name="검침값", descr="02~03(h)")
-	private Double value_02;
-	@ColumnInfo(name="검침값", descr="03~04(h)")
-	private Double value_03;
-	@ColumnInfo(name="검침값", descr="04~05(h)")
-	private Double value_04;
-	@ColumnInfo(name="검침값", descr="05~06(h)")
-	private Double value_05;
-	@ColumnInfo(name="검침값", descr="06~07(h)")
-	private Double value_06;
-	@ColumnInfo(name="검침값", descr="07~08(h)")
-	private Double value_07;
-	@ColumnInfo(name="검침값", descr="08~09(h)")
-	private Double value_08;
-	@ColumnInfo(name="검침값", descr="09~10(h)")
-	private Double value_09;
-	@ColumnInfo(name="검침값", descr="10~11(h)")
-	private Double value_10;
-	@ColumnInfo(name="검침값", descr="11~12(h)")
-	private Double value_11;
-	@ColumnInfo(name="검침값", descr="12~13(h)")
-	private Double value_12;
-	@ColumnInfo(name="검침값", descr="13~14(h)")
-	private Double value_13;
-	@ColumnInfo(name="검침값", descr="14~15(h)")
-	private Double value_14;
-	@ColumnInfo(name="검침값", descr="15~16(h)")
-	private Double value_15;
-	@ColumnInfo(name="검침값", descr="16~17(h)")
-	private Double value_16;
-	@ColumnInfo(name="검침값", descr="17~18(h)")
-	private Double value_17;
-	@ColumnInfo(name="검침값", descr="18~19(h)")
-	private Double value_18;
-	@ColumnInfo(name="검침값", descr="19~20(h)")
-	private Double value_19;
-	@ColumnInfo(name="검침값", descr="20~21(h)")
-	private Double value_20;
-	@ColumnInfo(name="검침값", descr="21~22(h)")
-	private Double value_21;
-	@ColumnInfo(name="검침값", descr="22~23(h)")
-	private Double value_22;
-	@ColumnInfo(name="검침값", descr="23~24(h)")
-	private Double value_23;
+	@ColumnInfo(name="검침값")
+	private Double value;
+
+	@ColumnInfo(name="count value, LP에서 합쳐진 개수")
+	private Integer c_value;
 	
-	@Column(name = "SEND_RESULT", length=255)
-	@ColumnInfo(name="sendResult", descr="외부 연계 시스템 에 전달하는 검침값 결과, 예 15분 ,30분 데이터가 전송됬으면 '15,30' 이렇게 설정됨 ")
-	private String sendResult;	
+	@ColumnInfo(name="채널별 정의 메소드")
+	private String ch_method;
 	
-	@Column(name="SIC", length=20)
-	@ColumnInfo(name="표준산업코드", descr="표준산업코드는 Code 테이블에서 관리되고 code의 id가 아니라 code를 입력한다. 나라마다 다른 값이다.")
-	private String sic;
-	
-	@Column(name="day_type")
-	@ColumnInfo(name="요일 유형", descr="영업일, 주말, 공휴일 등으로 구분할 수 있다. 나라마다 다르다.")
-//	private int dayType;
-	private Integer dayType;
-	
-	@Column(name="FULL_LOCATION")
-	private String fullLocation;
+	@ColumnInfo(name="미터의 마지막 char 값")
+	private Integer mdev_id_last;
 	
 	public MeteringDay(){
 		id = new DayPk();
@@ -203,16 +138,11 @@ public abstract class MeteringDay implements JSONString {
 	public DeviceType getMDevType() {
 		return id.getMDevType();
 	}
-	/*
-	public void setMDevType(DeviceType mdevType) {
-		this.id.setMDevType(mdevType);
-	}*/
+
 	public void setMDevType(String mdevType){
 		this.id.setMDevType(mdevType);
 	}
-/*	public void setMDevType(Integer mdevType) {
-		this.id.setMDevType(mdevType);
-	}*/
+
 	public String getMDevId() {
 		return id.getMDevId();
 	}
@@ -298,201 +228,16 @@ public abstract class MeteringDay implements JSONString {
 		return deviceType;
 	}
 	
-	/*
-	public void setDeviceType(DeviceType deviceType) {
-		this.deviceType = deviceType;
-	}
-	*/
 	public void setDeviceType(String deviceType) {
 		this.deviceType = DeviceType.valueOf(deviceType);
 	}
-	
-	/*public void setDeviceType(Integer deviceType) {
-		if(DeviceType.Modem.getCode().equals(deviceType)){
-			this.deviceType = DeviceType.Modem;
-		}
-		if(DeviceType.Meter.getCode().equals(deviceType)){
-			this.deviceType = DeviceType.Meter;
-		}
-		if(DeviceType.EndDevice.getCode().equals(deviceType)){
-			this.deviceType = DeviceType.EndDevice;
-		}
-	}*/
 
-	public Double getTotal() {
-		return total;
-	}
-	public void setTotal(Double total) {
-		this.total = total;
-	}
 	public Double getBaseValue() {
 		return baseValue;
 	}
 	public void setBaseValue(Double baseValue) {
 		this.baseValue = baseValue;
 	}
-	public Double getValue_00() {
-		return value_00;
-	}
-	public void setValue_00(Double value_00) {
-		this.value_00 = value_00;
-	}
-	public Double getValue_01() {
-		return value_01;
-	}
-	public void setValue_01(Double value_01) {
-		this.value_01 = value_01;
-	}
-	public Double getValue_02() {
-		return value_02;
-	}
-	public void setValue_02(Double value_02) {
-		this.value_02 = value_02;
-	}
-	public Double getValue_03() {
-		return value_03;
-	}
-	public void setValue_03(Double value_03) {
-		this.value_03 = value_03;
-	}
-	public Double getValue_04() {
-		return value_04;
-	}
-	public void setValue_04(Double value_04) {
-		this.value_04 = value_04;
-	}
-	public Double getValue_05() {
-		return value_05;
-	}
-	public void setValue_05(Double value_05) {
-		this.value_05 = value_05;
-	}
-	public Double getValue_06() {
-		return value_06;
-	}
-	public void setValue_06(Double value_06) {
-		this.value_06 = value_06;
-	}
-	public Double getValue_07() {
-		return value_07;
-	}
-	public void setValue_07(Double value_07) {
-		this.value_07 = value_07;
-	}
-	public Double getValue_08() {
-		return value_08;
-	}
-	public void setValue_08(Double value_08) {
-		this.value_08 = value_08;
-	}
-	public Double getValue_09() {
-		return value_09;
-	}
-	public void setValue_09(Double value_09) {
-		this.value_09 = value_09;
-	}
-	public Double getValue_10() {
-		return value_10;
-	}
-	public void setValue_10(Double value_10) {
-		this.value_10 = value_10;
-	}
-	public Double getValue_11() {
-		return value_11;
-	}
-	public void setValue_11(Double value_11) {
-		this.value_11 = value_11;
-	}
-	public Double getValue_12() {
-		return value_12;
-	}
-	public void setValue_12(Double value_12) {
-		this.value_12 = value_12;
-	}
-	public Double getValue_13() {
-		return value_13;
-	}
-	public void setValue_13(Double value_13) {
-		this.value_13 = value_13;
-	}
-	public Double getValue_14() {
-		return value_14;
-	}
-	public void setValue_14(Double value_14) {
-		this.value_14 = value_14;
-	}
-	public Double getValue_15() {
-		return value_15;
-	}
-	public void setValue_15(Double value_15) {
-		this.value_15 = value_15;
-	}
-	public Double getValue_16() {
-		return value_16;
-	}
-	public void setValue_16(Double value_16) {
-		this.value_16 = value_16;
-	}
-	public Double getValue_17() {
-		return value_17;
-	}
-	public void setValue_17(Double value_17) {
-		this.value_17 = value_17;
-	}
-	public Double getValue_18() {
-		return value_18;
-	}
-	public void setValue_18(Double value_18) {
-		this.value_18 = value_18;
-	}
-	public Double getValue_19() {
-		return value_19;
-	}
-	public void setValue_19(Double value_19) {
-		this.value_19 = value_19;
-	}
-	public Double getValue_20() {
-		return value_20;
-	}
-	public void setValue_20(Double value_20) {
-		this.value_20 = value_20;
-	}
-	public Double getValue_21() {
-		return value_21;
-	}
-	public void setValue_21(Double value_21) {
-		this.value_21 = value_21;
-	}
-	public Double getValue_22() {
-		return value_22;
-	}
-	public void setValue_22(Double value_22) {
-		this.value_22 = value_22;
-	}
-	public Double getValue_23() {
-		return value_23;
-	}
-	public void setValue_23(Double value_23) {
-		this.value_23 = value_23;
-	}
-
-	   
-    public String getSendResult() {
-		return sendResult;
-	}
-
-	public void setSendResult(String sendResult) {
-		this.sendResult = sendResult;
-	}
-
-	public void setLocation(Location location) {
-        this.location = location;
-    }
-	
-	@XmlTransient
-    public Location getLocation() {
-        return location;
-    }
 
 	public void setSupplier(Supplier supplier) {
 		this.supplier = supplier;
@@ -502,22 +247,6 @@ public abstract class MeteringDay implements JSONString {
 	public Supplier getSupplier() {
 		return supplier;
 	}
-
-    public String getSic() {
-        return sic;
-    }
-
-    public void setSic(String sic) {
-        this.sic = sic;
-    }
-
-    public int getDayType() {
-        return dayType;
-    }
-
-    public void setDayType(Integer dayType) {
-        this.dayType = dayType;
-    }
 
     public void setDeviceType(DeviceType deviceType) {
         this.deviceType = deviceType;
@@ -562,22 +291,38 @@ public abstract class MeteringDay implements JSONString {
     public void setEndDeviceId(Integer endDeviceId) {
         this.endDeviceId = endDeviceId;
     }
-
-    public Integer getLocationId() {
-        return locationId;
-    }
-
-    public void setLocationId(Integer locationId) {
-        this.locationId = locationId;
-    }
     
-    public String getFullLocation() {
-        return fullLocation;
-    }
+    public Double getValue() {
+		return value;
+	}
 
-    public void setFullLocation(String fullLocation) {
-        this.fullLocation = fullLocation;
-    }
+	public void setValue(Double value) {
+		this.value = value;
+	}
+
+	public Integer getC_value() {
+		return c_value;
+	}
+
+	public void setC_value(Integer c_value) {
+		this.c_value = c_value;
+	}
+
+	public String getCh_method() {
+		return ch_method;
+	}
+
+	public void setCh_method(String ch_method) {
+		this.ch_method = ch_method;
+	}
+
+	public Integer getMdev_id_last() {
+		return mdev_id_last;
+	}
+
+	public void setMdev_id_last(Integer mdev_id_last) {
+		this.mdev_id_last = mdev_id_last;
+	}
 
     @Override
     public String toJSONString() {
@@ -599,8 +344,6 @@ public abstract class MeteringDay implements JSONString {
 	        + ",'contractId':'" + ((contractId == null) ? "" : contractId) 
 	        + "','modemId':'" + ((modemId == null) ? "" : modemId)
 	        + "','endDeviceId':'" + ((endDeviceId == null) ? "" : endDeviceId)
-	        + "','location':" + ((location == null) ? "{}" : location.toJSONString())
-	        + ",'total':'" + ((total == null) ? "0" : ((df == null) ? total : df.format(total)) )
 	        + "','meteringdate':'" + meteringDate
 	        + "','baseValue':'" + ((baseValue == null) ? "0" : ((df == null) ? baseValue : df.format(baseValue)) )
 	        + "'}";

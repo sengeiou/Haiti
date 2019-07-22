@@ -1144,7 +1144,7 @@ public class VEEManagerImpl implements VEEManager{
 
         set.add(new Condition("writeDate",new Object[]{},null,Restriction.ORDERBYDESC));
 		
-		set.add(new Condition("yyyymmdd", new Object[] { conditions.get("startDate"), conditions.get("endDate") }, null, Restriction.BETWEEN));
+		set.add(new Condition("yyyymmdd", new Object[] { conditions.get("startDate"), conditions.get("endDate")}, null, Restriction.BETWEEN));
 		
 		List<VEELog> dataList = vEELogDao.getVEELogByListCondition(set, istartRow, ipageSize);
 		
@@ -1490,7 +1490,7 @@ public class VEEManagerImpl implements VEEManager{
 				}
 			}else if(CommonConstants.VEETableItem.LoadProfile.toString().equals(item)){
 				if(!"".equals(yyyymmdd)){
-					set.add(new Condition("id.yyyymmddhh",new Object[]{yyyymmdd},null,Restriction.EQ));
+					set.add(new Condition("id.yyyymmddhhmiss",new Object[]{yyyymmdd + "%"},null,Restriction.LIKE));
 				}
 			}
 			
@@ -1534,6 +1534,8 @@ public class VEEManagerImpl implements VEEManager{
 					vmdd.setHh(StringUtil.nullToBlank(((LpEM)emList.get(i)).getHour()));
 					vmdd.setYyyymmdd(StringUtil.nullToBlank(((LpEM)emList.get(i)).getYyyymmdd()));
 						
+					/*	
+					 * OPF-610 정규화 관련 처리로 인한 주석
 					if(((LpEM)emList.get(i)).getValue_00() != null) vmdd.setValue_00(df.format(((LpEM)emList.get(i)).getValue_00()));
 					else vmdd.setValue_00("");
 					if(((LpEM)emList.get(i)).getValue_01() != null) vmdd.setValue_01(df.format(((LpEM)emList.get(i)).getValue_01()));
@@ -1554,7 +1556,7 @@ public class VEEManagerImpl implements VEEManager{
 					else vmdd.setValue_08("");
 					if(((LpEM)emList.get(i)).getValue_09() != null) vmdd.setValue_09(df.format(((LpEM)emList.get(i)).getValue_09()));
 					else vmdd.setValue_09("");
-										
+								
 					if(((LpEM)emList.get(i)).getValue_10() != null) vmdd.setValue_10(df.format(((LpEM)emList.get(i)).getValue_10()));
 					else vmdd.setValue_10("");
 					if(((LpEM)emList.get(i)).getValue_11() != null) vmdd.setValue_11(df.format(((LpEM)emList.get(i)).getValue_11()));
@@ -1659,6 +1661,7 @@ public class VEEManagerImpl implements VEEManager{
 					else vmdd.setValue_58("");
 					if(((LpEM)emList.get(i)).getValue_59() != null) vmdd.setValue_59(df.format(((LpEM)emList.get(i)).getValue_59()));
 					else vmdd.setValue_59("");
+					*/
 					
 					vmdd.setRealData("Y");
 					
@@ -1686,6 +1689,8 @@ public class VEEManagerImpl implements VEEManager{
 					vmdd.setHh(StringUtil.nullToBlank(((LpGM)gmList.get(i)).getHour()));
 					vmdd.setYyyymmdd(StringUtil.nullToBlank(((LpGM)gmList.get(i)).getYyyymmdd()));
 	
+					/*
+					 * OPF-610 정규화 관련 처리로 인한 주석
 					if(((LpGM)gmList.get(i)).getValue_00() != null) vmdd.setValue_00(df.format(((LpGM)gmList.get(i)).getValue_00()));
 					else vmdd.setValue_00("");
 					if(((LpGM)gmList.get(i)).getValue_01() != null) vmdd.setValue_01(df.format(((LpGM)gmList.get(i)).getValue_01()));
@@ -1811,6 +1816,7 @@ public class VEEManagerImpl implements VEEManager{
 					else vmdd.setValue_58("");
 					if(((LpGM)gmList.get(i)).getValue_59() != null) vmdd.setValue_59(df.format(((LpGM)gmList.get(i)).getValue_59()));
 					else vmdd.setValue_59("");
+					*/
 					
 					vmdd.setRealData("Y");
 					
@@ -1838,6 +1844,8 @@ public class VEEManagerImpl implements VEEManager{
 					vmdd.setHh(StringUtil.nullToBlank(((LpWM)wmList.get(i)).getHour()));
 					vmdd.setYyyymmdd(StringUtil.nullToBlank(((LpWM)wmList.get(i)).getYyyymmdd()));
 					
+					/*
+					 * OPF-610 정규화 관련 처리로 인한 주석
 					if(((LpWM)wmList.get(i)).getValue_00() != null) vmdd.setValue_00(df.format(((LpWM)wmList.get(i)).getValue_00()));
 					else vmdd.setValue_00("");
 					if(((LpWM)wmList.get(i)).getValue_01() != null) vmdd.setValue_01(df.format(((LpWM)wmList.get(i)).getValue_01()));
@@ -1963,6 +1971,7 @@ public class VEEManagerImpl implements VEEManager{
 					else vmdd.setValue_58("");
 					if(((LpWM)wmList.get(i)).getValue_59() != null) vmdd.setValue_59(df.format(((LpWM)wmList.get(i)).getValue_59()));
 					else vmdd.setValue_59("");
+					*/
 					
 					vmdd.setRealData("Y");
 					
@@ -2043,7 +2052,10 @@ public class VEEManagerImpl implements VEEManager{
 			
 			LpPk lppk = new LpPk();
 			
+			/*
+			 * OPF-610 정규화 관련 처리로 인한 주석
 			lppk.setYyyymmddhh(yyyymmddhh);
+			*/
 			lppk.setChannel(Integer.parseInt(channel));
 			lppk.setMDevType(mdevType);
 			lppk.setMDevId(mdevId);
@@ -2109,8 +2121,11 @@ public class VEEManagerImpl implements VEEManager{
 							
 							LpEM tmp = preList.get(k);
 							
+							/*
+							 * OPF-610 정규화 관련 처리로 인한 주석
 							tmp.setYyyymmdd(yyyymmdd);
 							tmp.setYyyymmddhh(yyyymmddhh);
+							*/
 							//tmp.setSupplier(supplier);
 							lpEMDao.add(tmp);
 						}
@@ -2166,7 +2181,10 @@ public class VEEManagerImpl implements VEEManager{
 			
 			LpPk lppk = new LpPk();
 			
+			/*
+			 * OPF-610 정규화 관련 처리로 인한 주석
 			lppk.setYyyymmddhh(yyyymmddhh);
+			*/
 			lppk.setChannel(Integer.parseInt(channel));
 			lppk.setMDevType(mdevType);
 			lppk.setMDevId(mdevId);
@@ -2180,10 +2198,13 @@ public class VEEManagerImpl implements VEEManager{
 			set.add(new Condition("id.dst",new Object[]{lppk.getDst()},null,Restriction.EQ));			
 
 			currLp.setId(lppk);
+			/*
+			 * OPF-610 정규화 관련 처리로 인한 주석
 			currLp.setYyyymmdd(yyyymmdd);
 			currLp.setHour(hh);
-			currLp.setWriteDate(CalendarUtil.getCurrentDate());
+			currLp.setWriteDate(CalendarUtil.getCurrentDate());			
 			currLp.setSupplier(supplier);
+			*/
 			
 			for(int p=0; p<params.length; p++){
 				if("null".equals(StringUtil.nullToBlank(params[p]))){
@@ -2191,6 +2212,8 @@ public class VEEManagerImpl implements VEEManager{
 				}
 			}
 			
+			/*
+			 * OPF-610 정규화 관련 처리로 인한 주석
 			if(!StringUtil.nullToBlank(params[0]).equals("")) currLp.setValue_00(Double.parseDouble(StringUtil.nullToBlank(params[0])));
 			if(!StringUtil.nullToBlank(params[1]).equals("")) currLp.setValue_01(Double.parseDouble(StringUtil.nullToBlank(params[1])));
 			if(!StringUtil.nullToBlank(params[2]).equals("")) currLp.setValue_02(Double.parseDouble(StringUtil.nullToBlank(params[2])));
@@ -2256,7 +2279,7 @@ public class VEEManagerImpl implements VEEManager{
 			if(!StringUtil.nullToBlank(params[57]).equals("")) currLp.setValue_57(Double.parseDouble(StringUtil.nullToBlank(params[57])));
 			if(!StringUtil.nullToBlank(params[58]).equals("")) currLp.setValue_58(Double.parseDouble(StringUtil.nullToBlank(params[58])));
 			if(!StringUtil.nullToBlank(params[59]).equals("")) currLp.setValue_59(Double.parseDouble(StringUtil.nullToBlank(params[59])));
-
+			*/
 			
 			if(currLp != null) {
 				if(CommonConstants.MeterType.EnergyMeter.getLpClassName().equals(lpClassName)){				
@@ -2329,14 +2352,19 @@ public class VEEManagerImpl implements VEEManager{
 						
 			LpPk lppk = new LpPk();
 
+			
+			/*
+			 * OPF-610 정규화 관련 처리로 인한 주석
 			lppk.setYyyymmddhh(yyyymmddhh);
+			*/
 			lppk.setChannel(Integer.parseInt(channel));
 			lppk.setMDevType(mdevType);
 			lppk.setMDevId(mdevId);
 			lppk.setDst(Integer.parseInt(dst));
 			
 			Set<Condition> set = new HashSet<Condition>();
-			set.add(new Condition("id.yyyymmddhh",new Object[]{lppk.getYyyymmddhh()},null,Restriction.EQ));
+			
+			set.add(new Condition("id.yyyymmddhhmiss",new Object[]{lppk.getYyyymmddhhmiss().substring(0,8) + "%"},null,Restriction.LIKE));
 			set.add(new Condition("id.channel",new Object[]{lppk.getChannel()},null,Restriction.EQ));
 			set.add(new Condition("id.mdevType",new Object[]{lppk.getMDevType()},null,Restriction.EQ));
 			set.add(new Condition("id.mdevId",new Object[]{lppk.getMDevId()},null,Restriction.EQ));
@@ -2378,6 +2406,8 @@ public class VEEManagerImpl implements VEEManager{
 				// _afterValue의 값이 적용된 값으로 세팅... : 복원 버튼 클릭시 적용 버튼을 클릭하여 수정되는 구문을 같이 쓰기 위해...
 				params = new String[60];
 				
+				/*
+				 * OPF-610 정규화 관련 처리로 인한 주석
 				params[0] = StringUtil.nullToBlank(currLp.getValue_00());
 				params[1] = StringUtil.nullToBlank(currLp.getValue_01());
 				params[2] = StringUtil.nullToBlank(currLp.getValue_02());
@@ -2438,6 +2468,7 @@ public class VEEManagerImpl implements VEEManager{
 				params[57] = StringUtil.nullToBlank(currLp.getValue_57());
 				params[58] = StringUtil.nullToBlank(currLp.getValue_58());
 				params[59] = StringUtil.nullToBlank(currLp.getValue_59());
+				*/
 				
 				for(int p=0; p<params.length; p++){
 					if(Integer.parseInt((_attrName.substring(6, 8))) == p){
@@ -2450,6 +2481,8 @@ public class VEEManagerImpl implements VEEManager{
 				}
 			}
 			
+			/*
+			 * OPF-610 정규화 관련 처리로 인한 주석
 			if(!params[0].equals(currLp.getValue_00()==null?"":df.format(currLp.getValue_00()))){
 				insertVEELog_Lp(currLp, yyyymmdd, hh, table, "value_00", currLp.getValue_00()==null?"":currLp.getValue_00().toString(), params[0], userId, lppk, EditItem.IndividualEdited.toString());
 			}
@@ -2697,6 +2730,7 @@ public class VEEManagerImpl implements VEEManager{
 			if(!params[57].equals(StringUtil.nullToBlank(currLp.getValue_57()))) currLp.setValue_57(params[57].equals("")?null:Double.parseDouble(params[57]));
 			if(!params[58].equals(StringUtil.nullToBlank(currLp.getValue_58()))) currLp.setValue_58(params[58].equals("")?null:Double.parseDouble(params[58]));
 			if(!params[59].equals(StringUtil.nullToBlank(currLp.getValue_59()))) currLp.setValue_59(params[59].equals("")?null:Double.parseDouble(params[59]));
+			*/
 			
 			if(CommonConstants.MeterType.EnergyMeter.getLpClassName().equals(lpClassName)) {				
 				//System.out.println("==> curLpEMDao.updatecurLpEM~~~~~~~~~~~~");
@@ -2776,7 +2810,11 @@ public class VEEManagerImpl implements VEEManager{
 	
 	@SuppressWarnings("unused")
     public Map<String, Object> dayemUpdate(String yyyymmdd, String channel, String mdevType, String mdevId, String dst, String[] params, String hh, String userId, MeteringLP lpData, String editItem){
-		/*2. day_xx table update start*/
+		return null;
+		
+		/*OPF-610 정규화 관련하여 오류 주석처리 ,추후 해당  VEE 가젯을 사용할 경우 해당 모델에 맞게 수정 필요*/
+		/*
+		//2. day_xx table update start
 		//System.out.println("==> day_xx table update start");
 		Map<String, Object> returnData = new HashMap<String, Object>();
 		DayPk daypk = new DayPk();
@@ -2795,6 +2833,7 @@ public class VEEManagerImpl implements VEEManager{
 		setDay.add(new Condition("id.dst",new Object[]{daypk.getDst()},null,Restriction.EQ));
 		//원래의 day 데이터.
 		//System.out.println("==> getDayEMsByListCondition" );
+		
 		
 		List<DayEM> dayemList = dayEMDao.getDayEMsByListCondition(setDay);
 		DayEM curDayEM = null;
@@ -2830,7 +2869,6 @@ public class VEEManagerImpl implements VEEManager{
 		Double hap = 0.0;
 		
 		for(int m=0; m<60; m++){
-			//System.out.println(" value_" + k + " : " + StringUtil.nullToBlank(params[m]));
 			hap = hap + Double.parseDouble("".equals(StringUtil.nullToBlank(params[m]))?"0.0":params[m]);
 			k++;
 		}
@@ -2912,7 +2950,6 @@ public class VEEManagerImpl implements VEEManager{
 			originalDayEmValue = curDayEM.getValue_23()==null?"":curDayEM.getValue_23().toString();
 			dayAttrName = "value_23";
 		}else{
-			//System.out.println("[VEEManageImpl.java] ~~> 잘못된 hh 값입니다.");
 			returnData.put("returnValue", "wrong data !! => [hh]");
 			return returnData;
 		}
@@ -2969,7 +3006,6 @@ public class VEEManagerImpl implements VEEManager{
 		}else if("23".equals(hh)){
 			curDayEM.setValue_23(hap);
 		}else{
-			//System.out.println("[VEEManageImpl.java] ~~> 잘못된 hh 값입니다.");
 			returnData.put("returnValue", "wrong data !! => [hh]");
 			return returnData;
 		}
@@ -3004,15 +3040,20 @@ public class VEEManagerImpl implements VEEManager{
 		//System.out.println("==> dayEMDao.update");
 		
 		dayEMDao.saveOrUpdate(curDayEM);
-		/*2. day_xx table update end*/
+		//2. day_xx table update end*
 		
 		returnData.put("returnValue", curDayEM);
 		return returnData;
+		*/
 	}
 	
 	@SuppressWarnings("unused")
     public Map<String, Object> daygmUpdate(String yyyymmdd, String channel, String mdevType, String mdevId, String dst, String[] params, String hh, String userId, MeteringLP lpData, String editItem){
-		/*2. day_xx table update start*/
+		return null;
+		
+		/*OPF-610 정규화 관련하여 오류 주석처리 ,추후 해당  VEE 가젯을 사용할 경우 해당 모델에 맞게 수정 필요*/
+		/*
+		//2. day_xx table update start
 		//System.out.println("==> day_xx table update start");
 		Map<String, Object> returnData = new HashMap<String, Object>();
 		DayPk daypk = new DayPk();
@@ -3048,8 +3089,8 @@ public class VEEManagerImpl implements VEEManager{
 				curDayGM.setDeviceType(lpData.getDeviceType().toString());
 			
 			curDayGM.setDst(lpData.getDst());
-			curDayGM.setEnddevice(lpData.getEnddevice());
-			curDayGM.setLocation(lpData.getLocation());
+			//curDayGM.setEnddevice(lpData.getEnddevice());
+			//curDayGM.setLocation(lpData.getLocation());
 			curDayGM.setMDevId(lpData.getMDevId());
 			
 			if(lpData.getMDevType()!=null)
@@ -3239,15 +3280,20 @@ public class VEEManagerImpl implements VEEManager{
 		//System.out.println("==> dayEMDao.update");
 		
 		dayGMDao.saveOrUpdate(curDayGM);
-		/*2. day_xx table update end*/
+		//2. day_xx table update end
 		
 		returnData.put("returnValue", curDayGM);
 		return returnData;
+		*/
 	}
 	
 	@SuppressWarnings("unused")
     public Map<String, Object> daywmUpdate(String yyyymmdd, String channel, String mdevType, String mdevId, String dst, String[] params, String hh, String userId, MeteringLP lpData, String editItem){
-		/*2. day_xx table update start*/
+		return null;
+		
+		/*OPF-610 정규화 관련하여 오류 주석처리 ,추후 해당  VEE 가젯을 사용할 경우 해당 모델에 맞게 수정 필요*/
+		/*
+		//2. day_xx table update start
 		//System.out.println("==> day_xx table update start");
 		Map<String, Object> returnData = new HashMap<String, Object>();
 		DayPk daypk = new DayPk();
@@ -3283,8 +3329,8 @@ public class VEEManagerImpl implements VEEManager{
 				curDayWM.setDeviceType(lpData.getDeviceType().toString());
 			
 			curDayWM.setDst(lpData.getDst());
-			curDayWM.setEnddevice(lpData.getEnddevice());
-			curDayWM.setLocation(lpData.getLocation());
+			//curDayWM.setEnddevice(lpData.getEnddevice());
+			//curDayWM.setLocation(lpData.getLocation());
 			curDayWM.setMDevId(lpData.getMDevId());
 			
 			if(lpData.getMDevType()!=null)
@@ -3294,7 +3340,7 @@ public class VEEManagerImpl implements VEEManager{
 			curDayWM.setMeteringType(lpData.getMeteringType());
 			curDayWM.setModem(lpData.getModem());
 			curDayWM.setYyyymmdd(yyyymmdd);
-			curDayWM.setSupplier(lpData.getSupplier());
+			//curDayWM.setSupplier(lpData.getSupplier());
 		}
 		
 		int k=0;
@@ -3475,15 +3521,19 @@ public class VEEManagerImpl implements VEEManager{
 		//System.out.println("==> dayEMDao.update");
 		
 		dayWMDao.saveOrUpdate(curDayWM);
-		/*2. day_xx table update end*/
+		//2. day_xx table update end
 		
 		returnData.put("returnValue", curDayWM);
 		return returnData;
+		*/
 	}
 	
 	
 	public String monthemUpdate(String yyyymmdd, String channel, String mdevType, String mdevId, String dst, String[] params, String hh, String userId, DayEM currEM, String editItem){
+		return null;
 		
+		/*OPF-610 정규화 관련하여 오류 주석처리 ,추후 해당  VEE 가젯을 사용할 경우 해당 모델에 맞게 수정 필요*/
+		/*
 		DayPk daypk = new DayPk();
 		
 		daypk.setYyyymmdd(yyyymmdd);
@@ -3526,7 +3576,6 @@ public class VEEManagerImpl implements VEEManager{
 			
 			curMonthEM.setDst(currEM.getDst());
 			curMonthEM.setEnddevice(currEM.getEnddevice());
-			curMonthEM.setLocation(currEM.getLocation());
 			curMonthEM.setMDevId(currEM.getMDevId());
 			
 			if(currEM.getMDevType()!=null)
@@ -3753,12 +3802,16 @@ public class VEEManagerImpl implements VEEManager{
 		
 		monthEMDao.saveOrUpdate(curMonthEM);
 		
-		/*3. month_xx table update end*/
+		//3. month_xx table update end
 		return "";
+		*/
 	}
 	
 	public String monthgmUpdate(String yyyymmdd, String channel, String mdevType, String mdevId, String dst, String[] params, String hh, String userId, DayGM curGM, String editItem){
+		return null;
 		
+		/*OPF-610 정규화 관련하여 오류 주석처리 ,추후 해당  VEE 가젯을 사용할 경우 해당 모델에 맞게 수정 필요*/
+		/*
 		DayPk daypk = new DayPk();
 		
 		daypk.setYyyymmdd(yyyymmdd);
@@ -3801,7 +3854,6 @@ public class VEEManagerImpl implements VEEManager{
 			
 			curMonthGM.setDst(curGM.getDst());
 			curMonthGM.setEnddevice(curGM.getEnddevice());
-			curMonthGM.setLocation(curGM.getLocation());
 			curMonthGM.setMDevId(curGM.getMDevId());
 			
 			if(curGM.getMDevType()!=null)
@@ -4028,12 +4080,16 @@ public class VEEManagerImpl implements VEEManager{
 		
 		monthGMDao.saveOrUpdate(curMonthGM);
 		
-		/*3. month_xx table update end*/
+		//3. month_xx table update end
 		return "";
+		*/
 	}
 	
 	public String monthwmUpdate(String yyyymmdd, String channel, String mdevType, String mdevId, String dst, String[] params, String hh, String userId, DayWM curWM, String editItem){
+		return null;
 		
+		/*OPF-610 정규화 관련하여 오류 주석처리 ,추후 해당  VEE 가젯을 사용할 경우 해당 모델에 맞게 수정 필요*/
+		/*
 		DayPk daypk = new DayPk();
 		
 		daypk.setYyyymmdd(yyyymmdd);
@@ -4076,7 +4132,6 @@ public class VEEManagerImpl implements VEEManager{
 			
 			curMonthWM.setDst(curWM.getDst());
 			curMonthWM.setEnddevice(curWM.getEnddevice());
-			curMonthWM.setLocation(curWM.getLocation());
 			curMonthWM.setMDevId(curWM.getMDevId());
 			
 			if(curWM.getMDevType()!=null)
@@ -4304,8 +4359,9 @@ public class VEEManagerImpl implements VEEManager{
 		
 		monthWMDao.saveOrUpdate(curMonthWM);
 		
-		/*3. month_xx table update end*/
+		//3. month_xx table update end
 		return "";
+		*/
 	}
 	
 	public void insertVEELog_Lp(MeteringLP currLp, String yyyymmdd, String hh, String table, String attrName, String beforValue, String afterValue, String userId, LpPk lppk, String editItem){
@@ -4313,8 +4369,11 @@ public class VEEManagerImpl implements VEEManager{
 	
 			VEELog veelog = new VEELog();
 			if(currLp.getMeter() != null){
+				/*
+				 * OPF-610 정규화 관련 처리로 인한 주석
 				Meter meter = meterDao.get(currLp.getMeterId());
 				veelog.setSupplier(meter.getSupplier());
+				*/
 			}else{
 				Operator op = operatorDao.get(new Integer(Integer.parseInt(userId)));
 				veelog.setSupplier(op.getSupplier());
@@ -4325,9 +4384,13 @@ public class VEEManagerImpl implements VEEManager{
 			veelog.setMDevId(currLp.getMDevId());
 			if(currLp.getMDevType() != null) veelog.setMDevType(currLp.getMDevType().toString());
 			veelog.setDst(currLp.getDst());
+			/*
+			 * OPF-610 정규화 관련 처리로 인한 주석
 			if(currLp.getLocationId() != null) {
 				veelog.setLocation(locationDao.get(currLp.getLocationId()));
 			}
+			*/
+			
 			veelog.setYyyymmdd(yyyymmdd); 
 			veelog.setHh(hh);
 			veelog.setWriteDate(TimeUtil.getCurrentTimeMilli().substring(0, 14));
@@ -4369,9 +4432,6 @@ public class VEEManagerImpl implements VEEManager{
 		veelog.setMDevId(currDay.getMDevId());
 		if(currDay.getMDevType() != null) veelog.setMDevType(currDay.getMDevType().toString());
 		veelog.setDst(currDay.getDst());
-		if(currDay.getLocationId() != null) {
-			veelog.setLocation(locationDao.get(currDay.getLocationId()));
-		}
 		veelog.setYyyymmdd(yyyymmdd); 
 		veelog.setHh(hh);
 		veelog.setWriteDate(TimeUtil.getCurrentTimeMilli().substring(0, 14));
@@ -4411,9 +4471,6 @@ public class VEEManagerImpl implements VEEManager{
 		veelog.setMDevId(curMonth.getMDevId());
 		if(curMonth.getMDevType() != null) veelog.setMDevType(curMonth.getMDevType().toString());
 		veelog.setDst(curMonth.getDst());
-		if(curMonth.getLocationId() != null) {
-			veelog.setLocation(locationDao.get(curMonth.getLocationId()));
-		}
 		veelog.setYyyymmdd(yyyymmdd); 
 		veelog.setHh(hh);
 		veelog.setWriteDate(TimeUtil.getCurrentTimeMilli().substring(0, 14));
@@ -4575,10 +4632,10 @@ public class VEEManagerImpl implements VEEManager{
 				
 			Set<Condition> set = new HashSet<Condition>();
 			
-			if(!"".equals(yyyymmdd)) set.add(new Condition("yyyymmdd",new Object[]{yyyymmdd},null,Restriction.EQ));				
+			if(!"".equals(mdevId)) set.add(new Condition("id.mdevId",new Object[]{mdevId},null,Restriction.EQ));
+			if(!"".equals(yyyymmdd)) set.add(new Condition("id.yyyymmddhhmiss",new Object[]{yyyymmdd + "%"},null,Restriction.LIKE));				
 			if(!"".equals(channel)) set.add(new Condition("id.channel",new Object[]{Integer.parseInt(channel)},null,Restriction.EQ));
 			if(!"".equals(mdevType)) set.add(new Condition("id.mdevType",new Object[]{CommonConstants.DeviceType.valueOf(mdevType)},null,Restriction.EQ));
-			if(!"".equals(mdevId)) set.add(new Condition("id.mdevId",new Object[]{mdevId},null,Restriction.EQ));
 			if(!"".equals(dst)) set.add(new Condition("id.dst",new Object[]{Integer.parseInt(dst)},null,Restriction.EQ));
 			set.add(new Condition("hour", new Object[]{}, null, Restriction.ORDERBY));
 			
@@ -4632,6 +4689,8 @@ public class VEEManagerImpl implements VEEManager{
 							}
 							
 							if(existRealData) {
+								/*
+								 * OPF-610 정규화 관련 처리로 인한 주석
 								lpData.setValue_00(lpReal.getValue_00()==null?lpData.getValue_00():df.format(lpReal.getValue_00()));
 								lpData.setValue_01(lpReal.getValue_01()==null?lpData.getValue_01():df.format(lpReal.getValue_01()));
 								lpData.setValue_02(lpReal.getValue_02()==null?lpData.getValue_02():df.format(lpReal.getValue_02()));
@@ -4697,6 +4756,7 @@ public class VEEManagerImpl implements VEEManager{
 								lpData.setValue_57(lpReal.getValue_57()==null?lpData.getValue_57():df.format(lpReal.getValue_57()));
 								lpData.setValue_58(lpReal.getValue_58()==null?lpData.getValue_58():df.format(lpReal.getValue_58()));
 								lpData.setValue_59(lpReal.getValue_59()==null?lpData.getValue_59():df.format(lpReal.getValue_59()));
+								*/
 								
 								lpData.setRealData("Y");
 								if(emptyCount > 0){
@@ -4760,6 +4820,8 @@ public class VEEManagerImpl implements VEEManager{
 							}
 							
 							if(existRealData) {
+								/*
+								 * OPF-610 정규화 관련 처리로 인한 주석
 								lpData.setValue_00(lpReal.getValue_00()==null?"":df.format(lpReal.getValue_00()));
 								lpData.setValue_01(lpReal.getValue_01()==null?"":df.format(lpReal.getValue_01()));
 								lpData.setValue_02(lpReal.getValue_02()==null?"":df.format(lpReal.getValue_02()));
@@ -4825,6 +4887,7 @@ public class VEEManagerImpl implements VEEManager{
 								lpData.setValue_57(lpReal.getValue_57()==null?"":df.format(lpReal.getValue_57()));
 								lpData.setValue_58(lpReal.getValue_58()==null?"":df.format(lpReal.getValue_58()));
 								lpData.setValue_59(lpReal.getValue_59()==null?"":df.format(lpReal.getValue_59()));
+								*/
 								
 								lpData.setRealData("Y");
 								lpData.setIsAutoEstimation("N");
@@ -4881,6 +4944,8 @@ public class VEEManagerImpl implements VEEManager{
 							}
 							
 							if(existRealData) {
+								/*
+								 * OPF-610 정규화 관련 처리로 인한 주석
 								lpData.setValue_00(StringUtil.nullToBlank(lpReal.getValue_00()));
 								lpData.setValue_01(StringUtil.nullToBlank(lpReal.getValue_01()));
 								lpData.setValue_02(StringUtil.nullToBlank(lpReal.getValue_02()));
@@ -4946,7 +5011,7 @@ public class VEEManagerImpl implements VEEManager{
 								lpData.setValue_57(StringUtil.nullToBlank(lpReal.getValue_57()));
 								lpData.setValue_58(StringUtil.nullToBlank(lpReal.getValue_58()));
 								lpData.setValue_59(StringUtil.nullToBlank(lpReal.getValue_59()));
-								
+								*/
 								lpData.setRealData("Y");
 								lpData.setIsAutoEstimation("N");
 								
@@ -5105,10 +5170,10 @@ public class VEEManagerImpl implements VEEManager{
 				
 			Set<Condition> set = new HashSet<Condition>();
 			
-			if(!"".equals(yyyymmdd)) set.add(new Condition("yyyymmdd",new Object[]{yyyymmdd},null,Restriction.EQ));				
+			if(!"".equals(mdevId)) set.add(new Condition("id.mdevId",new Object[]{mdevId},null,Restriction.EQ));
+			if(!"".equals(yyyymmdd)) set.add(new Condition("id.yyyymmddhhmiss",new Object[]{yyyymmdd + "%"},null,Restriction.LIKE));				
 			if(!"".equals(channel)) set.add(new Condition("id.channel",new Object[]{Integer.parseInt(channel)},null,Restriction.EQ));
 			if(!"".equals(mdevType)) set.add(new Condition("id.mdevType",new Object[]{CommonConstants.DeviceType.valueOf(mdevType)},null,Restriction.EQ));
-			if(!"".equals(mdevId)) set.add(new Condition("id.mdevId",new Object[]{mdevId},null,Restriction.EQ));
 			if(!"".equals(dst)) set.add(new Condition("id.dst",new Object[]{Integer.parseInt(dst)},null,Restriction.EQ));
 			set.add(new Condition("hour", new Object[]{}, null, Restriction.ORDERBY));
 			
@@ -5167,8 +5232,11 @@ public class VEEManagerImpl implements VEEManager{
 					if(!existRealData) {
 						String table = "";
 						
-						LpPk lppk = new LpPk();								
+						LpPk lppk = new LpPk();
+						/*
+						 * OPF-610 정규화 관련 처리로 인한 주석
 						lppk.setYyyymmddhh(lpData.getYyyymmdd() + lpData.getHh());
+						*/
 						lppk.setChannel(Integer.parseInt(lpData.getChannel()));
 						lppk.setMDevType(lpData.getMdev_type());
 						lppk.setMDevId(lpData.getMdev_id());
@@ -5180,10 +5248,13 @@ public class VEEManagerImpl implements VEEManager{
 						currLp = new LpEM();
 						
 						currLp.setId(lppk);
+						/*
+						 * OPF-610 정규화 관련 처리로 인한 주석
 						currLp.setYyyymmdd(lpData.getYyyymmdd());
-						currLp.setHour(lpData.getHh());
-						currLp.setWriteDate(CalendarUtil.getCurrentDate());
+						currLp.setHour(lpData.getHh());						
 						currLp.setSupplier(supplier);
+						*/
+						currLp.setWriteDate(CalendarUtil.getCurrentDate());
 						
 						String[] params = new String[60];
 						
@@ -5210,6 +5281,8 @@ public class VEEManagerImpl implements VEEManager{
 							}
 						}
 						
+						/*
+						 * OPF-610 정규화 관련 처리로 인한 주석
 						if(!StringUtil.nullToBlank(params[0]).equals("")) currLp.setValue_00(Double.parseDouble(StringUtil.nullToBlank(params[0])));
 						if(!StringUtil.nullToBlank(params[1]).equals("")) currLp.setValue_01(Double.parseDouble(StringUtil.nullToBlank(params[1])));
 						if(!StringUtil.nullToBlank(params[2]).equals("")) currLp.setValue_02(Double.parseDouble(StringUtil.nullToBlank(params[2])));
@@ -5275,6 +5348,7 @@ public class VEEManagerImpl implements VEEManager{
 						if(!StringUtil.nullToBlank(params[57]).equals("")) currLp.setValue_57(Double.parseDouble(StringUtil.nullToBlank(params[57])));
 						if(!StringUtil.nullToBlank(params[58]).equals("")) currLp.setValue_58(Double.parseDouble(StringUtil.nullToBlank(params[58])));
 						if(!StringUtil.nullToBlank(params[59]).equals("")) currLp.setValue_59(Double.parseDouble(StringUtil.nullToBlank(params[59])));
+						*/
 						
 						lpEMDao.saveOrUpdate((LpEM)currLp);
 						
@@ -5287,15 +5361,18 @@ public class VEEManagerImpl implements VEEManager{
 					} else if(existRealData && isNullData) {
 						String table = "";
 						
-						LpPk lppk = new LpPk();								
+						LpPk lppk = new LpPk();
+						/*
+						 * OPF-610 정규화 관련 처리로 인한 주석
 						lppk.setYyyymmddhh(lpData.getYyyymmdd() + lpData.getHh());
+						*/
 						lppk.setChannel(Integer.parseInt(lpData.getChannel()));
 						lppk.setMDevType(lpData.getMdev_type());
 						lppk.setMDevId(lpData.getMdev_id());
 						lppk.setDst(Integer.parseInt(lpData.getDst()));
 						
 						Set<Condition> findSet = new HashSet<Condition>();
-						findSet.add(new Condition("id.yyyymmddhh",new Object[]{lppk.getYyyymmddhh()},null,Restriction.EQ));
+						findSet.add(new Condition("id.yyyymmddhhmiss",new Object[]{lppk.getYyyymmddhhmiss().substring(0,8)},null,Restriction.LIKE));
 						findSet.add(new Condition("id.channel",new Object[]{lppk.getChannel()},null,Restriction.EQ));
 						findSet.add(new Condition("id.mdevType",new Object[]{lppk.getMDevType()},null,Restriction.EQ));
 						findSet.add(new Condition("id.mdevId",new Object[]{lppk.getMDevId()},null,Restriction.EQ));
@@ -5331,6 +5408,8 @@ public class VEEManagerImpl implements VEEManager{
 							}
 						}
 						
+						/*
+						 * OPF-610 정규화 관련 처리로 인한 주석
 						if(!StringUtil.nullToBlank(params[0]).equals("")) currLp.setValue_00(Double.parseDouble(StringUtil.nullToBlank(params[0])));
 						if(!StringUtil.nullToBlank(params[1]).equals("")) currLp.setValue_01(Double.parseDouble(StringUtil.nullToBlank(params[1])));
 						if(!StringUtil.nullToBlank(params[2]).equals("")) currLp.setValue_02(Double.parseDouble(StringUtil.nullToBlank(params[2])));
@@ -5396,6 +5475,7 @@ public class VEEManagerImpl implements VEEManager{
 						if(!StringUtil.nullToBlank(params[57]).equals("")) currLp.setValue_57(Double.parseDouble(StringUtil.nullToBlank(params[57])));
 						if(!StringUtil.nullToBlank(params[58]).equals("")) currLp.setValue_58(Double.parseDouble(StringUtil.nullToBlank(params[58])));
 						if(!StringUtil.nullToBlank(params[59]).equals("")) currLp.setValue_59(Double.parseDouble(StringUtil.nullToBlank(params[59])));
+						*/
 						
 						lpEMDao.update((LpEM)currLp);
 						
@@ -5456,8 +5536,11 @@ public class VEEManagerImpl implements VEEManager{
 					if(!existRealData) {
 						String table = "";
 						
-						LpPk lppk = new LpPk();								
+						LpPk lppk = new LpPk();
+						/*
+						 * OPF-610 정규화 관련 처리로 인한 주석
 						lppk.setYyyymmddhh(lpData.getYyyymmdd() + lpData.getHh());
+						*/
 						lppk.setChannel(Integer.parseInt(lpData.getChannel()));
 						lppk.setMDevType(lpData.getMdev_type());
 						lppk.setMDevId(lpData.getMdev_id());
@@ -5468,10 +5551,13 @@ public class VEEManagerImpl implements VEEManager{
 						table = CommonConstants.MeterType.GasMeter.getLpClassName();				
 						currLp = new LpGM();						
 						currLp.setId(lppk);
+						/*
+						 * OPF-610 정규화 관련 처리로 인한 주석
 						currLp.setYyyymmdd(lpData.getYyyymmdd());
-						currLp.setHour(lpData.getHh());
-						currLp.setWriteDate(CalendarUtil.getCurrentDate());
+						currLp.setHour(lpData.getHh());						
 						currLp.setSupplier(supplier);
+						*/
+						currLp.setWriteDate(CalendarUtil.getCurrentDate());
 						
 						String[] params = new String[60];
 						
@@ -5498,6 +5584,8 @@ public class VEEManagerImpl implements VEEManager{
 							}
 						}
 						
+						/*
+						 * OPF-610 정규화 관련 처리로 인한 주석
 						if(!StringUtil.nullToBlank(params[0]).equals("")) currLp.setValue_00(Double.parseDouble(StringUtil.nullToBlank(params[0])));
 						if(!StringUtil.nullToBlank(params[1]).equals("")) currLp.setValue_01(Double.parseDouble(StringUtil.nullToBlank(params[1])));
 						if(!StringUtil.nullToBlank(params[2]).equals("")) currLp.setValue_02(Double.parseDouble(StringUtil.nullToBlank(params[2])));
@@ -5563,7 +5651,7 @@ public class VEEManagerImpl implements VEEManager{
 						if(!StringUtil.nullToBlank(params[57]).equals("")) currLp.setValue_57(Double.parseDouble(StringUtil.nullToBlank(params[57])));
 						if(!StringUtil.nullToBlank(params[58]).equals("")) currLp.setValue_58(Double.parseDouble(StringUtil.nullToBlank(params[58])));
 						if(!StringUtil.nullToBlank(params[59]).equals("")) currLp.setValue_59(Double.parseDouble(StringUtil.nullToBlank(params[59])));
-						
+						*/
 						lpGMDao.saveOrUpdate((LpGM)currLp);
 						
 						/* 2. day_xx update */
@@ -5575,15 +5663,18 @@ public class VEEManagerImpl implements VEEManager{
 					} else if(existRealData && isNullData) {
 						String table = "";
 						
-						LpPk lppk = new LpPk();								
+						LpPk lppk = new LpPk();
+						/*
+						 * OPF-610 정규화 관련 처리로 인한 주석
 						lppk.setYyyymmddhh(lpData.getYyyymmdd() + lpData.getHh());
+						*/
 						lppk.setChannel(Integer.parseInt(lpData.getChannel()));
 						lppk.setMDevType(lpData.getMdev_type());
 						lppk.setMDevId(lpData.getMdev_id());
 						lppk.setDst(Integer.parseInt(lpData.getDst()));
 						
 						Set<Condition> findSet = new HashSet<Condition>();
-						findSet.add(new Condition("id.yyyymmddhh",new Object[]{lppk.getYyyymmddhh()},null,Restriction.EQ));
+						findSet.add(new Condition("id.yyyymmddhhmiss",new Object[]{lppk.getYyyymmddhh()},null,Restriction.LIKE));
 						findSet.add(new Condition("id.channel",new Object[]{lppk.getChannel()},null,Restriction.EQ));
 						findSet.add(new Condition("id.mdevType",new Object[]{lppk.getMDevType()},null,Restriction.EQ));
 						findSet.add(new Condition("id.mdevId",new Object[]{lppk.getMDevId()},null,Restriction.EQ));
@@ -5619,6 +5710,8 @@ public class VEEManagerImpl implements VEEManager{
 							}
 						}
 						
+						/*
+						 * OPF-610 정규화 관련 처리로 인한 주석
 						if(!StringUtil.nullToBlank(params[0]).equals("")) currLp.setValue_00(Double.parseDouble(StringUtil.nullToBlank(params[0])));
 						if(!StringUtil.nullToBlank(params[1]).equals("")) currLp.setValue_01(Double.parseDouble(StringUtil.nullToBlank(params[1])));
 						if(!StringUtil.nullToBlank(params[2]).equals("")) currLp.setValue_02(Double.parseDouble(StringUtil.nullToBlank(params[2])));
@@ -5684,6 +5777,7 @@ public class VEEManagerImpl implements VEEManager{
 						if(!StringUtil.nullToBlank(params[57]).equals("")) currLp.setValue_57(Double.parseDouble(StringUtil.nullToBlank(params[57])));
 						if(!StringUtil.nullToBlank(params[58]).equals("")) currLp.setValue_58(Double.parseDouble(StringUtil.nullToBlank(params[58])));
 						if(!StringUtil.nullToBlank(params[59]).equals("")) currLp.setValue_59(Double.parseDouble(StringUtil.nullToBlank(params[59])));
+						*/
 						
 						lpGMDao.update((LpGM)currLp);
 						
@@ -5744,8 +5838,11 @@ public class VEEManagerImpl implements VEEManager{
 					if(!existRealData) {
 						String table = "";
 						
-						LpPk lppk = new LpPk();								
-						lppk.setYyyymmddhh(lpData.getYyyymmdd() + lpData.getHh());
+						LpPk lppk = new LpPk();
+						/*
+						 * OPF-610 정규화 관련 처리로 인한 주석
+						 * lppk.setYyyymmddhh(lpData.getYyyymmdd() + lpData.getHh());
+						 */
 						lppk.setChannel(Integer.parseInt(lpData.getChannel()));
 						lppk.setMDevType(lpData.getMdev_type());
 						lppk.setMDevId(lpData.getMdev_id());
@@ -5757,10 +5854,13 @@ public class VEEManagerImpl implements VEEManager{
 						
 						currLp = new LpWM();						
 						currLp.setId(lppk);
+						/*
+						 * OPF-610 정규화 관련 처리로 인한 주석
 						currLp.setYyyymmdd(lpData.getYyyymmdd());
-						currLp.setHour(lpData.getHh());
-						currLp.setWriteDate(CalendarUtil.getCurrentDate());
+						currLp.setHour(lpData.getHh());						
 						currLp.setSupplier(supplier);
+						*/
+						currLp.setWriteDate(CalendarUtil.getCurrentDate());
 						
 						String[] params = new String[60];
 						
@@ -5787,6 +5887,8 @@ public class VEEManagerImpl implements VEEManager{
 							}
 						}
 						
+						/*
+						 * OPF-610 정규화 관련 처리로 인한 주석
 						if(!StringUtil.nullToBlank(params[0]).equals("")) currLp.setValue_00(Double.parseDouble(StringUtil.nullToBlank(params[0])));
 						if(!StringUtil.nullToBlank(params[1]).equals("")) currLp.setValue_01(Double.parseDouble(StringUtil.nullToBlank(params[1])));
 						if(!StringUtil.nullToBlank(params[2]).equals("")) currLp.setValue_02(Double.parseDouble(StringUtil.nullToBlank(params[2])));
@@ -5852,7 +5954,7 @@ public class VEEManagerImpl implements VEEManager{
 						if(!StringUtil.nullToBlank(params[57]).equals("")) currLp.setValue_57(Double.parseDouble(StringUtil.nullToBlank(params[57])));
 						if(!StringUtil.nullToBlank(params[58]).equals("")) currLp.setValue_58(Double.parseDouble(StringUtil.nullToBlank(params[58])));
 						if(!StringUtil.nullToBlank(params[59]).equals("")) currLp.setValue_59(Double.parseDouble(StringUtil.nullToBlank(params[59])));
-						
+						*/
 						lpWMDao.saveOrUpdate((LpWM)currLp);
 						
 						/* 2. day_xx update */
@@ -5864,15 +5966,18 @@ public class VEEManagerImpl implements VEEManager{
 					} else if(existRealData && isNullData) {
 						String table = "";
 						
-						LpPk lppk = new LpPk();								
-						lppk.setYyyymmddhh(lpData.getYyyymmdd() + lpData.getHh());
+						LpPk lppk = new LpPk();
+						/*
+						 * OPF-610 정규화 관련 처리로 인한 주석
+						 * lppk.setYyyymmddhh(lpData.getYyyymmdd() + lpData.getHh());
+						 */
 						lppk.setChannel(Integer.parseInt(lpData.getChannel()));
 						lppk.setMDevType(lpData.getMdev_type());
 						lppk.setMDevId(lpData.getMdev_id());
 						lppk.setDst(Integer.parseInt(lpData.getDst()));
 						
 						Set<Condition> findSet = new HashSet<Condition>();
-						findSet.add(new Condition("id.yyyymmddhh",new Object[]{lppk.getYyyymmddhh()},null,Restriction.EQ));
+						findSet.add(new Condition("id.yyyymmddhhmiss",new Object[]{lppk.getYyyymmddhh()},null,Restriction.LIKE));
 						findSet.add(new Condition("id.channel",new Object[]{lppk.getChannel()},null,Restriction.EQ));
 						findSet.add(new Condition("id.mdevType",new Object[]{lppk.getMDevType()},null,Restriction.EQ));
 						findSet.add(new Condition("id.mdevId",new Object[]{lppk.getMDevId()},null,Restriction.EQ));
@@ -5907,7 +6012,8 @@ public class VEEManagerImpl implements VEEManager{
 								insertVEELog_Lp(currLp, yyyymmdd, lpData.getHh(), table, "Value_" + String.format("%02d", k), "", params[k], userId, lppk, EditItem.AutomaticEstimated.toString());
 							}
 						}
-						
+						/*
+						 * OPF-610 정규화 관련 처리로 인한 주석
 						if(!StringUtil.nullToBlank(params[0]).equals("")) currLp.setValue_00(Double.parseDouble(StringUtil.nullToBlank(params[0])));
 						if(!StringUtil.nullToBlank(params[1]).equals("")) currLp.setValue_01(Double.parseDouble(StringUtil.nullToBlank(params[1])));
 						if(!StringUtil.nullToBlank(params[2]).equals("")) currLp.setValue_02(Double.parseDouble(StringUtil.nullToBlank(params[2])));
@@ -5973,6 +6079,7 @@ public class VEEManagerImpl implements VEEManager{
 						if(!StringUtil.nullToBlank(params[57]).equals("")) currLp.setValue_57(Double.parseDouble(StringUtil.nullToBlank(params[57])));
 						if(!StringUtil.nullToBlank(params[58]).equals("")) currLp.setValue_58(Double.parseDouble(StringUtil.nullToBlank(params[58])));
 						if(!StringUtil.nullToBlank(params[59]).equals("")) currLp.setValue_59(Double.parseDouble(StringUtil.nullToBlank(params[59])));
+						*/
 						
 						lpWMDao.update((LpWM)currLp);
 						
@@ -6057,9 +6164,9 @@ public class VEEManagerImpl implements VEEManager{
 			Set<Condition> set = new HashSet<Condition>();
 			
 			if(!type.equals("3")) {
-				set.add(new Condition("yyyymmdd",new Object[]{preDate},null,Restriction.EQ));
+				set.add(new Condition("id.yyyymmddhhmiss",new Object[]{preDate + "%"},null,Restriction.LIKE));
 			} else {
-				set.add(new Condition("yyyymmdd",new Object[]{preDate, lastDate},null,Restriction.BETWEEN));
+				set.add(new Condition("id.yyyymmddhhmiss",new Object[]{preDate, lastDate},null,Restriction.BETWEEN));
 			}
 			
 			if(!"".equals(channel)) set.add(new Condition("id.channel",new Object[]{Integer.parseInt(channel)},null,Restriction.EQ));
@@ -6116,6 +6223,8 @@ public class VEEManagerImpl implements VEEManager{
 					for(int i=0; i<emList.size(); i++){
 						vmdd = lpList.get(i % 24);
 						
+						/*
+						 * OPF-610 정규화 관련 처리로 인한 주석
 						vmdd.setValue_00(String.valueOf(Double.parseDouble(StringUtil.nullToZero(vmdd.getValue_00())) + Double.parseDouble(StringUtil.nullToZero(((LpEM)emList.get(i)).getValue_00()))));
 						vmdd.setValue_01(String.valueOf(Double.parseDouble(StringUtil.nullToZero(vmdd.getValue_01())) + Double.parseDouble(StringUtil.nullToZero(((LpEM)emList.get(i)).getValue_01()))));
 						vmdd.setValue_02(String.valueOf(Double.parseDouble(StringUtil.nullToZero(vmdd.getValue_02())) + Double.parseDouble(StringUtil.nullToZero(((LpEM)emList.get(i)).getValue_02()))));
@@ -6181,6 +6290,7 @@ public class VEEManagerImpl implements VEEManager{
 						vmdd.setValue_57(String.valueOf(Double.parseDouble(StringUtil.nullToZero(vmdd.getValue_57())) + Double.parseDouble(StringUtil.nullToZero(((LpEM)emList.get(i)).getValue_57()))));
 						vmdd.setValue_58(String.valueOf(Double.parseDouble(StringUtil.nullToZero(vmdd.getValue_58())) + Double.parseDouble(StringUtil.nullToZero(((LpEM)emList.get(i)).getValue_58()))));
 						vmdd.setValue_59(String.valueOf(Double.parseDouble(StringUtil.nullToZero(vmdd.getValue_59())) + Double.parseDouble(StringUtil.nullToZero(((LpEM)emList.get(i)).getValue_59()))));
+						*/
 					}
 					
 					for(int i=0; i < lpList.size() ; i++) {
@@ -6258,6 +6368,8 @@ public class VEEManagerImpl implements VEEManager{
 					for(int i=0; i<emList.size(); i++){
 						vmdd = new VEEMaxDetailData();
 						
+						/*
+						 * OPF-610 정규화 관련 처리로 인한 주석
 						vmdd.setValue_00(df.format(Double.parseDouble(StringUtil.nullToZero(((LpEM)emList.get(i)).getValue_00()))));
 						vmdd.setValue_01(df.format(Double.parseDouble(StringUtil.nullToZero(((LpEM)emList.get(i)).getValue_01()))));
 						vmdd.setValue_02(df.format(Double.parseDouble(StringUtil.nullToZero(((LpEM)emList.get(i)).getValue_02()))));
@@ -6323,6 +6435,7 @@ public class VEEManagerImpl implements VEEManager{
 						vmdd.setValue_57(df.format(Double.parseDouble(StringUtil.nullToZero(((LpEM)emList.get(i)).getValue_57()))));
 						vmdd.setValue_58(df.format(Double.parseDouble(StringUtil.nullToZero(((LpEM)emList.get(i)).getValue_58()))));
 						vmdd.setValue_59(df.format(Double.parseDouble(StringUtil.nullToZero(((LpEM)emList.get(i)).getValue_59()))));
+						*/
 						
 						lpList.add(vmdd);
 					}
@@ -6347,6 +6460,8 @@ public class VEEManagerImpl implements VEEManager{
 					for(int i=0; i<gmList.size(); i++){
 						vmdd = lpList.get(i % 24);
 						
+						/*
+						 * OPF-610 정규화 관련 처리로 인한 주석
 						vmdd.setValue_00(String.valueOf(Double.parseDouble(StringUtil.nullToZero(vmdd.getValue_00())) + Double.parseDouble(StringUtil.nullToZero(((LpGM)gmList.get(i)).getValue_00()))));
 						vmdd.setValue_01(String.valueOf(Double.parseDouble(StringUtil.nullToZero(vmdd.getValue_01())) + Double.parseDouble(StringUtil.nullToZero(((LpGM)gmList.get(i)).getValue_01()))));
 						vmdd.setValue_02(String.valueOf(Double.parseDouble(StringUtil.nullToZero(vmdd.getValue_02())) + Double.parseDouble(StringUtil.nullToZero(((LpGM)gmList.get(i)).getValue_02()))));
@@ -6412,6 +6527,7 @@ public class VEEManagerImpl implements VEEManager{
 						vmdd.setValue_57(String.valueOf(Double.parseDouble(StringUtil.nullToZero(vmdd.getValue_57())) + Double.parseDouble(StringUtil.nullToZero(((LpGM)gmList.get(i)).getValue_57()))));
 						vmdd.setValue_58(String.valueOf(Double.parseDouble(StringUtil.nullToZero(vmdd.getValue_58())) + Double.parseDouble(StringUtil.nullToZero(((LpGM)gmList.get(i)).getValue_58()))));
 						vmdd.setValue_59(String.valueOf(Double.parseDouble(StringUtil.nullToZero(vmdd.getValue_59())) + Double.parseDouble(StringUtil.nullToZero(((LpGM)gmList.get(i)).getValue_59()))));
+						*/
 					}
 					
 					for(int i=0; i < lpList.size() ; i++) {
@@ -6489,6 +6605,8 @@ public class VEEManagerImpl implements VEEManager{
 					for(int i=0; i<gmList.size(); i++){
 						vmdd = new VEEMaxDetailData();
 						
+						/*
+						 * OPF-610 정규화 관련 처리로 인한 주석
 						vmdd.setValue_00(df.format(Double.parseDouble(StringUtil.nullToZero(((LpGM)gmList.get(i)).getValue_00()))));
 						vmdd.setValue_01(df.format(Double.parseDouble(StringUtil.nullToZero(((LpGM)gmList.get(i)).getValue_01()))));
 						vmdd.setValue_02(df.format(Double.parseDouble(StringUtil.nullToZero(((LpGM)gmList.get(i)).getValue_02()))));
@@ -6554,6 +6672,7 @@ public class VEEManagerImpl implements VEEManager{
 						vmdd.setValue_57(df.format(Double.parseDouble(StringUtil.nullToZero(((LpGM)gmList.get(i)).getValue_57()))));
 						vmdd.setValue_58(df.format(Double.parseDouble(StringUtil.nullToZero(((LpGM)gmList.get(i)).getValue_58()))));
 						vmdd.setValue_59(df.format(Double.parseDouble(StringUtil.nullToZero(((LpGM)gmList.get(i)).getValue_59()))));
+						*/
 						
 						lpList.add(vmdd);
 					}
@@ -6578,6 +6697,8 @@ public class VEEManagerImpl implements VEEManager{
 					for(int i=0; i<wmList.size(); i++){
 						vmdd = lpList.get(i % 24);
 						
+						/*
+						 * OPF-610 정규화 관련 처리로 인한 주석
 						vmdd.setValue_00(String.valueOf(Double.parseDouble(StringUtil.nullToZero(vmdd.getValue_00())) + Double.parseDouble(StringUtil.nullToZero(((LpWM)wmList.get(i)).getValue_00()))));
 						vmdd.setValue_01(String.valueOf(Double.parseDouble(StringUtil.nullToZero(vmdd.getValue_01())) + Double.parseDouble(StringUtil.nullToZero(((LpWM)wmList.get(i)).getValue_01()))));
 						vmdd.setValue_02(String.valueOf(Double.parseDouble(StringUtil.nullToZero(vmdd.getValue_02())) + Double.parseDouble(StringUtil.nullToZero(((LpWM)wmList.get(i)).getValue_02()))));
@@ -6643,6 +6764,7 @@ public class VEEManagerImpl implements VEEManager{
 						vmdd.setValue_57(String.valueOf(Double.parseDouble(StringUtil.nullToZero(vmdd.getValue_57())) + Double.parseDouble(StringUtil.nullToZero(((LpWM)wmList.get(i)).getValue_57()))));
 						vmdd.setValue_58(String.valueOf(Double.parseDouble(StringUtil.nullToZero(vmdd.getValue_58())) + Double.parseDouble(StringUtil.nullToZero(((LpWM)wmList.get(i)).getValue_58()))));
 						vmdd.setValue_59(String.valueOf(Double.parseDouble(StringUtil.nullToZero(vmdd.getValue_59())) + Double.parseDouble(StringUtil.nullToZero(((LpWM)wmList.get(i)).getValue_59()))));
+						*/
 					}
 					
 					for(int i=0; i < lpList.size() ; i++) {
@@ -6720,6 +6842,8 @@ public class VEEManagerImpl implements VEEManager{
 					for(int i=0; i<wmList.size(); i++){
 						vmdd = new VEEMaxDetailData();
 						
+						/*
+						 * OPF-610 정규화 관련 처리로 인한 주석
 						vmdd.setValue_00(df.format(Double.parseDouble(StringUtil.nullToZero(((LpWM)wmList.get(i)).getValue_00()))));
 						vmdd.setValue_01(df.format(Double.parseDouble(StringUtil.nullToZero(((LpWM)wmList.get(i)).getValue_01()))));
 						vmdd.setValue_02(df.format(Double.parseDouble(StringUtil.nullToZero(((LpWM)wmList.get(i)).getValue_02()))));
@@ -6785,6 +6909,7 @@ public class VEEManagerImpl implements VEEManager{
 						vmdd.setValue_57(df.format(Double.parseDouble(StringUtil.nullToZero(((LpWM)wmList.get(i)).getValue_57()))));
 						vmdd.setValue_58(df.format(Double.parseDouble(StringUtil.nullToZero(((LpWM)wmList.get(i)).getValue_58()))));
 						vmdd.setValue_59(df.format(Double.parseDouble(StringUtil.nullToZero(((LpWM)wmList.get(i)).getValue_59()))));
+						*/
 						
 						lpList.add(vmdd);
 					}

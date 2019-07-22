@@ -17,8 +17,8 @@ import org.apache.commons.lang.StringUtils;
 
 import com.aimir.constants.CommonConstants.DateType;
 import com.aimir.constants.CommonConstants.MeterType;
-import com.aimir.model.mvm.MeteringDay;
 import com.aimir.model.mvm.MeteringDayTHU;
+import com.aimir.model.view.DayEMView;
 import com.aimir.util.Condition.Restriction;
 
 public class BemsStatisticUtil {
@@ -284,9 +284,16 @@ public class BemsStatisticUtil {
 		String[] param = initStringArray(meteringList.size(), false);
 		for (int i = 0; i < meteringList.size(); i++) {
 			Object obj = meteringList.get(i);
+			/*
+			OPF-610 정규화 관련 처리로 인한 주석
 			if (obj instanceof MeteringDay) {
 				MeteringDay metering = (MeteringDay) meteringList.get(i);
 				param[i] = StringUtils.defaultIfEmpty(metering.getTotal() + "",
+						"0.0");
+			}*/
+			if (obj instanceof DayEMView) {
+				DayEMView metering = (DayEMView) meteringList.get(i);
+				param[i] = StringUtils.defaultIfEmpty(metering.getTotal_value() + "",
 						"0.0");
 			} else if (obj instanceof MeteringDayTHU) {
 				MeteringDayTHU metering = (MeteringDayTHU) meteringList.get(i);
@@ -333,8 +340,13 @@ public class BemsStatisticUtil {
 			return param;
 		}
 
+		/*
+		OPF-610 정규화 관련 처리로 인한 주석
 		if (metering instanceof MeteringDay) {
 			MeteringDay meter = (MeteringDay) metering;
+		*/
+		if (metering instanceof DayEMView) {
+			DayEMView meter = (DayEMView) metering;
 			param[0] = StringUtils.defaultIfEmpty(meter.getValue_00() + "",
 					"0.0");
 			param[1] = StringUtils.defaultIfEmpty(meter.getValue_01() + "",

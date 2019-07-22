@@ -43,7 +43,7 @@ public class MDProcessor extends Processor
         log.debug("MCU_ID[" + data.getMcuId() + "] IP_ADDR[" + data.getIpAddr() + "] PROTOCOL_TYPE[" + data.getProtocolType() + "]");
             MeterDataSaverWS mds = DataUtil.getBean(MeterDataSaverWS.class);
             //mds.save(data.getMcuId(), data.getCnt().getValue(), data.getMdData());
-            mds.save(data.getMcuId(), data.getCnt().getValue(), data.getMdData(), data.getNS(), data.getIpAddr(), data.getProtocolType());
+            mds.save(data.getMcuId(), data.getCnt().getValue(), data.getMdData(), data.getNS(), data.getIpAddr(), data.getProtocolType(), data.getMeteringType().name());
             log.debug("saveMeasurementData End....");
         // }
         // catch(Exception ex)
@@ -144,7 +144,8 @@ public class MDProcessor extends Processor
                         MDHistoryData mdhd = (MDHistoryData)mdhds[i];
                         try {
                             MeterDataSaverWS mds = DataUtil.getBean(MeterDataSaverWS.class);
-                            mds.save(mdhd.getMcuId(), mdhd.getEntryCount(), mdhd.getMdData(),mdhd.getIpAddr(),mdhd.getProtocolType());
+					mds.save(mdhd.getMcuId(), mdhd.getEntryCount(), mdhd.getMdData(), mdhd.getIpAddr(),
+							mdhd.getProtocolType(), mdhd.getMeteringType());
                         }
                         catch (Exception e)
                         {
@@ -173,7 +174,7 @@ public class MDProcessor extends Processor
             }
         }
         catch (Exception e) {
-            log.warn(e.getMessage() + " try next");
+            log.error(e.getMessage() + " try next");
         }
     }
 }

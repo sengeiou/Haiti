@@ -32,6 +32,10 @@ import com.aimir.dao.system.CodeDao;
 import com.aimir.dao.system.LocationDao;
 import com.aimir.dao.system.SupplierDao;
 import com.aimir.dao.system.ZoneDao;
+import com.aimir.dao.view.DayEMViewDao;
+import com.aimir.dao.view.DayGMViewDao;
+import com.aimir.dao.view.DayHMViewDao;
+import com.aimir.dao.view.DayWMViewDao;
 import com.aimir.model.device.EndDevice;
 import com.aimir.model.device.EndDeviceVO;
 import com.aimir.model.device.Meter;
@@ -44,6 +48,10 @@ import com.aimir.model.system.DecimalPattern;
 import com.aimir.model.system.Location;
 import com.aimir.model.system.Supplier;
 import com.aimir.model.system.Zone;
+import com.aimir.model.view.DayEMView;
+import com.aimir.model.view.DayGMView;
+import com.aimir.model.view.DayHMView;
+import com.aimir.model.view.DayWMView;
 import com.aimir.service.device.EndDeviceManager;
 import com.aimir.util.CalendarUtil;
 import com.aimir.util.Condition;
@@ -103,6 +111,19 @@ public class EndDeviceManagerImpl implements EndDeviceManager {
 	
 	@Autowired
 	SupplierDao supplierDao;
+	
+	@Autowired
+	DayEMViewDao dayEMViewDao;
+	
+	@Autowired
+	DayWMViewDao dayWMViewDao;
+	
+	@Autowired
+	DayHMViewDao dayHMViewDao;
+	
+	@Autowired
+	DayGMViewDao dayGMViewDao;
+	
 
 	public List<EndDeviceVO> getEndDevices() {
 
@@ -190,6 +211,16 @@ public class EndDeviceManagerImpl implements EndDeviceManager {
 					Restriction.EQ));
 			conditionList.add(new Condition("enddevice.id",
 					new Object[] { endDevice.getId() }, null, Restriction.EQ));
+			
+			List<DayEMView> dayEMViewList = dayEMViewDao
+					.getDayEMsByListCondition(conditionList);
+			
+			if (dayEMViewList.size() > 0)
+				endDeviceVO.setDayEM(dayEMViewList.get(0).getTotal() + "");
+			
+				
+			//OPF-610 정규화 관련 처리로 인한 주석처리, View 하위에 대체 
+			/*
 			List<DayEM> dayEMList = dayEMDao
 					.getDayEMsByListCondition(conditionList);
 			List<DayGM> dayGMList = dayGMDao
@@ -207,6 +238,28 @@ public class EndDeviceManagerImpl implements EndDeviceManager {
 				endDeviceVO.setDayWM(dayWMList.get(0).getTotal() + "");
 			if (dayHMList.size() > 0)
 				endDeviceVO.setDayHM(dayHMList.get(0).getTotal() + "");
+			*/
+			
+			List<DayEMView> dayEMList = dayEMViewDao
+					.getDayEMsByListCondition(conditionList);
+			List<DayGMView> dayGMList = dayGMViewDao
+					.getDayGMsByListCondition(conditionList);
+			List<DayWMView> dayWMList = dayWMViewDao
+					.getDayWMsByListCondition(conditionList);
+			List<DayHMView> dayHMList = dayHMViewDao
+					.getDayHMsByListCondition(conditionList);
+
+			if (dayEMList.size() > 0)
+				endDeviceVO.setDayEM(dayEMList.get(0).getTotal() + "");
+			if (dayGMList.size() > 0)
+				endDeviceVO.setDayGM(dayGMList.get(0).getTotal() + "");
+			if (dayWMList.size() > 0)
+				endDeviceVO.setDayWM(dayWMList.get(0).getTotal() + "");
+			if (dayHMList.size() > 0)
+				endDeviceVO.setDayHM(dayHMList.get(0).getTotal() + "");
+			
+			
+			
 			result.add(endDeviceVO);
 		}
 
@@ -319,6 +372,18 @@ public class EndDeviceManagerImpl implements EndDeviceManager {
 					conditionList.add(new Condition("id.channel",
 							new Object[] { DefaultChannel.Usage.getCode() },
 							null, Restriction.EQ));
+					
+					List<DayEMView> dayEmViewList = dayEMViewDao
+							.getDayEMsByListCondition(conditionList);
+					
+					if (dayEmViewList.size() > 0) {
+						endDeviceVO.setDayEM(new BigDecimal(dayEmViewList
+								.get(0).getTotal())
+								+ "");
+					}
+					
+					//OPF-610 정규화 관련 처리로 인한 주석처리, View 하위에 대체
+					/*
 					List<DayEM> dayEMList = dayEMDao
 							.getDayEMsByListCondition(conditionList);
 					List<DayGM> dayGMList = dayGMDao
@@ -345,6 +410,24 @@ public class EndDeviceManagerImpl implements EndDeviceManager {
 						endDeviceVO.setDayHM(dayHMList.get(0)
 								.getTotal()
 								+ "");
+					*/
+					
+					List<DayEMView> dayEMList = dayEMViewDao.getDayEMsByListCondition(conditionList);
+					List<DayGMView> dayGMList = dayGMViewDao.getDayGMsByListCondition(conditionList);
+					List<DayWMView> dayWMList = dayWMViewDao.getDayWMsByListCondition(conditionList);
+					List<DayHMView> dayHMList = dayHMViewDao.getDayHMsByListCondition(conditionList);
+
+					if (dayEMList.size() > 0) {
+						endDeviceVO.setDayEM(new BigDecimal(dayEMList.get(0).getTotal())
+								+ "");
+					}
+					if (dayGMList.size() > 0)
+						endDeviceVO.setDayGM(dayGMList.get(0).getTotal()+ "");
+					if (dayWMList.size() > 0)
+						endDeviceVO.setDayWM(dayWMList.get(0).getTotal()+ "");
+					if (dayHMList.size() > 0)
+						endDeviceVO.setDayHM(dayHMList.get(0).getTotal()+ "");
+					
 					result.add(endDeviceVO);
 				}
 
@@ -398,6 +481,8 @@ public class EndDeviceManagerImpl implements EndDeviceManager {
 												.getCode() }, null,
 										Restriction.EQ));
 
+						//OPF-610 정규화 관련 처리로 인한 주석처리, View 하위에 대체
+						/*
 						List<DayEM> dayEMList = dayEMDao
 								.getDayEMsByListCondition(conditionList);
 						List<DayGM> dayGMList = dayGMDao
@@ -424,6 +509,23 @@ public class EndDeviceManagerImpl implements EndDeviceManager {
 							endDeviceVO.setDayHM(dayHMList.get(0)
 									.getTotal()
 									+ "");
+						*/
+						
+						List<DayEMView> dayEMList = dayEMViewDao.getDayEMsByListCondition(conditionList);
+						List<DayGMView> dayGMList = dayGMViewDao.getDayGMsByListCondition(conditionList);
+						List<DayWMView> dayWMList = dayWMViewDao.getDayWMsByListCondition(conditionList);
+						List<DayHMView> dayHMList = dayHMViewDao.getDayHMsByListCondition(conditionList);
+
+						if (dayEMList.size() > 0) {
+							endDeviceVO.setDayEM(new BigDecimal(dayEMList.get(0).getTotal()) + "");
+						}
+						if (dayGMList.size() > 0)
+							endDeviceVO.setDayGM(dayGMList.get(0).getTotal() + "");
+						if (dayWMList.size() > 0)
+							endDeviceVO.setDayWM(dayWMList.get(0).getTotal() + "");
+						if (dayHMList.size() > 0)
+							endDeviceVO.setDayHM(dayHMList.get(0).getTotal() + "");
+						
 						result.add(endDeviceVO);
 					}
 				}
@@ -469,6 +571,9 @@ public class EndDeviceManagerImpl implements EndDeviceManager {
 				conditionList.add(new Condition("id.channel",
 						new Object[] { DefaultChannel.Usage.getCode() }, null,
 						Restriction.EQ));
+				
+				//OPF-610 정규화 관련 처리로 인한 주석처리, View 하위에 대체
+				/*
 				List<DayEM> dayEMList = dayEMDao
 						.getDayEMsByListCondition(conditionList);
 				List<DayGM> dayGMList = dayGMDao
@@ -492,6 +597,23 @@ public class EndDeviceManagerImpl implements EndDeviceManager {
 				if (dayHMList.size() > 0)
 					endDeviceVO.setDayHM(dayHMList.get(0).getTotal()
 							+ "");
+				*/
+				
+				List<DayEMView> dayEMList = dayEMViewDao.getDayEMsByListCondition(conditionList);
+				List<DayGMView> dayGMList = dayGMViewDao.getDayGMsByListCondition(conditionList);
+				List<DayWMView> dayWMList = dayWMViewDao.getDayWMsByListCondition(conditionList);
+				List<DayHMView> dayHMList = dayHMViewDao.getDayHMsByListCondition(conditionList);
+
+				if (dayEMList.size() > 0) {
+					endDeviceVO.setDayEM(new BigDecimal(dayEMList.get(0).getTotal()) + "");
+				}
+				if (dayGMList.size() > 0)
+					endDeviceVO.setDayGM(dayGMList.get(0).getTotal() + "");
+				if (dayWMList.size() > 0)
+					endDeviceVO.setDayWM(dayWMList.get(0).getTotal() + "");
+				if (dayHMList.size() > 0)
+					endDeviceVO.setDayHM(dayHMList.get(0).getTotal() + "");
+				
 				result.add(endDeviceVO);
 			}
 		} catch (Exception e) {
@@ -993,6 +1115,9 @@ public class EndDeviceManagerImpl implements EndDeviceManager {
 			conditionList.add(
 				new Condition("id.channel", new Object[] { DefaultChannel.Usage.getCode() }, null, Restriction.EQ)
 			);
+			
+			//OPF-610 정규화 관련 처리로 인한 주석처리, View 하위에 대체
+			/*
 			List<DayEM> dayEMList = dayEMDao.getDayEMsByListCondition(conditionList);
 			List<DayGM> dayGMList = dayGMDao.getDayGMsByListCondition(conditionList);
 			List<DayWM> dayWMList = dayWMDao.getDayWMsByListCondition(conditionList);
@@ -1010,6 +1135,26 @@ public class EndDeviceManagerImpl implements EndDeviceManager {
 			if (dayHMList.size() > 0) {
 				endDeviceVO.setDayHM(dayHMList.get(0).getTotal() + "");
 			}
+			*/
+			
+			List<DayEMView> dayEMList = dayEMViewDao.getDayEMsByListCondition(conditionList);
+			List<DayGMView> dayGMList = dayGMViewDao.getDayGMsByListCondition(conditionList);
+			List<DayWMView> dayWMList = dayWMViewDao.getDayWMsByListCondition(conditionList);
+			List<DayHMView> dayHMList = dayHMViewDao.getDayHMsByListCondition(conditionList);
+
+			if (dayEMList.size() > 0) {
+				endDeviceVO.setDayEM(new BigDecimal(dayEMList.get(0).getTotal()) + "");
+			}
+			if (dayGMList.size() > 0) {
+				endDeviceVO.setDayGM(dayGMList.get(0).getTotal() + "");
+			}
+			if (dayWMList.size() > 0){
+				endDeviceVO.setDayWM(dayWMList.get(0).getTotal() + "");
+			}
+			if (dayHMList.size() > 0) {
+				endDeviceVO.setDayHM(dayHMList.get(0).getTotal() + "");
+			}
+			
 			result.add(endDeviceVO);
 		}
 		return result;

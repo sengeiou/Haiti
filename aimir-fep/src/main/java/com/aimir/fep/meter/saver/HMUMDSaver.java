@@ -79,7 +79,7 @@ public class HMUMDSaver extends AbstractMDSaver {
                 condition.add(new Condition("id.mdevType", new Object[]{parser.getMDevType()}, null, Restriction.EQ));
                 condition.add(new Condition("id.mdevId", new Object[]{parser.getMDevId()}, null, Restriction.EQ));
                 // condition.add(new Condition("id.dst", new Object[]{dst}, null, Restriction.EQ));
-                condition.add(new Condition("yyyymmdd", new Object[]{lpdate}, null, Restriction.EQ));
+                condition.add(new Condition("id.yyyymmddhhmiss", new Object[]{lpdate + "%"}, null, Restriction.LIKE));
                 condition.add(new Condition("id.channel", new Object[]{1}, null, Restriction.EQ));
                 
                 lplist = lpEMDao.getLpEMsByListCondition(condition); 

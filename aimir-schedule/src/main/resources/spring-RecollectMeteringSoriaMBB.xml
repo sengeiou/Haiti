@@ -37,7 +37,7 @@
     </bean>
     
     <!-- Annotation Support Hibernate Session Factory -->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="hibernateProperties">
             <props>
@@ -50,7 +50,8 @@
                 <!--<prop key="hibernate.hbm2ddl.auto">create-drop</prop>-->
                 <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
                 <!--<prop key="hibernate.hbm2ddl.auto">validate</prop>-->
-                <prop key="hibernate.hbm2ddl.auto">false</prop>
+                <prop key="hibernate.hbm2ddl.auto">none</prop>
+                <prop key="hibernate.hbm2ddl.schema_filter_provider">com.aimir.schedule.tool.HiberateSchemaFilterProvider</prop>
                 <prop key="hibernate.connection.autocommit">false</prop>
                 <!-- 0:none, 1:read_uncommitted, 2:read_committed, 4:repeatable_read, 8:serializable -->
                 <prop key="hibernate.connection.isolation">1</prop>
@@ -69,7 +70,7 @@
     </bean>
 
     <!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     

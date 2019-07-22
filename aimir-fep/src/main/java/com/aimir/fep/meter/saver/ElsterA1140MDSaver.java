@@ -320,7 +320,7 @@ public class ElsterA1140MDSaver extends AbstractMDSaver {
 		double basePulse = 0;
 		
     	try {
-    	    condition.add(new Condition("id.yyyymmddhh",new Object[] { yyyymmddhh }, null, Restriction.EQ));
+    	    condition.add(new Condition("id.yyyymmddhhmiss",new Object[] { yyyymmddhh + "%" }, null, Restriction.LIKE));
     	    condition.add(new Condition("id.channel",new Object[] { ElectricityChannel.Usage.getChannel() },
                     null, Restriction.EQ));
     	    condition.add(new Condition("id.dst", new Object[] { DateTimeUtil.inDST(null, dateTime) }, null,Restriction.EQ));
@@ -332,8 +332,10 @@ public class ElsterA1140MDSaver extends AbstractMDSaver {
 			
 			try {
 				if (lpEM != null && !lpEM.isEmpty()) {	
+					/* [[ OPF-610 DB(LP) normalization 
 					basePulse = lpEM.get(0).getValue()+retValue(mm,lpEM.get(0).getValue_00(),lpEM.get(0).getValue_15(),lpEM.get(0).getValue_30(),lpEM.get(0).getValue_45());
-					
+					]] */ 
+					basePulse = lpEM.get(0).getValue();
 				}else{
 					LinkedHashSet<Condition> condition2 = new LinkedHashSet<Condition>();
 					
@@ -343,15 +345,18 @@ public class ElsterA1140MDSaver extends AbstractMDSaver {
                     
                     cal.add(cal.HOUR, -1);
 
-                    condition2.add(new Condition("id.yyyymmddhh",new Object[] { dateFormatter.format(cal.getTime()) }, null, Restriction.EQ));
+                    condition2.add(new Condition("id.yyyymmddhhmiss",new Object[] { dateFormatter.format(cal.getTime()) + "%" }, null, Restriction.LIKE));
                     condition2.add(new Condition("id.channel",  new Object[] { ElectricityChannel.Usage.getChannel() }, null, Restriction.EQ));
                     condition2.add(new Condition("id.dst",  new Object[] { DateTimeUtil.inDST(null, dateTime) }, null, Restriction.EQ));
 					// condition2.add(new Condition("id.mdevType",	new Object[] { parser.getMDevType() }, null,Restriction.EQ));
 					condition2.add(new Condition("id.mdevId",new Object[] { parser.getMDevId() }, null,	Restriction.EQ));
 					
 					List<LpEM> subLpEM = lpEMDao.findByConditions(condition2);
-					if (subLpEM != null && !subLpEM.isEmpty()) {	
+					if (subLpEM != null && !subLpEM.isEmpty()) {
+						/* [[ OPF-610 DB(LP) normalization
 							basePulse = subLpEM.get(0).getValue()+retValue(mm,subLpEM.get(0).getValue_00(),subLpEM.get(0).getValue_15(),subLpEM.get(0).getValue_30(),subLpEM.get(0).getValue_45());
+						*/ 
+						basePulse = subLpEM.get(0).getValue();
 					}
 				}
 			}catch(Exception e){

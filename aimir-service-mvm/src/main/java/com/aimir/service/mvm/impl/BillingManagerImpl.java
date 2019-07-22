@@ -36,6 +36,14 @@ import com.aimir.dao.system.SupplierDao;
 import com.aimir.dao.system.TariffEMDao;
 import com.aimir.dao.system.TariffGMDao;
 import com.aimir.dao.system.TariffWMDao;
+import com.aimir.dao.view.DayEMViewDao;
+import com.aimir.dao.view.DayGMViewDao;
+import com.aimir.dao.view.DayHMViewDao;
+import com.aimir.dao.view.DayWMViewDao;
+import com.aimir.dao.view.MonthEMViewDao;
+import com.aimir.dao.view.MonthGMViewDao;
+import com.aimir.dao.view.MonthHMViewDao;
+import com.aimir.dao.view.MonthWMViewDao;
 import com.aimir.model.mvm.DayEM;
 import com.aimir.model.mvm.DayGM;
 import com.aimir.model.mvm.DayHM;
@@ -47,6 +55,14 @@ import com.aimir.model.mvm.MonthWM;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.Location;
 import com.aimir.model.system.Supplier;
+import com.aimir.model.view.DayEMView;
+import com.aimir.model.view.DayGMView;
+import com.aimir.model.view.DayHMView;
+import com.aimir.model.view.DayWMView;
+import com.aimir.model.view.MonthEMView;
+import com.aimir.model.view.MonthGMView;
+import com.aimir.model.view.MonthHMView;
+import com.aimir.model.view.MonthWMView;
 import com.aimir.service.mvm.BillingManager;
 import com.aimir.util.CommonUtils2;
 import com.aimir.util.DecimalUtil;
@@ -83,6 +99,19 @@ public class BillingManagerImpl implements BillingManager {
 	@Autowired BillingMonthEMDao billingMonthEMDao;
     @Autowired RealTimeBillingEMDao realtimebillingemDao;
 	
+	@Autowired DayEMViewDao dayEmViewDao;
+	@Autowired DayGMViewDao dayGmViewDao;
+	@Autowired DayHMViewDao dayHmViewDao;
+	@Autowired DayWMViewDao dayWmViewDao;
+	
+	@Autowired MonthEMViewDao monthEmViewDao;
+	@Autowired MonthGMViewDao monthGmViewDao;
+	@Autowired MonthHMViewDao monthHmViewDao;
+	@Autowired MonthWMViewDao monthWmViewDao;
+	
+	
+	@Autowired MonthEMViewDao monthEMViewDao;
+    
 	@SuppressWarnings("unused")
 	public List<Map<String, String>> getElecBillingChartData(	Map<String, String> conditionMap)
 	{
@@ -576,7 +605,6 @@ public class BillingManagerImpl implements BillingManager {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<Map<String, String>> getCustomerBillingGridData(Map<String, Object> conditionMap) {
-
 		String searchDateType = (String)conditionMap.get("searchDateType");
 		String serviceType = (String)conditionMap.get("serviceType");
 		conditionMap.put("locationCondition", getLeafLocationIds((String)conditionMap.get("locationIds"), (String)conditionMap.get("supplierId"))); 
@@ -584,26 +612,27 @@ public class BillingManagerImpl implements BillingManager {
 		String rowPerPage = (String)conditionMap.get("pageSize");
 		List<Map<String, String>> returnList = new ArrayList<Map<String, String>>();
 		
-		if("EM".equals(serviceType)) { 
+		//OPF-610 정규화 관련 - day?mDao, month?MDao을 모두 ViewDao로 변경
+		if("EM".equals(serviceType)) {
 			if("1".equals(searchDateType) || "3".equals(searchDateType))   // 일별, 주별			
-				returnList = makeCustomerGridData(dayEmDao.getDayCustomerBillingGridData(conditionMap), conditionMap);						
+				returnList = makeCustomerGridData(dayEmViewDao.getDayCustomerBillingGridData(conditionMap), conditionMap);						
 			else if("4".equals(searchDateType) || "7".equals(searchDateType))  // 월별, 분기별		
-				returnList = makeCustomerGridData(monthEmDao.getMonthCustomerBillingGridData(conditionMap), conditionMap);			
+				returnList = makeCustomerGridData(monthEMViewDao.getMonthCustomerBillingGridData(conditionMap), conditionMap);			
 		} else if("GM".equals(serviceType)) {
 			if("1".equals(searchDateType) || "3".equals(searchDateType))   // 일별, 주별			
-				returnList = makeCustomerGridData(dayGmDao.getDayCustomerBillingGridData(conditionMap), conditionMap);						
+				returnList = makeCustomerGridData(dayGmViewDao.getDayCustomerBillingGridData(conditionMap), conditionMap);						
 			else if("4".equals(searchDateType) || "7".equals(searchDateType))  // 월별, 분기별		
-				returnList = makeCustomerGridData(monthGmDao.getMonthCustomerBillingGridData(conditionMap), conditionMap);			
+				returnList = makeCustomerGridData(monthGmViewDao.getMonthCustomerBillingGridData(conditionMap), conditionMap);			
 		} else if("HM".equals(serviceType)) {
 			if("1".equals(searchDateType) || "3".equals(searchDateType))   // 일별, 주별			
-				returnList = makeCustomerGridData(dayHmDao.getDayCustomerBillingGridData(conditionMap), conditionMap);						
+				returnList = makeCustomerGridData(dayHmViewDao.getDayCustomerBillingGridData(conditionMap), conditionMap);						
 			else if("4".equals(searchDateType) || "7".equals(searchDateType))  // 월별, 분기별		
-				returnList = makeCustomerGridData(monthHmDao.getMonthCustomerBillingGridData(conditionMap), conditionMap);			
+				returnList = makeCustomerGridData(monthHmViewDao.getMonthCustomerBillingGridData(conditionMap), conditionMap);			
 		} else if("WM".equals(serviceType)) {
 			if("1".equals(searchDateType) || "3".equals(searchDateType))   // 일별, 주별			
-				returnList = makeCustomerGridData(dayWmDao.getDayCustomerBillingGridData(conditionMap), conditionMap);						
+				returnList = makeCustomerGridData(dayWmViewDao.getDayCustomerBillingGridData(conditionMap), conditionMap);						
 			else if("4".equals(searchDateType) || "7".equals(searchDateType))  // 월별, 분기별		
-				returnList = makeCustomerGridData(monthWmDao.getMonthCustomerBillingGridData(conditionMap), conditionMap);
+				returnList = makeCustomerGridData(monthWmViewDao.getMonthCustomerBillingGridData(conditionMap), conditionMap);
 		}
 		
 		DecimalFormat dfMd = DecimalUtil.getDecimalFormat(supplierDao.get(Integer.parseInt(conditionMap.get("supplierId").toString())).getMd());
@@ -694,8 +723,11 @@ public class BillingManagerImpl implements BillingManager {
 		MonthHM monthHM = null;
 		MonthWM monthWM = null;
 
-		 conditionMap.put("dateType", conditionMap.get("searchDateType"));
-		 
+		conditionMap.put("dateType", conditionMap.get("searchDateType"));
+		
+		
+		//OPF-610 정규화 관련 처리로 인한 주석처리, View 하위에 대체
+		/*
 		for(Object object : objects) {
 			
 			rtnMap = new HashMap<String, String>();
@@ -831,7 +863,147 @@ public class BillingManagerImpl implements BillingManager {
 //				if(usageCharge != null) sUsageCharge = usageCharge.toString();				
 //				rtnMap.put("usageCharge", sUsageCharge);									
 			}				
+		
+			rtnList.add(rtnMap);
+		}
+		*/
+		
+		for(Object object : objects) {
 			
+			rtnMap = new HashMap<String, String>();
+			
+			if(object instanceof DayEMView) { 
+
+				DayEMView dayEMView = (DayEMView)object;
+
+				rtnMap.put("yyyymmdd", dayEMView.getYyyymmdd());
+				rtnMap.put("customerName", dayEMView.getContract().getCustomer().getName());
+				rtnMap.put("contractNo", dayEMView.getContract().getContractNumber());
+				rtnMap.put("meterName", (dayEMView.getMeter() == null) ? null : dayEMView.getMeter().getMdsId());
+				rtnMap.put("total", StringUtil.nullToBlank(dayEMView.getTotal()) + "");
+				rtnMap.put("usage", (dayEMView.getTotal() + Double.valueOf(StringUtil.nullToZero(dayEMView.getBaseValue()))) + "");
+
+				rtnMap.put("max", getMaxValue(dayEMView));
+				
+//				conditionMap.put("contract", contractDao.get(dayEM.getContract().getId()));
+//				usageCharge = tariffEMDao.getUsageChargeByContract(conditionMap);
+//				String sUsageCharge = "0";
+//				if(usageCharge != null) sUsageCharge = usageCharge.toString();
+//				rtnMap.put("usageCharge", sUsageCharge);
+				
+			} else if(object instanceof DayGMView) { 
+
+				DayGMView dayGMView = (DayGMView)object;
+				
+				rtnMap.put("yyyymmdd", dayGMView.getYyyymmdd());
+				rtnMap.put("customerName", dayGMView.getContract().getCustomer().getName());
+				rtnMap.put("contractNo", dayGMView.getContract().getContractNumber());
+				rtnMap.put("meterName", (dayGMView.getMeter() == null) ? null : dayGMView.getMeter().getMdsId());
+				rtnMap.put("total", StringUtil.nullToBlank(dayGMView.getTotal()) + "");
+				rtnMap.put("usage", (dayGMView.getTotal() + Double.valueOf(StringUtil.nullToZero(dayGMView.getBaseValue()))) + "");
+				rtnMap.put("max", getMaxValue(dayGMView));		
+				
+//				conditionMap.put("contract", contractDao.get(dayGM.getContract().getId()));
+//				usageCharge = tariffGMDao.getUsageChargeByContract(conditionMap);
+//				String sUsageCharge = "0";
+//				if(usageCharge != null) sUsageCharge = usageCharge.toString();				
+//				rtnMap.put("usageCharge", sUsageCharge);	
+				
+			} else if(object instanceof DayHMView) { 
+
+				DayHMView dayHMView = (DayHMView)object;
+				
+				rtnMap.put("yyyymmdd", dayHMView.getYyyymmdd());
+				rtnMap.put("customerName", dayHMView.getContract().getCustomer().getName());
+				rtnMap.put("contractNo", dayHMView.getContract().getContractNumber());
+				rtnMap.put("meterName", (dayHMView.getMeter() == null) ? null : dayHMView.getMeter().getMdsId());
+				rtnMap.put("total", StringUtil.nullToBlank(dayHMView.getTotal()) + "");
+				rtnMap.put("usage", (dayHMView.getTotal() + Double.valueOf(StringUtil.nullToZero(dayHMView.getBaseValue()))) + "");
+				rtnMap.put("max", getMaxValue(dayHMView));
+				
+			} else if(object instanceof DayWMView) { 
+
+				DayWMView dayWMView = (DayWMView)object;
+				
+				rtnMap.put("yyyymmdd", dayWMView.getYyyymmdd());
+				rtnMap.put("customerName", dayWMView.getContract().getCustomer().getName());
+				rtnMap.put("contractNo", dayWMView.getContract().getContractNumber());
+				rtnMap.put("meterName", (dayWMView.getMeter() == null) ? null : dayWMView.getMeter().getMdsId());
+				rtnMap.put("total", StringUtil.nullToBlank(dayWMView.getTotal()) + "");
+				rtnMap.put("usage", (dayWMView.getTotal() + Double.valueOf(StringUtil.nullToZero(dayWMView.getBaseValue()))) + "");
+				rtnMap.put("max", getMaxValue(dayWMView));
+				
+//				conditionMap.put("contract", contractDao.get(dayWM.getContract().getId()));
+//				usageCharge = tariffWMDao.getUsageChargeByContract(conditionMap);
+//				rtnMap.put("usageCharge", usageCharge.toString());
+				
+			} else if(object instanceof MonthEMView) {
+				
+				MonthEMView monthEMView = (MonthEMView)object;
+
+				rtnMap.put("yyyymmdd", monthEMView.getYyyymm());
+				rtnMap.put("customerName", monthEM.getContract().getCustomer().getName());
+				rtnMap.put("contractNo", monthEMView.getContract().getContractNumber());
+				rtnMap.put("meterName", (monthEMView.getMeter() == null) ? null : monthEMView.getMeter().getMdsId());			
+				rtnMap.put("total", StringUtil.nullToBlank(monthEMView.getTotal()) + "");
+				rtnMap.put("usage", (monthEMView.getTotal() + Double.valueOf(StringUtil.nullToZero(monthEMView.getBaseValue()))) + "");
+				rtnMap.put("max", getMaxValue(monthEMView));			
+				
+//				conditionMap.put("contract", contractDao.get(monthEM.getContract().getId()));
+//				usageCharge = tariffEMDao.getUsageChargeByContract(conditionMap);
+//				String sUsageCharge = "0";
+//				if(usageCharge != null) sUsageCharge = usageCharge.toString();				
+//				rtnMap.put("usageCharge", sUsageCharge);	
+				
+			} else if(object instanceof MonthGMView) {
+				
+				MonthGMView monthGMView = (MonthGMView)object;
+				
+				rtnMap.put("yyyymmdd", monthGM.getYyyymm());
+				rtnMap.put("customerName", monthGMView.getContract().getCustomer().getName());
+				rtnMap.put("contractNo", monthGMView.getContract().getContractNumber());
+				rtnMap.put("meterName", (monthGMView.getMeter() == null) ? null : monthGMView.getMeter().getMdsId());			
+				rtnMap.put("total", StringUtil.nullToBlank(monthGMView.getTotal()) + "");
+				rtnMap.put("usage", (monthGMView.getTotal() + Double.valueOf(StringUtil.nullToZero(monthGMView.getBaseValue()))) + "");
+				rtnMap.put("max", getMaxValue(monthGMView));		
+				
+//				conditionMap.put("contract", contractDao.get(monthGM.getContract().getId()));
+//				usageCharge = tariffGMDao.getUsageChargeByContract(conditionMap);
+//				String sUsageCharge = "0";
+//				if(usageCharge != null) sUsageCharge = usageCharge.toString();				
+//				rtnMap.put("usageCharge", sUsageCharge);					
+				
+			} else if(object instanceof MonthHMView) {
+			
+				MonthHMView monthHMView = (MonthHMView)object;
+				
+				rtnMap.put("yyyymmdd", monthHMView.getYyyymm());
+				rtnMap.put("customerName", monthHMView.getContract().getCustomer().getName());
+				rtnMap.put("contractNo", monthHMView.getContract().getContractNumber());
+				rtnMap.put("meterName", (monthHMView.getMeter() == null) ? null : monthHMView.getMeter().getMdsId());
+				rtnMap.put("total", StringUtil.nullToBlank(monthHMView.getTotal()) + "");
+				rtnMap.put("usage", (monthHMView.getTotal() + Double.valueOf(StringUtil.nullToZero(monthHMView.getBaseValue()))) + "");
+				rtnMap.put("max", getMaxValue(monthHMView));			
+		
+			} else if(object instanceof MonthWMView) {
+				
+				MonthWMView monthWMView = (MonthWMView)object;
+				
+				rtnMap.put("yyyymmdd", monthWMView.getYyyymm());
+				rtnMap.put("customerName", monthWMView.getContract().getCustomer().getName());
+				rtnMap.put("contractNo", monthWMView.getContract().getContractNumber());
+				rtnMap.put("meterName", (monthWMView.getMeter() == null) ? null : monthWMView.getMeter().getMdsId());
+				rtnMap.put("total", StringUtil.nullToBlank(monthWMView.getTotal()) + "");
+				rtnMap.put("usage", (monthWMView.getTotal() + Double.valueOf(StringUtil.nullToZero(monthWMView.getBaseValue()))) + "");
+				rtnMap.put("max", getMaxValue(monthWMView));	
+				
+//				conditionMap.put("contract", contractDao.get(monthWM.getContract().getId()));
+//				usageCharge = tariffWMDao.getUsageChargeByContract(conditionMap);
+//				String sUsageCharge = "0";
+//				if(usageCharge != null) sUsageCharge = usageCharge.toString();				
+//				rtnMap.put("usageCharge", sUsageCharge);									
+			}				
+		
 			rtnList.add(rtnMap);
 		}
 		
@@ -847,7 +1019,8 @@ public class BillingManagerImpl implements BillingManager {
 		
 		try {
 			
-			if(object instanceof DayEM || object instanceof DayGM || object instanceof DayHM || object instanceof DayWM ) {				
+			if(object instanceof DayEM || object instanceof DayGM || object instanceof DayHM || object instanceof DayWM
+					|| object instanceof DayEMView || object instanceof DayGMView || object instanceof DayHMView || object instanceof DayWMView) {				
 				
 				for(int i = 0 ; i <= 23; i++) {
 					
@@ -857,7 +1030,8 @@ public class BillingManagerImpl implements BillingManager {
 					}	
 				}
 
-			} else if(object instanceof MonthEM || object instanceof MonthGM || object instanceof MonthHM || object instanceof MonthWM) {
+			} else if(object instanceof MonthEM || object instanceof MonthGM || object instanceof MonthHM || object instanceof MonthWM
+					|| object instanceof MonthEMView || object instanceof MonthGMView || object instanceof MonthHMView || object instanceof MonthWMView) {
 				
 				for(int i = 1 ; i <= 31; i++) {
 					Object val = clazz.getDeclaredMethod("getValue_" + df.format(i)).invoke(object);

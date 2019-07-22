@@ -10,7 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.JobExecutionContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +26,7 @@ import com.aimir.dao.system.CodeDao;
 import com.aimir.dao.system.ContractDao;
 import com.aimir.dao.system.TariffGMDao;
 import com.aimir.dao.system.TariffTypeDao;
+import com.aimir.dao.view.DayGMViewDao;
 import com.aimir.model.device.Meter;
 import com.aimir.model.mvm.BillingDayGM;
 import com.aimir.model.mvm.DayGM;
@@ -33,9 +34,10 @@ import com.aimir.model.system.Code;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.TariffGM;
 import com.aimir.model.system.TariffType;
+import com.aimir.model.view.DayGMView;
 import com.aimir.util.Condition;
-import com.aimir.util.DateTimeUtil;
 import com.aimir.util.Condition.Restriction;
+import com.aimir.util.DateTimeUtil;
 import com.aimir.util.TimeUtil;
 
 @Transactional
@@ -72,6 +74,9 @@ public class DailyGMBillingInfoSaveTask  extends ScheduleTask{
 	
 	@Autowired
 	BillingDayGMDao billingDayGMDao;
+	
+	@Autowired
+	DayGMViewDao dayGMViewDao;
 
 	public void execute(JobExecutionContext context) {
 	    log.info("########### START DailyGMBillingInfo ###############");
@@ -172,8 +177,12 @@ public class DailyGMBillingInfoSaveTask  extends ScheduleTask{
 		        param.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
 		        param.add(new Condition("id.yyyymmdd", new Object[]{readToDate.substring(0,8)}, null, Restriction.GE));
 		        param.add(new Condition("id.yyyymmdd", new Object[]{readToDate.substring(0,8)}, null, Restriction.ORDERBYDESC));
+		        /*
+		         * OPF-610 정규화 관련 처리로 인한 주석
 				List<DayGM> dayGM = dayGMDao.getDayGMsByListCondition(param);
-		
+				*/
+		        List<DayGMView> dayGM = dayGMViewDao.getDayGMsByListCondition(param);
+		        
 		        String readToDateYYYYMMDD = readToDate.substring(0,8);
 		        String readFromDateHH = saveReadFromDateYYYYMMDDHHMMSS.substring(8,10);
 		        String saveReadFromDateHH = null;
@@ -276,6 +285,41 @@ public class DailyGMBillingInfoSaveTask  extends ScheduleTask{
 	     * @return
 	     */
 	    private Double[] getDayValue24(DayGM dayGm) {
+
+	        Double[] dayValues = new Double[24];
+	        
+	        /*
+	         * OPF-610 정규화 관련 처리로 인한 주석
+	        dayValues[0] = (dayGm.getValue_00() == null ? 0 : dayGm.getValue_00());
+	        dayValues[1] = (dayGm.getValue_01() == null ? 0 : dayGm.getValue_01());
+	        dayValues[2] = (dayGm.getValue_02() == null ? 0 : dayGm.getValue_02());
+	        dayValues[3] = (dayGm.getValue_03() == null ? 0 : dayGm.getValue_03());
+	        dayValues[4] = (dayGm.getValue_04() == null ? 0 : dayGm.getValue_04());
+	        dayValues[5] = (dayGm.getValue_05() == null ? 0 : dayGm.getValue_05());
+	        dayValues[6] = (dayGm.getValue_06() == null ? 0 : dayGm.getValue_06());
+	        dayValues[7] = (dayGm.getValue_07() == null ? 0 : dayGm.getValue_07());
+	        dayValues[8] = (dayGm.getValue_08() == null ? 0 : dayGm.getValue_08());
+	        dayValues[9] = (dayGm.getValue_09() == null ? 0 : dayGm.getValue_09());
+	        dayValues[10] = (dayGm.getValue_10() == null ? 0 : dayGm.getValue_10());
+	        dayValues[11] = (dayGm.getValue_11() == null ? 0 : dayGm.getValue_11());
+	        dayValues[12] = (dayGm.getValue_12() == null ? 0 : dayGm.getValue_12());
+	        dayValues[13] = (dayGm.getValue_13() == null ? 0 : dayGm.getValue_13());
+	        dayValues[14] = (dayGm.getValue_14() == null ? 0 : dayGm.getValue_14());
+	        dayValues[15] = (dayGm.getValue_15() == null ? 0 : dayGm.getValue_15());
+	        dayValues[16] = (dayGm.getValue_16() == null ? 0 : dayGm.getValue_16());
+	        dayValues[17] = (dayGm.getValue_17() == null ? 0 : dayGm.getValue_17());
+	        dayValues[18] = (dayGm.getValue_18() == null ? 0 : dayGm.getValue_18());
+	        dayValues[19] = (dayGm.getValue_19() == null ? 0 : dayGm.getValue_19());
+	        dayValues[20] = (dayGm.getValue_20() == null ? 0 : dayGm.getValue_20());
+	        dayValues[21] = (dayGm.getValue_21() == null ? 0 : dayGm.getValue_21());
+	        dayValues[22] = (dayGm.getValue_22() == null ? 0 : dayGm.getValue_22());
+	        dayValues[23] = (dayGm.getValue_23() == null ? 0 : dayGm.getValue_23());
+			*/
+	        
+	        return dayValues;
+	    }
+	    
+	    private Double[] getDayValue24(DayGMView dayGm) {
 
 	        Double[] dayValues = new Double[24];
 

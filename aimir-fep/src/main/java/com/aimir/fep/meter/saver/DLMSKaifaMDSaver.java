@@ -156,167 +156,34 @@ public class DLMSKaifaMDSaver extends AbstractMDSaver {
 		
 		return true;
 	}
-	
-	private void saveMeteringDataKaifa(MeteringType meteringType, String meteringDate,
-            String meteringTime, double meteringValue, Meter meter, DeviceType deviceType,
-            String deviceId, DeviceType mdevType, String mdevId, String meterTime) throws Exception {
-		try {
-			saveMeteringData(MeteringType.Normal, meteringDate,
-					meteringTime, meteringValue, meter, deviceType, 
-					deviceId, mdevType, mdevId, meterTime);
-		}finally {
-			log.debug("saveMeteringDataKaifa finish");
-		}
-	}
-	
-	private void saveLpKaifa(IMeasurementData md, DLMSKaifa parser) throws Exception {
-		try {
-			LPData[] lplist = parser.getLPData();
-			if (lplist == null || lplist.length == 0) {
-			    log.warn("LP size is 0!!");
-			    return;
-			}
-			
-			 log.debug("active pulse constant:" +
-			 parser.getActivePulseConstant());
-			// log.debug("currentDemand:" + currentDemand);
-			 
-			double lpSum = 0;
-			double basePulse = 0;
-			double current = parser.getMeteringValue() == null ? -1d : parser.getMeteringValue();
-			
-			double addBasePulse = 0;
-			
-			if (lplist != null && lplist.length > 0) {
-				log.debug("lplist[0]:"+lplist[0]);
-				log.debug("lplist[0].getDatetime():"+lplist[0].getDatetime());
-				String inityyyymmddhh =lplist[0].getDatetime().substring(0, 10);
-				
-				SimpleDateFormat dateFormatter = new SimpleDateFormat(
-				"yyyyMMddHH");
 		
-		        Calendar cal = Calendar.getInstance();
-		
-		        cal.setTime(dateFormatter.parse(inityyyymmddhh));
-		        cal.add(cal.HOUR, 1);
-		
-		        inityyyymmddhh = dateFormatter.format(cal.getTime());
-		        
-		        
-		        log.debug(md.getTimeStamp().substring(0,8));
-		        log.debug(md.getTimeStamp().substring(8,14));
-		        log.debug(parser.getMeteringValue());
-		        log.debug(parser.getMeter().getMdsId());
-		        log.debug(parser.getDeviceType());
-		        log.debug(parser.getDeviceId());
-		        log.debug(parser.getMDevType());
-		        log.debug(parser.getMDevId());
-		        log.debug(parser.getMeterTime());
-		        
-		        //Save meter information
-		        //saveMeterInfomation(parser); 
-		        // UPDATE  START SP-280
-//		        saveMeteringDataKaifa(MeteringType.Normal, md.getTimeStamp().substring(0,8),
-//		                md.getTimeStamp().substring(8, 14), parser.getMeteringValue() == null ? 0d : parser.getMeteringValue(),
-//		                parser.getMeter(), parser.getDeviceType(), parser.getDeviceId(),
-//		                parser.getMDevType(), parser.getMDevId(), parser.getMeterTime());			
-				Double meteringValue =  parser.getMeteringValue() == null ? 0d : parser.getMeteringValue();
-				Meter meter = parser.getMeter();
-		        String dsttime = DateTimeUtil.getDST(null, md.getTimeStamp());
-		        String meterTime =  parser.getMeterTime();
-		        log.debug("MDevId[" + parser.getMDevId() + "] DSTTime["+dsttime+"]");
-		        // if (meter.getLastReadDate() == null || dsttime.substring(0, 10).compareTo(meter.getLastReadDate().substring(0, 10)) >= 0) {
-		        if (meterTime != null && !"".equals(meterTime))
-		            meter.setLastReadDate(meterTime);
-		        else
-		            meter.setLastReadDate(dsttime);
-		        meter.setLastMeteringValue(meteringValue);
-		        //=> INSERT START 2016.12.08 SP-303
-		        log.debug("MDevId[" + parser.getMDevId() + "] DSTTime["+dsttime+"] LASTREADDate[" + meter.getLastReadDate()+"]");
-		        Code normalStatus = CommonConstants.getMeterStatusByName(MeterStatus.Normal.name());
-		        log.debug("MDevId[" + parser.getMDevId() + "] METER_STATUS[" + (meter.getMeterStatus() == null ? "NULL" : meter.getMeterStatus()) + "]");
-		        if (meter.getMeterStatus() == null || 
-		                (meter.getMeterStatus() != null && 
-		                !meter.getMeterStatus().getName().equals("CutOff") && 
-		                !meter.getMeterStatus().getName().equals("Delete"))){
-		            meter.setMeterStatus(normalStatus);
-		            log.debug("MDevId[" + parser.getMDevId() + "] METER_CHANGED_STATUS[" + meter.getMeterStatus() + "]");
-		        }
-		        if (meterTime != null && !"".equals(meterTime)) {
-		            try {
-		                long diff = DateTimeUtil.getDateFromYYYYMMDDHHMMSS(md.getTimeStamp()).getTime() - 
-		                        DateTimeUtil.getDateFromYYYYMMDDHHMMSS(meterTime).getTime();
-		                meter.setTimeDiff(diff / 1000);
-	    				log.debug("MDevId[" + parser.getMDevId() + "] Update timeDiff. diff=[" + meter.getTimeDiff() + "]"); // INSERT SP-406
-		            }
-		            catch (ParseException e) {
-		                log.warn("MDevId[" + parser.getMDevId() + "] Check MeterTime[" + meterTime + "] and MeteringTime[" + md.getTimeStamp() + "]");
-		            }
-		        }
-		        //=> INSERT END 2016.12.08   SP-303
-
-				//// UPDATE END   SP-280
-				for (int i = 0; i < lplist.length; i++) {
-					
-					lpSum += lplist[i].getLpValue();
-					
-					String yyyymmddhh = lplist[i].getDatetime().substring(0, 10);
-					if(inityyyymmddhh.equals(yyyymmddhh)){
-						addBasePulse+= lplist[i].getLpValue();
-					}
-					 log.debug("MDevId[" + parser.getMDevId() + "]  time=" + lplist[i].getDatetime() + ":lp="
-					 + lplist[i].getLp() + ":lpValue=" + lplist[i].getLpValue()+":addBasePulse="+addBasePulse);
-		
-				}
-			}
-
-			if ( current >= 0d ){
-				basePulse = current - lpSum;
-			}else{
-				basePulse = lpSum;
-			}
-			 log.debug("MDevId[" + parser.getMDevId() + "] lpSum:"+lpSum);
-			 log.debug("MDevId[" + parser.getMDevId() + "] MDevId[" + parser.getMDevId() + "] basePulse:"+basePulse);
-			if (lplist == null || lplist.length == 0) {
-				log.debug("MDevId[" + parser.getMDevId() + "]  LPSIZE => 0");
-			} else {
-				 log.debug("##########MDevId[" + parser.getMDevId() + "] LPSIZE => "+lplist.length);
-				lpSave(md, lplist, parser, basePulse, addBasePulse);
-			}
-		} catch (Exception e) {
-			log.error(e,e);
-		}finally {
-			log.debug("MDevId[" + parser.getMDevId() + "] saveLpKaifa finish");
-		}
-	}
-
-	// INSERT START SP-501
+	//OPF-610 DB(LP) normalization  
 	private void saveLpKaifaUsingLPTime(IMeasurementData md, DLMSKaifa parser) throws Exception {
-		try {
-			LPData[] lplist = parser.getLPData();
-			if (lplist == null || lplist.length == 0) {
-				log.warn("LP size is 0!!");
-				return;
-			}
-			log.debug("saveLpKaifaUsingLPTime Start Total LPSIZE => " + lplist.length);
-			
-			log.debug("active pulse constant:" + parser.getActivePulseConstant());
-	        log.debug(md.getTimeStamp().substring(0,8));
-	        log.debug(md.getTimeStamp().substring(8,14));
-	        log.debug(parser.getMeteringValue());
-	        log.debug(parser.getMeter().getMdsId());
-	        log.debug(parser.getDeviceType());
-	        log.debug(parser.getDeviceId());
-	        log.debug(parser.getMDevType());
-	        log.debug(parser.getMDevId());
-	        log.debug(parser.getMeterTime());
-	        
-	        //Save meter information
-			Double meteringValue =  parser.getMeteringValue() == null ? 0d : parser.getMeteringValue();
-			Meter meter = parser.getMeter();
-	        String dsttime = DateTimeUtil.getDST(null, md.getTimeStamp());
-	        String meterTime =  parser.getMeterTime();
-	        log.debug("MDevId[" + parser.getMDevId() + "] DSTTime["+dsttime+"]");
+ 		try {
+ 			LPData[] lplist = parser.getLPData();
+ 			if (lplist == null || lplist.length == 0) {
+ 				log.warn("LP size is 0!!");
+ 				return;
+ 			}
+ 			log.debug("saveLpKaifaUsingLPTime Start Total LPSIZE => " + lplist.length);
+ 			
+ 			log.debug("active pulse constant:" + parser.getActivePulseConstant());
+ 	        log.debug(md.getTimeStamp().substring(0,8));
+ 	        log.debug(md.getTimeStamp().substring(8,14));
+ 	        log.debug(parser.getMeteringValue());
+ 	        log.debug(parser.getMeter().getMdsId());
+ 	        log.debug(parser.getDeviceType());
+ 	        log.debug(parser.getDeviceId());
+ 	        log.debug(parser.getMDevType());
+ 	        log.debug(parser.getMDevId());
+ 	        log.debug(parser.getMeterTime());
+ 	        
+ 	        //Save meter information
+ 			Double meteringValue =  parser.getMeteringValue() == null ? 0d : parser.getMeteringValue();
+ 			Meter meter = parser.getMeter();
+ 	        String dsttime = DateTimeUtil.getDST(null, md.getTimeStamp());
+ 	        String meterTime =  parser.getMeterTime();
+ 	        log.debug("MDevId[" + parser.getMDevId() + "] DSTTime["+dsttime+"]");
 
 	        if (meterTime != null && !"".equals(meterTime))
 	            meter.setLastReadDate(meterTime);
@@ -324,140 +191,77 @@ public class DLMSKaifaMDSaver extends AbstractMDSaver {
 	            meter.setLastReadDate(dsttime);
 	        meter.setLastMeteringValue(meteringValue);
 
-	        log.debug("MDevId[" + parser.getMDevId() + "] DSTTime["+dsttime+"] LASTREADDate[" + meter.getLastReadDate()+"]");
-	        Code normalStatus = CommonConstants.getMeterStatusByName(MeterStatus.Normal.name());
-	        log.debug("MDevId[" + parser.getMDevId() + "] METER_STATUS[" + (meter.getMeterStatus() == null ? "NULL" : meter.getMeterStatus()) + "]");
-	        if (meter.getMeterStatus() == null || 
-	                (meter.getMeterStatus() != null && 
-	                !meter.getMeterStatus().getName().equals("CutOff") && 
-	                !meter.getMeterStatus().getName().equals("Delete"))){
-	            meter.setMeterStatus(normalStatus);
-	            log.debug("MDevId[" + parser.getMDevId() + "] METER_CHANGED_STATUS[" + meter.getMeterStatus() + "]");
-	        }
-	        if (meterTime != null && !"".equals(meterTime)) {
-	            try {
-	                long diff = DateTimeUtil.getDateFromYYYYMMDDHHMMSS(md.getTimeStamp()).getTime() - 
-	                        DateTimeUtil.getDateFromYYYYMMDDHHMMSS(meterTime).getTime();
-	                meter.setTimeDiff(diff / 1000);
-    				log.debug("MDevId[" + parser.getMDevId() + "] Update timeDiff. diff=[" + meter.getTimeDiff() + "]"); // INSERT SP-406
-	            }
-	            catch (ParseException e) {
-	                log.warn("MDevId[" + parser.getMDevId() + "] Check MeterTime[" + meterTime + "] and MeteringTime[" + md.getTimeStamp() + "]");
-	            }
-	        }     
+ 	        log.debug("MDevId[" + parser.getMDevId() + "] DSTTime["+dsttime+"] LASTREADDate[" + meter.getLastReadDate()+"]");
+ 	        Code normalStatus = CommonConstants.getMeterStatusByName(MeterStatus.Normal.name());
+ 	        log.debug("MDevId[" + parser.getMDevId() + "] METER_STATUS[" + (meter.getMeterStatus() == null ? "NULL" : meter.getMeterStatus()) + "]");
+ 	        if (meter.getMeterStatus() == null || 
+ 	                (meter.getMeterStatus() != null && 
+ 	                !meter.getMeterStatus().getName().equals("CutOff") && 
+ 	                !meter.getMeterStatus().getName().equals("Delete"))){
+ 	            meter.setMeterStatus(normalStatus);
+ 	            log.debug("MDevId[" + parser.getMDevId() + "] METER_CHANGED_STATUS[" + meter.getMeterStatus() + "]");
+ 	        }
+ 	        
+ 	        if (meterTime != null && !"".equals(meterTime)) {
+ 	            try {
+ 	                long diff = DateTimeUtil.getDateFromYYYYMMDDHHMMSS(md.getTimeStamp()).getTime() - 
+ 	                        DateTimeUtil.getDateFromYYYYMMDDHHMMSS(meterTime).getTime();
+ 	                meter.setTimeDiff(diff / 1000);
+     				log.debug("MDevId[" + parser.getMDevId() + "] Update timeDiff. diff=[" + meter.getTimeDiff() + "]"); // INSERT SP-406
+ 	            }
+ 	            catch (ParseException e) {
+ 	                log.error("MDevId[" + parser.getMDevId() + "] Check MeterTime[" + meterTime + "] and MeteringTime[" + md.getTimeStamp() + "]");
+ 	            }
+ 	        }     
+ 	        
+ 	        //split by date SP-890
+ 	        //파티션 풀스캔을 방지하기 위해 파티션 되어있는 대로 일 단위로 저장
+ 	        //날짜가 중간에 겹쳐져 있더라도 풀스캔 안됨 - 정철우 과장 (2019.01.28)
+ 	        /*
+ 	        Map<String, ArrayList<LPData>> dayMap = new HashMap<String, ArrayList<LPData>>();
+ 	        for(LPData lp : lplist) {
+ 	        	ArrayList<LPData> dayList = null;
+ 	        	String day = lp.getDatetime().substring(0, 8);
+ 	        	
+ 	        	if(dayMap.containsKey(day)) {
+ 	        		dayList = dayMap.get(day);
+ 	        	} else {
+ 	        		dayList = new ArrayList<LPData>();
+ 	        	}
+ 	        	
+ 	        	dayList.add(lp);
+ 	        	dayMap.put(day, dayList);
+ 	        }
+ 	       
+ 	       Iterator<String> keys = dayMap.keySet().iterator();
+ 	       while(keys.hasNext()) {
+ 	    	  String day = keys.next();
+ 	    	  ArrayList<LPData> dayList = dayMap.get(day);
 
-	        lpSaveUsingLPTime(md, lplist, parser);
-	        
-		} catch (Exception e) {
-			log.error(e,e);
-		}finally {
-			log.debug("MDevId[" + parser.getMDevId() + "] saveLpKaifa finish");
-		}
-	}
-	
-	private boolean lpSaveUsingLPTime(IMeasurementData md, LPData[] validlplist,
-			DLMSKaifa parser) throws Exception {
-        
-		log.info("#########save mdevId:"+parser.getMDevId());
-		//log.debug(validlplist[0].getCh().length+","+validlplist.length);
-		/*
-		double[][] lpValues = new double[validlplist[0].getCh().length][validlplist.length];
-		int[] flaglist = new int[validlplist.length];
-		double[] pflist = new double[validlplist.length];
-		String[] timelist = new String[validlplist.length];
-
-		for (int ch = 0; ch < lpValues.length; ch++) {
-			for (int lpcnt = 0; lpcnt < lpValues[ch].length; lpcnt++) {
-				lpValues[ch][lpcnt] = validlplist[lpcnt].getCh()[ch];
-			}
-		}
-
-		for (int i = 0; i < flaglist.length; i++) {
-			flaglist[i] = validlplist[i].getFlag();
-			pflist[i] = validlplist[i].getPF();
-			timelist[i] = validlplist[i].getDatetime();
-		}
-
-        double[] _baseValue = new double[lpValues.length];
-        _baseValue[0] = validlplist[0].getLpValue();;
-        for (int i = 1; i < lpValues.length; i++) {
-            _baseValue[i] = 0;
-        }		
-*/
-		ArrayList<String> dupdateList = new ArrayList<String>();
-		ArrayList<String> dateList = new ArrayList<String>();
-		
-		for(LPData lp: validlplist) {
-			dupdateList.add(lp.getDatetime().substring(0, 8));
-		}
-		
-		HashSet hs = new HashSet(dupdateList);
-		Iterator it = hs.iterator();
-		while(it.hasNext()){
-			dateList.add((String)it.next());
-		}
-		
-		String[] dayList = dateList.toArray(new String[0]);
-		Arrays.sort(dayList);
-		log.debug("dateList:"+ArrayUtils.toString(dayList ,"-"));
-
-		//split by date SP-890
-		for(String day : dayList) {
-
-			ArrayList<String> timeList = new ArrayList<String>();
-			ArrayList<Integer> flagList = new ArrayList<Integer>();
-			ArrayList<Double> pfList = new ArrayList<Double>();
-			ArrayList<LPData> lpValueList = new ArrayList<LPData>();
-			
-			for(LPData lpdata : validlplist) {
-				if(lpdata.getDatetime().substring(0, 8).equals(day)){
-					timeList.add(lpdata.getDatetime());
-					flagList.add(lpdata.getFlag());
-					pfList.add(lpdata.getPF());
-					lpValueList.add(lpdata);
-				}
-			}
-			
-			String[] timelist = timeList.toArray(new String[0]);
-			int[] flaglist = ArrayUtils.toPrimitive(flagList.toArray(new Integer[0]));
-			double[] pflist = ArrayUtils.toPrimitive(pfList.toArray(new Double[0]));
-			
-			LPData[] splitlplist = lpValueList.toArray(new LPData[0]);
-			double[][] lpValues = new double[splitlplist[0].getCh().length][splitlplist.length];
-			
-	        double[] _baseValue = new double[lpValues.length];
-	        _baseValue[0] = validlplist[0].getLpValue();;
-	        for (int i = 1; i < lpValues.length; i++) {
-	            _baseValue[i] = 0;
-	        }
-			
-			//test debugging
-			log.debug("date="+day+","+ArrayUtils.toString(timelist ,"-"));
-			log.debug("date="+day+","+ArrayUtils.toString(flaglist ,"-"));
-			log.debug("date="+day+","+ArrayUtils.toString(pflist ,"-"));
-			log.debug("date="+day+","+ArrayUtils.toString(_baseValue ,"-"));
-
-			for (int ch = 0; ch < lpValues.length; ch++) {
-				for (int lpcnt = 0; lpcnt < lpValues[ch].length; lpcnt++) {
-					lpValues[ch][lpcnt] = splitlplist[lpcnt].getCh()[ch];					
-					log.debug(lpValues[ch][lpcnt]);
-				}
-			}
-
-			try {
-				saveLPDataUsingLPTime(MeteringType.Normal, timelist, lpValues, flaglist,
-						_baseValue, parser.getMeter(), parser.getDeviceType(),
-						parser.getDeviceId(), parser.getMDevType(), parser
-								.getMDevId());
-			}catch(Exception e) {
-				log.warn(e,e);;
-			}
-		}
-
-		//parser.getMeter().setLpInterval(parser.getLpInterval());	// DELETE SP-869
-		return true;
-	}	
-	// INSERT END SP-501	
+ 	    	  LPData[] lps = new LPData[dayList.size()];
+ 	    	  lps = dayList.toArray(lps);
+ 	    	  
+ 	    	  Arrays.sort(lps);
+ 	    	  
+ 	    	 long stime = System.currentTimeMillis();
+ 	    	 saveLPUsingLpNormalization(CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()), 
+	 	        		md, lps, parser.getMDevId(), parser.getDeviceId(), parser.getMDevType());
+             long etime = System.currentTimeMillis();
+             log.debug("HHG // saveLPUsingLpNormalization // processing time ["+(etime - stime)+"] Thread ["+Thread.currentThread().getId()+"]"); 
+ 	 	     
+ 	       }
+ 	       */
+ 	        
+ 	      Arrays.sort(lplist);
+    	  saveLPUsingLpNormalization(CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()), 
+ 	        		md, lplist, parser.getMDevId(), parser.getDeviceId(), parser.getMDevType());
+      
+ 		} catch (Exception e) {
+ 			log.error(e,e);
+ 		}finally {
+ 			log.debug("MDevId[" + parser.getMDevId() + "] saveLpKaifa finish");
+ 		}
+ 	}
 	
 	private void saveEventLog(DLMSKaifa parser) {
 	    try {
@@ -747,159 +551,7 @@ public class DLMSKaifaMDSaver extends AbstractMDSaver {
 		}		
 		// INSERT END SP-486
 	}
-	
-	
-	private boolean lpSave(IMeasurementData md, LPData[] validlplist,
-			DLMSKaifa parser, double base,double addBasePulse) throws Exception {
-	    String yyyymmdd = validlplist[0].getDatetime().substring(0, 8);
-        String yyyymmddhh = validlplist[0].getDatetime().substring(0, 10);
-        String hhmm = validlplist[0].getDatetime().substring(8, 12);
-        double basePulse = validlplist[0].getLpValue();
-        
-		log.info("#########save base value:" + basePulse+":mdevId:"+parser.getMDevId()+":yyyymmddhh:"+yyyymmddhh);
-		double[][] lpValues = new double[validlplist[0].getCh().length][validlplist.length];
-		int[] flaglist = new int[validlplist.length];
-		double[] pflist = new double[validlplist.length];
-
-		for (int ch = 0; ch < lpValues.length; ch++) {
-			for (int lpcnt = 0; lpcnt < lpValues[ch].length; lpcnt++) {
-				// lpValues[ch][lpcnt] = validlplist[lpcnt].getLpValue();
-				// Kw/h 단위로 저장
-				lpValues[ch][lpcnt] = validlplist[lpcnt].getCh()[ch];
-			}
-		}
-
-		for (int i = 0; i < flaglist.length; i++) {
-			flaglist[i] = validlplist[i].getFlag();
-			pflist[i] = validlplist[i].getPF();
-		}
-
-		parser.getMeter().setLpInterval(parser.getLpInterval());
-		// TODO Flag, PF 처리해야 함.
-		saveLPData(MeteringType.Normal, yyyymmdd, hhmm, lpValues, flaglist,
-				basePulse, parser.getMeter(), parser.getDeviceType(),
-				parser.getDeviceId(), parser.getMDevType(), parser
-						.getMDevId());
-		return true;
-	}
-	
-	private boolean lpSave1(IMeasurementData md, LPData[] validlplist,
-            DLMSKaifa parser, double base,double addBasePulse) throws Exception {
-        LinkedHashSet<Condition> condition = new LinkedHashSet<Condition>();
-        String yyyymmdd = validlplist[0].getDatetime().substring(0, 8);
-        String yyyymmddhh = validlplist[0].getDatetime().substring(0, 10);
-        String hhmm = validlplist[0].getDatetime().substring(8, 12);
-        String mm = validlplist[0].getDatetime().substring(10, 12);
-
-        condition.add(new Condition("id.mdevType", new Object[] { parser
-                .getMDevType() }, null, Restriction.EQ));
-        condition.add(new Condition("id.mdevId", new Object[] { parser
-                .getMDevId() }, null, Restriction.EQ));
-        //log.debug("parser.getMDevType():"+parser.getMDevType()+":parser.getMDevId():"+parser.getMDevId()+":dst:"+DateTimeUtil
-        // .inDST(null, parser.getMeterDate())+":yyyymmddhh:"+yyyymmddhh );
-        condition
-                .add(new Condition("id.dst", new Object[] { DateTimeUtil
-//                      .inDST(null, parser.getMeterTime()) }, null,
-                        .inDST(null, md.getTimeStamp()) }, null,
-                        Restriction.EQ));
-
-        condition.add(new Condition("id.channel",
-                new Object[] { ElectricityChannel.Usage.getChannel() },
-                null, Restriction.EQ));
-
-        
-        condition.add(new Condition("id.yyyymmddhh",
-                new Object[] { yyyymmddhh }, null, Restriction.EQ));
-
-        List<LpEM> lpEM = lpEMDao.findByConditions(condition);
-
-        // String firstDate = lplist[0].getDatetime().substring(0,8);
-        double basePulse = -1;
-
-        try {
-            if (lpEM != null && !lpEM.isEmpty()) {
-                // 동시간대의 값을 가져올 경우 00분을 제외한 lp값을 더하여 base값을 구해야 한다.
-                if (!mm.equals("00"))
-                    basePulse = lpEM.get(0).getValue()+retValue(mm,lpEM.get(0).getValue_00(),lpEM.get(0).getValue_15(),lpEM.get(0).getValue_30(),lpEM.get(0).getValue_45());
-                else
-                    basePulse = lpEM.get(0).getValue();
-            }else{
-                LinkedHashSet<Condition> condition2 = new LinkedHashSet<Condition>();
-                condition2.add(new Condition("id.mdevType",
-                new Object[] { parser.getMDevType() }, null,
-                            Restriction.EQ));
-                condition2.add(new Condition("id.mdevId",
-                            new Object[] { parser.getMDevId() }, null,
-                            Restriction.EQ));
-//                   log.debug("parser.getMDevType():"+parser.getMDevType()+":parser.getMDevId():"+parser.getMDevId()+":dst:"+DateTimeUtil
-//                   .inDST(null,parser.getMeterTime())+":yyyymmddhh:"+yyyymmddhh );
-                condition2.add(new Condition("id.dst",
-//                          new Object[] { DateTimeUtil.inDST(null, parser
-//                                  .getMeterTime()) }, null, Restriction.EQ));
-                                    new Object[] { DateTimeUtil.inDST(null, 
-                                    md.getTimeStamp()) }, null, Restriction.EQ));
-                                    
-                                    
-                condition2.add(new Condition("id.channel",
-                            new Object[] { ElectricityChannel.Usage
-                                    .getChannel() }, null, Restriction.EQ));
-                    
-                Calendar cal = Calendar.getInstance();
-                SimpleDateFormat dateFormatter = new SimpleDateFormat(
-                "yyyyMMddHH");
-                cal.setTime(dateFormatter.parse(yyyymmddhh));
-                
-                cal.add(cal.HOUR, -1);
-
-                condition2.add(new Condition("id.yyyymmddhh",
-                                    new Object[] { dateFormatter.format(cal
-                                            .getTime()) }, null, Restriction.EQ));
-                List<LpEM> subLpEM = lpEMDao.findByConditions(condition2);
-                if (subLpEM != null && !subLpEM.isEmpty()) {
-                    // 전 시간 값을 가져온 것이기 때문에 전부 다 합산해야 한다.
-                    basePulse = subLpEM.get(0).getValue()+retValue("00",subLpEM.get(0).getValue_00(),subLpEM.get(0).getValue_15(),subLpEM.get(0).getValue_30(),subLpEM.get(0).getValue_45());
-                }
-            }
-            
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            log.error(e);
-        }
-        
-        if (lpEM != null && !lpEM.isEmpty()) {  
-            //basePulse = lpEM.get(0).getValue();
-        } else {
-            basePulse = base;
-        }
-        
-        log.info("#########save base value:" + basePulse+":mdevId:"+parser.getMDevId()+":yyyymmddhh:"+yyyymmddhh);
-        double[][] lpValues = new double[validlplist[0].getCh().length][validlplist.length];
-        int[] flaglist = new int[validlplist.length];
-        double[] pflist = new double[validlplist.length];
-
-        for (int ch = 0; ch < lpValues.length; ch++) {
-            for (int lpcnt = 0; lpcnt < lpValues[ch].length; lpcnt++) {
-                // lpValues[ch][lpcnt] = validlplist[lpcnt].getLpValue();
-                // Kw/h 단위로 저장
-                lpValues[ch][lpcnt] = validlplist[lpcnt].getCh()[ch];
-            }
-        }
-
-        for (int i = 0; i < flaglist.length; i++) {
-            flaglist[i] = validlplist[i].getFlag();
-            pflist[i] = validlplist[i].getPF();
-        }
-
-        parser.getMeter().setLpInterval(parser.getLpInterval());
-        // TODO Flag, PF 처리해야 함.
-        saveLPData(MeteringType.Normal, yyyymmdd, hhmm, lpValues, flaglist,
-                basePulse, parser.getMeter(), parser.getDeviceType(),
-                parser.getDeviceId(), parser.getMDevType(), parser
-                        .getMDevId());
-        return true;
-    }
-
+		
 	private Meter checkAndRegisterMbusMeter( Meter parentMeter, String mdsId, MBUS_DEVICE_TYPE meterType, int port ){
 		
 		if ( mdsId == null || meterType == null ){
@@ -1111,7 +763,7 @@ public class DLMSKaifaMDSaver extends AbstractMDSaver {
 				mbus1Meter.setLpInterval(parser.getMbus1LpInterval());
 				// UPDATE START SP-735,736
 				//saveMbusDataChannel(mbus1Meter, modemId, DeviceType.Modem, mbus1Meter.getMdsId(), parser.getMDevType(), mbus1Lplist);
-				saveMbusDataChannelUsingLPTime(mbus1Meter, modemId, DeviceType.Modem, mbus1Meter.getMdsId(), parser.getMDevType(), mbus1Lplist);
+				saveMbusDataChannelUsingLPTime(mbus1Meter, modemId, DeviceType.Modem, mbus1Meter.getMdsId(), parser.getMDevType(), parser.getDeviceId(), CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()), mbus1Lplist);
 				if (lastReadDate != null && !"".equals(lastReadDate)){
 					log.debug("MBUS1 MdevId[" + mbus1Meter.getMdsId() + "] UPDATE LAST_READ_DATE[" + lastReadDate + "]");
 					mbus1Meter.setLastReadDate(lastReadDate);
@@ -1144,7 +796,7 @@ public class DLMSKaifaMDSaver extends AbstractMDSaver {
 				mbus2Meter.setLpInterval(parser.getMbus2LpInterval());
 				// UPDATE START SP-735,736
 				//saveMbusDataChannel(mbus2Meter, modemId, DeviceType.Modem, mbus2Meter.getMdsId(), parser.getMDevType(), mbus2Lplist);
-				saveMbusDataChannelUsingLPTime(mbus2Meter, modemId, DeviceType.Modem, mbus2Meter.getMdsId(), parser.getMDevType(), mbus2Lplist);
+				saveMbusDataChannelUsingLPTime(mbus1Meter, modemId, DeviceType.Modem, mbus1Meter.getMdsId(), parser.getMDevType(), parser.getDeviceId(), CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()), mbus1Lplist);
 				if (lastReadDate != null && !"".equals(lastReadDate)){
 					log.debug("MBUS2 MdevId[" + mbus2Meter.getMdsId() + "] UPDATE LAST_READ_DATE[" + lastReadDate + "]");
 					mbus2Meter.setLastReadDate(lastReadDate);
@@ -1177,7 +829,7 @@ public class DLMSKaifaMDSaver extends AbstractMDSaver {
 				mbus3Meter.setLpInterval(parser.getMbus3LpInterval());
 				// UPDATE START SP-735,736
 				//saveMbusDataChannel(mbus3Meter, modemId, DeviceType.Modem, mbus3Meter.getMdsId(), parser.getMDevType(), mbus3Lplist);
-				saveMbusDataChannelUsingLPTime(mbus3Meter, modemId, DeviceType.Modem, mbus3Meter.getMdsId(), parser.getMDevType(), mbus3Lplist);
+				saveMbusDataChannelUsingLPTime(mbus1Meter, modemId, DeviceType.Modem, mbus1Meter.getMdsId(), parser.getMDevType(), parser.getDeviceId(), CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()), mbus1Lplist);
 				if (lastReadDate != null && !"".equals(lastReadDate)){
 					mbus3Meter.setLastReadDate(lastReadDate);
 					log.debug("MBUS3 MdevId[" + mbus3Meter.getMdsId() + "] UPDATE LAST_READ_DATE[" + lastReadDate + "]");
@@ -1210,7 +862,7 @@ public class DLMSKaifaMDSaver extends AbstractMDSaver {
 				mbus4Meter.setLpInterval(parser.getMbus4LpInterval());
 				// UPDATE START SP-735,736				
 				//saveMbusDataChannel(mbus4Meter, modemId, DeviceType.Modem, mbus4Meter.getMdsId(), parser.getMDevType(), mbus4Lplist);
-				saveMbusDataChannelUsingLPTime(mbus4Meter, modemId, DeviceType.Modem, mbus4Meter.getMdsId(), parser.getMDevType(), mbus4Lplist);
+				saveMbusDataChannelUsingLPTime(mbus1Meter, modemId, DeviceType.Modem, mbus1Meter.getMdsId(), parser.getMDevType(), parser.getDeviceId(), CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()), mbus1Lplist);
 				if (lastReadDate != null && !"".equals(lastReadDate)){
 					mbus4Meter.setLastReadDate(lastReadDate);
 					log.debug("MBUS4 MdevId[" + mbus4Meter.getMdsId() + "] UPDATE LAST_READ_DATE[" + lastReadDate + "]");
@@ -1231,45 +883,6 @@ public class DLMSKaifaMDSaver extends AbstractMDSaver {
 		    log.error(e, e);
 		}finally {
 			log.debug("MDevId[" + parser.getMDevId() + "] saveMbusDataKaifa finish");
-		}
-	}
-
-	private void saveMbusDataChannel(Meter meter, String devId, DeviceType devType, String mdevId,
-	        DeviceType mdevType, LPData[] mbusLplist) throws Exception {
-		try {
-			log.debug("saveMbusDataChannel devId[" + devId + 
-					"] devType[" + devType.name() + "] mdevId[" + mdevId + 
-					"] mdevType[" + mdevType.name() + "]" );
-			
-	        if(mbusLplist == null){
-	            log.debug("MDevId[" + mdevId + "] LPSIZE => 0");
-	        }
-	        else
-	        {
-	            log.debug("MDevId[" + mdevId + "] LPSIZE => "+ mbusLplist.length);
-	            String yyyymmdd = mbusLplist[0].getDatetime().substring(0, 8);
-	            String hhmm = mbusLplist[0].getDatetime().substring(8, 12);
-	            
-	            double[][] lpValues = new double[mbusLplist[0].getCh().length][mbusLplist.length];
-	            int[] flaglist = new int[mbusLplist.length];
-	            
-	            for (int ch = 0; ch < lpValues.length; ch++) {
-	                for (int lpcnt = 0; lpcnt < lpValues[ch].length; lpcnt++) {
-	                    lpValues[ch][lpcnt] = mbusLplist[lpcnt].getCh()[ch];
-	                    log.debug("MDevId[" + mdevId + "] lpValues[" + ch + "][" + lpcnt + "] = " + lpValues[ch][lpcnt]);
-	                }
-	            }
-	            
-	            for (int i = 0; i < flaglist.length; i++) {
-	                flaglist[i] = mbusLplist[i].getFlag();
-	                log.debug("MDevId[" + mdevId + "] flaglist[" + i + "] = " + flaglist[i]);
-	            }
-	            
-	            saveLPData(MeteringType.Normal, yyyymmdd, hhmm, lpValues, flaglist, 0,
-	            		meter, devType, devId, mdevType, mdevId);
-	        }
-		}finally {
-			log.debug("MDevId[" + mdevId + "] saveMbusDataChannel finish");
 		}
 	}
 	
@@ -2134,7 +1747,7 @@ public class DLMSKaifaMDSaver extends AbstractMDSaver {
 						",deviceId:" + parser.getDeviceId()+
 						",mdevTypeType:" + parser.getMDevType() +
 						",mdevId:" + parser.getMDevId() +
-						",meterType:" + parser.getMeterTime() +
+						",meterTime:" + parser.getMeterTime() +
 						",channels:" + sb.toString());
 							 
 				saveMeteringDataWithMultiChannel(MeteringType.Normal, 
@@ -2165,7 +1778,7 @@ public class DLMSKaifaMDSaver extends AbstractMDSaver {
 	 * @throws Exception
 	 */
 	private void saveMbusDataChannelUsingLPTime(Meter meter, String devId, DeviceType devType, String mdevId,
-	        DeviceType mdevType, LPData[] mbusLplist) throws Exception {
+	        DeviceType mdevType, String deviceId, MeteringType meteringType, LPData[] mbusLplist) throws Exception {
 		try {
 			log.debug("saveMbusDataChannelUsingLPTime devId[" + devId + 
 					"] devType[" + devType.name() + "] mdevId[" + mdevId + 
@@ -2176,6 +1789,10 @@ public class DLMSKaifaMDSaver extends AbstractMDSaver {
 	        }
 	        else
 	        {
+	        	//OPF-610 DB(LP) normalization
+	        	saveLPUsingLpNormalization(meteringType, null, mbusLplist, mdevId, deviceId, mdevType);
+	        	
+	        	/* 
 	            log.debug("MDevId[" + mdevId + "] LPSIZE => "+ mbusLplist.length);
 	            String yyyymmdd = mbusLplist[0].getDatetime().substring(0, 8);
 	            String hhmm = mbusLplist[0].getDatetime().substring(8, 12);
@@ -2204,6 +1821,7 @@ public class DLMSKaifaMDSaver extends AbstractMDSaver {
 	            }	
 	            saveLPDataUsingLPTime(MeteringType.Normal, timelist,lpValues, flaglist, _baseValue, 
 	            		meter, devType, devId, mdevType, mdevId);
+	            */
 	        }
 		}finally {
 			log.debug("MDevId[" + mdevId + "] saveMbusDataChannelUsingLPTime finish");

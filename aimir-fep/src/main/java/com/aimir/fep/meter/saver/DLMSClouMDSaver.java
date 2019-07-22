@@ -185,11 +185,13 @@ public class DLMSClouMDSaver extends AbstractMDSaver {
     				log.debug("MDevId[" + parser.getMDevId() + "] Update timeDiff. diff=[" + meter.getTimeDiff() + "]"); // INSERT SP-406
 	            }
 	            catch (ParseException e) {
-	                log.warn("MDevId[" + parser.getMDevId() + "] Check MeterTime[" + meterTime + "] and MeteringTime[" + md.getTimeStamp() + "]");
+	                log.error("MDevId[" + parser.getMDevId() + "] Check MeterTime[" + meterTime + "] and MeteringTime[" + md.getTimeStamp() + "]");
 	            }
 	        }     
 	        
-	        lpSaveUsingLPTime(md, lplist, parser);
+	 	      Arrays.sort(lplist);
+	    	  saveLPUsingLpNormalization(CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()), 
+	 	        		md, lplist, parser.getMDevId(), parser.getDeviceId(), parser.getMDevType());
 			
 		}catch(Exception e) {
 			log.error(e,e);
@@ -200,6 +202,7 @@ public class DLMSClouMDSaver extends AbstractMDSaver {
 	}
 
 	private boolean lpSaveUsingLPTime(IMeasurementData md, LPData[] validlplist, DLMSClou parser) throws Exception {
+		/* OPF-610 DB(LP) 주석 처리
 		log.info("#########save mdevId:"+parser.getMDevId());
 		
 		ArrayList<String> dupdateList = new ArrayList<String>();
@@ -271,7 +274,7 @@ public class DLMSClouMDSaver extends AbstractMDSaver {
 				log.warn(e,e);;
 			}
 		}
-		
+		*/
 		return true;
 	}
 	

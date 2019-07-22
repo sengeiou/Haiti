@@ -121,34 +121,6 @@ public class LpHMDaoImpl extends AbstractHibernateGenericDao<LpHM, Integer> impl
 
 
     public void updateSendedResult(LpHM lphm) {
-        StringBuffer sbQuery = new StringBuffer();
-        sbQuery.append("UPDATE LpHM SET ")
-            .append(" VALUE_00 = ?, ")
-            .append(" VALUE_15 = ?, ")
-            .append(" VALUE_30 = ?, ")
-            .append(" VALUE_45 = ? ")
-            .append(" WHERE id.yyyymmddhh = ? ")
-            .append(" AND id.channel = ? ")
-            .append(" AND id.mdevType = ? ")
-            .append(" AND id.mdevId = ? ")
-            .append(" AND id.dst = ? ");
-    
-        //HQL문을 이용한 CUD를 할 경우에는 getHibernateTemplate().bulkUpdate() 메소드를 사용한다.      
-        Query query = getSession().createQuery(sbQuery.toString());
-        query.setParameter(1, lphm.getValue_00());
-        query.setParameter(2, lphm.getValue_15());
-        query.setParameter(3, lphm.getValue_30());
-        query.setParameter(4, lphm.getValue_45());
-        query.setParameter(5, lphm.getId().getYyyymmddhh());
-        query.setParameter(6, lphm.getId().getChannel());
-        query.setParameter(7, lphm.getId().getMDevType());
-        query.setParameter(8, lphm.getId().getMDevId());
-        query.setParameter(9, lphm.getId().getDst());
-        query.executeUpdate();
-        // bulkUpdate 때문에 주석처리
-        /*this.getSession().bulkUpdate(sbQuery.toString(),
-            new Object[] {lphm.getValue_00(), lphm.getValue_15(), lphm.getValue_30(), lphm.getValue_45()
-            , lphm.getId().getYyyymmddhh(), lphm.getId().getChannel(), lphm.getId().getMDevType(), lphm.getId().getMDevId(), lphm.getId().getDst()} );*/
-        
+    	//OPF-610 정규화 관련 처리로 내용 삭제. 호출 하는 함수 없음
     }
 }

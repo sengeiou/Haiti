@@ -19,7 +19,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.JobExecutionContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 
 import com.aimir.constants.CommonConstants.DeviceType;
@@ -34,6 +34,7 @@ import com.aimir.dao.system.PrepaymentLogDao;
 import com.aimir.dao.system.SupplyTypeDao;
 import com.aimir.dao.system.TariffEMDao;
 import com.aimir.dao.system.TariffTypeDao;
+import com.aimir.dao.view.MonthEMViewDao;
 import com.aimir.model.device.Meter;
 import com.aimir.model.mvm.BillingBlockTariff;
 import com.aimir.model.mvm.LpEM;
@@ -43,6 +44,7 @@ import com.aimir.model.system.Contract;
 import com.aimir.model.system.PrepaymentLog;
 import com.aimir.model.system.TariffEM;
 import com.aimir.model.system.TariffType;
+import com.aimir.model.view.MonthEMView;
 import com.aimir.util.Condition;
 import com.aimir.util.Condition.Restriction;
 import com.aimir.util.DateTimeUtil;
@@ -95,6 +97,9 @@ public class MOEBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 
     @Autowired
     LpEMDao lpEMDao;
+    
+    @Autowired
+    MonthEMViewDao monthEMViewDao;
 
     /**
      *
@@ -244,11 +249,20 @@ public class MOEBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         condition.put("yyyymm", yyyymm);
         condition.put("dst", 0);
 
+        /*
+         * OPF-610 정규화 관련 처리로 인한 주석 
         List<MonthEM> monthEMs = monthEMDao.getMonthEMsByCondition(condition);
-
+		*/
+        List<MonthEMView> monthEMs = monthEMViewDao.getMonthEMsByCondition(condition);
+        
         log.info("monthEM size: " + monthEMs.size());
         if (monthEMs.size() > 0) {
-            MonthEM monthEM = monthEMs.get(0);
+			/* 
+			 * OPF-610 정규화 관련 처리로 인한 주석
+			 * MonthEM monthEM = monthEMs.get(0);
+			 */
+        	
+        	MonthEMView monthEM = monthEMs.get(0);
             monthEM.setMDevType(DeviceType.Meter.name());
             monthEM.setMDevId(meter.getMdsId());
 
@@ -335,7 +349,7 @@ public class MOEBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
             condition.add(new Condition("id.mdevType", new Object[]{monthEM.getMDevType()}, null, Restriction.EQ));
             condition.add(new Condition("id.mdevId", new Object[]{monthEM.getMDevId()}, null, Restriction.EQ));
             condition.add(new Condition("id.channel", new Object[]{1}, null, Restriction.EQ));
-            condition.add(new Condition("id.yyyymmddhh", new Object[]{yyyymmdd+"00", yyyymmdd+"23"}, null, Restriction.BETWEEN));
+            condition.add(new Condition("id.yyyymmddhhmiss", new Object[]{yyyymmdd+"000000", yyyymmdd+"235959"}, null, Restriction.BETWEEN));
             // condition.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
 
             List<LpEM> lpEMs = lpEMDao.findByConditions(condition);
@@ -349,10 +363,72 @@ public class MOEBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
                 }
             }
 
+            /*
+             * OPF-610 정규화 관련 처리로 인한 주석
             if (lastLp.getValue_30() != null)
                 return lastLp.getYyyymmddhh() + "3000";
             else if (lastLp.getValue_00() != null)
                 return lastLp.getYyyymmddhh() + "0000";
+            */
+            
+            if(lastLp.getValue() != null) {
+            	int min = Integer.parseInt(lastLp.getMinute());
+            	
+            	if(min == 0 || min == 30) {
+            		return lastLp.getYyyymmddhhmm() + "00";
+            	}
+            }
+        }
+
+        return null;
+    }
+    
+    private String getLastLpTime(MonthEMView monthEM) throws Exception {
+        String yyyymmdd = null;
+        String lpValue = null;
+        for (int i = 31; i > 0; i--) {
+            lpValue = BeanUtils.getProperty(monthEM, String.format("value_%02d", i));
+            if (lpValue != null && !lpValue.equals("")) {
+                yyyymmdd = String.format("%s%02d", monthEM.getYyyymm(), i);
+                log.info("getLastLpTime: " + yyyymmdd);
+                break;
+            }
+        }
+        if (yyyymmdd != null) {
+            Set<Condition> condition = new HashSet<Condition>();
+            log.info("MDevType[" + monthEM.getMDevType() + "] MDevId[" + monthEM.getMDevId() + "] YYYYMMDD[" + yyyymmdd + "]");
+            condition.add(new Condition("id.mdevType", new Object[]{monthEM.getMDevType()}, null, Restriction.EQ));
+            condition.add(new Condition("id.mdevId", new Object[]{monthEM.getMDevId()}, null, Restriction.EQ));
+            condition.add(new Condition("id.channel", new Object[]{1}, null, Restriction.EQ));
+            condition.add(new Condition("id.yyyymmddhhmiss", new Object[]{yyyymmdd+"000000", yyyymmdd+"235959"}, null, Restriction.BETWEEN));
+            // condition.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
+
+            List<LpEM> lpEMs = lpEMDao.findByConditions(condition);
+            LpEM lastLp = null;
+            if (lpEMs.size() > 0) {
+                lastLp = lpEMs.get(0);
+                for (int i = 0; i < lpEMs.size(); i++) {
+                    if (lastLp.getYyyymmddhh().compareTo(lpEMs.get(i).getYyyymmddhh()) < 0) {
+                        lastLp = lpEMs.get(i);
+                    }
+                }
+            }
+
+            /*
+             * OPF-610 정규화 관련 처리로 인한 주석
+            if (lastLp.getValue_30() != null)
+                return lastLp.getYyyymmddhh() + "3000";
+            else if (lastLp.getValue_00() != null)
+                return lastLp.getYyyymmddhh() + "0000";
+            */
+            
+            if(lastLp.getValue() != null) {
+            	int min = Integer.parseInt(lastLp.getMinute());
+            	
+            	if(min == 0 || min == 30) {
+            		return lastLp.getYyyymmddhhmm() + "00";
+            	}
+            }
         }
 
         return null;

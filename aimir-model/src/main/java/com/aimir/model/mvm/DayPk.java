@@ -20,7 +20,10 @@ public class DayPk extends MeteringPk{
     private Integer channel;
 	   
 	@Column(name="yyyymmdd",length=8,nullable=false)
-	private String yyyymmdd;	
+	private String yyyymmdd;
+	
+	@ColumnInfo(name="검침시간")
+	private String hh;
 	
 	public String getYyyymmdd() {
 		return yyyymmdd;
@@ -34,5 +37,11 @@ public class DayPk extends MeteringPk{
     public void setChannel(Integer channel) {
         this.channel = channel;
     }
+	public String getHh() {
+		return hh;
+	}
+	public void setHh(String hh) {
+		this.hh = hh;
+	}
 	
 }

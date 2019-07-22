@@ -23,6 +23,9 @@ public class MonthPk extends MeteringPk{
 	@Column(name="yyyymm",length=6,nullable=false)
 	private String yyyymm;	
 	
+	@ColumnInfo(name="검침일")
+	private String dd;
+	
 	public String getYyyymm() {
 		return yyyymm;
 	}
@@ -35,5 +38,10 @@ public class MonthPk extends MeteringPk{
     public void setChannel(Integer channel) {
         this.channel = channel;
     }
-	
+	public String getDd() {
+		return dd;
+	}
+	public void setDd(String dd) {
+		this.dd = dd;
+	}
 }

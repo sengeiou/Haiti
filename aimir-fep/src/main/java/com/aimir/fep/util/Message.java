@@ -21,6 +21,7 @@ public class Message implements Serializable {
     private String nameSpace = "";
     private Protocol protocolType;
     private String filename = "";
+    private String meteringType = "";
     private byte[] data;
     private long sequenceLog = 0L;
     
@@ -138,6 +139,14 @@ public class Message implements Serializable {
         this.filename = filename;
     }
 
+    public String getMeteringType() {
+		return meteringType;
+	}
+
+	public void setMeteringType(String meteringType) {
+		this.meteringType = meteringType;
+	}
+	
 	public long getSequenceLog() {
 		return sequenceLog;
 	}
@@ -161,6 +170,7 @@ public class Message implements Serializable {
         buf.append("\"nameSpace\"=\"" + nameSpace + "\"");
         buf.append("\"protocolType\"=\"" + protocolType + "\"");
         buf.append("\"filename\"=\"" + filename + "\"");
+        buf.append("\"meteringType\"=\"" + meteringType + "\"");
         buf.append("\"data\"=\"" + Hex.decode(data) + "\"");
         buf.append("\"sequenceLog\"=\"" + sequenceLog + "\"");
         buf.append("}");

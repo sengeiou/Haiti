@@ -50,8 +50,15 @@ import com.aimir.dao.system.CustomerDao;
 import com.aimir.dao.system.LocationDao;
 import com.aimir.dao.system.SupplierDao;
 import com.aimir.dao.system.TariffTypeDao;
+import com.aimir.dao.view.DayEMViewDao;
+import com.aimir.dao.view.DayGMViewDao;
+import com.aimir.dao.view.DayHMViewDao;
+import com.aimir.dao.view.DayWMViewDao;
+import com.aimir.dao.view.MonthEMViewDao;
+import com.aimir.dao.view.MonthGMViewDao;
+import com.aimir.dao.view.MonthHMViewDao;
+import com.aimir.dao.view.MonthWMViewDao;
 import com.aimir.model.device.Meter;
-import com.aimir.model.mvm.MeteringDay;
 import com.aimir.model.mvm.MeteringLP;
 import com.aimir.model.mvm.MeteringMonth;
 import com.aimir.model.mvm.Season;
@@ -61,6 +68,8 @@ import com.aimir.model.system.Customer;
 import com.aimir.model.system.Location;
 import com.aimir.model.system.Supplier;
 import com.aimir.model.system.TariffType;
+import com.aimir.model.view.MeteringDayView;
+import com.aimir.model.view.MeteringMonthView;
 import com.aimir.service.mvm.SearchMeteringDataManager;
 import com.aimir.service.mvm.SeasonManager;
 import com.aimir.service.mvm.bean.MeteringListData;
@@ -162,6 +171,30 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
 
     @Autowired
     SeasonManager seasonManager;
+    
+    @Autowired
+    DayEMViewDao dayEMViewDao;
+    
+    @Autowired
+    DayGMViewDao dayGMViewDao;
+    
+    @Autowired
+    DayHMViewDao dayHMViewDao;
+    
+    @Autowired
+    DayWMViewDao dayWMViewDao;
+    
+    @Autowired
+    MonthEMViewDao monthEMViewDao;
+    
+    @Autowired
+    MonthGMViewDao monthGMViewDao;
+    
+    @Autowired
+    MonthHMViewDao monthHMViewDao;
+    
+    @Autowired
+    MonthWMViewDao monthWMViewDao;
 
     /*
      * 시간별 검색데이타 전체 건수
@@ -792,7 +825,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
         set.add(new Condition("supplier",new Object[]{supplier},null,Restriction.EQ));
 
         // 정렬
-        set.add(new Condition("id.yyyymmddhh",new Object[]{""},null,Restriction.ORDERBYDESC));
+        set.add(new Condition("id.yyyymmddhhmiss",new Object[]{""},null,Restriction.ORDERBYDESC));
 
         if ("EM".equals(type)) {
             itr = lpEMDao.getLpEMsByListCondition(set).iterator();
@@ -893,7 +926,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             }
 
             conditionList.add(new Condition("id.channel",new Object[]{1},null,Restriction.EQ));
-            conditionList.add(new Condition("id.yyyymmddhh",new Object[]{getBeforeHour(lp.getId().getYyyymmddhh())},null,Restriction.EQ));
+            conditionList.add(new Condition("id.yyyymmddhhmiss",new Object[]{getBeforeHour(lp.getYyyymmddhh() + "%")},null,Restriction.EQ));
 
             Double prevHourTotal = 0d;
             if ("EM".equals(type)) {
@@ -930,13 +963,15 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
                 }
             }
 
-
+            /*
+             * OPF-610 정규화 관련 처리로 인한 주석
             if(lp.getLocation()==null){
                 mld.setLocationName("");
             }else{
                 mld.setLocationName(lp.getLocation().getName());
             }
-
+			*/
+            
             mld.setDetailView("");
             mld.setChecked("");
             result.add(mld);
@@ -948,7 +983,9 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
     private Double getTotalValue(MeteringLP lp){
         
         if(lp != null){
-            
+            return lp.getValue();
+            /*
+             * OPF-610 정규화 관련 처리로 인한 주석
             return 
               StringUtil.nullToDoubleZero(lp.getValue_00())
             + StringUtil.nullToDoubleZero(lp.getValue_01()) 
@@ -1010,6 +1047,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             + StringUtil.nullToDoubleZero(lp.getValue_57()) 
             + StringUtil.nullToDoubleZero(lp.getValue_58()) 
             + StringUtil.nullToDoubleZero(lp.getValue_59());
+            */
         }else{
             return 0d;
         }
@@ -1039,6 +1077,8 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
         set.add(new Condition("id.yyyymmdd",new Object[]{""},null,Restriction.ORDERBYDESC));
         
         Iterator itr = null;
+        /*
+         * OPF-610 정규화 관련 처리로 인한 주석
         if ("EM".equals(type)) {
             itr = dayEMDao.getDayEMsByListCondition(set).iterator();
         } else if ("GM".equals(type)) {
@@ -1050,16 +1090,34 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
         } else if ("SPM".equals(type)) {
             itr = daySPMDao.getDaySPMsByListCondition(set).iterator();
         } 
+        */
+        if ("EM".equals(type)) {
+            itr = dayEMViewDao.getDayEMsByListCondition(set).iterator();
+        } else if ("GM".equals(type)) {
+            itr = dayGMViewDao.getDayGMsByListCondition(set).iterator();
+        } else if ("WM".equals(type)) {
+            itr = dayWMViewDao.getDayWMsByListCondition(set).iterator();
+        } else if ("HM".equals(type)) {
+            itr = dayHMViewDao.getDayHMsByListCondition(set).iterator();
+        }
         
-        
+        /* 
+         * OPF-610 정규화 관련 처리로 인한 주석
         List<MeteringDay> mtDay = new ArrayList<MeteringDay>();
         while (itr.hasNext()) {
             MeteringDay mDay = (MeteringDay) itr.next();
             mtDay.add(mDay);
         }
+        */
         
-//        String yyyymmdd = "";
-        for(MeteringDay day : mtDay){
+        List<MeteringDayView> mtDay = new ArrayList<MeteringDayView>();
+        while (itr.hasNext()) {
+            MeteringDayView mDay = (MeteringDayView) itr.next();
+            mtDay.add(mDay);
+        }
+        
+        for(MeteringDayView day : mtDay){
+        //for(MeteringDay day : mtDay){ OPF-610 정규화 관련 처리로 인한 주석
             firstRow++;
             MeteringListData mld = new MeteringListData();
             
@@ -1153,46 +1211,70 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             
             
             conditionList.add(new Condition("id.channel",new Object[]{1},null,Restriction.EQ));
+            /*
+             * OPF-610 정규화 관련 처리로 인한 주석
             conditionList.add(new Condition("id.yyyymmdd",new Object[]{getBeforeDay(day.getId().getYyyymmdd())},null,Restriction.EQ));
+            */
+            conditionList.add(new Condition("id.yyyymmdd",new Object[]{getBeforeDay(day.getYyyymmdd())},null,Restriction.EQ));
+            
             if ("EM".equals(type)) {
+            	/*
+            	 * OPF-610 정규화 관련 처리로 인한 주석
                 if( (dayEMDao.getDayEMsByListCondition(conditionList).size() > 0) &&
                         (dayEMDao.getDayEMsByListCondition(conditionList).get(0).getTotal() != null)) {
                     mld.setBeforData(df.format(dayEMDao.getDayEMsByListCondition(conditionList).get(0).getTotal()));
+                }
+                */
+                if( (dayEMViewDao.getDayEMsByListCondition(conditionList).size() > 0) &&
+                        (dayEMViewDao.getDayEMsByListCondition(conditionList).get(0).getTotal() != null)) {
+                    mld.setBeforData(df.format(dayEMViewDao.getDayEMsByListCondition(conditionList).get(0).getTotal()));
                 }
                 else {
                      mld.setBeforData("");
                 }
             } else if ("GM".equals(type)) {
+            	/*
                 if( (dayGMDao.getDayGMsByListCondition(conditionList).size() > 0) &&
                         (dayGMDao.getDayGMsByListCondition(conditionList).get(0).getTotal() != null)) {
                     mld.setBeforData(df.format(dayGMDao.getDayGMsByListCondition(conditionList).get(0).getTotal()));
+                }
+                */
+                if( (dayGMViewDao.getDayGMsByListCondition(conditionList).size() > 0) &&
+                        (dayGMViewDao.getDayGMsByListCondition(conditionList).get(0).getTotal() != null)) {
+                    mld.setBeforData(df.format(dayGMViewDao.getDayGMsByListCondition(conditionList).get(0).getTotal()));
                 }
                 else {
                      mld.setBeforData("");
                 }
             } else if ("WM".equals(type)) {
+            	/*
                 if( (dayWMDao.getDayWMsByListCondition(conditionList).size() > 0) &&
                         (dayWMDao.getDayWMsByListCondition(conditionList).get(0).getTotal() != null)) {
                     mld.setBeforData(df.format(dayWMDao.getDayWMsByListCondition(conditionList).get(0).getTotal()));
+                }
+                */
+            	if( (dayWMViewDao.getDayWMsByListCondition(conditionList).size() > 0) &&
+                        (dayWMViewDao.getDayWMsByListCondition(conditionList).get(0).getTotal() != null)) {
+                    mld.setBeforData(df.format(dayWMViewDao.getDayWMsByListCondition(conditionList).get(0).getTotal()));
                 }
                 else {
                      mld.setBeforData("");
                 }
             } else if ("HM".equals(type)) {
+            	/*
                 if( (dayHMDao.getDayHMsByListCondition(conditionList).size() > 0) &&
                         (dayHMDao.getDayHMsByListCondition(conditionList).get(0).getTotal() != null)) {
                     mld.setBeforData(df.format(dayHMDao.getDayHMsByListCondition(conditionList).get(0).getTotal()));
+                }
+                */
+                if( (dayHMViewDao.getDayHMsByListCondition(conditionList).size() > 0) &&
+                        (dayHMViewDao.getDayHMsByListCondition(conditionList).get(0).getTotal() != null)) {
+                    mld.setBeforData(df.format(dayHMViewDao.getDayHMsByListCondition(conditionList).get(0).getTotal()));
                 }
                 else {
                      mld.setBeforData("");
                 }
             } 
-            
-            if(day.getLocation()==null){
-                mld.setLocationName("");                
-            }else{
-                mld.setLocationName(day.getLocation().getName());                
-            }
             
             mld.setChecked("");
             mld.setDetailView("");
@@ -1233,6 +1315,8 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
         // String[] strDayWeek = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
         set.add(new Condition("supplier",new Object[]{supplier},null,Restriction.EQ));
         Iterator itr = null;
+        /*
+         * OPF-610 정규화 관련 처리로 인한 주석
         if ("EM".equals(type)) {
             itr = dayEMDao.getDayEMsByListCondition(set).iterator();
         } else if ("GM".equals(type)) {
@@ -1242,15 +1326,35 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
         } else if ("HM".equals(type)) {
             itr = dayHMDao.getDayHMsByListCondition(set).iterator();
         }
-
+		*/
+        
+        if ("EM".equals(type)) {
+            itr = dayEMViewDao.getDayEMsByListCondition(set).iterator();
+        } else if ("GM".equals(type)) {
+            itr = dayGMViewDao.getDayGMsByListCondition(set).iterator();
+        } else if ("WM".equals(type)) {
+            itr = dayWMViewDao.getDayWMsByListCondition(set).iterator();
+        } else if ("HM".equals(type)) {
+            itr = dayHMViewDao.getDayHMsByListCondition(set).iterator();
+        }
+        
+        /*
+         * OPF-610 정규화 관련 처리로 인한 주석
         List<MeteringDay> mtDay = new ArrayList<MeteringDay>();
         while (itr.hasNext()) {
             MeteringDay mDay = (MeteringDay) itr.next();
             mtDay.add(mDay);
         }
-
-        // String yyyymmdd = "";
-        for (MeteringDay day : mtDay) {
+		*/
+        
+        List<MeteringDayView> mtDay = new ArrayList<MeteringDayView>();
+        while (itr.hasNext()) {
+        	MeteringDayView mDay = (MeteringDayView) itr.next();
+            mtDay.add(mDay);
+        }
+        
+        for (MeteringDayView day : mtDay) {
+        //for (MeteringDay day : mtDay) { OPF-610 정규화 관련 처리로 인한 주석
             firstRow++;
             MeteringListData mld = new MeteringListData();
             mld.setNo(firstRow);
@@ -1291,34 +1395,66 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             if (day.getMeter() != null) {
                 conditionList.add(new Condition("meter.id", new Object[] { day.getMeter().getId() }, null, Restriction.EQ));
             }
-            conditionList.add(new Condition("id.yyyymmdd", new Object[] { getBeforeDay(day.getId().getYyyymmdd()) }, null,
-                    Restriction.EQ));
+            /*
+             * OPF-610 정규화 관련 처리로 인한 주석
+            conditionList.add(new Condition("id.yyyymmdd", new Object[] { getBeforeDay(day.getId().getYyyymmdd()) }, null, Restriction.EQ));
+            */
+            conditionList.add(new Condition("id.yyyymmdd", new Object[] { getBeforeDay(day.getYyyymmdd()) }, null, Restriction.EQ));
+            
             if ("EM".equals(type)) {
+            	/*
+            	 * OPF-610 정규화 관련 처리로 인한 주석
                 if ((dayEMDao.getDayEMsByListCondition(conditionList).size() > 0)
                         && (dayEMDao.getDayEMsByListCondition(conditionList).get(0).getTotal() != null)) {
                     mld.setBeforData(df.format(dayEMDao.getDayEMsByListCondition(conditionList).get(0).getTotal()));
-                } else {
+                }*/
+            	if ((dayEMViewDao.getDayEMsByListCondition(conditionList).size() > 0)
+                        && (dayEMViewDao.getDayEMsByListCondition(conditionList).get(0).getTotal() != null)) {
+                    mld.setBeforData(df.format(dayEMViewDao.getDayEMsByListCondition(conditionList).get(0).getTotal()));
+                }
+                else {
                     mld.setBeforData("");
                 }
             } else if ("GM".equals(type)) {
+            	/*
+            	 * OPF-610 정규화 관련 처리로 인한 주석
                 if ((dayGMDao.getDayGMsByListCondition(conditionList).size() > 0)
                         && (dayGMDao.getDayGMsByListCondition(conditionList).get(0).getTotal() != null)) {
                     mld.setBeforData(df.format(dayGMDao.getDayGMsByListCondition(conditionList).get(0).getTotal()));
-                } else {
+                }*/
+            	if ((dayGMViewDao.getDayGMsByListCondition(conditionList).size() > 0)
+                        && (dayGMViewDao.getDayGMsByListCondition(conditionList).get(0).getTotal() != null)) {
+                    mld.setBeforData(df.format(dayGMViewDao.getDayGMsByListCondition(conditionList).get(0).getTotal()));
+                }
+                else {
                     mld.setBeforData("");
                 }
             } else if ("WM".equals(type)) {
+            	/*
+            	 * OPF-610 정규화 관련 처리로 인한 주석
                 if ((dayWMDao.getDayWMsByListCondition(conditionList).size() > 0)
                         && (dayWMDao.getDayWMsByListCondition(conditionList).get(0).getTotal() != null)) {
                     mld.setBeforData(df.format(dayWMDao.getDayWMsByListCondition(conditionList).get(0).getTotal()));
-                } else {
+                }*/
+            	if ((dayWMViewDao.getDayWMsByListCondition(conditionList).size() > 0)
+                        && (dayWMViewDao.getDayWMsByListCondition(conditionList).get(0).getTotal() != null)) {
+                    mld.setBeforData(df.format(dayWMViewDao.getDayWMsByListCondition(conditionList).get(0).getTotal()));
+                }
+                else {
                     mld.setBeforData("");
                 }
             } else if ("HM".equals(type)) {
+            	/*
+            	 * OPF-610 정규화 관련 처리로 인한 주석
                 if ((dayHMDao.getDayHMsByListCondition(conditionList).size() > 0)
                         && (dayHMDao.getDayHMsByListCondition(conditionList).get(0).getTotal() != null)) {
                     mld.setBeforData(df.format(dayHMDao.getDayHMsByListCondition(conditionList).get(0).getTotal()));
-                } else {
+                }*/
+            	if ((dayHMViewDao.getDayHMsByListCondition(conditionList).size() > 0)
+                        && (dayHMViewDao.getDayHMsByListCondition(conditionList).get(0).getTotal() != null)) {
+                    mld.setBeforData(df.format(dayHMViewDao.getDayHMsByListCondition(conditionList).get(0).getTotal()));
+                }
+            	else {
                     mld.setBeforData("");
                 }
             }
@@ -1335,11 +1471,6 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
                 }
             }
 
-            if (day.getLocation() == null) {
-                mld.setLocationName("");
-            } else {
-                mld.setLocationName(day.getLocation().getName());
-            }
             mld.setChecked("");
             mld.setDetailView("");
             result.add(mld);
@@ -1500,6 +1631,8 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
         set.add(new Condition("supplier",new Object[]{supplier},null,Restriction.EQ));
         Double co2StdValue = getTypeToCo2(type);
         Iterator itr = null;
+        /*
+         * OPF-610 정규화 관련 처리로 인한 주석
         if ("EM".equals(type)) {
             itr = monthEMDao.getMonthEMsByListCondition(set).iterator();
         } else if ("GM".equals(type)) {
@@ -1509,14 +1642,35 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
         } else if ("HM".equals(type)) {
             itr = monthHMDao.getMonthHMsByListCondition(set).iterator();
         }
+        */
+        if ("EM".equals(type)) {
+            itr = monthEMViewDao.getMonthEMsByListCondition(set).iterator();
+        } else if ("GM".equals(type)) {
+            itr = monthGMViewDao.getMonthGMsByListCondition(set).iterator();
+        } else if ("WM".equals(type)) {
+            itr = monthWMViewDao.getMonthWMsByListCondition(set).iterator();
+        } else if ("HM".equals(type)) {
+            itr = monthHMViewDao.getMonthHMsByListCondition(set).iterator();
+        }
+        
+        
+        /*
+         * OPF-610 정규화 관련 처리로 인한 주석
         List<MeteringMonth> mtMonth = new ArrayList<MeteringMonth>();
         while (itr.hasNext()) {
             MeteringMonth mMonth = (MeteringMonth) itr.next();
             mtMonth.add(mMonth);
         }
-//        String yyyymm = "";
-
-        for (MeteringMonth month : mtMonth) {
+        */
+        
+        List<MeteringMonthView> mtMonth = new ArrayList<MeteringMonthView>();
+        while (itr.hasNext()) {
+        	MeteringMonthView mMonth = (MeteringMonthView) itr.next();
+            mtMonth.add(mMonth);
+        }
+        
+        for (MeteringMonthView month : mtMonth) {
+        //for (MeteringMonth month : mtMonth) { OPF-610 정규화 관련 처리로 인한 주석
             firstRow++;
             MeteringListData mld = new MeteringListData();
             mld.setNo(firstRow);
@@ -1553,35 +1707,62 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             if (month.getMeter() != null) {
                 conditionList.add(new Condition("meter.id", new Object[] { month.getMeter().getId() }, null, Restriction.EQ));
             }
-            conditionList.add(new Condition("id.yyyymm", new Object[] { getBeforeMonth(month.getId().getYyyymm()) }, null,
-                    Restriction.EQ));
-
+            /*
+             * OPF-610 정규화 관련 처리로 인한 주석
+            conditionList.add(new Condition("id.yyyymm", new Object[] { getBeforeMonth(month.getId().getYyyymm()) }, null, Restriction.EQ));
+			*/
+            conditionList.add(new Condition("id.yyyymm", new Object[] { getBeforeMonth(month.getYyyymm()) }, null, Restriction.EQ));
+            
             if ("EM".equals(type)) {
+            	/*
                 if ((monthEMDao.getMonthEMsByListCondition(conditionList).size() > 0)
                         && (monthEMDao.getMonthEMsByListCondition(conditionList).get(0).getTotal() != null)) {
                     mld.setBeforData(df.format(monthEMDao.getMonthEMsByListCondition(conditionList).get(0).getTotal()));
-                } else {
+                }*/
+            	if ((monthEMViewDao.getMonthEMsByListCondition(conditionList).size() > 0)
+                        && (monthEMViewDao.getMonthEMsByListCondition(conditionList).get(0).getTotal() != null)) {
+                    mld.setBeforData(df.format(monthEMViewDao.getMonthEMsByListCondition(conditionList).get(0).getTotal()));
+                }
+                 else {
                     mld.setBeforData("");
                 }
             } else if ("GM".equals(type)) {
+            	/*
                 if ((monthGMDao.getMonthGMsByListCondition(conditionList).size() > 0)
                         && (monthGMDao.getMonthGMsByListCondition(conditionList).get(0).getTotal() != null)) {
                     mld.setBeforData(df.format(monthGMDao.getMonthGMsByListCondition(conditionList).get(0).getTotal()));
-                } else {
+                }*/
+            	if ((monthGMViewDao.getMonthGMsByListCondition(conditionList).size() > 0)
+                        && (monthGMViewDao.getMonthGMsByListCondition(conditionList).get(0).getTotal() != null)) {
+                    mld.setBeforData(df.format(monthGMViewDao.getMonthGMsByListCondition(conditionList).get(0).getTotal()));
+                }
+            	else {
                     mld.setBeforData("");
                 }
             } else if ("WM".equals(type)) {
+            	/*
                 if ((monthWMDao.getMonthWMsByListCondition(conditionList).size() > 0)
                         && (monthWMDao.getMonthWMsByListCondition(conditionList).get(0).getTotal() != null)) {
                     mld.setBeforData(df.format(monthWMDao.getMonthWMsByListCondition(conditionList).get(0).getTotal()));
-                } else {
+                }*/
+            	if ((monthWMViewDao.getMonthWMsByListCondition(conditionList).size() > 0)
+                        && (monthWMViewDao.getMonthWMsByListCondition(conditionList).get(0).getTotal() != null)) {
+                    mld.setBeforData(df.format(monthWMViewDao.getMonthWMsByListCondition(conditionList).get(0).getTotal()));
+                }
+            	else {
                     mld.setBeforData("");
                 }
             } else if ("HM".equals(type)) {
+            	/*
                 if ((monthHMDao.getMonthHMsByListCondition(conditionList).size() > 0)
                         && (monthHMDao.getMonthHMsByListCondition(conditionList).get(0).getTotal() != null)) {
                     mld.setBeforData(df.format(monthHMDao.getMonthHMsByListCondition(conditionList).get(0).getTotal()));
-                } else {
+                }*/
+            	if ((monthHMViewDao.getMonthHMsByListCondition(conditionList).size() > 0)
+                        && (monthHMViewDao.getMonthHMsByListCondition(conditionList).get(0).getTotal() != null)) {
+                    mld.setBeforData(df.format(monthHMViewDao.getMonthHMsByListCondition(conditionList).get(0).getTotal()));
+                }
+            	else {
                     mld.setBeforData("");
                 }
             }
@@ -1598,11 +1779,6 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
                 }
             }
 
-            if (month.getLocation() == null) {
-                mld.setLocationName("");
-            } else {
-                mld.setLocationName(month.getLocation().getName());
-            }
             mld.setChecked("");
             mld.setDetailView("");
             result.add(mld);

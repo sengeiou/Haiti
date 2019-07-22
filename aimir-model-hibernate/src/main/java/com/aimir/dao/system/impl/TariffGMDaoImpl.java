@@ -12,8 +12,9 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.stereotype.Repository;
+
 import com.aimir.constants.CommonConstants;
 import com.aimir.constants.CommonConstants.DefaultChannel;
 import com.aimir.constants.CommonConstants.DeviceType;
@@ -25,10 +26,14 @@ import com.aimir.dao.mvm.MonthGMDao;
 import com.aimir.dao.mvm.SeasonDao;
 import com.aimir.dao.system.ContractDao;
 import com.aimir.dao.system.TariffGMDao;
+import com.aimir.dao.view.DayGMViewDao;
+import com.aimir.dao.view.MonthGMViewDao;
 import com.aimir.model.mvm.DayGM;
 import com.aimir.model.mvm.MonthGM;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.TariffGM;
+import com.aimir.model.view.DayGMView;
+import com.aimir.model.view.MonthGMView;
 import com.aimir.model.vo.TariffGMVO;
 import com.aimir.util.CalendarUtil;
 import com.aimir.util.StringUtil;
@@ -58,7 +63,13 @@ public class TariffGMDaoImpl extends AbstractHibernateGenericDao<TariffGM, Integ
 	
     @Autowired
     HibernateTransactionManager transactionManager;
-
+    
+    @Autowired
+    DayGMViewDao dayGMViewDao;
+    
+    @Autowired
+    MonthGMViewDao monthGMViewDao;
+    
 	@Autowired
 	protected TariffGMDaoImpl(SessionFactory sessionFactory) {
 		super(TariffGM.class);
@@ -254,7 +265,10 @@ public class TariffGMDaoImpl extends AbstractHibernateGenericDao<TariffGM, Integ
 			TariffGM tariffGM = null;
 			@SuppressWarnings("unused")
 	        MonthGM monthGM = null;
+			MonthGMView monthGMView = null;
+			
 			DayGM dayGM = null;
+			DayGMView dayGMView = null;
 			
 			Double usageUnitPrice = 0.0;
 			Double basicRate = 0.0;
@@ -267,6 +281,7 @@ public class TariffGMDaoImpl extends AbstractHibernateGenericDao<TariffGM, Integ
 	    		{
 	    			tariffGM = new TariffGM();
 	    			dayGM = new DayGM();
+	    			dayGMView = new DayGMView();
 	    			
 	    			tariffParam.put("searchDate", Integer.toString(i));
 	    			tariffParam.put("seasonId", seasonDao.getSeasonByMonth(startDate.substring(4, 6)).getId());
@@ -277,8 +292,14 @@ public class TariffGMDaoImpl extends AbstractHibernateGenericDao<TariffGM, Integ
 	    			tariffParam.put("yyyymmdd", Integer.toString(i));
 	    			
 //	    			dayGM =dayGMDao.getDayGM(tariffParam);
+	    			/*
+	    			 * OPF-610 정규화 관련 처리로 인한 주석
 	    			dayGM =dayGMDao.getDayGMbySupplierId(tariffParam);
 	    			usage = dayGM==null||dayGM.getTotal()==null?0.0:dayGM.getTotal();
+	    			*/
+	    			
+	    			dayGMView = dayGMViewDao.getDayGMbySupplierId(tariffParam);
+	    			usage = dayGMView ==  null || dayGMView.getTotal() == null ? 0.0 : dayGMView.getTotal();
 	    			
 	    			chargeSum = chargeSum + usage * usageUnitPrice;
 	    			period++;
@@ -294,6 +315,7 @@ public class TariffGMDaoImpl extends AbstractHibernateGenericDao<TariffGM, Integ
 	    		for(int i=Integer.parseInt(startDate);i<=Integer.parseInt(endDate);i=Integer.parseInt(CalendarUtil.getDateWithoutFormat(Integer.toString(i),Calendar.MONTH, 1))){
 	    			tariffGM = new TariffGM();
 	    			monthGM = new MonthGM();
+	    			
 	    			tariffParam.put("searchDate", Integer.toString(i));
 	    			tariffParam.put("seasonId", seasonDao.getSeasonByMonth(startDate.substring(4, 6)).getId());
 	    			tariffGM = getApplyedTariff(tariffParam);
@@ -302,18 +324,25 @@ public class TariffGMDaoImpl extends AbstractHibernateGenericDao<TariffGM, Integ
 
 	    			tariffParam.put("yyyymm", Integer.toString(i).substring(0, 6));
 //	    			monthGM =monthGMDao.getMonthGM(tariffParam);
+	    			/*
+	    			 * OPF-610 정규화 관련 처리로 인한 주석
 	    			monthGM =monthGMDao.getMonthGMbySupplierId(tariffParam);
 	    			if(monthGM != null) {
-	    			usage = dayGM==null||dayGM.getTotal()==null?0.0:dayGM.getTotal();
+		    			usage = dayGM==null||dayGM.getTotal()==null?0.0:dayGM.getTotal();
+		    			chargeSum = chargeSum + usage * usageUnitPrice + basicRate;
+	    			}
+	    			*/
 	    			
-	    			chargeSum = chargeSum + usage * usageUnitPrice + basicRate;
+	    			monthGMView = monthGMViewDao.getMonthGMbySupplierId(tariffParam);
+	    			if(monthGMView != null) {
+		    			usage = monthGMView == null || monthGMView.getTotal() == null ? 0.0 : monthGMView.getTotal();
+		    			chargeSum = chargeSum + usage * usageUnitPrice + basicRate;
 	    			}
 	    		}
 	    	}
 			
 			
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 			chargeSum=0.0;

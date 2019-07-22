@@ -273,7 +273,7 @@ public class ECGBillingMonthlyV3Task extends ScheduleTask {
         conditions.add(new Condition("id.mdevId", new Object[]{meterId}, null, Restriction.EQ));
         conditions.add(new Condition("id.channel", new Object[]{1}, null, Restriction.EQ));
         List<Projection> projections = new ArrayList<Projection>();
-        projections.add(Projections.alias(Projections.max("id.yyyymmddhh"), "maxYyyymmddhh"));
+        projections.add(Projections.alias(Projections.max("id.yyyymmddhhmiss"), "maxYyyymmddhh"));
         List<Map<String, Object>> maxyyyymmddhh = ((LpEMDaoImpl)lpEMDao).findByConditionsAndProjections(conditions, projections);
         
         if (maxyyyymmddhh != null && maxyyyymmddhh.size() == 1) {
@@ -287,7 +287,7 @@ public class ECGBillingMonthlyV3Task extends ScheduleTask {
             conditions.add(new Condition("id.mdevType", new Object[]{DeviceType.Meter}, null, Restriction.EQ));
             conditions.add(new Condition("id.mdevId", new Object[]{meterId}, null, Restriction.EQ));
             conditions.add(new Condition("id.channel", new Object[]{1, 2}, null, Restriction.IN));
-            conditions.add(new Condition("id.yyyymmddhh", new Object[]{lastLpTime}, null, Restriction.EQ));
+            conditions.add(new Condition("id.yyyymmddhhmiss", new Object[]{lastLpTime + "%"}, null, Restriction.EQ));
             
             List<LpEM> lplist = lpEMDao.findByConditions(conditions);
             

@@ -128,7 +128,7 @@ public class OmniMDSaver extends AbstractMDSaver {
             condition.add(new Condition("id.mdevType", new Object[]{DeviceType.Meter}, null, Restriction.EQ));
             condition.add(new Condition("id.mdevId", new Object[]{meterNo}, null, Restriction.EQ));
             // condition.add(new Condition("id.dst", new Object[]{dst}, null, Restriction.EQ));
-            condition.add(new Condition("yyyymmdd", new Object[]{lpdate}, null, Restriction.EQ));
+            condition.add(new Condition("id.yyyymmddhhmiss", new Object[]{lpdate + "%"}, null, Restriction.LIKE));
             condition.add(new Condition("id.channel", new Object[]{1}, null, Restriction.EQ));
             
             switch (MeterType.valueOf(meter.getMeterType().getName())) {

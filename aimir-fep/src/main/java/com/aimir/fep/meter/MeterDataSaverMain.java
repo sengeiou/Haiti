@@ -185,7 +185,7 @@ public class MeterDataSaverMain
             mdel.setEmDataCnt(mdHistoryData.getEntryCount());
             mdel.setMcuId(mdHistoryData.getMcuId());
             mdel.decode(mdHistoryData.getMdData(), mdHistoryData.getNameSpace(),
-                    mdHistoryData.getIpAddr(), mdHistoryData.getProtocolType());
+                    mdHistoryData.getIpAddr(), mdHistoryData.getProtocolType(), mdHistoryData.getMeteringType());
             
             txmanager.commit(txstatus);
             return mdel.getMeasurementDataEntry();
@@ -566,7 +566,7 @@ public class MeterDataSaverMain
         bos.write(data.getPayload());
         
         MeasurementDataEntry mde = new MeasurementDataEntry();
-        mde.decode(bos.toByteArray(), 0, mcuId, null, null, null);
+        mde.decode(bos.toByteArray(), 0, mcuId, null, null, null, null);
         save(mcuId, mde);
     }
     

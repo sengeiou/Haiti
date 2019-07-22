@@ -7,11 +7,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.JobExecutionContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,7 @@ import com.aimir.dao.system.CodeDao;
 import com.aimir.dao.system.ContractDao;
 import com.aimir.dao.system.TariffTypeDao;
 import com.aimir.dao.system.TariffWMDao;
+import com.aimir.dao.view.DayWMViewDao;
 import com.aimir.model.device.Meter;
 import com.aimir.model.mvm.BillingDayWM;
 import com.aimir.model.mvm.DayWM;
@@ -34,9 +36,10 @@ import com.aimir.model.system.Code;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.TariffType;
 import com.aimir.model.system.TariffWM;
+import com.aimir.model.view.DayWMView;
 import com.aimir.util.Condition;
-import com.aimir.util.DateTimeUtil;
 import com.aimir.util.Condition.Restriction;
+import com.aimir.util.DateTimeUtil;
 import com.aimir.util.TimeUtil;
 
 @Transactional
@@ -73,6 +76,9 @@ public class DailyWMBillingInfoSaveTask  extends ScheduleTask{
 	
 	@Autowired
 	BillingDayWMDao billingDayWMDao;
+	
+	@Autowired
+	DayWMViewDao dayWMViewDao;
 	
 	public void execute(JobExecutionContext context) {
 	    log.info("########### START DailyWMBillingInfo ###############");
@@ -187,8 +193,13 @@ public class DailyWMBillingInfoSaveTask  extends ScheduleTask{
 	            param.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
 	            param.add(new Condition("id.yyyymmdd", new Object[]{readToDate.substring(0,8)}, null, Restriction.GE));
 	            param.add(new Condition("id.yyyymmdd", new Object[]{readToDate.substring(0,8)}, null, Restriction.ORDERBYDESC));
+	            
+	            /*
+	             * OPF-610 정규화 관련 처리로 인한 주석
 	            List<DayWM> dayWM = dayWMDao.getDayWMsByListCondition(param);
-
+				*/
+	            List<DayWMView> dayWM = dayWMViewDao.getDayWMsByListCondition(param);
+	            
 	            String readToDateYYYYMMDD = readToDate.substring(0,8);                      // 마지막 읽은 일자
 //	          String readFromDateHH = saveReadFromDateYYYYMMDDHHMMSS.substring(8,10);
 	            String newReadFromDateHH = newReadFromDateYYYYMMDDHHMMSS.substring(8,10);       // 마지막 읽은 날의 새로 읽을 시간
@@ -331,6 +342,40 @@ public class DailyWMBillingInfoSaveTask  extends ScheduleTask{
 	     * @return
 	     */
 	    private Double[] getDayValue24(DayWM dayWm) {
+
+	        Double[] dayValues = new Double[24];
+
+	        /* OPF-610 정규화 관련 처리로 인한 주석
+	        dayValues[0] = (dayWm.getValue_00() == null ? 0 : dayWm.getValue_00());
+	        dayValues[1] = (dayWm.getValue_01() == null ? 0 : dayWm.getValue_01());
+	        dayValues[2] = (dayWm.getValue_02() == null ? 0 : dayWm.getValue_02());
+	        dayValues[3] = (dayWm.getValue_03() == null ? 0 : dayWm.getValue_03());
+	        dayValues[4] = (dayWm.getValue_04() == null ? 0 : dayWm.getValue_04());
+	        dayValues[5] = (dayWm.getValue_05() == null ? 0 : dayWm.getValue_05());
+	        dayValues[6] = (dayWm.getValue_06() == null ? 0 : dayWm.getValue_06());
+	        dayValues[7] = (dayWm.getValue_07() == null ? 0 : dayWm.getValue_07());
+	        dayValues[8] = (dayWm.getValue_08() == null ? 0 : dayWm.getValue_08());
+	        dayValues[9] = (dayWm.getValue_09() == null ? 0 : dayWm.getValue_09());
+	        dayValues[10] = (dayWm.getValue_10() == null ? 0 : dayWm.getValue_10());
+	        dayValues[11] = (dayWm.getValue_11() == null ? 0 : dayWm.getValue_11());
+	        dayValues[12] = (dayWm.getValue_12() == null ? 0 : dayWm.getValue_12());
+	        dayValues[13] = (dayWm.getValue_13() == null ? 0 : dayWm.getValue_13());
+	        dayValues[14] = (dayWm.getValue_14() == null ? 0 : dayWm.getValue_14());
+	        dayValues[15] = (dayWm.getValue_15() == null ? 0 : dayWm.getValue_15());
+	        dayValues[16] = (dayWm.getValue_16() == null ? 0 : dayWm.getValue_16());
+	        dayValues[17] = (dayWm.getValue_17() == null ? 0 : dayWm.getValue_17());
+	        dayValues[18] = (dayWm.getValue_18() == null ? 0 : dayWm.getValue_18());
+	        dayValues[19] = (dayWm.getValue_19() == null ? 0 : dayWm.getValue_19());
+	        dayValues[20] = (dayWm.getValue_20() == null ? 0 : dayWm.getValue_20());
+	        dayValues[21] = (dayWm.getValue_21() == null ? 0 : dayWm.getValue_21());
+	        dayValues[22] = (dayWm.getValue_22() == null ? 0 : dayWm.getValue_22());
+	        dayValues[23] = (dayWm.getValue_23() == null ? 0 : dayWm.getValue_23());
+			*/
+	        
+	        return dayValues;
+	    }
+	    
+	    private Double[] getDayValue24(DayWMView dayWm) {
 
 	        Double[] dayValues = new Double[24];
 

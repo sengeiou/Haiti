@@ -1745,7 +1745,7 @@ public class CommonConstants {
     
     public enum ElectricityChannel {
 
-        Co2(0), Usage(1), Integrated(98), PowerFactor(99), ValidationStatus(100);
+        Co2(0), Usage(1), Integrated(98), PowerFactor(99), ValidationStatus(100), Etc(10000);
         
         private Integer channel;
         
@@ -1756,6 +1756,17 @@ public class CommonConstants {
         public Integer getChannel() {
             return this.channel;
         }
+    }
+    
+    public static ElectricityChannel getElectricityChannel(int channel) {
+    	
+    	for(ElectricityChannel eChannel : ElectricityChannel.values()) {
+    		if(eChannel.getChannel() == channel) {
+    			return eChannel;
+    		}
+    	}
+    	
+    	return ElectricityChannel.Etc;
     }
     
     public enum IntegratedFlag {
@@ -2206,6 +2217,30 @@ public class CommonConstants {
         
         public int getType() {
             return this.type;
+        }
+                
+        public static MeteringType getMeteringType(int code){
+            
+        	MeteringType unit = null;
+            for(MeteringType type: MeteringType.values()) {
+                if (type.getType() == code)
+                    unit = type;
+            }
+        
+            return unit;
+        }
+        
+        public static MeteringType getMeteringType(String name){
+        	MeteringType unit = null;
+            for(MeteringType type: MeteringType.values()) {
+                if (type.name().equals(name))
+                    unit = type;
+            }
+            
+            if(unit == null)
+            	return MeteringType.Normal;
+            else
+            	return unit;
         }
     }
     

@@ -46,6 +46,30 @@ public class TimeUtil
         return strDate;
     }
     
+    public static String formatDateTime(String inDate, String foramt) {
+        String strDate = inDate;
+
+        if (!"".equals(StringUtil.nullToBlank(inDate))){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+
+            if (inDate.trim().length() > 14) {
+                inDate = inDate.substring(0, 14);
+            }
+
+            try {
+                Date date = sdf.parse(inDate);
+                SimpleDateFormat formatter;
+                formatter = new SimpleDateFormat(foramt);
+
+                strDate = formatter.format(date);
+            } catch (ParseException pe) {
+                
+            }
+        }
+
+        return strDate;
+    }
+    
     /**
      * @return 현재일시(yyyyMMddHHmmssSSS)
      */

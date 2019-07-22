@@ -785,7 +785,7 @@ public class CmdUtil
             txStatus = txManager.getTransaction(new DefaultTransactionDefinition(TransactionDefinition.ISOLATION_READ_UNCOMMITTED));
         
             Condition condition1 = new Condition("id.mdevId",new Object[] {meterId}, null,  Restriction.EQ);
-            Condition condition2 = new Condition("yyyymmdd",new Object[] {TimeUtil.getPreDay(yyyymmdd,-1).substring(0,8)}, null,  Restriction.EQ);
+            Condition condition2 = new Condition("id.yyyymmddhhmiss",new Object[] {TimeUtil.getPreDay(yyyymmdd,-1).substring(0,8) + "%"}, null,  Restriction.LIKE);
             set.add(condition1);
             set.add(condition2);
             
@@ -801,9 +801,9 @@ public class CmdUtil
                     if(lp.getChannel().equals(DefaultChannel.Usage.getCode())){
                         lpData[i++] = new LPData();
                         lpData[i++].setDatetime(lp.getYyyymmddhh());
-                        lpData[i++].setCh(new Double[]{lp.getValue_00()});
-                        lpData[i++].setLp(lp.getValue()+lp.getValue_00());
-                        lpData[i++].setV(new Double[]{lp.getValue_00()});
+                        lpData[i++].setCh(new Double[]{lp.getValue()});
+                        lpData[i++].setLp(lp.getValue()+lp.getValue());
+                        lpData[i++].setV(new Double[]{lp.getValue()});
                     }
 
                 }

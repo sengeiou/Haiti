@@ -49,7 +49,7 @@
                 <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
                 <!--<prop key="hibernate.hbm2ddl.auto">validate</prop>-->
                 <!-- <prop key="hibernate.hbm2ddl.auto">false</prop>-->
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.hbm2ddl.auto">none</prop>
                 <prop key="hibernate.connection.autocommit">false</prop>
                 <!--<prop key="hibernate.query.substitutions">Y</prop>-->
                 <prop key="hibernate.cache.use_second_level_cache">true</prop>
@@ -92,7 +92,7 @@
     </bean>
     
     <!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
-    <bean id="auditTransactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+    <bean id="auditTransactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="auditSessionFactory"/>
         <property name="defaultTimeout" value="${tx.default.timeout}"/>
     </bean>

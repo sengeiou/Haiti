@@ -13,7 +13,7 @@ import org.eclipse.persistence.annotations.Indexes;
 @Entity
 @Table(name = "LP_EM")
 @Indexes({
-    @Index(name="IDX_LP_EM_01", columnNames={"mdev_type", "mdev_id", "dst", "yyyymmdd", "channel", "full_location"})
+    @Index(name="IDX_LP_EM_TOBE_01", columnNames={"mdev_type", "mdev_id", "dst", "yyyymmdd", "channel"})
 })
 public class LpEM extends MeteringLP{
 

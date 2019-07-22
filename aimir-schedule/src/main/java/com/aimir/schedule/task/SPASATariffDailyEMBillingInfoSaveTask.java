@@ -9,11 +9,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.JobExecutionContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,7 @@ import com.aimir.dao.system.ContractDao;
 import com.aimir.dao.system.TOURateDao;
 import com.aimir.dao.system.TariffEMDao;
 import com.aimir.dao.system.TariffTypeDao;
+import com.aimir.dao.view.DayEMViewDao;
 import com.aimir.model.device.Meter;
 import com.aimir.model.mvm.BillingDayEM;
 import com.aimir.model.mvm.DayEM;
@@ -39,11 +41,12 @@ import com.aimir.model.system.Contract;
 import com.aimir.model.system.TOURate;
 import com.aimir.model.system.TariffEM;
 import com.aimir.model.system.TariffType;
+import com.aimir.model.view.DayEMView;
 import com.aimir.util.CalendarUtil;
 import com.aimir.util.Condition;
+import com.aimir.util.Condition.Restriction;
 import com.aimir.util.DateTimeUtil;
 import com.aimir.util.StringUtil;
-import com.aimir.util.Condition.Restriction;
 import com.aimir.util.TimeUtil;
 
 @Transactional
@@ -83,6 +86,9 @@ public class SPASATariffDailyEMBillingInfoSaveTask extends ScheduleTask {
 	
 	@Autowired
 	BillingDayEMDao billingDayEMDao;
+	
+	@Autowired
+	DayEMViewDao dayEMViewDao;
 
 	private boolean isNowRunning = false;
 	
@@ -204,7 +210,12 @@ public class SPASATariffDailyEMBillingInfoSaveTask extends ScheduleTask {
             param.add(new Condition("id.channel", new Object[]{DefaultChannel.Usage.getCode()}, null, Restriction.EQ));
             param.add(new Condition("id.yyyymmdd", new Object[]{readToDate.substring(0,8)}, null, Restriction.GE));
             param.add(new Condition("id.yyyymmdd", new Object[]{readToDate.substring(0,8)}, null, Restriction.ORDERBYDESC));
+            
+            /*
+             * OPF-610 정규화 관련 처리로 인한 주석
             List<DayEM> dayEM = dayEMDao.getDayEMsByListCondition(param);
+            */
+            List<DayEMView> dayEM = dayEMViewDao.getDayEMsByListCondition(param);
 
             String readToDateYYYYMMDD = readToDate.substring(0,8);                          // 마지막 읽은 일자
             String newReadFromDateHH = newReadFromDateYYYYMMDDHHMMSS.substring(8,10);       // 마지막 읽은 날의 새로 읽을 시간
@@ -548,6 +559,41 @@ public class SPASATariffDailyEMBillingInfoSaveTask extends ScheduleTask {
 	     * @return
 	     */
 	    private Double[] getDayValue24(DayEM dayEm) {
+
+	        Double[] dayValues = new Double[24];
+
+	        /*
+	         * OPF-610 정규화 관련 처리로 인한 주석
+	        dayValues[0] = (dayEm.getValue_00() == null ? 0 : dayEm.getValue_00());
+	        dayValues[1] = (dayEm.getValue_01() == null ? 0 : dayEm.getValue_01());
+	        dayValues[2] = (dayEm.getValue_02() == null ? 0 : dayEm.getValue_02());
+	        dayValues[3] = (dayEm.getValue_03() == null ? 0 : dayEm.getValue_03());
+	        dayValues[4] = (dayEm.getValue_04() == null ? 0 : dayEm.getValue_04());
+	        dayValues[5] = (dayEm.getValue_05() == null ? 0 : dayEm.getValue_05());
+	        dayValues[6] = (dayEm.getValue_06() == null ? 0 : dayEm.getValue_06());
+	        dayValues[7] = (dayEm.getValue_07() == null ? 0 : dayEm.getValue_07());
+	        dayValues[8] = (dayEm.getValue_08() == null ? 0 : dayEm.getValue_08());
+	        dayValues[9] = (dayEm.getValue_09() == null ? 0 : dayEm.getValue_09());
+	        dayValues[10] = (dayEm.getValue_10() == null ? 0 : dayEm.getValue_10());
+	        dayValues[11] = (dayEm.getValue_11() == null ? 0 : dayEm.getValue_11());
+	        dayValues[12] = (dayEm.getValue_12() == null ? 0 : dayEm.getValue_12());
+	        dayValues[13] = (dayEm.getValue_13() == null ? 0 : dayEm.getValue_13());
+	        dayValues[14] = (dayEm.getValue_14() == null ? 0 : dayEm.getValue_14());
+	        dayValues[15] = (dayEm.getValue_15() == null ? 0 : dayEm.getValue_15());
+	        dayValues[16] = (dayEm.getValue_16() == null ? 0 : dayEm.getValue_16());
+	        dayValues[17] = (dayEm.getValue_17() == null ? 0 : dayEm.getValue_17());
+	        dayValues[18] = (dayEm.getValue_18() == null ? 0 : dayEm.getValue_18());
+	        dayValues[19] = (dayEm.getValue_19() == null ? 0 : dayEm.getValue_19());
+	        dayValues[20] = (dayEm.getValue_20() == null ? 0 : dayEm.getValue_20());
+	        dayValues[21] = (dayEm.getValue_21() == null ? 0 : dayEm.getValue_21());
+	        dayValues[22] = (dayEm.getValue_22() == null ? 0 : dayEm.getValue_22());
+	        dayValues[23] = (dayEm.getValue_23() == null ? 0 : dayEm.getValue_23());
+			*/
+	        
+	        return dayValues;
+	    }
+	    
+	    private Double[] getDayValue24(DayEMView dayEm) {
 
 	        Double[] dayValues = new Double[24];
 

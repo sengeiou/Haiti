@@ -67,6 +67,7 @@ import com.aimir.constants.CommonConstants.McuType;
 import com.aimir.constants.CommonConstants.MeterModel;
 import com.aimir.constants.CommonConstants.MeterProgramKind;
 import com.aimir.constants.CommonConstants.MeterVendor;
+import com.aimir.constants.CommonConstants.MeteringType;
 import com.aimir.constants.CommonConstants.ModemCommandType;
 import com.aimir.constants.CommonConstants.ModemIFType;
 import com.aimir.constants.CommonConstants.ModemNetworkType;
@@ -4741,6 +4742,7 @@ public class CommandGW implements CommandGWMBean {
 				MDData mdData = new MDData(new WORD(1));
 				mdData.setMcuId(mcuId);
 				mdData.setMdData(mdv.encode());
+				mdData.setMeteringType(MeteringType.OnDemand);
 				// handler.putServiceData(ProcessorHandler.SERVICE_MEASUREMENTDATA,
 				// mdData);
 			}
@@ -4798,6 +4800,7 @@ public class CommandGW implements CommandGWMBean {
 				mdData.setMcuId(mcuId);
 				mdData.setTotalLength(ba.toByteArray().length);
 				mdData.setMdData(ba.toByteArray());
+				mdData.setMeteringType(MeteringType.OnDemand);
 				// handler.putServiceData(ProcessorHandler.SERVICE_MEASUREMENTDATA,
 				// mdData);
 
@@ -19764,6 +19767,7 @@ public class CommandGW implements CommandGWMBean {
 							mdData.setMcuId(mcuId);
 							mdData.setTotalLength(ba.toByteArray().length);
 							mdData.setMdData(ba.toByteArray());						
+							mdData.setMeteringType(MeteringType.OnDemand);
 							
 							putServiceData(target, mdData, startLongTime, endLongTime);
 						}
@@ -19934,7 +19938,8 @@ public class CommandGW implements CommandGWMBean {
 					mdData.setMcuId(mcuId);
 					mdData.setTotalLength(ba.toByteArray().length);
 					mdData.setMdData(ba.toByteArray());
-
+					mdData.setMeteringType(MeteringType.OnDemand);
+					
 					putServiceData(target, mdData, startLongTime, endLongTime);
 				}
 			/*
@@ -20345,6 +20350,7 @@ public class CommandGW implements CommandGWMBean {
             commLog.setStartDateTime(DateTimeUtil.getDateString(startLongTime));//Start Time은 sessionOpen 시 지정
             commLog.setEndDateTime(DateTimeUtil.getDateString(endLongTime));
             commLog.setProtocolType(target.getProtocol());
+            commLog.setMeteringType(mdData.getMeteringType().name());
             log.debug("startTime["+commLog.getStartDateTime()+"] endTime["+commLog.getEndDateTime()+"]");
             log.debug("startLongTime["+startLongTime+"] endLongTime["
                     +endLongTime+"]");
@@ -21822,6 +21828,7 @@ public class CommandGW implements CommandGWMBean {
 				commLog.setSenderId(mcuId);
 				commLog.setStartDateTime(DateTimeUtil.getDateString(new Date()));
 				commLog.setEndDateTime(DateTimeUtil.getDateString(new Date()));
+				commLog.setMeteringType(MeteringType.OnDemand.name());
 				handler.putServiceData(ProcessorHandler.SERVICE_MEASUREMENTDATA, commLog);
 			}
 			else {
@@ -21829,6 +21836,7 @@ public class CommandGW implements CommandGWMBean {
 				mdData.setMcuId(mcuId);
 				mdData.setTotalLength(ba.toByteArray().length);
 				mdData.setMdData(ba.toByteArray());
+				mdData.setMeteringType(MeteringType.OnDemand);
 				handler.putServiceData(ProcessorHandler.SERVICE_MEASUREMENTDATA, mdData); 
 			}
 		} catch (Exception e) {
@@ -23145,6 +23153,7 @@ public class CommandGW implements CommandGWMBean {
 						mdData.setMcuId("127.0.0.1");
 						mdData.setTotalLength(metringData.length);
 						mdData.setMdData(metringData);
+						mdData.setMeteringType(MeteringType.OnDemand);
 						ProcessorHandler handler = DataUtil.getBean(ProcessorHandler.class);
 				        handler.putServiceData(ProcessorHandler.SERVICE_MEASUREMENTDATA, mdData); 					
 					}
@@ -23251,6 +23260,7 @@ public class CommandGW implements CommandGWMBean {
 							mdData.setMcuId(mcuId);
 							mdData.setTotalLength(metringData.length);
 							mdData.setMdData(metringData);
+							mdData.setMeteringType(MeteringType.OnDemand);
 							ProcessorHandler handler = DataUtil.getBean(ProcessorHandler.class);
 					        handler.putServiceData(ProcessorHandler.SERVICE_MEASUREMENTDATA, mdData); 
 			        	}else{

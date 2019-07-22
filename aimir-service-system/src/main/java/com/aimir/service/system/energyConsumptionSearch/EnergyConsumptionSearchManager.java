@@ -18,6 +18,8 @@ import com.aimir.model.mvm.MeteringDay;
 import com.aimir.model.mvm.MonthEM;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.OperatorContract;
+import com.aimir.model.view.DayEMView;
+import com.aimir.model.view.MonthEMView;
 
 /**
  * EnergyConsumptionSearchManager.java Description 
@@ -146,6 +148,18 @@ public interface EnergyConsumptionSearchManager {
 	public List<DayEM> getDayEMs(DayEM dayEM);
 
 	/**
+	 * method name : getDeviceSpecificTimeChart1
+	 * method Desc : DayEM 조회 - 조건(DayEM)
+	 *
+	 * @param contractId
+	 * @param basicDay
+	 * @param channel
+	 * @param mdevType
+	 * @return
+	 */
+	public List<DayEMView> getDayEMViews(DayEMView dayEmView);
+	
+	/**
 	 * method name : getMonthEMs
 	 * method Desc : MonthEM 조회 - 조건(MonthEM)
 	 *
@@ -154,6 +168,15 @@ public interface EnergyConsumptionSearchManager {
 	 */
 	public List<MonthEM> getMonthEMs(MonthEM monthEM);
 
+	/**
+	 * method name : getMonthEMViews
+	 * method Desc : MonthEM 조회 - 조건(MonthEMView)
+	 *
+	 * @param monthEM
+	 * @return
+	 */
+	public List<MonthEMView> getMonthEMViews(MonthEMView monthEM);
+	
 	/**
 	 * method name : getSumMonthEMs
 	 * method Desc : MonthEM 합계 조회 - 조건(MonthEM)

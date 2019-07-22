@@ -46,6 +46,10 @@ import com.aimir.model.system.Contract;
 import com.aimir.model.system.Operator;
 import com.aimir.model.system.OperatorContract;
 import com.aimir.model.system.Supplier;
+import com.aimir.model.view.DayEMView;
+import com.aimir.model.view.MeteringDayView;
+import com.aimir.model.view.MeteringMonthView;
+import com.aimir.model.view.MonthEMView;
 import com.aimir.service.system.ContractManager;
 import com.aimir.service.system.OperatorManager;
 import com.aimir.service.system.SupplierManager;
@@ -1750,7 +1754,7 @@ public class EnergyConsumptionSearchController {
     private Double[] getDayValue24(MeteringDay meteringMonth) {
 
         Double[] dayValues = new Double[24];
-
+        /* OPF-610 정규화 관련 처리로 인한 주석
         dayValues[0] = (meteringMonth.getValue_00() == null ? 0 : meteringMonth.getValue_00());
         dayValues[1] = (meteringMonth.getValue_01() == null ? 0 : meteringMonth.getValue_01());
         dayValues[2] = (meteringMonth.getValue_02() == null ? 0 : meteringMonth.getValue_02());
@@ -1775,11 +1779,41 @@ public class EnergyConsumptionSearchController {
         dayValues[21] = (meteringMonth.getValue_21() == null ? 0 : meteringMonth.getValue_21());
         dayValues[22] = (meteringMonth.getValue_22() == null ? 0 : meteringMonth.getValue_22());
         dayValues[23] = (meteringMonth.getValue_23() == null ? 0 : meteringMonth.getValue_23());
-
+		*/
+        
         return dayValues;
     }
 
-
+    private Double[] getDayValue24(MeteringDayView meteringMonth) {
+        Double[] dayValues = new Double[24];
+        
+        dayValues[0] = (meteringMonth.getValue_00() == null ? 0 : meteringMonth.getValue_00());
+        dayValues[1] = (meteringMonth.getValue_01() == null ? 0 : meteringMonth.getValue_01());
+        dayValues[2] = (meteringMonth.getValue_02() == null ? 0 : meteringMonth.getValue_02());
+        dayValues[3] = (meteringMonth.getValue_03() == null ? 0 : meteringMonth.getValue_03());
+        dayValues[4] = (meteringMonth.getValue_04() == null ? 0 : meteringMonth.getValue_04());
+        dayValues[5] = (meteringMonth.getValue_05() == null ? 0 : meteringMonth.getValue_05());
+        dayValues[6] = (meteringMonth.getValue_06() == null ? 0 : meteringMonth.getValue_06());
+        dayValues[7] = (meteringMonth.getValue_07() == null ? 0 : meteringMonth.getValue_07());
+        dayValues[8] = (meteringMonth.getValue_08() == null ? 0 : meteringMonth.getValue_08());
+        dayValues[9] = (meteringMonth.getValue_09() == null ? 0 : meteringMonth.getValue_09());
+        dayValues[10] = (meteringMonth.getValue_10() == null ? 0 : meteringMonth.getValue_10());
+        dayValues[11] = (meteringMonth.getValue_11() == null ? 0 : meteringMonth.getValue_11());
+        dayValues[12] = (meteringMonth.getValue_12() == null ? 0 : meteringMonth.getValue_12());
+        dayValues[13] = (meteringMonth.getValue_13() == null ? 0 : meteringMonth.getValue_13());
+        dayValues[14] = (meteringMonth.getValue_14() == null ? 0 : meteringMonth.getValue_14());
+        dayValues[15] = (meteringMonth.getValue_15() == null ? 0 : meteringMonth.getValue_15());
+        dayValues[16] = (meteringMonth.getValue_16() == null ? 0 : meteringMonth.getValue_16());
+        dayValues[17] = (meteringMonth.getValue_17() == null ? 0 : meteringMonth.getValue_17());
+        dayValues[18] = (meteringMonth.getValue_18() == null ? 0 : meteringMonth.getValue_18());
+        dayValues[19] = (meteringMonth.getValue_19() == null ? 0 : meteringMonth.getValue_19());
+        dayValues[20] = (meteringMonth.getValue_20() == null ? 0 : meteringMonth.getValue_20());
+        dayValues[21] = (meteringMonth.getValue_21() == null ? 0 : meteringMonth.getValue_21());
+        dayValues[22] = (meteringMonth.getValue_22() == null ? 0 : meteringMonth.getValue_22());
+        dayValues[23] = (meteringMonth.getValue_23() == null ? 0 : meteringMonth.getValue_23());
+        
+        return dayValues;
+    }
 
 
 
@@ -2582,6 +2616,7 @@ public class EnergyConsumptionSearchController {
         String modemType = DeviceType.Modem.name();
         String endDeviceType = DeviceType.EndDevice.name();
 
+        /* OPF-610 정규화 관련 처리로 인한 주석, View 대체
         DayEM dayEM = new DayEM();
         Contract contract = contractManager.getContract(contractId);
 
@@ -2589,9 +2624,21 @@ public class EnergyConsumptionSearchController {
         dayEM.setYyyymmdd(basicDay);
         dayEM.setContract(contract);
         dayEM.setMDevType(meterType);
-
+        
         List<DayEM> dayEMs = energyConsumptionSearchManager.getDayEMs(dayEM);
+		*/
+        
+        DayEMView dayEMView = new DayEMView();
+        Contract contract = contractManager.getContract(contractId);
 
+        dayEMView.setChannel(DefaultChannel.Usage.getCode());
+        dayEMView.setYyyymmdd(basicDay);
+        dayEMView.setContract(contract);
+        dayEMView.setMdevType(meterType);
+        
+        List<DayEMView> dayEMs = energyConsumptionSearchManager.getDayEMViews(dayEMView);
+        
+        /* OPF-610 정규화 관련 처리로 인한 주석
         dayEM.setMDevType(endDeviceType);
 
         dayEMs.addAll(energyConsumptionSearchManager.getDayEMs(dayEM));
@@ -2599,7 +2646,14 @@ public class EnergyConsumptionSearchController {
         dayEM.setMDevType(modemType);
 
         dayEMs.addAll(energyConsumptionSearchManager.getDayEMs(dayEM));
+		*/
+        
+        dayEMView.setMdevType(endDeviceType);
+        dayEMs.addAll(energyConsumptionSearchManager.getDayEMViews(dayEMView));
 
+        dayEMView.setMdevType(modemType);
+        dayEMs.addAll(energyConsumptionSearchManager.getDayEMViews(dayEMView));
+        
         List<Object> data = new ArrayList<Object>();
         Map<String, Object> dataMap = null;
 
@@ -2638,9 +2692,10 @@ public class EnergyConsumptionSearchController {
         Double endDeviceUsage = 0.0;
         Double usage = 0.0;
 
-        for (DayEM result : dayEMs) {
+        for (DayEMView result : dayEMs) {
+        //for (DayEM result : dayEMs) { OPF-610 정규화 관련 처리로 인한 주석  
 
-            String mDevType = result.getMDevType().name();
+            String mDevType = result.getMdevType().name();
 
             if (endDeviceType.equals(mDevType) || modemType.equals(mDevType)) {
 
@@ -2676,20 +2731,6 @@ public class EnergyConsumptionSearchController {
                 for (int i = 0; i < 24; i++) {
 
                     dataLinkMap = new HashMap<String, Object>();
-
-//                    calendar.set(Calendar.HOUR_OF_DAY, i);
-//
-//                    hour = calendar.get(Calendar.HOUR);
-//                    amPm = new String(calendar.getDisplayName(Calendar.AM_PM, Calendar.SHORT, locale));
-//
-//                    if (hour % 3 == 0) {
-//
-//                        dataLinkMap.put("label", amPm + " " + (hour == 0 ? 12 : hour));
-//                    } else {
-//
-//                        dataLinkMap.put("label", "");
-//                    }
-
                     dataLinkMap.put("label", i);
                     value += values[i];
 
@@ -2712,7 +2753,8 @@ public class EnergyConsumptionSearchController {
                 meterUsage = result.getTotal();
             }
         }
-
+        
+        
 //        usage = meterUsage - endDeviceUsage;
         usage = getNullToDouble(meterUsage - endDeviceUsage);
 
@@ -2788,19 +2830,6 @@ public class EnergyConsumptionSearchController {
         for (int i = 0; i < 24; i++) {
 
             categoryMap = new HashMap<String, Object>();
-
-//            calendar.set(Calendar.HOUR_OF_DAY, i);
-//
-//            hour = calendar.get(Calendar.HOUR);
-//            amPm = new String(calendar.getDisplayName(Calendar.AM_PM, Calendar.SHORT, locale));
-
-//            if (hour % 3 == 0) {
-//
-//                categoryMap.put("label", amPm + " " + (hour == 0 ? 12 : hour));
-//            } else {
-//
-//                categoryMap.put("label", "");
-//            }
             categoryMap.put("label", i);
             category.add(categoryMap);
         }
@@ -2929,6 +2958,8 @@ public class EnergyConsumptionSearchController {
         String modemType = DeviceType.Modem.name();
         String endDeviceType = DeviceType.EndDevice.name();
 
+        /*
+		OPF-610 정규화 관련 처리로 인한 주석
         MonthEM monthEM = new MonthEM();
         Contract contract = contractManager.getContract(contractId);
 
@@ -2940,13 +2971,29 @@ public class EnergyConsumptionSearchController {
         List<MonthEM> monthEMs = energyConsumptionSearchManager.getMonthEMs(monthEM);
 
         monthEM.setMDevType(endDeviceType);
-
         monthEMs.addAll(energyConsumptionSearchManager.getMonthEMs(monthEM));
 
         monthEM.setMDevType(modemType);
-
         monthEMs.addAll(energyConsumptionSearchManager.getMonthEMs(monthEM));
+		*/
+        
+        MonthEMView monthEM = new MonthEMView();
+        Contract contract = contractManager.getContract(contractId);
 
+        monthEM.setChannel(DefaultChannel.Usage.getCode());
+        monthEM.setYyyymm(basicDay);
+        monthEM.setContract(contract);
+        monthEM.setMdevType(meterType);
+        
+        List<MonthEMView> monthEMs = energyConsumptionSearchManager.getMonthEMViews(monthEM);
+        
+        monthEM.setMDevType(endDeviceType);
+        monthEMs.addAll(energyConsumptionSearchManager.getMonthEMViews(monthEM));
+
+        monthEM.setMDevType(modemType);
+        monthEMs.addAll(energyConsumptionSearchManager.getMonthEMViews(monthEM));
+        
+        
         List<Object> data = new ArrayList<Object>();
         Map<String, Object> dataMap = null;
 
@@ -2995,7 +3042,8 @@ public class EnergyConsumptionSearchController {
             maxDay = calendar2.get(Calendar.DAY_OF_MONTH);
         }
 
-        for (MonthEM result : monthEMs) {
+        for (MonthEMView result : monthEMs) {
+        //for (MonthEM result : monthEMs) { // OPF-610 정규화 관련 처리로 인한 주석
 
             String mDevType = result.getMDevType().name();
 
@@ -3095,6 +3143,44 @@ public class EnergyConsumptionSearchController {
      */
     private Double[] getMonthValue31(MeteringMonth meteringMonth) {
 
+        Double[] dayValues = new Double[31];
+        /* OPF-610 정규화 관련 처리로 인한 주석
+        dayValues[0]  = (meteringMonth.getValue_01() == null ? 0 : meteringMonth.getValue_01());
+        dayValues[1]  = (meteringMonth.getValue_02() == null ? 0 : meteringMonth.getValue_02());
+        dayValues[2]  = (meteringMonth.getValue_03() == null ? 0 : meteringMonth.getValue_03());
+        dayValues[3]  = (meteringMonth.getValue_04() == null ? 0 : meteringMonth.getValue_04());
+        dayValues[4]  = (meteringMonth.getValue_05() == null ? 0 : meteringMonth.getValue_05());
+        dayValues[5]  = (meteringMonth.getValue_06() == null ? 0 : meteringMonth.getValue_06());
+        dayValues[6]  = (meteringMonth.getValue_07() == null ? 0 : meteringMonth.getValue_07());
+        dayValues[7]  = (meteringMonth.getValue_08() == null ? 0 : meteringMonth.getValue_08());
+        dayValues[8]  = (meteringMonth.getValue_09() == null ? 0 : meteringMonth.getValue_09());
+        dayValues[9]  = (meteringMonth.getValue_10() == null ? 0 : meteringMonth.getValue_10());
+        dayValues[10] = (meteringMonth.getValue_11() == null ? 0 : meteringMonth.getValue_11());
+        dayValues[11] = (meteringMonth.getValue_12() == null ? 0 : meteringMonth.getValue_12());
+        dayValues[12] = (meteringMonth.getValue_13() == null ? 0 : meteringMonth.getValue_13());
+        dayValues[13] = (meteringMonth.getValue_14() == null ? 0 : meteringMonth.getValue_14());
+        dayValues[14] = (meteringMonth.getValue_15() == null ? 0 : meteringMonth.getValue_15());
+        dayValues[15] = (meteringMonth.getValue_16() == null ? 0 : meteringMonth.getValue_16());
+        dayValues[16] = (meteringMonth.getValue_17() == null ? 0 : meteringMonth.getValue_17());
+        dayValues[17] = (meteringMonth.getValue_18() == null ? 0 : meteringMonth.getValue_18());
+        dayValues[18] = (meteringMonth.getValue_19() == null ? 0 : meteringMonth.getValue_19());
+        dayValues[19] = (meteringMonth.getValue_20() == null ? 0 : meteringMonth.getValue_20());
+        dayValues[20] = (meteringMonth.getValue_21() == null ? 0 : meteringMonth.getValue_21());
+        dayValues[21] = (meteringMonth.getValue_22() == null ? 0 : meteringMonth.getValue_22());
+        dayValues[22] = (meteringMonth.getValue_23() == null ? 0 : meteringMonth.getValue_23());
+        dayValues[23] = (meteringMonth.getValue_24() == null ? 0 : meteringMonth.getValue_24());
+        dayValues[24] = (meteringMonth.getValue_25() == null ? 0 : meteringMonth.getValue_25());
+        dayValues[25] = (meteringMonth.getValue_26() == null ? 0 : meteringMonth.getValue_26());
+        dayValues[26] = (meteringMonth.getValue_27() == null ? 0 : meteringMonth.getValue_27());
+        dayValues[27] = (meteringMonth.getValue_28() == null ? 0 : meteringMonth.getValue_28());
+        dayValues[28] = (meteringMonth.getValue_29() == null ? 0 : meteringMonth.getValue_29());
+        dayValues[29] = (meteringMonth.getValue_30() == null ? 0 : meteringMonth.getValue_30());
+        dayValues[30] = (meteringMonth.getValue_31() == null ? 0 : meteringMonth.getValue_31());
+		*/
+        return dayValues;
+    }
+    
+    private Double[] getMonthValue31(MeteringMonthView meteringMonth) {
         Double[] dayValues = new Double[31];
 
         dayValues[0]  = (meteringMonth.getValue_01() == null ? 0 : meteringMonth.getValue_01());
@@ -3410,8 +3496,17 @@ public class EnergyConsumptionSearchController {
                 monthEM.setContract(contract);
                 monthEM.setEnddevice(endDevice);
 
+                /* OPF-610 정규화 관련 처리로 인한 주석
                 List<MonthEM> monthEMs = energyConsumptionSearchManager.getMonthEMs(monthEM);
-
+				*/
+                
+                MonthEMView monthEMView = new MonthEMView();
+                monthEMView.setYyyymm(basicDay);
+                monthEMView.setContract(contract);
+                monthEMView.setEnddevice(endDevice);
+                
+                List<MonthEMView> monthEMs = energyConsumptionSearchManager.getMonthEMViews(monthEMView);
+                
                 value = new Double(0);
 
                 for (int i = 0; i < monthEMs.size(); i++) {
@@ -3495,6 +3590,7 @@ public class EnergyConsumptionSearchController {
         String modemType = DeviceType.Modem.name();
         String endDeviceType = DeviceType.EndDevice.name();
 
+        /* OPF-610 정규화 관련 처리로 인한 주석
         MonthEM monthEM = new MonthEM();
         Contract contract = contractManager.getContract(contractId);
 
@@ -3504,14 +3600,30 @@ public class EnergyConsumptionSearchController {
         monthEM.setMDevType(meterType);
 
         List<MonthEM> monthEMsMeter = energyConsumptionSearchManager.getMonthEMs(monthEM);
-
         monthEM.setMDevType(endDeviceType);
 
         List<MonthEM> monthEMsEndDevice = energyConsumptionSearchManager.getMonthEMs(monthEM);
-
         monthEM.setMDevType(modemType);
 
         monthEMsEndDevice.addAll(energyConsumptionSearchManager.getMonthEMs(monthEM));
+		*/
+        
+        MonthEMView monthEMView = new MonthEMView();
+        Contract contract = contractManager.getContract(contractId);
+
+        monthEMView.setChannel(DefaultChannel.Usage.getCode());
+        monthEMView.setYyyymm(basicDay);
+        monthEMView.setContract(contract);
+        monthEMView.setMDevType(meterType);
+
+        List<MonthEMView> monthEMsMeter = energyConsumptionSearchManager.getMonthEMViews(monthEMView);
+        monthEMView.setMDevType(endDeviceType);
+
+        List<MonthEMView> monthEMsEndDevice = energyConsumptionSearchManager.getMonthEMViews(monthEMView);
+        monthEMView.setMDevType(modemType);
+
+        monthEMsEndDevice.addAll(energyConsumptionSearchManager.getMonthEMViews(monthEMView));
+        
 
         List<Object> categories = new ArrayList<Object>();
         List<Object> category = new ArrayList<Object>();
@@ -3542,7 +3654,8 @@ public class EnergyConsumptionSearchController {
 
             Map<Integer, Double> etcUsageMap = new HashMap<Integer, Double>();
 
-            for (MonthEM monthEMMeter : monthEMsMeter) {
+            for (MonthEMView monthEMMeter : monthEMsMeter) {
+            //for (MonthEM monthEMMeter : monthEMsMeter) { //OPF-610 정규화 관련 처리로 인한 주석 
 
                 int label = Integer.parseInt(monthEMMeter.getYyyymm().substring(4,6));
 
@@ -3555,7 +3668,8 @@ public class EnergyConsumptionSearchController {
 
             String seriesname = null;
 
-            MonthEM same;
+            MonthEMView same;
+            //MonthEM same; OPF-610 정규화 관련 처리로 인한 주석
 
             for (int i = 0; i < monthEMsEndDevice.size(); i++) {
 
@@ -3564,13 +3678,15 @@ public class EnergyConsumptionSearchController {
 
                 seriesname = monthEMsEndDevice.get(i).getEnddevice().getFriendlyName();
 
-                for (MonthEM monthEMMeter : monthEMsMeter) {
+                for (MonthEMView monthEMMeter : monthEMsMeter) {
+                //for (MonthEM monthEMMeter : monthEMsMeter) { OPF-610 정규화 관련 처리로 인한 주석
 
                     int label = Integer.parseInt(monthEMMeter.getYyyymm().substring(4,6));
 
                     Double etcUsage = etcUsageMap.get(label);
 
-                    same = new MonthEM();
+                    same = new MonthEMView();
+                    //same = new MonthEM(); OPF-610 정규화 관련 처리로 인한 주석
 
                     for (int j = 0; j < monthEMsEndDevice.size(); j++) {
 
@@ -3608,7 +3724,8 @@ public class EnergyConsumptionSearchController {
                 dataset.add(datasetMap);
             }
 
-            for (MonthEM monthEMMeter : monthEMsMeter) {
+            for (MonthEMView monthEMMeter : monthEMsMeter) {
+            //for (MonthEM monthEMMeter : monthEMsMeter) { OPF-610 정규화 관련 처리로 인한 주석
 
                 int label = Integer.parseInt(monthEMMeter.getYyyymm().substring(4,6));
 

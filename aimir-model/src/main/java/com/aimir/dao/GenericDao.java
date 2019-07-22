@@ -3,6 +3,7 @@ package com.aimir.dao;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -39,8 +40,6 @@ public interface GenericDao<T, ID extends Serializable> {
 	
 	public abstract T add(T entity);
 	public abstract T add_requires_new(T entity);
-	public abstract T addIgnoreDupWithHint(T entity);
-	
 	
 	public boolean exists(ID id);
 	
@@ -89,6 +88,8 @@ public interface GenericDao<T, ID extends Serializable> {
 	public void flushAndClear();
 	
 	public void refresh(Object entity);
+	
+	public String callProcedure(Map<String, Object> parameter);
 	
 	public abstract void saveOrUpdateAll(Collection<?> entities);
 

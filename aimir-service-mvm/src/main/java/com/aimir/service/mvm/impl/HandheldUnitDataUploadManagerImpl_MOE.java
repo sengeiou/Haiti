@@ -36,7 +36,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -1650,7 +1650,7 @@ public class HandheldUnitDataUploadManagerImpl_MOE implements HandheldUnitDataUp
                 // LP 중복 검사
                 Boolean isDuplicate = false;
                 condition = new LinkedHashSet<Condition>();
-                condition.add(new Condition("id.yyyymmddhh",new Object[] { yyyymmddhh }, null, Restriction.EQ));
+                condition.add(new Condition("id.yyyymmddhhmiss",new Object[] { yyyymmddhh + "%" }, null, Restriction.LIKE));
                 condition.add(new Condition("id.channel",
                         new Object[] { ElectricityChannel.Usage.getChannel() },null, Restriction.EQ));
                 condition.add(new Condition("id.dst", new Object[] {0}, null, Restriction.EQ)); // TODO DST

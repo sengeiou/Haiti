@@ -996,7 +996,7 @@ public class NURI_Kamstrup382 extends MeterDataParser implements java.io.Seriali
     	
     	try{
         	Condition condition1 = new Condition("mdsId",new Object[] {meterId}, null,  Restriction.EQ);
-        	Condition condition2 = new Condition("yyyymmdd",new Object[] {TimeUtil.getPreDay(yyyymmdd,-1).substring(0,8)}, null,  Restriction.EQ);
+        	Condition condition2 = new Condition("id.yyyymmddhhmiss",new Object[] {TimeUtil.getPreDay(yyyymmdd,-1).substring(0,8) + "%"}, null,  Restriction.LIKE);
         	set.add(condition1);
         	set.add(condition2);
     		LpEMDao lpEmDao = null;

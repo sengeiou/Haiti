@@ -311,10 +311,10 @@ public abstract class MeteringLPTHU {
 	}
 	
 	public String getYyyymmddhh() {
-		return this.id.getYyyymmddhh();
+		return this.getId().getYyyymmddhhmiss().substring(0, 10);
 	}
 	public void setYyyymmddhh(String yyyymmddhh) {
-		this.id.setYyyymmddhh(yyyymmddhh);
+		this.getId().setYyyymmddhhmiss(yyyymmddhh + "0000");
 	}
 	
 	public Integer getDst() {

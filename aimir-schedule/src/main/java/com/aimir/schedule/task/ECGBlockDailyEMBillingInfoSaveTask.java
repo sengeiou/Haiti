@@ -15,7 +15,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.JobExecutionContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +33,7 @@ import com.aimir.dao.system.PrepaymentLogDao;
 import com.aimir.dao.system.SupplyTypeDao;
 import com.aimir.dao.system.TariffEMDao;
 import com.aimir.dao.system.TariffTypeDao;
+import com.aimir.dao.view.MonthEMViewDao;
 import com.aimir.model.device.Meter;
 import com.aimir.model.mvm.BillingBlockTariff;
 import com.aimir.model.mvm.MonthEM;
@@ -42,6 +43,7 @@ import com.aimir.model.system.PrepaymentLog;
 import com.aimir.model.system.SupplyType;
 import com.aimir.model.system.TariffEM;
 import com.aimir.model.system.TariffType;
+import com.aimir.model.view.MonthEMView;
 import com.aimir.util.CalendarUtil;
 import com.aimir.util.Condition;
 import com.aimir.util.Condition.Restriction;
@@ -87,6 +89,9 @@ public class ECGBlockDailyEMBillingInfoSaveTask  extends ScheduleTask{
 
     @Autowired
     PrepaymentLogDao prepaymentLogDao;
+    
+    @Autowired
+    MonthEMViewDao monthEMViewDao;
     
     private boolean isNowRunning = false;
     
@@ -241,8 +246,13 @@ public class ECGBlockDailyEMBillingInfoSaveTask  extends ScheduleTask{
                 condition.put("channelList", channelList);
                 condition.put("yyyymm", lastAccumulateDate.substring(0,6));
                 condition.put("supplierId", contract.getSupplierId());
+                /*
+                 * OPF-610 정규화 관련 처리로 인한 주석
                 List<MonthEM> monthEM = monthEMDao.getMonthEMsByCondition(condition);
-
+                */                
+                List<MonthEMView> monthEM = monthEMViewDao.getMonthEMsByCondition(condition);
+                
+                
                 //1달이상의 요금이 계산되지 않았더라도 각 달의 과금일 전날까지의 요금을 계산하기 위함
                 //Start MonthEM for
                 for (int i = 0; i < monthEM.size(); i++) {
@@ -550,6 +560,48 @@ public class ECGBlockDailyEMBillingInfoSaveTask  extends ScheduleTask{
          * @return
          */
         private Double[] getMonthValue31(MonthEM monthEm) {
+
+            Double[] dayValues = new Double[31];
+
+            /*
+             * OPF-610 정규화 관련 처리로 인한 주석
+            dayValues[0] = monthEm.getValue_01() == null ? 0 : monthEm.getValue_01();
+            dayValues[1] = monthEm.getValue_02() == null ? 0 : monthEm.getValue_02();
+            dayValues[2] = monthEm.getValue_03() == null ? 0 : monthEm.getValue_03();
+            dayValues[3] = monthEm.getValue_04() == null ? 0 : monthEm.getValue_04();
+            dayValues[4] = monthEm.getValue_05() == null ? 0 : monthEm.getValue_05();
+            dayValues[5] = monthEm.getValue_06() == null ? 0 : monthEm.getValue_06();
+            dayValues[6] = monthEm.getValue_07() == null ? 0 : monthEm.getValue_07();
+            dayValues[7] = monthEm.getValue_08() == null ? 0 : monthEm.getValue_08();
+            dayValues[8] = monthEm.getValue_09() == null ? 0 : monthEm.getValue_09();
+            dayValues[9] = monthEm.getValue_10() == null ? 0 : monthEm.getValue_10();
+            dayValues[10] = monthEm.getValue_11() == null ? 0 : monthEm.getValue_11();
+            dayValues[11] = monthEm.getValue_12() == null ? 0 : monthEm.getValue_12();
+            dayValues[12] = monthEm.getValue_13() == null ? 0 : monthEm.getValue_13();
+            dayValues[13] = monthEm.getValue_14() == null ? 0 : monthEm.getValue_14();
+            dayValues[14] = monthEm.getValue_15() == null ? 0 : monthEm.getValue_15();
+            dayValues[15] = monthEm.getValue_16() == null ? 0 : monthEm.getValue_16();
+            dayValues[16] = monthEm.getValue_17() == null ? 0 : monthEm.getValue_17();
+            dayValues[17] = monthEm.getValue_18() == null ? 0 : monthEm.getValue_18();
+            dayValues[18] = monthEm.getValue_19() == null ? 0 : monthEm.getValue_19();
+            dayValues[19] = monthEm.getValue_20() == null ? 0 : monthEm.getValue_20();
+            dayValues[20] = monthEm.getValue_21() == null ? 0 : monthEm.getValue_21();
+            dayValues[21] = monthEm.getValue_22() == null ? 0 : monthEm.getValue_22();
+            dayValues[22] = monthEm.getValue_23() == null ? 0 : monthEm.getValue_23();
+            dayValues[23] = monthEm.getValue_24() == null ? 0 : monthEm.getValue_24();
+            dayValues[24] = monthEm.getValue_25() == null ? 0 : monthEm.getValue_25();
+            dayValues[25] = monthEm.getValue_26() == null ? 0 : monthEm.getValue_26();
+            dayValues[26] = monthEm.getValue_27() == null ? 0 : monthEm.getValue_27();
+            dayValues[27] = monthEm.getValue_28() == null ? 0 : monthEm.getValue_28();
+            dayValues[28] = monthEm.getValue_29() == null ? 0 : monthEm.getValue_29();
+            dayValues[29] = monthEm.getValue_30() == null ? 0 : monthEm.getValue_30();
+            dayValues[30] = monthEm.getValue_31() == null ? 0 : monthEm.getValue_31();
+            */
+            
+            return dayValues;
+        }
+        
+        private Double[] getMonthValue31(MonthEMView monthEm) {
 
             Double[] dayValues = new Double[31];
 

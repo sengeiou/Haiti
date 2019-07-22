@@ -34,6 +34,8 @@ import com.aimir.model.mvm.MonthWM;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.TariffWM;
 import com.aimir.model.system.TariffWMCaliber;
+import com.aimir.model.view.DayWMView;
+import com.aimir.model.view.MonthWMView;
 import com.aimir.model.vo.TariffWMVO;
 import com.aimir.util.CalendarUtil;
 import com.aimir.util.Condition;
@@ -281,6 +283,9 @@ public class TariffWMDaoImpl extends AbstractJpaDao<TariffWM, Integer> implement
 			MonthWM monthWM = null;
 			DayWM dayWM = null;
 			
+			DayWMView dayWMView = null;
+			MonthWMView monthWMView = null;
+			
 	    	if(CommonConstants.DateType.DAILY.getCode().equals(dateType)){
 	    		int period=0;
 	    		for(int i=Integer.parseInt(startDate);i<=Integer.parseInt(endDate);i=Integer.parseInt(CalendarUtil.getDateWithoutFormat(Integer.toString(i),Calendar.DATE, 1))){
@@ -292,7 +297,10 @@ public class TariffWMDaoImpl extends AbstractJpaDao<TariffWM, Integer> implement
 	    			//dayWM =dayWMDao.getDayWM(tariffParam);
 	    			dayWM =dayWMDao.getDayWMbySupplierId(tariffParam);
 	    			
-	    			double dayTotal = dayWM==null || dayWM.getTotal() == null ?0.0 : dayWM.getTotal();
+	    			//OPF-610 정규화 관련 처리로 인한 주석
+	    			//double dayTotal = dayWM==null || dayWM.getTotal() == null ?0.0 : dayWM.getTotal();
+	    			
+	    			double dayTotal = dayWMView==null || dayWMView.getTotal() == null ?0.0 : dayWMView.getTotal();
 	    			
 	    			//사용량구간별 요금계산
 	    			for(TariffWM tariffWM:tariffWMList){
@@ -326,8 +334,11 @@ public class TariffWMDaoImpl extends AbstractJpaDao<TariffWM, Integer> implement
 	    			
 	    			double monthTotal = 0d;
 	    			if(monthWM != null) {
-	    				monthTotal = monthWM.getTotal();
+	    				//OPF-610 정규화 관련 처리로 인한 주석
+	    				//monthTotal = monthWM.getTotal();
 		    			
+	    				monthTotal = monthWMView.getTotal();
+	    				
 		    			//사용량구간별 요금계산
 		    			for(TariffWM tariffWM:tariffWMList){
 		    				

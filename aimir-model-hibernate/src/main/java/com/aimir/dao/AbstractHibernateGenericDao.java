@@ -244,11 +244,6 @@ public abstract class AbstractHibernateGenericDao<T, ID extends Serializable> im
         return entity;
     }
 	
-	@Override
-	public T addIgnoreDupWithHint(T entity) {
-		return add_requires_new(entity);
-	}
-
 	/* code s */
 	public T codeAdd(T entity) {
 		getSession().setFlushMode(FlushMode.AUTO);
@@ -407,6 +402,12 @@ public abstract class AbstractHibernateGenericDao<T, ID extends Serializable> im
 	        getSession().saveOrUpdate(t);
 	    }
 		// getSession().saveOrUpdateAll(entities);
+	}
+
+	@Override
+	public String callProcedure(Map<String, Object> parameter) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

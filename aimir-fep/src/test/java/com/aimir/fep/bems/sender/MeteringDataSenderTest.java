@@ -74,12 +74,7 @@ public class MeteringDataSenderTest extends BaseTestCase {
 		DLMSMDSaver d = this.applicationContext.getBean(DLMSMDSaver.class);
 		
 		AbstractMDSaver s = d;
-		
-		
-		s.addMeteringData(null, null, null, null);
-		
-		
-		
+		//s.addMeteringData(null, null, null, null);
 	}
 	
 	@Ignore

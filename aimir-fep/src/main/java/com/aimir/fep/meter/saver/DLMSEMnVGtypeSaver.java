@@ -327,10 +327,16 @@ public class DLMSEMnVGtypeSaver extends AbstractMDSaver {
 //                _lplist, _flag, baseValue, parser.getMeter(),
 //                DeviceType.Modem, parser.getMeter().getModem().getDeviceSerial(),    
 //                DeviceType.Meter, parser.getMeterID());
+        
+        //OPF-610 DB(LP) normalization
+        /*
         super.saveLPData(MeteringType.OnDemand, startlpdate.substring(0, 8), startlpdate.substring(8)+"00",
                 _lplist, _flag, baseValue, parser.getMeter(),
                 DeviceType.Modem, parser.getMeter().getModem().getDeviceSerial(),    
                 DeviceType.Meter, parser.getMeterID());
+        */
+        saveLPUsingLpNormalization(CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()), null, 
+        		parser.getLPData(), parser.getMDevId(), parser.getDeviceId(), parser.getMDevType());
     }
 	
     

@@ -13,13 +13,17 @@ import com.aimir.dao.mvm.DayWMDao;
 import com.aimir.dao.mvm.LpWMDao;
 import com.aimir.dao.mvm.MonthWMDao;
 import com.aimir.dao.mvm.SeasonDao;
+import com.aimir.dao.view.DayWMViewDao;
+import com.aimir.dao.view.MonthWMViewDao;
 import com.aimir.model.mvm.DayWM;
 import com.aimir.model.mvm.LpWM;
 import com.aimir.model.mvm.MonthWM;
 import com.aimir.model.mvm.Season;
+import com.aimir.model.view.DayWMView;
+import com.aimir.model.view.MonthWMView;
 import com.aimir.util.Condition;
-import com.aimir.util.SearchCalendarUtil;
 import com.aimir.util.Condition.Restriction;
+import com.aimir.util.SearchCalendarUtil;
 
 @Service(value = "MvmWmChartViewManagerImpl")
 public class MvmWmChartViewManagerImpl {
@@ -28,10 +32,16 @@ public class MvmWmChartViewManagerImpl {
 
 	@Autowired
 	DayWMDao dayWMDao;
+	
+	@Autowired
+	DayWMViewDao dayWMViewDao;
 
 	@Autowired
 	MonthWMDao monthWMDao;
 
+	@Autowired
+	MonthWMViewDao monthWMViewDao;
+	
 	@Autowired
 	SeasonDao seasonDao;
 	
@@ -129,6 +139,43 @@ public class MvmWmChartViewManagerImpl {
 
 	}
 	
+	public HashMap<String, Object>  getWMSearchDataDayView(Set<Condition> set, Integer[]  custList) {
+		HashMap<String, Object> resultHm = new HashMap<String, Object>();
+		
+		Double[] avgValue = new Double[custList.length];
+		Double[] maxValue = new Double[custList.length];
+		Double[] minValue = new Double[custList.length];
+		Double[] sumValue = new Double[custList.length];
+		
+		if(custList.length >0 && custList != null) {
+			for(int idx=0;idx < custList.length;idx++) {
+			
+			Condition cdt = new Condition("contract.id", new Object[] { custList[idx] }, null,Restriction.EQ);// 
+			set.add(cdt);
+			
+			avgValue[idx] = (Double) dayWMDao.getDayWMsMaxMinAvgSum(set, "avg").get(0);
+			maxValue[idx] = (Double) dayWMDao.getDayWMsMaxMinAvgSum(set, "max").get(0);
+			minValue[idx] = (Double) dayWMDao.getDayWMsMaxMinAvgSum(set, "min").get(0);
+			sumValue[idx] = (Double) dayWMDao.getDayWMsMaxMinAvgSum(set, "sum").get(0);
+			
+			set.remove(cdt);
+		}
+		
+		Condition cdt = new Condition("contract.id", custList, null,Restriction.IN);//
+		set.add(cdt);
+		List<DayWMView> dataList = dayWMViewDao.getDayWMsByListCondition(set);
+		
+		resultHm.put("arrAvgValue", avgValue);
+		resultHm.put("arrMaxValue", maxValue);
+		resultHm.put("arrMinValue", minValue);
+		resultHm.put("arrSumValue", sumValue);
+		resultHm.put("arrContId", custList);
+		resultHm.put("dataList", dataList);
+		}
+		return resultHm;
+
+	}
+	
 	/**
 	 * @Method Name : getWMSearchDataMonth
 	 * @Date        : 2010. 4. 15.
@@ -176,6 +223,44 @@ public class MvmWmChartViewManagerImpl {
 
 	}
 	
+	public HashMap<String, Object>  getWMSearchDataMonthView(Set<Condition> set, Integer[]  custList) {
+		HashMap<String, Object> resultHm = new HashMap<String, Object>();
+		
+		
+		Double[] avgValue = new Double[custList.length];
+		Double[] maxValue = new Double[custList.length];
+		Double[] minValue = new Double[custList.length];
+		Double[] sumValue = new Double[custList.length];
+		
+		if(custList.length >0 && custList != null) {
+			for(int idx=0;idx < custList.length;idx++) {
+			
+			
+			Condition cdt = new Condition("contract.id", new Object[] { custList[idx] }, null,Restriction.EQ);// 
+			set.add(cdt);
+			
+			avgValue[idx] = (Double) monthWMDao.getMonthWMsMaxMinAvgSum(set, "avg").get(0);
+			maxValue[idx] = (Double) monthWMDao.getMonthWMsMaxMinAvgSum(set, "max").get(0);
+			minValue[idx] = (Double) monthWMDao.getMonthWMsMaxMinAvgSum(set, "min").get(0);
+			sumValue[idx] = (Double) monthWMDao.getMonthWMsMaxMinAvgSum(set, "sum").get(0);
+			
+			set.remove(cdt);
+		}
+		
+		Condition cdt = new Condition("contract.id", custList, null,Restriction.IN);//
+		set.add(cdt);
+		List<MonthWMView> dataList = monthWMViewDao.getMonthWMsByListCondition(set);
+		
+		resultHm.put("arrAvgValue", avgValue);
+		resultHm.put("arrMaxValue", maxValue);
+		resultHm.put("arrMinValue", minValue);
+		resultHm.put("arrSumValue", sumValue);
+		resultHm.put("arrContId", custList);
+		resultHm.put("dataList", dataList);
+		}
+		return resultHm;
+
+	}
 	
 	/**
 	 * @Method Name : getWMSearchDataDayWeek

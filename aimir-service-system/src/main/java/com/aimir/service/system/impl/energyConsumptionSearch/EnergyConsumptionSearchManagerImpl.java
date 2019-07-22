@@ -30,6 +30,8 @@ import com.aimir.dao.mvm.MonthEMDao;
 import com.aimir.dao.system.CodeDao;
 import com.aimir.dao.system.ContractDao;
 import com.aimir.dao.system.energySavingGoal.EnergySavingTargetDao;
+import com.aimir.dao.view.DayEMViewDao;
+import com.aimir.dao.view.MonthEMViewDao;
 import com.aimir.model.device.EndDevice;
 import com.aimir.model.device.Modem;
 import com.aimir.model.mvm.Billing;
@@ -49,6 +51,8 @@ import com.aimir.model.system.Code;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.EnergySavingTarget;
 import com.aimir.model.system.OperatorContract;
+import com.aimir.model.view.DayEMView;
+import com.aimir.model.view.MonthEMView;
 import com.aimir.service.system.energyConsumptionSearch.EnergyConsumptionSearchManager;
 import com.aimir.util.BillDateUtil;
 import com.aimir.util.DecimalUtil;
@@ -109,6 +113,12 @@ public class EnergyConsumptionSearchManagerImpl implements EnergyConsumptionSear
     
     @Autowired
     CodeDao codeDao;
+    
+    @Autowired
+    DayEMViewDao dayEMViewDao;
+    
+    @Autowired
+    MonthEMViewDao monthEMViewDao;
     
 	/* (non-Javadoc)
 	 * @see com.aimir.service.system.energyConsumptionSearch.EnergyConsumptionSearchManager#getMaxDay(com.aimir.model.system.Contract)
@@ -303,7 +313,7 @@ public class EnergyConsumptionSearchManagerImpl implements EnergyConsumptionSear
 			meteringDay.setYyyymmdd(basicDay);
 			meteringDay.setChannel(channel);
 			meteringDay.setMDevType(mdevType);
-			meteringDay.setLocation(contract.getLocation());
+			//meteringDay.setLocation(contract.getLocation());
 
 			//meteringDaysAvg = dayEMDao.getDayEMsAvg((DayEM) meteringDay);
 			usageAve = dayEMDao.getDayEMsUsageAvg((DayEM) meteringDay);
@@ -315,7 +325,7 @@ public class EnergyConsumptionSearchManagerImpl implements EnergyConsumptionSear
 			meteringDay.setYyyymmdd(basicDay);
 			meteringDay.setChannel(channel);
 			meteringDay.setMDevType(mdevType);
-			meteringDay.setLocation(contract.getLocation());
+			//meteringDay.setLocation(contract.getLocation());
 
 			//meteringDaysAvg = dayGMDao.getDayGMsAvg((DayGM) meteringDay);
 			usageAve =  dayGMDao.getDayGMsUsageAvg((DayGM) meteringDay);
@@ -328,7 +338,7 @@ public class EnergyConsumptionSearchManagerImpl implements EnergyConsumptionSear
 			meteringDay.setYyyymmdd(basicDay);
 			meteringDay.setChannel(channel);
 			meteringDay.setMDevType(mdevType);
-			meteringDay.setLocation(contract.getLocation());
+			//meteringDay.setLocation(contract.getLocation());
 
 			//meteringDaysAvg = dayWMDao.getDayWMsAvg((DayWM) meteringDay);
 			usageAve = dayWMDao.getDayWMsUsageAvg((DayWM) meteringDay);
@@ -681,6 +691,66 @@ public class EnergyConsumptionSearchManagerImpl implements EnergyConsumptionSear
 		return billingYear;
 	}
 
+	public List<DayEMView> getDayEMViews(DayEMView dayEmView) {
+		Code code = codeDao.getCodeIdByCodeObject(HomeDeviceCategoryType.GENERAL_APPLIANCE.getCode());
+		
+		List<DayEMView> dayEMs = new ArrayList<DayEMView>();
+		
+		if (dayEmView.getMdevType() != null) {
+			
+			switch (dayEmView.getMdevType().getCode()) {
+			
+				case 0 :
+					
+					dayEMs = dayEMViewDao.getDayEMs(dayEmView);
+					
+					break;
+					
+				case 1 :
+					
+					dayEMs = dayEMViewDao.getDayEMs(dayEmView);
+					
+					for (int i = 0; i < dayEMs.size(); i++) {
+						
+						EndDevice endDevice = new EndDevice();
+						
+						endDevice.setModem(dayEMs.get(i).getModem());
+						endDevice.setCategoryCode(code);
+						
+						List<EndDevice> endDevices = endDeviceDao.getEndDevices(endDevice);
+						
+						if (1 == endDevices.size()) {
+							
+							endDevice = endDevices.get(0);
+							dayEMs.get(i).setEnddevice(endDevice);
+						} else {
+
+							dayEMs.remove(i--);
+						}
+					}
+					
+					break;
+					
+				case 2 :
+					
+					dayEMs = dayEMViewDao.getDayEMs(dayEmView);
+					
+					break;
+					
+				case 3 :
+					
+					dayEMs = dayEMViewDao.getDayEMs(dayEmView);
+					
+					break;
+					
+				default :
+					break;
+			}
+		}
+
+		return dayEMs;
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.aimir.service.system.energyConsumptionSearch.EnergyConsumptionSearchManager#getDayEMs(com.aimir.model.mvm.DayEM)
 	 */
@@ -745,6 +815,70 @@ public class EnergyConsumptionSearchManagerImpl implements EnergyConsumptionSear
 		return dayEMs;
 	}
 
+	public List<MonthEMView> getMonthEMViews(MonthEMView monthEM) {
+		Code code = codeDao.getCodeIdByCodeObject(HomeDeviceCategoryType.GENERAL_APPLIANCE.getCode());
+		
+		List<MonthEMView> monthEMs = new ArrayList<MonthEMView>();
+		
+		if (monthEM.getMDevType() != null) {
+			
+			switch (monthEM.getMDevType().getCode()) {
+			
+				case 0 :
+					
+					monthEMs = monthEMViewDao.getMonthEMs(monthEM);
+					
+					break;
+					
+				case 1 :
+					
+					monthEMs = monthEMViewDao.getMonthEMs(monthEM);
+					
+					for (int i = 0; i < monthEMs.size(); i++) {
+						
+						EndDevice endDevice = new EndDevice();
+						
+						endDevice.setModem(monthEMs.get(i).getModem());
+						endDevice.setCategoryCode(code);
+						
+						List<EndDevice> endDevices = endDeviceDao.getEndDevices(endDevice);
+						
+						if (1 == endDevices.size()) {
+							
+							endDevice = endDevices.get(0);
+							monthEMs.get(i).setEnddevice(endDevice);
+						} else {
+
+							monthEMs.remove(i--);
+						}
+					}
+					
+					break;
+					
+				case 2 :
+					
+					monthEMs = monthEMViewDao.getMonthEMs(monthEM);
+					
+					break;
+					
+				case 3 :
+					
+					monthEMs = monthEMViewDao.getMonthEMs(monthEM);
+					
+					break;
+					
+				default :
+					
+					break;
+			}
+		} else {
+			
+			monthEMs = monthEMViewDao.getMonthEMs(monthEM);
+		}
+
+		return monthEMs;
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.aimir.service.system.energyConsumptionSearch.EnergyConsumptionSearchManager#getMonthEMs(com.aimir.model.mvm.MonthEM)
 	 */

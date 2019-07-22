@@ -241,7 +241,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
     }
 
     public int decode(byte[] data, int position, String mcuId, String ns, String ipAddr,
-            String protocolType) throws Exception
+            String protocolType, String meteringType) throws Exception
     {
         log.debug("MeasurementDataEntry decode:: position["+position+"]"); // raw["+Hex.decode(data)+"]");
         int pos = position;
@@ -305,7 +305,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
                 // DCU ondemand has bug, data cnt is little endian
                 if (pos == data.length) break;
                 
-                pos+=md.decode(data, pos);
+                pos+=md.decode(data, pos, meteringType);
     
                 log.debug("pos["+pos+"] md["+md.toString()+"]");
                 append(md);

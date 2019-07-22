@@ -21,12 +21,14 @@ import com.aimir.dao.system.GroupDao;
 import com.aimir.dao.system.GroupMemberDao;
 import com.aimir.dao.system.HomeDeviceDrLevelDao;
 import com.aimir.dao.system.HomeGroupDao;
+import com.aimir.dao.view.DayEMViewDao;
 import com.aimir.model.device.EndDevice;
 import com.aimir.model.device.MCU;
 import com.aimir.model.mvm.DayEM;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.HomeDeviceDrLevel;
 import com.aimir.model.system.HomeGroup;
+import com.aimir.model.view.DayEMView;
 import com.aimir.service.system.homeDeviceMgmt.HomeDeviceMgmtManager;
 import com.aimir.util.BillDateUtil;
 import com.aimir.util.DecimalUtil;
@@ -52,6 +54,9 @@ public class HomeDeviceMgmtManagerImpl implements HomeDeviceMgmtManager {
 
     @Autowired 
     DayEMDao dayEMDao;
+    
+    @Autowired
+    DayEMViewDao dayEMViewDao;
     
     @Autowired      
     ContractDao contractDao;
@@ -99,6 +104,8 @@ public class HomeDeviceMgmtManagerImpl implements HomeDeviceMgmtManager {
 		Contract contract = contractDao.findByCondition("contractNumber", homeGroupDao.get(homeGroupId).getName());
 		DecimalFormat dfMd = DecimalUtil.getDecimalFormat(contract.getSupplier().getMd());
 		try{
+			//OPF-610 정규화 관련 처리로 인한 주석처리, View 하위에 대체
+			/*
 			DayEM dayEM = new DayEM();	        
 	        //String billDate = BillDateUtil.getBillDate(contract, TimeUtil.getCurrentDay(), 0);
 	        String billDate = BillDateUtil.getBillDate(contract, "20110401", 0);
@@ -108,11 +115,24 @@ public class HomeDeviceMgmtManagerImpl implements HomeDeviceMgmtManager {
 	        dayEM.setMDevType(mDevType); // Modem 또는 EndDevice
 
 	        List<DayEM> dayEMs = dayEMDao.getDayEMs(dayEM);
-
 			for (DayEM result : dayEMs) {
-
 				usage += (null == result.getTotal() ? 0.0 : result.getTotal());
 			}
+			*/
+			
+			DayEMView dayEMView = new DayEMView();	        
+	        //String billDate = BillDateUtil.getBillDate(contract, TimeUtil.getCurrentDay(), 0);
+	        String billDate = BillDateUtil.getBillDate(contract, "20110401", 0);
+	        dayEMView.setChannel(DefaultChannel.Usage.getCode());
+	        dayEMView.setYyyymmdd(billDate);
+	        dayEMView.setContract(contract);
+	        dayEMView.setMdevType(mDevType); // Modem 또는 EndDevice
+	        
+	        List<DayEMView> dayEMs = dayEMViewDao.getDayEMs(dayEMView);
+	        for (DayEMView result : dayEMs) {
+				usage += (null == result.getTotal() ? 0.0 : result.getTotal());
+			}
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}

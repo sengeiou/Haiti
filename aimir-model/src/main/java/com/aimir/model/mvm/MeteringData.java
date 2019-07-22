@@ -299,4 +299,37 @@ public abstract class MeteringData {
 		return supplier;
 	}
 
+	@Override
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
+		
+		buffer.append("DEVICE_ID:").append(deviceId).append(", ");
+		buffer.append("DEVICE_TYPE:").append(deviceType.name()).append(", ");
+		buffer.append("HHMMSS:").append(hhmmss).append(", ");
+		buffer.append("METERINGTYPE:").append(meteringType).append(", ");
+		buffer.append("VALUE:").append(value).append(", ");
+		buffer.append("WRITEDATE:").append(writeDate).append(", ");
+		buffer.append("YYYYMMDD:").append(yyyymmdd).append(", ");
+		buffer.append("MDEV_ID:").append(id.getMDevId()).append(", ");
+		buffer.append("YYYYMMDDHHMMSS:").append(id.getYyyymmddhhmmss()).append(", ");
+		buffer.append("DST:").append(id.getDst()).append(", ");
+		buffer.append("MDEV_TYPE:").append(id.getMDevType().name()).append(", ");
+		buffer.append("CONTRACT_ID:").append(contract == null ? "null" : contract.getId()).append(", ");
+		buffer.append("ENDDEVICE_ID:").append(enddevice == null ? "null" : enddevice.getId()).append(", ");		
+		buffer.append("LOCATION_ID:").append(location == null ? "null" : location.getId()).append(", ");
+		buffer.append("METER_ID:").append(meter == null ? "null" : meter.getMdsId()).append(", ");
+		buffer.append("MODEM_ID:").append(modem == null ? "null" : modem.getDeviceSerial()).append(", ");
+		buffer.append("SUPPLIER_ID:").append(supplier == null ? "null" : supplier.getId()).append(", ");
+		buffer.append("CH1:").append(ch1).append(", ");
+		buffer.append("CH2:").append(ch2).append(", ");
+		buffer.append("CH3:").append(ch3).append(", ");
+		buffer.append("CH4:").append(ch4).append(", ");
+		buffer.append("CH5:").append(ch5).append(", ");
+		buffer.append("CH6:").append(ch6).append(", ");
+		buffer.append("CH7:").append(ch7).append("");
+		
+		return buffer.toString();
+	}
+
+	
 }

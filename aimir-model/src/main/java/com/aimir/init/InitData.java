@@ -6,13 +6,12 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.dbunit.dataset.Column;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.ITableIterator;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 
 /**
@@ -33,8 +32,8 @@ public class InitData {
 
 	public InitData() {
 
-		//ctx = new FileSystemXmlApplicationContext("src/main/resources/applicationContext.xml");
-		ctx = new FileSystemXmlApplicationContext("src/main/resources/applicationContext-hibernate4.xml");
+		ctx = new FileSystemXmlApplicationContext("src/main/resources/applicationContext.xml");
+		//ctx = new FileSystemXmlApplicationContext("src/main/resources/applicationContext-hibernate4.xml");
 
 	}
 

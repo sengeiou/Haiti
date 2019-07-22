@@ -132,7 +132,7 @@ public class MultiPulseSensorMDSaver extends AbstractMDSaver {
                 condition.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
                 condition.add(new Condition("id.channel", new Object[]{i+1}, null, Restriction.EQ));
                 condition.add(new Condition("id.mdevType", new Object[]{DeviceType.Modem}, null, Restriction.EQ));
-                condition.add(new Condition("id.yyyymmddhh", new Object[]{envData.getDatetime().substring(0,10)}, null, Restriction.EQ));
+                condition.add(new Condition("id.yyyymmddhhmiss", new Object[]{envData.getDatetime().substring(0,10) + "%"}, null, Restriction.LIKE));
                 
                 List<LpTM> dbList = lpTMDao.findByConditions(condition);
                 

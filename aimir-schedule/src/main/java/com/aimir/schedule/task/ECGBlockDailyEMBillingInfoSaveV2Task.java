@@ -23,7 +23,7 @@ import org.quartz.JobExecutionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +40,7 @@ import com.aimir.dao.system.PrepaymentLogDao;
 import com.aimir.dao.system.SupplyTypeDao;
 import com.aimir.dao.system.TariffEMDao;
 import com.aimir.dao.system.TariffTypeDao;
+import com.aimir.dao.view.MonthEMViewDao;
 import com.aimir.fep.util.DataUtil;
 import com.aimir.model.device.Meter;
 import com.aimir.model.mvm.BillingBlockTariff;
@@ -51,6 +52,7 @@ import com.aimir.model.system.Customer;
 import com.aimir.model.system.PrepaymentLog;
 import com.aimir.model.system.TariffEM;
 import com.aimir.model.system.TariffType;
+import com.aimir.model.view.MonthEMView;
 import com.aimir.util.Condition;
 import com.aimir.util.Condition.Restriction;
 import com.aimir.util.DateTimeUtil;
@@ -104,6 +106,9 @@ public class ECGBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     
     @Autowired
     LpEMDao lpEMDao;
+    
+    @Autowired
+    MonthEMViewDao monthEMViewDao;
     
     private boolean isNowRunning = false;
     
@@ -345,11 +350,19 @@ public class ECGBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         condition.put("yyyymm", yyyymm);
         condition.put("dst", 0);
         
+        /*
+         * OPF-610 정규화 관련 처리로 인한 주석
         List<MonthEM> monthEMs = monthEMDao.getMonthEMsByCondition(condition);
+        */
+        List<MonthEMView> monthEMs = monthEMViewDao.getMonthEMsByCondition(condition);
         
         log.info("monthEM size: " + monthEMs.size());
         if (monthEMs.size() > 0) {
-            MonthEM monthEM = monthEMs.get(0);
+			/*
+			 * OPF-610 정규화 관련 처리로 인한 주석
+			 * MonthEM monthEM = monthEMs.get(0);
+			 */
+        	MonthEMView monthEM = monthEMs.get(0);
             monthEM.setMDevType(DeviceType.Meter.name());
             monthEM.setMDevId(meter.getMdsId());
             
@@ -453,15 +466,15 @@ public class ECGBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
             condition.add(new Condition("id.mdevId", new Object[]{monthEM.getMDevId()}, null, Restriction.EQ));
             condition.add(new Condition("id.channel", new Object[]{KamstrupChannel.ActiveEnergyImp.getChannel()}, null, Restriction.EQ));
             condition.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
-            condition.add(new Condition("yyyymmdd", new Object[]{yyyymmdd}, null, Restriction.EQ));
+            condition.add(new Condition("id.yyyymmddhhmiss", new Object[]{yyyymmdd + "%"}, null, Restriction.LIKE));
             
             List<Projection> projections = new ArrayList<Projection>();
-            projections.add(Projections.alias(Projections.max("id.yyyymmddhh"), "maxYyyymmddhh"));
+            projections.add(Projections.alias(Projections.max("id.yyyymmddhhmiss"), "maxYyyymmddhhmiss"));
             
             List<Map<String, Object>> lastLpEM = ((LpEMDaoImpl)lpEMDao).findByConditionsAndProjections(condition, projections);
             
             if (lastLpEM != null && lastLpEM.size() == 1) {
-                String maxYyyymmddhh = (String)lastLpEM.get(0).get("maxYyyymmddhh");
+                String maxYyyymmddhhmiss = (String)lastLpEM.get(0).get("maxYyyymmddhhmiss");
                 
                 condition = new HashSet<Condition>();
                 condition.add(new Condition("id.mdevType", new Object[]{monthEM.getMDevType()}, null, Restriction.EQ));
@@ -469,7 +482,51 @@ public class ECGBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
                 condition.add(new Condition("id.channel", new Object[]{KamstrupChannel.ActiveEnergyImp.getChannel(),
                         KamstrupChannel.ActiveEnergyExp.getChannel()}, null, Restriction.IN));
                 condition.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
-                condition.add(new Condition("id.yyyymmddhh", new Object[]{maxYyyymmddhh}, null, Restriction.EQ));
+                condition.add(new Condition("id.yyyymmddhhmiss", new Object[]{maxYyyymmddhhmiss}, null, Restriction.EQ));
+                
+                return lpEMDao.findByConditions(condition).toArray(new LpEM[0]);
+            }
+        }
+        
+        return null;
+    }
+    
+    @Transactional
+    private LpEM[] getLastLpTime(MonthEMView monthEM) throws Exception {
+        String yyyymmdd = null;
+        String lpValue = null;
+        for (int i = 31; i > 0; i--) {
+            lpValue = BeanUtils.getProperty(monthEM, String.format("value_%02d", i));
+            if (lpValue != null && !lpValue.equals("")) {
+                yyyymmdd = String.format("%s%02d", monthEM.getYyyymm(), i);
+                log.info("getLastLpTime: " + yyyymmdd);
+                break;
+            }
+        }
+        if (yyyymmdd != null) {
+            Set<Condition> condition = new HashSet<Condition>();
+            log.info("MDevType[" + monthEM.getMDevType() + "] MDevId[" + monthEM.getMDevId() + "] YYYYMMDD[" + yyyymmdd + "]");
+            condition.add(new Condition("id.mdevType", new Object[]{monthEM.getMDevType()}, null, Restriction.EQ));
+            condition.add(new Condition("id.mdevId", new Object[]{monthEM.getMDevId()}, null, Restriction.EQ));
+            condition.add(new Condition("id.channel", new Object[]{KamstrupChannel.ActiveEnergyImp.getChannel()}, null, Restriction.EQ));
+            condition.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
+            condition.add(new Condition("id.yyyymmddhhmiss", new Object[]{yyyymmdd + "%"}, null, Restriction.LIKE));
+            
+            List<Projection> projections = new ArrayList<Projection>();
+            projections.add(Projections.alias(Projections.max("id.yyyymmddhhmiss"), "maxYyyymmddhhmiss"));
+            
+            List<Map<String, Object>> lastLpEM = ((LpEMDaoImpl)lpEMDao).findByConditionsAndProjections(condition, projections);
+            
+            if (lastLpEM != null && lastLpEM.size() == 1) {
+                String maxYyyymmddhhmiss = (String)lastLpEM.get(0).get("maxYyyymmddhhmiss");
+                
+                condition = new HashSet<Condition>();
+                condition.add(new Condition("id.mdevType", new Object[]{monthEM.getMDevType()}, null, Restriction.EQ));
+                condition.add(new Condition("id.mdevId", new Object[]{monthEM.getMDevId()}, null, Restriction.EQ));
+                condition.add(new Condition("id.channel", new Object[]{KamstrupChannel.ActiveEnergyImp.getChannel(),
+                        KamstrupChannel.ActiveEnergyExp.getChannel()}, null, Restriction.IN));
+                condition.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
+                condition.add(new Condition("id.yyyymmddhhmiss", new Object[]{maxYyyymmddhhmiss}, null, Restriction.EQ));
                 
                 return lpEMDao.findByConditions(condition).toArray(new LpEM[0]);
             }

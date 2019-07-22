@@ -16,7 +16,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +36,7 @@ import com.aimir.dao.system.SupplyTypeDao;
 import com.aimir.dao.system.TOURateDao;
 import com.aimir.dao.system.TariffEMDao;
 import com.aimir.dao.system.TariffTypeDao;
+import com.aimir.dao.view.MonthEMViewDao;
 import com.aimir.model.mvm.DayEM;
 import com.aimir.model.mvm.MonthEM;
 import com.aimir.model.mvm.Season;
@@ -43,6 +44,7 @@ import com.aimir.model.system.Contract;
 import com.aimir.model.system.TOURate;
 import com.aimir.model.system.TariffEM;
 import com.aimir.model.system.TariffType;
+import com.aimir.model.view.MonthEMView;
 import com.aimir.model.vo.TariffEMVO;
 import com.aimir.util.StringUtil;
 import com.aimir.util.TimeUtil;
@@ -94,6 +96,9 @@ public class TariffEMDaoImpl extends AbstractHibernateGenericDao<TariffEM, Integ
 	
     @Autowired
     HibernateTransactionManager transactionManager;
+    
+    @Autowired
+	MonthEMViewDao monthEMViewDao;
 
 	@SuppressWarnings("unchecked")
 	public List<Object> getYyyymmddList(Integer supplierId){
@@ -453,7 +458,9 @@ public class TariffEMDaoImpl extends AbstractHibernateGenericDao<TariffEM, Integ
 		if(tariffEMList == null || tariffEMList.size() == 0){
 			return 0d;
 		}
-		MonthEM monthEM = null;
+		//MonthEM monthEM = null;
+		MonthEMView monthEMView = null;
+		
 		DayEM dayEM = null;
 		Double chargeSum = 10000d;
 		int duration;
@@ -469,72 +476,82 @@ public class TariffEMDaoImpl extends AbstractHibernateGenericDao<TariffEM, Integ
 			duration = TimeUtil.getDayDuration(startDate, endDate); //요금계산하는 실제 사용기간			
 			
 //			 List<MonthEM> tempList = monthEMDao.getMonthEMsByListCondition(param);
+			/*
+			 * OPF-610 정규화 관련 처리로 인한 주석
 			List<MonthEM> tempList = monthEMDao.getMonthEMbySupplierId(param);
-
-			 if( tempList != null && tempList.size() > 0){
+			*/
+			List<MonthEMView> tempList = monthEMViewDao.getMonthEMbySupplierId(param);
+			
+			
+			 if( tempList != null && tempList.size() > 0) {
+				 /* 
+				  * OPF-610 정규화 관련 처리로 인한 주석
 				 monthEM = (MonthEM)tempList.get(0);
 				 monthTotal = Double.parseDouble(StringUtil.nullToZero(monthEM.getTotal())); // 그 달의 총 사용량을 취득한다.
+				 */
+				 
+				 monthEMView = (MonthEMView)tempList.get(0);
+				 monthTotal = Double.parseDouble(StringUtil.nullToZero(monthEMView.getTotal())); // 그 달의 총 사용량을 취득한다.
 			 }
 			
 			//logger.debug("monthTotal=" +monthTotal);
 			 
-			if(monthEM != null) {
-			for(TariffEM tariffEM : tariffEMList){			
-				
-					if(tariffEM.getSupplySizeMin() != null || tariffEM.getSupplySizeMax() != null){
-						if(tariffEM.getSupplySizeMin() != null && tariffEM.getSupplySizeMin() >= monthTotal) {
-							chargeSum = tariffEM.getEnergyDemandCharge() == null ? 0d : tariffEM.getEnergyDemandCharge();
-							if(tariffEM.getActiveEnergyCharge()!= null){
-								chargeSum += monthTotal*tariffEM.getActiveEnergyCharge();
-							}
-						}
-						if(tariffEM.getSupplySizeMin() != null && tariffEM.getSupplySizeMin() >= monthTotal && tariffEM.getSupplySizeMin() < monthTotal) {
-							chargeSum = tariffEM.getEnergyDemandCharge() == null ? 0d : tariffEM.getEnergyDemandCharge();
-							if(tariffEM.getActiveEnergyCharge()!= null){
-								chargeSum += monthTotal*tariffEM.getActiveEnergyCharge();
-							}
-						}
-						if(tariffEM.getSupplySizeMax() != null && tariffEM.getSupplySizeMin() != null && tariffEM.getSupplySizeMin() < monthTotal) {
-							chargeSum = tariffEM.getEnergyDemandCharge() == null ? 0d : tariffEM.getEnergyDemandCharge()*duration/30;
-							if(tariffEM.getActiveEnergyCharge()!= null){
-								chargeSum += monthTotal*tariffEM.getActiveEnergyCharge();
-							}
-						}				
-					}else{
-						if(tariffEM.getSeason() != null){
-							
-							String seasonStart = startDate.substring(0,4)+tariffEM.getSeason().getSmonth() + tariffEM.getSeason().getSday();
-							String seasonEnd = endDate.substring(0,4)+tariffEM.getSeason().getEmonth() + tariffEM.getSeason().getEday();
-							
-							if(tariffEM.getPeakType() != null){
-								
-								TOURate touRate = touRateDao.getTOURate(contract.getTariffIndex().getId(), 
-																		tariffEM.getSeason().getId(), 
-																		tariffEM.getPeakType());
-								double peakTimeUsage = 0.0d;
-								/*
-								if(touRate != null && touRate.getStartTime()){
-									//peak 시간대별 사용량 구해서 계산해야 함
-									chargeSum += peakTimeUsage*tariffEM.getActiveEnergyCharge();
-									dayEMDao.
+			if(monthEMView != null) {
+				for(TariffEM tariffEM : tariffEMList){			
+					
+						if(tariffEM.getSupplySizeMin() != null || tariffEM.getSupplySizeMax() != null){
+							if(tariffEM.getSupplySizeMin() != null && tariffEM.getSupplySizeMin() >= monthTotal) {
+								chargeSum = tariffEM.getEnergyDemandCharge() == null ? 0d : tariffEM.getEnergyDemandCharge();
+								if(tariffEM.getActiveEnergyCharge()!= null){
+									chargeSum += monthTotal*tariffEM.getActiveEnergyCharge();
 								}
-								*/
+							}
+							if(tariffEM.getSupplySizeMin() != null && tariffEM.getSupplySizeMin() >= monthTotal && tariffEM.getSupplySizeMin() < monthTotal) {
+								chargeSum = tariffEM.getEnergyDemandCharge() == null ? 0d : tariffEM.getEnergyDemandCharge();
+								if(tariffEM.getActiveEnergyCharge()!= null){
+									chargeSum += monthTotal*tariffEM.getActiveEnergyCharge();
+								}
+							}
+							if(tariffEM.getSupplySizeMax() != null && tariffEM.getSupplySizeMin() != null && tariffEM.getSupplySizeMin() < monthTotal) {
+								chargeSum = tariffEM.getEnergyDemandCharge() == null ? 0d : tariffEM.getEnergyDemandCharge()*duration/30;
+								if(tariffEM.getActiveEnergyCharge()!= null){
+									chargeSum += monthTotal*tariffEM.getActiveEnergyCharge();
+								}
+							}				
+						}else{
+							if(tariffEM.getSeason() != null){
+								
+								String seasonStart = startDate.substring(0,4)+tariffEM.getSeason().getSmonth() + tariffEM.getSeason().getSday();
+								String seasonEnd = endDate.substring(0,4)+tariffEM.getSeason().getEmonth() + tariffEM.getSeason().getEday();
+								
+								if(tariffEM.getPeakType() != null){
+									
+									TOURate touRate = touRateDao.getTOURate(contract.getTariffIndex().getId(), 
+																			tariffEM.getSeason().getId(), 
+																			tariffEM.getPeakType());
+									double peakTimeUsage = 0.0d;
+									/*
+									if(touRate != null && touRate.getStartTime()){
+										//peak 시간대별 사용량 구해서 계산해야 함
+										chargeSum += peakTimeUsage*tariffEM.getActiveEnergyCharge();
+										dayEMDao.
+									}
+									*/
+								}else{
+									
+									if(startDate.compareTo(seasonStart) >= 0 && endDate.compareTo(seasonEnd) <= 0){
+										chargeSum = monthTotal*(tariffEM.getActiveEnergyCharge()==null?1:tariffEM.getActiveEnergyCharge());
+									}
+								}
 							}else{
 								
-								if(startDate.compareTo(seasonStart) >= 0 && endDate.compareTo(seasonEnd) <= 0){
-									chargeSum = monthTotal*(tariffEM.getActiveEnergyCharge()==null?1:tariffEM.getActiveEnergyCharge());
+								if(tariffEM.getActiveEnergyCharge() != null){
+									chargeSum = monthTotal*tariffEM.getActiveEnergyCharge();
 								}
 							}
-						}else{
-							
-							if(tariffEM.getActiveEnergyCharge() != null){
-								chargeSum = monthTotal*tariffEM.getActiveEnergyCharge();
-							}
+							chargeSum += tariffEM.getEnergyDemandCharge()*duration/30;
 						}
-						chargeSum += tariffEM.getEnergyDemandCharge()*duration/30;
 					}
-	
-				}
 			 } else {
 				 chargeSum=0d;
 			 }

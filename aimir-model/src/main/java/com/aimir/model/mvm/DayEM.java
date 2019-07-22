@@ -12,7 +12,7 @@ import org.eclipse.persistence.annotations.Indexes;
 @Entity
 @Table(name = "DAY_EM")
 @Indexes({
-		@Index(name="IDX_DAY_EM_01", columnNames={"mdev_type", "mdev_id", "dst", "yyyymmdd", "channel", "full_location"})
+		@Index(name="IDX_DAY_EM_01", columnNames={"mdev_type", "mdev_id", "dst", "yyyymmdd", "channel"})
         })
 public class DayEM extends MeteringDay {
 

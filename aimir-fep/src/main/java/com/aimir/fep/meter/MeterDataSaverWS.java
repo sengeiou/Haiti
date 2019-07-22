@@ -36,7 +36,8 @@ public class MeterDataSaverWS
     		@WebParam(name="MeteringDataCount") int cnt,
             @WebParam(name="MeteringDataBinary") byte[] data, 
             @WebParam(name="IpAddr") String ipAddr,
-            @WebParam(name="ProtocolType") String protocolType
+            @WebParam(name="ProtocolType") String protocolType,
+            @WebParam(name="MeteringType") String meteringType
             )
     throws Exception
     {
@@ -51,7 +52,8 @@ public class MeterDataSaverWS
             mdHistoryData.setMdData(data);
             mdHistoryData.setIpAddr(ipAddr);
             mdHistoryData.setProtocolType(protocolType);
-
+            mdHistoryData.setMeteringType(meteringType);
+            
             saver.save(mdHistoryData, false);
 
             log.debug("saveMeasurementData");
@@ -67,7 +69,8 @@ public class MeterDataSaverWS
     		, @WebParam(name="MeteringDataBinary") byte[] data
     		, @WebParam(name="NameSpace") String nameSpace
     		, @WebParam(name="IpAddr") String ipAddr
-    		, @WebParam(name="ProtocolType") String protocolType)
+    		, @WebParam(name="ProtocolType") String protocolType,
+			@WebParam(name="MeteringType") String meteringType)
     throws Exception
     {
         log.debug("McuId["+mcuId+"] MeteringDataCnt["+cnt+"] MeteringDataBinary["+Hex.decode(data)+"]"
@@ -81,7 +84,8 @@ public class MeterDataSaverWS
             mdHistoryData.setNameSpace(nameSpace);
             mdHistoryData.setIpAddr(ipAddr);
             mdHistoryData.setProtocolType(protocolType);
-
+			mdHistoryData.setMeteringType(meteringType);
+			
             saver.save(mdHistoryData, false);
 
             log.debug("saveMeasurementData");

@@ -325,7 +325,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc-portlet</artifactId>
-      <version>${spring.version}</version>
+      <version>${spring.webmvc.portlet}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.flex</groupId> 

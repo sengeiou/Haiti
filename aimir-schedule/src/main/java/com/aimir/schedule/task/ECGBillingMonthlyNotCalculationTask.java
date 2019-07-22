@@ -12,7 +12,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.JobExecutionContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 
 import com.aimir.dao.device.MeterDao;
@@ -25,6 +25,7 @@ import com.aimir.dao.system.OperatorDao;
 import com.aimir.dao.system.PrepaymentLogDao;
 import com.aimir.dao.system.TariffEMDao;
 import com.aimir.dao.system.TariffTypeDao;
+import com.aimir.dao.view.MonthEMViewDao;
 import com.aimir.model.mvm.MonthEM;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.Customer;
@@ -33,6 +34,7 @@ import com.aimir.model.system.Operator;
 import com.aimir.model.system.PrepaymentLog;
 import com.aimir.model.system.TariffEM;
 import com.aimir.model.system.TariffType;
+import com.aimir.model.view.MonthEMView;
 import com.aimir.util.DateTimeUtil;
 import com.aimir.util.StringUtil;
 
@@ -72,6 +74,9 @@ public class ECGBillingMonthlyNotCalculationTask extends ScheduleTask {
 	
 	@Autowired
 	LocationDao locationDao;	
+	
+	@Autowired
+	MonthEMViewDao monthEMViewDao;
 	
 	
 	TransactionStatus txStatus = null;
@@ -277,9 +282,16 @@ public class ECGBillingMonthlyNotCalculationTask extends ScheduleTask {
     	
     	String serviceChannel = KamstrupChannel.ActiveEnergyImp.getChannel()+","+KamstrupChannel.ActiveEnergyExp.getChannel();
         
-    	List<MonthEM> monthlyEMList = monthEMDao.getMonthlyUsageByContract(contract, yyyymm, serviceChannel);
+		/* 
+		 * OPF-610 정규화 관련 처리로 인한 주석
+		  List<MonthEM> monthlyEMList = monthEMDao.getMonthlyUsageByContract(contract, yyyymm, serviceChannel);
+		  for ( MonthEM em : monthlyEMList ) {
+    		totalUsage += StringUtil.nullToDoubleZero(em.getTotal());
+    		}
+		 */
     	
-    	for ( MonthEM em : monthlyEMList ) {
+    	List<MonthEMView> monthlyEMList = monthEMViewDao.getMonthlyUsageByContract(contract, yyyymm, serviceChannel);
+    	for ( MonthEMView em : monthlyEMList ) {
     		totalUsage += StringUtil.nullToDoubleZero(em.getTotal());
     	}
     	

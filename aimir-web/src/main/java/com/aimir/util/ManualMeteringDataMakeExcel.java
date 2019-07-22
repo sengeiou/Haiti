@@ -15,6 +15,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 
 import com.aimir.model.mvm.MeteringDay;
 import com.aimir.model.system.Supplier;
+import com.aimir.model.view.MeteringDayView;
 import com.aimir.service.mvm.bean.MeteringListData;
 
 /**
@@ -39,12 +40,12 @@ public class ManualMeteringDataMakeExcel {
      * @param fileName
      */
     public void writeManualMeteringDayExcel(
-    	List<MeteringDay> result, 
+    	List<MeteringDayView> result, 
     	Map<String, String> msgMap,    	
     	Supplier supplier,
     	boolean isLast, String filePath, String fileName) {
 
-    	MeteringDay m = null;
+    	MeteringDayView m = null;
     	String lang = supplier.getLang().getCode_2letter();
     	String country = supplier.getCountry().getCode_2letter();
     	

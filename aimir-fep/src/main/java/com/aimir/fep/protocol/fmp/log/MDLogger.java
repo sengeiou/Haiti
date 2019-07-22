@@ -37,6 +37,56 @@ public class MDLogger extends MessageLogger {
         logDirName = "db/md";
     }
 
+    public String writeObject(Serializable obj, String path) {
+    	ObjectOutputStream out = null;
+        try
+        {
+            String mcuId = null;
+            // 2017.03.24 SP-629
+            if (obj instanceof MDData) {
+                MDData mdData = (MDData)obj;
+                mcuId = mdData.getMcuId();
+            }
+            else if (obj instanceof MDHistoryData) {
+                MDHistoryData mdhd = (MDHistoryData)obj;
+                mcuId = mdhd.getMcuId();
+            }
+            
+            if(mcuId == null || "".equals(mcuId)) {
+            	mcuId = "127.0.0.1";
+            }
+            
+            if (mcuId != null) {
+                File f = null;
+                f = new File(path,"MDLog-" + mcuId + "-"
+                        +UUID.randomUUID()+".log");
+                out = new ObjectOutputStream(
+                    new BufferedOutputStream(new FileOutputStream(f)));
+                out.writeObject(obj);
+                out.reset();
+                return f.getAbsolutePath();
+            }
+            else {
+                log.warn("Serializable is not MDData or MDHistory");
+            }
+        }
+        catch (Exception e) {
+            log.error("********" + getClass().getName()
+                    + " write() Failed *********",e);
+        }
+        finally {
+            if (out != null) {
+                try {
+                    out.close();
+                }
+                catch (Exception e) {
+                    log.error(e, e);
+                }
+            }
+        }
+        return null;
+    }
+    
     @Override
     public String writeObject(Serializable obj) {
         ObjectOutputStream out = null;

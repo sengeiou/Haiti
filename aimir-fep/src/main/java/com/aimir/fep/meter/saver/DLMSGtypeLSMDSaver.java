@@ -196,6 +196,7 @@ public class DLMSGtypeLSMDSaver extends AbstractMDSaver {
                 double reactiveLagEnergy = 0.0;
                 double reactiveLeadEnergy = 0.0;
                 
+                /* OPF-610 정규화 관련 처리로 인한 주석, 필요시 구현
                 for (MonthEM m : monthList.toArray(new MonthEM[0])) {
                     if (m.getChannel() == 2) {
                         activeEnergy = m.getTotal();
@@ -213,6 +214,7 @@ public class DLMSGtypeLSMDSaver extends AbstractMDSaver {
                         exportActiveEnergy = m.getTotal();
                     }
                 }
+                */
                 
                 Date lpDate = sdf.parse(lpData.getDatetime()+"00");
     
@@ -269,6 +271,8 @@ public class DLMSGtypeLSMDSaver extends AbstractMDSaver {
                     lpData.setLpValue(l.getValue().doubleValue());
                 }
 			
+                
+                /* OPF-610 정규화 관련 처리로 인한 주석, 필요시 구현
                 if (l.getValue_45() != null) {
                     lpData.setDatetime(l.getYyyymmddhh() + "45");
                     if (l.getChannel() == 2) {
@@ -344,6 +348,7 @@ public class DLMSGtypeLSMDSaver extends AbstractMDSaver {
                             ch[4] = l.getValue_00();
                     }
                 }
+                */
             }
             lpData.setCh(ch);
             return lpData;
@@ -1220,7 +1225,7 @@ public class DLMSGtypeLSMDSaver extends AbstractMDSaver {
 		// .inDST(null, parser.getMeterDate())+":yyyymmddhh:"+yyyymmddhh );
 		condition.add(new Condition("id.dst", new Object[] { DateTimeUtil.inDST(null, parser.getMeterTime()) }, null, Restriction.EQ));
 		condition.add(new Condition("id.channel",new Object[] { ElectricityChannel.Usage.getChannel() },null, Restriction.EQ));
-		condition.add(new Condition("id.yyyymmddhh", new Object[] { yyyymmddhh }, null, Restriction.EQ));
+		condition.add(new Condition("id.yyyymmddhhmiss", new Object[] { yyyymmddhh + "%" }, null, Restriction.LIKE));
 
 		List<LpEM> lpEM = lpEMDao.findByConditions(condition);
 
@@ -1230,10 +1235,12 @@ public class DLMSGtypeLSMDSaver extends AbstractMDSaver {
 		try {
 		    if (lpEM != null && !lpEM.isEmpty()) {
 		        // 동시간대의 값을 가져올 경우 00분을 제외한 lp값을 더하여 base값을 구해야 한다.
+		    	/* [[ //OPF-610 DB(LP) normalization 
 		        if (!mm.equals("00"))
 		            basePulse = lpEM.get(0).getValue()+retValue(mm,lpEM.get(0).getValue_00(),lpEM.get(0).getValue_15(),lpEM.get(0).getValue_30(),lpEM.get(0).getValue_45());
 		        else
-		            basePulse = lpEM.get(0).getValue();
+		        ]] */
+		        basePulse = lpEM.get(0).getValue();
 		    } 
 		    else{
 		        LinkedHashSet<Condition> condition2 = new LinkedHashSet<Condition>();
@@ -1260,13 +1267,14 @@ public class DLMSGtypeLSMDSaver extends AbstractMDSaver {
 
 		        cal.add(cal.HOUR, -1);
 
-		        condition2.add(new Condition("id.yyyymmddhh",
-		                new Object[] { dateFormatter.format(cal
-		                        .getTime()) }, null, Restriction.EQ));
+		        condition2.add(new Condition("id.yyyymmddhhmiss", new Object[] { dateFormatter.format(cal.getTime()) + "%" }, null, Restriction.LIKE));
 		        List<LpEM> subLpEM = lpEMDao.findByConditions(condition2);
 		        if (subLpEM != null && !subLpEM.isEmpty()) {
 		            // 전 시간 값을 가져온 것이기 때문에 전부 다 합산해야 한다.
-		            basePulse = subLpEM.get(0).getValue()+retValue("00",subLpEM.get(0).getValue_00(),subLpEM.get(0).getValue_15(),subLpEM.get(0).getValue_30(),subLpEM.get(0).getValue_45());
+		        	/* [[ OPF-610 DB(LP) normalization 
+		            //basePulse = subLpEM.get(0).getValue()+retValue("00",subLpEM.get(0).getValue_00(),subLpEM.get(0).getValue_15(),subLpEM.get(0).getValue_30(),subLpEM.get(0).getValue_45());
+		        	]] */
+		        	basePulse = subLpEM.get(0).getValue();
 		        }
 		    }
 

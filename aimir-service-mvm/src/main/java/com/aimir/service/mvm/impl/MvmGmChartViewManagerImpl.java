@@ -13,13 +13,17 @@ import com.aimir.dao.mvm.DayGMDao;
 import com.aimir.dao.mvm.LpGMDao;
 import com.aimir.dao.mvm.MonthGMDao;
 import com.aimir.dao.mvm.SeasonDao;
+import com.aimir.dao.view.DayGMViewDao;
+import com.aimir.dao.view.MonthGMViewDao;
 import com.aimir.model.mvm.DayGM;
 import com.aimir.model.mvm.LpGM;
 import com.aimir.model.mvm.MonthGM;
 import com.aimir.model.mvm.Season;
+import com.aimir.model.view.DayGMView;
+import com.aimir.model.view.MonthGMView;
 import com.aimir.util.Condition;
-import com.aimir.util.SearchCalendarUtil;
 import com.aimir.util.Condition.Restriction;
+import com.aimir.util.SearchCalendarUtil;
 
 @Service(value = "MvmGmChartViewManagerImpl")
 public class MvmGmChartViewManagerImpl {
@@ -28,9 +32,15 @@ public class MvmGmChartViewManagerImpl {
 
 	@Autowired
 	DayGMDao dayGMDao;
+	
+	@Autowired
+	DayGMViewDao dayGMViewDao;
 
 	@Autowired
 	MonthGMDao monthGMDao;
+	
+	@Autowired
+	MonthGMViewDao monthGMViewDao;
 
 	@Autowired
 	SeasonDao seasonDao;
@@ -125,7 +135,42 @@ public class MvmGmChartViewManagerImpl {
 		resultHm.put("dataList", dataList);
 		}
 		return resultHm;
-
+	}
+	
+	public HashMap<String, Object>  getGMSearchDataDayView(Set<Condition> set, Integer[] custList) {
+		HashMap<String, Object> resultHm = new HashMap<String, Object>();
+		
+		Double[] avgValue = new Double[custList.length];
+		Double[] maxValue = new Double[custList.length];
+		Double[] minValue = new Double[custList.length];
+		Double[] sumValue = new Double[custList.length];
+		
+		if(custList.length >0 && custList != null) { 
+			for(int idx=0;idx < custList.length;idx++) {
+			
+			Condition cdt = new Condition("contract.id", new Object[] { custList[idx] }, null,Restriction.EQ);// 
+			set.add(cdt);
+			
+			avgValue[idx] = (Double) dayGMDao.getDayGMsMaxMinAvgSum(set, "avg").get(0);
+			maxValue[idx] = (Double) dayGMDao.getDayGMsMaxMinAvgSum(set, "max").get(0);
+			minValue[idx] = (Double) dayGMDao.getDayGMsMaxMinAvgSum(set, "min").get(0);
+			sumValue[idx] = (Double) dayGMDao.getDayGMsMaxMinAvgSum(set, "sum").get(0);
+			
+			set.remove(cdt);
+		}
+		
+		Condition cdt = new Condition("contract.id", custList, null,Restriction.IN);//
+		set.add(cdt);
+		List<DayGMView> dataList = dayGMViewDao.getDayGMsByListCondition(set);
+		
+		resultHm.put("arrAvgValue", avgValue);
+		resultHm.put("arrMaxValue", maxValue);
+		resultHm.put("arrMinValue", minValue);
+		resultHm.put("arrSumValue", sumValue);
+		resultHm.put("arrContId", custList);
+		resultHm.put("dataList", dataList);
+		}
+		return resultHm;
 	}
 	
 	/**
@@ -175,6 +220,44 @@ public class MvmGmChartViewManagerImpl {
 
 	}
 	
+	public HashMap<String, Object>  getGMSearchDataMonthView(Set<Condition> set, Integer[]  custList) {
+		HashMap<String, Object> resultHm = new HashMap<String, Object>();
+		
+		Double[] avgValue = new Double[custList.length];
+		Double[] maxValue = new Double[custList.length];
+		Double[] minValue = new Double[custList.length];
+		Double[] sumValue = new Double[custList.length];
+		
+		if(custList.length >0 && custList != null) { 
+			for(int idx=0;idx < custList.length;idx++) {
+			
+			Condition cdt = new Condition("contract.id", new Object[] { custList[idx] }, null,Restriction.EQ);// 
+			set.add(cdt);
+			
+			avgValue[idx] = (Double) monthGMDao.getMonthGMsMaxMinAvgSum(set, "avg").get(0);
+			maxValue[idx] = (Double) monthGMDao.getMonthGMsMaxMinAvgSum(set, "max").get(0);
+			minValue[idx] = (Double) monthGMDao.getMonthGMsMaxMinAvgSum(set, "min").get(0);
+			sumValue[idx] = (Double) monthGMDao.getMonthGMsMaxMinAvgSum(set, "sum").get(0);
+			
+			set.remove(cdt);
+		}
+		
+		Condition cdt = new Condition("contract.id", custList, null,Restriction.IN);//
+		set.add(cdt);
+		Condition cdt2 = new Condition("contract.id", null, null, Restriction.ORDERBY);
+		set.add(cdt2);
+		List<MonthGMView> dataList = monthGMViewDao.getMonthGMsByListCondition(set);
+		
+		resultHm.put("arrAvgValue", avgValue);
+		resultHm.put("arrMaxValue", maxValue);
+		resultHm.put("arrMinValue", minValue);
+		resultHm.put("arrSumValue", sumValue);
+		resultHm.put("arrContId", custList);
+		resultHm.put("dataList", dataList);
+		}
+		return resultHm;
+
+	}
 	
 	/**
 	 * @Method Name : getGMSearchDataDayWeek

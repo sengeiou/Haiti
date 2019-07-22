@@ -42,6 +42,8 @@ import com.aimir.model.mvm.MeteringMonth;
 import com.aimir.model.system.Co2Formula;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.Supplier;
+import com.aimir.model.view.MeteringDayView;
+import com.aimir.model.view.MeteringMonthView;
 import com.aimir.service.mvm.MvmChartViewManager;
 import com.aimir.service.mvm.bean.ChannelInfo;
 import com.aimir.service.mvm.bean.CustomerInfo;
@@ -411,10 +413,10 @@ public class MvmChartViewManagerImpl implements MvmChartViewManager {
         set.add(cdt);
         // 조회년월일시
         if ((beginDate != null && beginDate.length() != 0) && (endDate != null && endDate.length() != 0)) {
-            Condition cdt2 = new Condition("id.yyyymmddhh", new Object[] { beginDate, endDate }, null, Restriction.BETWEEN);//
+            Condition cdt2 = new Condition("id.yyyymmddhhmiss", new Object[] { beginDate + "0000", endDate + "5959"}, null, Restriction.BETWEEN);//
             set.add(cdt2);
         }
-        Condition cdt3 = new Condition("id.yyyymmddhh", null, null, Restriction.ORDERBY);
+        Condition cdt3 = new Condition("id.yyyymmddhhmiss", null, null, Restriction.ORDERBY);
         set.add(cdt3);
 
         return null;
@@ -454,14 +456,14 @@ public class MvmChartViewManagerImpl implements MvmChartViewManager {
         set.add(cdt1);
         // 조회년월일시
         if ((beginDate != null && beginDate.length() != 0) && (endDate != null && endDate.length() != 0)) {
-            Condition cdt2 = new Condition("id.yyyymmddhh", new Object[] { beginDate, endDate }, null, Restriction.BETWEEN);//
+            Condition cdt2 = new Condition("id.yyyymmddhhmiss", new Object[] { beginDate + "0000", endDate + "5959" }, null, Restriction.BETWEEN);//
             set.add(cdt2);
         }
         Condition cdt4 = new Condition("id.mdevType", new Object[] { DeviceType.Meter }, null, Restriction.EQ);
         set.add(cdt4);
         Condition cdt = new Condition("contract.id", null, null, Restriction.ORDERBY);
         set.add(cdt);
-        Condition cdt3 = new Condition("id.yyyymmddhh", null, null, Restriction.ORDERBY);
+        Condition cdt3 = new Condition("id.yyyymmddhhmiss", null, null, Restriction.ORDERBY);
         set.add(cdt3);
 
         Double co2StdValue =0D;
@@ -968,23 +970,39 @@ public class MvmChartViewManagerImpl implements MvmChartViewManager {
         set.add(cdt3);
         Double co2StdValue =0D;
         if ("EM".equals(type)) {
+        	/*
+        	 * OPF-610 정규화 관련 처리로 인한 주석
             hm = MvmEmChartViewManagerImpl.getEMSearchDataDay(set, custList);
+            */
+        	hm = MvmEmChartViewManagerImpl.getEMSearchDataDayView(set, custList);
             co2StdValue = getTypeToCo2("EM");
             hm.put("co2StdValue", co2StdValue);
             result = getDayChangRowByCol(hm, supplierId, beginDate, endDate);
         }
         else if ("GM".equals(type)) {
+        	/*
+        	 * OPF-610 정규화 관련 처리로 인한 주석
             hm =  MvmGmChartViewManagerImpl.getGMSearchDataDay(set, custList);
+            */
+        	hm =  MvmGmChartViewManagerImpl.getGMSearchDataDayView(set, custList);
             co2StdValue = getTypeToCo2("GM");
             hm.put("co2StdValue", co2StdValue);
             result = getDayChangRowByCol(hm, supplierId);
         } else if ("WM".equals(type)) {
+        	/*
+        	 * OPF-610 정규화 관련 처리로 인한 주석
             hm =  MvmWmChartViewManagerImpl.getWMSearchDataDay(set, custList);
+            */
+        	hm =  MvmWmChartViewManagerImpl.getWMSearchDataDayView(set, custList);
             co2StdValue = getTypeToCo2("WM");
             hm.put("co2StdValue", co2StdValue);
             result = getDayChangRowByCol(hm, supplierId);
         } else if ("HM".equals(type)) {
+        	/*
+        	 * OPF-610 정규화 관련 처리로 인한 주석
             hm =  MvmHmChartViewManagerImpl.getHMSearchDataDay(set, custList);
+            */
+        	hm =  MvmHmChartViewManagerImpl.getHMSearchDataDayView(set, custList);
             co2StdValue = getTypeToCo2("HM");
             hm.put("co2StdValue", co2StdValue);
             result = getDayChangRowByCol(hm, supplierId);
@@ -1010,19 +1028,32 @@ public class MvmChartViewManagerImpl implements MvmChartViewManager {
         MvmChartViewData mcvd = null;
         Class<? extends MvmChartViewData> cls = null;
 
+        /*
+         * OPF-610 정규화 관련 처리로 인한 주석
         List<MeteringDay> dataList = (List<MeteringDay>) hm.get("dataList");
-
+		*/
+        List<MeteringDayView> dataList = (List<MeteringDayView>) hm.get("dataList");
+        
         Integer[] contId = (Integer[]) hm.get("arrContId");
-//        Double[] avgValue = (Double[]) hm.get("arrAvgValue");
-//        Double[] maxValue = (Double[]) hm.get("arrMaxValue");
-//        Double[] minValue = (Double[]) hm.get("arrMinValue");
-//        Double[] sumValue = (Double[]) hm.get("arrSumValue");
+        /*
+        Double[] avgValue = (Double[]) hm.get("arrAvgValue");
+        Double[] maxValue = (Double[]) hm.get("arrMaxValue");
+        Double[] minValue = (Double[]) hm.get("arrMinValue");
+        Double[] sumValue = (Double[]) hm.get("arrSumValue");
+        */
         Double co2StdValue = (Double) hm.get("co2StdValue");
 
 //        Map<String, Object> dataMap = null;
 
+        /*
+         * OPF-610 정규화 관련 처리로 인한 주석
         Class<? extends MeteringDay> clas = null;
+        */
+        
+        Class<? extends MeteringDayView> clas = null;
         MeteringDay mtr = null;
+        MeteringDayView mtrView = null;
+        
         Class<?>[] parameterTypes = {};
         Object[] parameters = {};
         Method method = null;
@@ -1086,8 +1117,12 @@ public class MvmChartViewManagerImpl implements MvmChartViewManager {
                     String compdate = dataList.get(i).getYyyymmdd();
                     Integer compContID = dataList.get(i).getContract().getId();
 
+                    /*
                     mtr = dataList.get(i);
                     clas = mtr.getClass();
+                    */
+                    mtrView = dataList.get(i);
+                    clas = mtrView.getClass();
 
                     bdValue = null;
                     value = null;
@@ -1100,35 +1135,14 @@ public class MvmChartViewManagerImpl implements MvmChartViewManager {
                             Integer stdConId = contId[colIdx];
 
                             if (compdate.equals(stdDate) && (compContID == stdConId)) {
-//                                tmpValue[rowIdx][colIdx] = dataList.get(i).getValue_00();
                                 bdValue = null;
-
-//                                for (int j = 0 ; j < 24 ; j++) { // 시간별 데이터 합산
-//                                    value = null;
-//                                    try {
-//                                        method = clas.getMethod("getValue_" + StringUtil.frontAppendNStr('0', Integer.toString(j), 2), parameterTypes);
-//                                        value = (Double)method.invoke(mtr, parameters);
-//                                    } catch (SecurityException e) {
-//                                        e.printStackTrace();
-//                                    } catch (IllegalArgumentException e) {
-//                                        e.printStackTrace();
-//                                    } catch (NoSuchMethodException e) {
-//                                        e.printStackTrace();
-//                                    } catch (InvocationTargetException e) {
-//                                        e.printStackTrace();
-//                                    }
-//
-//                                    if (value != null) {
-//                                        if (bdValue == null) {
-//                                            bdValue = new BigDecimal(value.toString());
-//                                        } else {
-//                                            bdValue = bdValue.add(new BigDecimal(value.toString()));
-//                                        }
-//                                    }
-//                                }
                                 
-//                                tmpValue[rowIdx][colIdx] = (bdValue == null) ? null : bdValue.doubleValue();
+                                /*
+                                 * OPF-610 정규화 관련 처리로 인한 주석
                                 tmpValue[rowIdx][colIdx] = (mtr.getTotal() == null) ? null : DecimalUtil.ConvertNumberToDouble(mtr.getTotal());
+                                */
+                                tmpValue[rowIdx][colIdx] = (mtrView.getTotal() == null) ? null : DecimalUtil.ConvertNumberToDouble(mtrView.getTotal());
+                                
                             }
                         }
                     }
@@ -1350,22 +1364,38 @@ public class MvmChartViewManagerImpl implements MvmChartViewManager {
         set.add(cdt3);
         Double co2StdValue = 0D;
         if ("EM".equals(type)) {
+        	/*
+        	 * OPF-610 정규화 관련 처리로 인한 주석
             hm = MvmEmChartViewManagerImpl.getEMSearchDataMonth(set, custList);
+            */
+        	hm = MvmEmChartViewManagerImpl.getEMSearchDataMonthView(set, custList);
             co2StdValue = getTypeToCo2("EM");
             hm.put("co2StdValue", co2StdValue);
             result = getMonthChangRowByCol(hm, supplierId, beginDate, endDate);
         } else if ("GM".equals(type)) {
-            hm = MvmGmChartViewManagerImpl.getGMSearchDataMonth(set, custList);
+			/*
+			 * OPF-610 정규화 관련 처리로 인한 주석
+			 * hm = MvmGmChartViewManagerImpl.getGMSearchDataMonth(set, custList);
+			 */
+        	hm = MvmGmChartViewManagerImpl.getGMSearchDataMonthView(set, custList);
             co2StdValue = getTypeToCo2("GM");
             hm.put("co2StdValue", co2StdValue);
             result = getMonthChangRowByCol(hm, supplierId);
         } else if ("WM".equals(type)) {
-            hm = MvmWmChartViewManagerImpl.getWMSearchDataMonth(set, custList);
+			/*
+			 * OPF-610 정규화 관련 처리로 인한 주석
+			 * hm = MvmWmChartViewManagerImpl.getWMSearchDataMonth(set, custList);
+			 */
+        	hm = MvmWmChartViewManagerImpl.getWMSearchDataMonthView(set, custList);
             co2StdValue = getTypeToCo2("WM");
             hm.put("co2StdValue", co2StdValue);
             result = getMonthChangRowByCol(hm, supplierId);
         } else if ("HM".equals(type)) {
-            hm = MvmHmChartViewManagerImpl.getHMSearchDataMonth(set, custList);
+			/*
+			 * OPF-610 정규화 관련 처리로 인한 주석
+			 * hm = MvmHmChartViewManagerImpl.getHMSearchDataMonth(set, custList);
+			 */
+        	hm = MvmHmChartViewManagerImpl.getHMSearchDataMonthView(set, custList);
             co2StdValue = getTypeToCo2("HM");
             hm.put("co2StdValue", co2StdValue);
             result = getMonthChangRowByCol(hm, supplierId);
@@ -1386,8 +1416,12 @@ public class MvmChartViewManagerImpl implements MvmChartViewManager {
     @SuppressWarnings("unchecked")
     public List<MvmChartViewData> getMonthChangRowByCol(HashMap<String, Object> hm, String supplierId, String startDate, String endDate) {
         List<MvmChartViewData> result = new ArrayList<MvmChartViewData>();
-        List<MeteringMonth> dataList = (List<MeteringMonth>) hm.get("dataList");
-
+		/*
+		 * OPF-610 정규화 관련 처리로 인한 주석
+		 * List<MeteringMonth> dataList = (List<MeteringMonth>) hm.get("dataList");
+		 */
+        List<MeteringMonthView> dataList = (List<MeteringMonthView>) hm.get("dataList");
+        
         Integer[] contId = (Integer[]) hm.get("arrContId");
 //        Double[] avgValue = (Double[]) hm.get("arrAvgValue");
 //        Double[] maxValue = (Double[]) hm.get("arrMaxValue");
@@ -2309,22 +2343,41 @@ public class MvmChartViewManagerImpl implements MvmChartViewManager {
         set.add(cdt4);
 //        Double co2StdValue = 0D;
         if ("EM".equals(type)) {
-            hm = MvmEmChartViewManagerImpl.getEMSearchDataDay(set, custList);
+			/*
+			 * OPF-610 정규화 관련 처리로 인한 주석
+			 * hm = MvmEmChartViewManagerImpl.getEMSearchDataDay(set, custList);
+			 */
+        	hm = MvmEmChartViewManagerImpl.getEMSearchDataDayView(set, custList);
+        	
 //            co2StdValue = getTypeToCo2("EM");
 //            hm.put("co2StdValue", co2StdValue);
             result = getSearchDataDayOverChartFormat(hm, supplierId);
         } else if ("GM".equals(type)) {
-            hm = MvmGmChartViewManagerImpl.getGMSearchDataDay(set, custList);
+			/*
+			 * OPF-610 정규화 관련 처리로 인한 주석
+			 * hm = MvmGmChartViewManagerImpl.getGMSearchDataDay(set, custList);
+			 */
+        	hm = MvmGmChartViewManagerImpl.getGMSearchDataDayView(set, custList);
+        	
 //            co2StdValue = getTypeToCo2("GM");
 //            hm.put("co2StdValue", co2StdValue);
             result = getSearchDataDayOverChartFormat(hm, supplierId);
         } else if ("WM".equals(type)) {
-            hm = MvmWmChartViewManagerImpl.getWMSearchDataDay(set, custList);
+			/*
+			 * OPF-610 정규화 관련 처리로 인한 주석
+			 * hm = MvmWmChartViewManagerImpl.getWMSearchDataDay(set, custList);
+			 */
+        	hm = MvmWmChartViewManagerImpl.getWMSearchDataDayView(set, custList);
+        	
 //            co2StdValue = getTypeToCo2("WM");
 //            hm.put("co2StdValue", co2StdValue);
             result = getSearchDataDayOverChartFormat(hm, supplierId);
         } else if ("HM".equals(type)) {
-            hm = MvmHmChartViewManagerImpl.getHMSearchDataDay(set, custList);
+			/*
+			 * OPF-610 정규화 관련 처리로 인한 주석
+			 * hm = MvmHmChartViewManagerImpl.getHMSearchDataDay(set, custList);
+			 */
+        	hm = MvmHmChartViewManagerImpl.getHMSearchDataDayView(set, custList);
 //            co2StdValue = getTypeToCo2("HM");
 //            hm.put("co2StdValue", co2StdValue);
             result = getSearchDataDayOverChartFormat(hm, supplierId);
@@ -2349,8 +2402,12 @@ public class MvmChartViewManagerImpl implements MvmChartViewManager {
         MvmChartViewData mcvd = null;
         Class<? extends MvmChartViewData> cls = null;
 
-        List<MeteringDay> dataList = (List<MeteringDay>) hm.get("dataList");
-
+		/*
+		 * OPF-610 정규화 관련 처리로 인한 주석
+		 * List<MeteringDay> dataList = (List<MeteringDay>) hm.get("dataList");
+		 */        
+        List<MeteringDayView> dataList = (List<MeteringDayView>) hm.get("dataList");
+        
         Integer[] contId = (Integer[]) hm.get("arrContId");
         Double[] avgValue = (Double[]) hm.get("arrAvgValue");
         Double[] maxValue = (Double[]) hm.get("arrMaxValue");

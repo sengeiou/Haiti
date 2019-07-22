@@ -48,7 +48,7 @@ public class ComReportManagerImpl implements ComReportManager{
         List<LpEM> lpList = new ArrayList<LpEM>();
         Set<Condition> set = new HashSet<Condition>();
         set.add(new Condition("id.channel", new Object[]{condition.get("channel")}, null, Condition.Restriction.EQ));
-        set.add(new Condition("yyyymmdd", new Object[]{condition.get("yyyymmdd")}, null, Condition.Restriction.EQ));
+        set.add(new Condition("id.yyyymmddhhmiss", new Object[]{condition.get("yyyymmdd") + "%"}, null, Condition.Restriction.LIKE));
         set.add(new Condition("id.mdevId", new Object[]{condition.get("mdevId")}, null, Condition.Restriction.EQ));
         lpList = lpemDao.getLpEMsByListCondition(set);
 
@@ -108,6 +108,9 @@ public class ComReportManagerImpl implements ComReportManager{
         for(int i=0; i<lpLength; i++){
             LpEM lp = lpList.get(i);
             String hour = lp.getHour();
+            
+            /*
+             * OPF-610 정규화 관련 처리로 인한 주석
             if(lpInterval==10){
                 timeLine.put(hour.concat("0000"), lp.getValue_00()==null?"X" : "O");
                 timeLine.put(hour.concat("1000"), lp.getValue_10()==null?"X" : "O");
@@ -127,6 +130,17 @@ public class ComReportManagerImpl implements ComReportManager{
                 timeLine.put(hour.concat("0000"), lp.getValue_00()==null?"X" : "O");
             }else{
 
+            }
+            */
+            
+            for(int n=0; n<60; n+=lpInterval) {
+            	hour += String.format("%02d", n) + "00";
+            
+            	if(hour.equals(lp.getYyyymmddhhmiss().substring(8, lp.getYyyymmddhhmiss().length()))) {
+            		timeLine.put(hour, "O");
+            	} else {
+            		timeLine.put(hour, "X");
+            	}
             }
         }
         // 정전 시간 입력

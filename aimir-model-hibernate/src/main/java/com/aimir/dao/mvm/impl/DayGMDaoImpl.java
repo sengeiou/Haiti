@@ -1777,10 +1777,6 @@ public class DayGMDaoImpl extends AbstractHibernateGenericDao<DayGM, Integer> im
 				criteria.add(Restrictions.eq("id.mdevType", dayGM.getMDevType()));
 			}
 
-			if (dayGM.getLocation() != null) {
-
-				criteria.add(Restrictions.eq("location.id", dayGM.getLocation().getId()));
-			}
 		}
 
 		ProjectionList pjl = Projections.projectionList();
@@ -1835,10 +1831,6 @@ public class DayGMDaoImpl extends AbstractHibernateGenericDao<DayGM, Integer> im
 				criteria.add(Restrictions.eq("id.mdevType", dayGM.getMDevType()));
 			}
 
-			if (dayGM.getLocation() != null) {
-
-				criteria.add(Restrictions.eq("location.id", dayGM.getLocation().getId()));
-			}
 		}
 
 		ProjectionList pjl = Projections.projectionList();

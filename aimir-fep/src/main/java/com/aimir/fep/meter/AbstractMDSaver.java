@@ -3,12 +3,13 @@ package com.aimir.fep.meter;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -24,8 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.aimir.constants.CommonConstants;
 import com.aimir.constants.CommonConstants.ChannelCalcMethod;
@@ -80,10 +79,12 @@ import com.aimir.dao.system.Co2FormulaDao;
 import com.aimir.dao.system.CodeDao;
 import com.aimir.dao.system.ContractDao;
 import com.aimir.dao.system.DeviceModelDao;
+import com.aimir.fep.logger.AimirThreadMapper;
 import com.aimir.fep.meter.data.BillingData;
 import com.aimir.fep.meter.data.EnvData;
 import com.aimir.fep.meter.data.EventLogData;
 import com.aimir.fep.meter.data.Instrument;
+import com.aimir.fep.meter.data.LPData;
 import com.aimir.fep.meter.data.MeterData;
 import com.aimir.fep.meter.data.MeterTimeSyncData;
 import com.aimir.fep.meter.data.PowerAlarmLogData;
@@ -93,6 +94,8 @@ import com.aimir.fep.meter.entry.IMeasurementData;
 import com.aimir.fep.meter.link.MeterEventLink;
 import com.aimir.fep.meter.parser.BatteryLog;
 import com.aimir.fep.meter.parser.ZEUPLS_Status;
+import com.aimir.fep.protocol.fmp.log.ExternalTableLogger;
+import com.aimir.fep.protocol.fmp.log.ProcedureRecoveryLogger;
 import com.aimir.fep.util.EventUtil;
 import com.aimir.fep.util.FMPProperty;
 import com.aimir.fep.util.Util;
@@ -120,7 +123,6 @@ import com.aimir.model.mvm.LpHM;
 import com.aimir.model.mvm.LpPk;
 import com.aimir.model.mvm.LpSPM;
 import com.aimir.model.mvm.LpTM;
-import com.aimir.model.mvm.LpVC;
 import com.aimir.model.mvm.LpWM;
 import com.aimir.model.mvm.MeteringData;
 import com.aimir.model.mvm.MeteringDataEM;
@@ -130,26 +132,20 @@ import com.aimir.model.mvm.MeteringDataSPM;
 import com.aimir.model.mvm.MeteringDataWM;
 import com.aimir.model.mvm.MeteringDay;
 import com.aimir.model.mvm.MeteringLP;
-import com.aimir.model.mvm.MeteringMonth;
-import com.aimir.model.mvm.MonthEM;
-import com.aimir.model.mvm.MonthGM;
-import com.aimir.model.mvm.MonthHM;
-import com.aimir.model.mvm.MonthSPM;
-import com.aimir.model.mvm.MonthWM;
 import com.aimir.model.mvm.PowerQuality;
+import com.aimir.model.mvm.PowerQualityPk;
 import com.aimir.model.mvm.PowerQualityStatus;
 import com.aimir.model.mvm.RealTimeBillingEM;
 import com.aimir.model.system.Co2Formula;
 import com.aimir.model.system.Code;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.DeviceModel;
-import com.aimir.model.system.Location;
 import com.aimir.model.system.MeterConfig;
 import com.aimir.util.Condition;
+import com.aimir.util.Condition.Restriction;
 import com.aimir.util.DateTimeUtil;
 import com.aimir.util.TimeLocaleUtil;
 import com.aimir.util.TimeUtil;
-import com.aimir.util.Condition.Restriction;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
@@ -719,52 +715,68 @@ public abstract class AbstractMDSaver
         Set<Condition> cond = null;
         List<PowerQuality> pqlist = null;
         
+        if(instrument == null || instrument.length < 1) {
+        	log.debug("PowerQuality data zero.");
+        	return;
+        }
+        
+        _time = DateTimeUtil.getDST(null, instrument[0].getDatetime()+"00");
+        dst = DateTimeUtil.inDST(null, _time);
+        
+        Arrays.sort(instrument);     
+        LinkedHashSet<Condition> condition = new LinkedHashSet<Condition>();
+        condition.add(new Condition("id.mdevId", new Object[]{mdevId}, null, Restriction.EQ));
+        condition.add(new Condition("id.dst", new Object[]{dst}, null, Restriction.EQ));
+        condition.add(new Condition("id.yyyymmddhhmm", new Object[]{instrument[0].getDatetime().substring(0, 12),
+        		instrument[instrument.length - 1].getDatetime().substring(0, 12)}, null, Restriction.BETWEEN));
+        condition.add(new Condition("id.mdevType", new Object[]{mdevType}, null, Restriction.EQ));
+        pqlist = powerQualityDao.findByConditions(condition);
+        
+        Map<PowerQualityPk, PowerQuality> map = new HashMap<PowerQualityPk, PowerQuality>();
+        for(PowerQuality pq : pqlist) {
+        	map.put(pq.id, pq);
+        }
+        
         for (Instrument ins : instrument) {
-            _time = DateTimeUtil.getDST(null, ins.getDatetime()+"00");
-            dst = DateTimeUtil.inDST(null, _time);
-            
-            cond = new LinkedHashSet<Condition>();
-            cond.add(new Condition("id.mdevId", new Object[]{mdevId}, null, Restriction.EQ));
-            cond.add(new Condition("id.dst", new Object[]{dst}, null, Restriction.EQ));
-            cond.add(new Condition("id.yyyymmddhhmm", new Object[]{_time.substring(0, 12)}, null, Restriction.EQ));
-            cond.add(new Condition("id.mdevType", new Object[]{mdevType}, null, Restriction.EQ));
-            
-            pqlist = powerQualityDao.findByConditions(cond);
-            if (pqlist != null && pqlist.size() > 0)
-                continue;
-            
-            pw = new PowerQuality();
-            BeanUtils.copyProperties(pw, ins);
-
-            pw.setDeviceId(deviceId);
-            pw.setDeviceType(deviceType);
-            pw.setDst(dst);
-            pw.setLine_frequency(ins.getLINE_FREQUENCY());
-            pw.setMDevId(mdevId);
-            pw.setMDevType(mdevType.name());
-            pw.setYyyymmdd(_time.substring(0, 8));
-            pw.setHhmm(_time.substring(8,12));
-            pw.setYyyymmddhhmm(_time.substring(0, 12));
-            pw.setWriteDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
-
-            switch (mdevType) {
-            case Meter :
-                pw.setMeter(meter);
-                pw.setSupplier(meter.getSupplier());
-                break;
-            case Modem :
-                Modem modem = modemDao.get(mdevId);
-                pw.setModem(modem);
-                if(modem!=null && modem.getSupplier() != null){
-                    pw.setSupplier(modem.getSupplier());
-                }
-                break;
-            case EndDevice :
-                // pw.setEnvdevice(enddevice);
-            }
-
-            if (meter != null && meter.getContract() != null)
-                pw.setContract(meter.getContract());
+        	 _time = DateTimeUtil.getDST(null, ins.getDatetime()+"00");
+             dst = DateTimeUtil.inDST(null, _time);
+             
+        	 pw = new PowerQuality();
+        	 BeanUtils.copyProperties(pw, ins);
+        	 
+             pw.setDeviceId(deviceId);
+             pw.setDeviceType(deviceType);
+             pw.setDst(dst);
+             pw.setLine_frequency(ins.getLINE_FREQUENCY());
+             pw.setMDevId(mdevId);
+             pw.setMDevType(mdevType.name());
+             pw.setYyyymmdd(_time.substring(0, 8));
+             pw.setHhmm(_time.substring(8,12));
+             pw.setYyyymmddhhmm(_time.substring(0, 12));
+             pw.setWriteDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
+             
+             if(map.containsKey(pw.id)) {
+            	 continue;
+             }
+             
+             switch (mdevType) {
+             case Meter :
+                 pw.setMeter(meter);
+                 pw.setSupplier(meter.getSupplier());
+                 break;
+             case Modem :
+                 Modem modem = modemDao.get(mdevId);
+                 pw.setModem(modem);
+                 if(modem!=null && modem.getSupplier() != null){
+                     pw.setSupplier(modem.getSupplier());
+                 }
+                 break;
+             case EndDevice :
+                 // pw.setEnvdevice(enddevice);
+             }
+             
+             if (meter != null && meter.getContract() != null)
+                 pw.setContract(meter.getContract());
 
             pw.setCurr_1st_harmonic_mag_a(ins.getCURR_1ST_HARMONIC_MAG_A());
             pw.setCurr_1st_harmonic_mag_b(ins.getCURR_1ST_HARMONIC_MAG_B());
@@ -851,7 +863,190 @@ public abstract class AbstractMDSaver
             powerQualityDao.add(pw);
         }
     }
-
+    
+    /**
+     * OPF-610 DB(LP) normalization
+     * @param meteringType : normal, ondemand, recovery
+     * @param lpDate:yyyymmdd
+     * @param lpTime:hhmm
+     * @param lplist
+     * @param flaglist
+     * @param baseValue
+     * @param meter
+     * @param deviceType: MCU(0), Modem(1), Meter(2), EndDevice(3);
+     * @param deviceId: 통신 장비 아이디(modem인 경우 eui64, mcu인 경우 mcu id)
+     * @param mdevType : 검침 장비 타입(modem, meter)
+     * @param mdevId : 검침 장비 아이디
+     * @throws Exception
+     */
+    public void saveLPDataP(MeteringType meteringType, String lpDate, String lpTime,
+            double[][] lplist, int[] flaglist, double baseValue, Meter meter,
+            DeviceType deviceType, String deviceId, DeviceType mdevType, String mdevId) throws Exception{
+        saveLPData(meteringType, lpDate, lpTime, lplist, flaglist, baseValue, meter,
+                deviceType, deviceId, mdevType, mdevId);
+    }
+ 	
+ 	/*
+ 	 * OPF-610 DB(LP) normalization
+ 	 * 에러를 최소화 하기 위해 기존 함수 수정
+	 */
+    protected void saveLPData(MeteringType meteringType, String lpDate, String lpTime,
+            double[][] lplist, int[] flaglist, double[] baseValue, Meter meter,
+            DeviceType deviceType, String deviceId, DeviceType mdevType, String mdevId)
+    throws Exception
+    {
+    	if(lplist != null && lplist.length > 0) {
+    		LPData[] lpData = new LPData[lplist[0].length];
+    		
+    		for(int i=0; i<lplist[i].length; i++) {
+    			Double[] lps = new Double[lplist.length];
+    			for(int j=0; j<lplist.length; j++) {
+    				lps[j] = lplist[j][i];
+    			}
+    			lpData[i] = new LPData((lpDate + lpTime), lps[0], lps[0]);
+    			lpData[i].setCh(lps);
+    			lpData[i].setFlag(flaglist[i]);
+    		}
+    		
+    		saveLPUsingLpNormalization(meteringType, null, lpData, mdevId, deviceId, mdevType);
+    	}
+    }
+    
+ 	/*
+ 	 * OPF-610 DB(LP) normalization
+ 	 * 에러를 최소화 하기 위해 기존 함수 수정
+	 */
+    protected void saveLPData(MeteringType meteringType, String lpDate, String lpTime,
+            double[][] lplist, int[] flaglist, double baseValue, Meter meter,
+            DeviceType deviceType, String deviceId, DeviceType mdevType, String mdevId)
+    throws Exception 
+    {
+    	saveLPData(meteringType, lpDate, lpTime, lplist, flaglist, 
+    			new double[]{baseValue}, meter, deviceType, deviceId, mdevType, mdevId);
+    }
+    
+    
+ 	/*
+ 	 * OPF-610 DB(LP) normalization
+	 * key값을 채널별로 설정하며 내부에는 채널벌 LP 데이터가 들어가도록 한다.
+	 * 나머지 0,98,99,100 채널은 상위에서 담당한다.
+	 */
+	protected boolean saveLPUsingLpNormalization(MeteringType meteringType, IMeasurementData md, 
+			LPData[] validlplist, String mdevId, String deviceId, DeviceType mdevType) throws Exception {
+        
+		log.info("######### Save mdevId:"+mdevId+", lp length:"+validlplist.length+", deviceId:"+deviceId+", mdevType:"+mdevType);
+		//LPData 개수를 기준으로 list을 작성하며, 채널은 내부의 리스트로 관리
+		//lpData가 24개이고 채널이 6개라면, 24개의 리스트가 존재하며 각각에 6개의 리스트가 하나씩 존재 
+		//List<List<MeteringLP>> meteringList = new ArrayList<List<MeteringLP>>();
+		Map<Integer, LinkedList<MeteringLP>> lpMap = new HashMap<Integer, LinkedList<MeteringLP>>();
+		
+		Meter meter = meterDao.get(mdevId);
+		Modem modem= meter.getModem();
+		MeterType meterType = MeterType.valueOf(meter.getMeterType().getName());		
+		
+		for(LPData lp : validlplist) {
+			int chLen = lp.getCh().length;
+			LinkedList<MeteringLP> subList = null;
+			
+			for(int i=0; i<chLen; i++) {
+				int ch = i + 1;
+				
+				if(lpMap.get(ch) == null) 
+					subList = new LinkedList<MeteringLP>();
+				else
+					subList = lpMap.get(ch);
+				
+				String dsttime = lp.getDatetime();
+				int dst = DateTimeUtil.inDST(null, dsttime);
+				int interval = meter.getLpInterval();
+				int minute = Integer.parseInt(lp.getDatetime().substring(10, 12));
+				
+				MeteringLP meteringLP = null;
+		        switch (meterType) {
+		        case EnergyMeter :
+		        	meteringLP = new LpEM();
+		            break;
+		        case WaterMeter :
+		        	meteringLP = new LpWM();
+		            break;
+		        case GasMeter :
+		        	meteringLP = new LpGM();
+		            break;
+		        case HeatMeter :
+		        	meteringLP = new LpHM();
+		            break;
+		        case SolarPowerMeter :
+		        	meteringLP = new LpSPM();
+		            break;
+		        case Inverter :
+		        	meteringLP = new LpEM();
+		            break;            
+		        }
+				
+				meteringLP.setChannel(i + 1);
+				meteringLP.setDeviceId(meter.getMdsId());
+				meteringLP.setMDevId(meter.getMdsId());
+				meteringLP.setMDevType(DeviceType.Meter.name());
+				meteringLP.setMeteringType(meteringType);
+				meteringLP.setValue(lp.getCh()[i]);
+				meteringLP.setDst(dst);
+				meteringLP.setWriteDate(new Date());
+				meteringLP.setDate(lp.getDatetime());
+				meteringLP.setLpFlag(lp.getFlag());
+				meteringLP.setContract(meter.getContract());
+				meteringLP.setLpStatus(lp.getStatus());
+				
+				if(modem != null) {
+					if(modem.getModemType() == ModemType.MMIU) {
+						meteringLP.setDeviceId(modem.getDeviceSerial());
+						meteringLP.setDeviceType(DeviceType.Modem.name());
+					} else if(modem.getModemType() == ModemType.SubGiga) {
+						meteringLP.setDeviceId(deviceId);
+						meteringLP.setDeviceType(DeviceType.MCU.name());
+					} else {
+						log.info("[checking] meter["+meter.getMdsId()+"] modem["+modem.getDeviceSerial()+"] / req modem type check");
+					}
+				}
+				
+				if( (minute % interval) == 0) {
+					meteringLP.setIntervalYN(1);
+				} else {
+					meteringLP.setIntervalYN(0);
+				}
+				
+				switch(mdevType) {
+				case Meter:
+					meteringLP.setMeter(meter);
+					if(meter.getModem() != null) {
+						meteringLP.setModem(modem);
+					}
+					break;
+				case Modem:
+					if(modem != null) {
+						meteringLP.setModem(meter.getModem());	
+					}
+					break;
+				case EndDevice:
+					break;
+				default:
+					break;
+				}
+				
+				subList.add(meteringLP);
+				lpMap.put(ch, subList);
+			}
+		}
+		
+		try {
+			saveLPDataUsingLPTime(meteringType, lpMap, meter, mdevType);
+		}catch(Exception e) {
+			log.error(e,e);
+			log.error(e.getMessage());
+		}
+		
+		return true;
+	}	
+	// INSERT END SP-501
     
     protected void saveMeteringDataWithMultiChannel(MeteringType meteringType, String meteringDate,
             String meteringTime, double meteringValue, Meter meter, DeviceType deviceType,
@@ -973,18 +1168,13 @@ public abstract class AbstractMDSaver
             //    meter.getModem().setLastLinkTime(dsttime);
             //}
             //=> DELETE END   2017.02.28 SP-516
-        // }
+            
         try {
-            //meteringDataDao.saveOrUpdate_requires_new(mdata);
-        	//SP-890
-            meteringDataDao.add_requires_new(mdata); //ignore dup
-            //=> DELETE START 2017.02.28 SP-516
-            //modemDao.update_requires_new(meter.getModem());
-            //meterDao.update_requires_new(meter);
-            //=> DELETE END   2017.02.28 SP-516
+        	//insert or update
+            meteringDataDao.update(mdata);
         }
         catch (Exception e) {
-            log.warn(e);
+            log.error(e);
         }
         //=> INSERT START 2017.02.28 SP-516
         try {
@@ -995,14 +1185,14 @@ public abstract class AbstractMDSaver
         			meter.getModem().setLastLinkTime(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
         		}
 
-        		modemDao.update_requires_new(meter.getModem());
+        		modemDao.update(meter.getModem());
         	}
         }
         catch (Exception e) {
             log.warn(e);
         }
         try {
-        	meterDao.update_requires_new(meter);
+        	meterDao.update(meter);
         }
         catch (Exception e) {
         	log.warn(e);
@@ -1125,8 +1315,8 @@ public abstract class AbstractMDSaver
         // }
     
         try {
-            meteringDataDao.saveOrUpdate_requires_new(mdata);
-            meterDao.update_requires_new(meter);
+            meteringDataDao.update(mdata);
+            meterDao.update(meter);
         }
         catch (Exception e) {
             log.warn(e);
@@ -1162,242 +1352,7 @@ public abstract class AbstractMDSaver
         	log.warn(e);
         }
     }    
-    
-    /**
-     * 검침데이타를 채널별로 생성하고 0번 채널(탄소배출량), 100번 채널(상태)를 추가한다.
-     * @param meteringType
-     * @param lpDate    yyyyMMdd
-     * @param lpTime    HHmm
-     * @param lplist
-     * @param flaglist
-     * @param baseValue
-     * @param meter
-     * @param deviceType
-     * @param deviceId
-     * @param mdevType
-     * @param mdevId
-     * @return
-     * @throws Exception
-     */
-    private List<MeteringLP>[] makeChLPs(MeteringType meteringType, String lpDate, String lpTime,
-            double[][] lplist, int[] flaglist, double[] baseValue, Meter meter,
-            DeviceType deviceType, String deviceId, DeviceType mdevType, String mdevId)
-    throws Exception
-    {
-        double lpThreshold = Double.parseDouble(FMPProperty.getProperty("lp.threshold", "300"));
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(DateTimeUtil.getDateFromYYYYMMDDHHMMSS(lpDate+lpTime+"00"));
-        String dsttime = DateTimeUtil.getDST(null, DateTimeUtil.getDateString(cal.getTime()));
-        int dst = DateTimeUtil.inDST(null, dsttime);
-        cal.setTime(DateTimeUtil.getDateFromYYYYMMDDHHMMSS(dsttime));
-
-        // 처음 시작하는 분을 기억하고 있다가 사용해야 한다.
-        int startmm = Integer.parseInt(dsttime.substring(10, 12));
-
-        // 0 채널(탄소배출량), 98 채널(연동 전송여부), 100 채널 (플래그) 추가한다.
-        List<MeteringLP>[] chLPs = new ArrayList[lplist.length+3];
-        for (int ch=0; ch < chLPs.length; ch++) {
-            chLPs[ch] = new ArrayList<MeteringLP>();
-        }
-
-        // 미터의 채널 정보를 가져온다.
-        ChannelConfig[] channels = null;
-        if (meter.getModel() != null && meter.getModel().getDeviceConfig() != null)
-            channels = ((MeterConfig)meter.getModel().getDeviceConfig()).getChannels().toArray(new ChannelConfig[0]);
-        else channels = new ChannelConfig[0];
-        
-        int _dst = 0;
-        String _dsttime = null;
-        MeteringLP[] lps = null;
-        double[] sum = baseValue;
-        MeterType meterType = MeterType.valueOf(meter.getMeterType().getName());
-
-        int valuecnt = 0;
-        int mm = startmm;
-        for (int lpcnt = 0; lpcnt < lplist[0].length;) {
-            valuecnt = 0;
-            
-            // lp는 로우가 시간별로 존재하기 때문에 여기서 초기화한다.
-            lps = newMeteringLP(meterType, lplist.length);
-            for (int ch = 0; ch < lps.length; ch++) {
-                lps[ch].setChannel(ch+1);
-                lps[ch].setDeviceId(deviceId);
-                lps[ch].setDeviceType(deviceType.name());
-                lps[ch].setMDevId(mdevId);
-                lps[ch].setMDevType(mdevType.name());
-                lps[ch].setMeteringType(meteringType.getType());
-                lps[ch].setValue(dformat(sum[ch]));
-
-                if (meter.getContract() != null)
-                    lps[ch].setContract(meter.getContract());
-
-                switch (mdevType) {
-                case Meter :
-                    lps[ch].setMeter(meter);
-                    lps[ch].setLocation(meter.getLocation());
-                    lps[ch].setSupplier(meter.getSupplier());
-                    if (meter.getModem() != null)
-                        lps[ch].setModem(meter.getModem());
-                    break;
-                case Modem :
-                    Modem modem = modemDao.get(mdevId);
-                    lps[ch].setModem(modem);
-                    lps[ch].setLocation(modem.getLocation());
-                    lps[ch].setSupplier(modem.getSupplier());
-                    break;
-                case EndDevice :
-                }
-            }
-
-            for (; mm < 60 && lplist[0].length > lpcnt; mm+=meter.getLpInterval(), lpcnt++) {
-                _dsttime = DateTimeUtil.getDateString(cal.getTime());
-                _dst = DateTimeUtil.inDST(null, _dsttime);
-
-                if (!_dsttime.substring(0,8).equals(dsttime.substring(0,8)) || _dst != dst) {
-                    dsttime = _dsttime;
-                    dst = _dst;
-                    break;
-                }
-                else {
-                    double tmp = 0.0;
-                    for (int ch = 0; ch < lps.length; ch++) {
-                        // 2015.02.26 마이너스가 나오는 경우 0.0으로 처리한다.
-                        tmp = dformat(lplist[ch][lpcnt]);
-                        if (getChMethod(channels, lps[ch].getChannel()) == ChannelCalcMethod.SUM 
-                                && (tmp < 0.0 || tmp > lpThreshold)
-                                && meter.getModel().getName().equals(MeterVendor.KAMSTRUP.getName())) {
-                            log.warn("MDevId[" + mdevId + "] LP Value[" + tmp + "] is minus or over "+lpThreshold+"!, It is replaced to null");
-                            BeanUtils.copyProperty(lps[ch], String.format("value_%02d", mm), null);
-                            try {
-                                EventUtil.sendEvent("Meter Value Alarm",
-                                        TargetClass.valueOf(meter.getMeterType().getName()),
-                                        meter.getMdsId(),
-                                        new String[][] {{"message", "LP DateTime[" + _dsttime + "] Value[" + tmp + "]"}}
-                                        );
-                            }
-                            catch (Exception ignore) {
-                            }
-                        }
-                        else {
-                            BeanUtils.copyProperty(lps[ch], String.format("value_%02d", mm), dformat(lplist[ch][lpcnt]));
-                            valuecnt++;
-                        }
-
-                        lps[ch].setHour(_dsttime.substring(8, 10));
-                        lps[ch].setYyyymmdd(_dsttime.substring(0,8));
-                        lps[ch].setYyyymmddhh(_dsttime.substring(0, 10));
-                        lps[ch].setDst(_dst);
-                        lps[ch].setWriteDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
-                        lps[ch].setValueCnt(valuecnt);
-                        
-                        switch (getChMethod(channels, lps[ch].getChannel())) {
-                        case SUM : sum[ch] += lplist[ch][lpcnt];
-                                   break;
-                        case MAX : sum[ch] = lplist[ch][lpcnt];
-                                   break;
-                        case AVG : sum[ch] += lplist[ch][lpcnt];
-                                   sum[ch] /= lps[ch].getValueCnt();
-                        }
-                    }
-                    cal.add(Calendar.MINUTE, meter.getLpInterval());
-                }
-            }
-
-            if (mm >= 60)
-                mm = 0;
-
-            for (int ch = 0; ch < lps.length; ch++) {
-                if (lps[ch].getYyyymmdd() != null && lps[ch].getDst() != null) {
-                    chLPs[ch+1].add(lps[ch]);
-                    log.debug("MDevId[" + mdevId + "] CH[" + lps[ch].getChannel() +
-                            "] YYYYMMDDHH[" + lps[ch].getYyyymmddhh() +
-                            "] WRITEDATE[" + lps[ch].getWriteDate() +
-                            "] DST[" + lps[ch].getDst() +
-                            "] VALUE[" + lps[ch].getValue() + "]");
-                }
-            }
-        }
-
-        // 탄소배출량채널과 검침값상태채널을 생성한다.
-        MeteringLP lp = null;
-        MeteringLP[] co = new MeteringLP[chLPs[1].size()];
-        MeteringLP[] flag = new MeteringLP[chLPs[1].size()];
-        MeteringLP[] integratedFlag = new MeteringLP[chLPs[1].size()];
-        Co2Formula co2f = co2FormulaDao.getCo2FormulaBySupplyType(meterType.getServiceType());
-
-        double lpValue = 0.0;
-
-        // 시작 분을 초기화한다.
-        mm = startmm; // Integer.parseInt(dsttime.substring(10, 12));
-        String str_mm = "";
-        for (int i = 0, flagcnt = 0; i < co.length; i++) {
-            lp = chLPs[1].get(i);
-            co[i] = newMeteringLP(meterType, lp);
-            flag[i] = newMeteringLP(meterType, lp);
-            integratedFlag[i] = newMeteringLP(meterType, lp);
-
-            co[i].setChannel(ElectricityChannel.Co2.getChannel());
-            flag[i].setChannel(ElectricityChannel.ValidationStatus.getChannel());
-            integratedFlag[i].setChannel(ElectricityChannel.Integrated.getChannel());
-
-            for (; mm < 60 && flagcnt < flaglist.length; mm += meter.getLpInterval(), flagcnt++) {
-                str_mm = String.format("value_%02d", mm);
-                String val = BeanUtils.getProperty(lp, str_mm);
-                if(val != null && !"".equals(val)){
-                    lpValue = Double.parseDouble(val);
-                    BeanUtils.copyProperty(co[i], str_mm, dformat(lpValue*co2f.getCo2factor()));
-                    BeanUtils.copyProperty(flag[i], str_mm, flaglist[flagcnt]);
-                    BeanUtils.copyProperty(integratedFlag[i], str_mm, IntegratedFlag.NOTSENDED.getFlag());
-                }
-
-            }
-            chLPs[0].add(co[i]);
-            chLPs[chLPs.length-1].add(flag[i]);
-            chLPs[chLPs.length-2].add(integratedFlag[i]);
-
-            if (mm >= 60)
-                mm = 0;
-        }
-
-        return chLPs;
-    }
-
-    /**
-     * @param meteringType : normal, ondemand, recovery
-     * @param lpDate:yyyymmdd
-     * @param lpTime:hhmm
-     * @param lplist
-     * @param flaglist
-     * @param baseValue
-     * @param meter
-     * @param deviceType: MCU(0), Modem(1), Meter(2), EndDevice(3);
-     * @param deviceId: 통신 장비 아이디(modem인 경우 eui64, mcu인 경우 mcu id)
-     * @param mdevType : 검침 장비 타입(modem, meter)
-     * @param mdevId : 검침 장비 아이디
-     * @throws Exception
-     */
-    public void saveLPDataP(MeteringType meteringType, String lpDate, String lpTime,
-            double[][] lplist, int[] flaglist, double baseValue, Meter meter,
-            DeviceType deviceType, String deviceId, DeviceType mdevType, String mdevId) throws Exception{
-        saveLPData(meteringType, lpDate, lpTime, lplist, flaglist, baseValue, meter,
-                deviceType, deviceId, mdevType, mdevId);
-    }
-    
-    protected void saveLPData(MeteringType meteringType, String lpDate, String lpTime,
-            double[][] lplist, int[] flaglist, double baseValue, Meter meter,
-            DeviceType deviceType, String deviceId, DeviceType mdevType, String mdevId)
-    throws Exception
-    {
-        double[] _baseValue = new double[lplist.length];
-        _baseValue[0] = baseValue;
-        for (int i = 1; i < _baseValue.length; i++) {
-            _baseValue[i] = 0;
-        }
-        
-        saveLPData(meteringType, lpDate, lpTime, lplist, flaglist, _baseValue, meter, deviceType, deviceId, mdevType, mdevId);
-    }
-
-
+   
     private ChannelCalcMethod getChMethod(ChannelConfig[] ccs, int ch) {
         for (ChannelConfig cc : ccs) {
             if (cc.getChannelIndex() == ch) {
@@ -1410,1687 +1365,379 @@ public abstract class AbstractMDSaver
         return ChannelCalcMethod.MAX;
     }
     
-    /**
-     * @param meteringType : normal, ondemand, recovery
-     * @param lpDate:yyyymmdd
-     * @param lpTime:hhmm
-     * @param lplist
-     * @param flaglist
-     * @param baseValue
-     * @param meter
-     * @param deviceType: MCU(0), Modem(1), Meter(2), EndDevice(3);
-     * @param deviceId: 통신 장비 아이디(modem인 경우 eui64, mcu인 경우 mcu id)
-     * @param mdevType : 검침 장비 타입(modem, meter)
-     * @param mdevId : 검침 장비 아이디
-     * @throws Exception
-     */
-    protected void saveLPData1(MeteringType meteringType, String lpDate, String lpTime,
-            double[][] lplist, int[] flaglist, double[] baseValue, Meter meter,
-            DeviceType deviceType, String deviceId, DeviceType mdevType, String mdevId)
-    throws Exception
-    {
-        log.debug("Meter Serial:"+meter.getMdsId()+" , Lp Date:"+lpDate+" baseValue_cnt:"+baseValue.length+" ");
-        List<MeteringLP>[] chLPs = makeChLPs(meteringType, lpDate, lpTime,  lplist, flaglist,
-                baseValue, meter, deviceType, deviceId, mdevType, mdevId);
-
-        MeterType meterType = MeterType.valueOf(meter.getMeterType().getName());
-
-        // 미터의 채널 정보를 가져온다.
-        ChannelConfig[] channels = null;
-        if (meter.getModel() != null && meter.getModel().getDeviceConfig() != null)
-            channels = ((MeterConfig)meter.getModel().getDeviceConfig()).getChannels().toArray(new ChannelConfig[0]);
-        else channels = new ChannelConfig[0];
-        
-        if (chLPs[1].size() == 0) {
-            throw new Exception("MDevId[" + mdevId + "] LP size is 0!!!");
+    private void saveLPDataUsingLPTime(MeteringType meteringType, Map<Integer, LinkedList<MeteringLP>> lpMap, 
+    		Meter meter, DeviceType mdevType) throws Exception {
+    	log.info("Meter Serial:"+meter.getMdsId() +", lp map size:"+lpMap.size());
+    	if (lpMap.size() == 0) {
+             throw new Exception("LP size is 0!!!");
         }
-
-        // 날짜별로 LP를 조회한다.
-        MeteringLP lp = chLPs[1].get(0);
-        MeteringLP _lp = null;
-        MeteringLP _integrated = null;
-        String yyyymmdd = lp.getYyyymmdd();
-        int dst = lp.getDst();
-
-        LinkedHashSet<Condition> condition = null;
-        Map<LpPk, MeteringLP>[] _chLPs = null;
-        Map<DayPk, MeteringDay>[] _chDays = null;
-
-        List<MeteringLP>[] addLPs = new ArrayList[chLPs.length];
-        List<MeteringLP>[] updateLPs = new ArrayList[chLPs.length];
-        List<MeteringDay>[] addDays = new ArrayList[chLPs.length];
-        List<MeteringDay>[] updateDays = new ArrayList[chLPs.length];
-        
-        boolean dayMonthSave = Boolean.parseBoolean(FMPProperty.getProperty("daymonth.save", "true"));
-
-        String lpValue = null;
-        String _lpValue = null;
-        boolean dayUpdated = false;
-        int valueCnt = 0;
-        String str_mm = "";
-        for (int lpcnt = 0; lpcnt < chLPs[1].size();) {
-            // 전 채널 검침데이타를 가져온다.
-            condition = new LinkedHashSet<Condition>();
-            condition.add(new Condition("id.yyyymmddhh", new Object[]{yyyymmdd+"00", yyyymmdd+"23"}, null, Restriction.BETWEEN));
-            condition.add(new Condition("id.mdevId", new Object[]{mdevId}, null, Restriction.EQ));
-            condition.add(new Condition("id.mdevType", new Object[]{mdevType}, null, Restriction.EQ));
-            condition.add(new Condition("id.dst", new Object[]{dst}, null, Restriction.EQ));
-            
-            // 주기 채널별로 검침데이타를 분리한다.
-            _chLPs = listLP(condition, meterType, chLPs.length);
-            condition = new LinkedHashSet<Condition>();
-            condition.add(new Condition("id.yyyymmdd", new Object[]{yyyymmdd}, null, Restriction.EQ));
-            condition.add(new Condition("id.mdevId", new Object[]{mdevId}, null, Restriction.EQ));
-            condition.add(new Condition("id.mdevType", new Object[]{mdevType}, null, Restriction.EQ));
-            condition.add(new Condition("id.dst", new Object[]{dst}, null, Restriction.EQ));
-            
-            MeteringDay _lpday = null;
-            if(dayMonthSave){
-                // 일 채널별로 검침데이타를 분리한다.
-                _chDays = listDay(condition, meterType, _chLPs.length);
-
-                log.debug("MDevId[" + mdevId + "] _chLPs[" + _chLPs.length + "] _chDays[" + _chDays.length + "]");
-                
-                // lp 주기 합산값을 day의 시간 값에 대입한다.                
-                if (_chDays[0].size() == 0) {
-                    _chDays = new HashMap[chLPs.length];
-                    dayUpdated = false;
-                }
-                else {
-                    dayUpdated = true;
-                }
-            }
-
-
-            for (;lpcnt < chLPs[1].size();lpcnt++) {
-                lp = chLPs[1].get(lpcnt);
-                // 월일 또는 DST가 다르면 검침데이타를 다시 조회하여 비교할 수 있도록 한다.
-                if (!yyyymmdd.equals(lp.getYyyymmdd()) || dst != lp.getDst()) {
-                    yyyymmdd = lp.getYyyymmdd();
-                    dst = lp.getDst();
-                    // Metering Day를 업데이트 또는 생성한다.
-                    
-                    if(dayMonthSave){
-                        for (int ch = 0; ch < chLPs.length; ch++) {
-                            if (dayUpdated) {
-                                if (updateDays[ch] == null) {
-                                    updateDays[ch] = new ArrayList<MeteringDay>();
-                                }
-                                updateDays[ch].add(_chDays[ch].get(0));
-                            }
-                            else {
-                                if (addDays[ch] == null) {
-                                    addDays[ch] = new ArrayList<MeteringDay>();
-                                }
-                                addDays[ch].add(_chDays[ch].get(0));
-                            }
-                        }
-                    }
-
-                    break;
-                }
-
-                boolean needUpdate = false;
-                if (_chLPs.length != 0 && _chLPs[1].size() != 0) {
-                    // 같은 일에 대하여 시간에 대한 주기값이 존재하는지 검사하여 있으면 변경 없으면 추가
-                    // 추가 변경 플래그
-                    for (int i = 0; i < _chLPs[1].size(); i++) {
-                        _lp = _chLPs[1].get(i);
-                        _integrated = _chLPs[_chLPs.length-2].get(i);
-
-                        // DB에 있는 동일 일시에 대한 주기별 데이타를 갱신하기 위해 _lp에 값을 채운다.
-                        if (lp.getYyyymmddhh().equals(_lp.getYyyymmddhh())) {
-                            needUpdate = true;
-                            log.debug("MDevId[" + mdevId + "] ch count[" + chLPs.length + "]");
-                            for (int ch = 0; ch < chLPs.length; ch++) {
-                                
-                                // 연동채널은 사용량과 같이 처리가 되어 건너뛴다.
-                                if (ch == chLPs.length - 2)
-                                    continue;
-
-                                lp = chLPs[ch].get(lpcnt);
-                                if (_chLPs[ch].size() > i) {
-                                    _lp = _chLPs[ch].get(i);
-                                    _lp.setWriteDate(lp.getWriteDate());
-                                }
-                                else {
-                                    _lp = lp;
-                                }
-
-                                // base pulse 값이 db에 있는 것이 크면 변경한다.
-                                // log.debug("ch[" + lp.getChannel() + "] lp value[" + lp.getValue() + "] _lp value[" + _lp.getValue() + "]");
-                                if (lp.getValue() != null)
-                                    _lp.setValue(dformat(lp.getValue()));
-
-                                // 널이 아닌 주기값을 lp에 넣는다.
-                                for (int _mm = 0; _mm < 60; _mm+=meter.getLpInterval()) {
-                                    str_mm = String.format("value_%02d", _mm);
-                                    _lpValue = BeanUtils.getProperty(_lp, str_mm);
-                                    lpValue = BeanUtils.getProperty(lp, str_mm);
-                                    
-                                    if (lpValue != null && !lpValue.equals(_lpValue)) {
-                                        // TODO _lpValue가 널이면 값을 채우게 되는데 널은 아닌데 값이 다르다면
-                                        // 사용량이 이상한 것이므로 검침데이타가 깨졌을 수도 있다. 따라서, 이벤트 전송.
-                                        if (_lpValue != null) {
-                                        }
-                                        // 값이 달라진 것에 대해서는 전송 상태더라도 미전송 상태로 변경한다.
-                                        if (lp.getChannel() == ElectricityChannel.Usage.getChannel()) {
-                                            BeanUtils.copyProperty(_integrated, str_mm,
-                                                    IntegratedFlag.NOTSENDED.getFlag());
-                                            _integrated.setWriteDate(lp.getWriteDate());
-                                        }
-                                        BeanUtils.copyProperty(_lp, str_mm, dformat(Double.parseDouble(lpValue)));
-                                    }
-                                }
-                                chLPs[ch].set(lpcnt, _lp);
-                                if (lp.getChannel() == ElectricityChannel.Usage.getChannel())
-                                    chLPs[chLPs.length-2].set(lpcnt, _integrated);
-                            }
-                        }
-                    }
-                }
-                
-                // lp 개수를 파악한다.
-                for (int ch = 0; ch < chLPs.length; ch++, valueCnt=0) {
-                    _lp = chLPs[ch].get(lpcnt);
-                    for (int _mm = 0; _mm < 60; _mm+=meter.getLpInterval()) {
-                        str_mm = String.format("value_%02d", _mm);
-                        _lpValue = BeanUtils.getProperty(_lp, str_mm);
-                        if (_lpValue != null && !"".equals(_lpValue))
-                            valueCnt++;
-                    }
-                    _lp.setValueCnt(valueCnt);
-                    chLPs[ch].set(lpcnt, _lp);
-                }
-                
-                // 추가와 변경을 선별한다.
-                if (needUpdate) {
-                    // 업데이트 리스트
-                    for (int ch = 0; ch < chLPs.length; ch++) {
-                        if (updateLPs[ch] == null)
-                            updateLPs[ch] = new ArrayList<MeteringLP>();
-
-                        updateLPs[ch].add(chLPs[ch].get(lpcnt));
-                    }
-                }
-                else {
-                    // 추가 리스트
-                    for (int ch = 0; ch < chLPs.length; ch++) {
-                        if (addLPs[ch] == null)
-                            addLPs[ch] = new ArrayList<MeteringLP>();
-
-                        addLPs[ch].add(chLPs[ch].get(lpcnt));
-                    }
-                }
-                
-                
-                if(dayMonthSave){
-                	// DAY를 생성하거나 업데이트
-                    // DAY의 시간값을 구하기 위해 LP의 주기값을 합산한다.
-                    for (int ch = 0; ch < chLPs.length; ch++) {
-                        lp = chLPs[ch].get(lpcnt);
-                        if (_chDays.length != 0 && _chDays[ch] != null && _chDays[ch].size() != 0) {
-                            _lpday = _chDays[ch].get(0);
-                        }
-                        else {
-                            _chDays[ch] = new HashMap<DayPk, MeteringDay>();
-                            _chDays[ch].put(_lpday.getId(), _lpday);
-                            _lpday = newMeteringDay(meteringType, meterType,
-                                    meter, deviceType, deviceId, mdevType, mdevId);
-                            _lpday.setChannel(lp.getChannel());
-                            // base value가 채널 개수만큼 존재할 때 chLPs의 채널개수는 3개가 더 늘어나므로 그 개수만큼 늘려준다.
-                            if (ch == 0|| ch==chLPs.length-2 || ch==chLPs.length-1)
-                                _lpday.setBaseValue(0.0);
-                            else
-                                _lpday.setBaseValue(baseValue[ch-1]);
-                            _lpday.setYyyymmdd(lp.getYyyymmdd());
-                            _lpday.setDayType(getDayType(lp.getYyyymmdd()));
-                            _lpday.setDst(lp.getDst());
-                        }
-
-                        if (meter.getContract() != null) {
-                            _lpday.setContract(meter.getContract());
-                            if (_lpday.getContract().getSic() != null)
-                                _lpday.setSic(_lpday.getContract().getSic().getCode());
-                        }
-                            
-                        if (_lpday.getChannel().equals(ElectricityChannel.ValidationStatus.getChannel())) {
-                            double _flag = 0;
-                            double _nextFlag = 0;
-                            String _strNextFlag = null;
-                            for (int _mm = 0; _mm < 60; _mm += meter.getLpInterval()) {
-                                _strNextFlag = BeanUtils.getProperty(lp, String.format("value_%02d", _mm));
-                                if (_strNextFlag != null) {
-                                    _nextFlag = Double.parseDouble(_strNextFlag);
-                                    if (_flag < _nextFlag)
-                                        _flag = _nextFlag;
-                                }
-                            }
-                            BeanUtils.copyProperty(_lpday, "value_" + lp.getHour(), _flag);
-
-                            for (int _hh = 0; _hh < 24; _hh++) {
-                                _strNextFlag = BeanUtils.getProperty(_lpday, String.format("value_%02d", _hh));
-                                if (_strNextFlag != null) {
-                                    _nextFlag = Double.parseDouble(_strNextFlag);
-                                    if (_flag < _nextFlag)
-                                        _flag = _nextFlag;
-                                }
-                            }
-                            _lpday.setTotal(_flag);
-                        }
-                        else if (_lpday.getChannel().equals(ElectricityChannel.Integrated.getChannel())) {
-                            double _flag = -1;
-                            double _nextFlag = 0;
-                            String _strNextFlag = null;
-                            for (int _mm = 0; _mm < 60; _mm += meter.getLpInterval()) {
-                                _strNextFlag = BeanUtils.getProperty(lp, String.format("value_%02d", _mm));
-                                if (_strNextFlag != null) {
-                                    _nextFlag = Double.parseDouble(_strNextFlag);
-                                    if (_flag == -1)
-                                        _flag = _nextFlag;
-                                    else if (_flag != _nextFlag) {
-                                        _flag = IntegratedFlag.PARTIALSENDED.getFlag();
-                                        break;
-                                    }
-                                }
-                            }
-                            BeanUtils.copyProperty(_lpday, "value_" + lp.getHour(), _flag);
-
-                            _flag = -1;
-                            for (int _hh = 0; _hh < 24; _hh++) {
-                                _strNextFlag = BeanUtils.getProperty(_lpday, String.format("value_%02d", _hh));
-                                if (_strNextFlag != null) {
-                                    _nextFlag = Double.parseDouble(_strNextFlag);
-                                    if (_flag == -1)
-                                        _flag = _nextFlag;
-                                    else if (_flag != _nextFlag) {
-                                        _flag = IntegratedFlag.PARTIALSENDED.getFlag();
-                                        break;
-                                    }
-                                }
-                            }
-                            _lpday.setTotal(_flag);
-                        }
-                        else if (_lpday.getChannel().equals(ElectricityChannel.PowerFactor.getChannel())) {
-                            // Power Factory 계산은 두 채널을 이용하여 재계산하여야 하므로 루프로 처리할 수 없다.
-                        }
-                        else {
-                            double _sum = 0.0;
-                            double _sumcount = 0.0;
-                            double _maxValue = 0.0;
-                            double _doubleValue = 0.0;
-                            for (int _mm = 0; _mm < 60; _mm+=meter.getLpInterval()) {
-                                _lpValue = BeanUtils.getProperty(lp, String.format("value_%02d", _mm));
-                                if (_lpValue != null) {
-                                    _doubleValue = Double.parseDouble(_lpValue);
-                                    _sum += _doubleValue;
-                                    if (_maxValue < _doubleValue) _maxValue = _doubleValue;
-                                    _sumcount++;
-                                }
-                            }
-                            // 채널의 계산방법을 적용한다. by elevas, 2012.06.12
-                            switch (getChMethod(channels, _lpday.getChannel())) {
-                            case SUM : 
-                                BeanUtils.copyProperty(_lpday, "value_"+ lp.getHour(), dformat(_sum));
-                                break;
-                            case AVG :
-                                BeanUtils.copyProperty(_lpday, "value_"+ lp.getHour(), dformat(_sum / _sumcount));
-                                break;
-                            case MAX :
-                                BeanUtils.copyProperty(_lpday, "value_"+ lp.getHour(), _maxValue);
-                            }
-                                
-                            // LP 00시 value가 Day의 base값이 된다.
-                            if (lp.getHour().equals("00")) {
-                                _lpday.setBaseValue(lp.getValue());
-                            }
-
-                            _doubleValue = 0.0;
-                            _maxValue = 0.0;
-                            _sum = 0.0;
-                            _sumcount = 0.0;
-                            for (int _hh = 0; _hh < 24; _hh++) {
-                                _lpValue = BeanUtils.getProperty(_lpday, String.format("value_%02d", _hh));
-                                if (_lpValue != null) {
-                                    _doubleValue = Double.parseDouble(_lpValue); 
-                                    _sum += _doubleValue;
-                                    if (_maxValue < _doubleValue) _maxValue = _doubleValue;
-                                    _sumcount++;
-                                }
-                            }
-                            switch (getChMethod(channels, _lpday.getChannel())) {
-                            case SUM :
-                                _lpday.setTotal(dformat(_sum));
-                                break;
-                            case AVG :
-                                _lpday.setTotal(dformat(_sum / _sumcount));
-                                break;
-                            case MAX :
-                                _lpday.setTotal(dformat(_maxValue));
-                            }
-                        }
-                        _chDays[ch].put(_lpday.getId(), _lpday);
-                        log.debug("MDevId[" + mdevId + "] DAY CH[" + _lpday.getChannel() + "] YYYYMMDD[" +
-                                _lpday.getYyyymmdd() + "] TOTAL[" + _lpday.getTotal() + "]");
-                    }
-                }                
-            }
-        }
-        
-        if(dayMonthSave){
-            // 날짜나 DST가 다르면 등록, 업데이트를 확인하여 리스트에 추가하도록 되어 있는데
-            // 마지막으로 처리한 것은 루프 종료 후에 처리해야 한다.
-            for (int ch = 0; ch < chLPs.length; ch++) {
-                if (dayUpdated) {
-                    if (updateDays[ch] == null) {
-                        updateDays[ch] = new ArrayList<MeteringDay>();
-                    }
-                    updateDays[ch].add(_chDays[ch].get(0));
-                }
-                else {
-                    if (addDays[ch] == null) {
-                        addDays[ch] = new ArrayList<MeteringDay>();
-                    }
-                    addDays[ch].add(_chDays[ch].get(0));
-                }
-            }
-        }
-
-
-        //List<MeteringMonth>[] addMonths = new ArrayList[chLPs.length];
+    	
+    	boolean dayMonthSave = Boolean.parseBoolean(FMPProperty.getProperty("daymonth.save", "true"));
+    	
+    	MeterType meterType = MeterType.valueOf(meter.getMeterType().getName());
+    	
+    	if(Boolean.valueOf(FMPProperty.getProperty("fep.lp.using.procedure", "false"))
+    			&& meterType == MeterType.EnergyMeter) {
+    		saveLPDataUsingLPTimeUsingProcedure(meteringType, lpMap, meter, mdevType);
+    	} else {
+    		saveLPDataUsingLPTimeUsingJPA(meteringType, lpMap, meter, mdevType);
+    	}
+    	
+    	if(dayMonthSave) {
+    		//saveDayDataUsingLPTimeUsingJPA(meteringType, lpMap, meter, mdevType);
+			//saveMonthDataUsingLPTimeUsingJPA(meteringType, lpMap, meter, mdevType);
+    	}
     }
     
-    // INSERT START SP-501
-    // It must be Lp data at the correct interval.
-    protected void saveLPDataUsingLPTime(MeteringType meteringType, String[] lptimelist,
-            double[][] lplist, int[] flaglist, double[] baseValue, Meter meter,
-            DeviceType deviceType, String deviceId, DeviceType mdevType, String mdevId)
-    throws Exception
-    {
-        log.info("Meter Serial:"+meter.getMdsId() +", baseValue_cnt:"+baseValue.length+" ");
-        List<MeteringLP>[] chLPs = makeChLPsUsingLPTime(meteringType, lptimelist,  lplist, flaglist,
-                baseValue, meter, deviceType, deviceId, mdevType, mdevId);
-
-        MeterType meterType = MeterType.valueOf(meter.getMeterType().getName());
-
-        // 미터의 채널 정보를 가져온다.
-        ChannelConfig[] channels = null;
-        if (meter.getModel() != null && meter.getModel().getDeviceConfig() != null)
-            channels = ((MeterConfig)meter.getModel().getDeviceConfig()).getChannels().toArray(new ChannelConfig[0]);
-        else channels = new ChannelConfig[0];
+    private void saveLPDataUsingLPTimeUsingProcedure(MeteringType meteringType, Map<Integer, LinkedList<MeteringLP>> lpMap, 
+    		Meter meter, DeviceType mdevType) throws Exception {
+    	
+    	StringBuilder appendBuilder = null;    	 
+    	MeterType meterType = MeterType.valueOf(meter.getMeterType().getName());
+    	MeterConfig meterConfig = (MeterConfig)meter.getModel().getDeviceConfig();
+    	
+    	makeChLPsUsingLPTime(lpMap, meter);
+    	
+    	LinkedList<MeteringLP> ch1List = lpMap.get(ElectricityChannel.Usage.getChannel());
+    	
+        log.debug("Using JPA - Procedure | mdevId["+meter.getMdsId()+"] channel["+lpMap.size()+"] channel[1] count["+lpMap.get(1).size()+"]");
+        Iterator<Integer> channels = lpMap.keySet().iterator();
         
-        if (chLPs[1].size() == 0) {
-            throw new Exception("LP size is 0!!!");
+        if(meteringType != null && meterType.equals(meterType.EnergyMeter)) { //현재 EnergyMeter 만 표시, 만약 다른 Meter Type 필요하다면 하단에 처리 필요
+        	appendBuilder = new StringBuilder();
+            while(channels.hasNext()) {
+            	Integer channel = channels.next();
+            	LinkedList<MeteringLP> lpList = lpMap.get(channel);
+            	
+        		for(MeteringLP mLP : lpList) {
+        			mLP.setModem(meter.getModem());
+        			appendBuilder.append(mLP.getExternalTableValue());
+            	}	
+            }
         }
-        boolean dayMonthSave = Boolean.parseBoolean(FMPProperty.getProperty("daymonth.save", "true"));
-        // 날짜별로 LP를 조회한다.
-        MeteringLP lp = chLPs[1].get(0);
-        MeteringLP _lp = null;
-
-        Map<LpPk, MeteringLP>[] _chLPs = null;
-        Map<DayPk, MeteringDay>[] _chDays = null;
-
-        Map<LpPk, MeteringLP>[] addLPs = new HashMap[chLPs.length];
-        Map<LpPk, MeteringLP>[] updateLPs = new HashMap[chLPs.length];
-        Map<DayPk, MeteringDay>[] addDays = new HashMap[chLPs.length];
-        Map<DayPk, MeteringDay>[] updateDays = new HashMap[chLPs.length];
-
-        String lpValue = null;
-        String _lpValue = null;
-        int valueCnt = 0;
         
-        // 전 채널 검침데이타를 가져온다.
+    	if(appendBuilder != null) {
+        	String mappingID = AimirThreadMapper.getInstance().getMapperId(Thread.currentThread().getId());
+        	String filename = "LP_EM_TOBE_EXT_" + mappingID;
+        	
+        	ExternalTableLogger logger = new ExternalTableLogger();
+        	logger.writeObject(filename, appendBuilder.toString());
+        	
+        	Map<String, Object> parameter = new HashMap<String, Object>();
+        	parameter.put("PROCEDURE_NAME", "LP_EXTERNAL_MERGE");
+        	
+        	parameter.put("THREAD_NUM", mappingID);
+        	String procedureReuslt = lpEMDao.callProcedure(parameter);        	
+        	
+        	log.info("mappingID ["+mappingID+"] filename["+filename+"] procedure["+parameter.get("PROCEDURE_NAME")+"] procedureReuslt ["+procedureReuslt+"]");
+        	
+        	if(procedureReuslt.contains("ERROR")) {
+        		try {
+        			ProcedureRecoveryLogger prLogger = new ProcedureRecoveryLogger();
+        			prLogger.makeLPOfProcedureERR(appendBuilder.toString());
+        		}catch(Exception e) {
+        			log.error(e,e);
+        		}
+        	}
+        	logger.deleteFile(filename);
+        	AimirThreadMapper.getInstance().deleteMapperId(Thread.currentThread().getId());
+        }
+    }    
+    
+    private void saveLPDataUsingLPTimeUsingJPA(MeteringType meteringType, Map<Integer, LinkedList<MeteringLP>> lpMap, 
+    		Meter meter, DeviceType mdevType) throws Exception {
+    	Map<LpPk, MeteringLP> _chLPs = null;
+    	Map<Integer, LinkedList<MeteringLP>> addMap = new HashMap<Integer, LinkedList<MeteringLP>>();
+    	Map<Integer, LinkedList<MeteringLP>> updateMap = new HashMap<Integer, LinkedList<MeteringLP>>();
+    	
+    	MeterType meterType = MeterType.valueOf(meter.getMeterType().getName());
+    	MeterConfig meterConfig = (MeterConfig)meter.getModel().getDeviceConfig();
+    	
+    	makeChLPsUsingLPTime(lpMap, meter);
+    	
+    	LinkedList<MeteringLP> ch1List = lpMap.get(ElectricityChannel.Usage.getChannel());
+    	
+    	// 전 채널 검침데이타를 가져온다.
         LinkedHashSet<Condition> condition = new LinkedHashSet<Condition>();
-        condition.add(new Condition("id.yyyymmddhh", new Object[]{chLPs[1].get(0).getYyyymmddhh(),
-                chLPs[1].get(chLPs[1].size()-1).getYyyymmddhh()}, null, Restriction.BETWEEN));
-        condition.add(new Condition("id.mdevId", new Object[]{mdevId}, null, Restriction.EQ));
-        condition.add(new Condition("id.dst", new Object[]{chLPs[1].get(0).getDst()}, null, Restriction.EQ));
+        condition.add(new Condition("id.yyyymmddhhmiss", new Object[]{ch1List.get(0).getYyyymmddhhmiss(),
+        		ch1List.get(ch1List.size() - 1).getYyyymmddhhmiss()}, null, Restriction.BETWEEN));
+        condition.add(new Condition("id.mdevId", new Object[]{meter.getMdsId()}, null, Restriction.EQ));
+        condition.add(new Condition("id.dst", new Object[]{ch1List.get(0).getDst()}, null, Restriction.EQ));
         condition.add(new Condition("id.mdevType", new Object[]{mdevType}, null, Restriction.EQ)); //index order
-
+        _chLPs = listLP(condition, meterType);
+                
+        //day, month는 View에서 자동계산하도록 수정됨
         
-        // 주기 채널별로 검침데이타를 분리한다.
-        _chLPs = listLP(condition, meterType, chLPs.length);
-        condition = new LinkedHashSet<Condition>();
-        condition.add(new Condition("id.yyyymmdd", new Object[]{chLPs[1].get(0).getYyyymmdd(),
-                chLPs[1].get(chLPs[1].size()-1).getYyyymmdd()}, null, Restriction.BETWEEN));
+        log.debug("Using JPA - Persist() | mdevId["+meter.getMdsId()+"] channel["+lpMap.size()+"] channel[1] count["+lpMap.get(1).size()+"]");
+        Iterator<Integer> channels = lpMap.keySet().iterator();
+        while(channels.hasNext()) {
+        	Integer channel = channels.next();
+        	LinkedList<MeteringLP> lpList = lpMap.get(channel);
+        	
+        	for(MeteringLP mLP : lpList) {
+        		MeteringLP _mLP = null;
+        		mLP.setModem(meter.getModem());
+        		if((_mLP = _chLPs.get(mLP.getId())) != null) {
+        			//update source
+        			// 2012.10.16 추가. Normal 인 경우만 업데이트하지 않는다.
+        			// 2019.07.22 Skip 해야할 때를 정해서 아래 루틴에 적용 필요
+                	if(meteringType.getType() == MeteringType.Normal.getType()) {
+                		continue;
+                	}
+                	
+                	LinkedList<MeteringLP> updateList = null;
+        			
+        			if(updateMap.get(channel) == null) {
+        				updateList = new LinkedList<MeteringLP>();
+        			} else {
+        				updateList = updateMap.get(channel);
+        			}
+        			
+        			updateList.add(mLP);
+        			updateMap.put(channel, updateList);
+        		} else{
+        			//insert source
+        			LinkedList<MeteringLP> addList = null;
+        			
+        			if(addMap.get(channel) == null) {
+        				addList = new LinkedList<MeteringLP>();
+        			} else {
+        				addList = addMap.get(channel);
+        			}
+        			
+        			addList.add(mLP);
+        			addMap.put(channel, addList);
+        		}
+        	}
+        }
+        
+        if(addMap != null && addMap.size() > 0) {
+        	addMeteringDataUsingJPA(meter.getMdsId(), meterType, addMap);
+        }
+        
+        if(updateMap != null && updateMap.size() > 0) {
+        	updateMeteringDataUsingJPA(meter.getMdsId(), meterType, updateMap);
+        }
+    }
+    
+    private void saveDayDataUsingLPTimeUsingJPA(MeteringType meteringType, Map<Integer, LinkedList<MeteringLP>> lpMap, 
+    		Meter meter, DeviceType mdevType) throws Exception {
+    	Map<DayPk, MeteringDay> _chDays = null;
+    	MeterType meterType = MeterType.valueOf(meter.getMeterType().getName());
+    	
+    	String mdevId = lpMap.get(1).get(0).getMDevId();
+    	
+    	LinkedHashSet<Condition> condition = new LinkedHashSet<Condition>();
+    	condition.add(new Condition("id.yyyymmdd", new Object[]{lpMap.get(1).get(0).getYyyymmdd(),
+    			lpMap.get(1).get(lpMap.get(1).size() - 1).getYyyymmdd()}, null, Restriction.BETWEEN));
         condition.add(new Condition("id.mdevId", new Object[]{mdevId}, null, Restriction.EQ));
         condition.add(new Condition("id.mdevType", new Object[]{mdevType}, null, Restriction.EQ));
-        condition.add(new Condition("id.dst", new Object[]{chLPs[1].get(0).getDst()}, null, Restriction.EQ));
+        condition.add(new Condition("id.dst", new Object[]{lpMap.get(1).get(0).getDst()}, null, Restriction.EQ));
         
-        if(dayMonthSave){
-            // 일 채널별로 검침데이타를 분리한다.
-            _chDays = listDay(condition, meterType, chLPs.length);
-            log.debug("MDevId[" + mdevId + "] _chLPs[" + _chLPs.length + "] _chDays[" + _chDays.length + "]");
-        }
-
-        
-        // lp 주기 합산값을 day의 시간 값에 대입한다.
-        MeteringDay _lpday = null;
-        boolean needUpdate = false;
-        String str_mm = "";
-        
-        log.info("MDevId[" + mdevId + "] ch count[" + chLPs.length + "] ch[1] count[" + chLPs[1].size() + "]");
-        for (int lpcnt = 0; lpcnt < chLPs[1].size();lpcnt++) {
-            lp = chLPs[1].get(lpcnt);
-
-            needUpdate = false;
-            // value cnt가 lp 주기 개수만큼 채워져 있으면 건너뛴다.
-            if (_chLPs.length != 0 && _chLPs[1].size() != 0 && (_lp=_chLPs[1].get(lp.getId())) != null) {
-                // 같은 일에 대하여 시간에 대한 주기값이 존재하는지 검사하여 value cnt가 주기 개수만큼 있으면 건너뛴다.
-                // 전체 검침데이타를 갱신하고 싶으면 이 부분을 주석처리하거나 프로퍼티로 설정할 수 있도록 한다.
-
-                // 2012.10.16 추가. Normal 인 경우만 업데이트하지 않는다. 
-                if (_lp.getValueCnt() == (60/meter.getLpInterval()) && meteringType.getType() == MeteringType.Normal.getType()) {
-                    continue;
-                }
-                
-                for (int ch = 0; ch < chLPs.length; ch++) {
-                    needUpdate = false;
-                    
-                    if (updateLPs[ch] == null)
-                        updateLPs[ch] = new HashMap<LpPk, MeteringLP>();
-                    
-                    lp = chLPs[ch].get(lpcnt);
-                    _lp = _chLPs[ch].get(lp.getId());
-                    if (_lp != null) {
-                        _lp.setWriteDate(lp.getWriteDate());
-                        needUpdate = true;
-                    }
-                    else {
-                        _lp = lp;
-                        needUpdate = false;
-                    }
-
-                    // base pulse 값이 db에 있는 것이 크면 변경한다.
-                    // log.debug("ch[" + lp.getChannel() + "] lp value[" + lp.getValue() + "] _lp value[" + _lp.getValue() + "]");
-                    if (lp.getValue() != null)
-                        _lp.setValue(dformat(lp.getValue()));
-
-                    // 널이 아닌 주기값을 lp에 넣는다.
-                    if (meter.getLpInterval() == null || meter.getLpInterval() == 0)
-                        throw new Exception("LP Interval["+meter.getLpInterval()+"] is 0 or null");
-                    
-                    for (int _mm = 0; _mm < 60; _mm+=meter.getLpInterval()) {
-                        str_mm = String.format("value_%02d", _mm);
-                        _lpValue = BeanUtils.getProperty(_lp, str_mm);
-                        lpValue = BeanUtils.getProperty(lp, str_mm);
-                        
-                        // log.debug("CH[" + ch + "] MM[" + _mm + "] _LPVALUE[" + _lpValue + "] LPVALUE[" + lpValue + "]");
-                        if (lpValue != null) {
-                            // TODO _lpValue가 널이면 값을 채우게 되는데 널은 아닌데 값이 다르다면
-                            // 사용량이 이상한 것이므로 검침데이타가 깨졌을 수도 있다. 따라서, 이벤트 전송.
-                            if (_lpValue != null) {
-                            }
-                            BeanUtils.copyProperty(_lp, str_mm, dformat(Double.parseDouble(lpValue)));
-                        }
-                    }
-                    
-                    // check ip count
-                    valueCnt = 0;
-                    for (int _mm = 0; _mm < 60; _mm+=meter.getLpInterval()) {
-                        _lpValue = BeanUtils.getProperty(_lp, String.format("value_%02d", _mm));
-                        if (_lpValue != null && !"".equals(_lpValue))
-                            valueCnt++;
-                    }
-                    _lp.setValueCnt(valueCnt);
-                    if (_lp.getFullLocation() == null || "".equals(_lp.getFullLocation()))
-                        _lp.setFullLocation(getFullLocation(meter.getLocation()));
-                    
-                    chLPs[ch].set(lpcnt, _lp);
-                    updateLPs[ch].put(_lp.getId(), _lp);
-                    
-                }
-            }
-            else {
-                for (int ch = 0; ch < chLPs.length; ch++) {
-                    if (addLPs[ch] == null)
-                        addLPs[ch] = new HashMap<LpPk, MeteringLP>();
-                    
-                    _lp = chLPs[ch].get(lpcnt);
-                    valueCnt = 0;
-                    for (int _mm = 0; _mm < 60; _mm+=meter.getLpInterval()) {
-                        _lpValue = BeanUtils.getProperty(_lp, String.format("value_%02d", _mm));
-                        if (_lpValue != null && !"".equals(_lpValue))
-                            valueCnt++;
-                    }
-                    _lp.setValueCnt(valueCnt);
-                    if (_lp.getFullLocation() == null || "".equals(_lp.getFullLocation()))
-                        _lp.setFullLocation(getFullLocation(meter.getLocation()));
-                    
-                    chLPs[ch].set(lpcnt, _lp);
-                    addLPs[ch].put(_lp.getId(), _lp);
-                    
-                }
-            }
-            
-            
-            if(dayMonthSave){
-                // DAY를 생성하거나 업데이트
-                // DAY의 시간값을 구하기 위해 LP의 주기값을 합산한다.
-                DayPk dayPk = null;
-                for (int ch = 0; ch < chLPs.length; ch++) {
-                    needUpdate = true;
-                    lp = chLPs[ch].get(lpcnt);
-                    dayPk = new DayPk();
-                    dayPk.setChannel(lp.getChannel());
-                    dayPk.setDst(lp.getDst());
-                    dayPk.setMDevId(lp.getMDevId());
-                    dayPk.setMDevType(lp.getMDevType().name());
-                    dayPk.setYyyymmdd(lp.getYyyymmdd());
-                    
-                    if (addDays[ch] == null)
-                        addDays[ch] = new HashMap<DayPk, MeteringDay>();
-                    if (updateDays[ch] == null) 
-                        updateDays[ch] = new HashMap<DayPk, MeteringDay>();
-                    
-                    _lpday = addDays[ch].get(dayPk);
-                    if (_lpday == null)
-                        _lpday = updateDays[ch].get(dayPk);
-                    if (_lpday == null)
-                        _lpday = _chDays[ch].get(dayPk);
-                    
-                    if (_lpday == null)
-                    {
-                        needUpdate = false;
-                        _lpday = newMeteringDay(meteringType, meterType,
-                                meter, deviceType, deviceId, mdevType, mdevId);
-                        
-                        // _chDays[ch] = new HashMap<String, MeteringDay>();
-                        _lpday.setChannel(lp.getChannel());
-                        // base value가 채널 개수만큼 존재할 때 chLPs의 채널개수는 3개가 더 늘어나므로 그 개수만큼 늘려준다.
-                        if (ch == 0|| ch==chLPs.length-2 || ch==chLPs.length-1)
-                            _lpday.setBaseValue(0.0);
-                        else
-                            _lpday.setBaseValue(lp.getValue());
-                        _lpday.setYyyymmdd(lp.getYyyymmdd());
-                        _lpday.setDayType(getDayType(lp.getYyyymmdd()));
-                        _lpday.setDst(lp.getDst());
-                    }
-
-                    if (_lpday.getFullLocation() == null || "".equals(_lpday.getFullLocation()))
-                        _lpday.setFullLocation(getFullLocation(meter.getLocation()));
-                    
-                    if (_lpday.getContract() == null || _lpday.getSic() == null) {
-                        if (meter.getContract() != null) {
-                            _lpday.setContract(meter.getContract());
-                            if (meter.getContract().getSic() != null)
-                                _lpday.setSic(meter.getContract().getSic().getCode());
-                        }
-                    }
-                    
-                    if (_lpday.getChannel().equals(ElectricityChannel.ValidationStatus.getChannel())) {
-                        double _flag = 0;
-                        double _nextFlag = 0;
-                        String _strNextFlag = null;
-                        for (int _mm = 0; _mm < 60; _mm += meter.getLpInterval()) {
-                            _strNextFlag = BeanUtils.getProperty(lp, String.format("value_%02d", _mm));
-                            if (_strNextFlag != null) {
-                                _nextFlag = Double.parseDouble(_strNextFlag);
-                                if (_flag < _nextFlag)
-                                    _flag = _nextFlag;
-                            }
-                        }
-                        BeanUtils.copyProperty(_lpday, "value_" + lp.getHour(), _flag);
-
-                        for (int _hh = 0; _hh < 24; _hh++) {
-                            _strNextFlag = BeanUtils.getProperty(_lpday, String.format("value_%02d", _hh));
-                            if (_strNextFlag != null) {
-                                _nextFlag = Double.parseDouble(_strNextFlag);
-                                if (_flag < _nextFlag)
-                                    _flag = _nextFlag;
-                            }
-                        }
-                        _lpday.setTotal(_flag);
-                    }
-                    else if (_lpday.getChannel().equals(ElectricityChannel.Integrated.getChannel())) {
-                        double _flag = -1;
-                        double _nextFlag = 0;
-                        String _strNextFlag = null;
-                        for (int _mm = 0; _mm < 60; _mm += meter.getLpInterval()) {
-                            _strNextFlag = BeanUtils.getProperty(lp, String.format("value_%02d", _mm));
-                            if (_strNextFlag != null) {
-                                _nextFlag = Double.parseDouble(_strNextFlag);
-                                if (_flag == -1)
-                                    _flag = _nextFlag;
-                                else if (_flag != _nextFlag) {
-                                    _flag = IntegratedFlag.PARTIALSENDED.getFlag();
-                                    break;
-                                }
-                            }
-                        }
-                        BeanUtils.copyProperty(_lpday, "value_" + lp.getHour(), _flag);
-
-                        _flag = -1;
-                        for (int _hh = 0; _hh < 24; _hh++) {
-                            _strNextFlag = BeanUtils.getProperty(_lpday, String.format("value_%02d", _hh));
-                            if (_strNextFlag != null) {
-                                _nextFlag = Double.parseDouble(_strNextFlag);
-                                if (_flag == -1)
-                                    _flag = _nextFlag;
-                                else if (_flag != _nextFlag) {
-                                    _flag = IntegratedFlag.PARTIALSENDED.getFlag();
-                                    break;
-                                }
-                            }
-                        }
-                        _lpday.setTotal(_flag);
-                    }
-                    else if (_lpday.getChannel().equals(ElectricityChannel.PowerFactor.getChannel())) {
-                        // Power Factory 계산은 두 채널을 이용하여 재계산하여야 하므로 루프로 처리할 수 없다.
-                    }
-                    else {
-                        double _sum = 0.0;
-                        double _sumcount = 0.0;
-                        double _maxValue = 0.0;
-                        double _doubleValue = 0.0;
-                        for (int _mm = 0; _mm < 60; _mm+=meter.getLpInterval()) {
-                            _lpValue = BeanUtils.getProperty(lp, String.format("value_%02d", _mm));
-                            if (_lpValue != null) {
-                                _doubleValue = Double.parseDouble(_lpValue);
-                                _sum += _doubleValue;
-                                if (_maxValue < _doubleValue) _maxValue = _doubleValue;
-                                _sumcount++;
-                            }
-                        }
-                        // 채널의 계산방법을 적용한다. by elevas, 2012.06.12
-                        switch (getChMethod(channels, _lpday.getChannel())) {
-                        case SUM : 
-                            BeanUtils.copyProperty(_lpday, "value_"+ lp.getHour(), dformat(_sum));
-                            break;
-                        case AVG :
-                            _sumcount = _sumcount == 0 ? 1 : _sumcount; // 0일경우 에러나는것 방지. 
-                            BeanUtils.copyProperty(_lpday, "value_"+ lp.getHour(), dformat(_sum / _sumcount));
-                            break;
-                        case MAX :
-                            BeanUtils.copyProperty(_lpday, "value_"+ lp.getHour(), dformat(_maxValue));
-                        }
-                            
-                        // LP 00시 value가 Day의 base값이 된다.
-                        if (lp.getHour().equals("00")) {
-                            _lpday.setBaseValue(lp.getValue());
-                        }
-
-                        _sum = 0.0;
-                        _sumcount = 0.0;
-                        _doubleValue = 0.0;
-                        _maxValue = 0.0;
-                        for (int _hh = 0; _hh < 24; _hh++) {
-                            _lpValue = BeanUtils.getProperty(_lpday, String.format("value_%02d", _hh));
-                            if (_lpValue != null) {
-                                _doubleValue = Double.parseDouble(_lpValue);
-                                _sum += _doubleValue;
-                                if (_maxValue < _doubleValue) _maxValue = _doubleValue;
-                                _sumcount++;
-                            }
-                        }
-                        switch (getChMethod(channels, _lpday.getChannel())) {
-                        case SUM :
-                            _lpday.setTotal(dformat(_sum));
-                            break;
-                        case AVG :
-                            _sumcount = _sumcount == 0 ? 1 : _sumcount; // 0일경우 에러나는것 방지.
-                            _lpday.setTotal(dformat(_sum / _sumcount));
-                            break;
-                        case MAX :
-                            _lpday.setTotal(dformat(_maxValue));
-                        }
-                    }
-                    _chDays[ch].put(_lpday.getId(), _lpday);
-                    
-                    if (addDays[ch].containsKey(_lpday.getId()))
-                        needUpdate = false;
-                    
-                    if (!needUpdate) {
-                        log.debug("ADD CH[" + ch + "] MDEV_ID[" + _lpday.getMDevId() + "] CH[" + _lpday.getChannel() + "] YYYYMMDD[" + _lpday.getYyyymmdd() + "]");
-                        addDays[ch].put(_lpday.getId(), _lpday);
-                    }
-                    else {
-                        log.debug("UPDATE CH[" + ch + "] MDEV_ID[" + _lpday.getMDevId() + "] CH[" + _lpday.getChannel() + "] YYYYMMDD[" + _lpday.getYyyymmdd() + "]");
-                        updateDays[ch].put(_lpday.getId(), _lpday);
-                        
-                    }
-                    
-                    // log.info("DAY MDEV_ID[" + _lpday.getMDevId() + "] CH[" + _lpday.getChannel() + "] YYYYMMDD[" +
-                    //        _lpday.getYyyymmdd() + "] TOTAL[" + _lpday.getTotal() + "]");
-                }
-            }
-
-        }
-
-        
-        List<MeteringMonth>[] addMonths = new ArrayList[0];
-        List<MeteringMonth>[] updateMonths = new ArrayList[0];
-        
-        if(dayMonthSave){
-            addMonths = new ArrayList[chLPs.length];
-            updateMonths = new ArrayList[chLPs.length];            
-            makeMonthList(addDays, updateDays, addMonths, updateMonths, meteringType,
-                    meter, deviceType, deviceId, mdevType, mdevId);
-        }
-
-
-        updateMeteringData(mdevId, meterType, updateLPs, updateDays, updateMonths);
-        addMeteringData(meterType, addLPs, addDays, addMonths);
+    	_chDays = listDay(condition, meterType, lpMap.size());
+    	log.debug("MDevId[" + mdevId + "] lpMap[" + lpMap.size() + "] _chDays[" + _chDays.size() + "]");
+    	
+    	for(Integer ch : lpMap.keySet()) {
+    		//20190404 정규화 이전에는 시간을 컬럼으로 구분하여 1 row안에 모든 시간별 LP가 존재
+    		//정규화에는 시간별 row가 생성되기 때문에 LP을 시간별로 구분할 필요가 있음
+    		Map<String, LinkedList<MeteringLP>> _hourLpMap = new HashMap<String, LinkedList<MeteringLP>>();
+    		LinkedList<MeteringLP> lpData = lpMap.get(ch);
+    		
+    		ElectricityChannel electricityChannel = CommonConstants.getElectricityChannel(ch);
+    		
+    		for(MeteringLP _lp : lpData) {
+    			String hh = _lp.getHour();
+    			LinkedList<MeteringLP> list = null;
+    			
+    			if(!_hourLpMap.containsKey(hh)) {
+    				list = new LinkedList<MeteringLP>();
+    				list.add(_lp);
+    			} else {
+    				list = _hourLpMap.get(hh);
+    				list.add(_lp);
+    			}
+    			_hourLpMap.put(hh, list);
+    		}
+    		
+    		//시간별로 정의된 내용을 기반으로 dayEM 생성
+    		for(String hh : _hourLpMap.keySet()) {
+    			LinkedList<MeteringLP> hourList = _hourLpMap.get(hh);
+    			MeteringLP firstLp = hourList.get(0);
+    			MeteringLP lastLp = hourList.get(hourList.size() - 1);
+    			
+    			DayPk dayPk = new DayPk();
+    			dayPk.setChannel(ch);
+        		dayPk.setDst(firstLp.getDst());
+        		dayPk.setMDevId(mdevId);
+        		dayPk.setMDevType(mdevType.name());
+        		dayPk.setYyyymmdd(firstLp.getYyyymmdd());
+        		//dayPk.setHh(firstLp.getHour());
+        		
+        		MeteringDay _lpDay = _chDays.get(dayPk);
+        		if(_lpDay == null) {
+        			_lpDay = newMeteringDay(meteringType, meterType, meter, 
+        					firstLp.getDeviceType(), firstLp.getDeviceId(), mdevType, mdevId);
+        			_lpDay.setId(dayPk);
+        			
+        			if(ch == ElectricityChannel.Co2.getChannel() ||
+        					ch == ElectricityChannel.PowerFactor.getChannel() ||
+        					ch == ElectricityChannel.ValidationStatus.getChannel()) {
+        				_lpDay.setBaseValue(0.0);    				
+        			} else {
+        				//이미 정렬된 상태이기 때문에 첫번째 값이 가장 00분에 가까운 시간의 값이다.
+        				_lpDay.setBaseValue(firstLp.getValue());
+        			}
+        			
+        			//정규화 이전 dayType 변수는 삭제
+        		}
+        		
+        		if (_lpDay.getContract() == null && meter.getContract() != null) {
+        			_lpDay.setContract(meter.getContract());
+        		}
+        		
+        		switch(electricityChannel) {
+        		case ValidationStatus:
+        			for(int i=hourList.size() - 1; i <=0; i--) {
+        				MeteringLP item = hourList.get(i);
+        				if(item.getIntervalYN() == 1) {
+        					double v = item.getValue();
+        					//_lpDay.setValue(v);        					
+        					break;
+        				}
+        			}
+        			break;
+        		case Integrated:
+        			break;
+        		case PowerFactor:
+        			
+        			break;
+        		default:
+        			
+        			break;
+        		}
+        		
+        		
+    		}
+    		
+   		
+    		
+    	}
+    	
     }
     
-    private List<MeteringLP>[] makeChLPsUsingLPTime(MeteringType meteringType, String[] lptimelist, 
-            double[][] lplist, int[] flaglist, double[] baseValue, Meter meter,
-            DeviceType deviceType, String deviceId, DeviceType mdevType, String mdevId)
-    throws Exception
-    {
+    private void saveMonthDataUsingLPTimeUsingJPA(MeteringType meteringType, Map<Integer, LinkedList<MeteringLP>> lpMap, 
+    		Meter meter, DeviceType mdevType) throws Exception {
+    	
+    }
+    
+    private void makeChLPsUsingLPTime(Map<Integer, LinkedList<MeteringLP>> lpMap, Meter meter) throws Exception {
     	double lpThreshold = Double.parseDouble(FMPProperty.getProperty("lp.threshold", "300"));
-
-        // 처음 시작하는 분을 기억하고 있다가 사용해야 한다.
-        int startmm = Integer.parseInt(lptimelist[0].substring(10, 12));
-
-        // 0 채널(탄소배출량), 98 채널(연동 전송여부), 100 채널 (플래그) 추가한다.
-        List<MeteringLP>[] chLPs = new ArrayList[lplist.length+3];
-        for (int ch=0; ch < chLPs.length; ch++) {
-        	chLPs[ch] = new ArrayList<MeteringLP>();
-        }
-
+    	MeterType meterType = MeterType.valueOf(meter.getMeterType().getName());
+    	int chLpCnt = 0;
+    	
+    	//channel info 
+    	//Co2(0), Usage(1), Integrated(98), PowerFactor(99), ValidationStatus(100);
+    	
         // 미터의 채널 정보를 가져온다.
         ChannelConfig[] channels = null;
         if (meter.getModel() != null && meter.getModel().getDeviceConfig() != null)
             channels = ((MeterConfig)meter.getModel().getDeviceConfig()).getChannels().toArray(new ChannelConfig[0]);
         else channels = new ChannelConfig[0];
         
-        int _dst = 0;
-        String _dsttime = null;
-        MeteringLP[] lps = null;
-        double[] sum = baseValue;
-        MeterType meterType = MeterType.valueOf(meter.getMeterType().getName());
-
-        int valuecnt = 0;
-        int mm = startmm;
-        for (int lpcnt = 0; lpcnt < lplist[0].length;) {
-        	log.debug("lpcnt[" + lpcnt + "] lplist length[" + lplist[0].length + "]");
-        	valuecnt = 0;
-            
-            // lp는 로우가 시간별로 존재하기 때문에 여기서 초기화한다.
-            lps = newMeteringLP(meterType, lplist.length);
-            for (int ch = 0; ch < lps.length; ch++) {
-                lps[ch].setChannel(ch+1);
-                lps[ch].setDeviceId(deviceId);
-                lps[ch].setDeviceType(deviceType.name());
-                lps[ch].setMDevId(mdevId);
-                lps[ch].setMDevType(mdevType.name());
-                lps[ch].setMeteringType(meteringType.getType());
-                lps[ch].setValue(dformat(sum[ch]));
-
-                if (meter.getContract() != null)
-                    lps[ch].setContract(meter.getContract());
-
-                switch (mdevType) {
-                case Meter :
-                    lps[ch].setMeter(meter);
-                    lps[ch].setLocation(meter.getLocation());
-                    lps[ch].setSupplier(meter.getSupplier());
-                    if (meter.getModem() != null)
-                        lps[ch].setModem(meter.getModem());
-                    break;
-                case Modem :
-                    Modem modem = modemDao.get(mdevId);
-                    lps[ch].setModem(modem);
-                    lps[ch].setLocation(modem.getLocation());
-                    lps[ch].setSupplier(modem.getSupplier());
-                    break;
-                case EndDevice :
-                }
-            }
-
-            for (; mm < 60 && lplist[0].length > lpcnt; lpcnt++) {
-            	mm = Integer.parseInt(lptimelist[lpcnt].substring(10, 12));
-            	
-            	log.debug("lpcnt[" + lpcnt + "] mm[" + mm + "] lptime[" + lptimelist[lpcnt] + "]");
-            	
-            	_dsttime = lptimelist[lpcnt];
-            	_dst = DateTimeUtil.inDST(null, _dsttime);
-
-            	double tmp = 0.0;
-            	for (int ch = 0; ch < lps.length; ch++) {
-            		// 2015.02.26 마이너스가 나오는 경우 0.0으로 처리한다.
-            		tmp = dformat(lplist[ch][lpcnt]);
-            		if (getChMethod(channels, lps[ch].getChannel()) == ChannelCalcMethod.SUM 
-	                    && (tmp < 0.0 || tmp > lpThreshold)
-	                    && meter.getModel().getName().equals(MeterVendor.KAMSTRUP.getName())) {
-	                    log.warn("MDevId[" + mdevId + "] LP Value[" + tmp + "] is minus or over "+lpThreshold+"!, It is replaced to null");
-	                    BeanUtils.copyProperty(lps[ch], String.format("value_%02d", mm), null);
-	                    try {
-	                        EventUtil.sendEvent("Meter Value Alarm",
-	                                TargetClass.valueOf(meter.getMeterType().getName()),
-	                                meter.getMdsId(),
-	                                new String[][] {{"message", "LP DateTime[" + _dsttime + "] Value[" + tmp + "]"}}
-	                                );
-	                    }
-	                    catch (Exception ignore) {
-	                    }
-            		}
-            		else {
-            			log.debug("copyProperty lpcnt[" + lpcnt + "] ch[" + ch + "] " + String.format("value_%02d", mm) + "[" + dformat(lplist[ch][lpcnt]) + "]");
-            			BeanUtils.copyProperty(lps[ch], String.format("value_%02d", mm), dformat(lplist[ch][lpcnt]));
-            			valuecnt++;
-	                }
-
-                    lps[ch].setHour(_dsttime.substring(8, 10));
-                    lps[ch].setYyyymmdd(_dsttime.substring(0,8));
-                    lps[ch].setYyyymmddhh(_dsttime.substring(0, 10));
-                    lps[ch].setDst(_dst);
-                    lps[ch].setWriteDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
-                    lps[ch].setValueCnt(valuecnt);
-                    
-                    switch (getChMethod(channels, lps[ch].getChannel())) {
-                    case SUM : sum[ch] += lplist[ch][lpcnt];
-                               break;
-                    case MAX : sum[ch] = lplist[ch][lpcnt];
-                               break;
-                    case AVG : sum[ch] += lplist[ch][lpcnt];
-                               sum[ch] /= lps[ch].getValueCnt();
-                    }
-            	}
-            	
-            	if (lpcnt+1 >= lplist[0].length) {
-            		lpcnt++;
-            		break;
-            	}
-            	else  {
-            		int nextmm = Integer.parseInt(lptimelist[lpcnt+1].substring(10, 12));
-            		if (mm >= nextmm) {
-            			lpcnt++;
-            			break;
-            		}
-            	}
-            }
-
-            for (int ch = 0; ch < lps.length; ch++) {
-                if (lps[ch].getYyyymmdd() != null && lps[ch].getDst() != null) {
-                    chLPs[ch+1].add(lps[ch]);
-                    log.debug("MDevId[" + mdevId + "] CH[" + lps[ch].getChannel() +
-                            "] YYYYMMDDHH[" + lps[ch].getYyyymmddhh() +
-                            "] WRITEDATE[" + lps[ch].getWriteDate() +
-                            "] DST[" + lps[ch].getDst() +
-                            "] VALUE[" + lps[ch].getValue() + "]");
-                }
-            }
+        double[] sum = new double[lpMap.size()];
+        sum[0] = lpMap.get(ElectricityChannel.Usage.getChannel()).get(0).getValue();
+        for(int i=1; i<sum.length; i++) {
+        	sum[i] = 0d;
         }
-
-        // 탄소배출량채널과 검침값상태채널을 생성한다.
-        MeteringLP lp = null;
-        MeteringLP[] co = new MeteringLP[chLPs[1].size()];
-        MeteringLP[] flag = new MeteringLP[chLPs[1].size()];
-        MeteringLP[] integratedFlag = new MeteringLP[chLPs[1].size()];
+        
+        Iterator<Integer> channelList = lpMap.keySet().iterator();
+        while(channelList.hasNext()) {
+        	int valueCnt = 0;
+        	Integer ch = channelList.next();
+        	LinkedList<MeteringLP> lpList = lpMap.get(ch);
+        	chLpCnt = lpList.size();
+        	
+        	for(MeteringLP lp : lpList) {
+        		double tmp = dformat(lp.getValue());
+        		if (getChMethod(channels, lp.getChannel()) == ChannelCalcMethod.SUM 
+    					&& (tmp < 0.0 || tmp > lpThreshold)
+	                    && meter.getModel().getName().equals(MeterVendor.KAMSTRUP.getName())) {
+    				try {
+    					EventUtil.sendEvent("Meter Value Alarm",
+                                TargetClass.valueOf(meter.getMeterType().getName()),
+                                meter.getMdsId(),
+                                new String[][] {{"message", "LP DateTime[" + lp.id.getYyyymmddhhmiss() + "] Value[" + tmp + "]"}}
+                                );
+    				}catch(Exception e) { }
+        		} else {
+        			 valueCnt++;
+        		}
+        		
+        		switch (getChMethod(channels, lp.getChannel())) {
+        		case SUM:
+        			sum[ch - 1] += lp.getValue();
+        			break;
+        		case MAX:
+        			sum[ch - 1] = lp.getValue();
+        			break;
+        		case AVG:
+        			sum[ch - 1] += lp.getValue();
+        			sum[ch - 1] /= valueCnt;
+        			break;
+        		}
+        	}
+        }
+        
+        MeteringLP[] co = new MeteringLP[chLpCnt];
+        MeteringLP[] flag = new MeteringLP[chLpCnt];
+        MeteringLP[] integratedFlag = new MeteringLP[chLpCnt];
+        
         Co2Formula co2f = co2FormulaDao.getCo2FormulaBySupplyType(meterType.getServiceType());
-
-        double lpValue = 0.0;
-
-        // 시작 분을 초기화한다.
-        mm = startmm; // Integer.parseInt(dsttime.substring(10, 12));
-        String str_mm = "";
-        for (int i = 0, flagcnt = 0; i < co.length; i++) {
-            lp = chLPs[1].get(i);
-            co[i] = newMeteringLP(meterType, lp);
-            flag[i] = newMeteringLP(meterType, lp);
-            integratedFlag[i] = newMeteringLP(meterType, lp);
-
+        LinkedList<MeteringLP> ch1List = lpMap.get(ElectricityChannel.Usage.getChannel());
+        
+        for(int i=0; i<chLpCnt; i++) {
+            MeteringLP mLP = ch1List.get(i);
+            
+            co[i] = newMeteringLP(meterType, mLP);
+            flag[i] = newMeteringLP(meterType, mLP);
+            integratedFlag[i] = newMeteringLP(meterType, mLP);
+            
             co[i].setChannel(ElectricityChannel.Co2.getChannel());
             flag[i].setChannel(ElectricityChannel.ValidationStatus.getChannel());
             integratedFlag[i].setChannel(ElectricityChannel.Integrated.getChannel());
-
-            for (; mm < 60 && flagcnt < flaglist.length;  flagcnt++) {
-                mm = Integer.parseInt(lptimelist[flagcnt].substring(10, 12));
-                str_mm = String.format("value_%02d", mm);
-                String val = BeanUtils.getProperty(lp, str_mm);
-                if(val != null && !"".equals(val)){
-                    lpValue = Double.parseDouble(val);
-                    BeanUtils.copyProperty(co[i], str_mm, dformat(lpValue*co2f.getCo2factor()));
-                    BeanUtils.copyProperty(flag[i], str_mm, flaglist[flagcnt]);
-                    BeanUtils.copyProperty(integratedFlag[i], str_mm, IntegratedFlag.NOTSENDED.getFlag());
-                }
-
-                // INSERT START SP-554
-            	if (flagcnt+1 >= flaglist.length) {
-            		flagcnt++;
-            		break;
-            	}
-            	else  {
-            		int nextmm = Integer.parseInt(lptimelist[flagcnt+1].substring(10, 12));
-            		if (mm >= nextmm) {
-            			flagcnt++;
-            			break;
-            		}
-            	}
-                // INSERT END SP-554
-            }
-            chLPs[0].add(co[i]);
-            chLPs[chLPs.length-1].add(flag[i]);
-            chLPs[chLPs.length-2].add(integratedFlag[i]);
-
-            if (mm >= 60)
-                mm = 0;
+            
+            co[i].setValue(dformat(mLP.getValue() * co2f.getCo2factor()));
+            flag[i].setValue(mLP.getLpFlag());
+            integratedFlag[i].setValue((double)IntegratedFlag.NOTSENDED.getFlag());
         }
-
-        return chLPs;
+        
+        lpMap.put(ElectricityChannel.Co2.getChannel(), new LinkedList<>(Arrays.asList(co)));
+        lpMap.put(ElectricityChannel.ValidationStatus.getChannel(), new LinkedList<>(Arrays.asList(flag)));
+        //OPF-713 || Unnecessary channel delete(integrated, power factor)
+        //lpMap.put(ElectricityChannel.Integrated.getChannel(), new LinkedList<>(Arrays.asList(integratedFlag)));
     }
-    // INSERT END SP-501        
     
-    protected void saveLPData(MeteringType meteringType, String lpDate, String lpTime,
-            double[][] lplist, int[] flaglist, double[] baseValue, Meter meter,
-            DeviceType deviceType, String deviceId, DeviceType mdevType, String mdevId)
-    throws Exception
-    {
-        log.info("Meter Serial:"+meter.getMdsId()+" , Lp Date:"+lpDate+", LP Time:"+lpTime+", baseValue_cnt:"+baseValue.length+" ");
-        List<MeteringLP>[] chLPs = makeChLPs(meteringType, lpDate, lpTime,  lplist, flaglist,
-                baseValue, meter, deviceType, deviceId, mdevType, mdevId);
-
-        MeterType meterType = MeterType.valueOf(meter.getMeterType().getName());
-        
-        boolean dayMonthSave = Boolean.parseBoolean(FMPProperty.getProperty("daymonth.save", "true"));
-
-        // 미터의 채널 정보를 가져온다.
-        ChannelConfig[] channels = null;
-        if (meter.getModel() != null && meter.getModel().getDeviceConfig() != null)
-            channels = ((MeterConfig)meter.getModel().getDeviceConfig()).getChannels().toArray(new ChannelConfig[0]);
-        else channels = new ChannelConfig[0];
-        
-        if (chLPs[1].size() == 0) {
-            throw new Exception("LP size is 0!!!");
-        }
-
-        // 날짜별로 LP를 조회한다.
-        MeteringLP lp = chLPs[1].get(0);
-        MeteringLP _lp = null;
-
-        Map<LpPk, MeteringLP>[] _chLPs = null;
-        Map<DayPk, MeteringDay>[] _chDays = null;
-
-        Map<LpPk, MeteringLP>[] addLPs = new HashMap[chLPs.length];
-        Map<LpPk, MeteringLP>[] updateLPs = new HashMap[chLPs.length];
-        Map<DayPk, MeteringDay>[] addDays = new HashMap[chLPs.length];
-        Map<DayPk, MeteringDay>[] updateDays = new HashMap[chLPs.length];
-
-        String lpValue = null;
-        String _lpValue = null;
-        int valueCnt = 0;
-        
-        // 전 채널 검침데이타를 가져온다.
-        LinkedHashSet<Condition> condition = new LinkedHashSet<Condition>();
-        condition.add(new Condition("id.yyyymmddhh", new Object[]{chLPs[1].get(0).getYyyymmddhh(),
-                chLPs[1].get(chLPs[1].size()-1).getYyyymmddhh()}, null, Restriction.BETWEEN));
-        condition.add(new Condition("id.mdevId", new Object[]{mdevId}, null, Restriction.EQ));
-        condition.add(new Condition("id.mdevType", new Object[]{mdevType}, null, Restriction.EQ));
-        condition.add(new Condition("id.dst", new Object[]{chLPs[1].get(0).getDst()}, null, Restriction.EQ));
-        
-        // 주기 채널별로 검침데이타를 분리한다.
-        _chLPs = listLP(condition, meterType, chLPs.length);
-        condition = new LinkedHashSet<Condition>();
-        condition.add(new Condition("id.yyyymmdd", new Object[]{chLPs[1].get(0).getYyyymmdd(),
-                chLPs[1].get(chLPs[1].size()-1).getYyyymmdd()}, null, Restriction.BETWEEN));
-        condition.add(new Condition("id.mdevId", new Object[]{mdevId}, null, Restriction.EQ));
-        condition.add(new Condition("id.mdevType", new Object[]{mdevType}, null, Restriction.EQ));
-        condition.add(new Condition("id.dst", new Object[]{chLPs[1].get(0).getDst()}, null, Restriction.EQ));
-        
-        // 일 채널별로 검침데이타를 분리한다.
-        
-        if(dayMonthSave){
-            _chDays = listDay(condition, meterType, chLPs.length);
-            log.debug("MDevId[" + mdevId + "] _chLPs[" + _chLPs.length + "] _chDays[" + _chDays.length + "]");
-        }
-        
-        // lp 주기 합산값을 day의 시간 값에 대입한다.
-        MeteringDay _lpday = null;
-        boolean needUpdate = false;
-        String str_mm = "";
-        
-        log.info("MDevId[" + mdevId + "] ch count[" + chLPs.length + "] ch[1] count[" + chLPs[1].size() + "]");
-        for (int lpcnt = 0; lpcnt < chLPs[1].size();lpcnt++) {
-            lp = chLPs[1].get(lpcnt);
-
-            needUpdate = false;
-            // value cnt가 lp 주기 개수만큼 채워져 있으면 건너뛴다.
-            if (_chLPs.length != 0 && _chLPs[1].size() != 0 && (_lp=_chLPs[1].get(lp.getId())) != null) {
-                // 같은 일에 대하여 시간에 대한 주기값이 존재하는지 검사하여 value cnt가 주기 개수만큼 있으면 건너뛴다.
-                // 전체 검침데이타를 갱신하고 싶으면 이 부분을 주석처리하거나 프로퍼티로 설정할 수 있도록 한다.
-
-                // 2012.10.16 추가. Normal 인 경우만 업데이트하지 않는다. 
-                if (_lp.getValueCnt() == (60/meter.getLpInterval()) && meteringType.getType() == MeteringType.Normal.getType()) {
-                    continue;
-                }
-                
-                for (int ch = 0; ch < chLPs.length; ch++) {
-                    needUpdate = false;
-                    
-                    if (updateLPs[ch] == null)
-                        updateLPs[ch] = new HashMap<LpPk, MeteringLP>();
-                    
-                    lp = chLPs[ch].get(lpcnt);
-                    _lp = _chLPs[ch].get(lp.getId());
-                    if (_lp != null) {
-                        _lp.setWriteDate(lp.getWriteDate());
-                        needUpdate = true;
-                    }
-                    else {
-                        _lp = lp;
-                        needUpdate = false;
-                    }
-
-                    // base pulse 값이 db에 있는 것이 크면 변경한다.
-                    // log.debug("ch[" + lp.getChannel() + "] lp value[" + lp.getValue() + "] _lp value[" + _lp.getValue() + "]");
-                    if (lp.getValue() != null)
-                        _lp.setValue(dformat(lp.getValue()));
-
-                    // 널이 아닌 주기값을 lp에 넣는다.
-                    if (meter.getLpInterval() == null || meter.getLpInterval() == 0)
-                        throw new Exception("LP Interval["+meter.getLpInterval()+"] is 0 or null");
-                    
-                    for (int _mm = 0; _mm < 60; _mm+=meter.getLpInterval()) {
-                        str_mm = String.format("value_%02d", _mm);
-                        _lpValue = BeanUtils.getProperty(_lp, str_mm);
-                        lpValue = BeanUtils.getProperty(lp, str_mm);
-                        
-                        // log.debug("CH[" + ch + "] MM[" + _mm + "] _LPVALUE[" + _lpValue + "] LPVALUE[" + lpValue + "]");
-                        if (lpValue != null) {
-                            // TODO _lpValue가 널이면 값을 채우게 되는데 널은 아닌데 값이 다르다면
-                            // 사용량이 이상한 것이므로 검침데이타가 깨졌을 수도 있다. 따라서, 이벤트 전송.
-                            if (_lpValue != null) {
-                            }
-                            BeanUtils.copyProperty(_lp, str_mm, dformat(Double.parseDouble(lpValue)));
-                        }
-                    }
-                    
-                    // check ip count
-                    valueCnt = 0;
-                    for (int _mm = 0; _mm < 60; _mm+=meter.getLpInterval()) {
-                        _lpValue = BeanUtils.getProperty(_lp, String.format("value_%02d", _mm));
-                        if (_lpValue != null && !"".equals(_lpValue))
-                            valueCnt++;
-                    }
-                    _lp.setValueCnt(valueCnt);
-                    if (_lp.getFullLocation() == null || "".equals(_lp.getFullLocation()))
-                        _lp.setFullLocation(getFullLocation(meter.getLocation()));
-                    
-                    chLPs[ch].set(lpcnt, _lp);
-                    updateLPs[ch].put(_lp.getId(), _lp);
-                    
-                    /*
-                    if (needUpdate) {
-                        Properties props = new Properties();
-                        props.setProperty("mdevId", mdevId);
-                        if (_lp instanceof LpEM)
-                            lpEMDao.update((LpEM)_lp, props);
-                        else if (_lp instanceof LpGM)
-                            lpGMDao.update((LpGM)_lp, props);
-                        else if (_lp instanceof LpHM)
-                            lpHMDao.update((LpHM)_lp, props);
-                        else if (_lp instanceof LpWM)
-                            lpWMDao.update((LpWM)_lp, props);
-                        else if (_lp instanceof LpSPM)
-                            lpSPMDao.update((LpSPM)_lp, props);
-                    }
-                    else {
-                        if (_lp instanceof LpEM)
-                            lpEMDao.add((LpEM)_lp);
-                        else if (_lp instanceof LpGM)
-                            lpGMDao.add((LpGM)_lp);
-                        else if (_lp instanceof LpHM)
-                            lpHMDao.add((LpHM)_lp);
-                        else if (_lp instanceof LpWM)
-                            lpWMDao.add((LpWM)_lp);
-                        else if (_lp instanceof LpSPM)
-                            lpSPMDao.add((LpSPM)_lp);
-                    }
-                    */
-                }
-            }
-            else {
-                for (int ch = 0; ch < chLPs.length; ch++) {
-                    if (addLPs[ch] == null)
-                        addLPs[ch] = new HashMap<LpPk, MeteringLP>();
-                    
-                    _lp = chLPs[ch].get(lpcnt);
-                    valueCnt = 0;
-                    for (int _mm = 0; _mm < 60; _mm+=meter.getLpInterval()) {
-                        _lpValue = BeanUtils.getProperty(_lp, String.format("value_%02d", _mm));
-                        if (_lpValue != null && !"".equals(_lpValue))
-                            valueCnt++;
-                    }
-                    _lp.setValueCnt(valueCnt);
-                    if (_lp.getFullLocation() == null || "".equals(_lp.getFullLocation()))
-                        _lp.setFullLocation(getFullLocation(meter.getLocation()));
-                    
-                    chLPs[ch].set(lpcnt, _lp);
-                    addLPs[ch].put(_lp.getId(), _lp);
-                    
-                    /*
-                    if (_lp instanceof LpEM)
-                        lpEMDao.add((LpEM)_lp);
-                    else if (_lp instanceof LpGM)
-                        lpGMDao.add((LpGM)_lp);
-                    else if (_lp instanceof LpHM)
-                        lpHMDao.add((LpHM)_lp);
-                    else if (_lp instanceof LpWM)
-                        lpWMDao.add((LpWM)_lp);
-                    else if (_lp instanceof LpSPM)
-                        lpSPMDao.add((LpSPM)_lp);
-                    */
-                }
-            }
-            
-            // lp 개수를 파악한다.
-            /*
-            for (int ch = 0; ch < chLPs.length; ch++, valueCnt=0) {
-                _lp = chLPs[ch].get(lpcnt);
-                for (int _mm = 0; _mm < 60; _mm+=meter.getLpInterval()) {
-                    _lpValue = BeanUtils.getProperty(_lp, String.format("value_%02d", _mm));
-                    if (_lpValue != null && !"".equals(_lpValue))
-                        valueCnt++;
-                }
-                _lp.setValueCnt(valueCnt);
-                if (_lp.getFullLocation() == null || "".equals(_lp.getFullLocation()))
-                    _lp.setFullLocation(getFullLocation(meter.getLocation()));
-                chLPs[ch].set(lpcnt, _lp);
-            }
-            */
-            
-            
-            if(dayMonthSave){
-                // DAY를 생성하거나 업데이트
-                // DAY의 시간값을 구하기 위해 LP의 주기값을 합산한다.
-                DayPk dayPk = null;
-                for (int ch = 0; ch < chLPs.length; ch++) {
-                    needUpdate = true;
-                    lp = chLPs[ch].get(lpcnt);
-                    dayPk = new DayPk();
-                    dayPk.setChannel(lp.getChannel());
-                    dayPk.setDst(lp.getDst());
-                    dayPk.setMDevId(lp.getMDevId());
-                    dayPk.setMDevType(lp.getMDevType().name());
-                    dayPk.setYyyymmdd(lp.getYyyymmdd());
-                    
-                    if (addDays[ch] == null)
-                        addDays[ch] = new HashMap<DayPk, MeteringDay>();
-                    if (updateDays[ch] == null) 
-                        updateDays[ch] = new HashMap<DayPk, MeteringDay>();
-                    
-                    _lpday = addDays[ch].get(dayPk);
-                    if (_lpday == null)
-                        _lpday = updateDays[ch].get(dayPk);
-                    if (_lpday == null)
-                        _lpday = _chDays[ch].get(dayPk);
-                    
-                    if (_lpday == null)
-                    {
-                        needUpdate = false;
-                        _lpday = newMeteringDay(meteringType, meterType,
-                                meter, deviceType, deviceId, mdevType, mdevId);
-                        
-                        // _chDays[ch] = new HashMap<String, MeteringDay>();
-                        _lpday.setChannel(lp.getChannel());
-                        // base value가 채널 개수만큼 존재할 때 chLPs의 채널개수는 3개가 더 늘어나므로 그 개수만큼 늘려준다.
-                        if (ch == 0|| ch==chLPs.length-2 || ch==chLPs.length-1)
-                            _lpday.setBaseValue(0.0);
-                        else
-                            _lpday.setBaseValue(lp.getValue());
-                        _lpday.setYyyymmdd(lp.getYyyymmdd());
-                        _lpday.setDayType(getDayType(lp.getYyyymmdd()));
-                        _lpday.setDst(lp.getDst());
-                    }
-
-                    if (_lpday.getFullLocation() == null || "".equals(_lpday.getFullLocation()))
-                        _lpday.setFullLocation(getFullLocation(meter.getLocation()));
-                    
-                    if (_lpday.getContract() == null || _lpday.getSic() == null) {
-                        if (meter.getContract() != null) {
-                            _lpday.setContract(meter.getContract());
-                            if (meter.getContract().getSic() != null)
-                                _lpday.setSic(meter.getContract().getSic().getCode());
-                        }
-                    }
-                    
-                    if (_lpday.getChannel().equals(ElectricityChannel.ValidationStatus.getChannel())) {
-                        double _flag = 0;
-                        double _nextFlag = 0;
-                        String _strNextFlag = null;
-                        for (int _mm = 0; _mm < 60; _mm += meter.getLpInterval()) {
-                            _strNextFlag = BeanUtils.getProperty(lp, String.format("value_%02d", _mm));
-                            if (_strNextFlag != null) {
-                                _nextFlag = Double.parseDouble(_strNextFlag);
-                                if (_flag < _nextFlag)
-                                    _flag = _nextFlag;
-                            }
-                        }
-                        BeanUtils.copyProperty(_lpday, "value_" + lp.getHour(), _flag);
-
-                        for (int _hh = 0; _hh < 24; _hh++) {
-                            _strNextFlag = BeanUtils.getProperty(_lpday, String.format("value_%02d", _hh));
-                            if (_strNextFlag != null) {
-                                _nextFlag = Double.parseDouble(_strNextFlag);
-                                if (_flag < _nextFlag)
-                                    _flag = _nextFlag;
-                            }
-                        }
-                        _lpday.setTotal(_flag);
-                    }
-                    else if (_lpday.getChannel().equals(ElectricityChannel.Integrated.getChannel())) {
-                        double _flag = -1;
-                        double _nextFlag = 0;
-                        String _strNextFlag = null;
-                        for (int _mm = 0; _mm < 60; _mm += meter.getLpInterval()) {
-                            _strNextFlag = BeanUtils.getProperty(lp, String.format("value_%02d", _mm));
-                            if (_strNextFlag != null) {
-                                _nextFlag = Double.parseDouble(_strNextFlag);
-                                if (_flag == -1)
-                                    _flag = _nextFlag;
-                                else if (_flag != _nextFlag) {
-                                    _flag = IntegratedFlag.PARTIALSENDED.getFlag();
-                                    break;
-                                }
-                            }
-                        }
-                        BeanUtils.copyProperty(_lpday, "value_" + lp.getHour(), _flag);
-
-                        _flag = -1;
-                        for (int _hh = 0; _hh < 24; _hh++) {
-                            _strNextFlag = BeanUtils.getProperty(_lpday, String.format("value_%02d", _hh));
-                            if (_strNextFlag != null) {
-                                _nextFlag = Double.parseDouble(_strNextFlag);
-                                if (_flag == -1)
-                                    _flag = _nextFlag;
-                                else if (_flag != _nextFlag) {
-                                    _flag = IntegratedFlag.PARTIALSENDED.getFlag();
-                                    break;
-                                }
-                            }
-                        }
-                        _lpday.setTotal(_flag);
-                    }
-                    else if (_lpday.getChannel().equals(ElectricityChannel.PowerFactor.getChannel())) {
-                        // Power Factory 계산은 두 채널을 이용하여 재계산하여야 하므로 루프로 처리할 수 없다.
-                    }
-                    else {
-                        double _sum = 0.0;
-                        double _sumcount = 0.0;
-                        double _maxValue = 0.0;
-                        double _doubleValue = 0.0;
-                        for (int _mm = 0; _mm < 60; _mm+=meter.getLpInterval()) {
-                            _lpValue = BeanUtils.getProperty(lp, String.format("value_%02d", _mm));
-                            if (_lpValue != null) {
-                                _doubleValue = Double.parseDouble(_lpValue);
-                                _sum += _doubleValue;
-                                if (_maxValue < _doubleValue) _maxValue = _doubleValue;
-                                _sumcount++;
-                            }
-                        }
-                        // 채널의 계산방법을 적용한다. by elevas, 2012.06.12
-                        switch (getChMethod(channels, _lpday.getChannel())) {
-                        case SUM : 
-                            BeanUtils.copyProperty(_lpday, "value_"+ lp.getHour(), dformat(_sum));
-                            break;
-                        case AVG :
-                            _sumcount = _sumcount == 0 ? 1 : _sumcount; // 0일경우 에러나는것 방지. 
-                            BeanUtils.copyProperty(_lpday, "value_"+ lp.getHour(), dformat(_sum / _sumcount));
-                            break;
-                        case MAX :
-                            BeanUtils.copyProperty(_lpday, "value_"+ lp.getHour(), dformat(_maxValue));
-                        }
-                            
-                        // LP 00시 value가 Day의 base값이 된다.
-                        if (lp.getHour().equals("00")) {
-                            _lpday.setBaseValue(lp.getValue());
-                        }
-
-                        _sum = 0.0;
-                        _sumcount = 0.0;
-                        _doubleValue = 0.0;
-                        _maxValue = 0.0;
-                        for (int _hh = 0; _hh < 24; _hh++) {
-                            _lpValue = BeanUtils.getProperty(_lpday, String.format("value_%02d", _hh));
-                            if (_lpValue != null) {
-                                _doubleValue = Double.parseDouble(_lpValue);
-                                _sum += _doubleValue;
-                                if (_maxValue < _doubleValue) _maxValue = _doubleValue;
-                                _sumcount++;
-                            }
-                        }
-                        switch (getChMethod(channels, _lpday.getChannel())) {
-                        case SUM :
-                            _lpday.setTotal(dformat(_sum));
-                            break;
-                        case AVG :
-                            _sumcount = _sumcount == 0 ? 1 : _sumcount; // 0일경우 에러나는것 방지.
-                            _lpday.setTotal(dformat(_sum / _sumcount));
-                            break;
-                        case MAX :
-                            _lpday.setTotal(dformat(_maxValue));
-                        }
-                    }
-                    _chDays[ch].put(_lpday.getId(), _lpday);
-                    
-                    if (addDays[ch].containsKey(_lpday.getId()))
-                        needUpdate = false;
-                    
-                    if (!needUpdate) {
-                        log.debug("ADD CH[" + ch + "] MDEV_ID[" + _lpday.getMDevId() + "] CH[" + _lpday.getChannel() + "] YYYYMMDD[" + _lpday.getYyyymmdd() + "]");
-                        addDays[ch].put(_lpday.getId(), _lpday);
-                        
-                        /*
-                        if (_lpday instanceof DayEM)
-                            dayEMDao.add((DayEM)_lpday);
-                        else if (_lpday instanceof DayWM)
-                            dayWMDao.add((DayWM)_lpday);
-                        else if (_lpday instanceof DayGM)
-                            dayGMDao.add((DayGM)_lpday);
-                        else if (_lpday instanceof DayHM)
-                            dayHMDao.add((DayHM)_lpday);
-                        else if (_lpday instanceof DaySPM)
-                            daySPMDao.add((DaySPM)_lpday);
-                        */
-                    }
-                    else {
-                        log.debug("UPDATE CH[" + ch + "] MDEV_ID[" + _lpday.getMDevId() + "] CH[" + _lpday.getChannel() + "] YYYYMMDD[" + _lpday.getYyyymmdd() + "]");
-                        updateDays[ch].put(_lpday.getId(), _lpday);
-                        
-                        /*
-                        if (_lpday instanceof DayEM)
-                            dayEMDao.update((DayEM)_lpday);
-                        else if (_lpday instanceof DayWM)
-                            dayWMDao.update((DayWM)_lpday);
-                        else if (_lpday instanceof DayGM)
-                            dayGMDao.update((DayGM)_lpday);
-                        else if (_lpday instanceof DayHM)
-                            dayHMDao.update((DayHM)_lpday);
-                        else if (_lpday instanceof DaySPM)
-                            daySPMDao.update((DaySPM)_lpday);
-                        */
-                    }
-                    
-                    // log.info("DAY MDEV_ID[" + _lpday.getMDevId() + "] CH[" + _lpday.getChannel() + "] YYYYMMDD[" +
-                    //        _lpday.getYyyymmdd() + "] TOTAL[" + _lpday.getTotal() + "]");
-                }
-            }
-
-        }
-
-        List<MeteringMonth>[] addMonths = new ArrayList[0];
-        List<MeteringMonth>[] updateMonths = new ArrayList[0];
-        
-        if(dayMonthSave){
-            addMonths = new ArrayList[chLPs.length];
-            updateMonths = new ArrayList[chLPs.length];
-            makeMonthList(addDays, updateDays, addMonths, updateMonths, meteringType,
-                    meter, deviceType, deviceId, mdevType, mdevId);
-        }
-        updateMeteringData(mdevId, meterType, updateLPs, updateDays, updateMonths);
-        addMeteringData(meterType, addLPs, addDays, addMonths);
-    }
-
-    private void makeMonthList(Map<DayPk, MeteringDay>[] addDays, Map<DayPk, MeteringDay>[] updateDays,
-            List<MeteringMonth>[] addMonths, List<MeteringMonth>[] updateMonths, MeteringType meteringType,
-            Meter meter, DeviceType deviceType, String deviceId, DeviceType mdevType, String mdevId)
-    throws Exception
-    {
-        MeterType meterType = MeterType.valueOf(meter.getMeterType().getName());
-
-        // 업데이트와 추가리스트의 일별 데이타를 시간별로 합산하여 MeteringMonth를 생성 또는 변경한다.
-
-        // updateDays, addDays 에서 년월과 dst를 추출하여 리스트를 생성한다.
-        List<String> yyyymmlist = new ArrayList<String>();
-        makeYYYYMMDSTList(updateDays, yyyymmlist);
-        makeYYYYMMDSTList(addDays, yyyymmlist);
-
-        List<MeteringMonth>[] _chMonths = null;
-        boolean monthUpdated = false;
-
-        String _yyyymm = null;
-        int _dst = 0;
-        Set<Condition> condition = null;
-
-        for (int monthcnt = 0; monthcnt < yyyymmlist.size(); monthcnt++) {
-            monthUpdated = false;
-            _yyyymm = yyyymmlist.get(monthcnt);
-            condition = new LinkedHashSet<Condition>();
-            condition.add(new Condition("id.yyyymm", new Object[]{_yyyymm}, null, Restriction.EQ));
-            condition.add(new Condition("id.mdevId", new Object[]{mdevId}, null, Restriction.EQ));
-            condition.add(new Condition("id.mdevType", new Object[]{mdevType}, null, Restriction.EQ));
-            condition.add(new Condition("id.dst", new Object[]{_dst}, null, Restriction.EQ));
-            
-            // 월 채널별로 검침데이타를 분리한다.
-            _chMonths = listMonth(condition, meterType, addDays.length);
-
-            if (_chMonths.length == 0 || (_chMonths.length !=0 && _chMonths[0].size() == 0)) {
-                _chMonths = new ArrayList[addDays.length];
-            }
-            else {
-                // 월 데이타가 있으므로 업데이트
-                monthUpdated = true;
-            }
-
-            makeChMonths(_chMonths, updateDays, _yyyymm, _dst, meteringType, meterType,
-                    meter, deviceType, deviceId, mdevType, mdevId);
-            makeChMonths(_chMonths, addDays, _yyyymm, _dst, meteringType, meterType,
-                    meter, deviceType, deviceId, mdevType, mdevId);
-
-            log.debug("MONTH MDEV_ID[" + mdevId + "] UPDATED[" + monthUpdated + "]");
-            if (!monthUpdated) {
-                MeteringMonth _lpmonth = null;
-                
-                for (int ch = 0; ch < addDays.length; ch++) {
-                    if (addMonths[ch] == null) {
-                        addMonths[ch] = new ArrayList<MeteringMonth>();
-                    }
-                    _lpmonth = _chMonths[ch].get(0);
-                    addMonths[ch].add(_lpmonth);
-                    
-                    /*
-                    if (_lpmonth instanceof MonthEM)
-                        monthEMDao.add((MonthEM)_lpmonth);
-                    else if (_lpmonth instanceof MonthGM)
-                        monthGMDao.add((MonthGM)_lpmonth);
-                    else if (_lpmonth instanceof MonthWM)
-                        monthWMDao.add((MonthWM)_lpmonth);
-                    else if (_lpmonth instanceof MonthHM)
-                        monthHMDao.add((MonthHM)_lpmonth);
-                    else if (_lpmonth instanceof MonthSPM)
-                        monthSPMDao.add((MonthSPM)_lpmonth);
-                    */
-                }
-            }
-            else {
-                MeteringMonth _lpmonth = null;
-                for (int ch = 0; ch < addDays.length; ch++) {
-                    _lpmonth = _chMonths[ch].get(0);
-                    if (updateMonths[ch] == null) 
-                        updateMonths[ch] = new ArrayList<MeteringMonth>();
-                    updateMonths[ch].add(_lpmonth);
-                    /*
-                    if (_lpmonth instanceof MonthEM)
-                        monthEMDao.update((MonthEM)_lpmonth);
-                    else if (_lpmonth instanceof MonthGM)
-                        monthGMDao.update((MonthGM)_lpmonth);
-                    else if (_lpmonth instanceof MonthWM)
-                        monthWMDao.update((MonthWM)_lpmonth);
-                    else if (_lpmonth instanceof MonthHM)
-                        monthHMDao.update((MonthHM)_lpmonth);
-                    else if (_lpmonth instanceof MonthSPM)
-                        monthSPMDao.update((MonthSPM)_lpmonth);
-                    */
-                }
-            }
-        }
-    }
-
-    private void makeChMonths(List<MeteringMonth>[] chMonths, Map<DayPk, MeteringDay>[] days,
-            String yyyymm, int dst, MeteringType meteringType, MeterType meterType,
-            Meter meter, DeviceType deviceType, String deviceId, DeviceType mdevType,
-            String mdevId)
-    throws Exception
-    {
-        if (days[1] != null && days[1].size() > 0) {
-            // 미터의 채널 정보를 가져온다.
-            ChannelConfig[] channels = null;
-            if (meter.getModel() != null && meter.getModel().getDeviceConfig() != null)
-                channels = ((MeterConfig)meter.getModel().getDeviceConfig()).getChannels().toArray(new ChannelConfig[0]);
-            else channels = new ChannelConfig[0];
-            
-            MeteringMonth _lpmonth = null;
-            int chlen = days.length;
-            double _dayValue = 0.0;
-            String _strDayValue = null;
-
-            // 채널 수로 돌린다.
-            for (int ch = 0; ch < chlen; ch++) {
-                for (MeteringDay _lpday : days[ch].values().toArray(new MeteringDay[0])) {
-                    if (_lpday == null || (_lpday != null && !_lpday.getYyyymmdd().substring(0, 6).equals(yyyymm)))
-                        continue;
-                    
-                    _dayValue = 0.0;
-                    if (chMonths[ch] == null || chMonths[ch].size() == 0) {
-                        chMonths[ch] = new ArrayList<MeteringMonth>();
-                        _lpmonth = newMeteringMonth(meteringType, meterType,
-                                meter, deviceType, deviceId, mdevType, mdevId);
-                        _lpmonth.setChannel(_lpday.getChannel());
-                        _lpmonth.setYyyymm(yyyymm);
-                        // 월 검침테이블에서는 dst를 사용하지 않는다.
-                        _lpmonth.setDst(0);
-                        _lpmonth.setBaseValue(_lpday.getBaseValue());
-                        chMonths[ch].add(_lpmonth);
-                    }
-                    _lpmonth = chMonths[ch].get(0);
-                    _lpmonth.setWriteDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
-                    _lpmonth.setLocation(meter.getLocation());
-                    if (_lpmonth.getFullLocation() == null || "".equals(_lpmonth.getFullLocation()))
-                        _lpmonth.setFullLocation(getFullLocation(meter.getLocation()));
-                    
-                    if (meter.getContract() != null) {
-                        _lpmonth.setContract(meter.getContract());
-                    }
-
-                    if (_lpmonth.getChannel().equals(ElectricityChannel.ValidationStatus.getChannel())) {
-                        String _strFlag = null;
-                        double _flag = 0.0;
-                        _strFlag = BeanUtils.getProperty(_lpmonth,
-                                "value_"+_lpday.getYyyymmdd().substring(6,8));
-                        if (_strFlag != null) {
-                            _flag = Double.parseDouble(_strFlag);
-
-                            if (_flag < _lpday.getTotal()) {
-                                BeanUtils.copyProperty(_lpmonth,
-                                        "value_"+_lpday.getYyyymmdd().substring(6,8), dformat(_lpday.getTotal()));
-                                _lpmonth.setTotal(dformat(_lpday.getTotal()));
-                            }
-                        }
-                        else {
-                            BeanUtils.copyProperty(_lpmonth,
-                                    "value_"+_lpday.getYyyymmdd().substring(6,8), dformat(_lpday.getTotal()));
-                            if (_lpmonth.getTotal() == null)
-                                _lpmonth.setTotal(dformat(_lpday.getTotal()));
-                        }
-                    }
-                    else if (_lpmonth.getChannel().equals(ElectricityChannel.Integrated.getChannel())) {
-                        BeanUtils.copyProperty(_lpmonth,
-                                "value_"+_lpday.getYyyymmdd().substring(6,8), dformat(_lpday.getTotal()));
-                        _lpmonth.setTotal(dformat(_lpday.getTotal()));
-                    }
-                    else {
-                        _strDayValue = BeanUtils.getProperty(_lpmonth,
-                                "value_"+_lpday.getYyyymmdd().substring(6,8));
-                        if (_strDayValue != null)
-                            _dayValue = Double.parseDouble(_strDayValue);
-
-                        // 매월 1일 base값이 월 base값이 된다.
-                        if (_lpday.getYyyymmdd().substring(6,8).equals("01")) {
-                            _lpmonth.setBaseValue(_lpday.getBaseValue());
-                        }
-
-                        if (_strDayValue == null || _dayValue != _lpday.getTotal()) {
-                            BeanUtils.copyProperty(_lpmonth,
-                                    "value_"+_lpday.getYyyymmdd().substring(6,8), dformat(_lpday.getTotal()));
-                            
-                            switch (getChMethod(channels, _lpmonth.getChannel())) {
-                            case SUM :
-                                if (_lpmonth.getTotal() != null)
-                                    _lpmonth.setTotal(dformat(_lpmonth.getTotal() - _dayValue + _lpday.getTotal()));
-                                else
-                                    _lpmonth.setTotal(dformat(_lpday.getTotal()));
-                                break;
-                            case AVG :
-                                double sum = 0.0;
-                                double sumcount = 0.0;
-                                int _day = Integer.parseInt(_lpday.getYyyymmdd().substring(6,8));
-                                for (int i = 1; i <= _day; i++) {
-                                    _strDayValue = BeanUtils.getProperty(_lpmonth, String.format("value_%02d",i));
-                                    if (_strDayValue != null) {
-                                        sum += Double.parseDouble(_strDayValue);
-                                        sumcount++;
-                                    }
-                                }
-                                if (sumcount != 0.0) _lpmonth.setTotal(dformat(sum / sumcount));
-                                else _lpmonth.setTotal(sum);
-                                break;
-                            case MAX :
-                                if (_lpmonth.getTotal() == null || _lpmonth.getTotal() < _lpday.getTotal())
-                                    _lpmonth.setTotal(_lpday.getTotal());
-                            }
-                        }
-                    }
-
-                    chMonths[ch].set(0, _lpmonth);
-
-                    log.debug("MONTH MDEV_ID[" + mdevId + "] CH[" + _lpmonth.getChannel() + "] YYYYMM[" + _lpmonth.getYyyymm() +
-                            "] DST[" + _lpmonth.getDst() + "] TOTAL[" + _lpmonth.getTotal() + "]");
-                }
-            }
-        }
-    }
-
-    private void makeYYYYMMDSTList(Map<DayPk, MeteringDay>[] daylist, List<String> yyyymmlist)
-    {
-        String _yyyymm = null;
-
-        if (daylist != null && daylist[1] != null) {
-            for (MeteringDay _mday : daylist[1].values().toArray(new MeteringDay[0])) {
-                _yyyymm = _mday.getYyyymmdd().substring(0, 6);
-                if (!yyyymmlist.contains(_yyyymm)) {
-                    yyyymmlist.add(_yyyymm);
-                }
-                /*
-                else {
-                    // dst를 비교한다.
-                    for (int j = 0; j < yyyymmlist.size(); j++) {
-                        if (yyyymmlist.get(j).equals(_yyyymm)) {
-                            if (!dstlist.get(j).equals(_dst)) {
-                                yyyymmlist.add(_yyyymm);
-                                dstlist.add(_dst);
-                                break;
-                            }
-                        }
-                    }
-                }
-                */
-            }
-        }
-    }
-
-    public void addMeteringData(MeterType meterType, Map<LpPk, MeteringLP>[] addLPs,
-            Map<DayPk, MeteringDay>[] addDays, List<MeteringMonth>[] addMonths)
-    throws Exception
-    {
-        MeteringMonth lpmonth = null;
-        String writeTime = DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss");
-        boolean dayMonthSave = Boolean.parseBoolean(FMPProperty.getProperty("daymonth.save", "true"));
-        
-        for (int ch = 0; ch < addLPs.length; ch++) {
-            if (addLPs[ch] != null) {
-                for (MeteringLP lp : addLPs[ch].values().toArray(new MeteringLP[0])) {
-                    lp.setWriteDate(writeTime);
-                    log.debug("[ADD][LP_EM] MDEV_ID[" + lp.getMDevId() + "] CH[" + lp.getChannel() + 
-                            "] YYYYMMDDHH[" + lp.getYyyymmddhh() + "] WRITEDATE[" + lp.getWriteDate() + "] DST[" + lp.getDst() + "]");
-                    switch(meterType) {
-                    case EnergyMeter :
-                        lpEMDao.add((LpEM)lp);
-                        break;
-                    case WaterMeter :
-                        lpWMDao.add((LpWM)lp);
-                        break;
+    public void addMeteringDataUsingJPA(String mdevId, MeterType meterType, 
+    		Map<Integer,LinkedList<MeteringLP>> addMap) 
+    throws Exception {
+    	
+    	Iterator<Integer> channels = addMap.keySet().iterator();
+    	while(channels.hasNext()) {
+    		Integer ch = channels.next();
+    		LinkedList<MeteringLP> list = addMap.get(ch);
+    		
+    		if(list != null) {
+        		for(MeteringLP lp : list) {
+        			log.debug("[ADD] mdevId["+mdevId+"] ch["+ch+"] meterType["+meterType+"] yyymmddhhmiss["+lp.getYyyymmddhhmiss()+"] "
+        					+ "value["+lp.getValue()+"] cvalue["+lp.getIntervalYN()+"] DST["+lp.getDst()+"] contractId["+lp.getContractId()+"]");
+        			
+        			switch(meterType) {
+        			case EnergyMeter:
+        				lpEMDao.add((LpEM)lp);
+        			break;
+        			case WaterMeter :
+        				lpWMDao.add((LpWM)lp);
+                    break;
                     case GasMeter :
                         lpGMDao.add((LpGM)lp);
                         break;
@@ -3101,104 +1748,39 @@ public abstract class AbstractMDSaver
                         lpSPMDao.add((LpSPM)lp);
                         break;
                     case Inverter :
-                        lpEMDao.add((LpEM)lp);
-                        break;                        
-                    }
-                }
-            }
-        }
-        
-        if(dayMonthSave){
-            for (int ch = 0; ch < addDays.length; ch++) {
-                if (addDays[ch] != null) {
-                    for (MeteringDay lpday : addDays[ch].values().toArray(new MeteringDay[0])) {
-                        lpday.setWriteDate(writeTime);
-                        
-                        log.debug("[ADD][DAY_EM] MDEV_ID[" + lpday.getMDevId() + "] CH[" + lpday.getChannel() + 
-                                "] YYYYMMDD[" + lpday.getYyyymmdd() + "] WRITEDATE[" + lpday.getWriteDate() + "] DST[" + lpday.getDst() + "]");
-                        
-                        switch(meterType) {
-                        case EnergyMeter :
-                            dayEMDao.add((DayEM)lpday);
-                            break;
-                        case WaterMeter :
-                            dayWMDao.add((DayWM)lpday);
-                            break;
-                        case GasMeter :
-                            dayGMDao.add((DayGM)lpday);
-                            break;
-                        case HeatMeter :
-                            dayHMDao.add((DayHM)lpday);
-                            break;
-                        case SolarPowerMeter :
-                            daySPMDao.add((DaySPM)lpday);
-                            break;
-                        case Inverter :
-                            dayEMDao.add((DayEM)lpday);
-                            break;                        
-                        }
-                    }
-                }
-            }
-
-            for (int ch = 0; ch < addMonths.length; ch++) {
-                if (addMonths[ch] != null) {
-                    for (int i = 0; i < addMonths[ch].size(); i++) {
-                        lpmonth = addMonths[ch].get(i);
-                        lpmonth.setWriteDate(writeTime);
-                        
-                        log.debug("[ADD][MONTH_EM] MDEV_ID[" + lpmonth.getMDevId() + "] CH[" + lpmonth.getChannel() + 
-                                "] YYYYMM[" + lpmonth.getYyyymm() + "] WRITEDATE[" + lpmonth.getWriteDate() + "] DST[" + lpmonth.getDst() + "]");
-                        
-                        switch(meterType) {
-                        case EnergyMeter :
-                            monthEMDao.add((MonthEM)lpmonth);
-                            break;
-                        case WaterMeter :
-                            monthWMDao.add((MonthWM)lpmonth);
-                            break;
-                        case GasMeter :
-                            monthGMDao.add((MonthGM)lpmonth);
-                            break;
-                        case HeatMeter :
-                            monthHMDao.add((MonthHM)lpmonth);
-                            break;
-                        case SolarPowerMeter :
-                            monthSPMDao.add((MonthSPM)lpmonth);
-                            break;
-                        case Inverter :
-                            monthEMDao.add((MonthEM)lpmonth);
-                            break;                        
-                        }
-                    }
-                }
-            }
-        }
+                    	lpEMDao.add((LpEM)lp);
+                    break;
+                    default:
+                    break;
+        			}
+        		}
+    		}
+    	}
     }
     
-    public void updateMeteringData(String mdevId, MeterType meterType, Map<LpPk, MeteringLP>[] updateLPs,
-            Map<DayPk, MeteringDay>[] updateDays, List<MeteringMonth>[] updateMonths)
-    throws Exception
-    {
-        MeteringMonth lpmonth = null;
-        String writeTime = DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss");
-        Properties props = new Properties();
+    public void updateMeteringDataUsingJPA(String mdevId, MeterType meterType, 
+    		Map<Integer,LinkedList<MeteringLP>> updateMap) 
+    throws Exception {
+    	Iterator<Integer> channels = updateMap.keySet().iterator();
+    	
+    	Properties props = new Properties();
         props.setProperty("mdevId", mdevId);
-        boolean dayMonthSave = Boolean.parseBoolean(FMPProperty.getProperty("daymonth.save", "true"));
         
-        for (int ch = 0; ch < updateLPs.length; ch++) {
-            if (updateLPs[ch] != null) {
-                for (MeteringLP lp : updateLPs[ch].values().toArray(new MeteringLP[0])) {
-                    lp.setWriteDate(writeTime);
-                    log.debug("[UPDATE][LP_EM] MDEV_ID[" + lp.getMDevId() + "] CH[" + lp.getChannel() + 
-                            "] YYYYMMDDHH[" + lp.getYyyymmddhh() + "] WRITEDATE[" + lp.getWriteDate() + "] DST[" + lp.getDst() + "]");
-                    switch(meterType) {
-                    case EnergyMeter :
-                        lpEMDao.update((LpEM)lp, props);
-                        break;
-                    case WaterMeter :
-                        lpWMDao.update((LpWM)lp, props);
-                        break;
+    	while(channels.hasNext()) {
+    		Integer ch = channels.next();
+    		LinkedList<MeteringLP> list = updateMap.get(ch);
+    		
+    		if(list != null) {
+        		for(MeteringLP lp : list) {
+        			log.debug("[UPDATE] mdevId["+mdevId+"] ch["+ch+"] meterType["+meterType+"] yyymmddhhmiss["+lp.getYyyymmddhhmiss()+"] value["+lp.getValue()+"] cvalue["+lp.getIntervalYN()+"]");
+        			        			
+        			switch(meterType) {
+        			case EnergyMeter:
+        				lpEMDao.update((LpEM)lp, props);
+        			break;
+        			case WaterMeter :
+        				lpWMDao.update((LpWM)lp, props);
+                    break;
                     case GasMeter :
                         lpGMDao.update((LpGM)lp, props);
                         break;
@@ -3209,79 +1791,14 @@ public abstract class AbstractMDSaver
                         lpSPMDao.update((LpSPM)lp, props);
                         break;
                     case Inverter :
-                        lpEMDao.update((LpEM)lp, props);
-                        break;                        
-                    }
-                }
-            }
-        }
-
-        if(dayMonthSave){
-            for (int ch = 0; ch < updateDays.length; ch++) {
-                if (updateDays[ch] != null) {
-                    for (MeteringDay lpday : updateDays[ch].values().toArray(new MeteringDay[0])) {
-                        lpday.setWriteDate(writeTime);
-                        
-                        log.debug("[UPDATE][DAY_EM] MDEV_ID[" + lpday.getMDevId() + "] CH[" + lpday.getChannel() + 
-                                "] YYYYMMDD[" + lpday.getYyyymmdd() + "] WRITEDATE[" + lpday.getWriteDate() + "] DST[" + lpday.getDst() + "]");
-                        switch(meterType) {
-                        case EnergyMeter :
-                            dayEMDao.update((DayEM)lpday);
-                            break;
-                        case WaterMeter :
-                            dayWMDao.update((DayWM)lpday);
-                            break;
-                        case GasMeter :
-                            dayGMDao.update((DayGM)lpday);
-                            break;
-                        case HeatMeter :
-                            dayHMDao.update((DayHM)lpday);
-                            break;
-                        case SolarPowerMeter :
-                            daySPMDao.update((DaySPM)lpday);
-                            break;
-                        case Inverter :
-                            dayEMDao.update((DayEM)lpday);
-                            break;                        
-                        }
-                    }
-                }
-            }
-
-            for (int ch = 0; ch < updateMonths.length; ch++) {
-                if (updateMonths[ch] != null) {
-                    for (int i = 0; i < updateMonths[ch].size(); i++) {
-                        lpmonth = updateMonths[ch].get(i);
-                        lpmonth.setWriteDate(writeTime);
-                        
-                        log.debug("[UPDATE][MONTH_EM] MDEV_ID[" + lpmonth.getMDevId() + "] CH[" + lpmonth.getChannel() + 
-                                "] YYYYMM[" + lpmonth.getYyyymm() + "] WRITEDATE[" + lpmonth.getWriteDate() + "] DST[" + lpmonth.getDst() + "]");
-                        
-                        switch(meterType) {
-                        case EnergyMeter :
-                            monthEMDao.update((MonthEM)lpmonth);
-                            break;
-                        case WaterMeter :
-                            monthWMDao.update((MonthWM)lpmonth);
-                            break;
-                        case GasMeter :
-                            monthGMDao.update((MonthGM)lpmonth);
-                            break;
-                        case HeatMeter :
-                            monthHMDao.update((MonthHM)lpmonth);
-                            break;
-                        case SolarPowerMeter :
-                            monthSPMDao.update((MonthSPM)lpmonth);
-                            break;
-                        case Inverter :
-                            monthEMDao.update((MonthEM)lpmonth);
-                            break;                        
-                        }
-                    }
-                }
-            }
-        }
-
+                    	lpEMDao.update((LpEM)lp, props);
+                    break;
+                    default:
+                    break;
+        			}
+        		}
+    		}
+    	}
     }
 
     private MeteringLP newMeteringLP(MeterType meterType, MeteringLP lp) {
@@ -3311,76 +1828,82 @@ public abstract class AbstractMDSaver
         _lp.setDeviceId(lp.getDeviceId());
         _lp.setDeviceType(lp.getDeviceType().name());
         _lp.setDst(lp.getDst());
-        _lp.setEnddevice(lp.getEnddevice());
-        _lp.setYyyymmdd(lp.getYyyymmdd());
-        _lp.setYyyymmddhh(lp.getYyyymmddhh());
-        _lp.setHour(lp.getHour());
-        _lp.setLocation(lp.getLocation());
+        _lp.setDate(lp.getYyyymmddhhmiss());
         _lp.setMDevId(lp.getMDevId());
         _lp.setMDevType(lp.getMDevType().name());
         _lp.setMeteringType(lp.getMeteringType());
-        _lp.setWriteDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
+        _lp.setIntervalYN(lp.getIntervalYN());
+        _lp.setWriteDate(lp.getWriteDate());
 
         switch (lp.getMDevType()) {
         case Meter :
             _lp.setMeter(lp.getMeter());
-            _lp.setSupplier(lp.getSupplier());
-            if (lp.getMeter().getModem() != null)
-                _lp.setModem(lp.getMeter().getModem());
             break;
         case Modem :
-            _lp.setModem(lp.getModem());
-            _lp.setSupplier(lp.getSupplier());
             break;
         case EndDevice :
+        	break;
         }
 
         return _lp;
     }
 
-    private MeteringLP[] newMeteringLP(MeterType meterType, int chCnt) {
-        MeteringLP[] lps = null;
+    private MeteringDay newMeteringDay(MeteringType meteringType, MeterType meterType,
+            Meter meter, DeviceType deviceType, String deviceId, DeviceType mdevType,
+            String mdevId) {
+        MeteringDay day = null;
         switch (meterType) {
         case EnergyMeter :
-            lps = new LpEM[chCnt];
-            for (int i = 0; i < chCnt; i++) {
-                lps[i] = new LpEM();
-            }
+            day = new DayEM();
             break;
         case WaterMeter :
-            lps = new LpWM[chCnt];
-            for (int i = 0; i < chCnt; i++) {
-                lps[i] = new LpWM();
-            }
+            day = new DayWM();
             break;
         case GasMeter :
-            lps = new LpGM[chCnt];
-            for (int i = 0; i < chCnt; i++) {
-                lps[i] = new LpGM();
-            }
+            day = new DayGM();
             break;
         case HeatMeter :
-            lps = new LpHM[chCnt];
-            for (int i = 0; i < chCnt; i++) {
-                lps[i] = new LpHM();
-            }
+            day = new DayHM();
             break;
         case SolarPowerMeter :
-            lps = new LpSPM[chCnt];
-            for (int i = 0; i < chCnt; i++) {
-                lps[i] = new LpSPM();
-            }
+            day = new DaySPM();
             break;
         case Inverter :
-            lps = new LpEM[chCnt];
-            for (int i = 0; i < chCnt; i++) {
-                lps[i] = new LpEM();
-            }
-            break;
+            day = new DayEM();
+            break;            
         }
-        return lps;
-    }
 
+        day.setDeviceId(deviceId);
+        day.setDeviceType(deviceType.name());
+        day.setMDevId(mdevId);
+        day.setMDevType(mdevType.name());
+        day.setMeteringType(meteringType.getType());
+        day.setWriteDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
+
+        if (meter.getContract() != null) {
+            day.setContract(meter.getContract());
+            // 2012.04.13 sic를 정보를 입력한다.
+            //day.setSic(meter.getContract().getSic() != null ? meter.getContract().getSic().getCode() : null);
+        }
+
+        switch (mdevType) {
+        case Meter :
+            day.setMeter(meter);
+            day.setSupplier(meter.getSupplier());
+            if (meter.getModem() != null)
+                day.setModem(meter.getModem());
+            break;
+        case Modem :
+            day.setModem(meter.getModem());
+            day.setSupplier(meter.getSupplier());
+            break;
+        case EndDevice :
+        }
+        return day;
+    }
+    
+    /*
+         정규화로 인하여 함수 재설정
     private MeteringDay newMeteringDay(MeteringType meteringType, MeterType meterType,
             Meter meter, DeviceType deviceType, String deviceId, DeviceType mdevType,
             String mdevId) {
@@ -3436,62 +1959,12 @@ public abstract class AbstractMDSaver
         }
         return day;
     }
-
-    private MeteringMonth newMeteringMonth(MeteringType meteringType, MeterType meterType,
-            Meter meter, DeviceType deviceType, String deviceId, DeviceType mdevType,
-            String mdevId) {
-        MeteringMonth month = null;
-        switch (meterType) {
-        case EnergyMeter :
-            month = new MonthEM();
-            break;
-        case WaterMeter :
-            month = new MonthWM();
-            break;
-        case GasMeter :
-            month = new MonthGM();
-            break;
-        case HeatMeter :
-            month = new MonthHM();
-            break;
-        case SolarPowerMeter :
-            month = new MonthSPM();
-            break;
-        case Inverter :
-            month = new MonthEM();
-            break;            
-        }
-
-        month.setDeviceId(deviceId);
-        month.setDeviceType(deviceType.name());
-        month.setMDevId(mdevId);
-        month.setMDevType(mdevType.name());
-        month.setMeteringType(meteringType.getType());
-        month.setWriteDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
-
-        if (meter.getContract() != null)
-            month.setContract(meter.getContract());
-
-        switch (mdevType) {
-        case Meter :
-            month.setMeter(meter);
-            month.setLocation(meter.getLocation());
-            month.setSupplier(meter.getSupplier());
-            if (meter.getModem() != null)
-                month.setModem(meter.getModem());
-            break;
-        case Modem :
-            month.setModem(meter.getModem());
-            month.setLocation(meter.getModem().getLocation());
-            month.setSupplier(meter.getSupplier());
-            break;
-        case EndDevice :
-        }
-        return month;
-    }
-
-    private Map<LpPk, MeteringLP>[] listLP(Set<Condition> condition, MeterType meterType, int chcnt) {
-        List list = null;
+    */
+    
+    private Map<LpPk, MeteringLP> listLP(Set<Condition> condition, MeterType meterType)  {
+    	Map<LpPk, MeteringLP> map = new HashMap<LpPk, MeteringLP>();
+    	
+    	List list = new ArrayList<MeteringLP>();
         switch (meterType) {
         case EnergyMeter :
             list = lpEMDao.findByConditions(condition);
@@ -3514,219 +1987,15 @@ public abstract class AbstractMDSaver
             list = lpEMDao.findByConditions(condition);
             break;            
         }
-
-        /*
-        List<Integer> channelCnt = new ArrayList<Integer>();
-        MeteringLP lp = null;
-        for (int i = 0; i < list.size(); i++) {
-            lp = (MeteringLP)list.get(i);
-            if (!channelCnt.contains(lp.getChannel()))
-                channelCnt.add(lp.getChannel());
-        }
-        */
-        MeteringLP lp = null;
-        log.debug("LP Channel Count[" + chcnt + "]");
-        Map<LpPk, MeteringLP>[] channelLP = new HashMap[chcnt];
-        for (int i = 0; i < channelLP.length; i++) {
-            channelLP[i] = new HashMap<LpPk, MeteringLP>();
-        }
         
-        Collections.sort(list, new Comparator() {
-
-            @Override
-            public int compare(Object o1, Object o2) {
-                if (o1 instanceof LpEM) {
-                    LpEM lp1 = (LpEM)o1;
-                    LpEM lp2 = (LpEM)o2;
-                    return lp1.getId().hashCode() - lp2.getId().hashCode();
-                }
-                else if (o1 instanceof LpGM) {
-                    LpGM lp1 = (LpGM)o1;
-                    LpGM lp2 = (LpGM)o2;
-                    return lp1.getId().hashCode() - lp2.getId().hashCode();
-                }
-                else if (o1 instanceof LpWM) {
-                    LpWM lp1 = (LpWM)o1;
-                    LpWM lp2 = (LpWM)o2;
-                    return lp1.getId().hashCode() - lp2.getId().hashCode();
-                }
-                else if (o1 instanceof LpHM) {
-                    LpHM lp1 = (LpHM)o1;
-                    LpHM lp2 = (LpHM)o2;
-                    return lp1.getId().hashCode() - lp2.getId().hashCode();
-                }
-                else if (o1 instanceof LpVC) {
-                    LpVC lp1 = (LpVC)o1;
-                    LpVC lp2 = (LpVC)o2;
-                    return lp1.getId().hashCode() - lp2.getId().hashCode();
-                }
-                return 0;
-            }
-            
-        });
-        
-        for (int i = 0; i < list.size(); i++) {
-            lp = (MeteringLP)list.get(i);
-            if (lp.getChannel().equals(ElectricityChannel.ValidationStatus.getChannel())) {
-                if (channelLP[channelLP.length-1] == null)
-                    channelLP[channelLP.length-1] = new HashMap<LpPk, MeteringLP>();
-                channelLP[channelLP.length-1].put(lp.getId(), lp);
-            }
-            else if (lp.getChannel().equals(ElectricityChannel.PowerFactor.getChannel())) {
-                if (channelLP[channelLP.length-2] == null)
-                    channelLP[channelLP.length-2] = new HashMap<LpPk, MeteringLP>();
-                channelLP[channelLP.length-2].put(lp.getId(), lp);
-            }
-            // TODO Power Factor 채널 처리를 하면 -3으로 변경해야 함.
-            else if (lp.getChannel().equals(ElectricityChannel.Integrated.getChannel())) {
-                if (channelLP[channelLP.length-2] == null)
-                    channelLP[channelLP.length-2] = new HashMap<LpPk, MeteringLP>();
-                channelLP[channelLP.length-2].put(lp.getId(), lp);
-            }
-            else {
-                if(channelLP.length-1 >= lp.getChannel()){
-                    if (channelLP[lp.getChannel()] == null)
-                        channelLP[lp.getChannel()] = new HashMap<LpPk, MeteringLP>();
-                    channelLP[lp.getChannel()].put(lp.getId(), lp);
-                }
-
-            }
+        if(list != null) {
+	        for(int i=0; i<list.size(); i++) {
+	        	MeteringLP mLp = (MeteringLP)list.get(i);
+	        	map.put(mLp.getId(), mLp);
+	        }
         }
-
-        return channelLP;
-    }
-
-    private Map<DayPk, MeteringDay>[] listDay(Set<Condition> condition, MeterType meterType, int chcnt) {
-        List list = null;
-        switch (meterType) {
-        case EnergyMeter :
-            list = dayEMDao.findByConditions(condition);
-            break;
-        case WaterMeter :
-            list = dayWMDao.findByConditions(condition);
-            break;
-        case GasMeter :
-            list = dayGMDao.findByConditions(condition);
-            break;
-        case HeatMeter :
-            list = dayHMDao.findByConditions(condition);
-            break;
-        case SolarPowerMeter :
-            list = daySPMDao.findByConditions(condition);
-            break;
-        case Inverter :
-            list = dayEMDao.findByConditions(condition);
-            break;            
-        }
-        /*
-        List<Integer> channelCnt = new ArrayList<Integer>();
-        MeteringDay mday = null;
-        for (int i = 0; i < list.size(); i++) {
-            mday = (MeteringDay)list.get(i);
-            if (!channelCnt.contains(mday.getChannel()))
-                channelCnt.add(mday.getChannel());
-        }
-        */
-        log.debug("LP Channel Count[" + chcnt + "]");
-        MeteringDay mday = null;
-        Map<DayPk, MeteringDay>[] channelDay = new HashMap[chcnt];
-        for (int i = 0; i < channelDay.length; i++) {
-            channelDay[i] = new HashMap<DayPk, MeteringDay>();
-        }
-        
-        for (int i = 0; i < list.size(); i++) {
-            mday = (MeteringDay)list.get(i);
-            log.debug("MDEV_ID[" + mday.getMDevId() + "] CH[" + mday.getChannel() + 
-                    "] YYYYMMDD[" + mday.getYyyymmdd()+ "] DST[" + mday.getDst() + "]");
-            if (mday.getChannel().equals(ElectricityChannel.ValidationStatus.getChannel())) {
-                if (channelDay[channelDay.length-1] == null)
-                    channelDay[channelDay.length-1] = new HashMap<DayPk, MeteringDay>();
-                channelDay[channelDay.length-1].put(mday.getId(), mday);
-            }
-            else if (mday.getChannel().equals(ElectricityChannel.PowerFactor.getChannel())) {
-                if (channelDay[channelDay.length-2] == null)
-                    channelDay[channelDay.length-2] = new HashMap<DayPk, MeteringDay>();
-                channelDay[channelDay.length-2].put(mday.getId(), mday);
-            }
-            // TODO Power Factor 처리가 되면 -3으로 변경해야함.
-            else if (mday.getChannel().equals(ElectricityChannel.Integrated.getChannel())) {
-                if (channelDay[channelDay.length-2] == null)
-                    channelDay[channelDay.length-2] = new HashMap<DayPk, MeteringDay>();
-                channelDay[channelDay.length-2].put(mday.getId(), mday);
-            }
-            else {
-                
-                if(channelDay.length-1 >= mday.getChannel()){
-                    if (channelDay[mday.getChannel()] == null)
-                        channelDay[mday.getChannel()] = new HashMap<DayPk, MeteringDay>();
-                    channelDay[mday.getChannel()].put(mday.getId(), mday);
-                }
-
-            }
-        }
-
-        return channelDay;
-    }
-
-    private List<MeteringMonth>[] listMonth(Set<Condition> condition, MeterType meterType, int chcnt) {
-        List list = null;
-        switch (meterType) {
-        case EnergyMeter :
-            list = monthEMDao.findByConditions(condition);
-            break;
-        case WaterMeter :
-            list = monthWMDao.findByConditions(condition);
-            break;
-        case GasMeter :
-            list = monthGMDao.findByConditions(condition);
-            break;
-        case HeatMeter :
-            list = monthHMDao.findByConditions(condition);
-            break;
-        case SolarPowerMeter :
-            list = monthSPMDao.findByConditions(condition);
-            break;
-        case Inverter :
-            list = monthEMDao.findByConditions(condition);
-            break;            
-        }
-        
-        log.debug("LP Channel Count[" + chcnt + "]");
-        List<MeteringMonth>[] channelMonth = new ArrayList[chcnt];
-        MeteringMonth mmonth = null;
-        for (int i = 0; i < channelMonth.length; i++) {
-            channelMonth[i] = new ArrayList<MeteringMonth>();
-        }
-        
-        for (int i = 0; i < list.size(); i++) {
-            mmonth = (MeteringMonth)list.get(i);
-            if (mmonth.getChannel().equals(ElectricityChannel.ValidationStatus.getChannel())) {
-                if (channelMonth[channelMonth.length-1] == null)
-                    channelMonth[channelMonth.length-1] = new ArrayList<MeteringMonth>();
-                channelMonth[channelMonth.length-1].add(mmonth);
-            }
-            else if (mmonth.getChannel().equals(ElectricityChannel.PowerFactor.getChannel())) {
-                if (channelMonth[channelMonth.length-2] == null)
-                    channelMonth[channelMonth.length-2] = new ArrayList<MeteringMonth>();
-                channelMonth[channelMonth.length-2].add(mmonth);
-            }
-            // TODO Power Factor가 처리되면 -3으로 변경해야함.
-            else if (mmonth.getChannel().equals(ElectricityChannel.Integrated.getChannel())) {
-                if (channelMonth[channelMonth.length-2] == null)
-                    channelMonth[channelMonth.length-2] = new ArrayList<MeteringMonth>();
-                channelMonth[channelMonth.length-2].add(mmonth);
-            }
-            else {
-                if(channelMonth.length-1 >= mmonth.getChannel()){
-                    if (channelMonth[mmonth.getChannel()] == null)
-                        channelMonth[mmonth.getChannel()] = new ArrayList<MeteringMonth>();
-                    channelMonth[mmonth.getChannel()].add(mmonth);
-                }
-
-            }
-        }
-
-        return channelMonth;
+     
+        return map;
     }
 
     /**
@@ -4777,28 +3046,6 @@ public abstract class AbstractMDSaver
         return jsonParser.parse(str);
     }
     
-    private String getFullLocation(Location loc) {
-        if (loc == null)
-            return "";
-        
-        // location 트리
-        if (locMap == null)
-            locMap = new HashMap<String, String>();
-        
-        String locid = "loc_" + loc.getId();
-        String locTree = locMap.get(locid);
-        if (locTree == null) {
-            StringBuffer loc_buf = new StringBuffer();
-            while (loc != null) {
-                loc_buf.append("loc_" + loc.getId());
-                loc = loc.getParent();
-            }
-            locTree = loc_buf.toString();
-            locMap.put(locid, locTree);
-        }
-        return locid;
-    }
-    
     protected void saveSNRLog(String deviceId, String yyyymmdd, String hhmmss, Modem modem, Double val) 
     {
         try{
@@ -4869,7 +3116,7 @@ public abstract class AbstractMDSaver
                 log.debug("SENSORID["+envData.getSensorId()+"] YYYYMMDDHHMM["+envData.getDatetime().substring(0,12)+"] CHANNEL["+(i+1)+"] VALUE["+envData.getCh()[i]+"]");
                 
                 LinkedHashSet<Condition> condition = new LinkedHashSet<Condition>();
-                condition.add(new Condition("id.yyyymmddhh", new Object[]{envData.getDatetime().substring(0,10)}, null, Restriction.EQ));
+                condition.add(new Condition("id.yyyymmddhhmiss", new Object[]{envData.getDatetime().substring(0,10) + "%"}, null, Restriction.LIKE));
                 condition.add(new Condition("id.channel", new Object[]{i+1}, null, Restriction.EQ));
                 condition.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
                 condition.add(new Condition("id.mdevId", new Object[]{envData.getSensorId()}, null, Restriction.EQ));
@@ -4894,5 +3141,40 @@ public abstract class AbstractMDSaver
                 }
             }            
         }
+    }
+
+    private Map<DayPk, MeteringDay> listDay(Set<Condition> condition, MeterType meterType, int chcnt) throws Exception {
+    	Map<DayPk, MeteringDay> result = new HashMap<DayPk, MeteringDay>();
+    	List list = null;    	 
+    	
+    	switch (meterType) {
+        case EnergyMeter :
+            list = dayEMDao.findByConditions(condition);
+            break;
+        case WaterMeter :
+            list = dayWMDao.findByConditions(condition);
+            break;
+        case GasMeter :
+            list = dayGMDao.findByConditions(condition);
+            break;
+        case HeatMeter :
+            list = dayHMDao.findByConditions(condition);
+            break;
+        case SolarPowerMeter :
+            list = daySPMDao.findByConditions(condition);
+            break;
+        case Inverter :
+            list = dayEMDao.findByConditions(condition);
+            break;            
+        }
+    	
+    	log.debug("LP Channel Count[" + chcnt + "] // Query Result Count["+list == null ? 0 : list.size()+"]");
+    	
+    	for(int i=0; i<list.size(); i++) {
+    		MeteringDay meteringDay = (MeteringDay)list.get(i);
+    		result.put(meteringDay.getId(), meteringDay);
+    	}
+    	
+    	return result;
     }
 }

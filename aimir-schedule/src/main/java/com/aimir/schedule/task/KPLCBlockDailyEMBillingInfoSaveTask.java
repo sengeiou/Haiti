@@ -24,7 +24,7 @@ import org.quartz.JobExecutionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 
@@ -248,24 +248,24 @@ public class KPLCBlockDailyEMBillingInfoSaveTask extends ScheduleTask {
             conditions.add(new Condition("id.channel", new Object[]{KamstrupChannel.ActiveEnergyImp.getChannel()},
                     null, Restriction.EQ));
             conditions.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
-            conditions.add(new Condition("id.yyyymmddhh", new Object[]{meterInstallDate.substring(0, 10)}, null, Restriction.GE));
+            conditions.add(new Condition("id.yyyymmddhhmiss", new Object[]{meterInstallDate.substring(0, 10) + "0000"}, null, Restriction.GE));
             
             if (prepayStartDate != null && !"".equals(prepayStartDate))
-                conditions.add(new Condition("id.yyyymmddhh", new Object[]{prepayStartDate.substring(0, 10)}, null, Restriction.LE));
+                conditions.add(new Condition("id.yyyymmddhhmiss", new Object[]{prepayStartDate.substring(0, 10) + "0000"}, null, Restriction.LE));
             
             List<Projection> projections = new ArrayList<Projection>();
-            projections.add(Projections.alias(Projections.max("id.yyyymmddhh"), "maxYyyymmddhh"));
+            projections.add(Projections.alias(Projections.max("id.yyyymmddhhmiss"), "maxYyyymmddhhmiss"));
             
             List<Map<String, Object>> maxyyyymmddhh = ((LpEMDaoImpl)lpEMDao).findByConditionsAndProjections(conditions, projections);
             
             if (maxyyyymmddhh != null && maxyyyymmddhh.size() == 1) {
                 log.info(maxyyyymmddhh.get(0));
-                String _yyyymmddhh = (String)maxyyyymmddhh.get(0).get("maxYyyymmddhh");
-                if (_yyyymmddhh == null)
+                String _yyyymmddhhmiss = (String)maxyyyymmddhh.get(0).get("maxYyyymmddhhmiss");
+                if (_yyyymmddhhmiss == null)
                     return null;
                 
                 conditions = new HashSet<Condition>();
-                conditions.add(new Condition("id.yyyymmddhh", new Object[]{_yyyymmddhh}, null, Restriction.EQ));
+                conditions.add(new Condition("id.yyyymmddhhmiss", new Object[]{_yyyymmddhhmiss}, null, Restriction.EQ));
                 conditions.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
                 conditions.add(new Condition("id.mdevType", new Object[]{DeviceType.Meter}, null, Restriction.EQ));
                 conditions.add(new Condition("id.mdevId", new Object[]{meterId}, null, Restriction.EQ));
@@ -297,16 +297,16 @@ public class KPLCBlockDailyEMBillingInfoSaveTask extends ScheduleTask {
         conditions.add(new Condition("id.channel", new Object[]{KamstrupChannel.ActiveEnergyImp.getChannel()},
                 null, Restriction.EQ));
         conditions.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
-        conditions.add(new Condition("id.yyyymmddhh", new Object[]{prepayStartDate.substring(0, 10)}, null, Restriction.GE));
+        conditions.add(new Condition("id.yyyymmddhhmiss", new Object[]{prepayStartDate.substring(0, 10) + "0000"}, null, Restriction.GE));
         conditions.add(new Condition("contract", null, null, Restriction.NULL));
         // conditions.add(new Condition("c.contractNumber", null, null, Restriction.NULL));
         
         List<Projection> projections = new ArrayList<Projection>();
-        projections.add(Projections.alias(Projections.min("id.yyyymmddhh"), "minYyyymmddhh"));
+        projections.add(Projections.alias(Projections.min("id.yyyymmddhhmiss"), "minYyyymmddhhmiss"));
         
         List<Map<String, Object>> minyyyymmddhh = ((LpEMDaoImpl)lpEMDao).findByConditionsAndProjections(conditions, projections);
         
-        String yyyymmddhh_contractnull = (String)minyyyymmddhh.get(0).get("minYyyymmddhh");
+        String yyyymmddhhmiss_contractnull = (String)minyyyymmddhh.get(0).get("minYyyymmddhhmiss");
         
         // 계약정보가 있는 것으로 찾는다.
         conditions = new HashSet<Condition>();
@@ -315,31 +315,31 @@ public class KPLCBlockDailyEMBillingInfoSaveTask extends ScheduleTask {
         conditions.add(new Condition("id.channel", new Object[]{KamstrupChannel.ActiveEnergyImp.getChannel()},
                 null, Restriction.EQ));
         conditions.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
-        conditions.add(new Condition("id.yyyymmddhh", new Object[]{prepayStartDate.substring(0, 10)}, null, Restriction.GE));
+        conditions.add(new Condition("id.yyyymmddhhmiss", new Object[]{prepayStartDate.substring(0, 10) + "0000"}, null, Restriction.GE));
         conditions.add(new Condition("contract", new Object[]{"c"}, null, Restriction.ALIAS));
         conditions.add(new Condition("c.contractNumber", new Object[]{contractNumber}, null, Restriction.EQ));
         
         minyyyymmddhh = ((LpEMDaoImpl)lpEMDao).findByConditionsAndProjections(conditions, projections);
         
-        String yyyymmddhh_contract = (String)minyyyymmddhh.get(0).get("minYyyymmddhh");
+        String yyyymmddhhmiss_contract = (String)minyyyymmddhh.get(0).get("minYyyymmddhh");
         
-        String _yyyymmddhh = null;
-        if (yyyymmddhh_contractnull == null && yyyymmddhh_contract == null)
+        String _yyyymmddhhmiss = null;
+        if (yyyymmddhhmiss_contractnull == null && yyyymmddhhmiss_contract == null)
             return null;
-        else if (yyyymmddhh_contractnull != null && yyyymmddhh_contract == null)
-            _yyyymmddhh = yyyymmddhh_contractnull;
-        else if (yyyymmddhh_contractnull == null && yyyymmddhh_contract != null)
-            _yyyymmddhh = yyyymmddhh_contract;
+        else if (yyyymmddhhmiss_contractnull != null && yyyymmddhhmiss_contract == null)
+        	_yyyymmddhhmiss = yyyymmddhhmiss_contractnull;
+        else if (yyyymmddhhmiss_contractnull == null && yyyymmddhhmiss_contract != null)
+        	_yyyymmddhhmiss = yyyymmddhhmiss_contract;
         else {
-            if (yyyymmddhh_contractnull.compareTo(yyyymmddhh_contract) > 0)
-                _yyyymmddhh = yyyymmddhh_contract;
+            if (yyyymmddhhmiss_contractnull.compareTo(yyyymmddhhmiss_contract) > 0)
+            	_yyyymmddhhmiss = yyyymmddhhmiss_contract;
             else
-                _yyyymmddhh = yyyymmddhh_contractnull;
+            	_yyyymmddhhmiss = yyyymmddhhmiss_contractnull;
         }
 
-        log.info(_yyyymmddhh);
+        log.info(_yyyymmddhhmiss);
         conditions = new HashSet<Condition>();
-        conditions.add(new Condition("id.yyyymmddhh", new Object[]{_yyyymmddhh}, null, Restriction.EQ));
+        conditions.add(new Condition("id.yyyymmddhhmiss", new Object[]{_yyyymmddhhmiss}, null, Restriction.EQ));
         conditions.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
         conditions.add(new Condition("id.mdevType", new Object[]{DeviceType.Meter}, null, Restriction.EQ));
         conditions.add(new Condition("id.mdevId", new Object[]{meterId}, null, Restriction.EQ));
@@ -445,8 +445,13 @@ public class KPLCBlockDailyEMBillingInfoSaveTask extends ScheduleTask {
                     LpEM[] firstLps = getFirstLp(meterId, contract.getContractNumber(), contract.getPrepayStartTime());
                  
                     // 평균값을 빼서 계약일 기준값으로 만든다.
+                    /*
+                     * OPF-610 정규화 관련 처리로 인한 주석
                     double lastActiveEnergy = lastLp[0].getValue() + lastLp[1].getValueCnt() -
                             firstLps[0].getValue() - firstLps[1].getValue();
+                    */
+                    
+                    double lastActiveEnergy = lastLp[0].getValue() - firstLps[0].getValue() - firstLps[1].getValue();
                     
                     // 미터 설치일이 계약일보다 늦으면 계약일에 해당하는 지침값을 계산하지 않는다.
                     if (meter.getInstallDate().substring(0, 8).compareTo(contract.getContractDate().substring(0, 8)) < 0) {

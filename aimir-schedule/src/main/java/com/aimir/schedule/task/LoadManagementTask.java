@@ -23,6 +23,7 @@ import com.aimir.dao.system.ContractDao;
 import com.aimir.dao.system.DemandResponseEventLogDao;
 import com.aimir.dao.system.GroupMemberDao;
 import com.aimir.dao.system.HomeGroupDao;
+import com.aimir.dao.view.DayEMViewDao;
 import com.aimir.model.device.CircuitBreakerSetting;
 import com.aimir.model.device.EndDevice;
 import com.aimir.model.device.EnergyMeter;
@@ -31,11 +32,12 @@ import com.aimir.model.mvm.DayEM;
 import com.aimir.model.system.DemandResponseEventLog;
 import com.aimir.model.system.GroupMember;
 import com.aimir.model.system.HomeGroup;
+import com.aimir.model.view.DayEMView;
 import com.aimir.schedule.command.CmdOperationUtil;
 import com.aimir.util.Condition;
+import com.aimir.util.Condition.Restriction;
 import com.aimir.util.DateTimeUtil;
 import com.aimir.util.TimeUtil;
-import com.aimir.util.Condition.Restriction;
 
 
 @Transactional
@@ -75,6 +77,9 @@ public class LoadManagementTask {
 	
     @Autowired    
     DemandResponseEventLogDao demandResponseEventLogDao;
+    
+    @Autowired
+    DayEMViewDao dayEMViewDao;
 	
 	public static final int DRLEVEL_ON = 1;
 	public static final int DRLEVEL_OFF = 15;
@@ -115,15 +120,25 @@ public class LoadManagementTask {
 		    cond.add(new Condition("id.channel", new Object[]{1}, null, Restriction.EQ));
 		    cond.add(new Condition("id.yyyymmdd", new Object[]{datetime.substring(0,8)}, null, Restriction.EQ));
 		    cond.add(new Condition("id.mdevId", new Object[]{mdsId}, null, Restriction.EQ));		    
-		    
+		    /* OPF-610 정규화 관련 처리로 인한 주석
 		    List<DayEM> days = dayDao.findByConditions(cond);
+		    */
+		    List<DayEMView> days = dayEMViewDao.findByConditions(cond);
 		    
 		    if(days != null && days.size() > 0){
+		    	/* OPF-610 정규화 관련 처리로 인한 주석
 		    	DayEM day = days.get(0);
 		    	if(day.getTotal() > threshold){
 			    	log.info("Threshold list ="+mdsId + "," + meter.getContract().getContractNumber() + ","+day.getTotal() + "/"+threshold);
 		    		contractList.add(meter.getContract().getContractNumber());
-		    	}		    	
+		    	}
+		    	*/	
+		    	
+		    	DayEMView day = days.get(0);
+		    	if(day.getTotal() > threshold){
+			    	log.info("Threshold list ="+mdsId + "," + meter.getContract().getContractNumber() + ","+day.getTotal() + "/"+threshold);
+		    		contractList.add(meter.getContract().getContractNumber());
+		    	}
 		    }
 	    }
 	    

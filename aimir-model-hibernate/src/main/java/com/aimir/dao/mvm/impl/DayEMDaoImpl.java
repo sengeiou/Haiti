@@ -1716,7 +1716,8 @@ public class DayEMDaoImpl extends AbstractHibernateGenericDao<DayEM, Integer>
                 temp.get("EM_SUM_" + setTime), "0").toString());
             }
             
-            temp.put("EM_TOTAL", dayEM.getTotal());
+            //OPF-610 정규화 관련 처리로 인한 주석처리, View로 대체 필요
+            //temp.put("EM_TOTAL", dayEM.getTotal());
             retList.add(temp);
         }
         
@@ -2883,10 +2884,6 @@ public class DayEMDaoImpl extends AbstractHibernateGenericDao<DayEM, Integer>
                 criteria.add(Restrictions.eq("id.mdevType", dayEM.getMDevType()));
             }
 
-            if (dayEM.getLocation() != null) {
-
-                criteria.add(Restrictions.eq("location.id", dayEM.getLocation().getId()));
-            }
         }
 
         ProjectionList pjl = Projections.projectionList();
@@ -2943,10 +2940,6 @@ public class DayEMDaoImpl extends AbstractHibernateGenericDao<DayEM, Integer>
                 criteria.add(Restrictions.eq("id.mdevType", dayEM.getMDevType()));
             }
 
-            if (dayEM.getLocation() != null) {
-
-                criteria.add(Restrictions.eq("location.id", dayEM.getLocation().getId()));
-            }
         }
 
         ProjectionList pjl = Projections.projectionList();

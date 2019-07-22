@@ -19,19 +19,27 @@ public class LpPk extends MeteringPk{
     @ColumnInfo(name="채널")
     private Integer channel;
 	   
-	@Column(name="yyyymmddhh",length=10,nullable=false)
-	private String yyyymmddhh;	
-	
-	public String getYyyymmddhh() {
-		return yyyymmddhh;
+	@Column(name="yyyymmddhhmiss",length=14,nullable=false)
+	private String yyyymmddhhmiss;	
+
+    public String getYyyymmddhhmiss() {
+		return yyyymmddhhmiss;
 	}
-	public void setYyyymmddhh(String yyyymmddhh) {
-		this.yyyymmddhh = yyyymmddhh;
+	public void setYyyymmddhhmiss(String yyyymmddhhmiss) {
+		this.yyyymmddhhmiss = yyyymmddhhmiss;
 	}
-    public Integer getChannel() {
+	public Integer getChannel() {
         return channel;
     }
     public void setChannel(Integer channel) {
         this.channel = channel;
     }
+    
+	public String getYyyymmdd() {
+		return yyyymmddhhmiss.substring(0, 8);
+	}
+		
+	public String getYyyymmddhh() {
+		return yyyymmddhhmiss.substring(0, 10);
+	}
 }

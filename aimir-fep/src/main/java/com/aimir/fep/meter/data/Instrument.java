@@ -16,7 +16,7 @@ package com.aimir.fep.meter.data;
  * @author PYK
  * Getter and Setter method name are must uppper case
  */
-public class Instrument implements java.io.Serializable {
+public class Instrument implements Comparable<Instrument>, java.io.Serializable {
 
     /**
      * 
@@ -877,6 +877,11 @@ public class Instrument implements java.io.Serializable {
         this.line_ca = line_ca;
     }
 
+	@Override
+	public int compareTo(Instrument o) {
+		return datetime.compareTo(o.datetime);
+	}
+	
     /**
      * Constructs a <code>String</code> with all attributes
      * in name = value format.

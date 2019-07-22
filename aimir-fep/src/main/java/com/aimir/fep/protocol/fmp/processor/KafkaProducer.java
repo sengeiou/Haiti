@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.IntegerSerializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.expression.common.LiteralExpression;
 import org.springframework.integration.kafka.outbound.KafkaProducerMessageHandler;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
@@ -15,23 +17,25 @@ import org.springframework.messaging.MessageHandler;
 import org.springframework.stereotype.Component;
 
 import com.aimir.fep.util.FMPProperty;
+import com.aimir.util.StringUtil;
 
 @Component
-public class KafkaProducer
-{
-    public static String topic = "aimir";
+public class KafkaProducer {
+	private static Logger log = LoggerFactory.getLogger(KafkaProducer.class);
+
+	public static String topic = "aimir";
 
     public static String messageKey = "aimiramm";
 
     public static String brokerAddress = FMPProperty.getProperty("kafka.broker.list");
 
-    public MessageHandler handler() throws Exception {
-        KafkaProducerMessageHandler<Integer, com.aimir.fep.util.Message> handler =
-                new KafkaProducerMessageHandler<>(kafkaTemplate());
-        handler.setTopicExpression(new LiteralExpression(KafkaProducer.topic));
-        handler.setMessageKeyExpression(new LiteralExpression(KafkaProducer.messageKey));
-        return handler;
-    }
+	public MessageHandler handler() throws Exception {
+		KafkaProducerMessageHandler<Integer, com.aimir.fep.util.Message> handler = new KafkaProducerMessageHandler<>(
+				kafkaTemplate());
+		handler.setTopicExpression(new LiteralExpression(KafkaProducer.topic));
+		handler.setMessageKeyExpression(new LiteralExpression(KafkaProducer.messageKey));
+		return handler;
+	}
 
     private KafkaTemplate<Integer, com.aimir.fep.util.Message> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
@@ -49,6 +53,10 @@ public class KafkaProducer
         // props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "gzip");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, IntegerSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+		props.put(ProducerConfig.ACKS_CONFIG, FMPProperty.getProperty("kafka.producer.acks.config", "all"));
+		props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "lz4");
+
+		log.debug("## Kafka Producer properties => {}", StringUtil.objectToJsonString(props));
         return new DefaultKafkaProducerFactory<>(props);
     }
 }

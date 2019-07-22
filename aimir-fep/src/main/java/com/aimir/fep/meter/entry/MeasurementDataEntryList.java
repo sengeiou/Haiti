@@ -92,7 +92,7 @@ public class MeasurementDataEntryList
         return bao.toByteArray();
     }
 
-    public void decode(byte[] data, String ns, String ipAddr, String protocolType)
+    public void decode(byte[] data, String ns, String ipAddr, String protocolType, String meteringType)
     {
         int pos = 0;
         MeasurementDataEntry mde = null;
@@ -106,7 +106,7 @@ public class MeasurementDataEntryList
         	try{
                 mde = new MeasurementDataEntry();
                 mde.setOnDemand(this.isOnDemand());
-                offset = mde.decode(data,pos,mcuId, ns, ipAddr, protocolType);
+                offset = mde.decode(data,pos,mcuId, ns, ipAddr, protocolType, meteringType);
                 log.debug("OFFSET[" + offset + "]");
                 if (offset == -1 || offset == 0)
                     break;

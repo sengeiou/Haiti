@@ -1637,10 +1637,6 @@ public class DayWMDaoImpl extends AbstractHibernateGenericDao<DayWM, Integer> im
 				criteria.add(Restrictions.eq("id.mdevType", dayWM.getMDevType()));
 			}
 
-			if (dayWM.getLocation() != null) {
-
-				criteria.add(Restrictions.eq("location.id", dayWM.getLocation().getId()));
-			}
 		}
 
 		ProjectionList pjl = Projections.projectionList();
@@ -1695,10 +1691,6 @@ public class DayWMDaoImpl extends AbstractHibernateGenericDao<DayWM, Integer> im
 				criteria.add(Restrictions.eq("id.mdevType", dayWM.getMDevType()));
 			}
 
-			if (dayWM.getLocation() != null) {
-
-				criteria.add(Restrictions.eq("location.id", dayWM.getLocation().getId()));
-			}
 		}
 
 		ProjectionList pjl = Projections.projectionList();

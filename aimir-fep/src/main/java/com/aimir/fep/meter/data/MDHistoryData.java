@@ -16,6 +16,7 @@ public class MDHistoryData implements java.io.Serializable
     private String nameSpace = null;
     private String ipAddr = null;
     private String protocolType = null;
+    private String meteringType = null;
     private String commTime = null;
 
     /**
@@ -141,5 +142,15 @@ public class MDHistoryData implements java.io.Serializable
 	public void setCommTime(String commTime) {
 		this.commTime = commTime;
 	}
+	
+	public String getMeteringType() {
+		return meteringType;
+	}
+	
+	public void setMeteringType(String meteringType) {
+		this.meteringType = meteringType;
+	}
+	
+	
     
 }

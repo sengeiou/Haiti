@@ -93,7 +93,7 @@ public class MeasurementData implements IMeasurementData
         return bao.toByteArray();
     }
 
-    public int decode(byte[] data,int position) throws Exception
+    public int decode(byte[] data, int position, String meteringType) throws Exception
     {
         int pos = position;
         log.debug("decode:: pos["+pos+"] data.total_len[" + data.length + "]");
@@ -161,6 +161,7 @@ public class MeasurementData implements IMeasurementData
                 this.parser.setOnDemand(this.isOnDemand());
                 this.parser.setMeter(meter);
                 this.parser.setMeteringTime(getTimeStamp());
+                this.parser.setMeteringType(meteringType);
                 this.parser.parse(bx);
             }
         } catch (ArrayIndexOutOfBoundsException ex) {

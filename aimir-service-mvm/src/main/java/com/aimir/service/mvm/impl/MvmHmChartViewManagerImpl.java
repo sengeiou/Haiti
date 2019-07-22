@@ -13,13 +13,17 @@ import com.aimir.dao.mvm.DayHMDao;
 import com.aimir.dao.mvm.LpHMDao;
 import com.aimir.dao.mvm.MonthHMDao;
 import com.aimir.dao.mvm.SeasonDao;
+import com.aimir.dao.view.DayHMViewDao;
+import com.aimir.dao.view.MonthHMViewDao;
 import com.aimir.model.mvm.DayHM;
 import com.aimir.model.mvm.LpHM;
 import com.aimir.model.mvm.MonthHM;
 import com.aimir.model.mvm.Season;
+import com.aimir.model.view.DayHMView;
+import com.aimir.model.view.MonthHMView;
 import com.aimir.util.Condition;
-import com.aimir.util.SearchCalendarUtil;
 import com.aimir.util.Condition.Restriction;
+import com.aimir.util.SearchCalendarUtil;
 
 @Service(value = "MvmHmChartViewManagerImpl")
 public class MvmHmChartViewManagerImpl {
@@ -28,10 +32,16 @@ public class MvmHmChartViewManagerImpl {
 
 	@Autowired
 	DayHMDao dayHMDao;
+	
+	@Autowired
+	DayHMViewDao dayHMViewDao;
 
 	@Autowired
 	MonthHMDao monthHMDao;
 
+	@Autowired
+	MonthHMViewDao monthHMViewDao;
+	
 	@Autowired
 	SeasonDao seasonDao;
 	
@@ -129,6 +139,43 @@ public class MvmHmChartViewManagerImpl {
 
 	}
 	
+	public HashMap<String, Object>  getHMSearchDataDayView(Set<Condition> set, Integer[] custList) {
+		HashMap<String, Object> resultHm = new HashMap<String, Object>();
+		
+		Double[] avgValue = new Double[custList.length];
+		Double[] maxValue = new Double[custList.length];
+		Double[] minValue = new Double[custList.length];
+		Double[] sumValue = new Double[custList.length];
+		
+		if(custList.length >0 && custList != null) {
+			for(int idx=0;idx < custList.length;idx++) {
+			
+			Condition cdt = new Condition("contract.id", new Object[] { custList[idx] }, null,Restriction.EQ);// 
+			set.add(cdt);
+			
+			avgValue[idx] = (Double) dayHMDao.getDayHMsMaxMinAvgSum(set, "avg").get(0);
+			maxValue[idx] = (Double) dayHMDao.getDayHMsMaxMinAvgSum(set, "max").get(0);
+			minValue[idx] = (Double) dayHMDao.getDayHMsMaxMinAvgSum(set, "min").get(0);
+			sumValue[idx] = (Double) dayHMDao.getDayHMsMaxMinAvgSum(set, "sum").get(0);
+			
+			set.remove(cdt);
+		}
+		
+		Condition cdt = new Condition("contract.id", custList, null,Restriction.IN);//
+		set.add(cdt);
+		List<DayHMView> dataList = dayHMViewDao.getDayHMsByListCondition(set);
+		
+		resultHm.put("arrAvgValue", avgValue);
+		resultHm.put("arrMaxValue", maxValue);
+		resultHm.put("arrMinValue", minValue);
+		resultHm.put("arrSumValue", sumValue);
+		resultHm.put("arrContId", custList);
+		resultHm.put("dataList", dataList);
+		}
+		return resultHm;
+
+	}
+	
 	/**
 	 * @Method Name : getHMSearchDataMonth
 	 * @Date        : 2010. 4. 15.
@@ -162,6 +209,43 @@ public class MvmHmChartViewManagerImpl {
 		Condition cdt = new Condition("contract.id", custList, null,Restriction.IN);//
 		set.add(cdt);
 		List<MonthHM> dataList = monthHMDao.getMonthHMsByListCondition(set);
+		
+		resultHm.put("arrAvgValue", avgValue);
+		resultHm.put("arrMaxValue", maxValue);
+		resultHm.put("arrMinValue", minValue);
+		resultHm.put("arrSumValue", sumValue);
+		resultHm.put("arrContId", custList);
+		resultHm.put("dataList", dataList);
+		}
+		return resultHm;
+
+	}
+	
+	public HashMap<String, Object>  getHMSearchDataMonthView(Set<Condition> set, Integer[] custList) {
+		HashMap<String, Object> resultHm = new HashMap<String, Object>();
+		
+		Double[] avgValue = new Double[custList.length];
+		Double[] maxValue = new Double[custList.length];
+		Double[] minValue = new Double[custList.length];
+		Double[] sumValue = new Double[custList.length];
+		
+		if(custList.length >0 && custList != null) {
+			for(int idx=0;idx < custList.length;idx++) {
+			
+			Condition cdt = new Condition("contract.id", new Object[] { custList[idx] }, null,Restriction.EQ);// 
+			set.add(cdt);
+			
+			avgValue[idx] = (Double) monthHMDao.getMonthHMsMaxMinAvgSum(set, "avg").get(0);
+			maxValue[idx] = (Double) monthHMDao.getMonthHMsMaxMinAvgSum(set, "max").get(0);
+			minValue[idx] = (Double) monthHMDao.getMonthHMsMaxMinAvgSum(set, "min").get(0);
+			sumValue[idx] = (Double) monthHMDao.getMonthHMsMaxMinAvgSum(set, "sum").get(0);
+			
+			set.remove(cdt);
+		}
+		
+		Condition cdt = new Condition("contract.id", custList, null,Restriction.IN);//
+		set.add(cdt);
+		List<MonthHMView> dataList = monthHMViewDao.getMonthHMsByListCondition(set);
 		
 		resultHm.put("arrAvgValue", avgValue);
 		resultHm.put("arrMaxValue", maxValue);

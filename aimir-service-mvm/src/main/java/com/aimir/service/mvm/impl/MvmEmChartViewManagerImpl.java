@@ -15,13 +15,17 @@ import com.aimir.dao.mvm.DayEMDao;
 import com.aimir.dao.mvm.LpEMDao;
 import com.aimir.dao.mvm.MonthEMDao;
 import com.aimir.dao.mvm.SeasonDao;
+import com.aimir.dao.view.DayEMViewDao;
+import com.aimir.dao.view.MonthEMViewDao;
 import com.aimir.model.mvm.DayEM;
 import com.aimir.model.mvm.LpEM;
 import com.aimir.model.mvm.MonthEM;
 import com.aimir.model.mvm.Season;
+import com.aimir.model.view.DayEMView;
+import com.aimir.model.view.MonthEMView;
 import com.aimir.util.Condition;
-import com.aimir.util.SearchCalendarUtil;
 import com.aimir.util.Condition.Restriction;
+import com.aimir.util.SearchCalendarUtil;
 
 @Service(value = "MvmEmChartViewManagerImpl")
 public class MvmEmChartViewManagerImpl {
@@ -30,9 +34,15 @@ public class MvmEmChartViewManagerImpl {
 
 	@Autowired
 	DayEMDao dayEMDao;
+	
+	@Autowired
+	DayEMViewDao dayEMViewDao;
 
 	@Autowired
 	MonthEMDao monthEMDao;
+	
+	@Autowired
+	MonthEMViewDao monthEMViewDao;
 
 	@Autowired
 	SeasonDao seasonDao;
@@ -184,6 +194,43 @@ public class MvmEmChartViewManagerImpl {
 
 	}
 	
+	public HashMap<String, Object>  getEMSearchDataDayView(Set<Condition> set, Integer[] custList) {
+		HashMap<String, Object> resultHm = new HashMap<String, Object>();
+		
+		Double[] avgValue = new Double[custList.length];
+		Double[] maxValue = new Double[custList.length];
+		Double[] minValue = new Double[custList.length];
+		Double[] sumValue = new Double[custList.length];
+		
+		if(custList.length >0 && custList != null) { 
+			for(int idx=0;idx < custList.length;idx++) {
+			
+				Condition cdt = new Condition("contract.id", new Object[] { custList[idx] }, null,Restriction.EQ);// 
+				set.add(cdt);
+				
+				avgValue[idx] = (Double) dayEMDao.getDayEMsMaxMinAvgSum(set, "avg").get(0);
+				maxValue[idx] = (Double) dayEMDao.getDayEMsMaxMinAvgSum(set, "max").get(0);
+				minValue[idx] = (Double) dayEMDao.getDayEMsMaxMinAvgSum(set, "min").get(0);
+				sumValue[idx] = (Double) dayEMDao.getDayEMsMaxMinAvgSum(set, "sum").get(0);
+				
+				set.remove(cdt);
+			}
+		
+			Condition cdt = new Condition("contract.id", custList, null,Restriction.IN);//
+			set.add(cdt);
+			List<DayEMView> dataList = dayEMViewDao.getDayEMsByListCondition(set);
+			
+			resultHm.put("arrAvgValue", avgValue);
+			resultHm.put("arrMaxValue", maxValue);
+			resultHm.put("arrMinValue", minValue);
+			resultHm.put("arrSumValue", sumValue);
+			resultHm.put("arrContId", custList);
+			resultHm.put("dataList", dataList);
+		}
+		return resultHm;
+
+	}
+	
 	/**
 	 * @Method Name : getEmSearchDataMonth
 	 * @Date        : 2010. 4. 15.
@@ -218,6 +265,44 @@ public class MvmEmChartViewManagerImpl {
 		Condition cdt = new Condition("contract.id", custList, null,Restriction.IN);//
 		set.add(cdt);
 		List<MonthEM> dataList = monthEMDao.getMonthEMsByListCondition(set);
+		
+		resultHm.put("arrAvgValue", avgValue);
+		resultHm.put("arrMaxValue", maxValue);
+		resultHm.put("arrMinValue", minValue);
+		resultHm.put("arrSumValue", sumValue);
+		resultHm.put("arrContId", custList);
+		resultHm.put("dataList", dataList);
+		}
+		return resultHm;
+
+	}
+	
+	public HashMap<String, Object> getEMSearchDataMonthView(Set<Condition> set, Integer[] custList) {
+		HashMap<String, Object> resultHm = new HashMap<String, Object>();
+		
+		Double[] avgValue = new Double[custList.length];
+		Double[] maxValue = new Double[custList.length];
+		Double[] minValue = new Double[custList.length];
+		Double[] sumValue = new Double[custList.length];
+		
+		if(custList.length >0 && custList != null) { 
+			for(int idx=0;idx < custList.length;idx++) {
+			
+			Condition cdt = new Condition("contract.id", new Object[] { custList[idx] }, null,Restriction.EQ);// 
+			set.add(cdt);
+			
+			avgValue[idx] = (Double) monthEMDao.getMonthEMsMaxMinAvgSum(set, "avg").get(0);
+			maxValue[idx] = (Double) monthEMDao.getMonthEMsMaxMinAvgSum(set, "max").get(0);
+			minValue[idx] = (Double) monthEMDao.getMonthEMsMaxMinAvgSum(set, "min").get(0);
+			sumValue[idx] = (Double) monthEMDao.getMonthEMsMaxMinAvgSum(set, "sum").get(0);
+			
+			set.remove(cdt);
+			
+		}
+		
+		Condition cdt = new Condition("contract.id", custList, null,Restriction.IN);//
+		set.add(cdt);
+		List<MonthEMView> dataList = monthEMViewDao.getMonthEMsByListCondition(set);
 		
 		resultHm.put("arrAvgValue", avgValue);
 		resultHm.put("arrMaxValue", maxValue);

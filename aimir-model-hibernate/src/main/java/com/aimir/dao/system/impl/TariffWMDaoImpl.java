@@ -15,7 +15,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.stereotype.Repository;
 
 import com.aimir.constants.CommonConstants;
@@ -31,11 +31,15 @@ import com.aimir.dao.system.ContractDao;
 import com.aimir.dao.system.TariffEMDao;
 import com.aimir.dao.system.TariffWMCaliberDao;
 import com.aimir.dao.system.TariffWMDao;
+import com.aimir.dao.view.DayWMViewDao;
+import com.aimir.dao.view.MonthWMViewDao;
 import com.aimir.model.mvm.DayWM;
 import com.aimir.model.mvm.MonthWM;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.TariffWM;
 import com.aimir.model.system.TariffWMCaliber;
+import com.aimir.model.view.DayWMView;
+import com.aimir.model.view.MonthWMView;
 import com.aimir.model.vo.TariffWMVO;
 import com.aimir.util.CalendarUtil;
 
@@ -70,6 +74,12 @@ public class TariffWMDaoImpl extends AbstractHibernateGenericDao<TariffWM, Integ
 
     @Autowired
     HibernateTransactionManager transactionManager;
+    
+    @Autowired
+	DayWMViewDao dayWMViewDao;
+    
+    @Autowired
+	MonthWMViewDao monthWMViewDao;
 	
 	@Autowired
 	protected TariffWMDaoImpl(SessionFactory sessionFactory) {
@@ -279,7 +289,10 @@ public class TariffWMDaoImpl extends AbstractHibernateGenericDao<TariffWM, Integ
 			
 			List<TariffWM> tariffWMList = null;
 			MonthWM monthWM = null;
+			MonthWMView monthWMView = null;
+			
 			DayWM dayWM = null;
+			DayWMView dayWMView = null;
 			
 	    	if(CommonConstants.DateType.DAILY.getCode().equals(dateType)){
 	    		int period=0;
@@ -290,9 +303,14 @@ public class TariffWMDaoImpl extends AbstractHibernateGenericDao<TariffWM, Integ
 	    			
 	    			tariffParam.put("yyyymmdd", Integer.toString(i));
 	    			//dayWM =dayWMDao.getDayWM(tariffParam);
-	    			dayWM =dayWMDao.getDayWMbySupplierId(tariffParam);
-	    			
+	    			/*
+	    			 * OPF-610 정규화 관련 처리로 인한 주석
+	    			dayWM = dayWMDao.getDayWMbySupplierId(tariffParam);
 	    			double dayTotal = dayWM==null || dayWM.getTotal() == null ?0.0 : dayWM.getTotal();
+	    			*/
+	    			
+	    			dayWMView = dayWMViewDao.getDayWMbySupplierId(tariffParam);
+	    			double dayTotal = dayWMView == null || dayWMView.getTotal() == null ? 0.0 : dayWMView.getTotal();
 	    			
 	    			//사용량구간별 요금계산
 	    			for(TariffWM tariffWM:tariffWMList){
@@ -322,12 +340,21 @@ public class TariffWMDaoImpl extends AbstractHibernateGenericDao<TariffWM, Integ
 	    			
 	    			tariffParam.put("yyyymm", Integer.toString(i).substring(0, 6));
 //	    			monthWM =monthWMDao.getMonthWM(tariffParam);
+	    			/*
+	    			 * OPF-610 정규화 관련 처리로 인한 주석
 	    			monthWM =monthWMDao.getMonthWMbySupplierId(tariffParam);
+	    			*/
+	    			
+	    			monthWMView = monthWMViewDao.getMonthWMbySupplierId(tariffParam);
 	    			
 	    			double monthTotal = 0d;
 	    			if(monthWM != null) {
+	    				/*
+	    				 * OPF-610 정규화 관련 처리로 인한 주석
 	    				monthTotal = monthWM.getTotal();
-		    			
+		    			*/
+	    				monthTotal = monthWMView.getTotal();
+	    				
 		    			//사용량구간별 요금계산
 		    			for(TariffWM tariffWM:tariffWMList){
 		    				

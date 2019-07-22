@@ -367,8 +367,8 @@ class EMnVRecoveryCallable implements Callable<Map<String, String>> {
 			HashSet<Condition> condition = new LinkedHashSet<Condition>();
 
 			condition.add(new Condition("id.mdevId", new Object[] { mdsId }, null, Restriction.EQ));
-			condition.add(new Condition("id.yyyymmddhh", new Object[] { "2015%" }, null, Restriction.LIKE));
-			condition.add(new Condition("id.yyyymmddhh", null, null, Condition.Restriction.ORDERBY));
+			condition.add(new Condition("id.yyyymmddhhmiss", new Object[] { "2015%" }, null, Restriction.LIKE));
+			condition.add(new Condition("id.yyyymmddhhmiss", null, null, Condition.Restriction.ORDERBY));
 			condition.add(new Condition("id.channel", null, null, Condition.Restriction.ORDERBY));
 
 			List<LpEM> lpEMList = lpEMDao.findByConditions(condition);
@@ -377,6 +377,8 @@ class EMnVRecoveryCallable implements Callable<Map<String, String>> {
 			log.debug("비교채널a = " + lpEMList.get(compareChannel).getChannel());
 			aDate = lpEMList.get(compareChannel).getYyyymmddhh();
 
+			/*
+			 * OPF-610 정규화 관련 처리로 인한 주석
 			if (lpEMList.get(compareChannel).getValue_00() != null) {
 				aDate = aDate + "00";
 			} else if (lpEMList.get(compareChannel).getValue_15() != null) {
@@ -387,11 +389,26 @@ class EMnVRecoveryCallable implements Callable<Map<String, String>> {
 				aDate = aDate + "45";
 			}
 			result.put("aDate", aDate);
+			*/
+			
+			if (lpEMList.get(compareChannel).getValue() != null) {
+				LpEM lp = lpEMList.get(compareChannel);
+				
+				if("00".equals(lp.getMinute())) 
+					aDate = aDate + "00";
+				else if("15".equals(lp.getMinute())) 
+					aDate = aDate + "15";
+				else if("30".equals(lp.getMinute())) 
+					aDate = aDate + "30";
+				else if("45".equals(lp.getMinute())) 
+					aDate = aDate + "45";
+			}
+			result.put("aDate", aDate);
 
 			condition.clear();
 			condition.add(new Condition("id.mdevId", new Object[] { mdsId }, null, Restriction.EQ));
-			condition.add(new Condition("id.yyyymmddhh", new Object[] { aDate.substring(0, 10) }, null, Restriction.LT));
-			condition.add(new Condition("id.yyyymmddhh", null, null, Condition.Restriction.ORDERBYDESC));
+			condition.add(new Condition("id.yyyymmddhhmiss", new Object[] { aDate.substring(0, 10) + "0000" }, null, Restriction.LT));
+			condition.add(new Condition("id.yyyymmddhhmiss", null, null, Condition.Restriction.ORDERBYDESC));
 			condition.add(new Condition("id.channel", null, null, Condition.Restriction.ORDERBY));
 
 			lpEMList = lpEMDao.findByConditions(condition);
@@ -400,6 +417,9 @@ class EMnVRecoveryCallable implements Callable<Map<String, String>> {
 				log.debug("2015년의 최초 시간보다 먼저인 시간중 가장 큰 시간 ==> " + lpEMList.get(compareChannel).getYyyymmddhh());
 				log.debug("비교채널b = " + lpEMList.get(compareChannel).getChannel());
 				bDate = lpEMList.get(compareChannel).getYyyymmddhh();
+				
+				/*
+				 * OPF-610 정규화 관련 처리로 인한 주석
 				if (lpEMList.get(compareChannel).getValue_00() != null) {
 					bDate = bDate.substring(0, 10) + "00";
 				}
@@ -412,7 +432,20 @@ class EMnVRecoveryCallable implements Callable<Map<String, String>> {
 				if (lpEMList.get(compareChannel).getValue_45() != null) {
 					bDate = bDate.substring(0, 10) + "45";
 				}
-
+				*/
+				
+				if (lpEMList.get(compareChannel).getValue() != null) {
+					LpEM lp = lpEMList.get(compareChannel);
+					
+					if("00".equals(lp.getMinute())) 
+						bDate = bDate.substring(0, 10) + "00";
+					if("15".equals(lp.getMinute())) 
+						bDate = bDate.substring(0, 10) + "15";
+					if("30".equals(lp.getMinute())) 
+						bDate = bDate.substring(0, 10) + "30";
+					if("45".equals(lp.getMinute())) 
+						bDate = bDate.substring(0, 10) + "45";
+				}
 				result.put("bDate", bDate);
 
 				SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -463,6 +496,8 @@ class EMnVRecoveryCallable implements Callable<Map<String, String>> {
 
 					String partDate = lpEm.getYyyymmddhh();
 
+					/*
+					 * OPF-610 정규화 관련 처리로 인한 주석 [[ START
 					if (lpEm.getValue_45() != null) {
 						partDate = partDate.substring(0, 10) + "45";
 						if (!bLpMap.containsKey(partDate)) {
@@ -572,6 +607,39 @@ class EMnVRecoveryCallable implements Callable<Map<String, String>> {
 
 						//					log.debug("Ch={}, value00={}", channel, lpEm.getValue_00());
 					}
+					OPF-610 정규화 관련 처리로 인한 주석 ]] END */
+					
+					
+					if(lpEm.getValue() != null) {
+						int minute = Integer.parseInt(lpEm.getMinute());
+						
+						if(minute == 45 || minute == 30 || minute == 15 || minute == 0) {
+							partDate = partDate.substring(0, 10) + lpEm.getMinute();
+							
+							if (!bLpMap.containsKey(partDate)) {
+								LPData lp = new LPData();
+								resultCal = Calendar.getInstance();
+								bCal = Calendar.getInstance();
+								bCal.setTime(DateTimeUtil.getDateFromYYYYMMDDHHMMSS(partDate));
+								resultCal.setTimeInMillis(bCal.getTimeInMillis() + dateGap);
+								resultCal.add(Calendar.MINUTE, -15);
+								resultDate = dateFormatter.format(resultCal.getTime());
+
+								lp.setDatetime(resultDate);
+								lp.setCh(new Double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 });
+								bLpMap.put(partDate, lp);
+							}
+							
+							LPData lp = (LPData) bLpMap.get(partDate);
+							lp.getCh()[channel - 1] = lpEm.getValue();
+							
+							if(channel == 1) {
+								lp.setLp(lpEm.getValue() * activePulseConstant / st);
+								lp.setLpValue(lpEm.getValue());
+							}
+						}
+					}
+					
 				}
 
 				// LP배열로 만들고, 날짜별로 정렬

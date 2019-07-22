@@ -131,7 +131,7 @@ public class SXRMDSaver extends AbstractMDSaver {
             condition.add(new Condition("id.mdevType", new Object[]{parser.getMDevType()}, null, Restriction.EQ));
             condition.add(new Condition("id.mdevId", new Object[]{parser.getMDevId()}, null, Restriction.EQ));
             // condition.add(new Condition("id.dst", new Object[]{dst}, null, Restriction.EQ));
-            condition.add(new Condition("id.yyyymmddhh", new Object[]{lpdate.substring(0,10)}, null, Restriction.EQ));
+            condition.add(new Condition("id.yyyymmddhhmiss", new Object[]{lpdate.substring(0,10) + "%"}, null, Restriction.LIKE));
             condition.add(new Condition("id.channel", new Object[]{1}, null, Restriction.EQ));
             
             switch (MeterType.valueOf(parser.getMeter().getMeterType().getName())) {

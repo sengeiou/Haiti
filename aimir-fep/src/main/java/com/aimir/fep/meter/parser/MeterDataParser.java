@@ -21,6 +21,7 @@ public abstract class MeterDataParser implements Serializable
 	protected static Log log = LogFactory.getLog(MeterDataParser.class);
     protected Meter meter;
     protected String meteringTime;
+    protected String meteringType;
     protected String meterTime;
     private boolean isOnDemand = false;
     // SP-687
@@ -123,7 +124,15 @@ public abstract class MeterDataParser implements Serializable
         return this.meterTime;
     }
     
-    /**
+    public String getMeteringType() {
+		return meteringType;
+	}
+
+	public void setMeteringType(String meteringType) {
+		this.meteringType = meteringType;
+	}
+
+	/**
      * 통신 장비 유형
      * @return
      */
