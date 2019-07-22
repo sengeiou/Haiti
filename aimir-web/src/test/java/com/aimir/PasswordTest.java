@@ -1,7 +1,5 @@
 package com.aimir;
 
-import static org.junit.Assert.*;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,15 +8,10 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 import org.owasp.esapi.ESAPI;
 import org.owasp.esapi.User;
-import org.owasp.esapi.crypto.CipherText;
-import org.owasp.esapi.crypto.PlainText;
 
 import com.aimir.esapi.AimirAuthenticator;
-import com.aimir.fep.bypass.decofactory.consts.HdlcConstants.HdlcObjectType;
-import com.aimir.fep.bypass.decofactory.decoframe.INestedFrame;
 import com.aimir.fep.bypass.decofactory.decoframe.SORIA_DLMSFrame;
 import com.aimir.fep.bypass.decofactory.decorator.NestedDLMSDecoratorForSORIA;
-import com.aimir.fep.bypass.decofactory.decorator.NestedHDLCDecoratorForSORIA;
 import com.aimir.fep.bypass.decofactory.protocolfactory.BypassFrameFactory.Procedure;
 import com.aimir.fep.util.DataUtil;
 
