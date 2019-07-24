@@ -38,7 +38,7 @@
     </bean>
 
     <!-- Audit Log Support Hibernate Session Factory -->
-    <bean id="auditSessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+    <bean id="auditSessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="auditDataSource" />
         <property name="hibernateProperties">
             <props>
@@ -63,12 +63,12 @@
     </bean>
     
     <!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
-    <bean id="auditTransactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+    <bean id="auditTransactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="auditSessionFactory"/>
     </bean>
     
     <!-- Annotation Support Hibernate Session Factory -->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="hibernateProperties">
             <props>
@@ -89,7 +89,7 @@
     </bean>
 
     <!-- Hibernate Transaction Manager -->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
