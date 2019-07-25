@@ -1,5 +1,7 @@
 package com.aimir.model.view;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
@@ -9,7 +11,10 @@ import com.aimir.annotation.ColumnInfo;
 import com.aimir.constants.CommonConstants.DeviceType;
 
 @Embeddable
-public class DayViewPk {
+public class DayViewPk implements Serializable {
+
+	private static final long serialVersionUID = 3780167401154873553L;
+
 	@Column(name="mdev_type",length=20)
 	@Enumerated(EnumType.STRING)
 	@ColumnInfo(name="장비 아이디", descr="")
