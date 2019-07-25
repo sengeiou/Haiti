@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>  
 <dataset> 
-    <!-- Language -->
-    <!-- Timezone -->
-    <!-- Code -->
+    <!-- Language: EN -->
+    <!-- Timezone: EN -->
+    <!-- Code: EN -->
     
     <system.Country 
         name="Haiti"
@@ -26,11 +26,19 @@
     />
     
     <system.Co2Formula name="ElectricityCO2" supplyTypeCode="3.1" unitUsage="100" co2emissions="44.3" co2factor="0.443" unit="KWh"/>
+    <system.Co2Formula name="WaterCO2" supplyTypeCode="3.3" unitUsage="100" co2emissions="58.7" co2factor="0.587" unit="㎥"/>
     
     <system.SupplyType
         supplier="EDH"
         typeCode="3.1"
         co2Formula="ElectricityCO2"
+        billDate="1"
+    />
+
+    <system.SupplyType
+        supplier="EDH"
+        typeCode="3.3"
+        co2Formula="WaterCO2"
         billDate="1"
     />
     
@@ -70,6 +78,15 @@
         hasDashboardAuth="true" 
         customerRole="false" 
         loginAuthority="true" />
+
+    <system.Role name="engineer" 
+        supplier="EDH" 
+        systemAuthority="c" 
+        mtrAuthority="c" 
+        descr="Operator and Engineer" 
+        hasDashboardAuth="true" 
+        customerRole="false" 
+        loginAuthority="true" />    
         
     <system.Role name="vendor" 
         supplier="EDH" 
@@ -106,6 +123,7 @@
     <system.Dashboard descr="Metering Management Dashboard" name="Metering" orderNo="2" role="admin"/>
     <system.Dashboard descr="Device Management Dashboard" name="Device" orderNo="3" role="admin"/>
     <system.Dashboard descr="Event and History Management Dashboard" name="Alarm Event" orderNo="4" role="admin"/>
+    <system.Dashboard descr="Prepayment Dashboard" name="Prepayment" orderNo="5" role="admin"/>
     
     <system.Gadget
         descr="Code Management"
@@ -128,14 +146,14 @@
         gadgetCode="gadget.metering001"
     />
     <system.Gadget
-        descr="VEE (Metering Data Validation, Estimation, Editing)"
-        iconSrc="assets/images/gadget_en/vee.gif"
-        maxUrl="mvm/VEEManagementEmMaxGadget.do"
-        miniUrl="mvm/VEEManagementEmMiniGadget.do"
-        name="VEE Management"
+        descr="Metering Data(Water)"
+        iconSrc="assets/images/gadget_en/meteringdata.gif"
+        maxUrl="mvm/mvmMaxGadgetWM.do"
+        miniUrl="mvm/mvmMiniGadgetWM.do"
+        name="Water Data"
         miniHeight="350"
         fullHeight="800"
-        gadgetCode="gadget.metering023"
+        gadgetCode="gadget.metering001"
     />  
     <system.Gadget
         descr="Device Vendor Model"
@@ -228,6 +246,16 @@
         gadgetCode="gadget.metering005"
     />
     <system.Gadget
+        descr="Metering Fail(Water)"
+        iconSrc="assets/images/gadget_en/meteringfail.gif"
+        maxUrl="mvm/meteringFailureWmMaxGadget.do"
+        miniUrl="mvm/meteringFailureWmMiniGadget.do"
+        name="Water Metering Fail"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering005"
+    />
+    <system.Gadget
         descr="Customer and Contract"
         iconSrc="assets/images/gadget_en/customer.gif"
         maxUrl="system/customerMax.do"
@@ -236,17 +264,7 @@
         miniHeight="350"
         fullHeight="1548"
         gadgetCode="gadget.system010"
-    />
-    <system.Gadget
-        descr="Data Gaps(Electricity)"
-        iconSrc="assets/images/gadget_en/datagaps.gif"
-        maxUrl="mvm/dataGapsEmMaxGadget.do"
-        miniUrl="mvm/dataGapsEmMiniGadget.do"
-        name="Data Gaps"
-        miniHeight="500"
-        fullHeight="800"
-        gadgetCode="gadget.metering008"
-    />
+    />    
     <system.Gadget
         descr="Modem Management"
         iconSrc="assets/images/gadget_en/modem.gif"
@@ -336,17 +354,7 @@
         miniHeight="600"
         fullHeight="800"
         gadgetCode="gadget.system200"
-    />
-    <system.Gadget
-        descr="Task Management"
-        iconSrc="assets/images/gadget_ko/vee.gif"
-        maxUrl="system/schedule/scheduleManagementMaxGadget.do"
-        miniUrl="system/schedule/scheduleManagementMiniGadget.do"
-        name="Task Management"
-        miniHeight="350"
-        fullHeight="800"
-        gadgetCode="gadget.system013"
-    />
+    />   
     <system.Gadget
         descr="Vendor Prepayment Charge"
         iconSrc="assets/images/gadget_ko/thumbnail.gif"
@@ -386,8 +394,17 @@
         miniHeight="350"
         fullHeight="800"
         gadgetCode="gadget.metering012"
-    /> 
-    
+    />     
+    <system.Gadget
+        descr="Water Consumption Ranking"
+        iconSrc="assets/images/gadget_en/consumptionrank.gif"
+        maxUrl="mvm/consumptionRankingWmMaxGadget.do"
+        miniUrl="mvm/consumptionRankingWmMiniGadget.do"
+        name="Water Consumption Ranking"
+        miniHeight="350"
+        fullHeight="800"
+        gadgetCode="gadget.metering012"
+    />
     <system.Gadget
         descr="Meter Event Log"
         iconSrc="assets/images/wid_thum.gif"
@@ -399,6 +416,7 @@
         gadgetCode="gadget.device013"   
     />
     
+    <!-- 메인 대시보드 가젯 -->    
     <system.DashboardGadget 
         collapsible="false"
         layout="fit"
@@ -431,14 +449,6 @@
         dashboard="Main"
         gadget="Customer and Contract"
     />
-    <system.DashboardGadget 
-        collapsible="false"
-        layout="fit"
-        gridX="0"
-        gridY="2"
-        dashboard="Main"
-        gadget="TOU Report"
-    />
     
     <!-- 검침데이터 관리 대시보드 시작-->       
     <system.DashboardGadget 
@@ -464,14 +474,14 @@
         gridY="0"
         dashboard="Metering"
         gadget="Metering Fail"
-    />  
+    />
     <system.DashboardGadget 
         collapsible="false"
         layout="fit"
         gridX="0"
         gridY="1"
         dashboard="Metering"
-        gadget="Data Gaps"
+        gadget="Water Data"
     />
     <system.DashboardGadget 
         collapsible="false"
@@ -479,15 +489,15 @@
         gridX="1"
         gridY="1"
         dashboard="Metering"
-        gadget="Power Quality"
-    />
+        gadget="Water Metering Fail"
+    />            
     <system.DashboardGadget 
         collapsible="false"
         layout="fit"
         gridX="2"
         gridY="1"
         dashboard="Metering"
-        gadget="TOU Report"
+        gadget="Power Quality"
     />
     <system.DashboardGadget 
         collapsible="false"
@@ -495,7 +505,7 @@
         gridX="0"
         gridY="2"
         dashboard="Metering"
-        gadget="VEE Management"
+        gadget="TOU Report"
     />
     <!-- Metering 대시보드 끝-->
     
@@ -540,14 +550,6 @@
         dashboard="System"
         gadget="Group Management"
     />
-    <system.DashboardGadget
-        collapsible="false"
-        layout="fit"
-        gridX="2"
-        gridY="1"
-        dashboard="System"
-        gadget="Task Management"
-    />
     <!-- System 대시보드 끝-->
     
     <!-- 장비 관리 대시보드 시작-->
@@ -586,28 +588,11 @@
     <system.DashboardGadget 
         collapsible="false"
         layout="fit"
-        gridX="1"
-        gridY="1"
-        dashboard="Device"
-        gadget="Google Map For Device"
-    />   
-    <system.DashboardGadget 
-        collapsible="false"
-        layout="fit"
         gridX="2"
         gridY="1"
         dashboard="Device"
         gadget="Meter Time Management"
     /> 
-    <system.DashboardGadget 
-        collapsible="false"
-        layout="fit"
-        gridX="2"
-        gridY="2"
-        dashboard="Device"
-        gadget="Meter Event Log"
-    />   
-    
     <!-- Device 대시보드 끝-->
 
     <!-- 이력 관리 대시보드 시작--> 
@@ -641,10 +626,68 @@
         gridX="0"
         gridY="1"
         dashboard="Alarm Event"
+        gadget="Meter Event Log"
+    />   
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="Alarm Event"
         gadget="Change Log"
     />  
     <!-- 이력 관리 대시보드 끝-->    
-    
+    <!-- 선불 대시보드 -->    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="Prepayment"
+        gadget="Prepayment Customer Management"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="0"
+        dashboard="Prepayment"
+        gadget="Vendor Prepayment Charge"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="0"
+        dashboard="Prepayment"
+        gadget="Deposit Management"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="1"
+        dashboard="Prepayment"
+        gadget="Creating Customer Manager"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="1"
+        gridY="1"
+        dashboard="Prepayment"
+        gadget="Consumption Ranking"
+    />
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="2"
+        gridY="1"
+        dashboard="Prepayment"
+        gadget="Water Consumption Ranking"
+    />
+
+    <!-- 가젯롤 -->
     <system.GadgetRole
         gadget="Code Management"
         role="admin"
@@ -656,7 +699,7 @@
         supplier="EDH"
     />
     <system.GadgetRole
-        gadget="VEE Management"
+        gadget="Water Data"
         role="admin"
         supplier="EDH"
     />
@@ -706,15 +749,15 @@
         supplier="EDH"
     />
     <system.GadgetRole
+        gadget="Water Metering Fail"
+        role="admin"
+        supplier="EDH"
+    />
+    <system.GadgetRole
         gadget="Customer and Contract"
         role="admin"
         supplier="EDH"
     />    
-    <system.GadgetRole
-        gadget="Data Gaps"
-        role="admin"
-        supplier="EDH"
-    /> 
     <system.GadgetRole
         gadget="Modem Management"
         role="admin"
@@ -726,7 +769,7 @@
         supplier="EDH"
     />        
     <system.GadgetRole
-        gadget="Device Registration"
+        gadget="Asset Registration"
         role="admin"
         supplier="EDH"
     />
@@ -764,20 +807,17 @@
        gadget="Vendor Prepayment Charge"
        role="admin"
        supplier="EDH"
-    />
-    
+    /> 
     <system.GadgetRole
        gadget="Vendor Prepayment Charge"
        role="vendor"
        supplier="EDH"
     />    
-    
     <system.GadgetRole
        gadget="Deposit Management"
        role="admin"
        supplier="EDH"
     />        
-
     <system.GadgetRole
        gadget="Creating Customer Manager"
        role="admin"
@@ -789,19 +829,51 @@
        supplier="EDH"
     />
     <system.GadgetRole
+       gadget="Water Consumption Ranking"
+       role="admin"
+       supplier="EDH"
+    />
+    <system.GadgetRole
        gadget="Meter Event Log"
        role="admin"
        supplier="EDH"
     />
     	
+    <!-- Device Vendor/Model -->   
     <system.DeviceVendor 
         supplier="EDH"
         name="NURITelecom"
         code="100"
-        address="B-10F Woolim Lions Valley 371-28 Gasandong Geumcheon-gu, Seoul, Korea, 153-786 Tel : +82.2.781.0770"
+        address="NURI Bld, 16 Sapyeong-daero, Seocho-gu, Seoul, Korea, 06552 Tel : +82.2.781.0770"
         descr="Nuri Telecom Co.,Ltd."
     />
-    
+    <!-- Dummy Device -->
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="97"
+        deviceType="1.1.1.7"
+        name="DCU-DUMMY"
+        image="uploadImg/mcu/DCU-DUMMY.jpg"
+        description="Dummy DCU"
+    />    
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="98"
+        deviceType="1.2.1.255"
+        name="MODEM-DUMMY"
+        image="uploadImg/modem/MODEM-DUMMY.jpg"
+        description="Dummy Modem"
+    />
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="99"
+        deviceType="1.3.1.1"
+        name="METER-DUMMY"
+        image="uploadImg/meter/METER-DUMMY.jpg"
+        description="Dummy Meter"
+        mdsIdPattern="[a-zA-Z0-9]**"        
+    />
+    <!-- Operation Device -->
     <system.DeviceModel 
         deviceVendor="NURITelecom"
         code="4"
@@ -835,8 +907,7 @@
         code="98"
         deviceType="1.2.1.98"
         name="NZR-I121RE"
-    />
-    
+    />    
     <system.ModemConfig 
         name="NZR-I121RE"
         parserName="com.aimir.fep.meter.parser.ZBRepeater"
@@ -863,89 +934,57 @@
     />
     
     <device.OperationList  deviceTypeCode="1.2.1.98" operationCode="8.2.2"  model="NZR-O121RE"    level="2"   desc="Unit Scanning" />
-    <device.OperationList  deviceTypeCode="1.2.1.98" operationCode="8.2.5"  model="NZR-O121RE"    level="2"   desc="Event Log" />
-
-    <mvm.Season
-        smonth="03"
-        sday="01"
-        emonth="05"
-        name="Spring"
-    />
-    <mvm.Season
-        smonth="06"
-        sday="01"
-        emonth="08"
-        name="Summer"
-    />
-    <mvm.Season
-        smonth="09"
-        sday="01"
-        emonth="11"
-        name="Autumn"
-    />
-    <mvm.Season
-        smonth="12"
-        sday="01"
-        emonth="02"
-        name="Winter"
-    />
-    
-    <system.TariffType supplier="EDH" serviceTypeCode="3.1" code="1" name="Home Power1" description="Home Power1"/>
-    <system.TariffType supplier="EDH" serviceTypeCode="3.1" code="2" name="Business Rate1" description="Business Rate1"/>
-    
-    
-    <system.TariffEM
-        supplier="EDH" 
-        yyyymmdd="20140101"
-        tariffType="Home Power1" 
-        supplySizeMin="0" 
-        supplySizeMax="50" 
-        condition1="&gt;"
-        condition2="&lt;="
-        supplySizeUnit="kWh"
-        activeEnergyCharge="0.809"
-        serviceCharge="0" />
-    <system.TariffEM
-        supplier="EDH" 
-        yyyymmdd="20140101"
-        tariffType="Home Power1" 
-        supplySizeMin="50" 
-        supplySizeMax="300" 
-        condition1="&gt;"
-        condition2="&lt;="
-        supplySizeUnit="kWh"
-        activeEnergyCharge="1.003"
-        serviceCharge="0" />
-    <system.TariffEM
-        supplier="EDH" 
-        yyyymmdd="20140101"
-        tariffType="Home Power1" 
-        supplySizeMin="300" 
-        supplySizeMax="600" 
-        condition1="&gt;"
-        condition2="&lt;="
-        supplySizeUnit="kWh"
-        activeEnergyCharge="1.322"
-        serviceCharge="0" />
-    <system.TariffEM
-        supplier="EDH" 
-        yyyymmdd="20140101"
-        tariffType="Home Power1" 
-        supplySizeMin="600" 
-        condition1="&gt;"
-        condition2="&lt;="
-        supplySizeUnit="kWh"
-        activeEnergyCharge="1.516"
-        serviceCharge="0" />
-
-    <system.TariffEM
-        supplier="EDH" 
-        yyyymmdd="20140101"
-        tariffType="Business Rate1" 
-        supplySizeUnit="kWh"
-        activeEnergyCharge="1.220"
-        serviceCharge="0" />
+    <device.OperationList  deviceTypeCode="1.2.1.98" operationCode="8.2.5"  model="NZR-O121RE"    level="2"   desc="Event Log" />    
         
+    <system.DeviceVendor 
+        supplier="EDH"
+        name="GE"
+        code="101"
+        address="http://www.ge.com"
+        descr="General Electric Company"
+    />
+    
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="1"
+        deviceType="1.2.1.1"
+        name="NAMR-P109SR"
+    />
+    
+    <system.DeviceModel 
+        deviceVendor="GE"
+        code="12"
+        deviceType="1.3.1.1"
+        name="I210+c"
+        image="uploadImg/meter/sm110.jpg"
+    />
+    
+    <system.MeterConfig 
+        meterClass="1.0"
+        phase="1p2w"
+        pulseConst="1"
+        name="I210+c"
+        deviceModel="I210+c"
+        parserName="com.aimir.fep.meter.parser.I210PlusCSeries"
+        saverName="com.aimir.fep.meter.saver.I210PlusCSeriesMDSaver"
+    />
+    
+    <system.ModemConfig 
+        name="NAMR-P109SR"
+        deviceModel="NAMR-P109SR"
+    /> 
+    
+    <mvm.DisplayChannel name="Total Del Only F+H"       localName="Total Del Only F+H"      serviceType="Electricity" unit="kWh" chMethod="SUM"/>
+    <mvm.DisplayChannel name="Total Rcvd Only F+H"      localName="Total Rcvd Only F+H"     serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
+    
+    <mvm.ChannelConfig meterConfig="I210+c" channel="Total Del Only F+H"   channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="I210+c" channel="Total Rcvd Only F+H"  channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay" />
+    
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="I210+c"   level="2"   desc="On Demand Metering" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="I210+c"   level="2"   desc="Meter Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="I210+c"   level="2"   desc="Relay Switch" />
+
+
     <device.EventAlert eventAlertType='Event' 
                        severity='Information' 
                        name='Attachment or Detachment' 
@@ -1098,74 +1137,9 @@
                        troubleAdvice='' 
                        oid='203.109.0' 
                        monitor='SaveAndMonitor' 
-                       timeout='840'/>
-                       
-    <!-- VEE Conditions -->
-    <mvm.VEEParameter 
-                    ruleType="Validation" 
-                    parameter="ZeroConsumption"
-                    localName="Zero Consumption" 
-                    useThreshold="false"  
-                    condition="value_00=0 or value_01=0 or value_02=0 or value_03=0 or value_04=0 or value_05=0 or value_06=0 or value_07=0 or value_08=0 or value_09=0 or value_10=0 or value_11=0 or value_12=0 or value_13=0 or value_14=0 or value_15=0 or value_16=0 or value_17=0 or value_18=0 or value_19=0 or value_20=0 or value_21=0 or value_22=0 or value_23=0"  
-                    item="Day"  
-                    />
-    <mvm.VEEParameter   
-                    ruleType="Validation"
-                    parameter="OutOfThreshold"
-                    localName="Out Of Threshold" 
-                    useThreshold="true"  
-                    item="Day"
-                    condition="value_00&gt;threshold or value_01&gt;threshold or value_02&gt;threshold or value_03&gt;threshold or value_04&gt;threshold or value_05&gt;threshold or value_06&gt;threshold or value_07&gt;threshold or value_08&gt;threshold or value_09&gt;threshold or value_10&gt;threshold or value_11&gt;threshold or value_12&gt;threshold or value_13&gt;threshold or value_14&gt;threshold or value_15&gt;threshold or value_16&gt;threshold or value_17&gt;threshold or value_18&gt;threshold or value_19&gt;threshold or value_20&gt;threshold or value_21&gt;threshold or value_22&gt;threshold or value_23&gt;threshold"
-                    />
-                    
-    <system.DeviceVendor 
-        supplier="EDH"
-        name="GE"
-        code="2"
-        address="http://www.ge.com"
-        descr="General Electric Company"
-    />
+                       timeout='840'/>                                                   
     
-    <system.DeviceModel 
-        deviceVendor="NURITelecom"
-        code="1"
-        deviceType="1.2.1.1"
-        name="NAMR-P109SR"
-    />
-    
-    <system.DeviceModel 
-        deviceVendor="GE"
-        code="12"
-        deviceType="1.3.1.1"
-        name="I210+c"
-        image="uploadImg/meter/sm110.jpg"
-    />
-    
-    <system.MeterConfig 
-        meterClass="1.0"
-        phase="1p2w"
-        pulseConst="1"
-        name="I210+c"
-        deviceModel="I210+c"
-        parserName="com.aimir.fep.meter.parser.I210PlusCSeries"
-        saverName="com.aimir.fep.meter.saver.I210PlusCSeriesMDSaver"
-    />
-    
-    <system.ModemConfig 
-        name="NAMR-P109SR"
-        deviceModel="NAMR-P109SR"
-    /> 
-    
-    <mvm.DisplayChannel name="Total Del Only F+H"       localName="Total Del Only F+H"      serviceType="Electricity" unit="kWh" chMethod="SUM"/>
-    <mvm.DisplayChannel name="Total Rcvd Only F+H"      localName="Total Rcvd Only F+H"     serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
-    
-    <mvm.ChannelConfig meterConfig="I210+c" channel="Total Del Only F+H"   channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
-    <mvm.ChannelConfig meterConfig="I210+c" channel="Total Rcvd Only F+H"  channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay" />
-    
-    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="I210+c"   level="2"   desc="On Demand Metering" />
-    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="I210+c"   level="2"   desc="Meter Time Synchronization" />
-    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="I210+c"   level="2"   desc="Relay Switch" />
-    
+    <!-- Meter Event -->
     <device.MeterEvent 
                     id="STE.GE.I210+c.1"
                     value="1"
@@ -1226,7 +1200,7 @@
                     support="true"
                     meterType="EnergyMeter"
                     />                  
-         <device.MeterEvent 
+    <device.MeterEvent 
                     id="STE.GE.I210+c.33"
                     value="33"
                     vendor="GE" 
@@ -1238,7 +1212,7 @@
                     support="true"
                     meterType="EnergyMeter"
                     />              
-        <device.MeterEvent 
+    <device.MeterEvent 
                     id="STE.GE.I210+c.21"
                     value="21"
                     vendor="GE" 
@@ -1250,7 +1224,7 @@
                     support="true"
                     meterType="EnergyMeter"
                     />
-        <device.MeterEvent 
+    <device.MeterEvent 
                     id="MFE.GE.I210+c.16"
                     value="16"
                     vendor="GE" 
@@ -1262,7 +1236,7 @@
                     support="true"
                     meterType="EnergyMeter"
                     />
-        <device.MeterEvent 
+    <device.MeterEvent 
                     id="MFE.GE.I210+c.17"
                     value="17"
                     vendor="GE" 
@@ -1275,7 +1249,7 @@
                     meterType="EnergyMeter"
                     />
                     
-        <device.MeterEvent 
+    <device.MeterEvent 
                     id="MFE.GE.I210+c.18"
                     value="18"
                     vendor="GE" 
@@ -1289,7 +1263,7 @@
                     support="true"
                     meterType="EnergyMeter"
                     />
-        <device.MeterEvent 
+    <device.MeterEvent 
                     id="MFE.GE.I210+c.19"
                     value="19"
                     vendor="GE" 
@@ -1301,7 +1275,7 @@
                     support="true"
                     meterType="EnergyMeter"
                     />
-        <device.MeterEvent 
+    <device.MeterEvent 
                     id="MFE.GE.I210+c.24"
                     value="24"
                     vendor="GE" 
@@ -1313,7 +1287,7 @@
                     support="true"
                     meterType="EnergyMeter"
                     />
-        <device.MeterEvent 
+    <device.MeterEvent 
                     id="MFE.GE.I210+c.25"
                     value="25"
                     vendor="GE" 
@@ -1325,7 +1299,7 @@
                     support="true"
                     meterType="EnergyMeter"
                     />
-        <device.MeterEvent 
+    <device.MeterEvent 
                     id="MFE.GE.I210+c.28"
                     value="28"
                     vendor="GE" 
@@ -1337,7 +1311,7 @@
                     support="true"
                     meterType="EnergyMeter"
                     />
-        <device.MeterEvent 
+    <device.MeterEvent 
                     id="MFE.GE.I210+c.33"
                     value="33"
                     vendor="GE" 
@@ -1349,7 +1323,7 @@
                     support="true"
                     meterType="EnergyMeter"
                     />
-        <device.MeterEvent 
+    <device.MeterEvent 
                     id="MFE.GE.I210+c.34"
                     value="34"
                     vendor="GE" 
@@ -1361,7 +1335,7 @@
                     support="true"
                     meterType="EnergyMeter"
                     />
-        <device.MeterEvent 
+    <device.MeterEvent 
                     id="STS.GE.I210+c.20"
                     value="20"
                     vendor="GE" 
@@ -1373,55 +1347,55 @@
                     support="true"
                     meterType="EnergyMeter"
                     />
-        <device.MeterEvent 
+    <device.MeterEvent 
                     id="STS.GE.I210+c.13"
                     value="13"
                     vendor="GE" 
                     model="I210+c"  
                     kind="STS"  
                     name="RAM error"
-                    descr="Meter did detect a RAM error"
+                    descr="Meter detect a RAM error"
                     troubleAdvice=""
                     support="true"
                     meterType="EnergyMeter"
                     />
-        <device.MeterEvent 
+    <device.MeterEvent 
                     id="STS.GE.I210+c.14"
                     value="14"
                     vendor="GE" 
                     model="I210+c"  
                     kind="STS"  
                     name="ROM error"
-                    descr="Meter did detect a ROM error"
+                    descr="Meter detect a ROM error"
                     troubleAdvice="Check for proper installation. Check for proper grounding. Call for factory for further assistance"
                     support="true"
                     meterType="EnergyMeter"
                     />
-        <device.MeterEvent 
+    <device.MeterEvent 
                     id="STS.GE.I210+c.16"
                     value="16"
                     vendor="GE" 
                     model="I210+c"  
                     kind="STS"  
                     name="Clock error"
-                    descr="Meter did detect a clock error"
+                    descr="Meter detect a clock error"
                     troubleAdvice=""
                     support="true"
                     meterType="EnergyMeter"
                     />
-        <device.MeterEvent 
+    <device.MeterEvent 
                     id="STS.GE.I210+c.17"
                     value="17"
                     vendor="GE" 
                     model="I210+c"  
                     kind="STS"  
                     name="Bad voltage"
-                    descr="Meter did detect a bad voltage"
+                    descr="Meter detect a bad voltage"
                     troubleAdvice=""
                     support="true"
                     meterType="EnergyMeter"
                     />
-        <device.MeterEvent 
+    <device.MeterEvent 
                     id="STS.GE.I210+c.10"
                     value="10"
                     vendor="GE" 
@@ -1433,5 +1407,103 @@
                     support="true"
                     meterType="EnergyMeter"
                     />
+
+    <mvm.Season
+        smonth="03"
+        sday="01"
+        emonth="05"
+        name="Spring"
+    />
+    <mvm.Season
+        smonth="06"
+        sday="01"
+        emonth="08"
+        name="Summer"
+    />
+    <mvm.Season
+        smonth="09"
+        sday="01"
+        emonth="11"
+        name="Autumn"
+    />
+    <mvm.Season
+        smonth="12"
+        sday="01"
+        emonth="02"
+        name="Winter"
+    />
+
+    <!-- VEE Conditions -->
+    <mvm.VEEParameter 
+                    ruleType="Validation" 
+                    parameter="ZeroConsumption"
+                    localName="Zero Consumption" 
+                    useThreshold="false"  
+                    condition="value_00=0 or value_01=0 or value_02=0 or value_03=0 or value_04=0 or value_05=0 or value_06=0 or value_07=0 or value_08=0 or value_09=0 or value_10=0 or value_11=0 or value_12=0 or value_13=0 or value_14=0 or value_15=0 or value_16=0 or value_17=0 or value_18=0 or value_19=0 or value_20=0 or value_21=0 or value_22=0 or value_23=0"  
+                    item="Day"  
+                    />
+    <mvm.VEEParameter   
+                    ruleType="Validation"
+                    parameter="OutOfThreshold"
+                    localName="Out Of Threshold" 
+                    useThreshold="true"  
+                    item="Day"
+                    condition="value_00&gt;threshold or value_01&gt;threshold or value_02&gt;threshold or value_03&gt;threshold or value_04&gt;threshold or value_05&gt;threshold or value_06&gt;threshold or value_07&gt;threshold or value_08&gt;threshold or value_09&gt;threshold or value_10&gt;threshold or value_11&gt;threshold or value_12&gt;threshold or value_13&gt;threshold or value_14&gt;threshold or value_15&gt;threshold or value_16&gt;threshold or value_17&gt;threshold or value_18&gt;threshold or value_19&gt;threshold or value_20&gt;threshold or value_21&gt;threshold or value_22&gt;threshold or value_23&gt;threshold"
+                    />
+    
+    <system.TariffType supplier="EDH" serviceTypeCode="3.1" code="1" name="Home Power1" description="Home Power1"/>
+    <system.TariffType supplier="EDH" serviceTypeCode="3.1" code="2" name="Business Rate1" description="Business Rate1"/>    
+    
+    <system.TariffEM
+        supplier="EDH" 
+        yyyymmdd="20140101"
+        tariffType="Home Power1" 
+        supplySizeMin="0" 
+        supplySizeMax="50" 
+        condition1="&gt;"
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="0.809"
+        serviceCharge="0" />
+    <system.TariffEM
+        supplier="EDH" 
+        yyyymmdd="20140101"
+        tariffType="Home Power1" 
+        supplySizeMin="50" 
+        supplySizeMax="300" 
+        condition1="&gt;"
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="1.003"
+        serviceCharge="0" />
+    <system.TariffEM
+        supplier="EDH" 
+        yyyymmdd="20140101"
+        tariffType="Home Power1" 
+        supplySizeMin="300" 
+        supplySizeMax="600" 
+        condition1="&gt;"
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="1.322"
+        serviceCharge="0" />
+    <system.TariffEM
+        supplier="EDH" 
+        yyyymmdd="20140101"
+        tariffType="Home Power1" 
+        supplySizeMin="600" 
+        condition1="&gt;"
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="1.516"
+        serviceCharge="0" />
+
+    <system.TariffEM
+        supplier="EDH" 
+        yyyymmdd="20140101"
+        tariffType="Business Rate1" 
+        supplySizeUnit="kWh"
+        activeEnergyCharge="1.220"
+        serviceCharge="0" />                    
                     
 </dataset>
