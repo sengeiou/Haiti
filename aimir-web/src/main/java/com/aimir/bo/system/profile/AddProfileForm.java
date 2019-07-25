@@ -27,7 +27,6 @@ import com.aimir.service.system.LocationManager;
 import com.aimir.service.system.ProfileManager;
 
 @Controller
-@re
 public class AddProfileForm {
 
     private final Log log = LogFactory.getLog(AddProfileForm.class);
