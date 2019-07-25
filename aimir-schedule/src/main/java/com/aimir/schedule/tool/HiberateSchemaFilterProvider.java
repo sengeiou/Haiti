@@ -20,21 +20,23 @@ public class HiberateSchemaFilterProvider implements SchemaFilterProvider {
 
 	@Override
 	public SchemaFilter getDropFilter() {
-		return new InnerSchemaFilterProvider();
+		return InnerSchemaFilterProvider.Instance;
 	}
 
 	@Override
 	public SchemaFilter getMigrateFilter() {
-		return new InnerSchemaFilterProvider();
+		return InnerSchemaFilterProvider.Instance;
 	}
 
 	@Override
 	public SchemaFilter getValidateFilter() {
-		return new InnerSchemaFilterProvider();
+		return InnerSchemaFilterProvider.Instance;
 	}
 
 	
-	public class InnerSchemaFilterProvider implements SchemaFilter {
+	public static class InnerSchemaFilterProvider implements SchemaFilter {
+		
+		public static final InnerSchemaFilterProvider Instance = new InnerSchemaFilterProvider();
 		
 		@Override
 		public boolean includeNamespace(Namespace namespace) {
