@@ -43,15 +43,17 @@ public class HiberateSchemaFilterProvider implements SchemaFilterProvider {
 
 		@Override
 		public boolean includeTable(Table table) {
-			if(table.getName().toLowerCase().contains("day_em_view") || table.getName().toLowerCase().contains("month_em_view") || 
-				table.getName().toLowerCase().contains("day_gm_view") || table.getName().toLowerCase().contains("month_gm_view") ||
-				table.getName().toLowerCase().contains("day_wm_view") || table.getName().toLowerCase().contains("month_wm_view") ||
-				table.getName().toLowerCase().contains("day_tm_view") || table.getName().toLowerCase().contains("month_tm_view") ||
-				table.getName().toLowerCase().contains("day_hm_view") || table.getName().toLowerCase().contains("month_hm_view")) 
+			if(table.getName().toLowerCase().equals("day_em_view") || table.getName().toLowerCase().equals("month_em_view") || 
+				table.getName().toLowerCase().equals("day_gm_view") || table.getName().toLowerCase().equals("month_gm_view") ||
+				table.getName().toLowerCase().equals("day_wm_view") || table.getName().toLowerCase().equals("month_wm_view") ||
+				table.getName().toLowerCase().equals("day_tm_view") || table.getName().toLowerCase().equals("month_tm_view") ||
+				table.getName().toLowerCase().equals("day_hm_view") || table.getName().toLowerCase().equals("month_hm_view")) 
 			{
+				log.debug("### table : "+table.getName()+" return false");
 				return false;
 			}
 			
+			log.debug("### table : "+table.getName()+" return true");
 			return true;
 		}
 
