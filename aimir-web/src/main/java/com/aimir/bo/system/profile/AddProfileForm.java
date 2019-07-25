@@ -27,6 +27,7 @@ import com.aimir.service.system.LocationManager;
 import com.aimir.service.system.ProfileManager;
 
 @Controller
+@re
 public class AddProfileForm {
 
     private final Log log = LogFactory.getLog(AddProfileForm.class);
@@ -43,7 +44,7 @@ public class AddProfileForm {
 	@Autowired
     LocationManager locationManager;
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value="/gadget/system/profile/addProfile.do", method = RequestMethod.GET)
     public String setupForm(HttpServletRequest request, HttpServletResponse response, Model model) {
 		
 		ESAPI.httpUtilities().setCurrentHTTP(request, response);

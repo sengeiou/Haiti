@@ -1,6 +1,5 @@
 package com.aimir.bo.system.gadget;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,6 @@ import com.aimir.dao.system.DashboardGadgetDao;
 import com.aimir.esapi.AimirAuthenticator;
 import com.aimir.esapi.AimirUser;
 import com.aimir.model.system.Dashboard;
-import com.aimir.model.system.DashboardGadget;
 import com.aimir.model.system.DashboardGadgetVO;
 import com.aimir.model.system.Gadget;
 import com.aimir.service.system.DashboardGadgetManager;
@@ -53,10 +51,13 @@ public class GadgetController {
      * 
      * <p>Expected HTTP GET and request '/gadget/search'.</p>
      */
+    
+    /* Ambiguous mapping Error
     @RequestMapping(method=RequestMethod.GET)
     public List<Gadget> gatGadget() {
         return gadgetManager.getGadgets();
     }
+    */
     
     @RequestMapping("/gadget.*")
     public String execute(ModelMap model) {
