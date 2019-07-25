@@ -457,7 +457,7 @@ public class SPASABlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         for (int i = 31; i > 0; i--) {
             lpValue = BeanUtils.getProperty(monthEM, String.format("value_%02d", i));
             if (lpValue != null && !lpValue.equals("")) {
-                yyyymmdd = String.format("%s%02d", monthEM.getYyyymm(), i);
+                yyyymmdd = String.format("%s%02d", monthEM.id.getYyyymm(), i);
                 log.info("getLastLpTime: " + yyyymmdd);
                 break;
             }

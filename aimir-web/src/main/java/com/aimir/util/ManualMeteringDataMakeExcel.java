@@ -132,7 +132,7 @@ public class ManualMeteringDataMakeExcel {
             	row = sheet.createRow(i+ (meteringDataStartRow + 1));      
 
             	cell = row.createCell(0);
-            	cell.setCellValue(TimeLocaleUtil.getLocaleDate(m.getYyyymmdd(), lang, country));
+            	cell.setCellValue(TimeLocaleUtil.getLocaleDate(m.id.getYyyymmdd(), lang, country));
             	cell.setCellStyle(dataCellStyle);
 
             	cell = row.createCell(1);

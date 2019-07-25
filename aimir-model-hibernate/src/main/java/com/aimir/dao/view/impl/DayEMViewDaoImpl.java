@@ -51,20 +51,20 @@ public class DayEMViewDaoImpl extends AbstractHibernateGenericDao<DayEMView, Int
                 } 
             }
             
-            if (dayEMView.getChannel() != null) {
+            if (dayEMView.id.getChannel() != null) {
                 
-                criteria.add(Restrictions.eq("channel", dayEMView.getChannel()));
+                criteria.add(Restrictions.eq("channel", dayEMView.id.getChannel()));
             }
             
-            if (dayEMView.getYyyymmdd() != null) {
+            if (dayEMView.id.getYyyymmdd() != null) {
                 
                 
-                criteria.add(Restrictions.eq("yyyymmdd", dayEMView.getYyyymmdd()));
+                criteria.add(Restrictions.eq("yyyymmdd", dayEMView.id.getYyyymmdd()));
             }
             
-            if (dayEMView.getMdevType() != null) {
+            if (dayEMView.id.getMdevType() != null) {
                 
-                criteria.add(Restrictions.eq("mdevType", dayEMView.getMdevType()));
+                criteria.add(Restrictions.eq("mdevType", dayEMView.id.getMdevType()));
             }
         }
 

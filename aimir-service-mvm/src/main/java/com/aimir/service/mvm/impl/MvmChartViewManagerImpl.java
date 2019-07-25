@@ -1096,7 +1096,7 @@ public class MvmChartViewManagerImpl implements MvmChartViewManager {
 
                     // 행을 그리기 위한 기준으로 일자를 구함
                     for (int i = 0; i < dataList.size(); i++) {
-                        dayHashSet.add(dataList.get(i).getYyyymmdd());
+                        dayHashSet.add(dataList.get(i).id.getYyyymmdd());
                     }
 
                     Set<String> dayList = new TreeSet<String>(dayHashSet);
@@ -1114,7 +1114,7 @@ public class MvmChartViewManagerImpl implements MvmChartViewManager {
 
                 // 데이터 추출
                 for (int i = 0; i < dataList.size(); i++) {
-                    String compdate = dataList.get(i).getYyyymmdd();
+                    String compdate = dataList.get(i).id.getYyyymmdd();
                     Integer compContID = dataList.get(i).getContract().getId();
 
                     /*
@@ -1469,12 +1469,12 @@ public class MvmChartViewManagerImpl implements MvmChartViewManager {
                     }
                 } else {
                     for (int i = 0; i < dataList.size(); i++) {
-                        String tmpDate = dataList.get(i).getYyyymm();
+                        String tmpDate = dataList.get(i).id.getYyyymm();
                         if (i == 0) {
                             tmpYYmm = tmpDate;
-                            monthList.add(dataList.get(i).getYyyymm());
+                            monthList.add(dataList.get(i).id.getYyyymm());
                         } else if (!tmpYYmm.equals(tmpDate)) {
-                            monthList.add(dataList.get(i).getYyyymm());
+                            monthList.add(dataList.get(i).id.getYyyymm());
                         }
                         tmpYYmm = tmpDate;
                     }
@@ -1487,7 +1487,7 @@ public class MvmChartViewManagerImpl implements MvmChartViewManager {
                 }
                 // 데이터 추출
                 for (int i = 0; i < dataList.size(); i++) {
-                    String compdate = dataList.get(i).getYyyymm();
+                    String compdate = dataList.get(i).id.getYyyymm();
                     Integer compContID = dataList.get(i).getContract().getId();
 
                     for (int rowIdx = 0; rowIdx < monthList.size(); rowIdx++) {
@@ -2423,7 +2423,7 @@ public class MvmChartViewManagerImpl implements MvmChartViewManager {
 
                 // 행을 그리기 위한 기준으로 일자를 구함
                 for (int i = 0; i < dataList.size(); i++) {
-                    dayHashSet.add(dataList.get(i).getYyyymmdd());
+                    dayHashSet.add(dataList.get(i).id.getYyyymmdd());
                 }
 
                 Set<String> dayList = new TreeSet<String>(dayHashSet);
@@ -2441,7 +2441,7 @@ public class MvmChartViewManagerImpl implements MvmChartViewManager {
 
                 // 데이터 추출
                 for (int i = 0; i < dataList.size(); i++) {
-                    String compdate = dataList.get(i).getYyyymmdd();
+                    String compdate = dataList.get(i).id.getYyyymmdd();
                     Integer compContID = dataList.get(i).getContract().getId();
 
                     for (int rowIdx = 0; rowIdx < arrStdDate.length; rowIdx++) {

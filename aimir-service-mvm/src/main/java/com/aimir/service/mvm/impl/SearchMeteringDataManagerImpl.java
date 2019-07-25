@@ -1174,7 +1174,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             
 //            yyyymmdd = day.getYyyymmdd();
 //            mld.setMeteringTime(yyyymmdd);
-            mld.setMeteringTime(TimeLocaleUtil.getLocaleDate(day.getYyyymmdd(), lang, country));
+            mld.setMeteringTime(TimeLocaleUtil.getLocaleDate(day.id.getYyyymmdd(), lang, country));
             if(day.getTotal()==null){
                 mld.setMeteringData("");                
                 mld.setCo2("");
@@ -1215,7 +1215,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
              * OPF-610 정규화 관련 처리로 인한 주석
             conditionList.add(new Condition("id.yyyymmdd",new Object[]{getBeforeDay(day.getId().getYyyymmdd())},null,Restriction.EQ));
             */
-            conditionList.add(new Condition("id.yyyymmdd",new Object[]{getBeforeDay(day.getYyyymmdd())},null,Restriction.EQ));
+            conditionList.add(new Condition("id.yyyymmdd",new Object[]{getBeforeDay(day.id.getYyyymmdd())},null,Restriction.EQ));
             
             if ("EM".equals(type)) {
             	/*
@@ -1380,7 +1380,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             // +" "+ strDayWeek[(scu.getDateTodayWeekNum(yyyymmdd) - 1)].toString());
             // mld.setMeteringTime( yyyymmdd + " " + strDayWeek[(scu.getDateTodayWeekNum(yyyymmdd) - 1)].toString());
             // mld.setMeteringTime(sdfDayFormat.format(sdfDate.parse(day.getYyyymmdd())));
-            mld.setMeteringTime(TimeLocaleUtil.getLocaleWeekDay(day.getYyyymmdd(), lang, country));
+            mld.setMeteringTime(TimeLocaleUtil.getLocaleWeekDay(day.id.getYyyymmdd(), lang, country));
 
             if (day.getTotal() == null) {
                 mld.setMeteringData("");
@@ -1399,7 +1399,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
              * OPF-610 정규화 관련 처리로 인한 주석
             conditionList.add(new Condition("id.yyyymmdd", new Object[] { getBeforeDay(day.getId().getYyyymmdd()) }, null, Restriction.EQ));
             */
-            conditionList.add(new Condition("id.yyyymmdd", new Object[] { getBeforeDay(day.getYyyymmdd()) }, null, Restriction.EQ));
+            conditionList.add(new Condition("id.yyyymmdd", new Object[] { getBeforeDay(day.id.getYyyymmdd()) }, null, Restriction.EQ));
             
             if ("EM".equals(type)) {
             	/*
@@ -1691,7 +1691,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             }
 //            yyyymm = month.getYyyymm();
 //            mld.setMeteringTime(yyyymm);
-            mld.setMeteringTime(TimeLocaleUtil.getLocaleYearMonth(month.getYyyymm(), lang, country));
+            mld.setMeteringTime(TimeLocaleUtil.getLocaleYearMonth(month.id.getYyyymm(), lang, country));
 
             if (month.getTotal() == null) {
                 mld.setMeteringData("");
@@ -1711,7 +1711,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
              * OPF-610 정규화 관련 처리로 인한 주석
             conditionList.add(new Condition("id.yyyymm", new Object[] { getBeforeMonth(month.getId().getYyyymm()) }, null, Restriction.EQ));
 			*/
-            conditionList.add(new Condition("id.yyyymm", new Object[] { getBeforeMonth(month.getYyyymm()) }, null, Restriction.EQ));
+            conditionList.add(new Condition("id.yyyymm", new Object[] { getBeforeMonth(month.id.getYyyymm()) }, null, Restriction.EQ));
             
             if ("EM".equals(type)) {
             	/*

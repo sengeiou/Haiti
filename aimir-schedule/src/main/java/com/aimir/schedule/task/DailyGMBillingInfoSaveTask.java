@@ -194,13 +194,13 @@ public class DailyGMBillingInfoSaveTask  extends ScheduleTask{
 		    	if(dayGM.size() != 0) {
 		    		for(int i=0; i<dayGM.size(); i++) {
 		    			dataValue =  this.getDayValue24(dayGM.get(i));
-		    			billingDayGM.setYyyymmdd(dayGM.get(i).getYyyymmdd());
+		    			billingDayGM.setYyyymmdd(dayGM.get(i).id.getYyyymmdd());
 		    			List<BillingDayGM> list_billingDayGM = billingDayGMDao.getBillingDayGMs(billingDayGM, null, null);
 		    			Double dailyBill = list_billingDayGM.size() != 0 ? list_billingDayGM.get(0).getBill() : 0d;
 
 		    			// 마지막 읽은 날의 남은 시간에 대한 사용량을 더한다.
 		    			// 예) 10일 22시까지 읽었으면 이번에는 10일 23시의 사용량부터 계산하도록 하기 위해서
-		    			if(readToDateYYYYMMDD.equals(dayGM.get(i).getYyyymmdd())) { 
+		    			if(readToDateYYYYMMDD.equals(dayGM.get(i).id.getYyyymmdd())) { 
 		    				for (int j = 0; j < dataValue.length; j++) {
 
 		    					if(Integer.parseInt(readFromDateHH) <= j) {
@@ -212,10 +212,10 @@ public class DailyGMBillingInfoSaveTask  extends ScheduleTask{
 		    					}
 							}
 		    				flg = true;
-		    				saveReadFromDateYYYYMMDDHHMMSS = dayGM.get(i).getYyyymmdd() + saveReadFromDateHH + "0000";
+		    				saveReadFromDateYYYYMMDDHHMMSS = dayGM.get(i).id.getYyyymmdd() + saveReadFromDateHH + "0000";
 		    			} else { // 마지막 읽은 날짜와 같지 않을 경우는 전체 사용량을 읽는다.
 		    				usage = usage + dayGM.get(i).getTotal();
-		    				saveReadFromDateYYYYMMDDHHMMSS = dayGM.get(i).getYyyymmdd() + "000000";
+		    				saveReadFromDateYYYYMMDDHHMMSS = dayGM.get(i).id.getYyyymmdd() + "000000";
 		    			}
 		    			// 가장 최근 데이터일 경우, 언제까지 사용량을 읽었는지 계산한다.
 						for(int k=dataValue.length -1; k>=0; k--) {
@@ -224,7 +224,7 @@ public class DailyGMBillingInfoSaveTask  extends ScheduleTask{
 								break;
 							}
 						}
-						saveReadToDateYYYYMMDDHHMMSS = dayGM.get(i).getYyyymmdd() + saveReadToDateHH + "0000";
+						saveReadToDateYYYYMMDDHHMMSS = dayGM.get(i).id.getYyyymmdd() + saveReadToDateHH + "0000";
 
 		    			Code code = codeDao.get(contract.getCreditTypeCodeId());
 

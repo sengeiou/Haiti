@@ -215,7 +215,7 @@ public class DailyWMBillingInfoSaveTask  extends ScheduleTask{
 	                    bdUsage = new BigDecimal(0d);
 	                    bdBill = new BigDecimal(0d);
 	                    dataValue =  this.getDayValue24(dayWM.get(i));
-	                    billingDayWM.setYyyymmdd(dayWM.get(i).getYyyymmdd());
+	                    billingDayWM.setYyyymmdd(dayWM.get(i).id.getYyyymmdd());
 	                    List<BillingDayWM> list_billingDayWM = billingDayWMDao.getBillingDayWMs(billingDayWM, null, null);
 	                    _billingDayWM = list_billingDayWM.size() != 0 ? list_billingDayWM.get(0) : null;
 //	                    Double dailyBill = list_billingDayWM.size() != 0 ? list_billingDayWM.get(0).getBill() : 0d;
@@ -223,7 +223,7 @@ public class DailyWMBillingInfoSaveTask  extends ScheduleTask{
 
 	                    // 마지막 읽은 날의 남은 시간에 대한 사용량을 더한다.
 	                    // 예) 10일 22시까지 읽었으면 이번에는 10일 23시의 사용량부터 계산하도록 하기 위해서
-	                    if (readToDateYYYYMMDD.equals(dayWM.get(i).getYyyymmdd())) {
+	                    if (readToDateYYYYMMDD.equals(dayWM.get(i).id.getYyyymmdd())) {
 	                        if (intNewReadFromDateHH == 0) {
 	                            // 새로 읽을 시간이 0 이면 skip.(마지막 읽은 시간이 23시임)
 	                            continue;
@@ -240,10 +240,10 @@ public class DailyWMBillingInfoSaveTask  extends ScheduleTask{
 	                            }
 	                        }
 	                        flg = true;
-	                        saveReadFromDateYYYYMMDDHHMMSS = dayWM.get(i).getYyyymmdd() + saveReadFromDateHH + "0000";
+	                        saveReadFromDateYYYYMMDDHHMMSS = dayWM.get(i).id.getYyyymmdd() + saveReadFromDateHH + "0000";
 	                    } else { // 마지막 읽은 날짜와 같지 않을 경우는 전체 사용량을 읽는다.
 	                        bdUsage = bdUsage.add(new BigDecimal(dayWM.get(i).getTotal()));
-	                        saveReadFromDateYYYYMMDDHHMMSS = dayWM.get(i).getYyyymmdd() + "000000";
+	                        saveReadFromDateYYYYMMDDHHMMSS = dayWM.get(i).id.getYyyymmdd() + "000000";
 	                    }
 
 	                    // 가장 최근 데이터일 경우, 언제까지 사용량을 읽었는지 계산한다.
@@ -254,7 +254,7 @@ public class DailyWMBillingInfoSaveTask  extends ScheduleTask{
 	                        }
 	                    }
 
-	                    saveReadToDateYYYYMMDDHHMMSS = dayWM.get(i).getYyyymmdd() + saveReadToDateHH + "0000";
+	                    saveReadToDateYYYYMMDDHHMMSS = dayWM.get(i).id.getYyyymmdd() + saveReadToDateHH + "0000";
 	    //              Double usage = (dayWM==null || dayWM.getTotal() == null ?0.0 : dayWM.getTotal());
 //	                  Code code = contract.getCreditType();
 

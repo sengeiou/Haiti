@@ -696,9 +696,9 @@ public class EnergyConsumptionSearchManagerImpl implements EnergyConsumptionSear
 		
 		List<DayEMView> dayEMs = new ArrayList<DayEMView>();
 		
-		if (dayEmView.getMdevType() != null) {
+		if (dayEmView.id.getMdevType() != null) {
 			
-			switch (dayEmView.getMdevType().getCode()) {
+			switch (dayEmView.id.getMdevType().getCode()) {
 			
 				case 0 :
 					

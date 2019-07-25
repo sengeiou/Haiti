@@ -2630,11 +2630,11 @@ public class EnergyConsumptionSearchController {
         
         DayEMView dayEMView = new DayEMView();
         Contract contract = contractManager.getContract(contractId);
-
-        dayEMView.setChannel(DefaultChannel.Usage.getCode());
-        dayEMView.setYyyymmdd(basicDay);
+    
         dayEMView.setContract(contract);
-        dayEMView.setMdevType(meterType);
+        dayEMView.id.setChannel(DefaultChannel.Usage.getCode());
+        dayEMView.id.setYyyymmdd(basicDay);
+        dayEMView.id.setMdevType(meterType);
         
         List<DayEMView> dayEMs = energyConsumptionSearchManager.getDayEMViews(dayEMView);
         
@@ -2648,10 +2648,10 @@ public class EnergyConsumptionSearchController {
         dayEMs.addAll(energyConsumptionSearchManager.getDayEMs(dayEM));
 		*/
         
-        dayEMView.setMdevType(endDeviceType);
+        dayEMView.id.setMdevType(endDeviceType);
         dayEMs.addAll(energyConsumptionSearchManager.getDayEMViews(dayEMView));
 
-        dayEMView.setMdevType(modemType);
+        dayEMView.id.setMdevType(modemType);
         dayEMs.addAll(energyConsumptionSearchManager.getDayEMViews(dayEMView));
         
         List<Object> data = new ArrayList<Object>();
@@ -2695,7 +2695,7 @@ public class EnergyConsumptionSearchController {
         for (DayEMView result : dayEMs) {
         //for (DayEM result : dayEMs) { OPF-610 정규화 관련 처리로 인한 주석  
 
-            String mDevType = result.getMdevType().name();
+            String mDevType = result.id.getMdevType().name();
 
             if (endDeviceType.equals(mDevType) || modemType.equals(mDevType)) {
 
@@ -2980,10 +2980,10 @@ public class EnergyConsumptionSearchController {
         MonthEMView monthEM = new MonthEMView();
         Contract contract = contractManager.getContract(contractId);
 
-        monthEM.setChannel(DefaultChannel.Usage.getCode());
-        monthEM.setYyyymm(basicDay);
+        monthEM.id.setChannel(DefaultChannel.Usage.getCode());
+        monthEM.id.setYyyymm(basicDay);
         monthEM.setContract(contract);
-        monthEM.setMdevType(meterType);
+        monthEM.setMDevType(meterType);
         
         List<MonthEMView> monthEMs = energyConsumptionSearchManager.getMonthEMViews(monthEM);
         
@@ -3501,7 +3501,7 @@ public class EnergyConsumptionSearchController {
 				*/
                 
                 MonthEMView monthEMView = new MonthEMView();
-                monthEMView.setYyyymm(basicDay);
+                monthEMView.id.setYyyymm(basicDay);
                 monthEMView.setContract(contract);
                 monthEMView.setEnddevice(endDevice);
                 
@@ -3611,8 +3611,8 @@ public class EnergyConsumptionSearchController {
         MonthEMView monthEMView = new MonthEMView();
         Contract contract = contractManager.getContract(contractId);
 
-        monthEMView.setChannel(DefaultChannel.Usage.getCode());
-        monthEMView.setYyyymm(basicDay);
+        monthEMView.id.setChannel(DefaultChannel.Usage.getCode());
+        monthEMView.id.setYyyymm(basicDay);
         monthEMView.setContract(contract);
         monthEMView.setMDevType(meterType);
 
@@ -3657,7 +3657,7 @@ public class EnergyConsumptionSearchController {
             for (MonthEMView monthEMMeter : monthEMsMeter) {
             //for (MonthEM monthEMMeter : monthEMsMeter) { //OPF-610 정규화 관련 처리로 인한 주석 
 
-                int label = Integer.parseInt(monthEMMeter.getYyyymm().substring(4,6));
+                int label = Integer.parseInt(monthEMMeter.id.getYyyymm().substring(4,6));
 
                 etcUsageMap.put(label, monthEMMeter.getTotal() == null ? 0.0 : monthEMMeter.getTotal());
 
@@ -3681,7 +3681,7 @@ public class EnergyConsumptionSearchController {
                 for (MonthEMView monthEMMeter : monthEMsMeter) {
                 //for (MonthEM monthEMMeter : monthEMsMeter) { OPF-610 정규화 관련 처리로 인한 주석
 
-                    int label = Integer.parseInt(monthEMMeter.getYyyymm().substring(4,6));
+                    int label = Integer.parseInt(monthEMMeter.id.getYyyymm().substring(4,6));
 
                     Double etcUsage = etcUsageMap.get(label);
 
@@ -3691,7 +3691,7 @@ public class EnergyConsumptionSearchController {
                     for (int j = 0; j < monthEMsEndDevice.size(); j++) {
 
                         if (seriesname.equals(monthEMsEndDevice.get(j).getEnddevice().getFriendlyName())
-                            && label == Integer.parseInt(monthEMsEndDevice.get(j).getYyyymm().substring(4, 6))) {
+                            && label == Integer.parseInt(monthEMsEndDevice.get(j).id.getYyyymm().substring(4, 6))) {
 
                             same = monthEMsEndDevice.get(j);
                             monthEMsEndDevice.remove(j);
@@ -3727,7 +3727,7 @@ public class EnergyConsumptionSearchController {
             for (MonthEMView monthEMMeter : monthEMsMeter) {
             //for (MonthEM monthEMMeter : monthEMsMeter) { OPF-610 정규화 관련 처리로 인한 주석
 
-                int label = Integer.parseInt(monthEMMeter.getYyyymm().substring(4,6));
+                int label = Integer.parseInt(monthEMMeter.id.getYyyymm().substring(4,6));
 
                 Double etcUsage = etcUsageMap.get(label);
 

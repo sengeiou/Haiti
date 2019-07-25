@@ -302,7 +302,7 @@ public class ECGBlockDailyEMBillingInfoSaveTask  extends ScheduleTask{
                     log.info("----------------- BillingBlockTariff save Start ----------------------");
 
                     //마지막으로 billingBlockTariff을 저장한 날의 정보를 갱신하기 위함
-                    if(lastAccumulateDate.substring(0,6).equals(monthEM.get(i).getYyyymm())) {
+                    if(lastAccumulateDate.substring(0,6).equals(monthEM.get(i).id.getYyyymm())) {
                         Set<Condition> condition3 = new HashSet<Condition>();
                         condition3.add(new Condition("id.mdevType", new Object[]{DeviceType.Meter}, null, Restriction.EQ));
                         condition3.add(new Condition("id.mdevId", new Object[]{mdsId}, null, Restriction.EQ));

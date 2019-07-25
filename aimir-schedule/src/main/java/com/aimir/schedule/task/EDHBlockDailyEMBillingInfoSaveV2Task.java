@@ -404,7 +404,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         for (int i = 31; i > 0; i--) {
             lpValue = BeanUtils.getProperty(monthEM, String.format("value_%02d", i));
             if (lpValue != null && !lpValue.equals("")) {
-                yyyymmdd = String.format("%s%02d", monthEM.getYyyymm(), i);
+                yyyymmdd = String.format("%s%02d", monthEM.id.getYyyymm(), i);
                 log.info("5-1. MeterId [" + meterId + "] getLastLpTime: " + yyyymmdd);
                 break;
             }

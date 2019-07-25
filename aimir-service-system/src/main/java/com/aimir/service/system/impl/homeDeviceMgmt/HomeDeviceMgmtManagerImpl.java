@@ -123,10 +123,10 @@ public class HomeDeviceMgmtManagerImpl implements HomeDeviceMgmtManager {
 			DayEMView dayEMView = new DayEMView();	        
 	        //String billDate = BillDateUtil.getBillDate(contract, TimeUtil.getCurrentDay(), 0);
 	        String billDate = BillDateUtil.getBillDate(contract, "20110401", 0);
-	        dayEMView.setChannel(DefaultChannel.Usage.getCode());
-	        dayEMView.setYyyymmdd(billDate);
+	        dayEMView.id.setChannel(DefaultChannel.Usage.getCode());
+	        dayEMView.id.setYyyymmdd(billDate);
 	        dayEMView.setContract(contract);
-	        dayEMView.setMdevType(mDevType); // Modem 또는 EndDevice
+	        dayEMView.id.setMdevType(mDevType); // Modem 또는 EndDevice
 	        
 	        List<DayEMView> dayEMs = dayEMViewDao.getDayEMs(dayEMView);
 	        for (DayEMView result : dayEMs) {
