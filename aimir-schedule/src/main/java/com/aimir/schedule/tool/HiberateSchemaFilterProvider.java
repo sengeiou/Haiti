@@ -14,8 +14,7 @@ public class HiberateSchemaFilterProvider implements SchemaFilterProvider {
 	
 	@Override
 	public SchemaFilter getCreateFilter() {
-		// TODO Auto-generated method stub
-		return null;
+		return InnerSchemaFilterProvider.Instance;
 	}
 
 	@Override
