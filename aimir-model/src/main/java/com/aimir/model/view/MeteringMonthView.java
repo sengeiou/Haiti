@@ -6,6 +6,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.aimir.annotation.ColumnInfo;
@@ -17,6 +18,7 @@ import com.aimir.model.device.Modem;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.Supplier;
 
+@MappedSuperclass
 public class MeteringMonthView {
 	@Column(name="mdev_id",length=20)
 	@ColumnInfo(name="장비 아이디", descr="")
