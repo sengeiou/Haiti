@@ -32,9 +32,8 @@ public class InitData {
 
 	public InitData() {
 
-		ctx = new FileSystemXmlApplicationContext("src/main/resources/applicationContext.xml");
-		//ctx = new FileSystemXmlApplicationContext("src/main/resources/applicationContext-hibernate4.xml");
-
+		//ctx = new FileSystemXmlApplicationContext("src/main/resources/applicationContext.xml");
+		ctx = new FileSystemXmlApplicationContext("src/main/resources/applicationContext-hibernate5.xml");
 	}
 
 	public void initData(String dataDir) throws Exception {
