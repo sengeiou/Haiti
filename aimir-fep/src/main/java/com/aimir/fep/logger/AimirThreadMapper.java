@@ -21,10 +21,10 @@ public class AimirThreadMapper {
 	// 최소 THREAD_COUNT + 5, RECOVERY_THREAD_COUNT + 5 만큼은 프로시저 테이블이 준비되어 있어야 한다.
 	
 	private final int MAPPER_PREFIX = Integer.parseInt(FMPProperty.getProperty("lp.normalization.server.index", "1"));
-	private final int THREAD_COUNT = 20;
+	private final int THREAD_COUNT = Integer.parseInt(FMPProperty.getProperty("lp.normalization.server.index.size", "20"));
 	
-	private final int RECOVERY_MAPPER_PRIFIX = 5000;
-	private final int RECOVERY_THREAD_COUNT = 10;
+	private final int RECOVERY_MAPPER_PRIFIX = Integer.parseInt(FMPProperty.getProperty("lp.normalization.server.recovery.index", "5000"));
+	private final int RECOVERY_THREAD_COUNT = Integer.parseInt(FMPProperty.getProperty("lp.normalization.server.recovery.index.size", "10"));
 	
 	private Map<Long, String> activeMap = null;
 	private ArrayList<String> idleList = null;
