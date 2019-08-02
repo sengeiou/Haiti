@@ -14,19 +14,19 @@
     <system.Supplier 
         name="EDH" 
         country="Haiti"
-        lang="English"
+        lang="French"
         timezone="America/Port-au-Prince"
         address="Port-au-Prince"
         descr="EDH"
         telno=""
-        cd.pattern="###,###,###,###,##0.000"
+        cd.pattern="###,###,###,###,##0.00"
         cd.round="c"
-        md.pattern="###,###,###,###,##0.000"
+        md.pattern="###,###,###,###,##0.00"
         md.round="r"
     />
     
     <system.Co2Formula name="ElectricityCO2" supplyTypeCode="3.1" unitUsage="100" co2emissions="44.3" co2factor="0.443" unit="KWh"/>
-    <system.Co2Formula name="WaterCO2" supplyTypeCode="3.3" unitUsage="100" co2emissions="58.7" co2factor="0.587" unit="㎥"/>
+    <system.Co2Formula name="WaterCO2" supplyTypeCode="3.2" unitUsage="100" co2emissions="58.7" co2factor="0.587" unit="㎥"/>
     
     <system.SupplyType
         supplier="EDH"
@@ -37,7 +37,7 @@
 
     <system.SupplyType
         supplier="EDH"
-        typeCode="3.3"
+        typeCode="3.2"
         co2Formula="WaterCO2"
         billDate="1"
     />
@@ -79,24 +79,24 @@
         customerRole="false" 
         loginAuthority="true" />
 
-    <system.Role name="engineer" 
-        supplier="EDH" 
-        systemAuthority="c" 
-        mtrAuthority="c" 
-        descr="Operator and Engineer" 
-        hasDashboardAuth="true" 
-        customerRole="false" 
-        loginAuthority="true" />    
-        
-    <system.Role name="vendor" 
+    <system.Role name="manager" 
         supplier="EDH" 
         systemAuthority="r" 
         mtrAuthority="r" 
-        descr="Vendor" 
+        descr="Manager" 
         hasDashboardAuth="true" 
         customerRole="false" 
         loginAuthority="true" />
-                
+
+    <system.Role name="edh_vendor" 
+        supplier="EDH" 
+        systemAuthority="r" 
+        mtrAuthority="r" 
+        descr="EDH_Vendor" 
+        hasDashboardAuth="true" 
+        customerRole="false" 
+        loginAuthority="true" />
+
     <system.Role name="customer" 
         supplier="EDH" 
         systemAuthority="r"
@@ -105,7 +105,25 @@
         hasDashboardAuth="true" 
         customerRole="true" 
         loginAuthority="true" />
-        
+    
+    <system.Role name="operator" 
+        supplier="EDH" 
+        systemAuthority="c" 
+        mtrAuthority="c" 
+        descr="Operator" 
+        hasDashboardAuth="true" 
+        customerRole="false" 
+        loginAuthority="true" />    
+
+    <system.Role name="vendor" 
+        supplier="EDH" 
+        systemAuthority="r" 
+        mtrAuthority="r" 
+        descr="Vendor" 
+        hasDashboardAuth="true" 
+        customerRole="false" 
+        loginAuthority="true" />
+                        
     <system.Operator loginId="admin" 
         aliasName="administrator" 
         email="admin@edh.com" 
@@ -118,12 +136,27 @@
         showDefaultDashboard="true"
         supplier="EDH"/>
     
+    <system.Operator loginId="nuri" 
+        aliasName="nuri_operator" 
+        email="admin@nuritelecom.com" 
+        failedLoginCount="0" 
+        name="nuri"
+        password="q7zl0OA/5+forf+37cAeaa2uReRgFfpiNaUjuGkoBfT59y6cIP59H5VUdv1q0pRybmOov+LZwLgShGLQDFbfog===="
+        telNo="027810740"
+        loginDenied="false" 
+        role="operator"
+        showDefaultDashboard="true"
+        supplier="EDH"/>
+
     <system.Dashboard descr="Main Dashboard" name="Main" orderNo="0" role="admin"/>
     <system.Dashboard descr="System Management Dashboard" name="System" orderNo="1" role="admin"/>
     <system.Dashboard descr="Metering Management Dashboard" name="Metering" orderNo="2" role="admin"/>
     <system.Dashboard descr="Device Management Dashboard" name="Device" orderNo="3" role="admin"/>
     <system.Dashboard descr="Event and History Management Dashboard" name="Alarm Event" orderNo="4" role="admin"/>
     <system.Dashboard descr="Prepayment Dashboard" name="Prepayment" orderNo="5" role="admin"/>
+    <system.Dashboard descr="Usage of customer" name="Usage" orderNo="0" role="customer"/>
+    <system.Dashboard descr="User of EDH_Vendor" name="User" orderNo="0" role="edh_vendor"/>
+    <system.Dashboard descr="Main of Manager" name="Main" orderNo="0" role="manager"/>
     
     <system.Gadget
         descr="Code Management"
@@ -415,6 +448,16 @@
         fullHieght="1000"   
         gadgetCode="gadget.device013"   
     />
+    <system.Gadget
+        descr="Electricity Usage Management"
+        iconSrc="assets/images/wid_thum.gif"
+        maxUrl="customer/customerUsageEmMiniGadget.do"
+        miniUrl="customer/customerUsageEmMiniGadget.do"
+        name="Electricity Usage Management"
+        miniHeight="650"
+        fullHieght="650"
+        gadgetCode="gadget.hems.info002"   
+    />
     
     <!-- 메인 대시보드 가젯 -->    
     <system.DashboardGadget 
@@ -686,6 +729,16 @@
         dashboard="Prepayment"
         gadget="Water Consumption Ranking"
     />
+    <!-- 선불 대시보드 끝-->    
+    <!-- Customer 대시보드 -->    
+    <system.DashboardGadget 
+        collapsible="false"
+        layout="fit"
+        gridX="0"
+        gridY="0"
+        dashboard="Usage"
+        gadget="Electricity Usage Management"
+    />
 
     <!-- 가젯롤 -->
     <system.GadgetRole
@@ -838,6 +891,11 @@
        role="admin"
        supplier="EDH"
     />
+    <system.GadgetRole
+       gadget="Electricity Usage Management"
+       role="customer"
+       supplier="EDH"
+    />
     	
     <!-- Device Vendor/Model -->   
     <system.DeviceVendor 
@@ -850,7 +908,7 @@
     <!-- Dummy Device -->
     <system.DeviceModel 
         deviceVendor="NURITelecom"
-        code="97"
+        code="110"
         deviceType="1.1.1.7"
         name="DCU-DUMMY"
         image="uploadImg/mcu/DCU-DUMMY.jpg"
@@ -858,7 +916,7 @@
     />    
     <system.DeviceModel 
         deviceVendor="NURITelecom"
-        code="98"
+        code="120"
         deviceType="1.2.1.255"
         name="MODEM-DUMMY"
         image="uploadImg/modem/MODEM-DUMMY.jpg"
@@ -866,7 +924,7 @@
     />
     <system.DeviceModel 
         deviceVendor="NURITelecom"
-        code="99"
+        code="130"
         deviceType="1.3.1.1"
         name="METER-DUMMY"
         image="uploadImg/meter/METER-DUMMY.jpg"
@@ -876,7 +934,7 @@
     <!-- Operation Device -->
     <system.DeviceModel 
         deviceVendor="NURITelecom"
-        code="4"
+        code="111"
         deviceType="1.1.1.3"
         name="NZC I211"
         image="uploadImg/mcu/NZC-I212.jpg"
@@ -890,7 +948,7 @@
     
     <system.DeviceModel 
         deviceVendor="NURITelecom"
-        code="5"
+        code="112"
         deviceType="1.1.1.4"
         name="NZC O212"
     />
@@ -904,7 +962,7 @@
     <!-- Repeater(indoor) -->
     <system.DeviceModel 
         deviceVendor="NURITelecom"
-        code="98"
+        code="121"
         deviceType="1.2.1.98"
         name="NZR-I121RE"
     />    
@@ -921,7 +979,7 @@
     <!-- Repeater(outdoor) -->
     <system.DeviceModel 
         deviceVendor="NURITelecom"
-        code="98"
+        code="122"
         deviceType="1.2.1.98"
         name="NZR-O121RE"
     />
@@ -935,25 +993,42 @@
     
     <device.OperationList  deviceTypeCode="1.2.1.98" operationCode="8.2.2"  model="NZR-O121RE"    level="2"   desc="Unit Scanning" />
     <device.OperationList  deviceTypeCode="1.2.1.98" operationCode="8.2.5"  model="NZR-O121RE"    level="2"   desc="Event Log" />    
-        
+    
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="123"
+        deviceType="1.2.1.1"
+        name="NAMR-P109SR"
+    />
+
+    <system.ModemConfig 
+        name="NAMR-P109SR"
+        deviceModel="NAMR-P109SR"
+    /> 
+
+    <system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="124"
+        deviceType="1.2.1.5"
+        name="NAPC-W202SR"
+    />
+
+    <system.ModemConfig 
+        name="NAPC-W202SR"
+        deviceModel="NAPC-W202SR"
+    /> 
+
     <system.DeviceVendor 
         supplier="EDH"
         name="GE"
-        code="101"
+        code="200"
         address="http://www.ge.com"
         descr="General Electric Company"
     />
     
     <system.DeviceModel 
-        deviceVendor="NURITelecom"
-        code="1"
-        deviceType="1.2.1.1"
-        name="NAMR-P109SR"
-    />
-    
-    <system.DeviceModel 
         deviceVendor="GE"
-        code="12"
+        code="210"
         deviceType="1.3.1.1"
         name="I210+c"
         image="uploadImg/meter/sm110.jpg"
@@ -968,12 +1043,7 @@
         parserName="com.aimir.fep.meter.parser.I210PlusCSeries"
         saverName="com.aimir.fep.meter.saver.I210PlusCSeriesMDSaver"
     />
-    
-    <system.ModemConfig 
-        name="NAMR-P109SR"
-        deviceModel="NAMR-P109SR"
-    /> 
-    
+        
     <mvm.DisplayChannel name="Total Del Only F+H"       localName="Total Del Only F+H"      serviceType="Electricity" unit="kWh" chMethod="SUM"/>
     <mvm.DisplayChannel name="Total Rcvd Only F+H"      localName="Total Rcvd Only F+H"     serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
     
@@ -1451,59 +1521,103 @@
                     condition="value_00&gt;threshold or value_01&gt;threshold or value_02&gt;threshold or value_03&gt;threshold or value_04&gt;threshold or value_05&gt;threshold or value_06&gt;threshold or value_07&gt;threshold or value_08&gt;threshold or value_09&gt;threshold or value_10&gt;threshold or value_11&gt;threshold or value_12&gt;threshold or value_13&gt;threshold or value_14&gt;threshold or value_15&gt;threshold or value_16&gt;threshold or value_17&gt;threshold or value_18&gt;threshold or value_19&gt;threshold or value_20&gt;threshold or value_21&gt;threshold or value_22&gt;threshold or value_23&gt;threshold"
                     />
     
-    <system.TariffType supplier="EDH" serviceTypeCode="3.1" code="1" name="Home Power1" description="Home Power1"/>
-    <system.TariffType supplier="EDH" serviceTypeCode="3.1" code="2" name="Business Rate1" description="Business Rate1"/>    
+    <system.TariffType supplier="EDH" serviceTypeCode="3.1" code="1" name="Residence" description="Residence"/>
+    <system.TariffType supplier="EDH" serviceTypeCode="3.1" code="2" name="Commerce" description="Commerce"/>    
     
     <system.TariffEM
         supplier="EDH" 
-        yyyymmdd="20140101"
-        tariffType="Home Power1" 
+        yyyymmdd="20150323"
+        tariffType="Residence"
         supplySizeMin="0" 
-        supplySizeMax="50" 
+        supplySizeMax="1" 
         condition1="&gt;"
         condition2="&lt;="
         supplySizeUnit="kWh"
-        activeEnergyCharge="0.809"
-        serviceCharge="0" />
-    <system.TariffEM
-        supplier="EDH" 
-        yyyymmdd="20140101"
-        tariffType="Home Power1" 
-        supplySizeMin="50" 
-        supplySizeMax="300" 
-        condition1="&gt;"
-        condition2="&lt;="
-        supplySizeUnit="kWh"
-        activeEnergyCharge="1.003"
-        serviceCharge="0" />
-    <system.TariffEM
-        supplier="EDH" 
-        yyyymmdd="20140101"
-        tariffType="Home Power1" 
-        supplySizeMin="300" 
-        supplySizeMax="600" 
-        condition1="&gt;"
-        condition2="&lt;="
-        supplySizeUnit="kWh"
-        activeEnergyCharge="1.322"
-        serviceCharge="0" />
-    <system.TariffEM
-        supplier="EDH" 
-        yyyymmdd="20140101"
-        tariffType="Home Power1" 
-        supplySizeMin="600" 
-        condition1="&gt;"
-        condition2="&lt;="
-        supplySizeUnit="kWh"
-        activeEnergyCharge="1.516"
-        serviceCharge="0" />
+        activeEnergyCharge="0.00"
+        serviceCharge="150.00" />    
 
     <system.TariffEM
         supplier="EDH" 
-        yyyymmdd="20140101"
-        tariffType="Business Rate1" 
+        yyyymmdd="20150323"
+        tariffType="Residence"
+        supplySizeMin="1" 
+        supplySizeMax="30" 
+        condition1="&gt;"
+        condition2="&lt;="
         supplySizeUnit="kWh"
-        activeEnergyCharge="1.220"
-        serviceCharge="0" />                    
-                    
+        activeEnergyCharge="4.80"
+        serviceCharge="150.00" />       
+
+    <system.TariffEM
+        supplier="EDH" 
+        yyyymmdd="20150323"
+        tariffType="Residence"
+        supplySizeMin="30" 
+        supplySizeMax="200" 
+        condition1="&gt;"
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="5.10"
+        serviceCharge="150.00" />    
+
+    <system.TariffEM
+        supplier="EDH" 
+        yyyymmdd="20150323"
+        tariffType="Residence"
+        supplySizeMin="200" 
+        supplySizeMax="" 
+        condition1="&gt;"
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="12.74"
+        serviceCharge="150.00" />    
+
+    <system.TariffEM
+        supplier="EDH" 
+        yyyymmdd="20150323"
+        tariffType="Commerce"
+        supplySizeMin="0" 
+        supplySizeMax="1" 
+        condition1="&gt;"
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="0.00"
+        serviceCharge="150.00" />    
+
+    <system.TariffEM
+        supplier="EDH" 
+        yyyymmdd="20150323"
+        tariffType="Commerce"
+        supplySizeMin="1" 
+        supplySizeMax="30" 
+        condition1="&gt;"
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="11.51"
+        serviceCharge="150.00" />       
+
+    <system.TariffEM
+        supplier="EDH" 
+        yyyymmdd="20150323"
+        tariffType="Commerce"
+        supplySizeMin="30" 
+        supplySizeMax="200" 
+        condition1="&gt;"
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="13.43"
+        serviceCharge="150.00" />    
+
+    <system.TariffEM
+        supplier="EDH" 
+        yyyymmdd="20150323"
+        tariffType="Commerce"
+        supplySizeMin="200" 
+        supplySizeMax="" 
+        condition1="&gt;"
+        condition2="&lt;="
+        supplySizeUnit="kWh"
+        activeEnergyCharge="14.38"
+        serviceCharge="150.00" />     
+
 </dataset>
