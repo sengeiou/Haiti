@@ -1,4 +1,4 @@
-package com.aimir.ddl.util;
+package com.aimir.schedule.tool;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
