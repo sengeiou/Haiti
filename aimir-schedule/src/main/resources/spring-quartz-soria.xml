@@ -51,7 +51,7 @@
 				<prop key="hibernate.bytecode.use_reflection_optimizer">false</prop>
 				<prop key="hibernate.use_sql_comments">false</prop>
 				<prop key="hibernate.hbm2ddl.auto">none</prop>
-				<prop key="hibernate.hbm2ddl.schema_filter_provider">com.aimir.schedule.tool.HiberateSchemaFilterProvider</prop>
+				<prop key="hibernate.hbm2ddl.schema_filter_provider">com.aimir.ddl.util.HiberateSchemaFilterProvider</prop>
 				<prop key="hibernate.connection.autocommit">false</prop>
 			</props>
 		</property>
