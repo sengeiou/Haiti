@@ -127,21 +127,19 @@ public class FepAdapter {
         logger.info("Register NicMDAdapter");
         registerNiTcpCmdAdapter();
         
-        if(Boolean.parseBoolean(FMPProperty.getProperty("fep.ipv6.addr.use", "true"))) {
-            // UPDATE START SP-123 //
-            if ( dtlsUse ){
-                logger.info("Register NiUdpAdapter(DTLS)");
-                registerUdpDtlsAdapter();
-            }
-            else {
-                logger.info("Register NiUdpAdapter");
-                registerNiUdpAdapter();
-            }
-            // UPDATE END SP-123 //
-            
-            logger.info("Register NiPanaAdapter");
-            registerNiPanaAdapter();
+        // UPDATE START SP-123 //
+        if ( dtlsUse ){
+            logger.info("Register NiUdpAdapter(DTLS)");
+            registerUdpDtlsAdapter();
         }
+        else {
+            logger.info("Register NiUdpAdapter");
+            registerNiUdpAdapter();
+        }
+        // UPDATE END SP-123 //
+        
+        logger.info("Register NiPanaAdapter");
+        registerNiPanaAdapter();
         
         CommonConstants.refreshContractStatus();
         CommonConstants.refreshDataSvc();
