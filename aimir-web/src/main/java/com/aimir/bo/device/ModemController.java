@@ -572,12 +572,16 @@ public class ModemController {
 
     }
 */
+
+    /*
+     * 2019.07.25 | Ambiguous mapping Error
     @RequestMapping(value = "/gadget/device/updateModem")
     public ModelAndView updateModem(@RequestParam("modemId") Integer modemId,
             @ModelAttribute("modemInfoForm") Modem inModem) {
         ModelAndView mav = new ModelAndView("jsonView");
         return mav;
     }
+    */
 
     @RequestMapping(value = "/gadget/device/getModem")
     public ModelAndView getModem(@RequestParam("modemId") String modemId) {

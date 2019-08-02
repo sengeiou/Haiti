@@ -234,7 +234,7 @@ public class SPASATariffDailyEMBillingInfoSaveTask extends ScheduleTask {
 //                    dayValues = new Double[24];
                     bdUsage = new BigDecimal(0d);
                     dataValue =  this.getDayValue24(dayEM.get(i));
-                    billingDayEM.setYyyymmdd(dayEM.get(i).getYyyymmdd());
+                    billingDayEM.setYyyymmdd(dayEM.get(i).id.getYyyymmdd());
                     List<BillingDayEM> list_billingDayEM = billingDayEMDao.getBillingDayEMs(billingDayEM, null, null);
                     _billingDayEM = (list_billingDayEM.size() != 0) ? list_billingDayEM.get(0) : null;
 
@@ -248,7 +248,7 @@ public class SPASATariffDailyEMBillingInfoSaveTask extends ScheduleTask {
 
                     // 마지막 읽은 날의 남은 시간에 대한 사용량을 더한다.
                     // 예) 10일 15시까지 읽었으면 이번에는 10일 16시의 사용량부터 계산하도록 하기 위해서
-                    if (readToDateYYYYMMDD.equals(dayEM.get(i).getYyyymmdd())) {
+                    if (readToDateYYYYMMDD.equals(dayEM.get(i).id.getYyyymmdd())) {
                         if (intNewReadFromDateHH == 0) {
                             // 새로 읽을 시간이 0 이면 skip.(마지막 읽은 시간이 23시임)
                             continue;
@@ -269,9 +269,9 @@ public class SPASATariffDailyEMBillingInfoSaveTask extends ScheduleTask {
                         }
                         flg = true;
 
-                        saveReadFromDateYYYYMMDDHHMMSS = dayEM.get(i).getYyyymmdd() + saveReadFromDateHH + "0000";
+                        saveReadFromDateYYYYMMDDHHMMSS = dayEM.get(i).id.getYyyymmdd() + saveReadFromDateHH + "0000";
                     } else { // 마지막 읽은 날짜와 같지 않을 경우는 전체 사용량을 읽는다.
-                        saveReadFromDateYYYYMMDDHHMMSS = dayEM.get(i).getYyyymmdd() + "000000";
+                        saveReadFromDateYYYYMMDDHHMMSS = dayEM.get(i).id.getYyyymmdd() + "000000";
 //                        usage = usage + dayEM.get(i).getTotal();
                         bdUsage = bdUsage.add(new BigDecimal(dayEM.get(i).getTotal()));
                         dayValues = dataValue;
@@ -284,7 +284,7 @@ public class SPASATariffDailyEMBillingInfoSaveTask extends ScheduleTask {
                         }
                     }
 
-                    saveReadToDateYYYYMMDDHHMMSS = dayEM.get(i).getYyyymmdd() + saveReadToDateHH + "0000";
+                    saveReadToDateYYYYMMDDHHMMSS = dayEM.get(i).id.getYyyymmdd() + saveReadToDateHH + "0000";
 //                    list_dataValue.add(dayValues);
                     bdBill = this.getEMChargeUsingDayUsage(contract, tariffEMList, bdUsage.doubleValue(), dayValues);
                     bdSumBill = bdSumBill.add(bdBill); // 계산된 요금을 더한다.

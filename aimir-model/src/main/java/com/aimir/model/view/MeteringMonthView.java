@@ -1,11 +1,14 @@
 package com.aimir.model.view;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.aimir.annotation.ColumnInfo;
@@ -17,25 +20,11 @@ import com.aimir.model.device.Modem;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.Supplier;
 
+@MappedSuperclass
 public class MeteringMonthView {
-	@Column(name="mdev_id",length=20)
-	@ColumnInfo(name="장비 아이디", descr="")
-	private String mdevId;
 	
-	@Column(name="yyyymm",length=6,nullable=false)
-	private String yyyymm;	
-	
-	@ColumnInfo(name="채널")
-    private Integer channel;
-	
-    @Column(name="mdev_type",length=20)
-    @Enumerated(EnumType.STRING)
-	@ColumnInfo(name="장비 아이디", descr="")
-	private DeviceType mdevType;// MCU(0), Modem(1), Meter(2);
-    
-	@Column(columnDefinition="INTEGER default 0", length=2)
-	@ColumnInfo(name="DST", descr="Summer Time ex ) +1 -1 +0")
-	private Integer dst;
+	@EmbeddedId
+	public MonthViewPk id;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "meter_id")
@@ -142,40 +131,12 @@ public class MeteringMonthView {
 	private Double value_30;
 	private Double value_31;
 	
-	public String getMdevId() {
-		return mdevId;
+	public MonthViewPk getId() {
+		return id;
 	}
-	public void setMdevId(String mdevId) {
-		this.mdevId = mdevId;
+	public void setId(MonthViewPk id) {
+		this.id = id;
 	}
-	public String getYyyymm() {
-		return yyyymm;
-	}
-	public void setYyyymm(String yyyymm) {
-		this.yyyymm = yyyymm;
-	}
-	public Integer getChannel() {
-		return channel;
-	}
-	public void setChannel(Integer channel) {
-		this.channel = channel;
-	}
-	public DeviceType getMdevType() {
-		return mdevType;
-	}
-	public void setMdevType(String mdevType){
-		this.mdevType = DeviceType.valueOf(mdevType);
-	}
-	public void setMdevType(DeviceType mdevType) {
-		this.mdevType = mdevType;
-	}
-	public Integer getDst() {
-		return dst;
-	}
-	public void setDst(Integer dst) {
-		this.dst = dst;
-	}
-	
 	@XmlTransient
 	public Meter getMeter() {
 		return meter;
@@ -487,15 +448,15 @@ public class MeteringMonthView {
 	/////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////
 	public void setMDevType(String mdevType){
-		this.mdevType = DeviceType.valueOf(mdevType);
+		id.setMdevType(DeviceType.valueOf(mdevType));
 	}
 	public DeviceType getMDevType() {
-		return mdevType;
+		return id.getMdevType();
 	}
 	public void setMDevId(String mdevId) {
-		this.mdevId = mdevId;
+		id.setMdevId(mdevId);
 	}
 	public String getMDevId() {
-		return mdevId;
+		return id.getMdevId();
 	}
 }

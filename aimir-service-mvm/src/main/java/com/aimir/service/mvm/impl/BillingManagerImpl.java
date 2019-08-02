@@ -876,7 +876,7 @@ public class BillingManagerImpl implements BillingManager {
 
 				DayEMView dayEMView = (DayEMView)object;
 
-				rtnMap.put("yyyymmdd", dayEMView.getYyyymmdd());
+				rtnMap.put("yyyymmdd", dayEMView.id.getYyyymmdd());
 				rtnMap.put("customerName", dayEMView.getContract().getCustomer().getName());
 				rtnMap.put("contractNo", dayEMView.getContract().getContractNumber());
 				rtnMap.put("meterName", (dayEMView.getMeter() == null) ? null : dayEMView.getMeter().getMdsId());
@@ -895,7 +895,7 @@ public class BillingManagerImpl implements BillingManager {
 
 				DayGMView dayGMView = (DayGMView)object;
 				
-				rtnMap.put("yyyymmdd", dayGMView.getYyyymmdd());
+				rtnMap.put("yyyymmdd", dayGMView.id.getYyyymmdd());
 				rtnMap.put("customerName", dayGMView.getContract().getCustomer().getName());
 				rtnMap.put("contractNo", dayGMView.getContract().getContractNumber());
 				rtnMap.put("meterName", (dayGMView.getMeter() == null) ? null : dayGMView.getMeter().getMdsId());
@@ -913,7 +913,7 @@ public class BillingManagerImpl implements BillingManager {
 
 				DayHMView dayHMView = (DayHMView)object;
 				
-				rtnMap.put("yyyymmdd", dayHMView.getYyyymmdd());
+				rtnMap.put("yyyymmdd", dayHMView.id.getYyyymmdd());
 				rtnMap.put("customerName", dayHMView.getContract().getCustomer().getName());
 				rtnMap.put("contractNo", dayHMView.getContract().getContractNumber());
 				rtnMap.put("meterName", (dayHMView.getMeter() == null) ? null : dayHMView.getMeter().getMdsId());
@@ -925,7 +925,7 @@ public class BillingManagerImpl implements BillingManager {
 
 				DayWMView dayWMView = (DayWMView)object;
 				
-				rtnMap.put("yyyymmdd", dayWMView.getYyyymmdd());
+				rtnMap.put("yyyymmdd", dayWMView.id.getYyyymmdd());
 				rtnMap.put("customerName", dayWMView.getContract().getCustomer().getName());
 				rtnMap.put("contractNo", dayWMView.getContract().getContractNumber());
 				rtnMap.put("meterName", (dayWMView.getMeter() == null) ? null : dayWMView.getMeter().getMdsId());
@@ -941,7 +941,7 @@ public class BillingManagerImpl implements BillingManager {
 				
 				MonthEMView monthEMView = (MonthEMView)object;
 
-				rtnMap.put("yyyymmdd", monthEMView.getYyyymm());
+				rtnMap.put("yyyymmdd", monthEMView.id.getYyyymm());
 				rtnMap.put("customerName", monthEM.getContract().getCustomer().getName());
 				rtnMap.put("contractNo", monthEMView.getContract().getContractNumber());
 				rtnMap.put("meterName", (monthEMView.getMeter() == null) ? null : monthEMView.getMeter().getMdsId());			
@@ -977,7 +977,7 @@ public class BillingManagerImpl implements BillingManager {
 			
 				MonthHMView monthHMView = (MonthHMView)object;
 				
-				rtnMap.put("yyyymmdd", monthHMView.getYyyymm());
+				rtnMap.put("yyyymmdd", monthHMView.id.getYyyymm());
 				rtnMap.put("customerName", monthHMView.getContract().getCustomer().getName());
 				rtnMap.put("contractNo", monthHMView.getContract().getContractNumber());
 				rtnMap.put("meterName", (monthHMView.getMeter() == null) ? null : monthHMView.getMeter().getMdsId());
@@ -989,7 +989,7 @@ public class BillingManagerImpl implements BillingManager {
 				
 				MonthWMView monthWMView = (MonthWMView)object;
 				
-				rtnMap.put("yyyymmdd", monthWMView.getYyyymm());
+				rtnMap.put("yyyymmdd", monthWMView.id.getYyyymm());
 				rtnMap.put("customerName", monthWMView.getContract().getCustomer().getName());
 				rtnMap.put("contractNo", monthWMView.getContract().getContractNumber());
 				rtnMap.put("meterName", (monthWMView.getMeter() == null) ? null : monthWMView.getMeter().getMdsId());

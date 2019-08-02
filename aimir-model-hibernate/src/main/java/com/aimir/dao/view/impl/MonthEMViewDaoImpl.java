@@ -107,19 +107,19 @@ public class MonthEMViewDaoImpl extends AbstractHibernateGenericDao<MonthEMView,
 				} 
 			}
 			
-			if (monthEMView.getChannel() != null) {
+			if (monthEMView.id.getChannel() != null) {
 				
-				criteria.add(Restrictions.eq("id.channel", monthEMView.getChannel()));
+				criteria.add(Restrictions.eq("id.channel", monthEMView.id.getChannel()));
 			}
 			
-			if (monthEMView.getYyyymm() != null) {
+			if (monthEMView.id.getYyyymm() != null) {
 				
-				if ( 6 == monthEMView.getYyyymm().length() ) {
+				if ( 6 == monthEMView.id.getYyyymm().length() ) {
 					
-					criteria.add(Restrictions.eq("id.yyyymm", monthEMView.getYyyymm()));
-				} else if ( 4 == monthEMView.getYyyymm().length() ) {
+					criteria.add(Restrictions.eq("id.yyyymm", monthEMView.id.getYyyymm()));
+				} else if ( 4 == monthEMView.id.getYyyymm().length() ) {
 
-					criteria.add(Restrictions.like("id.yyyymm", monthEMView.getYyyymm() + "%"));
+					criteria.add(Restrictions.like("id.yyyymm", monthEMView.id.getYyyymm() + "%"));
 					criteria.addOrder( Order.asc("id.yyyymm") );
 				}
 			}

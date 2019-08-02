@@ -600,7 +600,7 @@ public class MeteringFailureManagerImpl implements MeteringFailureManager{
 		for(DayEMView dayEM : grid){
 		//for(DayEM dayEM : grid){ OPF-610 정규화 관련 처리로 인한 주석
 			failureMeteringData = new FailureMeteringData();
-			failureMeteringData.setMeteringDate(TimeLocaleUtil.getLocaleDate(dayEM.getYyyymmdd() , supplier.getLang().getCode_2letter(), supplier.getCountry().getCode_2letter()));
+			failureMeteringData.setMeteringDate(TimeLocaleUtil.getLocaleDate(dayEM.id.getYyyymmdd() , supplier.getLang().getCode_2letter(), supplier.getCountry().getCode_2letter()));
 			failureMeteringData.setMeteringValue(dayEM.getTotal().toString());
 			failureMeteringDataList.add(failureMeteringData);
 		}

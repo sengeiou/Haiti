@@ -39,7 +39,7 @@ public class ExternalTableLogger extends MessageLogger {
     public ExternalTableLogger() throws IOException {
         super();
         // 2017.03.24 SP-629
-        logDirName = "/mnt";
+        logDirName = "/lpDisk";
     }
 
     public String writeObject(Serializable obj, String path) {

@@ -3,11 +3,13 @@ package com.aimir.model.view;
 import java.text.DecimalFormat;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.aimir.annotation.ColumnInfo;
@@ -23,25 +25,11 @@ import com.aimir.util.TimeLocaleUtil;
 
 import net.sf.json.JSONString;
 
+@MappedSuperclass
 public class MeteringDayView implements JSONString {
-	@Column(name="mdev_id",length=20)
-	@ColumnInfo(name="장비 아이디", descr="")
-	private String mdevId;
 	
-	@Column(name="yyyymmdd",length=8,nullable=false)
-	private String yyyymmdd;	
-	
-    @ColumnInfo(name="채널")
-    private Integer channel;
-    
-    @Column(name="mdev_type",length=20)
-    @Enumerated(EnumType.STRING)
-	@ColumnInfo(name="장비 아이디", descr="")
-	private DeviceType mdevType;// MCU(0), Modem(1), Meter(2);
-    
-	@Column(columnDefinition="INTEGER default 0", length=2)
-	@ColumnInfo(name="DST", descr="Summer Time ex ) +1 -1 +0")
-	private Integer dst;
+	@EmbeddedId
+	public DayViewPk id;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "meter_id")
@@ -163,40 +151,7 @@ public class MeteringDayView implements JSONString {
 	private Double value_22;
 	@ColumnInfo(name="검침값", descr="23~24(h)")
 	private Double value_23;
-	public String getMdevId() {
-		return mdevId;
-	}
-	public void setMdevId(String mdevId) {
-		this.mdevId = mdevId;
-	}
-	public String getYyyymmdd() {
-		return yyyymmdd;
-	}
-	public void setYyyymmdd(String yyyymmdd) {
-		this.yyyymmdd = yyyymmdd;
-	}
-	public Integer getChannel() {
-		return channel;
-	}
-	public void setChannel(Integer channel) {
-		this.channel = channel;
-	}
-	public DeviceType getMdevType() {
-		return mdevType;
-	}
-	public void setMdevType(DeviceType mdevType) {
-		this.mdevType = mdevType;
-	}
-	public void setMdevType(String mdevType){
-		this.mdevType = DeviceType.valueOf(mdevType);
-	}
-	public Integer getDst() {
-		return dst;
-	}
-	public void setDst(Integer dst) {
-		this.dst = dst;
-	}
-	
+		
 	@XmlTransient
 	public Meter getMeter() {
 		return meter;
@@ -461,10 +416,16 @@ public class MeteringDayView implements JSONString {
 	public void setValue_23(Double value_23) {
 		this.value_23 = value_23;
 	}
-
+	
+	public DayViewPk getId() {
+		return id;
+	}
+	public void setId(DayViewPk id) {
+		this.id = id;
+	}
 	@Override
     public String toJSONString() {
-    	String meteringDate = (yyyymmdd == null) ? "" : getYyyymmdd();
+    	String meteringDate = (id.getYyyymmdd() == null) ? "" : id.getYyyymmdd();
     	DecimalFormat df = null;
     	if(supplier != null) {
     		String lang = supplier.getLang().getCode_2letter();

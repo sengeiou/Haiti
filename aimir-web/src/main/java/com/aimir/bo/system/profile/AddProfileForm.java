@@ -43,7 +43,7 @@ public class AddProfileForm {
 	@Autowired
     LocationManager locationManager;
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value="/gadget/system/profile/addProfile.do", method = RequestMethod.GET)
     public String setupForm(HttpServletRequest request, HttpServletResponse response, Model model) {
 		
 		ESAPI.httpUtilities().setCurrentHTTP(request, response);
