@@ -1418,7 +1418,7 @@ public abstract class AbstractMDSaver
         
     	if(appendBuilder != null) {
         	String mappingID = AimirThreadMapper.getInstance().getMapperId(Thread.currentThread().getId());
-        	String filename = "LP_EM_EXT_" + mappingID;
+        	String filename = "LP_EM_TOBE_EXT_" + mappingID;
         	
         	ExternalTableLogger logger = new ExternalTableLogger();
         	logger.writeObject(filename, appendBuilder.toString());
