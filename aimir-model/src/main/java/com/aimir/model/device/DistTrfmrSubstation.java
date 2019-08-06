@@ -42,8 +42,8 @@ public class DistTrfmrSubstation extends BaseObject implements JSONString, IAudi
 	static final long serialVersionUID = 828341386560726667L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DISTTRFMRSUBSTATION_SEQ")
-    @SequenceGenerator(name="DISTTRFMRSUBSTATION_SEQ", sequenceName="DISTTRFMRSUBSTATION_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_DISTTRFMRSUBSTATION")
+    @SequenceGenerator(name="SEQ_DISTTRFMRSUBSTATION", sequenceName="SEQ_DISTTRFMRSUBSTATION", allocationSize=1)
 	private Integer id;
 
 	@ColumnInfo(name="Distribution Transformer Substation Name", descr="Distribution Transformer Substation Name")

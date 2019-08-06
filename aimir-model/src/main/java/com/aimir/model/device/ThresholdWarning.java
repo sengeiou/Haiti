@@ -43,8 +43,8 @@ public class ThresholdWarning extends BaseObject implements JSONString {
 	private static final long serialVersionUID = -87595803050175852L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE,  generator="THRESHOLDWARNING_SEQ")
-	@SequenceGenerator(name="THRESHOLDWARNING_SEQ", sequenceName="THRESHOLDWARNING_SEQ", allocationSize=1) 
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,  generator="SEQ_THRESHOLDWARNING")
+	@SequenceGenerator(name="SEQ_THRESHOLDWARNING", sequenceName="SEQ_THRESHOLDWARNING", allocationSize=1)
 	private Integer id;	//	ID(PK)
 
     @Column(name="IP_ADDR", length=64)

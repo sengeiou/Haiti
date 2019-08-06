@@ -31,8 +31,8 @@ public class EmergencyCreditWSStart extends BaseObject {
     private static final long serialVersionUID = -3156689093225085739L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="EMERGENCY_CREDIT_WS_START_SEQ")
-    @SequenceGenerator(name="EMERGENCY_CREDIT_WS_START_SEQ", sequenceName="EMERGENCY_CREDIT_WS_START_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_EMERGENCY_CREDIT_WS_START")
+    @SequenceGenerator(name="SEQ_EMERGENCY_CREDIT_WS_START", sequenceName="SEQ_EMERGENCY_CREDIT_WS_START", allocationSize=1)
 	private Integer id;
 	
 	@Column(name = "supplier_name", nullable=false)

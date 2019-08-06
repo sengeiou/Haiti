@@ -25,8 +25,8 @@ public class User extends BaseObject implements IAuditable {
 	private static final long serialVersionUID = 3257568390917667126L;
 	
 	@Id 
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="APP_USER_SEQ")
-	@SequenceGenerator(name="APP_USER_SEQ", sequenceName="APP_USER_SEQ", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_USER")
+	@SequenceGenerator(name="SEQ_USER", sequenceName="SEQ_USER", allocationSize=1)
 	@Column(name="id")
 	private Long id;
 	

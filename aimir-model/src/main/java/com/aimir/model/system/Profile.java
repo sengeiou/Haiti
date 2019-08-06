@@ -42,8 +42,8 @@ public class Profile extends BaseObject implements JSONString, IAuditable {
 	private static final long serialVersionUID = -3713843501013837526L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PROFILE_SEQ")
-	@SequenceGenerator(name="PROFILE_SEQ", sequenceName="PROFILE_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_PROFILE")
+	@SequenceGenerator(name="SEQ_PROFILE", sequenceName="SEQ_PROFILE", allocationSize=1)
 	private Long id;
 	
 	@ManyToOne(fetch=FetchType.LAZY)

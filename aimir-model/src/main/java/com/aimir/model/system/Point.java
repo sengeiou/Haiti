@@ -23,8 +23,8 @@ public class Point extends BaseObject {
 	private static final long serialVersionUID = 6925279936233352839L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="POINT_SEQ")
-	@SequenceGenerator(name="POINT_SEQ", sequenceName="POINT_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_POINT")
+	@SequenceGenerator(name="SEQ_POINT", sequenceName="SEQ_POINT", allocationSize=1)
     private Integer id;
 	
 	

@@ -22,8 +22,8 @@ import com.aimir.annotation.ReferencedBy;
 public class Tag {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE,  generator="TAG_SEQ")
-	@SequenceGenerator(name="TAG_SEQ", sequenceName="TAG_SEQ", allocationSize=1) 
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,  generator="SEQ_TAG")
+	@SequenceGenerator(name="SEQ_TAG", sequenceName="SEQ_TAG", allocationSize=1)
 	private Integer id;
 
 	private String tag;

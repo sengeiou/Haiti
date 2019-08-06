@@ -62,8 +62,8 @@ public class Contract extends BaseObject implements JSONString, IAuditable {
 	private static final long serialVersionUID = 180346987413635833L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CONSTRACT_SEQ")
-	@SequenceGenerator(name="CONSTRACT_SEQ", sequenceName="CONSTRACT_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_CONTRACT")
+	@SequenceGenerator(name="SEQ_CONTRACT", sequenceName="SEQ_CONTRACT", allocationSize=1)
 	private Integer id;
 	
 	@Column(name="CONTRACT_NUMBER", unique=true, nullable=false)

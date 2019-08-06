@@ -39,8 +39,8 @@ public class LoadLimitSchedule extends BaseObject {
 	private static final long serialVersionUID = -3726084692444191291L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="LOADLIMITSCHEDULE_SEQ")
-	@SequenceGenerator(name="LOADLIMITSCHEDULE_SEQ", sequenceName="LOADLIMITSCHEDULE_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_LOADLIMITSCHEDULE")
+	@SequenceGenerator(name="SEQ_LOADLIMITSCHEDULE", sequenceName="SEQ_LOADLIMITSCHEDULE", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
     private Integer id;
 

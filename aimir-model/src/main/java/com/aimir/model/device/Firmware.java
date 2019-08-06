@@ -36,8 +36,8 @@ public class Firmware extends BaseObject {
 	private static final long serialVersionUID = 1329672452910583447L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="FIRMWARE_SEQ")
-    @SequenceGenerator(name="FIRMWARE_SEQ", sequenceName="FIRMWARE_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_FIRMWARE")
+    @SequenceGenerator(name="SEQ_FIRMWARE", sequenceName="SEQ_FIRMWARE", allocationSize=1)
 	private Integer id;
 
     @ColumnInfo(name="Firmware Id", view=@Scope(create=true, read=true, update=false), descr="펌웨어 ID")

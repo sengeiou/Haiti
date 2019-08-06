@@ -29,8 +29,8 @@ public class MeasurementHistory extends BaseObject {
 	private static final long serialVersionUID = -6648957129102667976L;
 	
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MEASUREMENT_HISTORY_SEQ")
-    @SequenceGenerator(name="MEASUREMENT_HISTORY_SEQ", sequenceName="MEASUREMENT_HISTORY_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_MEASUREMENT_HISTORY")
+    @SequenceGenerator(name="SEQ_MEASUREMENT_HISTORY", sequenceName="SEQ_MEASUREMENT_HISTORY", allocationSize=1)
 	private Long id;
 
 	@Column(name="DEVICE_TYPE", length=20)

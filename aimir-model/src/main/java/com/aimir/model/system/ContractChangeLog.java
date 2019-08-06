@@ -31,8 +31,8 @@ public class ContractChangeLog extends BaseObject implements JSONString{
 	private static final long serialVersionUID = 1163873437479103729L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CONTRACTCHANGELOG_SEQ")
-	@SequenceGenerator(name="CONTRACTCHANGELOG_SEQ", sequenceName="CONTRACTCHANGELOG_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_CONTRACTCHANGELOG")
+	@SequenceGenerator(name="SEQ_CONTRACTCHANGELOG", sequenceName="SEQ_CONTRACTCHANGELOG", allocationSize=1)
 	private Long id;
 	
 	@ManyToOne(fetch=FetchType.LAZY)

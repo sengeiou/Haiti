@@ -38,8 +38,8 @@ public class EventAlert extends BaseObject implements JSONString {
 	private static final long serialVersionUID = 13150985498127118L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE,  generator="EVENTALERT_SEQ")
-	@SequenceGenerator(name="EVENTALERT_SEQ", sequenceName="EVENTALERT_SEQ", allocationSize=1) 
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,  generator="SEQ_EVENTALERT")
+	@SequenceGenerator(name="SEQ_EVENTALERT", sequenceName="SEQ_EVENTALERT", allocationSize=1)
 	private Integer id;	//	ID(PK)
 
 	@Column(name = "EVENTALERT_TYPE", nullable=false)

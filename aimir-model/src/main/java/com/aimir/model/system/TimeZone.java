@@ -25,8 +25,8 @@ public class TimeZone extends BaseObject{
 	private static final long serialVersionUID = 5297838307633234511L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TIMEZONE_SEQ")
-	@SequenceGenerator(name="TIMEZONE_SEQ", sequenceName="TIMEZONE_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_TIMEZONE")
+	@SequenceGenerator(name="SEQ_TIMEZONE", sequenceName="SEQ_TIMEZONE", allocationSize=1)
 	private Integer id;
 	
 	@Column(unique=true, nullable=false)

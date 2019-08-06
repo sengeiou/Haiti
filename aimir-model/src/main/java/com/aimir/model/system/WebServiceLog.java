@@ -22,8 +22,8 @@ public class WebServiceLog extends BaseObject {
 	private static final long serialVersionUID = -8065602399960316511L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WEBSERVICELOG_SEQ")
-	@SequenceGenerator(name = "WEBSERVICELOG_SEQ", sequenceName = "WEBSERVICELOG_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_WEBSERVICELOG")
+	@SequenceGenerator(name = "SEQ_WEBSERVICELOG", sequenceName = "SEQ_WEBSERVICELOG", allocationSize = 1)
 	private Long id;
 
 	@Column(name = "OPENTIME", length = 200)

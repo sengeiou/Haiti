@@ -51,8 +51,8 @@ public class Supplier extends BaseObject implements JSONString, IAuditable {
 	private static final long serialVersionUID = 4835340675412939368L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SUPPLIER_SEQ")
-    @SequenceGenerator(name = "SUPPLIER_SEQ", sequenceName = "SUPPLIER_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_SUPPLIER")
+    @SequenceGenerator(name = "SEQ_SUPPLIER", sequenceName = "SEQ_SUPPLIER", allocationSize = 1)
     @ColumnInfo(name = "PK", descr = "PK")
     private Integer id;
 

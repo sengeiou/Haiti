@@ -30,8 +30,8 @@ public class Notification extends BaseObject{
 	static final long serialVersionUID = 6056177359684341051L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="NOTIFICATION_SEQ")
-    @SequenceGenerator(name="NOTIFICATION_SEQ", sequenceName="NOTIFICATION_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_NOTIFICATION")
+    @SequenceGenerator(name="SEQ_NOTIFICATION", sequenceName="SEQ_NOTIFICATION", allocationSize=1)
 	private Integer id;
 
 	@Column(name="SMSYN", columnDefinition="INTEGER default 1")

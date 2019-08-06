@@ -64,8 +64,8 @@ public class MeterProgram extends BaseObject implements JSONString {
     private static final long serialVersionUID = 4425586603710572606L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="METERPROGRAM_SEQ")
-    @SequenceGenerator(name="METERPROGRAM_SEQ", sequenceName="METERPROGRAM_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_METERPROGRAM")
+    @SequenceGenerator(name="SEQ_METERPROGRAM", sequenceName="SEQ_METERPROGRAM", allocationSize=1)
     private Integer id;
 
     @XmlTransient

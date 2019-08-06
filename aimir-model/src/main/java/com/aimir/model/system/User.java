@@ -40,8 +40,8 @@ public abstract class User  extends BaseObject implements JSONString, IAuditable
 	private static final long serialVersionUID = 6284113740604163761L;
 	
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="AIMIR_USER_SEQ")
-	@SequenceGenerator(name="AIMIR_USER_SEQ", sequenceName="AIMIR_USER_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_USER")
+	@SequenceGenerator(name="SEQ_USER", sequenceName="SEQ_USER", allocationSize=1)
     protected Integer id; //  ID(PK)
 	
 	/**

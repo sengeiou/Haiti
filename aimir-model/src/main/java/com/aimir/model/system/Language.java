@@ -20,8 +20,8 @@ public class Language extends BaseObject{
     private static final long serialVersionUID = -4348862749074118175L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="LANGUAGE_SEQ")
-    @SequenceGenerator(name="LANGUAGE_SEQ", sequenceName="LANGUAGE_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_LANGUAGE")
+    @SequenceGenerator(name="SEQ_LANGUAGE", sequenceName="SEQ_LANGUAGE", allocationSize=1)
     private Integer id;
     
     @Column(unique=true, nullable=false)

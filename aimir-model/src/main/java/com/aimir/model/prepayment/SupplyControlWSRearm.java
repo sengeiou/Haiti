@@ -31,8 +31,8 @@ public class SupplyControlWSRearm extends BaseObject {
     private static final long serialVersionUID = 3200643025969241661L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SUPPLY_CONTROL_WS_REARM_SEQ")
-    @SequenceGenerator(name="SUPPLY_CONTROL_WS_REARM_SEQ", sequenceName="SUPPLY_CONTROL_WS_REARM_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_SUPPLY_CONTROL_WS_REARM")
+    @SequenceGenerator(name="SEQ_SUPPLY_CONTROL_WS_REARM", sequenceName="SEQ_SUPPLY_CONTROL_WS_REARM", allocationSize=1)
 	private Integer id;
 	
 	@Column(name = "supplier_name", nullable=false)

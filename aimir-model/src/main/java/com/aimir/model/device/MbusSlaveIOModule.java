@@ -42,8 +42,8 @@ public class MbusSlaveIOModule extends BaseObject implements JSONString, IAudita
 	private static final long serialVersionUID = 2302164098551925453L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MBUSSLAVEIOMODULE_SEQ")
-    @SequenceGenerator(name="MBUSSLAVEIOMODULE_SEQ", sequenceName="MBUSSLAVEIOMODULE_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_MBUSSLAVEIOMODULE")
+    @SequenceGenerator(name="SEQ_MBUSSLAVEIOMODULE", sequenceName="SEQ_MBUSSLAVEIOMODULE", allocationSize=1)
 	private Integer id;
     
     

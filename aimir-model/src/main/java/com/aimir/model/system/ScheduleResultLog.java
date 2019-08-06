@@ -38,8 +38,8 @@ public class ScheduleResultLog extends BaseObject implements JSONString{
 	private static final long serialVersionUID = 8456161866692456444L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SCHEDULERESULTLOG_SEQ")
-	@SequenceGenerator(name="SCHEDULERESULTLOG_SEQ", sequenceName="SCHEDULERESULTLOG_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_SCHEDULERESULTLOG")
+	@SequenceGenerator(name="SEQ_SCHEDULERESULTLOG", sequenceName="SEQ_SCHEDULERESULTLOG", allocationSize=1)
 	private Long id;
 
 	@Column(name="CREATE_TIME", length=14, nullable=false)

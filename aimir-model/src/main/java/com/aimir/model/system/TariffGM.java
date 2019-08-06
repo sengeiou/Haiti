@@ -29,8 +29,8 @@ import com.aimir.model.mvm.Season;
 public class TariffGM extends Tariff{
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TARIFF_GM_SEQ")
-	@SequenceGenerator(name="TARIFF_GM_SEQ", sequenceName="TARIFF_GM_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_TARIFF_GM")
+	@SequenceGenerator(name="SEQ_TARIFF_GM", sequenceName="SEQ_TARIFF_GM", allocationSize=1)
 	@ColumnInfo(name="PK", descr="PK")
 	private Integer id;
 	

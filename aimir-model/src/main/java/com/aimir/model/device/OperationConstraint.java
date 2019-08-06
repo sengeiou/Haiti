@@ -45,8 +45,8 @@ public class OperationConstraint extends BaseObject {
     private static final long serialVersionUID = 859969180452148272L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OPERATION_CONSTRAINT_SEQ")
-    @SequenceGenerator(name="OPERATION_CONSTRAINT_SEQ", sequenceName="OPERATION_CONSTRAINT_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_OPERATION_CONSTRAINT")
+    @SequenceGenerator(name="SEQ_OPERATION_CONSTRAINT", sequenceName="SEQ_OPERATION_CONSTRAINT", allocationSize=1)
     private Integer id;
 
 //    @Version

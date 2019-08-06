@@ -32,8 +32,8 @@ public class PrepaymentSetWSRestartAccount extends BaseObject {
     private static final long serialVersionUID = -2854975321692836254L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PREPAYMENT_WS_RESTART_ACCO_SEQ")
-    @SequenceGenerator(name="PREPAYMENT_WS_RESTART_ACCO_SEQ", sequenceName="PREPAYMENT_WS_RESTART_ACCO_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_PREPAYMENT_WS_RESTR_ACT")
+    @SequenceGenerator(name="SEQ_PREPAYMENT_WS_RESTR_ACT", sequenceName="SEQ_PREPAYMENT_WS_RESTR_ACT", allocationSize=1)
 	private Integer id;
 
 	@Column(name = "supplier_name", nullable=false)

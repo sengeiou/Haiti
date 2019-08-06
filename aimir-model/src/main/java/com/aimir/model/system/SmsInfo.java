@@ -24,8 +24,8 @@ public class SmsInfo extends BaseObject{
     private static final long serialVersionUID = -4348862749074118175L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SMSINFO_SEQ")
-    @SequenceGenerator(name="SMSINFO_SEQ", sequenceName="SMSINFO_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_SMSINFO")
+    @SequenceGenerator(name="SEQ_SMSINFO", sequenceName="SEQ_SMSINFO", allocationSize=1)
     private Integer id;
     
     @ManyToOne(fetch=FetchType.LAZY)

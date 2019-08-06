@@ -32,8 +32,8 @@ public class MCUCodiMemory extends BaseObject implements JSONString, IAuditable 
 	private static final long serialVersionUID = -5215221068228365527L;
 	
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MCU_CODI_MEMORY_SEQ")
-    @SequenceGenerator(name="MCU_CODI_MEMORY_SEQ", sequenceName="MCU_CODI_MEMORY_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_MCU_CODI_MEMORY")
+    @SequenceGenerator(name="SEQ_MCU_CODI_MEMORY", sequenceName="SEQ_MCU_CODI_MEMORY", allocationSize=1)
 	private Integer id;
 	
     @ColumnInfo(name="", view=@Scope(create=false, read=false, update=false, devicecontrol=false), descr="")

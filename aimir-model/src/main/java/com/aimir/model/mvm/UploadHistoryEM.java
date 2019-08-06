@@ -34,8 +34,8 @@ public class UploadHistoryEM extends BaseObject {
 	private static final long serialVersionUID = 8917727240920498697L;
 		
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="UploadHistory_EM_SEQ")
-    @SequenceGenerator(name="UploadHistory_EM_SEQ", sequenceName="UploadHistory_EM_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_UploadHistory_EM")
+    @SequenceGenerator(name="SEQ_UploadHistory_EM", sequenceName="SEQ_UploadHistory_EM", allocationSize=1)
 	@ColumnInfo(descr="PK")
     private String id;    //  ID(PK)
 	

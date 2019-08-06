@@ -37,8 +37,8 @@ public class TOURate extends BaseObject{
 	private static final long serialVersionUID = -2147829927962950650L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TOU_RATE_SEQ")
-	@SequenceGenerator(name="TOU_RATE_SEQ", sequenceName="TOU_RATE_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_TOU_RATE")
+	@SequenceGenerator(name="SEQ_TOU_RATE", sequenceName="SEQ_TOU_RATE", allocationSize=1)
 	@ColumnInfo(name="PK", descr="PK")
 	private Integer id;
 	

@@ -27,8 +27,8 @@ public class SAPIntegrationLog extends BaseObject implements JSONString{
 	private static final long serialVersionUID = -6594382001300312223L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SAPIntegrationLog_SEQ")
-    @SequenceGenerator(name="SAPIntegrationLog_SEQ", sequenceName="SAPIntegrationLog_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_SAPIntegrationLog")
+    @SequenceGenerator(name="SEQ_SAPIntegrationLog", sequenceName="SEQ_SAPIntegrationLog", allocationSize=1)
 	private Integer id;
 	
 	@Column(name="Record_Number")

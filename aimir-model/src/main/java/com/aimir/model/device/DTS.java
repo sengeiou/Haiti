@@ -42,8 +42,8 @@ public class DTS extends BaseObject implements JSONString, IAuditable {
 	static final long serialVersionUID = 828341386560726667L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DTS_SEQ")
-    @SequenceGenerator(name="DTS_SEQ", sequenceName="DTS_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_DTS")
+    @SequenceGenerator(name="SEQ_DTS", sequenceName="SEQ_DTS", allocationSize=1)
 	private Integer id;
 
 	@ColumnInfo(name="DTS Name", descr="DTS Name")

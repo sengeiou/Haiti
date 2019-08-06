@@ -72,8 +72,8 @@ public class Location extends BaseObject implements JSONString {
     private static final long serialVersionUID = 4780327854320048764L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="LOCATION_SEQ")
-    @SequenceGenerator(name="LOCATION_SEQ", sequenceName="LOCATION_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_LOCATION")
+    @SequenceGenerator(name="SEQ_LOCATION", sequenceName="SEQ_LOCATION", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
     private Integer id;
 	

@@ -27,8 +27,8 @@ public class LoginLog extends BaseObject{
 	private static final long serialVersionUID = -244292093243821790L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="LOGINLOG_SEQ")
-	@SequenceGenerator(name="LOGINLOG_SEQ", sequenceName="LOGINLOG_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_LOGINLOG")
+	@SequenceGenerator(name="SEQ_LOGINLOG", sequenceName="SEQ_LOGINLOG", allocationSize=1)
 	private Long id;
 	
 	@Column(name="SESSION_ID")

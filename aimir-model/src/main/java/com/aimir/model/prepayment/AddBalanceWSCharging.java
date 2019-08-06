@@ -38,8 +38,8 @@ public class AddBalanceWSCharging extends BaseObject {
 	private static final long serialVersionUID = -9082722391307249191L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ADD_BALANCE_WS_CHARGING_SEQ")
-	@SequenceGenerator(name="ADD_BALANCE_WS_CHARGING_SEQ", sequenceName="ADD_BALANCE_WS_CHARGING_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_ADD_BALANCE_WS_CHARGING")
+	@SequenceGenerator(name="SEQ_ADD_BALANCE_WS_CHARGING", sequenceName="SEQ_ADD_BALANCE_WS_CHARGING", allocationSize=1)
 	private Integer id;
 	
 //	@ManyToOne

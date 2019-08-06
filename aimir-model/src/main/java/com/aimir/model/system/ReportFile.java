@@ -25,8 +25,8 @@ public class ReportFile extends BaseObject implements JSONString{
     private static final long serialVersionUID = -4455650930271509994L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="REPORT_FILE_SEQ")
-    @SequenceGenerator(name="REPORT_FILE_SEQ", sequenceName="REPORT_FILE_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_REPORT_FILE")
+    @SequenceGenerator(name="SEQ_REPORT_FILE", sequenceName="SEQ_REPORT_FILE", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
 	private Integer id;
 

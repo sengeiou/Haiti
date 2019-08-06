@@ -31,8 +31,8 @@ public class GetBalanceWSGetInfo extends BaseObject {
     private static final long serialVersionUID = -3678158342335488540L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GET_BALANCE_WS_GET_INFO_SEQ")
-    @SequenceGenerator(name="GET_BALANCE_WS_GET_INFO_SEQ", sequenceName="GET_BALANCE_WS_GET_INFO_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_GET_BALANCE_WS_GET_INFO")
+    @SequenceGenerator(name="SEQ_GET_BALANCE_WS_GET_INFO", sequenceName="SEQ_GET_BALANCE_WS_GET_INFO", allocationSize=1)
 	private Integer id;
 	
 	@Column(name = "supplier_name", nullable=false)

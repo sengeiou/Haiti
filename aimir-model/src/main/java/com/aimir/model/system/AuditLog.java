@@ -37,8 +37,8 @@ public class AuditLog extends BaseObject implements JSONString {
 	private static final long serialVersionUID = 1509560962134552502L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="AUDITLOG_SEQ")
-	@SequenceGenerator(name="AUDITLOG_SEQ", sequenceName="AUDITLOG_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_AUDITLOG")
+	@SequenceGenerator(name="SEQ_AUDITLOG", sequenceName="SEQ_AUDITLOG", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
     private Long id;     //id
 

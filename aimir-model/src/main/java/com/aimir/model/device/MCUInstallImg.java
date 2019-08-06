@@ -28,8 +28,8 @@ public class MCUInstallImg extends BaseObject {
 	private static final long serialVersionUID = 6049407631921994613L;
 	
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MCU_INSTALLIMAGE_SEQ")
-    @SequenceGenerator(name="MCU_INSTALLIMAGE_SEQ", sequenceName="MCU_INSTALLIMAGE_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_MCU_INSTALLIMAGE")
+    @SequenceGenerator(name="SEQ_MCU_INSTALLIMAGE", sequenceName="SEQ_MCU_INSTALLIMAGE", allocationSize=1)
 	private Long id;	
     private String orginalName;
     private String currentTimeMillisName;

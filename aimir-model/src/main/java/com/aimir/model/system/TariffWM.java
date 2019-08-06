@@ -22,8 +22,8 @@ import com.aimir.annotation.ColumnInfo;
 public class TariffWM extends Tariff{
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TARIFF_WM_SEQ")
-	@SequenceGenerator(name="TARIFF_WM_SEQ", sequenceName="TARIFF_WM_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_TARIFF_WM")
+	@SequenceGenerator(name="SEQ_TARIFF_WM", sequenceName="SEQ_TARIFF_WM", allocationSize=1)
 	@ColumnInfo(name="PK", descr="PK")
 	private Integer id;
 		

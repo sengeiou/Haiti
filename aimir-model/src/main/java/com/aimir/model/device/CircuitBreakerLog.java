@@ -37,8 +37,8 @@ public class CircuitBreakerLog extends BaseObject {
 	private static final long serialVersionUID = -3426136427255726166L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CIRCUIT_BREAKER_LOG_SEQ")
-    @SequenceGenerator(name="CIRCUIT_BREAKER_LOG_SEQ", sequenceName="CIRCUIT_BREAKER_LOG_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_CIRCUITBREAKERLOG")
+    @SequenceGenerator(name="SEQ_CIRCUITBREAKERLOG", sequenceName="SEQ_CIRCUITBREAKERLOG", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
     private Long id;
 

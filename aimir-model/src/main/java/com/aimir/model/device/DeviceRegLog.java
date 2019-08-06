@@ -38,8 +38,8 @@ public class DeviceRegLog extends BaseObject {
 	private static final long serialVersionUID = 8026288713320305491L;
 	
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DEVICEREG_LOG_SEQ")
-    @SequenceGenerator(name="DEVICEREG_LOG_SEQ", sequenceName="DEVICEREG_LOG_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_DEVICEREG_LOG")
+    @SequenceGenerator(name="SEQ_DEVICEREG_LOG", sequenceName="SEQ_DEVICEREG_LOG", allocationSize=1)
 	private Long id;
 	
     @Column(name="CREATE_DATE", length=14)

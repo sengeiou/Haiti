@@ -39,8 +39,8 @@ public class EBS_DEVICE extends BaseObject implements JSONString, IAuditable {
 	static final long serialVersionUID = 828341386560726667L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="EBS_DEVICE_SEQ")
-    @SequenceGenerator(name="EBS_DEVICE_SEQ", sequenceName="EBS_DEVICE_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_EBS_DEVICE")
+    @SequenceGenerator(name="SEQ_EBS_DEVICE", sequenceName="SEQ_EBS_DEVICE", allocationSize=1)
 	private Integer id;
 
 //	@ColumnInfo(name="Distribution Transformer Substation Name", descr="Distribution Transformer Substation Name")

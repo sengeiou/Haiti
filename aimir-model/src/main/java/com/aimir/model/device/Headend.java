@@ -27,8 +27,8 @@ public class Headend extends BaseObject {
 	private static final long serialVersionUID = -7588707526107168442L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="HEADEND_SEQ")
-	@SequenceGenerator(name="HEADEND_SEQ", sequenceName="HEADEND_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_HEADEND")
+	@SequenceGenerator(name="SEQ_HEADEND", sequenceName="SEQ_HEADEND", allocationSize=1)
 	@ColumnInfo(name="PK", descr="PK")
 	private Integer id;
 	

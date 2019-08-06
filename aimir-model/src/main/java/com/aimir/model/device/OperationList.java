@@ -39,8 +39,8 @@ public class OperationList extends BaseObject {
 	private static final long serialVersionUID = 7875345457374864812L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OPERATION_LIST_SEQ")
-    @SequenceGenerator(name="OPERATION_LIST_SEQ", sequenceName="OPERATION_LIST_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_OPERATION_LIST")
+    @SequenceGenerator(name="SEQ_OPERATION_LIST", sequenceName="SEQ_OPERATION_LIST", allocationSize=1)
     private Integer id;
 
 //    @Version

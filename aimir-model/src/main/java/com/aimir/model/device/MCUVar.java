@@ -26,8 +26,8 @@ public class MCUVar extends BaseObject implements IAuditable {
 	private static final long serialVersionUID = -9167601768841438376L;
 	
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MCU_VAR_SEQ")
-    @SequenceGenerator(name="MCU_VAR_SEQ", sequenceName="MCU_VAR_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_MCU_VAR")
+    @SequenceGenerator(name="SEQ_MCU_VAR", sequenceName="SEQ_MCU_VAR", allocationSize=1)
 	private Long id;    
     
 	private Integer varEnableMask;

@@ -28,8 +28,8 @@ public class Notice extends BaseObject implements JSONString{
 	private static final long serialVersionUID = 325930741994679915L;
 		
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="NOTICE_SEQ")
-	@SequenceGenerator(name="NOTICE_SEQ", sequenceName="NOTICE_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_NOTICE")
+	@SequenceGenerator(name="SEQ_NOTICE", sequenceName="SEQ_NOTICE", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
 	private Integer id;
 

@@ -32,8 +32,8 @@ public class CheckBalanceSettingWSModify extends BaseObject {
     private static final long serialVersionUID = -4131324217688205430L;
     
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CHECK_BALANCE_SETTING_WS_SEQ")
-	@SequenceGenerator(name="CHECK_BALANCE_SETTING_WS_SEQ", sequenceName="CHECK_BALANCE_SETTING_WS_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_CHECK_BALANCE_SETTING_WS")
+	@SequenceGenerator(name="SEQ_CHECK_BALANCE_SETTING_WS", sequenceName="SEQ_CHECK_BALANCE_SETTING_WS", allocationSize=1)
 	private Integer id;
 	
 	@Column(name = "supplier_name", nullable=false)

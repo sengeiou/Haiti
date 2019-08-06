@@ -39,8 +39,8 @@ public class Threshold extends BaseObject implements JSONString {
 	private static final long serialVersionUID = -44851368338651025L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE,  generator="THRESHOLD_SEQ")
-	@SequenceGenerator(name="THRESHOLD_SEQ", sequenceName="THRESHOLD_SEQ", allocationSize=1) 
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,  generator="SEQ_THRESHOLD")
+	@SequenceGenerator(name="SEQ_THRESHOLD", sequenceName="SEQ_THRESHOLD", allocationSize=1)
 	private Integer id;	//	ID(PK)
 
 	@Column(name = "THRESHOLD_NAME", nullable=false)

@@ -23,8 +23,8 @@ public class GroupStrategy extends BaseObject {
     private static final long serialVersionUID = -1172320728125799276L;
 
     @Id
-    @GeneratedValue(strategy= GenerationType.TABLE, generator="GROUP_STRATEGY_SEQ")
-    @SequenceGenerator(name="GROUP_STRATEGY_SEQ", sequenceName="GROUP_STRATEGY_SEQ", allocationSize=1)
+    @GeneratedValue(strategy= GenerationType.TABLE, generator="SEQ_GROUP_STRATEGY")
+    @SequenceGenerator(name="SEQ_GROUP_STRATEGY", sequenceName="SEQ_GROUP_STRATEGY", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
     private Integer id;	//	ID(PK)
 

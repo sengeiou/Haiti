@@ -21,8 +21,8 @@ import com.aimir.annotation.ColumnInfo;
 public class Season {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEASON_SEQ")
-    @SequenceGenerator(name="SEASON_SEQ", sequenceName="SEASON_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_SEASON")
+    @SequenceGenerator(name="SEQ_SEASON", sequenceName="SEQ_SEASON", allocationSize=1)
 	private Integer id;
 	
 	@Column(length=4)

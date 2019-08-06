@@ -32,8 +32,8 @@ public class Co2Formula extends BaseObject {
 	private static final long serialVersionUID = -3425979378837002300L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CO2FORMULA_SEQ")
-	@SequenceGenerator(name="CO2FORMULA_SEQ", sequenceName="CO2FORMULA_SEQ", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_CO2FORMULA")
+	@SequenceGenerator(name="SEQ_CO2FORMULA", sequenceName="SEQ_CO2FORMULA", allocationSize=1)
 	@ColumnInfo(name="PK", descr="PK")
 	private Integer id;
 

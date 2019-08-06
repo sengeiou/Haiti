@@ -28,8 +28,8 @@ public class MeterInstallImg extends BaseObject {
 	private static final long serialVersionUID = -3947955053420777575L;
 	
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="METER_INSTALLIMAGE_SEQ")
-    @SequenceGenerator(name="METER_INSTALLIMAGE_SEQ", sequenceName="METER_INSTALLIMAGE_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_METER_INSTALLIMAGE")
+    @SequenceGenerator(name="SEQ_METER_INSTALLIMAGE", sequenceName="SEQ_METER_INSTALLIMAGE", allocationSize=1)
 	private Long   id;	
     private String orginalName;
     private String currentTimeMillisName;

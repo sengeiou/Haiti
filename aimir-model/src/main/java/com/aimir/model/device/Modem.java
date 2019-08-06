@@ -194,7 +194,7 @@ public class Modem extends BaseObject implements JSONString, IAuditable {
     private static final long serialVersionUID = -299021006738263346L;
     
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_MODEM") 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_MODEM")
     @SequenceGenerator(name="SEQ_MODEM", sequenceName="SEQ_MODEM", allocationSize=1)
     private Integer id;
 
@@ -205,11 +205,29 @@ public class Modem extends BaseObject implements JSONString, IAuditable {
     @Column(name="DEVICE_SERIAL", nullable=false, unique=true)
     private String deviceSerial;
 
+    @XmlTransient
+    @ColumnInfo(name="모뎀아이디", descr="모뎀 테이블의 ID 혹은  NULL : 재귀호출을 위함")
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="MODEM_ID")
+    @ReferencedBy(name="deviceSerial")
+    private Modem modem;
+    
+    @Column(name="MODEM_ID", nullable=true, updatable=false, insertable=false)
+    private Integer parentModemId;
 
     @ColumnInfo(name="미터아이디", descr="미터 테이블의 ID 혹은  NULL")
     @OneToMany(fetch=FetchType.LAZY, mappedBy="modem")
     private Set<Meter> meter = new HashSet<Meter>(0);
 
+    @XmlTransient
+    @ColumnInfo(name="MCU 아이디", descr="MCU 테이블의 ID 혹은  NULL")
+    @ManyToOne(fetch=FetchType.LAZY)    
+    @JoinColumn(name="MCU_ID")
+    @ReferencedBy(name="sysID")
+    private MCU mcu;
+    
+    @Column(name="MCU_ID", nullable=true, updatable=false, insertable=false)
+    private Integer mcuId;
 
     @XmlTransient
     @ColumnInfo(name="공급사아이디", descr="공급사 테이블의 ID 혹은  NULL")
@@ -224,43 +242,29 @@ public class Modem extends BaseObject implements JSONString, IAuditable {
     @XmlTransient
     @ColumnInfo(name="모뎀 모델", descr="미터 제조사 모델의 ID 혹은  NULL")
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="DEVICEMODEL_ID")
+    @JoinColumn(name="devicemodel_id")
     @ReferencedBy(name="name")
     private DeviceModel model;
     
-    @Column(name="DEVICEMODEL_ID", nullable=true, updatable=false, insertable=false)
+    @Column(name="DEVICXEMODEL_ID", nullable=true, updatable=false, insertable=false)
     private Integer modelId;
+
+    @ColumnInfo(name="노드타입", descr="Modem에 연결된 Node의 타입(전기,가스,수도,열량,고압,PLC)")
+    @Column(name="NODE_TYPE", length=5)
+    private Integer nodeType;
+
+    @ColumnInfo(name="", descr="model name (Modem에 연결된 Node의 종류를 기술-GE-SM-XXX, AIDON-55X0, NAMR-H101MG 등), 배포 시 model 값으로 등록 됨.")
+    @Column(name="NODE_KIND", length=20)
+    private String nodeKind;
     
-
-    @XmlTransient
-    @ColumnInfo(name="",view=@Scope(create=true, read=true, update=true),descr="")
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="LOCATION_ID")
-    @ReferencedBy(name="name")
-    private Location location;
-    
-    @Column(name="LOCATION_ID", nullable=true, updatable=false, insertable=false)
-    private Integer locationId;
-
-
-    @ColumnInfo(name="설치일자", descr="YYYYMMDDHHMMSS")
-    @Column(name="INSTALL_DATE", length=14)
-    private String installDate;
-
-    @ColumnInfo(name="마지막 통신 일자", descr="YYYYMMDDHHMMSS")
-    @Column(name="LAST_LINK_TIME", length=14)
-    private String lastLinkTime; 
+    @ColumnInfo(name="", descr="Zigbee Interface Version")
+    @Column(name="ZDZD_IF_VERSION", length=20)
+    private String zdzdIfVersion;
    
     @ColumnInfo(name="", descr="protocol type (CDMA,GSM,GPRS,PSTN,LAN,ZigBee,WiMAX,Serial,PLC,Bluetooth,SMS)")
     @Enumerated(EnumType.STRING)
     @Column(name="PROTOCOL_TYPE")
-    private Protocol protocolType;  
-
-    
-    @ColumnInfo(name="communication protocol namespace for OID mapping")
-    @Column(name="NAME_SPACE", length=10)
-    private String nameSpace;
-    
+    private Protocol protocolType;
 
     @ColumnInfo(name="소프트웨어 버젼", descr="")
     @Column(name="SW_VER")
@@ -282,16 +286,6 @@ public class Modem extends BaseObject implements JSONString, IAuditable {
     @Column(name="COMM_STATE", length=10)
     private Integer commState;
 
-    @XmlTransient
-    @ColumnInfo(name="MCU 아이디", descr="MCU 테이블의 ID 혹은  NULL")
-    @ManyToOne(fetch=FetchType.LAZY)    
-    @JoinColumn(name="MCU_ID")
-    @ReferencedBy(name="sysID")
-    private MCU mcu;
-    
-    @Column(name="MCU_ID", nullable=true, updatable=false, insertable=false)
-    private Integer mcuId;
-    
     /**
      * 모뎀상태에 따라 상태값이 다르므로 코드를 참조한다.
      * <br>유형에 따른 미터 상태가 없으면 Code 1.2.7 을 이용한다.
@@ -309,106 +303,26 @@ public class Modem extends BaseObject implements JSONString, IAuditable {
     @ColumnInfo(name="프로토콜 버젼")
     @Column(name="PROTOCOL_VERSION", length=20)
     private String protocolVersion;  //protocol Version
- 
-   
 
-    @ColumnInfo(name="", descr="sensor type (code:zru, zeupls, mmiu, ieiu, zeupls, zmu, ihd, acd, hmu)")
-    @Enumerated(EnumType.STRING)
-    @Column(name="MODEM_TYPE")
-    private ModemType modemType;    
-    
-    @ColumnInfo(name="", view=@Scope(read=true, update=true, devicecontrol=true), descr="모뎀이 LP 저장하는 주기  0: No LP, 1: 60분 2: 30분 4: 15분")
-    @Column(name="LP_PERIOD", length=2)
-    private Integer lpPeriod;   
-    
+    @ColumnInfo(name="설치일자", descr="YYYYMMDDHHMMSS")
+    @Column(name="INSTALL_DATE", length=14)
+    private String installDate;
 
-    @ColumnInfo(name="노드타입", descr="Modem에 연결된 Node의 타입(전기,가스,수도,열량,고압,PLC)")
-    @Column(name="NODE_TYPE", length=5)
-    private Integer nodeType;
-
-    @ColumnInfo(name="", descr="model name (Modem에 연결된 Node의 종류를 기술-GE-SM-XXX, AIDON-55X0, NAMR-H101MG 등), 배포 시 model 값으로 등록 됨.")
-    @Column(name="NODE_KIND", length=20)
-    private String nodeKind;
+    @ColumnInfo(name="마지막 통신 일자", descr="YYYYMMDDHHMMSS")
+    @Column(name="LAST_LINK_TIME", length=14)
+    private String lastLinkTime;  
     
-    @ColumnInfo(name="interface", descr="modem interface type (IF4, AMU, etc)")
-    @Enumerated(EnumType.STRING)
-    @Column(name="interface_type")
-    private Interface interfaceType;
-
-    
-    @ColumnInfo(name="deviceIdType", descr="Id type (IPv4, IPv6, MAC, EUI64, SignedNumber, UnsignedNumber, ASCII, BCD, Byte Stream)")
-    @Column(name="ID_TYPE")
-    private Integer idType;
-
-
-    @ColumnInfo(descr="바코드 정보")
-    @Column(name="GS1")
-	private String gs1;
-    
-    @ColumnInfo(name="Purchase Order")
-    @Column(name="po")
-    private String po;
-    
-    @ColumnInfo(name="ICC ID")
-    @Column(name="ICC_ID")
-    private String iccId;
-
-    
-    @ColumnInfo(name="IMEI")
-    @Column(name="IMEI")
-    private String imei;    
-    
-    @ColumnInfo(name="IMSI")
-    @Column(name="IMSI")
-    private String imsi;
-    
-    @ColumnInfo(name="심카드 번호", view=@Scope(create=true, read=true, update=true))
-    @Column(name="SIM_NUMBER",length=24)
-    private String simNumber;
-    
-    @ColumnInfo(name="전화번호", view=@Scope(create=true, read=true, update=true))
-    @Column(name="PHONE_NUMBER", length=20)
-    private String phoneNumber;
-
-    @ColumnInfo(name="Cpu Usage")
-    @Column(name="Cpu_Usage", length=20)
-    private Integer cpuUsage;
-
-    @ColumnInfo(name="Memory Usage")
-    @Column(name="Memory_Usage", length=20)
-    private Integer memoryUsage;
-    
-    @ColumnInfo(name="Boot Loader Version")
-    @Column(name="BOOTLOADER_VER")
-    private String bootLoaderVer;
-        
     @ColumnInfo(name="무선 신호 세기(dBm) Signal Strength 모뎀 타입이 MMIU, IEIU인 경우에는 dbm으로 그외는V로 표시한다.PLC는 해당사항 없음")
     @Column(name="RF_POWER")
-    private Long rfPower;  
-    
-    @ColumnInfo(name="", descr="Zigbee Interface Version")
-    @Column(name="ZDZD_IF_VERSION", length=20)
-    private String zdzdIfVersion;
+    private Long rfPower;    
 
-    @XmlTransient
-    @ColumnInfo(name="모뎀아이디", descr="모뎀 테이블의 ID 혹은  NULL : 재귀호출을 위함")
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="MODEM_ID")
-    @ReferencedBy(name="deviceSerial")
-    private Modem modem;    
-    
-    @ColumnInfo(name="제조일자", view=@Scope(create=true, read=true, update=true), descr="제조일자")
-    @Column(name="MANUFACTURED_DATE", length=8)
-    private String manufacturedDate;
-    
-    @Column(name="MODEM_ID", nullable=true, updatable=false, insertable=false)
-    private Integer parentModemId;
-    
+    @ColumnInfo(name="아이피")
+    @Column(name="IP_ADDR", length=64)
+    private String ipAddr;
 
-    @ColumnInfo(name="설치된 이미지")
-    @Column(name="INSTALLED_SITE_IMG", length=100)
-    private String installedSiteImg;    
-    
+    @ColumnInfo(name="맥 어드레스")
+    @Column(name="MAC_ADDR", length=20)
+    private String macAddr;    
 
     @ColumnInfo(name="GPS X")
     @Column(name="GPIOX", length=10)
@@ -421,6 +335,10 @@ public class Modem extends BaseObject implements JSONString, IAuditable {
     @ColumnInfo(name="GPS Z")
     @Column(name="GPIOZ", length=10)
     private Double gpioZ;   
+
+    @ColumnInfo(name="설치된 이미지")
+    @Column(name="INSTALLED_SITE_IMG", length=100)
+    private String installedSiteImg;    
 
     @ColumnInfo(name="주소")
     @Column(name="ADDRESS", length=255)
@@ -440,15 +358,35 @@ public class Modem extends BaseObject implements JSONString, IAuditable {
 
     @ColumnInfo(name="", descr="last reset code(reset reason)")
     @Column(name="LAST_RESET_CODE", length=10)
-    private Integer lastResetCode;       
+    private Integer lastResetCode;
 
-    @ColumnInfo(name="아이피")
-    @Column(name="IP_ADDR", length=64)
-    private String ipAddr;
+    @ColumnInfo(name="", descr="sensor type (code:zru, zeupls, mmiu, ieiu, zeupls, zmu, ihd, acd, hmu)")
+    @Enumerated(EnumType.STRING)
+    @Column(name="MODEM_TYPE")
+    private ModemType modemType;    
+    
+    @ColumnInfo(name="", view=@Scope(read=true, update=true, devicecontrol=true), descr="모뎀이 LP 저장하는 주기  0: No LP, 1: 60분 2: 30분 4: 15분")
+    @Column(name="LP_PERIOD", length=2)
+    private Integer lpPeriod;
+    
+    @ColumnInfo(name="interface", descr="modem interface type (IF4, AMU, etc)")
+    @Enumerated(EnumType.STRING)
+    @Column(name="interface_type")
+    private Interface interfaceType;
 
-    @ColumnInfo(name="맥 어드레스")
-    @Column(name="MAC_ADDR", length=20)
-    private String macAddr; 
+    @XmlTransient
+    @ColumnInfo(name="",view=@Scope(create=true, read=true, update=true),descr="")
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="LOCATION_ID")
+    @ReferencedBy(name="name")
+    private Location location;
+    
+    @Column(name="LOCATION_ID", nullable=true, updatable=false, insertable=false)
+    private Integer locationId;
+    
+    @ColumnInfo(name="deviceIdType", descr="Id type (IPv4, IPv6, MAC, EUI64, SignedNumber, UnsignedNumber, ASCII, BCD, Byte Stream)")
+    @Column(name="ID_TYPE")
+    private Integer idType;
     
     @ColumnInfo(name="AMI Virtual Network Address Depth")
     @Column(name="AMI_NETWORK_DEPTH", length=2)
@@ -457,6 +395,58 @@ public class Modem extends BaseObject implements JSONString, IAuditable {
     @ColumnInfo(name="AMI Virtual Network Address")
     @Column(name="AMI_NETWORK_ADDRESS", length=128)
     private String amiNetworkAddress;  //AMI Virtual Network Address
+    
+    @ColumnInfo(name="communication protocol namespace for OID mapping")
+    @Column(name="NAME_SPACE", length=10)
+    private String nameSpace;
+
+    @ColumnInfo(descr="바코드 정보")
+    @Column(name="GS1")
+	private String gs1;
+    
+    @ColumnInfo(name="Purchase Order")
+    @Column(name="po")
+    private String po;
+    
+    @ColumnInfo(name="ICC ID")
+    @Column(name="ICC_ID")
+    private String iccId;
+    
+    @ColumnInfo(name="제조일자", view=@Scope(create=true, read=true, update=true), descr="제조일자")
+    @Column(name="MANUFACTURED_DATE", length=8)
+    private String manufacturedDate;
+    
+    @ColumnInfo(name="IMEI")
+    @Column(name="IMEI")
+    private String imei;    
+    
+    @ColumnInfo(name="IMSI")
+    @Column(name="IMSI")
+    private String imsi;
+    
+    @ColumnInfo(name="심카드 번호", view=@Scope(create=true, read=true, update=true))
+    @Column(name="SIM_NUMBER",length=24)
+    private String simNumber;
+    
+    @ColumnInfo(name="전화번호", view=@Scope(create=true, read=true, update=true))
+    @Column(name="PHONE_NUMBER", length=20)
+    private String phoneNumber;
+    
+    /*@ColumnInfo(name="ETX")
+    @Column(name="ETX", length=20)
+    private Integer etx;*/
+
+    @ColumnInfo(name="Cpu Usage")
+    @Column(name="Cpu_Usage", length=20)
+    private Integer cpuUsage;
+
+    @ColumnInfo(name="Memory Usage")
+    @Column(name="Memory_Usage", length=20)
+    private Integer memoryUsage;
+    
+    @ColumnInfo(name="Boot Loader Version")
+    @Column(name="BOOTLOADER_VER")
+    private String bootLoaderVer;
     
     public Integer getId() {
         return id;

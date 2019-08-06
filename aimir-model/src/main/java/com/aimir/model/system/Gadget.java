@@ -41,8 +41,8 @@ public class Gadget extends BaseObject implements JSONString{
 	private static final long serialVersionUID = -1268818013697105032L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE,  generator="GADGET_SEQ")
-	@SequenceGenerator(name="GADGET_SEQ", sequenceName="GADGET_SEQ", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,  generator="SEQ_GADGET")
+	@SequenceGenerator(name="SEQ_GADGET", sequenceName="SEQ_GADGET", allocationSize=1)
 	private Integer id;
 	
 	@Column(unique=true, nullable=false)

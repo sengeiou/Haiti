@@ -24,8 +24,8 @@ public class ECGBillingIntegration extends BaseObject implements JSONString{
 	private static final long serialVersionUID = -6594382001300312223L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ECGBillingIntegration_SEQ")
-    @SequenceGenerator(name="ECGBillingIntegration_SEQ", sequenceName="ECGBillingIntegration_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_ECGBillingIntegration")
+    @SequenceGenerator(name="SEQ_ECGBillingIntegration", sequenceName="SEQ_ECGBillingIntegration", allocationSize=1)
 	private Integer batchNo;
 	
 	/**

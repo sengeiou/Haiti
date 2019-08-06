@@ -24,8 +24,8 @@ public class CommStatus extends BaseObject {
 	private static final long serialVersionUID = 670721478784953689L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE,  generator="COMMSTATUS_SEQ")
-	@SequenceGenerator(name="COMMSTATUS_SEQ", sequenceName="COMMSTATUS_SEQ", allocationSize=1) 
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,  generator="SEQ_COMMSTATUS")
+	@SequenceGenerator(name="SEQ_COMMSTATUS", sequenceName="SEQ_COMMSTATUS", allocationSize=1)
 	private Integer id;	//	ID(PK)
 
 	@Column(name="YYYYMMDD")

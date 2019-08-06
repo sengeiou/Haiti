@@ -32,8 +32,8 @@ public class SupplyControlWSInterrupt extends BaseObject {
     private static final long serialVersionUID = -4946852875662153318L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SUPPLY_CONTROL_WS_INTERRUP_SEQ")
-    @SequenceGenerator(name="SUPPLY_CONTROL_WS_INTERRUP_SEQ", sequenceName="SUPPLY_CONTROL_WS_INTERRUP_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_SUPPLY_CONTROL_WS_INT")
+    @SequenceGenerator(name="SEQ_SUPPLY_CONTROL_WS_INT", sequenceName="SEQ_SUPPLY_CONTROL_WS_INT", allocationSize=1)
 	private Integer id;
 
 	@Column(name = "supplier_name", nullable=false)

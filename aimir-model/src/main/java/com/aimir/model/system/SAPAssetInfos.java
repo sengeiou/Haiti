@@ -33,8 +33,8 @@ public class SAPAssetInfos extends BaseObject implements JSONString{
 	static final long serialVersionUID = 2973162458901580968L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SAP_ASSET_INFOS_SEQ")
-	@SequenceGenerator(name = "SAP_ASSET_INFOS_SEQ", sequenceName = "SAP_ASSET_INFOS_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_SAP_ASSET_INFOS")
+	@SequenceGenerator(name = "SEQ_SAP_ASSET_INFOS", sequenceName = "SEQ_SAP_ASSET_INFOS", allocationSize = 1)
     private Integer id;
 
 	@Column(name = "METER_READER", length=3)

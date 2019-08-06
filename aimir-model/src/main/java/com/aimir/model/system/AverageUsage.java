@@ -33,8 +33,8 @@ public class AverageUsage extends BaseObject {
 	private static final long serialVersionUID = 6925279936233352839L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="AVERAGE_USAGE_SEQ")
-	@SequenceGenerator(name="AVERAGE_USAGE_SEQ", sequenceName="AVERAGE_USAGE_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_AVERAGE_USAGE")
+	@SequenceGenerator(name="SEQ_AVERAGE_USAGE", sequenceName="SEQ_AVERAGE_USAGE", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
     private Integer id;
     

@@ -35,8 +35,8 @@ public class PrepaymentAuthDevice  extends BaseObject{
 	static final long serialVersionUID = -6848689678057273926L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PREPAYMENT_AUTH_DEVICE_SEQ")
-	@SequenceGenerator(name="PREPAYMENT_AUTH_DEVICE_SEQ", sequenceName="PREPAYMENT_AUTH_DEVICE_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_PREPAYMENT_AUTH_DEVICE")
+	@SequenceGenerator(name="SEQ_PREPAYMENT_AUTH_DEVICE", sequenceName="SEQ_PREPAYMENT_AUTH_DEVICE", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
 	private Integer id;	//	ID(PK)
 	

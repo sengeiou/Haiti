@@ -36,8 +36,8 @@ public class Role extends BaseObject implements JSONString{
 	private static final long serialVersionUID = -7110538674532613070L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ROLE_SEQ")
-	@SequenceGenerator(name="ROLE_SEQ", sequenceName="ROLE_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_ROLE")
+	@SequenceGenerator(name="SEQ_ROLE", sequenceName="SEQ_ROLE", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
 	private Integer id;	//	ID(PK)
 

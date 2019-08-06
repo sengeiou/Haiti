@@ -35,8 +35,8 @@ public class EndDeviceLog  extends BaseObject implements JSONString {
 	private static final long serialVersionUID = -5284044128690521501L;
 	
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ENDDEVICELOG_SEQ")
-    @SequenceGenerator(name="ENDDEVICELOG_SEQ", sequenceName="ENDDEVICELOG_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_ENDDEVICELOG")
+    @SequenceGenerator(name="SEQ_ENDDEVICELOG", sequenceName="SEQ_ENDDEVICELOG", allocationSize=1)
 	private Integer id;
 
     @Column(nullable = false)

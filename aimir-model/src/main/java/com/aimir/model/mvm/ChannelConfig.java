@@ -44,8 +44,8 @@ public class ChannelConfig extends BaseObject implements JSONString {
     private static final long serialVersionUID = 6748339448528869541L;
     
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CHANNEL_CONFIG_SEQ")
-    @SequenceGenerator(name="CHANNEL_CONFIG_SEQ", sequenceName="CHANNEL_CONFIG_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_CHANNEL_CONFIG")
+    @SequenceGenerator(name="SEQ_CHANNEL_CONFIG", sequenceName="SEQ_CHANNEL_CONFIG", allocationSize=1)
     private Integer id;    
     
     @Column(name="data_type", nullable=false)

@@ -45,8 +45,8 @@ public class OBISCode extends BaseObject implements JSONString{
 	private static final long serialVersionUID = 3713988559688444944L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OBISCODE_SEQ")
-	@SequenceGenerator(name="OBISCODE_SEQ", sequenceName="OBISCODE_SEQ", allocationSize=1)	
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_OBISCODE")
+	@SequenceGenerator(name="SEQ_OBISCODE", sequenceName="SEQ_OBISCODE", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
 	private Long id;
 

@@ -107,8 +107,8 @@ public class Code extends BaseObject implements JSONString{
 	private static final long serialVersionUID = -1322900068244541952L;
 	
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CODE_SEQ")	
-	@SequenceGenerator(name="CODE_SEQ", sequenceName="CODE_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_CODE")
+	@SequenceGenerator(name="SEQ_CODE", sequenceName="SEQ_CODE", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
 	private Integer id;		//코드 id
 	@Column(unique=true, nullable=false)

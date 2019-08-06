@@ -20,8 +20,8 @@ public class OnDemandReadingOrder extends BaseObject implements JSONString,
 	private static final long serialVersionUID = 2489524733358761669L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ONDEMANDREADINGORDER_SEQ")
-	@SequenceGenerator(name = "ONDEMANDREADINGORDER_SEQ", sequenceName = "ONDEMANDREADINGORDER_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ONDEMANDREADINGORDER")
+	@SequenceGenerator(name = "SEQ_ONDEMANDREADINGORDER", sequenceName = "SEQ_ONDEMANDREADINGORDER", allocationSize = 1)
 	@ColumnInfo(name = "PK", descr = "PK")
 	private Integer id;
 

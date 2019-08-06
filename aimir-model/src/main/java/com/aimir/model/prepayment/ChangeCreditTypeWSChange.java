@@ -31,8 +31,8 @@ public class ChangeCreditTypeWSChange extends BaseObject {
     private static final long serialVersionUID = -3156689093225085739L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CHANGE_CREDIT_TYPE_WS_SEQ")
-    @SequenceGenerator(name="CHANGE_CREDIT_TYPE_WS_SEQ", sequenceName="CHANGE_CREDIT_TYPE_WS_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_CHANGE_CREDIT_TYPE_WS")
+    @SequenceGenerator(name="SEQ_CHANGE_CREDIT_TYPE_WS", sequenceName="SEQ_CHANGE_CREDIT_TYPE_WS", allocationSize=1)
 	private Integer id;
 	
 	@Column(name = "supplier_name", nullable=false)

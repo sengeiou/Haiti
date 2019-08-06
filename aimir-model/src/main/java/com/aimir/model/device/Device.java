@@ -31,8 +31,8 @@ import com.aimir.audit.IAuditable;
 public abstract class Device implements IAuditable {
 	
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DEVICE_SEQ")
-    @SequenceGenerator(name="DEVICE_SEQ", sequenceName="DEVICE_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_DEVICE")
+    @SequenceGenerator(name="SEQ_DEVICE", sequenceName="SEQ_DEVICE", allocationSize=1)
 	private Long id;
 
     @Enumerated(EnumType.STRING)

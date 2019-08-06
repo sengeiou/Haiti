@@ -38,8 +38,8 @@ public class LoadControlSchedule extends BaseObject {
 	private static final long serialVersionUID = -8782642400844907610L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="LOADCONTRAOLSCHEDULE_SEQ")
-	@SequenceGenerator(name="LOADCONTRAOLSCHEDULE_SEQ", sequenceName="LOADCONTRAOLSCHEDULE_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_LOADCONTRAOLSCHEDULE")
+	@SequenceGenerator(name="SEQ_LOADCONTRAOLSCHEDULE", sequenceName="SEQ_LOADCONTRAOLSCHEDULE", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
     private Integer id;
 

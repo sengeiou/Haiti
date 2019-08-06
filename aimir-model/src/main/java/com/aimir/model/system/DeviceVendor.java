@@ -51,8 +51,8 @@ public class DeviceVendor extends BaseObject implements JSONString, IAuditable {
 	private static final long serialVersionUID = -9080093327001193722L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DEVICEVENDOR_SEQ")
-	@SequenceGenerator(name="DEVICEVENDOR_SEQ", sequenceName="DEVICEVENDOR_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_DEVICEVENDOR")
+	@SequenceGenerator(name="SEQ_DEVICEVENDOR", sequenceName="SEQ_DEVICEVENDOR", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
 	private Integer id;
 

@@ -32,8 +32,8 @@ public class SupplyTypeLocation extends BaseObject implements JSONString, IAudit
     private static final long serialVersionUID = -3659014116254300422L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SUPPLYTYPELOCATION_SEQ")
-    @SequenceGenerator(name="SUPPLYTYPELOCATION_SEQ", sequenceName="SUPPLYTYPELOCATION_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_SUPPLYTYPELOCATION")
+    @SequenceGenerator(name="SEQ_SUPPLYTYPELOCATION", sequenceName="SEQ_SUPPLYTYPELOCATION", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
     private Integer id;
     

@@ -35,8 +35,8 @@ public class GadgetRole extends BaseObject {
 	private static final long serialVersionUID = -7119538674532613070L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE,  generator="GADGETROLE_SEQ")
-	@SequenceGenerator(name="GADGETROLE_SEQ", sequenceName="GADGETROLE_SEQ", allocationSize=1) 
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,  generator="SEQ_GADGETROLE")
+	@SequenceGenerator(name="SEQ_GADGETROLE", sequenceName="SEQ_GADGETROLE", allocationSize=1)
 	private Integer id;				// id(PK)
 	
 	@ManyToOne(fetch=FetchType.LAZY)

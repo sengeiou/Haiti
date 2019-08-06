@@ -22,8 +22,8 @@ public class ChangeLog extends BaseObject {
 	private static final long serialVersionUID = -7127561514740651044L;
 	
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CHANGE_LOG_SEQ")
-    @SequenceGenerator(name="CHANGE_LOG_SEQ", sequenceName="CHANGE_LOG_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_CHANGE_LOG")
+    @SequenceGenerator(name="SEQ_CHANGE_LOG", sequenceName="SEQ_CHANGE_LOG", allocationSize=1)
 	private Long id;
     
 	private String changeDate;

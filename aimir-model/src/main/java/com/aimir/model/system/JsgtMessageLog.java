@@ -23,8 +23,8 @@ public class JsgtMessageLog extends BaseObject {
 	private static final long serialVersionUID = -299021006738263346L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="JSGT_MESSAGE_LOG_SEQ")
-    @SequenceGenerator(name="JSGT_MESSAGE_LOG_SEQ", sequenceName="JSGT_MESSAGE_LOG_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_JSGT_MESSAGE_LOG")
+    @SequenceGenerator(name="SEQ_JSGT_MESSAGE_LOG", sequenceName="SEQ_JSGT_MESSAGE_LOG", allocationSize=1)
 	private Integer id;
 
 //    @Version

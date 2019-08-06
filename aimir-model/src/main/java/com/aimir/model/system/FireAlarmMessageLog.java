@@ -25,8 +25,8 @@ public class FireAlarmMessageLog extends BaseObject implements JSONString {
     private static final long serialVersionUID = 7835939935487701977L;
     
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="FIREALARMMESSAGELOG_SEQ")
-    @SequenceGenerator(name="FIREALARMMESSAGELOG_SEQ", sequenceName="FIREALARMMESSAGELOG_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_FIREALARMMESSAGELOG")
+    @SequenceGenerator(name="SEQ_FIREALARMMESSAGELOG", sequenceName="SEQ_FIREALARMMESSAGELOG", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
     private Long id;
     

@@ -35,8 +35,8 @@ public class DepositHistory extends BaseObject {
 	private static final long serialVersionUID = 7578408308756076944L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DEPOSIT_HISTORY_SEQ")
-	@SequenceGenerator(name="DEPOSIT_HISTORY_SEQ", sequenceName="DEPOSIT_HISTORY_SEQ", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_DEPOSIT_HISTORY")
+	@SequenceGenerator(name="SEQ_DEPOSIT_HISTORY", sequenceName="SEQ_DEPOSIT_HISTORY", allocationSize=1)
 	@ColumnInfo(name="History Index", descr="예치금 거래 내역 index")
 	private Integer id;
 

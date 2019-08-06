@@ -23,8 +23,8 @@ public class ChangeLogSetting extends BaseObject {
 	private static final long serialVersionUID = -2122883398746352567L;
 	
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CHANGE_LOG_SETTING_SEQ")
-    @SequenceGenerator(name="CHANGE_LOG_SETTING_SEQ", sequenceName="CHANGE_LOG_SETTING_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_CHANGE_LOG_SETTING")
+    @SequenceGenerator(name="SEQ_CHANGE_LOG_SETTING", sequenceName="SEQ_CHANGE_LOG_SETTING", allocationSize=1)
 	private Long id;	
 	
 	private Long supplierId;

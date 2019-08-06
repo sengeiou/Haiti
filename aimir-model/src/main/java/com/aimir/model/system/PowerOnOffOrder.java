@@ -20,8 +20,8 @@ public class PowerOnOffOrder extends BaseObject implements JSONString,
 	private static final long serialVersionUID = 768637358134619828L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "POWERONOFFORDER_SEQ")
-	@SequenceGenerator(name = "POWERONOFFORDER_SEQ", sequenceName = "POWERONOFFORDER_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_POWERONOFFORDER")
+	@SequenceGenerator(name = "SEQ_POWERONOFFORDER", sequenceName = "SEQ_POWERONOFFORDER", allocationSize = 1)
 	@ColumnInfo(name = "PK", descr = "PK")
 	private Long id;
 

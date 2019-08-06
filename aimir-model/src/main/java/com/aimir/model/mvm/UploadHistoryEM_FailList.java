@@ -32,8 +32,8 @@ public class UploadHistoryEM_FailList extends BaseObject {
 	private static final long serialVersionUID = -2702645582567160766L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="UploadHistory_FailList_SEQ")
-	@SequenceGenerator(name="UploadHistory_FailList_SEQ", sequenceName="UploadHistory_FailList_SEQ", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_UploadHistory_FailList")
+	@SequenceGenerator(name="SEQ_UploadHistory_FailList", sequenceName="SEQ_UploadHistory_FailList", allocationSize=1)
 	@ColumnInfo(name="PK", descr="PK")
 	private Integer id;
 	

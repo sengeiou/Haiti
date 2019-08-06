@@ -45,8 +45,8 @@ public class SAP extends BaseObject implements JSONString{
 	private static Log log = LogFactory.getLog(SAP.class);
 	
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SAP_SEQ")
-    @SequenceGenerator(name="SAP_SEQ", sequenceName="SAP_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_SAP")
+    @SequenceGenerator(name="SEQ_SAP", sequenceName="SEQ_SAP", allocationSize=1)
 	private Integer id;
 	
     @OneToOne(fetch=FetchType.LAZY)

@@ -23,8 +23,8 @@ public class SimCard extends BaseObject {
 	private static final long serialVersionUID = -4482006277550671703L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SIM_CARD_SEQ")
-    @SequenceGenerator(name="SIM_CARD_SEQ", sequenceName="SIM_CARD_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_SIM_CARD")
+    @SequenceGenerator(name="SEQ_SIM_CARD", sequenceName="SEQ_SIM_CARD", allocationSize=1)
 	private Long id;
 	
 	@ColumnInfo(name = "SIM 카드 번호")

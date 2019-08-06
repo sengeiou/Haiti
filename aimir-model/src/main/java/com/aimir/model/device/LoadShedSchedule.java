@@ -37,8 +37,8 @@ public class LoadShedSchedule extends BaseObject {
 	private static final long serialVersionUID = 5064442695778529580L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="LOADSHEDSCHEDULE_SEQ")
-	@SequenceGenerator(name="LOADSHEDSCHEDULE_SEQ", sequenceName="LOADSHEDSCHEDULE_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_LOADSHEDSCHEDULE")
+	@SequenceGenerator(name="SEQ_LOADSHEDSCHEDULE", sequenceName="SEQ_LOADSHEDSCHEDULE", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
     private Integer id;
 

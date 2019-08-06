@@ -25,8 +25,8 @@ public class Memo extends BaseObject implements JSONString {
 	private static final long serialVersionUID = 6400795868129603969L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MEMO_SEQ")
-	@SequenceGenerator(name="MEMO_SEQ", sequenceName="MEMO_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_MEMO")
+	@SequenceGenerator(name="SEQ_MEMO", sequenceName="SEQ_MEMO", allocationSize=1)
     private Integer Id;
 	
 	@Column(nullable=false)

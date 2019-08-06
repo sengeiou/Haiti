@@ -70,8 +70,8 @@ public class VEEParameter extends BaseObject {
 	private static final long serialVersionUID = 1576552466862276353L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="VEE_PARAMETER_SEQ")
-    @SequenceGenerator(name="VEE_PARAMETER_SEQ", sequenceName="VEE_PARAMETER_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_VEE_PARAMETER")
+    @SequenceGenerator(name="SEQ_VEE_PARAMETER", sequenceName="SEQ_VEE_PARAMETER", allocationSize=1)
 	private Integer id;
 	
 	@Column(name="RULE_TYPE", nullable=false)

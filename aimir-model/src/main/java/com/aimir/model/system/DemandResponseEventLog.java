@@ -36,8 +36,8 @@ public class DemandResponseEventLog extends BaseObject {
 	static final long serialVersionUID = -3900010223809724820L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DR_EVENT_LOG_SEQ")
-	@SequenceGenerator(name = "DR_EVENT_LOG_SEQ", sequenceName = "DR_EVENT_LOG_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_DEMAND_RESPONSE_EVENT_LOG")
+	@SequenceGenerator(name = "SEQ_DEMAND_RESPONSE_EVENT_LOG", sequenceName = "SEQ_DEMAND_RESPONSE_EVENT_LOG", allocationSize = 1)
     private Integer id;
 
 	@Column(name = "EVENT_STATE_ID")

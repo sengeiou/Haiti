@@ -25,8 +25,8 @@ public class Country extends BaseObject{
 	private static final long serialVersionUID = -4348862749074118175L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="COUNTRY_SEQ")
-	@SequenceGenerator(name="COUNTRY_SEQ", sequenceName="COUNTRY_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_COUNTRY")
+	@SequenceGenerator(name="SEQ_COUNTRY", sequenceName="SEQ_COUNTRY", allocationSize=1)
     private Integer id;
     
     @Column(nullable=false)

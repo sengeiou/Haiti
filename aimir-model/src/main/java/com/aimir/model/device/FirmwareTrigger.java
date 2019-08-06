@@ -27,8 +27,8 @@ public class FirmwareTrigger extends BaseObject {
 	private static final long serialVersionUID = 847794150120894220L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="FIRMWARE_TRIGGER_SEQ")
-    @SequenceGenerator(name="FIRMWARE_TRIGGER_SEQ", sequenceName="FIRMWARE_TRIGGER_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_FIRMWARE_TRIGGER")
+    @SequenceGenerator(name="SEQ_FIRMWARE_TRIGGER", sequenceName="SEQ_FIRMWARE_TRIGGER", allocationSize=1)
 	private Long id;
 
     @Column(name="CREATE_DATE",length=14, nullable=false)

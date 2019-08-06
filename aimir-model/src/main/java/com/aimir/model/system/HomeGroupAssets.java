@@ -37,8 +37,8 @@ public class HomeGroupAssets extends BaseObject {
 	static final long serialVersionUID = -7750156238515804376L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "HOME_GROUP_ASSETS_SEQ")
-	@SequenceGenerator(name = "HOME_GROUP_ASSETS_SEQ", sequenceName = "HOME_GROUP_ASSETS_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_HOME_GROUP_ASSETS")
+	@SequenceGenerator(name = "SEQ_HOME_GROUP_ASSETS", sequenceName = "SEQ_HOME_GROUP_ASSETS", allocationSize = 1)
 	/* Primary Key */
     private Integer id;
 

@@ -35,8 +35,8 @@ public class NotifiedResults extends BaseObject implements JSONString{
 	private static final long serialVersionUID = 7413005689194042727L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="NOTIFIED_RESULTS_SEQ")
-	@SequenceGenerator(name="NOTIFIED_RESULTS_SEQ", sequenceName="NOTIFIED_RESULTS_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_NOTIFIED_RESULTS")
+	@SequenceGenerator(name="SEQ_NOTIFIED_RESULTS", sequenceName="SEQ_NOTIFIED_RESULTS", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
 	private Integer id;
 

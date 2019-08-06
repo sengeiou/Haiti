@@ -32,8 +32,8 @@ public class MCUCodiDevice extends BaseObject implements JSONString, IAuditable 
 	private static final long serialVersionUID = 7882934323689187591L;
 	
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MCU_CODI_DEVICE_SEQ")
-    @SequenceGenerator(name="MCU_CODI_DEVICE_SEQ", sequenceName="MCU_CODI_DEVICE_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_MCU_CODI_DEVICE")
+    @SequenceGenerator(name="SEQ_MCU_CODI_DEVICE", sequenceName="SEQ_MCU_CODI_DEVICE", allocationSize=1)
 	private Integer id;
 	
     @ColumnInfo(name="", view=@Scope(create=false, read=false, update=false, devicecontrol=false), descr="")

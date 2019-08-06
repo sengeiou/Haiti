@@ -33,8 +33,8 @@ public class FirmwareBoard extends BaseObject {
 	private static final long serialVersionUID = 6329237071695179917L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="FIRMWAREBOARD_SEQ")
-    @SequenceGenerator(name="FIRMWAREBOARD_SEQ", sequenceName="FIRMWAREBOARD_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_FIRMWAREBOARD")
+    @SequenceGenerator(name="SEQ_FIRMWAREBOARD", sequenceName="SEQ_FIRMWAREBOARD", allocationSize=1)
 	private Integer id;
 
 	@ColumnInfo(name="Firmware Id", descr="펌웨어 ID 혹은  NULL")

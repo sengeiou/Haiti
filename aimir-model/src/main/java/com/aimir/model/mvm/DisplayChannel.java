@@ -42,8 +42,8 @@ public class DisplayChannel extends BaseObject implements JSONString {
 	private static final long serialVersionUID = 4171191010368646679L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DISPLAY_CHANNEL_SEQ")
-	@SequenceGenerator(name="DISPLAY_CHANNEL_SEQ", sequenceName="DISPLAY_CHANNEL_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_DISPLAY_CHANNEL")
+	@SequenceGenerator(name="SEQ_DISPLAY_CHANNEL", sequenceName="SEQ_DISPLAY_CHANNEL", allocationSize=1)
 	private Integer id;    
     
 	@Column(name="name", nullable=false, unique=true)

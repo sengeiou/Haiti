@@ -35,8 +35,8 @@ public abstract class DeviceConfig extends BaseObject implements IAuditable {
 
 	private static final long serialVersionUID = -3681214830764043814L;
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DEVICECONFIG_SEQ")
-	@SequenceGenerator(name="DEVICECONFIG_SEQ", sequenceName="DEVICECONFIG_SEQ", allocationSize=1) 
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_DEVICECONFIG")
+	@SequenceGenerator(name="SEQ_DEVICECONFIG", sequenceName="SEQ_DEVICECONFIG", allocationSize=1)
 	@ColumnInfo(name="PK", descr="PK & FK")
 	private Integer id;	
 

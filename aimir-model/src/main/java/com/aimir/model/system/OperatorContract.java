@@ -37,8 +37,8 @@ public class OperatorContract extends BaseObject implements JSONString  {
 	static final long serialVersionUID = 490087347027305569L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OPERATOR_CONTRACT_SEQ")
-	@SequenceGenerator(name = "OPERATOR_CONTRACT_SEQ", sequenceName = "OPERATOR_CONTRACT_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_OPERATOR_CONTRACT")
+	@SequenceGenerator(name = "SEQ_OPERATOR_CONTRACT", sequenceName = "SEQ_OPERATOR_CONTRACT", allocationSize = 1)
 	/* Primary Key */
     private Integer id;
 

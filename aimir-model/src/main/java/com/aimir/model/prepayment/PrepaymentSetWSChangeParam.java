@@ -31,8 +31,8 @@ public class PrepaymentSetWSChangeParam extends BaseObject {
     private static final long serialVersionUID = -3156689093225085739L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PREPAYMENT_WS_CHANGE_PARAM_SEQ")
-    @SequenceGenerator(name="PREPAYMENT_WS_CHANGE_PARAM_SEQ", sequenceName="PREPAYMENT_WS_CHANGE_PARAM_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_PREPAYMENT_WS_CHANGE_PRGM")
+    @SequenceGenerator(name="SEQ_PREPAYMENT_WS_CHANGE_PRGM", sequenceName="SEQ_PREPAYMENT_WS_CHANGE_PRGM", allocationSize=1)
 	private Integer id;
 	
 	@Column(name = "supplier_name", nullable=false)

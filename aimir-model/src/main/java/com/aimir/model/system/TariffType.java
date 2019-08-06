@@ -32,8 +32,8 @@ public class TariffType extends BaseObject implements JSONString{
 	private static final long serialVersionUID = 5039905265620686709L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TARIFFTYPE_SEQ")
-	@SequenceGenerator(name="TARIFFTYPE_SEQ", sequenceName="TARIFFTYPE_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_TARIFFTYPE")
+	@SequenceGenerator(name="SEQ_TARIFFTYPE", sequenceName="SEQ_TARIFFTYPE", allocationSize=1)
 	@ColumnInfo(name="PK", descr="PK")
 	private Integer id;
 	

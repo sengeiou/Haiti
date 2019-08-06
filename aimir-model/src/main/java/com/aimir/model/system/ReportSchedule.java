@@ -33,8 +33,8 @@ public class ReportSchedule extends BaseObject implements JSONString{
 	private static final long serialVersionUID = -6702093265114195542L;
 	
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="REPORT_SCHEDULE_SEQ")
-    @SequenceGenerator(name="REPORT_SCHEDULE_SEQ", sequenceName="REPORT_SCHEDULE_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_REPORT_SCHEDULE")
+    @SequenceGenerator(name="SEQ_REPORT_SCHEDULE", sequenceName="SEQ_REPORT_SCHEDULE", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
 	private Integer id;
     

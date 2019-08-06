@@ -26,8 +26,8 @@ public class PlcQualityTestDetail extends BaseObject {
 	private static final long serialVersionUID = -3248040699035316304L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PLC_QUALITY_TEST_DETAIL_SEQ")
-	@SequenceGenerator(name="PLC_QUALITY_TEST_DETAIL_SEQ", sequenceName="PLC_QUALITY_TEST_DETAIL_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_PLCQUALITYTESTDETAIL")
+	@SequenceGenerator(name="SEQ_PLCQUALITYTESTDETAIL", sequenceName="SEQ_PLCQUALITYTESTDETAIL", allocationSize=1)
 	private Long id;
 	
 	@ManyToOne(fetch=FetchType.LAZY)

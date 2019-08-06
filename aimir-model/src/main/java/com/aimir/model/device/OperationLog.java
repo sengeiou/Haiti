@@ -41,8 +41,8 @@ public class OperationLog extends BaseObject {
 	private static final long serialVersionUID = -2057362708625647099L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OPERATION_LOG_SEQ")
-    @SequenceGenerator(name="OPERATION_LOG_SEQ", sequenceName="OPERATION_LOG_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_OPERATION_LOG")
+    @SequenceGenerator(name="SEQ_OPERATION_LOG", sequenceName="SEQ_OPERATION_LOG", allocationSize=1)
 	private Long id;
 
     @ColumnInfo(name="명령 실행날짜", descr="Operation을 시도한 날짜(YYYYMMDD)")

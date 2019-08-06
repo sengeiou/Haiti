@@ -37,8 +37,8 @@ public class ReportContactsGroup extends BaseObject implements JSONString{
 	private static final long serialVersionUID = -3705677131890391138L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="REPORT_CONTACTS_GROUP_SEQ")
-	@SequenceGenerator(name="REPORT_CONTACTS_GROUP_SEQ", sequenceName="REPORT_CONTACTS_GROUP_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_REPORT_CONTACTS_GROUP")
+	@SequenceGenerator(name="SEQ_REPORT_CONTACTS_GROUP", sequenceName="SEQ_REPORT_CONTACTS_GROUP", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
 	private Integer id;
     

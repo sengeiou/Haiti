@@ -29,8 +29,8 @@ public class VerifyPrepaymentCustomerWS extends BaseObject implements JSONString
 	private static final long serialVersionUID = 2870215764049497358L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="VERIFY_PREPAYCUSTOMER_WS_SEQ")
-    @SequenceGenerator(name="VERIFY_PREPAYCUSTOMER_WS_SEQ", sequenceName="VERIFY_PREPAYCUSTOMER_WS_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_VERIFY_PREPAYCUSTOMER_WS")
+    @SequenceGenerator(name="SEQ_VERIFY_PREPAYCUSTOMER_WS", sequenceName="SEQ_VERIFY_PREPAYCUSTOMER_WS", allocationSize=1)
 	private Integer id;
 
 	@Column(name = "supplier_name", nullable=false)

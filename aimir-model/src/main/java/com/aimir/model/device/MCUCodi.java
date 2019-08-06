@@ -39,8 +39,8 @@ public class MCUCodi extends BaseObject implements JSONString, IAuditable {
 	private static final long serialVersionUID = -5723493667628682978L;
 			
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MCU_CODI_SEQ")
-    @SequenceGenerator(name="MCU_CODI_SEQ", sequenceName="MCU_CODI_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_MCU_CODI")
+    @SequenceGenerator(name="SEQ_MCU_CODI", sequenceName="SEQ_MCU_CODI", allocationSize=1)
 	private Integer id;
 	
     @ColumnInfo(name="집중기아이디", descr="집중기 테이블의 ID 혹은  NULL")

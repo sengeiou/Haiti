@@ -28,8 +28,8 @@ public class SupplyCapacityLog extends BaseObject implements JSONString {
 	private static final long serialVersionUID = 7543353742991087045L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SUPPLYCAPACITYLOG_SEQ")
-	@SequenceGenerator(name = "SUPPLYCAPACITYLOG_SEQ", sequenceName = "SUPPLYCAPACITYLOG_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_SUPPLYCAPACITYLOG")
+	@SequenceGenerator(name = "SEQ_SUPPLYCAPACITYLOG", sequenceName = "SEQ_SUPPLYCAPACITYLOG", allocationSize = 1)
 	private Long id;
 
 	@ManyToOne(fetch=FetchType.LAZY)

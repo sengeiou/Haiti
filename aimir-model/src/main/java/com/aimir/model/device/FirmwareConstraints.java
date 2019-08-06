@@ -34,8 +34,8 @@ public class FirmwareConstraints extends BaseObject {
 	private static final long serialVersionUID = 1529672452930586656L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="FIRMWARECONSTRAINTS_SEQ")
-    @SequenceGenerator(name="FIRMWARECONSTRAINTS_SEQ", sequenceName="FIRMWARECONSTRAINTS_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_FIRMWARECONSTRAINTS")
+    @SequenceGenerator(name="SEQ_FIRMWARECONSTRAINTS", sequenceName="SEQ_FIRMWARECONSTRAINTS", allocationSize=1)
 	private Integer id;
 	/*
 	 *  INSTANCENAME              VARCHAR2(255 BYTE) NOT NULL,

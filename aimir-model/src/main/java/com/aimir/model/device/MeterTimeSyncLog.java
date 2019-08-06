@@ -41,8 +41,8 @@ public class MeterTimeSyncLog extends BaseObject {
 
 	private static final long serialVersionUID = 7753145626321047234L;
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="METERTIMESYNC_LOG_SEQ")
-    @SequenceGenerator(name="METERTIMESYNC_LOG_SEQ", sequenceName="METERTIMESYNC_LOG_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_METERTIMESYNC_LOG")
+    @SequenceGenerator(name="SEQ_METERTIMESYNC_LOG", sequenceName="SEQ_METERTIMESYNC_LOG", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
 	private Long id;
     

@@ -21,8 +21,8 @@ public class VendorCasher extends BaseObject{
 	private static final long serialVersionUID = 943652653304862341L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="VENDOR_CASHER_SEQ")	
-	@SequenceGenerator(name="VENDOR_CASHER_SEQ", sequenceName="VENDOR_CASHER_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_VENDOR_CASHER")
+	@SequenceGenerator(name="SEQ_VENDOR_CASHER", sequenceName="SEQ_VENDOR_CASHER", allocationSize=1)
 	private Integer id;
 	
 	@Column(name="vendor_id", nullable=true, updatable=false, insertable=false)

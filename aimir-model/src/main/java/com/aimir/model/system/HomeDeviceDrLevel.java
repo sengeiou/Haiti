@@ -36,8 +36,8 @@ public class HomeDeviceDrLevel extends BaseObject {
 	static final long serialVersionUID = 592930089815132155L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="HOME_DEVICE_DRLEVEL_SEQ")
-    @SequenceGenerator(name="HOME_DEVICE_DRLEVEL_SEQ", sequenceName="HOME_DEVICE_DRLEVEL_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_HOME_DEVICE_DRLEVEL")
+    @SequenceGenerator(name="SEQ_HOME_DEVICE_DRLEVEL", sequenceName="SEQ_HOME_DEVICE_DRLEVEL", allocationSize=1)
 	private Integer id;
 	
     @Column(name = "DRLEVEL", nullable=false)

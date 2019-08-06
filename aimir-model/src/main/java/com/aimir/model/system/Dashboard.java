@@ -47,8 +47,8 @@ public class Dashboard extends BaseObject implements JSONString {
 	//private static Log log = LogFactory.getLog(Dashboard.class);
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DASHBOARD_SEQ")
-	@SequenceGenerator(name="DASHBOARD_SEQ", sequenceName="DASHBOARD_SEQ", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_DASHBOARD")
+	@SequenceGenerator(name="SEQ_DASHBOARD", sequenceName="SEQ_DASHBOARD", allocationSize=1)
 	private Integer id;
 	
 	@ManyToOne(fetch=FetchType.LAZY)

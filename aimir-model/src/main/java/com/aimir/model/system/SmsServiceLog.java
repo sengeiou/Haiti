@@ -23,8 +23,8 @@ public class SmsServiceLog extends BaseObject{
 	private static final long serialVersionUID = 8887277736300230238L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SMSSERVICELOG_SEQ")
-	@SequenceGenerator(name="SMSSERVICELOG_SEQ", sequenceName="SMSSERVICELOG_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_SMSSERVICELOG")
+	@SequenceGenerator(name="SEQ_SMSSERVICELOG", sequenceName="SEQ_SMSSERVICELOG", allocationSize=1)
 	private Long id;
 
 	@Column(name="SENDTIME")

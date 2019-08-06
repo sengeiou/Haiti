@@ -31,8 +31,8 @@ public class GetBalanceWSGetHistory extends BaseObject {
     private static final long serialVersionUID = 223056115028460372L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GET_BALANCE_WS_GET_HISTORY_SEQ")
-    @SequenceGenerator(name="GET_BALANCE_WS_GET_HISTORY_SEQ", sequenceName="GET_BALANCE_WS_GET_HISTORY_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_GET_BALANCE_WS_GET_HISTORY")
+    @SequenceGenerator(name="SEQ_GET_BALANCE_WS_GET_HISTORY", sequenceName="SEQ_GET_BALANCE_WS_GET_HISTORY", allocationSize=1)
 	private Integer id;
 	
 	@Column(name = "supplier_name", nullable=false)

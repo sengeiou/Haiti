@@ -29,8 +29,8 @@ public class GroupMember extends BaseObject{
 	private static final long serialVersionUID = 7062998849779282269L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GROUP_MEMBER_SEQ")
-	@SequenceGenerator(name="GROUP_MEMBER_SEQ", sequenceName="GROUP_MEMBER_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_GROUP_MEMBER")
+	@SequenceGenerator(name="SEQ_GROUP_MEMBER", sequenceName="SEQ_GROUP_MEMBER", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
 	private Integer id;	//	ID(PK)
 	

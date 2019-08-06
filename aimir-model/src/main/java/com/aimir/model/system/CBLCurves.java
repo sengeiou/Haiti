@@ -35,8 +35,8 @@ public class CBLCurves  extends BaseObject{
 	private static final long serialVersionUID = -6501081960477276283L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CBLCURVES_SEQ")
-	@SequenceGenerator(name="CBLCURVES_SEQ", sequenceName="CBLCURVES_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_CBLCURVES")
+	@SequenceGenerator(name="SEQ_CBLCURVES", sequenceName="SEQ_CBLCURVES", allocationSize=1)
 	@ColumnInfo(name="PK", descr="PK")
 	private Integer id;
 

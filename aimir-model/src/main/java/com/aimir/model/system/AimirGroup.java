@@ -46,8 +46,8 @@ public class AimirGroup extends BaseObject {
 	private static final long serialVersionUID = 6279582965129053637L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AIMIRGROUP_SEQ")
-	@SequenceGenerator(name = "AIMIRGROUP_SEQ", sequenceName = "AIMIRGROUP_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_AIMIRGROUP")
+	@SequenceGenerator(name = "SEQ_AIMIRGROUP", sequenceName = "SEQ_AIMIRGROUP", allocationSize = 1)
 	@ColumnInfo(name = "PK", descr = "PK")
 	private Integer id; // ID(PK)
 

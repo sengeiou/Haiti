@@ -59,8 +59,8 @@ public class EndDevice implements JSONString, IAuditable {
 	private static final long serialVersionUID = -5284044128690521501L;
 	
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ENDDEVICE_SEQ")
-    @SequenceGenerator(name="ENDDEVICE_SEQ", sequenceName="ENDDEVICE_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_ENDDEVICE")
+    @SequenceGenerator(name="SEQ_ENDDEVICE", sequenceName="SEQ_ENDDEVICE", allocationSize=1)
 	private Integer id;
 
 //    @Version

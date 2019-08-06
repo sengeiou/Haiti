@@ -34,8 +34,8 @@ public class PeakDemandSetting extends BaseObject implements JSONString {
 	private static final long serialVersionUID = -3726084692444191291L;
 	
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PEAKDEMAND_SETTING_SEQ")
-	@SequenceGenerator(name="PEAKDEMAND_SETTING_SEQ", sequenceName="PEAKDEMAND_SETTING_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_PEAKDEMAND_SETTING")
+	@SequenceGenerator(name="SEQ_PEAKDEMAND_SETTING", sequenceName="SEQ_PEAKDEMAND_SETTING", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
     private Integer id;
 	

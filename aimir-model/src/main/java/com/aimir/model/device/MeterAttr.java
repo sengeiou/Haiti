@@ -26,8 +26,8 @@ public class MeterAttr extends BaseObject implements JSONString  {
 
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="METER_ATTR_SEQ")
-    @SequenceGenerator(name="METER_ATTR_SEQ", sequenceName="METER_ATTR_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_METER_ATTR")
+    @SequenceGenerator(name="SEQ_METER_ATTR", sequenceName="SEQ_METER_ATTR", allocationSize=1)
 	@ColumnInfo(name="PK", descr="PK")
 	private Integer id;
 

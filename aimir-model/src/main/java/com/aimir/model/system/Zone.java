@@ -41,8 +41,8 @@ public class Zone extends BaseObject implements JSONString {
 	private static final long serialVersionUID = 4780327854320048764L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ZONE_SEQ")
-	@SequenceGenerator(name="ZONE_SEQ", sequenceName="ZONE_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_ZONE")
+	@SequenceGenerator(name="SEQ_ZONE", sequenceName="SEQ_ZONE", allocationSize=1)
 	@ColumnInfo(name="PK", descr="PK")
 	private Integer id;
 	

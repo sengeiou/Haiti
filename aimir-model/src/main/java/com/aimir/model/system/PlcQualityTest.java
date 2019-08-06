@@ -28,8 +28,8 @@ public class PlcQualityTest extends BaseObject {
 	private static final long serialVersionUID = -2381916563391390006L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PLC_QUALITY_TEST_SEQ")
-	@SequenceGenerator(name="PLC_QUALITY_TEST_SEQ", sequenceName="PLC_QUALITY_TEST_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_PLCQUALITYTEST")
+	@SequenceGenerator(name="SEQ_PLCQUALITYTEST", sequenceName="SEQ_PLCQUALITYTEST", allocationSize=1)
 	private Integer id;
 
 	@Column(name="ZIG_NAME")

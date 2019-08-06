@@ -37,8 +37,8 @@ public class SupplyType extends BaseObject implements JSONString, IAuditable {
 	private static final long serialVersionUID = 5484283850274810363L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SUPPLYTYPE_SEQ")
-	@SequenceGenerator(name="SUPPLYTYPE_SEQ", sequenceName="SUPPLYTYPE_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_SUPPLYTYPE")
+	@SequenceGenerator(name="SEQ_SUPPLYTYPE", sequenceName="SEQ_SUPPLYTYPE", allocationSize=1)
 	@ColumnInfo(name="PK", descr="PK")
 	private Integer id;
 	

@@ -37,8 +37,8 @@ public class ContractCapacity extends BaseObject implements JSONString, IAuditab
 	private static final long serialVersionUID = -3659014116254300422L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CONTRACTCAPACITY_SEQ")
-	@SequenceGenerator(name = "CONTRACTCAPACITY_SEQ", sequenceName = "CONTRACTCAPACITY_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CONTRACTCAPACITY")
+	@SequenceGenerator(name = "SEQ_CONTRACTCAPACITY", sequenceName = "SEQ_CONTRACTCAPACITY", allocationSize = 1)
 	@ColumnInfo(name = "PK", descr = "PK")
 	private Integer id;
 

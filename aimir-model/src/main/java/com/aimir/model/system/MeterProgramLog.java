@@ -37,8 +37,8 @@ public class MeterProgramLog extends BaseObject implements JSONString {
     private static final long serialVersionUID = 4425586603710572606L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="METERPROGRAMLOG_SEQ")
-    @SequenceGenerator(name="METERPROGRAMLOG_SEQ", sequenceName="METERPROGRAMLOG_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_METERPROGRAMLOG")
+    @SequenceGenerator(name="SEQ_METERPROGRAMLOG", sequenceName="SEQ_METERPROGRAMLOG", allocationSize=1)
     private Integer id;
 
     @Column(name="APPLIED_DATE", length=16)

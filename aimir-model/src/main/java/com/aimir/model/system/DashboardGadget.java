@@ -39,8 +39,8 @@ public class DashboardGadget extends BaseObject implements JSONString {
 	private static final long serialVersifonUID = 492349251269798738L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE,  generator="DASHBOARDGADGET_SEQ")
-	@SequenceGenerator(name="DASHBOARDGADGET_SEQ", sequenceName="DASHBOARDGADGET_SEQ", allocationSize=1) 
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,  generator="SEQ_DASHBOARDGADGET")
+	@SequenceGenerator(name="SEQ_DASHBOARDGADGET", sequenceName="SEQ_DASHBOARDGADGET", allocationSize=1)
 	private Integer id;
 	
 	@ManyToOne(fetch=FetchType.LAZY)

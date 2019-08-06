@@ -46,8 +46,8 @@ public class VEELog extends BaseObject {
 	private static final long serialVersionUID = 5053549357502768215L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="VEE_LOG_SEQ")
-    @SequenceGenerator(name="VEE_LOG_SEQ", sequenceName="VEE_LOG_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_VEE_LOG")
+    @SequenceGenerator(name="SEQ_VEE_LOG", sequenceName="SEQ_VEE_LOG", allocationSize=1)
 	private Long id;
     
     @ManyToOne(fetch=FetchType.LAZY)

@@ -33,8 +33,8 @@ public class CircuitBreakerSetting extends BaseObject {
 	private static final long serialVersionUID = -4056488859213228129L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CIRCUIT_BREAKER_SETTING_SEQ")
-	@SequenceGenerator(name="CIRCUIT_BREAKER_SETTING_SEQ", sequenceName="CIRCUIT_BREAKER_SETTING_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_CIRCUITBREAKERSETTING")
+	@SequenceGenerator(name="SEQ_CIRCUITBREAKERSETTING", sequenceName="SEQ_CIRCUITBREAKERSETTING", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
     private Integer id;
 	

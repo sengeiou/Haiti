@@ -29,8 +29,8 @@ public class MCUCodiBinding extends BaseObject implements JSONString, IAuditable
 	private static final long serialVersionUID = 1128234476311014557L;
 	
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MCU_CODI_BINDING_SEQ")
-    @SequenceGenerator(name="MCU_CODI_BINDING_SEQ", sequenceName="MCU_CODI_BINDING_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_MCU_CODI_BINDING")
+    @SequenceGenerator(name="SEQ_MCU_CODI_BINDING", sequenceName="SEQ_MCU_CODI_BINDING", allocationSize=1)
 	private Integer id;
 	
     @ColumnInfo(name="", view=@Scope(create=false, read=false, update=false, devicecontrol=false), descr="")

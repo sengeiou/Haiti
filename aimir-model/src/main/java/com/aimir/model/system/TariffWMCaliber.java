@@ -34,8 +34,8 @@ public class TariffWMCaliber extends BaseObject  {
 	private static final long serialVersionUID = -4343917831220543584L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TARIFF_WM_CALIBER_SEQ")
-	@SequenceGenerator(name="TARIFF_WM_CALIBER_SEQ", sequenceName="TARIFF_WM_CALIBER_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_TARIFF_WM_CALIBER")
+	@SequenceGenerator(name="SEQ_TARIFF_WM_CALIBER", sequenceName="SEQ_TARIFF_WM_CALIBER", allocationSize=1)
 	@ColumnInfo(name="PK", descr="PK")
 	private Integer id;
 	
