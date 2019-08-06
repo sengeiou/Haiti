@@ -1835,7 +1835,8 @@ public abstract class AbstractMDSaver
         _lp.setMeteringType(lp.getMeteringType());
         _lp.setIntervalYN(lp.getIntervalYN());
         _lp.setWriteDate(lp.getWriteDate());
-
+        _lp.setModemTime(lp.getModemTime());
+        
         switch (lp.getMDevType()) {
         case Meter :
             _lp.setMeter(lp.getMeter());
