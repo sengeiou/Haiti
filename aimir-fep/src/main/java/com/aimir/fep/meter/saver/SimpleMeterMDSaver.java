@@ -78,7 +78,7 @@ public class SimpleMeterMDSaver extends AbstractMDSaver {
         	hhmm,
         	lpValues, flaglist, basePulse,
             parser.getMeter(),  parser.getDeviceType(), parser.getDeviceId(),
-            parser.getMDevType(), parser.getMDevId());
+            parser.getMDevType(), parser.getMDevId(), parser.getMeteringTime());
         
         
         Modem modem = parser.getMeter().getModem();

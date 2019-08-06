@@ -177,7 +177,7 @@ public class ZEUPLSMDSaver extends AbstractMDSaver {
             
             saveLPData(MeteringType.Normal, lpdata.getLpDate(), (hh<10?"0":"")+ hh + (mm<10?"0":"")+mm,
                     new double[][]{lp}, flaglist, baseValue, parser.getMeter(),
-                    parser.getDeviceType(), parser.getDeviceId(), parser.getMDevType(), parser.getMDevId());
+                    parser.getDeviceType(), parser.getDeviceId(), parser.getMDevType(), parser.getMDevId(), parser.getMeteringTime());
             
             // 모든 lp를 더해서 baseValue에 더하여 다음 LP 저장에 사용한다.
             for (double _lp : lp) {

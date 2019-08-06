@@ -165,7 +165,7 @@ public class ElsterA1700MDSaver extends AbstractMDSaver {
             }
             saveLPData(MeteringType.Normal, yyyymmdd, hhmm, lpValues, flaglist, basePulse,
                     parser.getMeter(), parser.getDeviceType(), parser.getDeviceId(), 
-                    parser.getMDevType(), parser.getMDevId());
+                    parser.getMDevType(), parser.getMDevId(), parser.getMeteringTime());
         }
         log.debug("lp saver Success..");
         // lp에서 올라오는 power alarm log (marker) 저장

@@ -178,7 +178,7 @@ public class DLMSKepcoMDSaver extends AbstractMDSaver {
         super.saveLPData(MeteringType.Normal, startlpdate.substring(0, 8), startlpdate.substring(8)+"00",
                 _lplist, _flag, baseValue, parser.getMeter(),
                 DeviceType.Modem, parser.getMeter().getModem().getDeviceSerial(),
-                DeviceType.Meter, parser.getMeter().getMdsId());
+                DeviceType.Meter, parser.getMeter().getMdsId(), parser.getMeteringTime());
     }
 	
 	private void saveEventLog(DLMSKepco parser) {
@@ -839,7 +839,7 @@ public class DLMSKepcoMDSaver extends AbstractMDSaver {
 		saveLPData(MeteringType.Normal, yyyymmdd, hhmm, lpValues, flaglist,
 				basePulse, parser.getMeter(), parser.getDeviceType(),
 				parser.getDeviceId(), parser.getMDevType(), parser
-						.getMDevId());
+						.getMDevId(), parser.getMeteringTime());
 		return true;
 	}
 }

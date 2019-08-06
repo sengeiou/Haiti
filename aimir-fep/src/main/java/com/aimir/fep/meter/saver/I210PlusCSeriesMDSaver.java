@@ -162,7 +162,7 @@ public class I210PlusCSeriesMDSaver extends AbstractMDSaver {
             // TODO Flag, PF 처리해야 함.
             saveLPData(MeteringType.Normal, yyyymmdd, hhmm, lpValues, flaglist, basePulse,
                     parser.getMeter(), parser.getDeviceType(), parser.getDeviceId(),
-                    parser.getMDevType(), parser.getMDevId());
+                    parser.getMDevType(), parser.getMDevId(), parser.getMeteringTime());
         }
 
 

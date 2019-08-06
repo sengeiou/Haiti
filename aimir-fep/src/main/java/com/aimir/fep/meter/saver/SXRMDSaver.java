@@ -224,7 +224,7 @@ public class SXRMDSaver extends AbstractMDSaver {
         
         saveLPData(MeteringType.Normal, lpdate.substring(0,8), lpdate.substring(8, 12),
                 chlp, flaglist, baseValue, parser.getMeter(),
-                parser.getDeviceType(), parser.getDeviceId(), parser.getMDevType(), parser.getMDevId());
+                parser.getDeviceType(), parser.getDeviceId(), parser.getMDevType(), parser.getMDevId(), parser.getMeteringTime());
         
         // TODO 로그 처리 로직을 추가해야 한다.
         return true;

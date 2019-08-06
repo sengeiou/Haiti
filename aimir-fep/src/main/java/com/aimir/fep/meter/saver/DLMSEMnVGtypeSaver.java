@@ -336,7 +336,7 @@ public class DLMSEMnVGtypeSaver extends AbstractMDSaver {
                 DeviceType.Meter, parser.getMeterID());
         */
         saveLPUsingLpNormalization(CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()), null, 
-        		parser.getLPData(), parser.getMDevId(), parser.getDeviceId(), parser.getMDevType());
+        		parser.getLPData(), parser.getMDevId(), parser.getDeviceId(), parser.getMDevType(), parser.getMeteringTime());
     }
 	
     

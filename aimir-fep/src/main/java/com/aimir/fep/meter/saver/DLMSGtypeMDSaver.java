@@ -381,7 +381,7 @@ public class DLMSGtypeMDSaver extends AbstractMDSaver {
         super.saveLPData(MeteringType.Normal, startlpdate.substring(0, 8), startlpdate.substring(8)+"00",
                 _lplist, _flag, baseValue, parser.getMeter(),
                 DeviceType.MCU, parser.getMeter().getMcu().getSysID(),
-                DeviceType.Meter, parser.getMeterID());
+                DeviceType.Meter, parser.getMeterID(), parser.getMeteringTime());
     }
 	
     private void saveMeterEventLog(DLMSGtype parser) throws Exception {
@@ -1321,7 +1321,7 @@ public class DLMSGtypeMDSaver extends AbstractMDSaver {
 		// TODO Flag, PF 처리해야 함.
 		saveLPData(MeteringType.Normal, yyyymmdd, hhmm, lpValues, flaglist,
 		        basePulse, parser.getMeter(), parser.getDeviceType(),
-		        parser.getDeviceId(), parser.getMDevType(), parser.getMDevId());
+		        parser.getDeviceId(), parser.getMDevType(), parser.getMDevId(), parser.getMeteringTime());
 		return true;
     }
     

@@ -61,7 +61,7 @@ public class OmniMDSaver extends AbstractMDSaver {
             
             saveLPData(MeteringType.Manual, meteringTime.substring(0, 8), meteringTime.substring(8), 
                     new double[][]{lplist}, flaglist, meteringValue, meter, DeviceType.MCU, 
-                    dcuNo, DeviceType.Meter, meterNo);
+                    dcuNo, DeviceType.Meter, meterNo, null);
             
             meter.setLastReadDate(meteringTime+"00");
             if (meter.getModem() != null) {
@@ -205,7 +205,7 @@ public class OmniMDSaver extends AbstractMDSaver {
             
             saveLPData(MeteringType.Normal, lpdate, (hh<10?"0":"")+ hh + (mm<10?"0":"")+mm,
                     new double[][]{lp}, flaglist, baseValue, meter,
-                    DeviceType.MCU, dcuNo, DeviceType.Meter, meterNo);
+                    DeviceType.MCU, dcuNo, DeviceType.Meter, meterNo, null);
             
             meter.setLastReadDate(meteringTime+"00");
             meter.getModem().setLastLinkTime(meter.getLastReadDate());

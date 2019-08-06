@@ -229,7 +229,7 @@ public class ManualMDSaver extends AbstractMDSaver {
 
 				//LPData save
 	            saveLPData(MeteringType.Manual, meteringDate.substring(0, 8), 
-					"0000", lpValues, flaglist, meteringValue, meter, DeviceType.Meter, meterNo, DeviceType.Meter, meterNo);
+					"0000", lpValues, flaglist, meteringValue, meter, DeviceType.Meter, meterNo, DeviceType.Meter, meterNo, null);
 	            
 	            
 			}

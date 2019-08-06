@@ -63,7 +63,7 @@ public class NURI_Kamstrup601MDSaver extends AbstractMDSaver {
             // TODO Flag처리해야 함.
             saveLPData(MeteringType.Normal, yyyymmdd, hhmm, lpValues, flaglist, basePulse,
                     parser.getMeter(), parser.getDeviceType(), parser.getDeviceId(), 
-                    parser.getMDevType(), parser.getMDevId());
+                    parser.getMDevType(), parser.getMDevId(), parser.getMeteringTime());
 
         }
         

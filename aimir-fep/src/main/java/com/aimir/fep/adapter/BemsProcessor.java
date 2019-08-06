@@ -153,7 +153,7 @@ public class BemsProcessor extends AbstractMDSaver implements MessageListener {
         
         saveLPData(MeteringType.Normal, baseTime.substring(0,8), baseTime.substring(8, 12),
                 chlp, flaglist, baseValue, meter, DeviceType.Meter, md.getMeterId(),
-                DeviceType.Meter, md.getMeterId());
+                DeviceType.Meter, md.getMeterId(), null);
      
  
         // 미터가 공급유형이 전기이면서 계약용량 정보가 있으면 메인전원으로 판단한다.

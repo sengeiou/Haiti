@@ -212,7 +212,7 @@ public class DLMSEMnVEtype_1_0Saver extends AbstractMDSaver {
         super.saveLPData(MeteringType.OnDemand, startlpdate.substring(0, 8), startlpdate.substring(8)+"00",
                 _lplist, _flag, baseValue, parser.getMeter(),
                 DeviceType.Modem, parser.getMeter().getModem().getDeviceSerial(),    
-                DeviceType.Meter, parser.getMeterID());
+                DeviceType.Meter, parser.getMeterID(), parser.getMeteringTime());
     }
 		
     @Override

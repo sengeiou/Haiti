@@ -69,7 +69,7 @@ public class KaifaMBusMDSaver extends AbstractMDSaver {
             
             // TODO Flag처리해야 함.
             saveLPData(MeteringType.Normal, yyyymmdd, hhmm, lpValues, flaglist, 0, //basePulse -> Temporary 0,
-                    mbusMeter, mbusDeviceType, mbusDeviceId, mbusMdevType, mbusMdevId);
+                    mbusMeter, mbusDeviceType, mbusDeviceId, mbusMdevType, mbusMdevId, null);
 
         }
         

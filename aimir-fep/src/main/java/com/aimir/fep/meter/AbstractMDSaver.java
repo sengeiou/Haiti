@@ -881,9 +881,9 @@ public abstract class AbstractMDSaver
      */
     public void saveLPDataP(MeteringType meteringType, String lpDate, String lpTime,
             double[][] lplist, int[] flaglist, double baseValue, Meter meter,
-            DeviceType deviceType, String deviceId, DeviceType mdevType, String mdevId) throws Exception{
+            DeviceType deviceType, String deviceId, DeviceType mdevType, String mdevId, String meteringTime) throws Exception{
         saveLPData(meteringType, lpDate, lpTime, lplist, flaglist, baseValue, meter,
-                deviceType, deviceId, mdevType, mdevId);
+                deviceType, deviceId, mdevType, mdevId, meteringTime);
     }
  	
  	/*
@@ -892,7 +892,7 @@ public abstract class AbstractMDSaver
 	 */
     protected void saveLPData(MeteringType meteringType, String lpDate, String lpTime,
             double[][] lplist, int[] flaglist, double[] baseValue, Meter meter,
-            DeviceType deviceType, String deviceId, DeviceType mdevType, String mdevId)
+            DeviceType deviceType, String deviceId, DeviceType mdevType, String mdevId, String meteringTime)
     throws Exception
     {
     	if(lplist != null && lplist.length > 0) {
@@ -908,7 +908,7 @@ public abstract class AbstractMDSaver
     			lpData[i].setFlag(flaglist[i]);
     		}
     		
-    		saveLPUsingLpNormalization(meteringType, null, lpData, mdevId, deviceId, mdevType);
+    		saveLPUsingLpNormalization(meteringType, null, lpData, mdevId, deviceId, mdevType, meteringTime);
     	}
     }
     
@@ -918,11 +918,11 @@ public abstract class AbstractMDSaver
 	 */
     protected void saveLPData(MeteringType meteringType, String lpDate, String lpTime,
             double[][] lplist, int[] flaglist, double baseValue, Meter meter,
-            DeviceType deviceType, String deviceId, DeviceType mdevType, String mdevId)
+            DeviceType deviceType, String deviceId, DeviceType mdevType, String mdevId, String meteringTime)
     throws Exception 
     {
     	saveLPData(meteringType, lpDate, lpTime, lplist, flaglist, 
-    			new double[]{baseValue}, meter, deviceType, deviceId, mdevType, mdevId);
+    			new double[]{baseValue}, meter, deviceType, deviceId, mdevType, mdevId, meteringTime);
     }
     
     
@@ -932,7 +932,7 @@ public abstract class AbstractMDSaver
 	 * 나머지 0,98,99,100 채널은 상위에서 담당한다.
 	 */
 	protected boolean saveLPUsingLpNormalization(MeteringType meteringType, IMeasurementData md, 
-			LPData[] validlplist, String mdevId, String deviceId, DeviceType mdevType) throws Exception {
+			LPData[] validlplist, String mdevId, String deviceId, DeviceType mdevType, String meteringTime) throws Exception {
         
 		log.info("######### Save mdevId:"+mdevId+", lp length:"+validlplist.length+", deviceId:"+deviceId+", mdevType:"+mdevType);
 		//LPData 개수를 기준으로 list을 작성하며, 채널은 내부의 리스트로 관리
@@ -995,6 +995,7 @@ public abstract class AbstractMDSaver
 				meteringLP.setLpFlag(lp.getFlag());
 				meteringLP.setContract(meter.getContract());
 				meteringLP.setLpStatus(lp.getStatus());
+				meteringLP.setModemTime(meteringTime);
 				
 				if(modem != null) {
 					if(modem.getModemType() == ModemType.MMIU) {

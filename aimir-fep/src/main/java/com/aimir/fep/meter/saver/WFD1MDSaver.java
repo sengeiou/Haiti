@@ -62,7 +62,7 @@ public class WFD1MDSaver extends AbstractMDSaver {
             saveLPData(MeteringType.Normal, data.getLpDate(), "0000",
                     data.getLp(), flaglist, data.getBasePulse()[0],
                     parser.getMeter(),  parser.getDeviceType(), parser.getDeviceId(),
-                    parser.getMDevType(), parser.getMDevId());
+                    parser.getMDevType(), parser.getMDevId(), parser.getMeteringTime());
         }
         
         MeteringFail meteringFailed = parser.getMeteringFail();

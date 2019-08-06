@@ -220,7 +220,7 @@ public class ElsterA1140MDSaver extends AbstractMDSaver {
             }
             saveLPData(MeteringType.Normal, yyyymmdd, hhmm, lpValues, flaglist, basePulse,
                     parser.getMeter(), parser.getDeviceType(), parser.getDeviceId(), 
-                    parser.getMDevType(), parser.getMDevId());
+                    parser.getMDevType(), parser.getMDevId(), parser.getMeteringTime());
         }
         log.debug("lp saver Success..");
 

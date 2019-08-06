@@ -144,7 +144,7 @@ public class DLMSStypeMDSaver extends AbstractMDSaver {
         super.saveLPData(MeteringType.Normal, startlpdate.substring(0, 8), startlpdate.substring(8)+"00",
                 _lplist, _flag, baseValue, parser.getMeter(),
                 DeviceType.Modem, parser.getMeter().getModem().getDeviceSerial(),
-                DeviceType.Meter, parser.getMeterID());
+                DeviceType.Meter, parser.getMeterID(), parser.getMeteringTime());
     }
 	
     @Override

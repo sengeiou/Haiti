@@ -88,7 +88,7 @@ public class PG200MDSaver extends AbstractMDSaver {
             
             flaglist = makeFlag(lp[0].length);
             saveLPData(MeteringType.Normal, lpdate, "0000", lp, flaglist, baseValue, pg200.getMeter(),
-                    pg200.getDeviceType(), pg200.getDeviceId(), pg200.getMDevType(), pg200.getMDevId());
+                    pg200.getDeviceType(), pg200.getDeviceId(), pg200.getMDevType(), pg200.getMDevId(), pg200.getMeteringTime());
         }
         
         MMIU mmiu = (MMIU)pg200.getMeter().getModem();

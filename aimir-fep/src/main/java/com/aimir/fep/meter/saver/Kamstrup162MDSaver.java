@@ -77,7 +77,7 @@ public class Kamstrup162MDSaver extends AbstractMDSaver {
 	                    data.getLpDate().substring(8, 12),
 	                    data.getLp(), flaglist, data.getBasePulse(),
 	                    parser.getMeter(),  parser.getDeviceType(), parser.getDeviceId(),
-	                    parser.getMDevType(), parser.getMDevId());
+	                    parser.getMDevType(), parser.getMDevId(), parser.getMeteringTime());
 	            }
 //        }
         }

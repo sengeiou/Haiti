@@ -93,7 +93,7 @@ public class SXMDSaver extends AbstractMDSaver {
             saveLPData(MeteringType.Recovery, data.getLpDate(), "0000",
                     data.getLp(), flaglist, data.getBasePulse(),
                     parser.getMeter(),  parser.getDeviceType(), parser.getDeviceId(),
-                    parser.getMDevType(), parser.getMDevId());
+                    parser.getMDevType(), parser.getMDevId(), parser.getMeteringTime());
         }
         
         // savePreBill(kamstrupMeta);

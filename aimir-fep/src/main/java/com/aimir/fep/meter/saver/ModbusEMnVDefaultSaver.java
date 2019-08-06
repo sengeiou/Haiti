@@ -204,7 +204,7 @@ public class ModbusEMnVDefaultSaver extends AbstractMDSaver {
 
 		//super.saveLPData(MeteringType.Normal, startlpdate.substring(0, 8), startlpdate.substring(8)+"00",
 		//super.saveLPData(MeteringType.Normal, startlpdate.substring(0, 8), startlpdate.substring(8, 12), _lplist, _flag, baseValue, parser.getMeter(), DeviceType.Modem, parser.getMeter().getModem().getDeviceSerial(), DeviceType.Meter, meterId);
-		super.saveLPData(MeteringType.OnDemand, startlpdate.substring(0, 8), startlpdate.substring(8, 12), _lplist, _flag, baseValue, parser.getMeter(), DeviceType.Modem, parser.getMeter().getModem().getDeviceSerial(), DeviceType.Meter, meterId);
+		super.saveLPData(MeteringType.OnDemand, startlpdate.substring(0, 8), startlpdate.substring(8, 12), _lplist, _flag, baseValue, parser.getMeter(), DeviceType.Modem, parser.getMeter().getModem().getDeviceSerial(), DeviceType.Meter, meterId, null);
 	}
 
 }

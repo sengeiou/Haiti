@@ -57,7 +57,7 @@ public class TS_PulseMeterMDSaver extends AbstractMDSaver {
             
             saveLPData(MeteringType.Manual, lpdata.getLpDate(), "0000",
                     lpdata.getLp(), flaglist, lpdata.getBasePulse(), parser.getMeter(),
-                    parser.getDeviceType(), parser.getDeviceId(), parser.getMDevType(), parser.getMDevId());
+                    parser.getDeviceType(), parser.getDeviceId(), parser.getMDevType(), parser.getMDevId(), parser.getMeteringTime());
         }
 
         // 설정 저장

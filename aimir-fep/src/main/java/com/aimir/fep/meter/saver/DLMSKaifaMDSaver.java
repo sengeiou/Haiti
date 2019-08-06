@@ -254,7 +254,7 @@ public class DLMSKaifaMDSaver extends AbstractMDSaver {
  	        
  	      Arrays.sort(lplist);
     	  saveLPUsingLpNormalization(CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()), 
- 	        		md, lplist, parser.getMDevId(), parser.getDeviceId(), parser.getMDevType());
+ 	        		md, lplist, parser.getMDevId(), parser.getDeviceId(), parser.getMDevType(), parser.getMeteringTime());
       
  		} catch (Exception e) {
  			log.error(e,e);
@@ -763,7 +763,7 @@ public class DLMSKaifaMDSaver extends AbstractMDSaver {
 				mbus1Meter.setLpInterval(parser.getMbus1LpInterval());
 				// UPDATE START SP-735,736
 				//saveMbusDataChannel(mbus1Meter, modemId, DeviceType.Modem, mbus1Meter.getMdsId(), parser.getMDevType(), mbus1Lplist);
-				saveMbusDataChannelUsingLPTime(mbus1Meter, modemId, DeviceType.Modem, mbus1Meter.getMdsId(), parser.getMDevType(), parser.getDeviceId(), CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()), mbus1Lplist);
+				saveMbusDataChannelUsingLPTime(mbus1Meter, modemId, DeviceType.Modem, mbus1Meter.getMdsId(), parser.getMDevType(), parser.getDeviceId(), CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()), mbus1Lplist, parser.getMeteringTime());
 				if (lastReadDate != null && !"".equals(lastReadDate)){
 					log.debug("MBUS1 MdevId[" + mbus1Meter.getMdsId() + "] UPDATE LAST_READ_DATE[" + lastReadDate + "]");
 					mbus1Meter.setLastReadDate(lastReadDate);
@@ -796,7 +796,7 @@ public class DLMSKaifaMDSaver extends AbstractMDSaver {
 				mbus2Meter.setLpInterval(parser.getMbus2LpInterval());
 				// UPDATE START SP-735,736
 				//saveMbusDataChannel(mbus2Meter, modemId, DeviceType.Modem, mbus2Meter.getMdsId(), parser.getMDevType(), mbus2Lplist);
-				saveMbusDataChannelUsingLPTime(mbus1Meter, modemId, DeviceType.Modem, mbus1Meter.getMdsId(), parser.getMDevType(), parser.getDeviceId(), CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()), mbus1Lplist);
+				saveMbusDataChannelUsingLPTime(mbus1Meter, modemId, DeviceType.Modem, mbus1Meter.getMdsId(), parser.getMDevType(), parser.getDeviceId(), CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()), mbus1Lplist, parser.getMeteringTime());
 				if (lastReadDate != null && !"".equals(lastReadDate)){
 					log.debug("MBUS2 MdevId[" + mbus2Meter.getMdsId() + "] UPDATE LAST_READ_DATE[" + lastReadDate + "]");
 					mbus2Meter.setLastReadDate(lastReadDate);
@@ -829,7 +829,7 @@ public class DLMSKaifaMDSaver extends AbstractMDSaver {
 				mbus3Meter.setLpInterval(parser.getMbus3LpInterval());
 				// UPDATE START SP-735,736
 				//saveMbusDataChannel(mbus3Meter, modemId, DeviceType.Modem, mbus3Meter.getMdsId(), parser.getMDevType(), mbus3Lplist);
-				saveMbusDataChannelUsingLPTime(mbus1Meter, modemId, DeviceType.Modem, mbus1Meter.getMdsId(), parser.getMDevType(), parser.getDeviceId(), CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()), mbus1Lplist);
+				saveMbusDataChannelUsingLPTime(mbus1Meter, modemId, DeviceType.Modem, mbus1Meter.getMdsId(), parser.getMDevType(), parser.getDeviceId(), CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()), mbus1Lplist, parser.getMeteringTime());
 				if (lastReadDate != null && !"".equals(lastReadDate)){
 					mbus3Meter.setLastReadDate(lastReadDate);
 					log.debug("MBUS3 MdevId[" + mbus3Meter.getMdsId() + "] UPDATE LAST_READ_DATE[" + lastReadDate + "]");
@@ -862,7 +862,7 @@ public class DLMSKaifaMDSaver extends AbstractMDSaver {
 				mbus4Meter.setLpInterval(parser.getMbus4LpInterval());
 				// UPDATE START SP-735,736				
 				//saveMbusDataChannel(mbus4Meter, modemId, DeviceType.Modem, mbus4Meter.getMdsId(), parser.getMDevType(), mbus4Lplist);
-				saveMbusDataChannelUsingLPTime(mbus1Meter, modemId, DeviceType.Modem, mbus1Meter.getMdsId(), parser.getMDevType(), parser.getDeviceId(), CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()), mbus1Lplist);
+				saveMbusDataChannelUsingLPTime(mbus1Meter, modemId, DeviceType.Modem, mbus1Meter.getMdsId(), parser.getMDevType(), parser.getDeviceId(), CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()), mbus1Lplist, parser.getMeteringTime());
 				if (lastReadDate != null && !"".equals(lastReadDate)){
 					mbus4Meter.setLastReadDate(lastReadDate);
 					log.debug("MBUS4 MdevId[" + mbus4Meter.getMdsId() + "] UPDATE LAST_READ_DATE[" + lastReadDate + "]");
@@ -1778,7 +1778,7 @@ public class DLMSKaifaMDSaver extends AbstractMDSaver {
 	 * @throws Exception
 	 */
 	private void saveMbusDataChannelUsingLPTime(Meter meter, String devId, DeviceType devType, String mdevId,
-	        DeviceType mdevType, String deviceId, MeteringType meteringType, LPData[] mbusLplist) throws Exception {
+	        DeviceType mdevType, String deviceId, MeteringType meteringType, LPData[] mbusLplist, String meteringTime) throws Exception {
 		try {
 			log.debug("saveMbusDataChannelUsingLPTime devId[" + devId + 
 					"] devType[" + devType.name() + "] mdevId[" + mdevId + 
@@ -1790,7 +1790,7 @@ public class DLMSKaifaMDSaver extends AbstractMDSaver {
 	        else
 	        {
 	        	//OPF-610 DB(LP) normalization
-	        	saveLPUsingLpNormalization(meteringType, null, mbusLplist, mdevId, deviceId, mdevType);
+	        	saveLPUsingLpNormalization(meteringType, null, mbusLplist, mdevId, deviceId, mdevType, meteringTime);
 	        	
 	        	/* 
 	            log.debug("MDevId[" + mdevId + "] LPSIZE => "+ mbusLplist.length);

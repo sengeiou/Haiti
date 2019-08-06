@@ -193,6 +193,12 @@ public abstract class MeteringLP {
 	public void setModemTime(Date modemTime) {
 		this.modemTime = modemTime;
 	}
+	
+	public void setModemTime(String modemTime) {
+		try {
+			this.modemTime = DateTimeUtil.getDateFromYYYYMMDDHHMMSS(modemTime);	
+		}catch(Exception e) {}
+	}
 
 	public Date getDcuTime() {
 		return dcuTime;
@@ -328,7 +334,7 @@ public abstract class MeteringLP {
 		builder.append(getValue()).append("|");
 		builder.append(DateTimeUtil.getDateString(getWriteDate())).append("|");
 		builder.append(getContractId()).append("|");
-		builder.append(getModemTime()).append("|");
+		builder.append(DateTimeUtil.getDateString(getModemTime())).append("|");
 		builder.append(getDcuTime());
 		builder.append("\n");
 		return builder.toString();

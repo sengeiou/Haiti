@@ -170,7 +170,9 @@ public class Kamstrup351BMDSaver extends AbstractMDSaver {
 						parser.getDeviceType(),
 						parser.getDeviceId(), 
 						parser.getMDevType(), 
-						parser.getMDevId() );
+						parser.getMDevId(),
+						parser.getMeteringTime()
+						);
 			if (parser.getMeteringValue() != null) {
 				saveMeteringData(MeteringType.Normal, 
 								 md.getTimeStamp().substring(0, 8), 

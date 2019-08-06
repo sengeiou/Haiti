@@ -767,7 +767,7 @@ class EMnVRecoveryCallable implements Callable<Map<String, String>> {
 		}
 
 		AbstractMDSaver saver = (AbstractMDSaver) DataUtil.getBean(Class.forName("com.aimir.fep.meter.saver.DLMSEMnVGtypeSaver"));
-		saver.saveLPDataP(MeteringType.OnDemand, startlpdate.substring(0, 8), startlpdate.substring(8) + "00", _lplist, _flag, baseValue, parser.getMeter(), DeviceType.Modem, parser.getMeter().getModem().getDeviceSerial(), DeviceType.Meter, parser.getMeterID());
+		saver.saveLPDataP(MeteringType.OnDemand, startlpdate.substring(0, 8), startlpdate.substring(8) + "00", _lplist, _flag, baseValue, parser.getMeter(), DeviceType.Modem, parser.getMeter().getModem().getDeviceSerial(), DeviceType.Meter, parser.getMeterID(), parser.getMeteringTime());
 	}
 
 }

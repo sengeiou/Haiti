@@ -191,7 +191,7 @@ public class DLMSClouMDSaver extends AbstractMDSaver {
 	        
 	 	      Arrays.sort(lplist);
 	    	  saveLPUsingLpNormalization(CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()), 
-	 	        		md, lplist, parser.getMDevId(), parser.getDeviceId(), parser.getMDevType());
+	 	        		md, lplist, parser.getMDevId(), parser.getDeviceId(), parser.getMDevType(), parser.getMeteringTime());
 			
 		}catch(Exception e) {
 			log.error(e,e);

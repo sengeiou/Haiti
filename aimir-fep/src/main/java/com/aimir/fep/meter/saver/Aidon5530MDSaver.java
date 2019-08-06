@@ -75,7 +75,7 @@ public class Aidon5530MDSaver extends AbstractMDSaver {
             saveLPData(MeteringType.Normal, data.getLpDate(), "0000",
                     data.getLp(), flaglist, data.getBasePulse()[0],
                     parser.getMeter(),  parser.getDeviceType(), parser.getDeviceId(),
-                    parser.getMDevType(), parser.getMDevId());
+                    parser.getMDevType(), parser.getMDevId(), parser.getMeteringTime());
         }
         
         MeterStatus meterStatus  = aidonMeta.getMeterStatus()? MeterStatus.Normal:MeterStatus.Abnormal;

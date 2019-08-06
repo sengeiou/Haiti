@@ -577,7 +577,7 @@ public class DLMSNamjunSaver extends AbstractMDSaver {
 		saveLPData(MeteringType.Normal, yyyymmdd, hhmm, lpValues, flaglist,
 				basePulse, parser.getMeter(), parser.getDeviceType(),
 				parser.getDeviceId(), parser.getMDevType(), parser
-						.getMDevId());
+						.getMDevId(), parser.getMeteringTime());
 		return true;
 	}
 	
