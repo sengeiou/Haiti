@@ -67,39 +67,35 @@ public class MCU extends BaseObject implements JSONString, IAuditable {
     private static final long serialVersionUID = 6386644292331049382L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MCU_SEQ")
-    @SequenceGenerator(name = "MCU_SEQ", sequenceName = "MCU_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MCU")
+    @SequenceGenerator(name = "SEQ_MCU", sequenceName = "SEQ_MCU", allocationSize = 1)
     private Integer id;
+    
 
-//    @Version
-//    Integer version;
-
-    @ColumnInfo(name = "", descr = "MCU 테이블의 ID 혹은  NULL : 재귀호출을 위함")
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "mcu", fetch = FetchType.LAZY)
-    // @JoinColumn(name="PARENT_MCU_ID")
-    private List<MCU> childMcus = new ArrayList<MCU>(0);
-
-    @ColumnInfo(name = "", view = @Scope(create = true, read = true, update = true), descr = "")
-    @OneToMany
-    @JoinColumn(name = "MCU_ID")
-    @OrderBy("id")
-    private List<MCUInstallImg> mcuInstallImgs = new ArrayList<MCUInstallImg>(0);
+    @ColumnInfo(name = "집중기 ID", view = @Scope(create = true, read = true, update = true, devicecontrol = true), descr = "")
+    @Column(name = "SYS_ID", unique = true, nullable = false, length = 20)
+    private String sysID;
 
     @ColumnInfo(name = "", descr = "")
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "MCU_VAR_ID")
-    private MCUVar mcuVar;
+    @Column(name = "INSTALL_DATE", length = 14)
+    private String installDate;    
 
-    @Column(name = "MCU_VAR_ID", nullable = true, updatable = false, insertable = false)
-    private Long mcuVarId;
+    @ColumnInfo(name = "", view = @Scope(create = false, read = true, update = false), descr = "")
+    @Column(name = "LAST_COMM_DATE", length = 14)
+    private String lastCommDate;
 
-    @ColumnInfo(name = "", descr = "Indoor, Outdoor 타입의 집중기에만 코디정보가 있음 나머지에는 정보 필요없음")
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "MCU_CODI_ID")
-    private MCUCodi mcuCodi;
+    @ColumnInfo(name = "소프트웨어 버젼", view = @Scope(create = true, read = true, update = true, devicecontrol = true), descr = "CODE 1.1.3 연관")
+    @Column(name = "SYS_SW_VERSION")
+    private String sysSwVersion;
+    
+    @ColumnInfo(name = "집중기 S/W Revision", view = @Scope(create = true, read = true, update = true, devicecontrol = true), descr = "")
+    @Column(name = "SYS_SW_REVISION")
+    private String sysSwRevision;    
 
-    @Column(name = "MCU_CODI_ID", nullable = true, updatable = false, insertable = false)
-    private Integer mcuCodeId;
+    @ColumnInfo(name = "하드웨어 버젼", view = @Scope(create = true, read = true, update = true, devicecontrol = true), descr = "CODE 1.1.2 연관")
+    @Column(name = "SYS_HW_VERSION")
+    private String sysHwVersion;
+    
 
     @ColumnInfo(name = "장비모델", view = @Scope(create = true, read = true, update = true), descr = "DEVICE_MODEL 테이블의 Code")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -109,17 +105,51 @@ public class MCU extends BaseObject implements JSONString, IAuditable {
 
     @Column(name = "DEVICEMODEL_ID", nullable = true, updatable = false, insertable = false)
     private Integer deviceModelId;
+    
 
-    @JoinColumn(name = "parent_id")
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private MCU mcu;
+    @ColumnInfo(name = "SYS_SERIAL_NUMBER")
+    @Column(name = "SYS_SERIAL_NUMBER")
+    private String sysSerialNumber;
 
-    @Column(name = "parent_id", nullable = true, updatable = false, insertable = false)
-    private Integer parentId;
+    @ColumnInfo(name = "SYS_TLS_PORT")
+    @Column(name = "SYS_TLS_PORT")
+    private Integer sysTlsPort;
+    
 
-    @ColumnInfo(name = "미터아이디", descr = "미터 테이블의 ID 혹은  NULL")
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "mcu")
-    private Set<Modem> modem = new HashSet<Modem>(0);
+    @ColumnInfo(name = "집중기의 로컬 제어 포트 번호", view = @Scope(create = true, read = true, update = true, devicecontrol = true), descr = "")
+    @Column(name = "SYS_LOCAL_PORT", length = 10)
+    private Integer sysLocalPort;
+    
+
+    @ColumnInfo(name = "communication protocol namespace for OID mapping")
+    @Column(name = "NAME_SPACE", length = 10)
+    private String nameSpace;
+
+    @ColumnInfo(descr = "바코드 정보")
+    @Column(name = "GS1")
+    private String gs1;
+
+    @ColumnInfo(name = "SYS_HW_BUILD")
+    @Column(name = "SYS_HW_BUILD")
+    private String sysHwBuild;
+
+
+    @ColumnInfo(name = "SYS_TLS_VERSION")
+    @Column(name = "SYS_TLS_VERSION")
+    private String sysTlsVersion;   
+
+
+    @XmlTransient
+    @ColumnInfo(name = "집중기 삭제 상태", descr = "코드 테이블의 ID 혹은  NULL : Code 1.1.4 참조", view = @Scope(create = true, read = true, update = true))
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MCU_STATUS")
+    @ReferencedBy(name = "code")
+    private Code mcuStatus;
+
+    @XmlTransient
+    @Column(name = "MCU_STATUS", nullable = true, updatable = false, insertable = false)
+    private Integer mcuStatusCodeId;
+    
 
     @ColumnInfo(name = "공급사아이디", descr = "공급사 테이블의 ID 혹은  NULL")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -142,18 +172,26 @@ public class MCU extends BaseObject implements JSONString, IAuditable {
     @ColumnInfo(name = "", descr = "")
     @Column(name = "NETWORK_STATUS", length = 10)
     private Integer networkStatus;
+    
+    @ColumnInfo(name = "PROTOCOL TYPE", view = @Scope(create = true, read = true, update = true), descr = "Code 4.6의 타입")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PROTOCOL_TYPE")
+    @ReferencedBy(name = "code")
+    private Code protocolType;
+    
 
-    @ColumnInfo(name = "", descr = "")
-    @Column(name = "INSTALL_DATE", length = 14)
-    private String installDate;
+    @ColumnInfo(name = "MCU TYPE", view = @Scope(create = true, read = true, update = true), descr = "Code 1.1.1의 타입")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MCU_TYPE")
+    @ReferencedBy(name = "code")
+    private Code mcuType;
 
-    @ColumnInfo(name = "", descr = "")
-    @Column(name = "LOC_DETAIL", length = 100)
-    private String locDetail;
+    @Column(name = "MCU_TYPE", nullable = true, updatable = false, insertable = false)
+    private Integer mcuTypeCodeId;
 
-    @ColumnInfo(name = "", descr = "")
-    @Column(name = "LAST_MODIFIED_DATE", length = 14)
-    private String lastModifiedDate;
+    @Column(name = "PROTOCOL_TYPE", nullable = true, updatable = false, insertable = false)
+    private Integer protocolTypeCodeId;
+    
 
     @ColumnInfo(name = "", view = @Scope(create = true, read = true, update = true), descr = "")
     @Column(name = "IP_ADDR", length = 64)
@@ -167,32 +205,64 @@ public class MCU extends BaseObject implements JSONString, IAuditable {
     @Column(name = "MAC_ADDR", length = 64)
     private String macAddr;
 
+
+    @ColumnInfo(name = "", descr = "")
+    @Column(name = "LOC_DETAIL", length = 100)
+    private String locDetail;
+
+//    @Version
+//    Integer version;
+
+    @ColumnInfo(name = "", descr = "")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "MCU_VAR_ID")
+    private MCUVar mcuVar;
+
+    @Column(name = "MCU_VAR_ID", nullable = true, updatable = false, insertable = false)
+    private Long mcuVarId;
+
+    @ColumnInfo(name = "", descr = "Indoor, Outdoor 타입의 집중기에만 코디정보가 있음 나머지에는 정보 필요없음")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "MCU_CODI_ID")
+    private MCUCodi mcuCodi;
+
+    @Column(name = "MCU_CODI_ID", nullable = true, updatable = false, insertable = false)
+    private Integer mcuCodeId;
+    
+    
+    @ColumnInfo(name="L2 network key", view=@Scope(create=true, read=true, update=true), descr="L2 network key")
+    @Column(name="NETWORK_KEY", length=256)
+    private String networkKey;
+
+
+    @JoinColumn(name = "parent_id")
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private MCU mcu;
+
+    @Column(name = "parent_id", nullable = true, updatable = false, insertable = false)
+    private Integer parentId;
+
+    @ColumnInfo(name = "미터아이디", descr = "미터 테이블의 ID 혹은  NULL")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "mcu")
+    private Set<Modem> modem = new HashSet<Modem>(0);
+
+
+    @ColumnInfo(name = "", descr = "")
+    @Column(name = "LAST_MODIFIED_DATE", length = 14)
+    private String lastModifiedDate;
+
+
     @ColumnInfo(name = "", view = @Scope(create = true, read = true, update = true), descr = "")
     @Column(name = "SERVICE_ATM", length = 1)
     private Integer serviceAtm;
 
-    @ColumnInfo(name = "MCU TYPE", view = @Scope(create = true, read = true, update = true), descr = "Code 1.1.1의 타입")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MCU_TYPE")
-    @ReferencedBy(name = "code")
-    private Code mcuType;
-
-    @Column(name = "MCU_TYPE", nullable = true, updatable = false, insertable = false)
-    private Integer mcuTypeCodeId;
 /*
     @ColumnInfo(name="",descr="")
     @Enumerated(EnumType.STRING)
     @Column(name="MCU_TYPE")
     private MCUType mcuType;
  */
-    @ColumnInfo(name = "PROTOCOL TYPE", view = @Scope(create = true, read = true, update = true), descr = "Code 4.6의 타입")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PROTOCOL_TYPE")
-    @ReferencedBy(name = "code")
-    private Code protocolType;
 
-    @Column(name = "PROTOCOL_TYPE", nullable = true, updatable = false, insertable = false)
-    private Integer protocolTypeCodeId;
 
     @ColumnInfo(name = "경도", view = @Scope(create = true, read = true, update = true), descr = "")
     @Column(name = "GPIOX")
@@ -230,10 +300,6 @@ public class MCU extends BaseObject implements JSONString, IAuditable {
     @Column(name = "LAST_SW_UPDATE_DATE", length = 14)
     private String lastswUpdateDate;
 
-    @ColumnInfo(name = "", view = @Scope(create = false, read = true, update = false), descr = "")
-    @Column(name = "LAST_COMM_DATE", length = 14)
-    private String lastCommDate;
-
     @ColumnInfo(name = "", view = @Scope(create = false, read = true, update = true), descr = "")
     @Column(name = "UPDATE_SERVER_PORT", length = 10)
     private Integer updateServerPort;
@@ -242,9 +308,6 @@ public class MCU extends BaseObject implements JSONString, IAuditable {
     @Column(name = "FW_STATE", length = 10)
     private Integer fwState;
 
-    @ColumnInfo(name = "집중기 ID", view = @Scope(create = true, read = true, update = true, devicecontrol = true), descr = "")
-    @Column(name = "SYS_ID", unique = true, nullable = false, length = 20)
-    private String sysID;
 
     @ColumnInfo(name = "집중기 유형", view = @Scope(create = false, read = false, update = false, devicecontrol = true), descr = "3=Indoor MCU, 4=Outdoor MCU, 7=DCU : CODE 1.1.1 동일)")
     @Column(name = "SYS_TYPE", length = 10)
@@ -266,13 +329,6 @@ public class MCU extends BaseObject implements JSONString, IAuditable {
     @Column(name = "SYS_CONTACT", length = 100)
     private String sysContact;
 
-    @ColumnInfo(name = "하드웨어 버젼", view = @Scope(create = true, read = true, update = true, devicecontrol = true), descr = "CODE 1.1.2 연관")
-    @Column(name = "SYS_HW_VERSION")
-    private String sysHwVersion;
-
-    @ColumnInfo(name = "소프트웨어 버젼", view = @Scope(create = true, read = true, update = true, devicecontrol = true), descr = "CODE 1.1.3 연관")
-    @Column(name = "SYS_SW_VERSION")
-    private String sysSwVersion;
 
     @ColumnInfo(name = "모바일 전화번호", view = @Scope(create = true, read = true, update = true, devicecontrol = true), descr = "protocolType 연관")
     @Column(name = "SYS_PHONE_NUMBER", length = 16)
@@ -322,10 +378,6 @@ public class MCU extends BaseObject implements JSONString, IAuditable {
     @Column(name = "SYS_SERVER_ALARM_PORT", length = 10)
     private Integer sysServerAlarmPort;
 
-    @ColumnInfo(name = "집중기의 로컬 제어 포트 번호", view = @Scope(create = true, read = true, update = true, devicecontrol = true), descr = "")
-    @Column(name = "SYS_LOCAL_PORT", length = 10)
-    private Integer sysLocalPort;
-
     @ColumnInfo(name = "집중기의 보안 포트 번호", view = @Scope(create = true, read = true, update = true, devicecontrol = true), descr = "")
     @Column(name = "SYS_SECURE_PORT", length = 10)
     private Integer sysSecurePort;
@@ -349,10 +401,6 @@ public class MCU extends BaseObject implements JSONString, IAuditable {
     @ColumnInfo(name = "모바일 APN Name", view = @Scope(create = true, read = true, update = false, devicecontrol = true), descr = "")
     @Column(name = "SYS_MOBILE_ACCESS_POINT_NAME", length = 64)
     private String sysMobileAccessPointName;
-
-    @ColumnInfo(name = "집중기 S/W Revision", view = @Scope(create = true, read = true, update = true, devicecontrol = true), descr = "")
-    @Column(name = "SYS_SW_REVISION")
-    private String sysSwRevision;
 
     @ColumnInfo(name = "집중기 리셋 사유", view = @Scope(create = false, read = false, update = false, devicecontrol = true), descr = "0:Unknown, 1:Command, 2:Firmware Upgrade, 3:Fixed Reset, 4:Watchdog, 5:Low Battery")
     @Column(name = "SYS_RESET_REASON", length = 10)
@@ -382,52 +430,23 @@ public class MCU extends BaseObject implements JSONString, IAuditable {
     @Column(name = "PROTOCOL_VERSION", length = 20)
     private String protocolVersion; // protocol Version
 
-    @ColumnInfo(name = "AMI Virtual Network Address Depth")
-    @Column(name = "AMI_NETWORK_DEPTH", length = 2)
-    private Integer amiNetworkDepth; // AMI Virtual Network Depth
 
     @ColumnInfo(name = "AMI Virtual Network Address")
     @Column(name = "AMI_NETWORK_ADDRESS", length = 128)
     private String amiNetworkAddress; // AMI Virtual Network Address
 
-    @ColumnInfo(name = "AMI Virtual Network Address V6")
-    @Column(name = "AMI_NETWORK_ADDRESS_V6", length = 128)
-    private String amiNetworkAddressV6; // AMI Virtual Network Address
 
-    @ColumnInfo(name = "communication protocol namespace for OID mapping")
-    @Column(name = "NAME_SPACE", length = 10)
-    private String nameSpace;
+    @ColumnInfo(name = "", descr = "MCU 테이블의 ID 혹은  NULL : 재귀호출을 위함")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "mcu", fetch = FetchType.LAZY)
+    // @JoinColumn(name="PARENT_MCU_ID")
+    private List<MCU> childMcus = new ArrayList<MCU>(0);
 
-    @ColumnInfo(descr = "바코드 정보")
-    @Column(name = "GS1")
-    private String gs1;
+    @ColumnInfo(name = "", view = @Scope(create = true, read = true, update = true), descr = "")
+    @OneToMany
+    @JoinColumn(name = "MCU_ID")
+    @OrderBy("id")
+    private List<MCUInstallImg> mcuInstallImgs = new ArrayList<MCUInstallImg>(0);
 
-    @ColumnInfo(name = "SYS_HW_BUILD")
-    @Column(name = "SYS_HW_BUILD")
-    private String sysHwBuild;
-
-    @ColumnInfo(name = "SYS_SERIAL_NUMBER")
-    @Column(name = "SYS_SERIAL_NUMBER")
-    private String sysSerialNumber;
-
-    @ColumnInfo(name = "SYS_TLS_PORT")
-    @Column(name = "SYS_TLS_PORT")
-    private Integer sysTlsPort;
-
-    @ColumnInfo(name = "SYS_TLS_VERSION")
-    @Column(name = "SYS_TLS_VERSION")
-    private String sysTlsVersion;
-
-    @XmlTransient
-    @ColumnInfo(name = "집중기 삭제 상태", descr = "코드 테이블의 ID 혹은  NULL : Code 1.1.4 참조", view = @Scope(create = true, read = true, update = true))
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MCU_STATUS")
-    @ReferencedBy(name = "code")
-    private Code mcuStatus;
-
-    @XmlTransient
-    @Column(name = "MCU_STATUS", nullable = true, updatable = false, insertable = false)
-    private Integer mcuStatusCodeId;
 
     @Transient
     private String selectedField = "true";
@@ -451,14 +470,21 @@ public class MCU extends BaseObject implements JSONString, IAuditable {
     @ColumnInfo(name="제조일자", view=@Scope(create=true, read=true, update=true), descr="제조일자")
     @Column(name="MANUFACTURED_DATE", length=8)
     private String manufacturedDate;
-    
-    @ColumnInfo(name="L2 network key", view=@Scope(create=true, read=true, update=true), descr="L2 network key")
-    @Column(name="NETWORK_KEY", length=256)
-    private String networkKey;
+
     
     @ColumnInfo(name="L2 network key index", view=@Scope(create=true, read=true, update=true), descr="L2 network index")
     @Column(name="NETWORK_KEY_IDX")
     private Integer networkKeyIdx;
+    
+
+    @ColumnInfo(name = "AMI Virtual Network Address V6")
+    @Column(name = "AMI_NETWORK_ADDRESS_V6", length = 128)
+    private String amiNetworkAddressV6; // AMI Virtual Network Address
+    
+
+    @ColumnInfo(name = "AMI Virtual Network Address Depth")
+    @Column(name = "AMI_NETWORK_DEPTH", length = 2)
+    private Integer amiNetworkDepth; // AMI Virtual Network Depth
     
 
     public void setSelectedField(String selectedField) {
