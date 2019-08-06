@@ -24,13 +24,14 @@ public class SubGiga extends Modem {
 
     private static final long serialVersionUID = -3721786480232359971L;
     
-    @ColumnInfo(name="BASE_STATION_ADDRESS", descr="Base Station Address")
-    @Column(name="LINK_KEY", length=64)
-    private String baseStationAddress;
     
     @ColumnInfo(name="ipv6Address", descr="IPv6 Modem Ipv6 Address")
     @Column(name="IPV6_ADDRESS", length=64)
     private String ipv6Address;
+    
+    @ColumnInfo(name="BASE_STATION_ADDRESS", descr="Base Station Address")
+    @Column(name="LINK_KEY", length=64)
+    private String baseStationAddress;
     
     @ColumnInfo(name="securityKey", descr="Modem ieee 802.15.4 Security Key")
     @Column(name="SECURITY_KEY", length=64)
@@ -67,18 +68,7 @@ public class SubGiga extends Modem {
     @ColumnInfo(name="Metering Time Range")
     @Column(name="METERING_TIME_RANGE")
     private Integer meteringTimeRange;
-    
-    @ColumnInfo(name="APN address")
-    @Column(name="APN_ADDRESS")
-    private String apnAddress;
-    
-    @ColumnInfo(name="APN Id")
-    @Column(name="APN_ID")
-    private String apnId;
-    
-    @ColumnInfo(name="APN Password")
-    @Column(name="APN_PASSWORD")
-    private String apnPassword;
+
     
    @ColumnInfo(name="RSSI")
     @Column(name="RSSI", length=20)
@@ -91,6 +81,19 @@ public class SubGiga extends Modem {
     @ColumnInfo(name="ETX")
     @Column(name="ETX", length=20)
     private Integer etx;
+    
+    
+    @ColumnInfo(name="APN address")
+    @Column(name="APN_ADDRESS")
+    private String apnAddress;
+    
+    @ColumnInfo(name="APN Id")
+    @Column(name="APN_ID")
+    private String apnId;
+    
+    @ColumnInfo(name="APN Password")
+    @Column(name="APN_PASSWORD")
+    private String apnPassword;
 /*
     @ColumnInfo(name="Cpu Usage")
     @Column(name="Cpu_Usage", length=20)

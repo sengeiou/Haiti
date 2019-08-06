@@ -19,7 +19,11 @@ import com.aimir.annotation.ColumnInfo;
 @DiscriminatorValue("PLCIU")
 public class PLCIU extends Modem {
 
-    private static final long serialVersionUID = 6195190002090836902L;
+    private static final long serialVersionUID = 6195190002090836902L;    
+    
+    @ColumnInfo(name="ipv6Address", descr="IPv6 Modem Ipv6 Address")
+    @Column(name="IPV6_ADDRESS", length=64)
+    private String ipv6Address;
 
     @ColumnInfo(name="", descr="")
     @Column(name="SYS_DESCR", length=250)
@@ -100,10 +104,7 @@ public class PLCIU extends Modem {
     @ColumnInfo(name="", descr="")
     @Column(name="SYS_PORT", length=10)
     private String sysPort;
-    
-    @ColumnInfo(name="ipv6Address", descr="IPv6 Modem Ipv6 Address")
-    @Column(name="IPV6_ADDRESS", length=64)
-    private String ipv6Address;
+
 
     public String getSysDescr() {
         return sysDescr;

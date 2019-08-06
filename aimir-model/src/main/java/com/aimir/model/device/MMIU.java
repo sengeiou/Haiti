@@ -19,7 +19,11 @@ import com.aimir.annotation.Scope;
 @DiscriminatorValue("MMIU")
 public class MMIU extends Modem {
 
-    private static final long serialVersionUID = -8856182359061451639L;
+    private static final long serialVersionUID = -8856182359061451639L;    
+    
+    @ColumnInfo(name="ipv6Address", descr="IPv6 Modem Ipv6 Address")
+    @Column(name="IPV6_ADDRESS", length=64)
+    private String ipv6Address;
 
     @ColumnInfo(name="", view=@Scope(create=false, read=true, update=false), descr="")
     @Column(name="ERROR_STATUS", length=10)
@@ -56,10 +60,6 @@ public class MMIU extends Modem {
     @ColumnInfo(name="Metering Interval")
     @Column(name="METERING_INTERVAL")
     private Integer meteringInterval;
-    
-    @ColumnInfo(name="ipv6Address", descr="IPv6 Modem Ipv6 Address")
-    @Column(name="IPV6_ADDRESS", length=64)
-    private String ipv6Address;
     
     @ColumnInfo(name="mobileNetworkType", descr="mobileNetworkType (2g,3g,4g)")
     @Column(name="MOBILE_NETWORK_TYPE", length=20)
