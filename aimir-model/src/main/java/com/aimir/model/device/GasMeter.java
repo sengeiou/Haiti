@@ -21,6 +21,11 @@ public class GasMeter extends Meter {
 
     private static final long serialVersionUID = -5141779583419587993L;
 
+
+    @ColumnInfo(name="", view=@Scope(create=true, read=true, update=true),descr="센서를 설치할 당시의 지침값")
+    @Column(name="CURRENT_PULSE", length=10)
+    private Double currentPulse;
+    
     /**
      * 가스 미터의 벤더, 모델이 극동 MC2000 모델의 경우에만 적용 
      *    
@@ -44,9 +49,6 @@ public class GasMeter extends Meter {
     @Column(name="CORRECT_PULSE")
     private Double correctPulse;    
 
-    @ColumnInfo(name="", view=@Scope(create=true, read=true, update=true),descr="센서를 설치할 당시의 지침값")
-    @Column(name="CURRENT_PULSE", length=10)
-    private Double currentPulse;
 
     public Integer getAlarmStatus() {
 		return alarmStatus;

@@ -191,8 +191,8 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
 	 * 시스템이 부여한 시퀀스 아이디
 	 */
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="METER_SEQ")
-    @SequenceGenerator(name="METER_SEQ", sequenceName="METER_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_METER")
+    @SequenceGenerator(name="SEQ_METER", sequenceName="SEQ_METER", allocationSize=1) 
 	private Integer id;
 
 //    @Version
@@ -204,14 +204,84 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
 	 */
     @ColumnInfo(name="미터아이디", view=@Scope(create=true, read=true, update=false), descr="사람 혹은 장비에서 올라오는 값. 반드시 있어야 하는 값이며, 중복 되는 값은 사용할 수 없음")
     @Column(name="MDS_ID", nullable=false, unique=true)
-    private String mdsId;
+    private String mdsId;       
     
     /**
-     * 미터 설치 정보 (미터시리얼번호 외에 미터에서 관리하는 관리번호등등의 값이 될 수 있음
+     * 검침주기 (5, 15, 30, 60분)
      */
-    @ColumnInfo(name="", view=@Scope(create=false, read=false, update=false), descr="미터 설치 정보 (미터시리얼번호 외에 미터에서 관리하는 관리번호등등의 값이 될 수 있음")
-    @Column(name="INSTALL_PROPERTY")
-    private String installProperty;
+    @ColumnInfo(name="검침 주기",view=@Scope(create=true, read=true, update=true) )
+    @Column(name="LP_INTERVAL")
+    private Integer lpInterval;
+    
+    
+    /**
+     * 미터 유형 코드
+     * <br>1:전기, 2:수도, 3:가스, 4:열량, 5:보정기
+     */
+    @XmlTransient
+    @ColumnInfo(name="미터 타입", view=@Scope(create=true, read=true, update=false), descr="전기 가스 수도 열량 보정기의 ID 혹은  NULL")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="metertype_id")
+    @ReferencedBy(name="code")
+    private Code meterType;
+
+    @Column(name="metertype_id", nullable=true, updatable=false, insertable=false)
+    private Integer meterTypeCodeId;
+    
+
+	/**
+	 * 설치일자 yyyymmddhhmmss
+	 */
+    @ColumnInfo(name="설치일자", view=@Scope(create=true, read=true, update=true), descr="YYYYMMDDHHMMSS")
+    @Column(name="INSTALL_DATE")
+    private String installDate;
+    private String installDateHidden;
+    private String installDateUpdate;
+    
+
+    /**
+     * GIS 연동 X 좌표
+     */
+    @ColumnInfo(name="GPIOX", view=@Scope(create=true, read=true, update=true) )
+    @Column(name="GPIOX")
+    private Double gpioX;
+
+    /**
+     * GIS 연동 Y 좌표
+     */
+    @ColumnInfo(name="GPIOY", view=@Scope(create=true, read=true, update=true))
+    @Column(name="GPIOY")
+    private Double gpioY;
+
+    /**
+     * GIS 연동 Z 좌표
+     */
+    @ColumnInfo(name="GPIOZ", view=@Scope(create=true, read=true, update=true))
+    @Column(name="GPIOZ")
+    private Double gpioZ;
+
+    /**
+     * 마지막 통신 날짜. yyyymmddhhmmss
+     */
+    @ColumnInfo(name="마지막 통신 날짜", view=@Scope(create=false, read=true, update=false), descr="마지막에 통신한 날짜,yyyymmddhhmmss")
+    @Column(name="LAST_READ_DATE",length=14)
+    private String lastReadDate;
+    
+    
+    /**
+     * 마지막 변경날짜. yyyymmddhhmmss
+     */
+    @ColumnInfo(name="마지막 변경날짜",view=@Scope(create=false, read=true, update=false), descr="마지막에 정보 변경한 날짜,yyyymmddhhmmss")
+    @Column(name="WRITE_DATE",length=14)
+    private String writeDate;
+    
+    /**
+     * 최종 검침 값
+     */
+    @ColumnInfo(name="최종 검침 값", view=@Scope(create=false, read=true, update=false), descr="최근에 검침된 값지침 ")
+    @Column(name="LAST_METERING_VALUE")
+    private Double lastMeteringValue;
+
 
     /**
      * 공급사
@@ -239,34 +309,27 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
     @Column(name="devicemodel_id", nullable=true, updatable=false, insertable=false)
     private Integer modelId;
     
+
     /**
-     * 미터 유형 코드
-     * <br>1:전기, 2:수도, 3:가스, 4:열량, 5:보정기
+     * 미터와 연결된 모뎀 정보
      */
     @XmlTransient
-    @ColumnInfo(name="미터 타입", view=@Scope(create=true, read=true, update=false), descr="전기 가스 수도 열량 보정기의 ID 혹은  NULL")
+    @ColumnInfo(name="모뎀", view=@Scope(create=true, read=true, update=true), descr="모뎀 테이블의 ID 혹은  NULL")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="metertype_id")
-    @ReferencedBy(name="code")
-    private Code meterType;
-
-    @Column(name="metertype_id", nullable=true, updatable=false, insertable=false)
-    private Integer meterTypeCodeId;
+    @JoinColumn(name="MODEM_ID")
+    @ReferencedBy(name="deviceSerial")
+    private Modem modem;
+    
+    @Column(name="MODEM_ID", nullable=true, updatable=false, insertable=false)
+    private Integer modemId;
+    
     /**
-     * MBus 모뎀과 연결된 미터를 구분하기 위한 포트 번호
+     * 미터 설치 정보 (미터시리얼번호 외에 미터에서 관리하는 관리번호등등의 값이 될 수 있음
      */
-	@ColumnInfo(name="모뎀포트")
-    @Column(name="MODEM_PORT")
-    private Integer modemPort;
+    @ColumnInfo(name="", view=@Scope(create=false, read=false, update=false), descr="미터 설치 정보 (미터시리얼번호 외에 미터에서 관리하는 관리번호등등의 값이 될 수 있음")
+    @Column(name="INSTALL_PROPERTY")
+    private String installProperty;
 
-	/**
-	 * 설치일자 yyyymmddhhmmss
-	 */
-    @ColumnInfo(name="설치일자", view=@Scope(create=true, read=true, update=true), descr="YYYYMMDDHHMMSS")
-    @Column(name="INSTALL_DATE")
-    private String installDate;
-    private String installDateHidden;
-    private String installDateUpdate;
 
 	/**
 	 * 설치 아이디
@@ -274,13 +337,6 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
     @ColumnInfo(name="설치아이디", view=@Scope(create=true, read=true, update=true, delete=true))
     @Column(name="INSTALL_ID")
     private String installId;
-
-    /**
-     * IHD 아이디
-     */
-    @ColumnInfo(name="IHD아이디", view=@Scope(create=true, read=true, update=true, delete=true))
-    @Column(name="IHD_ID")
-    private String ihdId;
 
     /**
      * 사용량 임계치
@@ -299,14 +355,7 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
     @XmlTransient
     @OneToOne(mappedBy="meter", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     private Contract contract;
-    
-    
-    /**
-     * 검침주기 (5, 15, 30, 60분)
-     */
-    @ColumnInfo(name="검침 주기",view=@Scope(create=true, read=true, update=true) )
-    @Column(name="LP_INTERVAL")
-    private Integer lpInterval;
+
 
     /**
      * 미터 시간과 서버 시간의 차. 시간차가 많으면 동기화를 해줘야 한다. 미터 관리 가젯
@@ -315,18 +364,6 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
     @Column(name="TIME_DIFF")
     private Long timeDiff;
 
-    /**
-     * 미터와 연결된 모뎀 정보
-     */
-    @XmlTransient
-    @ColumnInfo(name="모뎀", view=@Scope(create=true, read=true, update=true), descr="모뎀 테이블의 ID 혹은  NULL")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="MODEM_ID")
-    @ReferencedBy(name="deviceSerial")
-    private Modem modem;
-    
-    @Column(name="MODEM_ID", nullable=true, updatable=false, insertable=false)
-    private Integer modemId;
     
     /**
      * 미터가 계측하는 대상 장비 (설비 또는 기타)
@@ -409,33 +446,6 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
     @Column(name="ADDRESS")
     private String address;
 
-    /**
-     * GIS 연동 X 좌표
-     */
-    @ColumnInfo(name="GPIOX", view=@Scope(create=true, read=true, update=true) )
-    @Column(name="GPIOX")
-    private Double gpioX;
-
-    /**
-     * GIS 연동 Y 좌표
-     */
-    @ColumnInfo(name="GPIOY", view=@Scope(create=true, read=true, update=true))
-    @Column(name="GPIOY")
-    private Double gpioY;
-
-    /**
-     * GIS 연동 Z 좌표
-     */
-    @ColumnInfo(name="GPIOZ", view=@Scope(create=true, read=true, update=true))
-    @Column(name="GPIOZ")
-    private Double gpioZ;
-
-    /**
-     * 마지막 통신 날짜. yyyymmddhhmmss
-     */
-    @ColumnInfo(name="마지막 통신 날짜", view=@Scope(create=false, read=true, update=false), descr="마지막에 통신한 날짜,yyyymmddhhmmss")
-    @Column(name="LAST_READ_DATE",length=14)
-    private String lastReadDate;
     
     /**
      * 마지막 시간 동기화 날짜. yyyymmddhhmmss
@@ -443,20 +453,7 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
     @ColumnInfo(name="마지막 시간 동기화 날짜", view=@Scope(create=false, read=true, update=false), descr="마지막에 통신한 날짜,yyyymmddhhmmss")
     @Column(name="LAST_TIMESYNC_DATE",length=14)
     private String lastTimesyncDate;
-    
-    /**
-     * 마지막 변경날짜. yyyymmddhhmmss
-     */
-    @ColumnInfo(name="마지막 변경날짜",view=@Scope(create=false, read=true, update=false), descr="마지막에 정보 변경한 날짜,yyyymmddhhmmss")
-    @Column(name="WRITE_DATE",length=14)
-    private String writeDate;
-    
-    /**
-     * 최종 검침 값
-     */
-    @ColumnInfo(name="최종 검침 값", view=@Scope(create=false, read=true, update=false), descr="최근에 검침된 값지침 ")
-    @Column(name="LAST_METERING_VALUE")
-    private Double lastMeteringValue;
+
 
     /**
      * 검침 최초 시작일. yyyymmddhhmmss
@@ -540,6 +537,14 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
 	@ColumnInfo(name="shortId", descr="ID of device managed by MCU")
     @Column(name="SHORT_ID")
     private Integer shortId;
+	
+
+    /**
+     * MBus 모뎀과 연결된 미터를 구분하기 위한 포트 번호
+     */
+	@ColumnInfo(name="모뎀포트")
+    @Column(name="MODEM_PORT")
+    private Integer modemPort;
 
 	public Meter getDistTrfmrSubstationMeter_A() {
 		return distTrfmrSubstationMeter_A;
@@ -658,6 +663,13 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
     @ColumnInfo(name="Milestone Area MSA1, MSA2, MSA3")
     @Column(name="MSA", length=30)
     private String msa;
+    
+    /**
+     * IHD 아이디
+     */
+    @ColumnInfo(name="IHD아이디", view=@Scope(create=true, read=true, update=true, delete=true))
+    @Column(name="IHD_ID")
+    private String ihdId;
     
 
 	public String getFriendlyName() {
