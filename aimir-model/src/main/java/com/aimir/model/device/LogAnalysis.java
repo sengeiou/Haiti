@@ -24,6 +24,7 @@ import com.aimir.model.BaseObject;
  * @author nuri
  * 
  */
+@Deprecated
 public class LogAnalysis extends BaseObject {
 
     private static final long serialVersionUID = -8576813510994652326L;
