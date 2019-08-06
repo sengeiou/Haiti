@@ -21,6 +21,11 @@ public class WaterMeter extends Meter {
 
     private static final long serialVersionUID = -5655825859390876579L;
 
+
+    @ColumnInfo(name="", view=@Scope(create=false, read=true, update=false),descr="센서를 설치할 당시의 지침값")
+    @Column(name="CURRENT_PULSE", length=10)
+    private Integer currentPulse;
+    
     /*
      * 0bit : Case Open(0:Normal, 1:Tamper)
 1bit : Tamper(0:Normal, 1:Tamper)
@@ -42,9 +47,6 @@ public class WaterMeter extends Meter {
     @Column(name="CORRECT_PULSE")
     private Double correctPulse;
 
-    @ColumnInfo(name="", view=@Scope(create=false, read=true, update=false),descr="센서를 설치할 당시의 지침값")
-    @Column(name="CURRENT_PULSE", length=10)
-    private Integer currentPulse;
     
     @ColumnInfo(name="지상/지하 설치", view=@Scope(create=true, read=true, update=true), descr="지상/지하 설치 위치 여부 지하 : true")
     @Column(name="UNDER_GROUND")

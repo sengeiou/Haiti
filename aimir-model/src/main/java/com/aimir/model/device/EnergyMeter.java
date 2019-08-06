@@ -29,6 +29,27 @@ import com.aimir.model.system.Code;
 public class EnergyMeter extends Meter {
 
     private static final long serialVersionUID = -2627401689224710036L;
+    
+
+    @ColumnInfo(name="현재 변압기 비율", view=@Scope(create=true, read=true, update=true), descr="Current Transformer Ratio")
+    @Column(name="CT")
+    private Double ct;
+
+    @ColumnInfo(name="전압 변압기 비율", view=@Scope(create=true, read=true, update=true), descr="Voltage Transformer Ratio")
+    @Column(name="VT")
+    private Double vt;    
+    
+    /**
+     * 미터의 모델이 SM110, Kamstrup382, AIDON 5530, 5540에만 적용
+     */
+    @ColumnInfo(name="스위치 상태", view=@Scope(create=false, read=true, update=true, devicecontrol=true), descr="Switch Status")
+    @Column(name="SWITCH_STATUS")
+    @Enumerated(EnumType.ORDINAL)
+    private CircuitBreakerStatus switchStatus;
+
+    @ColumnInfo(name="변압기 비율", view=@Scope(create=true, read=true, update=true), descr="Transformer Factor(ct x vt)")
+    @Column(name="TRANSFORMER_RATIO")
+    private Double transformerRatio;
 
     @ColumnInfo(name="미터 결상 타입", view=@Scope(create=true, read=true, update=true), descr="3phase 4wire 등등")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -38,18 +59,6 @@ public class EnergyMeter extends Meter {
     
     @Column(name="METERELEMENT_ID", nullable=true, updatable=false, insertable=false)
     private Integer meterElementCodeId;
-
-    @ColumnInfo(name="현재 변압기 비율", view=@Scope(create=true, read=true, update=true), descr="Current Transformer Ratio")
-    @Column(name="CT")
-    private Double ct;
-
-    @ColumnInfo(name="전압 변압기 비율", view=@Scope(create=true, read=true, update=true), descr="Voltage Transformer Ratio")
-    @Column(name="VT")
-    private Double vt;
-
-    @ColumnInfo(name="변압기 비율", view=@Scope(create=true, read=true, update=true), descr="Transformer Factor(ct x vt)")
-    @Column(name="TRANSFORMER_RATIO")
-    private Double transformerRatio;
     
     @ColumnInfo(name="현재 변압기 비율", view=@Scope(create=true, read=true, update=true), descr="Current Transformer Ratio")
     @Column(name="CT2")
@@ -62,14 +71,6 @@ public class EnergyMeter extends Meter {
     @ColumnInfo(name="변압기 비율", view=@Scope(create=true, read=true, update=true), descr="Potential Transformer Ratio")
     @Column(name="PT")
     private Double pt;
-    
-    /**
-     * 미터의 모델이 SM110, Kamstrup382, AIDON 5530, 5540에만 적용
-     */
-    @ColumnInfo(name="스위치 상태", view=@Scope(create=false, read=true, update=true, devicecontrol=true), descr="Switch Status")
-    @Column(name="SWITCH_STATUS")
-    @Enumerated(EnumType.ORDINAL)
-    private CircuitBreakerStatus switchStatus;
 
     /**
      * 미터의 모델이 SM110, Kamstrup382, AIDON 5530, 5540에만 적용
