@@ -1,8 +1,13 @@
 package com.aimir.model.device;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.eclipse.persistence.annotations.Index;
@@ -13,11 +18,11 @@ import com.aimir.model.BaseObject;
 
 /**
  * <p>Copyright NuriTelecom Co.Ltd. since 2009</p>
- * 
+ *
  * <p>plc modem signal-to-noise ratio</p>
- * 
- * PLC modem ratio 
- * 
+ *
+ * PLC modem ratio
+ *
  * @author YeonKyoung Park(goodjob)
  *
  */
@@ -26,70 +31,99 @@ import com.aimir.model.BaseObject;
 @Index(name="IDX_SNR_LOG_01", columnNames={"DEVICE_TYPE", "DEVICE_ID", "YYYYMMDD", "HHMMSS"})
 public class SNRLog extends BaseObject {
 
-	private static final long serialVersionUID = 3742831176414187373L;
+    private static final long serialVersionUID = 3742831176414187373L;
 
-	@EmbeddedId public SNRLogPk id;
-	
-	@Column(name="SNR")
-	@ColumnInfo(name="snr(dB)")
-	private Double snr;	
-	
-	@Column(name="DCU_ID")
-	@ColumnInfo(name="dcu id(gateway id)")
-	private String dcuid;
-    
-	public SNRLog(){
-		id = new SNRLogPk();
-	}
+    @Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SNR_LOG_SEQ")
+    @SequenceGenerator(name="SNR_LOG_SEQ", sequenceName="SNR_LOG_SEQ", allocationSize=1)
+    private Long id;
 
-	public SNRLogPk getId() {
-		return id;
-	}
-	public void setId(SNRLogPk id) {
-		this.id = id;
-	}
-	public ModemType getDeviceType() {
-		return id.getDeviceType();
-	}
-	public void setDeviceType(String deviceType) {
-		id.setDeviceType(deviceType);
-	}
-	public String getDeviceId() {
-		return id.getDeviceId();
-	}
-	public void setDeviceId(String deviceId) {
-		id.setDeviceId(deviceId);
-	}
-	public String getYyyymmdd() {
-		return id.getYyyymmdd();
-	}
-	public void setYyyymmdd(String yyyymmdd) {
-		id.setYyyymmdd(yyyymmdd);
-	}
-	public String getHhmmss() {
-		return id.getHhmmss();
-	}
-	public void setHhmmss(String hhmmss) {
-		id.setHhmmss(hhmmss);
-	}
+    @Column(name="device_type")
+    @ColumnInfo(name="장비유형 PLCIU")
+    @Enumerated(EnumType.STRING)
+    private ModemType deviceType;
+
+    @Column(name="device_id", length=20, nullable=false)
+    @ColumnInfo(name="장비아이디, 비지니스 키가됨")
+    private String deviceId;
+
+    @Column(name="YYYYMMDD", length=8, nullable=false)
+    private String yyyymmdd;
+
+    @Column(name="HHMMSS", length=6, nullable=false)
+    private String hhmmss;
+
+    @Column(name="SNR")
+    @ColumnInfo(name="snr(dB)")
+    private Double snr;
+
+    @Column(name="DCU_ID")
+    @ColumnInfo(name="dcu id(gateway id)")
+    private String dcuid;
+
+    public SNRLog(){
+    }
+
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public ModemType getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(ModemType deviceType) {
+        this.deviceType = deviceType;
+    }
+
+    public void setDeviceType(String deviceType) {
+        setDeviceType(ModemType.valueOf(deviceType));
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public String getYyyymmdd() {
+        return yyyymmdd;
+    }
+
+    public void setYyyymmdd(String yyyymmdd) {
+        this.yyyymmdd = yyyymmdd;
+    }
+
+    public String getHhmmss() {
+        return hhmmss;
+    }
+
+    public void setHhmmss(String hhmmss) {
+        this.hhmmss = hhmmss;
+    }
 
     public Double getSnr() {
-		return snr;
-	}
+        return snr;
+    }
 
-	public void setSnr(Double snr) {
-		this.snr = snr;
-	}
+    public void setSnr(Double snr) {
+        this.snr = snr;
+    }
 
-	public String getDcuid() {
-		return dcuid;
-	}
+    public String getDcuid() {
+        return dcuid;
+    }
 
-	public void setDcuid(String dcuid) {
-		this.dcuid = dcuid;
-	}
+    public void setDcuid(String dcuid) {
+        this.dcuid = dcuid;
+    }
 
-	@Override
+    @Override
     public boolean equals(Object o) {
         // TODO Auto-generated method stub
         return false;

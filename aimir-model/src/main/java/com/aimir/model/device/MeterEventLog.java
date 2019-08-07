@@ -1,13 +1,16 @@
 package com.aimir.model.device;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -22,6 +25,7 @@ import com.aimir.model.BaseObject;
 import com.aimir.model.system.Supplier;
 
 import org.eclipse.persistence.annotations.Index;
+
 /**
  * <p>Copyright NuriTelecom Co.Ltd. since 2009</p>
  * 
@@ -39,7 +43,22 @@ public class MeterEventLog extends BaseObject implements JSONString {
 
 	private static final long serialVersionUID = 3704829716152527781L;
 
-    @EmbeddedId public  MeterEventLogPk  id;    //  ID(PK)
+    @Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_METEREVENT_LOG")
+    @SequenceGenerator(name="SEQ_METEREVENT_LOG", sequenceName="SEQ_METEREVENT_LOG", allocationSize=1)
+    private Long id;
+
+    @Column(name="METEREVENT_ID", nullable=false, length=100)
+    @ColumnInfo(name="미터이벤트코드", descr="이벤트의 아이디")
+    private String meterEventId;
+
+    @Column(name="OPEN_TIME",length=14, nullable=false)
+    @ColumnInfo(name="발생시간", descr="YYYYMMDDHHMMSS")
+    private String openTime;
+
+    @Column(name="activator_id", length=100, nullable=false)
+    @ColumnInfo(name="발생ID", descr="발생 대상의 ID")
+    private String activatorId;
     
     @Column(length=8, nullable=false)
     @ColumnInfo(name="발생날짜", descr="YYYYMMDD")
@@ -70,43 +89,49 @@ public class MeterEventLog extends BaseObject implements JSONString {
     
     @Column(name="SUPPLIER_ID", nullable=true, updatable=false, insertable=false)
     private Integer supplierId;
-    
-	public MeterEventLog(){
-		id = new MeterEventLogPk();
-	}
 
-    public MeterEventLogPk getId() {
-		return id;
-	}
+    public MeterEventLog(){
+    }
 
-	public void setId(MeterEventLogPk id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getMeterEventId() {
-		return this.id.getMeterEventId();
-	}
+    public String getMeterEventId() {
+        return meterEventId;
+    }
 
-	public void setMeterEventId(String meterEventId) {
-		this.id.setMeterEventId(meterEventId);
-	}
+    public void setMeterEventId(String meterEventId) {
+        this.meterEventId = meterEventId;
+    }
 
-	public String getYyyymmdd() {
-		return yyyymmdd;
-	}
-
-	public void setYyyymmdd(String yyyymmdd) {
-		this.yyyymmdd = yyyymmdd;
-	}
-
-	public String getOpenTime() {
-        return this.id.getOpenTime();
+    public String getOpenTime() {
+        return openTime;
     }
 
     public void setOpenTime(String openTime) {
-        this.id.setOpenTime(openTime);
+        this.openTime = openTime;
     }
 
+    public String getActivatorId() {
+        return activatorId;
+    }
+
+    public void setActivatorId(String activatorId) {
+        this.activatorId = activatorId;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getYyyymmdd() {
+        return yyyymmdd;
+    }
+
+    public void setYyyymmdd(String yyyymmdd) {
+        this.yyyymmdd = yyyymmdd;
+    }
 
     public String getWriteTime() {
         return writeTime;
@@ -127,38 +152,30 @@ public class MeterEventLog extends BaseObject implements JSONString {
     public TargetClass getActivatorType() {
         return activatorType;
     }
-    
+
     public void setActivatorType(String activatorType) {
         this.activatorType = TargetClass.valueOf(activatorType);
     }
 
-    public String getActivatorId() {
-        return this.id.getActivatorId();
+    public Boolean getIntegrated() {
+        return integrated;
     }
 
-    public void setActivatorId(String activatorId) {
-        this.id.setActivatorId(activatorId);
+    public void setIntegrated(Boolean integrated) {
+        this.integrated = integrated;
     }
-    
-	public Boolean getIntegrated() {
-		return integrated;
-	}
 
-	public void setIntegrated(Boolean integrated) {
-		this.integrated = integrated;
-	}
-	
 
-	public void setSupplier(Supplier supplier) {
-		this.supplier = supplier;
-	}
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
 
-	@XmlTransient
-	public Supplier getSupplier() {
-		return supplier;
-	}
+    @XmlTransient
+    public Supplier getSupplier() {
+        return supplier;
+    }
 
-	public Integer getSupplierId() {
+    public Integer getSupplierId() {
         return supplierId;
     }
 
@@ -168,18 +185,18 @@ public class MeterEventLog extends BaseObject implements JSONString {
 
     public String toJSONString() {
         JSONStringer js = null;
-        
+
         js = new JSONStringer();
         js.object().key("id").value(this.id)
-                   .key("meterEvent").value((this.id.getMeterEventId() == null)? "null":this.id.getMeterEventId())
-                   .key("yyyymmdd").value((this.yyyymmdd == null)? "null":this.yyyymmdd)
-                   .key("openTime").value((this.id.getOpenTime() == null)? "null":this.id.getOpenTime())
-                   .key("writeTime").value((this.writeTime == null)? "null":this.writeTime)
-                   .key("message").value((this.message == null)? "null":this.message)
-                   .key("activatorType").value((this.activatorType == null)? "null":this.activatorType.name())
-                   .key("activatorId").value((this.id.getActivatorId() == null)? "null":this.id.getActivatorId())
-                   .key("integrated").value((this.integrated == null)? "false":this.integrated)
-                   .endObject();
+                .key("meterEvent").value((this.meterEventId == null)? "null":this.meterEventId)
+                .key("yyyymmdd").value((this.yyyymmdd == null)? "null":this.yyyymmdd)
+                .key("openTime").value((this.openTime == null)? "null":this.openTime)
+                .key("writeTime").value((this.writeTime == null)? "null":this.writeTime)
+                .key("message").value((this.message == null)? "null":this.message)
+                .key("activatorType").value((this.activatorType == null)? "null":this.activatorType.name())
+                .key("activatorId").value((this.activatorId == null)? "null":this.activatorId)
+                .key("integrated").value((this.integrated == null)? "false":this.integrated)
+                .endObject();
 
         return js.toString();
     }
