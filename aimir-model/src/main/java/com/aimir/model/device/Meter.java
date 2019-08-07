@@ -59,8 +59,6 @@ import com.aimir.model.system.Supplier;
  *     &lt;extension base="{http://server.ws.command.fep.aimir.com/}baseObject">
  *       &lt;sequence>
  *         &lt;element name="address" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="amiNetworkAddress" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="amiNetworkDepth" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="condition" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="deleteDate" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="distTrfmrSubstationId" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
@@ -94,7 +92,6 @@ import com.aimir.model.system.Supplier;
  *         &lt;element name="modemId" type="{http://server.ws.command.fep.aimir.com/}int" minOccurs="0"/>
  *         &lt;element name="modemPort" type="{http://server.ws.command.fep.aimir.com/}int" minOccurs="0"/>
  *         &lt;element name="prepaymentMeter" type="{http://server.ws.command.fep.aimir.com/}boolean" minOccurs="0"/>
- *         &lt;element name="protocolVersion" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="pulseConstant" type="{http://server.ws.command.fep.aimir.com/}double" minOccurs="0"/>
  *         &lt;element name="purchasePrice" type="{http://server.ws.command.fep.aimir.com/}double" minOccurs="0"/>
  *         &lt;element name="qualifiedDate" type="{http://server.ws.command.fep.aimir.com/}string" minOccurs="0"/>
@@ -119,8 +116,6 @@ import com.aimir.model.system.Supplier;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "meter", propOrder = {
         "address",
-        "amiNetworkAddress",
-        "amiNetworkDepth",
         "conditions",
         "deleteDate",
         "distTrfmrSubstationId",
@@ -158,7 +153,6 @@ import com.aimir.model.system.Supplier;
         "modemId",
         "modemPort",
         "prepaymentMeter",
-        "protocolVersion",
         "pulseConstant",
         "purchasePrice",
         "qualifiedDate",
