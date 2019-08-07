@@ -33,7 +33,7 @@ public class FirmwareIssueHistory extends BaseObject {
 
 	@EmbeddedId public FirmwareIssueHistoryPk id;
 	
-	@Column(name="step")
+	@Column(name="STEP", length=30)
     private String step;
 
     @Column(name="USE_BYPASS")
@@ -44,7 +44,7 @@ public class FirmwareIssueHistory extends BaseObject {
     @ColumnInfo(name="Result Status of STEP")
     private String resultStatus;
 	
-    @Column(name="updateDate", length=14)
+    @Column(name="UPDATEDATE", length=14)
     private String updateDate;
 
     @XmlTransient
@@ -56,10 +56,10 @@ public class FirmwareIssueHistory extends BaseObject {
         })
     private FirmwareIssue firmwareIssue;
     
-    @Column(name="requestId")
+    @Column(name="REQUESTID", length=30)
     private String requestId;
     
-    @Column(name="DCU_ID")
+    @Column(name="DCU_ID", length=20)
     private String dcuId;
     
     public FirmwareIssueHistory() {

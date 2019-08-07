@@ -36,7 +36,8 @@ import com.aimir.model.system.Supplier;
  * 2012. 2. 14.   v1.0       enj      Distribution Transfomer Substation 정보 관리   <br>
  *
  */
-@Entity
+@Deprecated
+//@Entity   // DistTrfmrSubstation class와 중복되고 사용하지 않는 클래스
 public class DTS extends BaseObject implements JSONString, IAuditable {
 
 	static final long serialVersionUID = 828341386560726667L;

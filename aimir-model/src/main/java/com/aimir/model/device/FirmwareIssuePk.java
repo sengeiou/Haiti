@@ -19,13 +19,13 @@ public class FirmwareIssuePk extends BasePk {
 
 	private static final long serialVersionUID = 3801120852112519366L;
 	
-	@Column(name="firmwareId",length=16,nullable=false)
+	@Column(name="FIRMWAREID",length=16,nullable=false)
 	private Long firmwareId;	
 
-	@Column(name="issueDate", length=14, nullable=false)
+	@Column(name="ISSUEDATE", length=14, nullable=false)
 	private String issueDate;
 	
-	@Column(name="locationId", length=16, nullable=true)
+	@Column(name="LOCATIONID", length=16, nullable=true)
 	private Integer locationId;
 
     public Long getFirmwareId() {
