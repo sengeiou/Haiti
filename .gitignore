@@ -1,0 +1,13 @@
+﻿.idea/
+/.metadata
+/.settings
+.classpath
+.project
+*.iml
+Servers
+aimir3.3-intellij.txt
+aimir-web/src/main/resources/jdbc.properties
+aimir-web/src/main/resources/command.properties
+penta
+.settings
+*.log
