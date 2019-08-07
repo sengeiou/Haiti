@@ -302,8 +302,8 @@ public class DLMSEMnVGtype extends MeterDataParser implements java.io.Serializab
 //			ct = meter.getCt();
 //		}
 //		
-//		if (meter != null && meter.getPt() != null && meter.getPt() > 0){
-//			pt = meter.getPt();
+//		if (meter != null && meter.getVt() != null && meter.getVt() > 0){
+//			pt = meter.getVt();
 //		}
 //		
 //		st = ct * pt;  // 서버 적용배율
@@ -344,8 +344,8 @@ public class DLMSEMnVGtype extends MeterDataParser implements java.io.Serializab
 			ct = meter.getCt();
 		}
 		
-		if (meter != null && meter.getPt() != null && meter.getPt() > 0){
-			pt = meter.getPt();
+		if (meter != null && meter.getTransformerRatio() != null && meter.getTransformerRatio() > 0){
+			pt = meter.getTransformerRatio();
 		}
 		
 		st = ct * pt;  // 서버 적용배율

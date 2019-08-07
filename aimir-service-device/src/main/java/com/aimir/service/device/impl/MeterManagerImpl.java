@@ -845,8 +845,8 @@ public class MeterManagerImpl implements MeterManager {
         oriMeter.setLpInterval(energyMeter.getLpInterval());
         oriMeter.setPulseConstant(energyMeter.getPulseConstant());
         oriMeter.setTransformerRatio(energyMeter.getTransformerRatio());
-        oriMeter.setCt(energyMeter.getCt());
-        oriMeter.setPt(energyMeter.getPt());        	
+        oriMeter.setCt(energyMeter.getCt()); 
+        oriMeter.setVt(energyMeter.getVt());  	
 
 
         if (energyMeter.getCustomer() != null && energyMeter.getCustomer().getCustomerNo() != null && !energyMeter.getCustomer().getCustomerNo().equals(""))

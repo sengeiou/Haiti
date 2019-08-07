@@ -35,7 +35,7 @@ public class EnergyMeter extends Meter {
     @Column(name="CT")
     private Double ct;
 
-    @ColumnInfo(name="전압 변압기 비율", view=@Scope(create=true, read=true, update=true), descr="Voltage Transformer Ratio")
+    @ColumnInfo(name="전압 변압기 비율", view=@Scope(create=true, read=true, update=true), descr="(PT)Voltage Transformer Ratio")
     @Column(name="VT")
     private Double vt;    
     
@@ -47,7 +47,7 @@ public class EnergyMeter extends Meter {
     @Enumerated(EnumType.ORDINAL)
     private CircuitBreakerStatus switchStatus;
 
-    @ColumnInfo(name="변압기 비율", view=@Scope(create=true, read=true, update=true), descr="Transformer Factor(ct x vt)")
+    @ColumnInfo(name="변압기 비율", view=@Scope(create=true, read=true, update=true), descr="Transformer Factor(ct x vt(pt))")
     @Column(name="TRANSFORMER_RATIO")
     private Double transformerRatio;
 
@@ -60,17 +60,17 @@ public class EnergyMeter extends Meter {
     @Column(name="METERELEMENT_ID", nullable=true, updatable=false, insertable=false)
     private Integer meterElementCodeId;
     
-    @ColumnInfo(name="현재 변압기 비율", view=@Scope(create=true, read=true, update=true), descr="Current Transformer Ratio")
-    @Column(name="CT2")
-    private Double ct2;
+    //@ColumnInfo(name="현재 변압기 비율", view=@Scope(create=true, read=true, update=true), descr="Current Transformer Ratio") // 컬럼 중복으로 삭제
+    //@Column(name="CT2")
+    //private Double ct2;
 
-    @ColumnInfo(name="전압 변압기 비율", view=@Scope(create=true, read=true, update=true), descr="Voltage Transformer Ratio")
-    @Column(name="VT2")
-    private Double vt2;
+    //@ColumnInfo(name="전압 변압기 비율", view=@Scope(create=true, read=true, update=true), descr="Voltage Transformer Ratio") // 컬럼 중복으로 삭제
+    //@Column(name="VT2")
+    //private Double vt2;
     
-    @ColumnInfo(name="변압기 비율", view=@Scope(create=true, read=true, update=true), descr="Potential Transformer Ratio")
-    @Column(name="PT")
-    private Double pt;
+    //@ColumnInfo(name="변압기 비율", view=@Scope(create=true, read=true, update=true), descr="Potential Transformer Ratio") // 컬럼 중복으로 삭제
+    //@Column(name="PT")
+    //private Double pt;
 
     /**
      * 미터의 모델이 SM110, Kamstrup382, AIDON 5530, 5540에만 적용
@@ -174,30 +174,6 @@ public class EnergyMeter extends Meter {
 
     public void setMeterElementCodeId(Integer meterElementCodeId) {
         this.meterElementCodeId = meterElementCodeId;
-    }
-
-    public Double getCt2() {
-        return ct2;
-    }
-
-    public void setCt2(Double ct2) {
-        this.ct2 = ct2;
-    }
-
-    public Double getVt2() {
-        return vt2;
-    }
-
-    public void setVt2(Double vt2) {
-        this.vt2 = vt2;
-    }
-
-    public Double getPt() {
-        return pt;
-    }
-
-    public void setPt(Double pt) {
-        this.pt = pt;
     }
     
 }
