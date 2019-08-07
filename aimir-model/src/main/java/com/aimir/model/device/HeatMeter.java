@@ -53,7 +53,7 @@ public class HeatMeter extends Meter {
     private Boolean installedPressSensor;
 
     @ColumnInfo(name="표준 규격",view=@Scope(create=false, read=true, update=false))
-    @Column(name="STANDARD")
+    @Column(name="STANDARD", length=30)
     private String standard;
     
     @ColumnInfo(name="기계실 번호",view=@Scope(create=true, read=true, update=true))
@@ -61,7 +61,7 @@ public class HeatMeter extends Meter {
     private Integer numOfRoom;
     
     @ColumnInfo(name="검침 단위", view=@Scope(create=false, read=true, update=false))
-    @Column(name="METERING_UNIT")
+    @Column(name="METERING_UNIT", length=30)
     private String meteringUnit;
     
 

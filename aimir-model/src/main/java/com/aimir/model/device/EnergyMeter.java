@@ -87,7 +87,7 @@ public class EnergyMeter extends Meter {
     @Column(name="DST_SEASON_On")
     private Boolean dstSeasonOn;
     
-	@Column(name="POWER_GRID")
+	@Column(name="POWER_GRID", length=100)
 	@ColumnInfo(descr="파워 그리드 망 식별 정보")
 	private String powerGrid;    
     

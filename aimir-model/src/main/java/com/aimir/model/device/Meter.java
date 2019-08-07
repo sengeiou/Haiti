@@ -203,7 +203,7 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
 	 * <br>사람 혹은 장비에서 올라오는 값. 반드시 있어야 하는 값이며, 중복 되는 값은 사용할 수 없음
 	 */
     @ColumnInfo(name="미터아이디", view=@Scope(create=true, read=true, update=false), descr="사람 혹은 장비에서 올라오는 값. 반드시 있어야 하는 값이며, 중복 되는 값은 사용할 수 없음")
-    @Column(name="MDS_ID", nullable=false, unique=true)
+    @Column(name="MDS_ID", nullable=false, unique=true, length=20)
     private String mdsId;
     
     /**
@@ -263,7 +263,7 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
 	 * 설치일자 yyyymmddhhmmss
 	 */
     @ColumnInfo(name="설치일자", view=@Scope(create=true, read=true, update=true), descr="YYYYMMDDHHMMSS")
-    @Column(name="INSTALL_DATE")
+    @Column(name="INSTALL_DATE", length=14)
     private String installDate;
     private String installDateHidden;
     private String installDateUpdate;
@@ -272,14 +272,14 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
 	 * 설치 아이디
 	 */
     @ColumnInfo(name="설치아이디", view=@Scope(create=true, read=true, update=true, delete=true))
-    @Column(name="INSTALL_ID")
+    @Column(name="INSTALL_ID", length=100)
     private String installId;
 
     /**
      * IHD 아이디
      */
     @ColumnInfo(name="IHD아이디", view=@Scope(create=true, read=true, update=true, delete=true))
-    @Column(name="IHD_ID")
+    @Column(name="IHD_ID", length=30)
     private String ihdId;
 
     /**
@@ -345,21 +345,21 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
      * 소프트웨어 버젼. 디지털  방식의 미터인 경우 해당 정보 있음 : Code 1.3.6 참조
      */
     @ColumnInfo(name="소프트웨어 버젼", view=@Scope(create=true, read=true, update=false), descr="디지털  방식의 미터인 경우 해당 정보 있음 : Code 1.3.6 참조")
-    @Column(name="SW_VERSION")
+    @Column(name="SW_VERSION", length=30)
     private String swVersion;
 
     /**
      * 하드웨어 버젼. 디지털  방식의 미터인 경우 해당 정보 있음 : Code 1.3.7 참조
      */
     @ColumnInfo(name="하드웨어 버젼", view=@Scope(create=true, read=true, update=false), descr="디지털  방식의 미터인 경우 해당 정보 있음 : Code 1.3.7 참조")
-    @Column(name="HW_VERSION")
+    @Column(name="HW_VERSION", length=20)
     private String hwVersion;
 
     /**
      * 소프트웨어 명칭
      */
     @ColumnInfo(name="소프트웨어명", view=@Scope(create=true, read=true, update=false), descr="디지털  방식의 미터인 경우 해당 정보 있음")
-    @Column(name="SW_NAME")
+    @Column(name="SW_NAME", length=30)
     private String swName;
 
     /**
@@ -373,21 +373,21 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
      * 설치 이미지. 현장에 설치된 이미지를 실어야 한다.
      */
     @ColumnInfo(name="설치된 이미지 ", view=@Scope(create=true, read=true, update=true), descr="설치후 찍은 이미지의 경로")
-    @Column(name="INSTALLED_SITE_IMG")
+    @Column(name="INSTALLED_SITE_IMG", length=100)
     private String installedSiteImg;
 
     /**
      * 미터 에러 발생 원인. 에러에 대한 원인 보여주기 위한 필드이지만 현재 이 정보를 갱신하는 곳이 없다.
      */
     @ColumnInfo(name="미터에서 발생한 경고 ", view=@Scope(create=false, read=true, update=false))
-    @Column(name="METER_CAUTION")
+    @Column(name="METER_CAUTION", length=100)
     private String meterCaution;
 
     /**
      * 미터에서 발생한 에러정보. 중요한 에러 정보를 보여주기 위한 필드이지만 현재 이 정보를 갱신하는 곳이 없다.
      */
     @ColumnInfo(name="미터에서 발생한 에러정보", view=@Scope(create=false, read=true, update=false))
-    @Column(name="METER_ERROR")
+    @Column(name="METER_ERROR", length=100)
     private String meterError;
 
     /**
@@ -406,7 +406,7 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
      * 미터가 설치된 상세 주소
      */
     @ColumnInfo(name="주소", view=@Scope(create=true, read=true, update=true) )
-    @Column(name="ADDRESS")
+    @Column(name="ADDRESS", length=100)
     private String address;
 
     /**
@@ -462,14 +462,14 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
      * 검침 최초 시작일. yyyymmddhhmmss
      */
 	@ColumnInfo(name="검침 최초 시작일", view=@Scope(create=true, read=true, update=true))
-    @Column(name="QUALIFIED_DATE", length=8)
+    @Column(name="QUALIFIED_DATE", length=14)
     private String qualifiedDate;
     
 	/**
 	 * 유효기간. yyyymmddhhmmss
 	 */
     @ColumnInfo(name="유효기간 ", view=@Scope(create=true, read=true, update=true))
-    @Column(name="EXPIRATION_DATE", length=8)
+    @Column(name="EXPIRATION_DATE", length=14)
     private String expirationDate;
     
     /**
@@ -507,7 +507,7 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
      * 미터제조일자. yyyymmddhhmmss
      */
     @ColumnInfo(name="미터 제조일자", view=@Scope(create=true, read=true, update=true), descr="미터 제조일자")
-    @Column(name="MANUFACTURED_DATE", length=8)
+    @Column(name="MANUFACTURED_DATE", length=14)
     private String manufacturedDate;    
 	
     /**
@@ -520,7 +520,7 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
 	/**
      * GS1 - 바코드
      */
-	@Column(name="GS1")
+	@Column(name="GS1", length=20)
 	@ColumnInfo(descr="바코드 정보")
 	private String gs1;
 
@@ -627,24 +627,25 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
 		this.distTrfmrSubstation = distTrfmrSubstation;
 	}
 	
-    @ColumnInfo(name="communication protocol version('IF4', 'TNG')")
-    @Column(name="PROTOCOL_VERSION", length=20)
-    private String protocolVersion;  //protocol Version
+    //@ColumnInfo(name="communication protocol version('IF4', 'TNG')")  //deprecated 미사용 컬럼
+    //@Column(name="PROTOCOL_VERSION", length=20)
+    //private String protocolVersion;  //protocol Version
     
-    @ColumnInfo(name="AMI Virtual Network Address Depth")
-    @Column(name="AMI_NETWORK_DEPTH", length=2)
-    private Integer amiNetworkDepth;  //AMI Virtual Network Depth
+    
+    //@ColumnInfo(name="AMI Virtual Network Address Depth")   //deprecated 미사용 컬럼
+    //@Column(name="AMI_NETWORK_DEPTH", length=2)
+    //private Integer amiNetworkDepth;  //AMI Virtual Network Depth
 	
-    @ColumnInfo(name="AMI Virtual Network Address")
-    @Column(name="AMI_NETWORK_ADDRESS", length=128)
-    private String amiNetworkAddress;  //AMI Virtual Network Address
+    //@ColumnInfo(name="AMI Virtual Network Address")  //deprecated 미사용 컬럼
+    //@Column(name="AMI_NETWORK_ADDRESS", length=128)
+    //private String amiNetworkAddress;  //AMI Virtual Network Address
 	
 	@ColumnInfo(name="수동 미터 여부", view=@Scope(create=true, read=true, update=true))
     @Column(name="is_manual_meter")
 	private Integer isManualMeter;
 	
 	@ColumnInfo(name="미터 별칭", view=@Scope(create=true, read=true, update=true))
-    @Column(name="friendly_name")
+    @Column(name="friendly_name", length=50)
 	private String friendlyName;
 
     @ColumnInfo(name="Delete Date")
@@ -995,29 +996,6 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
 		this.purchasePrice = purchasePrice;
 	}
 
-	public String getProtocolVersion() {
-		return protocolVersion;
-	}
-
-	public void setProtocolVersion(String protocolVersion) {
-		this.protocolVersion = protocolVersion;
-	}
-
-	public Integer getAmiNetworkDepth() {
-		return amiNetworkDepth;
-	}
-
-	public void setAmiNetworkDepth(Integer amiNetworkDepth) {
-		this.amiNetworkDepth = amiNetworkDepth;
-	}
-
-	public String getAmiNetworkAddress() {
-		return amiNetworkAddress;
-	}
-
-	public void setAmiNetworkAddress(String amiNetworkAddress) {
-		this.amiNetworkAddress = amiNetworkAddress;
-	}
 	
     public String getGs1() {
         return gs1;
@@ -1094,12 +1072,6 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
         + ((purchasePrice == null) ? 0 : purchasePrice.hashCode()); 
         result = prime * result
                 +((shortId == null) ? 0: shortId.hashCode());
-        result = prime * result 
-        		+ ((protocolVersion == null) ? 0 : protocolVersion.hashCode());
-        result = prime * result 
-        		+ ((amiNetworkDepth == null) ? 0 : amiNetworkDepth.hashCode());
-        result = prime * result 
-        		+ ((amiNetworkAddress == null) ? 0 : amiNetworkAddress.hashCode());
         result = prime * result 
         		+ ((gs1 == null) ? 0 : gs1.hashCode());
         return result;
@@ -1285,21 +1257,6 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
             if (other.shortId != null)
                 return false;
         } else if (!shortId.equals(other.shortId))
-            return false;
-		if (protocolVersion == null) {
-            if (other.protocolVersion != null)
-                return false;
-        } else if (!protocolVersion.equals(other.protocolVersion))
-            return false;
-		if (amiNetworkDepth == null) {
-            if (other.amiNetworkDepth!= null)
-                return false;
-        } else if (!amiNetworkDepth.equals(other.amiNetworkDepth))
-            return false;
-		if (amiNetworkAddress == null) {
-            if (other.amiNetworkAddress != null)
-                return false;
-        } else if (!amiNetworkAddress.equals(other.amiNetworkAddress))
             return false;
 		if (gs1 == null) {
             if (other.gs1 != null)
@@ -1523,9 +1480,6 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
 //			    	   .key("version").value((this.version == null)? "":this.version)
 			    	   .key("writeDate").value((this.writeDate == null)? "":this.writeDate)
 			    	   .key("shortId").value((this.shortId == null)? "":this.shortId)
-			    	   .key("protocolVersion").value(protocolVersion)
-			    	   .key("amiNetworkDepth").value(amiNetworkDepth)
-			    	   .key("amiNetworkAddress").value(amiNetworkAddress)
 			    	   .key("deleteDate").value((this.deleteDate == null) ? "" : this.deleteDate)
 			    	   .key("phase").value((this.phase == null) ? "" : this.phase)
 			    	   .key("msa").value((this.msa == null) ? "" : this.msa)
