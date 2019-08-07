@@ -329,8 +329,8 @@ class EMnVRecoveryCallable implements Callable<Map<String, String>> {
 			ct = eMeter.getCt();
 		}
 
-		if (eMeter != null && eMeter.getVt() != null && eMeter.getVt() > 0) {
-			pt = eMeter.getVt();
+		if (eMeter != null && eMeter.getTransformerRatio() != null && eMeter.getTransformerRatio() > 0) {
+			pt = eMeter.getTransformerRatio();
 		}
 
 		st = ct * pt; // 서버 적용배율

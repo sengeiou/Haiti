@@ -14,8 +14,9 @@ import com.aimir.annotation.ColumnInfo;
  * @author YeonKyoung Park(goodjob)
  *
  */
-@Entity
-@DiscriminatorValue("IEIU")
+@Deprecated
+//@Entity 과도한 필드 생성을 막기위해 사용하지 않는 클래스는 테이블 컬럼으로 생성하지 않기 위해 @Entity객체를 주석으로 단다.
+//@DiscriminatorValue("IEIU")
 public class IEIU extends Modem {
 
     private static final long serialVersionUID = -8972065131321718558L;

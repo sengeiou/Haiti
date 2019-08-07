@@ -203,7 +203,12 @@ public class Modem extends BaseObject implements JSONString, IAuditable {
 
     @ColumnInfo(name="모뎀시리얼", descr="사람 혹은 장비에서 올라오는 값. 반드시 있어야 하는 값이며, 중복 되는 값은 사용할 수 없음")
     @Column(name="DEVICE_SERIAL", nullable=false, unique=true)
-    private String deviceSerial;
+    private String deviceSerial;    
+
+    @ColumnInfo(name="", descr="sensor type (code:zru, zeupls, mmiu, ieiu, zeupls, zmu, ihd, acd, hmu)")
+    @Enumerated(EnumType.STRING)
+    @Column(name="MODEM_TYPE")
+    private ModemType modemType; 
 
     @XmlTransient
     @ColumnInfo(name="모뎀아이디", descr="모뎀 테이블의 ID 혹은  NULL : 재귀호출을 위함")
@@ -242,11 +247,11 @@ public class Modem extends BaseObject implements JSONString, IAuditable {
     @XmlTransient
     @ColumnInfo(name="모뎀 모델", descr="미터 제조사 모델의 ID 혹은  NULL")
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="devicemodel_id")
+    @JoinColumn(name="DEVICEMODEL_ID")
     @ReferencedBy(name="name")
     private DeviceModel model;
     
-    @Column(name="DEVICXEMODEL_ID", nullable=true, updatable=false, insertable=false)
+    @Column(name="DEVICEMODEL_ID", nullable=true, updatable=false, insertable=false)
     private Integer modelId;
 
     @ColumnInfo(name="노드타입", descr="Modem에 연결된 Node의 타입(전기,가스,수도,열량,고압,PLC)")
@@ -267,19 +272,19 @@ public class Modem extends BaseObject implements JSONString, IAuditable {
     private Protocol protocolType;
 
     @ColumnInfo(name="소프트웨어 버젼", descr="")
-    @Column(name="SW_VER")
+    @Column(name="SW_VER", length=10)
     private String swVer;
 
     @ColumnInfo(name="하드웨어 버젼", descr="")
-    @Column(name="HW_VER")
+    @Column(name="HW_VER", length=10)
     private String hwVer;
 
     @ColumnInfo(name="펌웨어버전", descr="")
-    @Column(name="FW_VER")
+    @Column(name="FW_VER", length=10)
     private String fwVer;
     
     @ColumnInfo(name="펌웨어 리비젼", descr="")
-    @Column(name="FW_REVISION")
+    @Column(name="FW_REVISION", length=20)
     private String fwRevision;
 
     @ColumnInfo(name="통신상태", descr="Code")
@@ -301,7 +306,7 @@ public class Modem extends BaseObject implements JSONString, IAuditable {
     private Integer modemStatusCodeId;
 
     @ColumnInfo(name="프로토콜 버젼")
-    @Column(name="PROTOCOL_VERSION", length=20)
+    @Column(name="PROTOCOL_VERSION", length=10)
     private String protocolVersion;  //protocol Version
 
     @ColumnInfo(name="설치일자", descr="YYYYMMDDHHMMSS")
@@ -358,12 +363,7 @@ public class Modem extends BaseObject implements JSONString, IAuditable {
 
     @ColumnInfo(name="", descr="last reset code(reset reason)")
     @Column(name="LAST_RESET_CODE", length=10)
-    private Integer lastResetCode;
-
-    @ColumnInfo(name="", descr="sensor type (code:zru, zeupls, mmiu, ieiu, zeupls, zmu, ihd, acd, hmu)")
-    @Enumerated(EnumType.STRING)
-    @Column(name="MODEM_TYPE")
-    private ModemType modemType;    
+    private Integer lastResetCode;   
     
     @ColumnInfo(name="", view=@Scope(read=true, update=true, devicecontrol=true), descr="모뎀이 LP 저장하는 주기  0: No LP, 1: 60분 2: 30분 4: 15분")
     @Column(name="LP_PERIOD", length=2)
@@ -371,7 +371,7 @@ public class Modem extends BaseObject implements JSONString, IAuditable {
     
     @ColumnInfo(name="interface", descr="modem interface type (IF4, AMU, etc)")
     @Enumerated(EnumType.STRING)
-    @Column(name="interface_type")
+    @Column(name="INTERFACE_TYPE")
     private Interface interfaceType;
 
     @XmlTransient
@@ -401,15 +401,15 @@ public class Modem extends BaseObject implements JSONString, IAuditable {
     private String nameSpace;
 
     @ColumnInfo(descr="바코드 정보")
-    @Column(name="GS1")
+    @Column(name="GS1", length=20)
 	private String gs1;
     
     @ColumnInfo(name="Purchase Order")
-    @Column(name="po")
+    @Column(name="PO", length=20)
     private String po;
     
     @ColumnInfo(name="ICC ID")
-    @Column(name="ICC_ID")
+    @Column(name="ICC_ID", length=36)
     private String iccId;
     
     @ColumnInfo(name="제조일자", view=@Scope(create=true, read=true, update=true), descr="제조일자")
@@ -417,11 +417,11 @@ public class Modem extends BaseObject implements JSONString, IAuditable {
     private String manufacturedDate;
     
     @ColumnInfo(name="IMEI")
-    @Column(name="IMEI")
+    @Column(name="IMEI", length=36)
     private String imei;    
     
     @ColumnInfo(name="IMSI")
-    @Column(name="IMSI")
+    @Column(name="IMSI", length=36)
     private String imsi;
     
     @ColumnInfo(name="심카드 번호", view=@Scope(create=true, read=true, update=true))
@@ -431,21 +431,17 @@ public class Modem extends BaseObject implements JSONString, IAuditable {
     @ColumnInfo(name="전화번호", view=@Scope(create=true, read=true, update=true))
     @Column(name="PHONE_NUMBER", length=20)
     private String phoneNumber;
-    
-    /*@ColumnInfo(name="ETX")
-    @Column(name="ETX", length=20)
-    private Integer etx;*/
 
     @ColumnInfo(name="Cpu Usage")
-    @Column(name="Cpu_Usage", length=20)
+    @Column(name="CPU_USAGE", length=20)
     private Integer cpuUsage;
 
     @ColumnInfo(name="Memory Usage")
-    @Column(name="Memory_Usage", length=20)
+    @Column(name="MEMORY_USAGE", length=20)
     private Integer memoryUsage;
     
     @ColumnInfo(name="Boot Loader Version")
-    @Column(name="BOOTLOADER_VER")
+    @Column(name="BOOTLOADER_VER", length=100)
     private String bootLoaderVer;
     
     public Integer getId() {
@@ -473,14 +469,6 @@ public class Modem extends BaseObject implements JSONString, IAuditable {
     public Set<Meter> getMeter() {
         return meter;
     }
-
-//    public Integer getVersion() {
-//        return version;
-//    }
-//
-//    public void setVersion(Integer version) {
-//        this.version = version;
-//    }
 
     public String getDeviceSerial() {
         return deviceSerial;

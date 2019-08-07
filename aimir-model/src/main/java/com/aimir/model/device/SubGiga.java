@@ -84,24 +84,16 @@ public class SubGiga extends Modem {
     
     
     @ColumnInfo(name="APN address")
-    @Column(name="APN_ADDRESS")
+    @Column(name="APN_ADDRESS", length=100)
     private String apnAddress;
     
     @ColumnInfo(name="APN Id")
-    @Column(name="APN_ID")
+    @Column(name="APN_ID", length=30)
     private String apnId;
     
     @ColumnInfo(name="APN Password")
-    @Column(name="APN_PASSWORD")
+    @Column(name="APN_PASSWORD", length=30)
     private String apnPassword;
-/*
-    @ColumnInfo(name="Cpu Usage")
-    @Column(name="Cpu_Usage", length=20)
-    private Integer cpuUsage;
-
-    @ColumnInfo(name="Memory Usage")
-    @Column(name="Memory_Usage", length=20)
-    private Integer memoryUsage;*/
     
     public String getBaseStationAddress() {
         return baseStationAddress;

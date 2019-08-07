@@ -495,8 +495,8 @@ public class DLMSEMnVEType_1_0 extends MeterDataParser implements java.io.Serial
 			ct = meter.getCt();
 		}
 
-		if (meter != null && meter.getVt() != null && meter.getVt() > 0) {
-			pt = meter.getVt();
+		if (meter != null && meter.getTransformerRatio() != null && meter.getTransformerRatio() > 0) {
+			pt = meter.getTransformerRatio();
 		}
 
 		st = ct * pt; // 서버 적용배율

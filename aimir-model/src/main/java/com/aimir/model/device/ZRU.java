@@ -10,7 +10,7 @@ import com.aimir.annotation.Scope;
 /**
  * <p>Copyright NuriTelecom Co.Ltd. since 2009</p>
  * 
- * <p>Zigbee</p> 
+ * <p>Zigbee Modem for Electricity</p> 
  * 
  * <pre>
  * Operation 범위는
@@ -70,11 +70,11 @@ public class ZRU extends Modem {
     private Boolean securityEnable;    
 
     @ColumnInfo(name="", view=@Scope(read=true, update=true, devicecontrol=true), descr="Metering Schedule Day (Mask 4 Bytes)")
-    @Column(name="METERING_DAY", length=255)
+    @Column(name="METERING_DAY", length=32)
     private String meteringDay;
 
     @ColumnInfo(name="", view=@Scope(read=true, update=true, devicecontrol=true), descr="Metering Schedule Hour (Mask 12 Bytes)")
-    @Column(name="METERING_HOUR", length=255)
+    @Column(name="METERING_HOUR", length=96)
     private String meteringHour;
 
     @ColumnInfo(name="", view=@Scope(read=true, update=true, devicecontrol=true), descr="Periodically Reset Time By a Day.")

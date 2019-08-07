@@ -10,7 +10,7 @@ import com.aimir.annotation.Scope;
 /**
  * <p>Copyright NuriTelecom Co.Ltd. since 2009</p>
  * 
- * <p> Modem Meter Interface Unit </p>
+ * <p> Modem Meter Interface Unit - mobile type modem (2g, 3g, LTE, 4g, 5g) or P2P modem</p>
  * 
  * @author YeonKyoung Park(goodjob)
  *
@@ -42,15 +42,15 @@ public class MMIU extends Modem {
     private Integer lpChoice;
 
     @ColumnInfo(name="APN address")
-    @Column(name="APN_ADDRESS")
+    @Column(name="APN_ADDRESS", length=100)
     private String apnAddress;
     
-    @ColumnInfo(name="APN id")
-    @Column(name="APN_ID")
+    @ColumnInfo(name="APN Id")
+    @Column(name="APN_ID", length=30)
     private String apnId;
     
-    @ColumnInfo(name="APN password")
-    @Column(name="APN_PASSWORD")
+    @ColumnInfo(name="APN Password")
+    @Column(name="APN_PASSWORD", length=30)
     private String apnPassword;
     
     @ColumnInfo(name="Reset Interval")
