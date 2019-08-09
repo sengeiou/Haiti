@@ -7501,9 +7501,9 @@ public class DeviceRegistrationManagerImpl implements DeviceRegistrationManager 
 							if (!StringUtil.nullToBlank(colValue).isEmpty()) {
 								energyMeter.setCt(Double.parseDouble(colValue.toString()));
 							}
-						} else if (colName.equals("pt")) {
+						} else if (colName.equals("pt") || colName.equals("vt")) {
 							if (!StringUtil.nullToBlank(colValue).isEmpty()) {
-								energyMeter.setPt(Double.parseDouble(colValue.toString()));
+								energyMeter.setVt(Double.parseDouble(colValue.toString()));
 							}
 						} else if (colName.equals("dstApplyOn")) {
 							if (!StringUtil.nullToBlank(colValue).isEmpty()) {
