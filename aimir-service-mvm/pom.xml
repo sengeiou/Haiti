@@ -11,11 +11,10 @@
     <version>3.4</version>
     <relativePath>../aimir-parent/pom.xml</relativePath>
   </parent>
-  
+  <groupId>com.aimir</groupId>
   <artifactId>aimir-service-mvm</artifactId>
   <packaging>jar</packaging>
   <name>Mvm Service Layer For AiMiR 3.4 SmartGrid System</name>
-  <version>${aimir.version}</version>
   <url>http://aimir.com</url>
 
   <build>
@@ -405,4 +404,6 @@
 		<url>http://repo.spring.io/libs-milestone/</url>
 	</repository>
 </repositories>
+
+	<version>${aimir.version}</version>
 </project>

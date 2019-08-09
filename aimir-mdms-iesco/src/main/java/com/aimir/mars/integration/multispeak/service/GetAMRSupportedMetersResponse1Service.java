@@ -16,7 +16,7 @@ import org.multispeak.version_4.ElectricMeter;
 import org.multispeak.version_4.ErrorObject;
 import org.multispeak.version_4.Meters;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;

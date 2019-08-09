@@ -9,10 +9,9 @@
     <version>3.4</version>
     <relativePath>../aimir-parent/pom.xml</relativePath>
   </parent>
-  
+  <groupId>com.aimir</groupId>
   <artifactId>aimir-service-device</artifactId>
   <name>Device Service Layer For AiMiR 3.4 SmartGrid System</name>
-  <version>${aimir.version}</version>
   <url>http://aimir.com</url>
 
   <build>
@@ -422,5 +421,6 @@
       <artifactId>dom4j</artifactId>
       <version>1.6.1</version>
     </dependency>               
-  </dependencies>
+  </dependencies> 
+  <version>${aimir.version}</version>
 </project>

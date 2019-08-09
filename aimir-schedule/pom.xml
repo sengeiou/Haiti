@@ -8,7 +8,7 @@
     <version>3.4</version>
     <relativePath>../aimir-parent/pom.xml</relativePath>
   </parent>
-  
+  <groupId>com.aimir</groupId>
   <artifactId>aimir-schedule</artifactId>
   <packaging>jar</packaging>
   <name>Schedule Service For AiMiR 3.4 SmartGrid System</name>

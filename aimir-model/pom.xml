@@ -11,7 +11,7 @@
     <version>3.4</version>
     <relativePath>../aimir-parent/pom.xml</relativePath>
   </parent>
-  
+  <groupId>com.aimir</groupId>
   <artifactId>aimir-model</artifactId>
   <packaging>jar</packaging>
   <name>Domain And Persistence Layer For AiMiR 3.4 SmartGrid System</name>
