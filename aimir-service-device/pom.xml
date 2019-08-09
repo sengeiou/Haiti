@@ -12,6 +12,7 @@
   
   <artifactId>aimir-service-device</artifactId>
   <name>Device Service Layer For AiMiR 3.4 SmartGrid System</name>
+  <version>${aimir.version}</version>
   <url>http://aimir.com</url>
 
   <build>
@@ -421,5 +422,5 @@
       <artifactId>dom4j</artifactId>
       <version>1.6.1</version>
     </dependency>               
-  </dependencies> 
+  </dependencies>
 </project>

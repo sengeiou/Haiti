@@ -15,6 +15,7 @@
   <artifactId>aimir-service-mvm</artifactId>
   <packaging>jar</packaging>
   <name>Mvm Service Layer For AiMiR 3.4 SmartGrid System</name>
+  <version>${aimir.version}</version>
   <url>http://aimir.com</url>
 
   <build>
@@ -404,5 +405,4 @@
 		<url>http://repo.spring.io/libs-milestone/</url>
 	</repository>
 </repositories>
-
 </project>

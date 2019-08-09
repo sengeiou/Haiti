@@ -13,6 +13,7 @@
   <artifactId>aimir-service-system</artifactId>
   <packaging>jar</packaging>
   <name>System Service Layer For AiMiR 3.4 SmartGrid System</name>
+  <version>${aimir.version}</version>
   <url>http://aimir.com</url>
 
   <build>
