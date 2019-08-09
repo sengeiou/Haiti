@@ -6,7 +6,6 @@
 
   <persistence-unit name="eclipselink.jpa" transaction-type="RESOURCE_LOCAL">
    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-   <!--<jar-file>file:D:/maven/repository/com/aimir/aimir-model/3.3/aimir-model-3.3.jar</jar-file>-->
    <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver" />

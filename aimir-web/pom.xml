@@ -6,13 +6,13 @@
   <parent>
     <groupId>com.aimir</groupId>
     <artifactId>aimir-parent</artifactId>
-    <version>3.3</version>
+    <version>3.4</version>
     <relativePath>../aimir-parent/pom.xml</relativePath>
   </parent>
   
   <artifactId>aimir-web</artifactId>
   <packaging>war</packaging>
-  <name>Presentation Layer For AiMiR 3.3 SmartGrid System</name>
+  <name>Presentation Layer For AiMiR 3.4 SmartGrid System</name>
   <url>http://aimir.com</url>
     
   <build>

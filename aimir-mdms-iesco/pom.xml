@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>com.aimir</groupId>
     <artifactId>aimir-parent</artifactId>
-    <version>3.3</version>
+    <version>3.4</version>
     <relativePath>../aimir-parent/pom.xml</relativePath>
   </parent>
-
+  <groupId>com.aimir</groupId>
   <artifactId>aimir-mdms-iesco</artifactId>
   <packaging>jar</packaging>
-  <name>MDMS-integration Service For AiMiR 3.3 SmartGrid System</name>
+  <name>MDMS-integration Service For AiMiR 3.4 SmartGrid System</name>
+  <version>${aimir.version}</version>
   <url>http://aimir.com</url>
 
   <properties>
@@ -483,6 +486,11 @@
       <version>3.0.0.ga</version>
       <scope>provided</scope>
     </dependency -->
+        <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>${hibernate.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.aspectj</groupId>
       <artifactId>aspectjrt</artifactId>

@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.aimir</groupId>
   <artifactId>aimir-parent</artifactId>
-  <version>3.3</version>
+  <version>3.4</version>
   <packaging>pom</packaging>
   <name>aimir-parent</name>
   <url>http://maven.apache.org</url>
@@ -37,7 +37,7 @@
     <avro.version>1.7.7</avro.version>
     <maven.test.skip>true</maven.test.skip>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <aimir.version>3.3</aimir.version>
+    <aimir.version>3.4</aimir.version>
     <jetty.version>9.2.15.v20160210</jetty.version>
     <jetty.aggregate.version>8.1.19.v20160209</jetty.aggregate.version>
     <maven-jar-plugin.version>2.5</maven-jar-plugin.version>

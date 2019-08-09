@@ -6,16 +6,16 @@
   <parent>
     <groupId>com.aimir</groupId>
     <artifactId>aimir-parent</artifactId>
-    <version>3.3</version>
+    <version>3.4</version>
     <relativePath>../aimir-parent/pom.xml</relativePath>
   </parent>
-  
+  <groupId>com.aimir</groupId>
   <artifactId>aimir-cms-ecg</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>${aimir.version}</version>
   <name>CMS for ECG</name>
   <url>http://aimir.com</url>
   <properties>
-      <maven.test.skip>false</maven.test.skip>
+      <maven.test.skip>true</maven.test.skip>
   </properties>
   
   <build>

@@ -459,10 +459,10 @@ public class TestKaifa4 extends TestMetering {
             		MDData mdData = frames[i];
                     log.debug("DCU["+MCUID+"] MDDATA ENTRY["+i+"] ");
                                          
-                    ServiceDataFrame sdf = client.sendMDWithCompress_(mdData);
-                    writeFile(sdf);
+                    //ServiceDataFrame sdf = client.sendMDWithCompress_(mdData);
+                    //writeFile(sdf);
                                    
-                    //client.sendMDWithCompress(mdData);
+                    client.sendMDWithCompress(mdData);
             	}catch (Exception e) {
             		log.error("Error on DCU["+MCUID+"] i["+i+"] : "+e.getMessage(),e);
 					i--;

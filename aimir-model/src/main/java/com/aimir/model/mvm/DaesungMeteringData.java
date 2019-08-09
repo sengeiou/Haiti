@@ -22,9 +22,9 @@ import org.eclipse.persistence.annotations.Index;
  * @author 박종성
  */
 @Deprecated
-@Entity
-@Table(name = "B1_ELC_AMR_CURR_INFO")
-@Index(name="IDX_B1_ELC_AMR_CURR_INFO_01", columnNames={"AR_ID"})
+//@Entity
+//@Table(name = "B1_ELC_AMR_CURR_INFO")
+//@Index(name="IDX_B1_ELC_AMR_CURR_INFO_01", columnNames={"AR_ID"})
 public class DaesungMeteringData {	
 
 	@EmbeddedId public DaesungMeteringPk id;

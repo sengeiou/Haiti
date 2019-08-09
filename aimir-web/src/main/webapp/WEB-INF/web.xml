@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4" id="WebApp_1434429029110">
 
-  <display-name>AiMiR 3.3 SmartGrid Web System</display-name>
+  <display-name>AiMiR 3.4 SmartGrid Web System</display-name>
 
   <!-- Define the basename for a resource bundle for I18N -->
   <context-param>
