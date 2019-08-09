@@ -6,14 +6,14 @@
   <parent>
     <groupId>com.aimir</groupId>
     <artifactId>aimir-parent</artifactId>
-    <version>3.3</version>
+    <version>3.4</version>
     <relativePath>../aimir-parent/pom.xml</relativePath>
   </parent>
 
   <groupId>aimir.schedule</groupId>  
   <artifactId>aimir-schedule-exec</artifactId>
   <packaging>jar</packaging>
-  <version>3.3</version>
+  <version>3.4</version>
   <description></description>
 
 
