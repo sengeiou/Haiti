@@ -160,7 +160,7 @@
     <system.Dashboard descr="Prepayment Dashboard" name="Prepayment" orderNo="5" role="admin"/>
     <system.Dashboard descr="Usage of customer" name="Usage" orderNo="0" role="customer"/>
     <system.Dashboard descr="User of EDH_Vendor" name="User" orderNo="0" role="edh_vendor"/>
-    <system.Dashboard descr="Main of Manager" name="Main" orderNo="0" role="manager"/>
+    <system.Dashboard descr="Main of Manager" name="Manager main" orderNo="0" role="manager"/>
     
     <system.Gadget
         descr="Code Management"
@@ -467,7 +467,7 @@
     <system.DashboardGadget 
         collapsible="false"
         layout="fit"
-        gridX="1"
+        gridX="0"
         gridY="0"
         dashboard="Main"
         gadget="Metering Data"
@@ -475,7 +475,7 @@
     <system.DashboardGadget 
         collapsible="false"
         layout="fit"
-        gridX="2"
+        gridX="1"
         gridY="0"
         dashboard="Main"
         gadget="Prepayment Customer Management"
@@ -483,15 +483,15 @@
     <system.DashboardGadget 
         collapsible="false"
         layout="fit"
-        gridX="1"
-        gridY="1"
+        gridX="2"
+        gridY="0"
         dashboard="Main"
         gadget="Metering Fail"
     /> 
     <system.DashboardGadget 
         collapsible="false"
         layout="fit"
-        gridX="2"
+        gridX="0"
         gridY="1"
         dashboard="Main"
         gadget="Customer and Contract"
@@ -635,7 +635,7 @@
     <system.DashboardGadget 
         collapsible="false"
         layout="fit"
-        gridX="2"
+        gridX="1"
         gridY="1"
         dashboard="Device"
         gadget="Meter Time Management"
@@ -913,7 +913,7 @@
     <system.DeviceModel 
         deviceVendor="NURITelecom"
         code="110"
-        deviceType="1.1.1.7"
+        deviceType="1.1.1.3"
         name="DCU-DUMMY"
         image="uploadImg/mcu/DCU-DUMMY.jpg"
         description="Dummy DCU"
