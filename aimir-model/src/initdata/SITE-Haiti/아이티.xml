@@ -44,6 +44,7 @@
     
     <system.Location 
         name="Haiti"
+        geocode="Haiti"
         orderNo="1"
         parent=""
         supplier="EDH"
@@ -51,6 +52,7 @@
     
     <system.Location 
         name="West"
+        geocode="West"
         orderNo="1"
         parent="Haiti"
         supplier="EDH"
@@ -58,6 +60,7 @@
     
     <system.Location 
         name="Port-au-Prince"
+        geocode="Port-au-Prince"
         orderNo="1"
         parent="West"
         supplier="EDH"
@@ -65,6 +68,7 @@
     
     <system.Location 
         name="Belvil"
+        geocode="Belvil"
         orderNo="1"
         parent="Port-au-Prince"
         supplier="EDH"

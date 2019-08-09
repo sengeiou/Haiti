@@ -12,6 +12,7 @@ import org.dbunit.dataset.ITableIterator;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 
 /**
@@ -32,13 +33,13 @@ public class InitData {
 
 	public InitData() {
 
-		//ctx = new FileSystemXmlApplicationContext("src/main/resources/applicationContext.xml");
-		ctx = new FileSystemXmlApplicationContext("src/main/resources/applicationContext-hibernate5.xml");
+		ctx = new FileSystemXmlApplicationContext("src/main/resources/applicationContext.xml");
+		//ctx = new FileSystemXmlApplicationContext("src/main/resources/applicationContext-hibernate5.xml");
 	}
 
 	public void initData(String dataDir) throws Exception {
 		TransactionStatus txstatus = null;
-		HibernateTransactionManager txmanager = (HibernateTransactionManager) ctx.getBean("transactionManager");
+        JpaTransactionManager txmanager = (JpaTransactionManager) ctx.getBean("transactionManager");
 
 		try {
 			txstatus = txmanager.getTransaction(null);
