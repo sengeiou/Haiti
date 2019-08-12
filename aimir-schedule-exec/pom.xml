@@ -6,14 +6,12 @@
   <parent>
     <groupId>com.aimir</groupId>
     <artifactId>aimir-parent</artifactId>
-    <version>3.4</version>
+    <version>3.4-SNAPSHOT</version>
     <relativePath>../aimir-parent/pom.xml</relativePath>
   </parent>
   
-  <groupId>aimir.schedule</groupId>
   <artifactId>aimir-schedule-exec</artifactId>
   <packaging>jar</packaging>
-  <version>3.4</version>
   <description></description>
   
   <build>
@@ -122,18 +120,6 @@
       <artifactId>aimir-schedule</artifactId>
       <version>${aimir.version}</version>
     </dependency>
-    <!-- 
-    <dependency>
-      <groupId>bems-util</groupId>
-      <artifactId>bems-util</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-     -->
-    <dependency>
-      <groupId>commons-dbcp</groupId>
-      <artifactId>commons-dbcp</artifactId>
-      <version>${commons-dbcp.version}</version>
-    </dependency>
     <dependency>
       <groupId>regexp</groupId>
       <artifactId>regexp</artifactId>
@@ -182,9 +168,14 @@
     </dependency>
     -->
     <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-dbcp2</artifactId>
+      <version>${dbcp2.version}</version>
+    </dependency>
+    <dependency>
       <groupId>com.oracle</groupId>
-      <artifactId>ojdbc6</artifactId>
-      <version>${ojdbc6.version}</version>
+      <artifactId>ojdbc7</artifactId>
+      <version>${ojdbc7.version}</version>
     </dependency>
     <!-- SQL Server -->
     <dependency>

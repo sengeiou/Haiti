@@ -5,11 +5,10 @@
     <parent>
     <groupId>com.aimir</groupId>
     <artifactId>aimir-parent</artifactId>
-    <version>3.4</version>
+    <version>3.4-SNAPSHOT</version>
     <relativePath>../aimir-parent/pom.xml</relativePath>
     </parent>
   
-    <groupId>com.aimir</groupId>
     <artifactId>aimir-simulator</artifactId>
     <name>AiMiR volume simulator Service For AiMiR 3.4 SmartGrid System</name>
     <packaging>jar</packaging>
@@ -115,13 +114,6 @@
       <artifactId>quartz</artifactId>
       <version>${quartz.version}</version>
     </dependency>
-    <!--  
-    <dependency>
-      <groupId>commons-dbcp</groupId>
-      <artifactId>commons-dbcp</artifactId>
-      <version>${commons-dbcp.version}</version>
-    </dependency>
-    -->
     <dependency>
         <groupId>commons-beanutils</groupId>
         <artifactId>commons-beanutils</artifactId>

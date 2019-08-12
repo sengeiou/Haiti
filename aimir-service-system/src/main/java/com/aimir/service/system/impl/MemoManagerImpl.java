@@ -9,7 +9,7 @@ import javax.jws.WebService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.flex.remoting.RemotingDestination;
+//import org.springframework.flex.remoting.RemotingDestination;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +21,7 @@ import com.aimir.service.system.MemoManager;
 @WebService(endpointInterface = "com.aimir.service.system.MemoManager")
 @Service(value = "memoManager")
 @Transactional
-@RemotingDestination
+//@RemotingDestination
 public class MemoManagerImpl implements MemoManager {
 
 	Log logger = LogFactory.getLog(MemoManagerImpl.class);

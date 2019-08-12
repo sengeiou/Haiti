@@ -1,6 +1,7 @@
 package com.aimir.bo.system.bems;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +20,6 @@ import com.aimir.esapi.AimirUser;
 import com.aimir.model.system.Operator;
 import com.aimir.service.system.EnergySavingGoal2Manager;
 
-import flex.messaging.util.URLDecoder;
 
 @Controller
 public class EnergySavingGoal2Controller {

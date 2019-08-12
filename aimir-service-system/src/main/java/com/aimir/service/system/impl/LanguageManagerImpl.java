@@ -7,7 +7,7 @@ import javax.jws.WebService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.flex.remoting.RemotingDestination;
+//import org.springframework.flex.remoting.RemotingDestination;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +19,7 @@ import com.aimir.service.system.LanguageManager;
 @WebService(endpointInterface = "com.aimir.service.system.LanguageManager")
 @Service(value = "languageManager")
 @Transactional
-@RemotingDestination
+//@RemotingDestination
 public class LanguageManagerImpl implements LanguageManager {
 
 	Log logger = LogFactory.getLog(CountryManagerImpl.class);

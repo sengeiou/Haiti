@@ -8,10 +8,9 @@
   <parent>
     <groupId>com.aimir</groupId>
     <artifactId>aimir-parent</artifactId>
-    <version>3.4</version>
+    <version>3.4-SNAPSHOT</version>
     <relativePath>../aimir-parent/pom.xml</relativePath>
   </parent>
-  <groupId>com.aimir</groupId>
   <artifactId>aimir-fep</artifactId>
   <name>FEP Service For AiMiR 3.0 SmartGrid System</name>
   <version>${aimir.version}</version>

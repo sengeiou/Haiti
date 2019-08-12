@@ -31,7 +31,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.extractor.XSSFExcelExtractor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.flex.remoting.RemotingDestination;
+//import org.springframework.flex.remoting.RemotingDestination;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -87,7 +87,7 @@ import com.aimir.util.TimeUtil;
 @WebService(endpointInterface = "com.aimir.service.system.ContractManager")
 @Service(value = "contractManager")
 @Transactional
-@RemotingDestination
+//@RemotingDestination
 public class ContractManagerImpl implements ContractManager {
 
     private static Log logger = LogFactory.getLog(ContractManagerImpl.class);

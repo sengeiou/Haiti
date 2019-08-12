@@ -3,7 +3,7 @@ package com.aimir.service.system.impl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.flex.remoting.RemotingDestination;
+//import org.springframework.flex.remoting.RemotingDestination;
 
 import com.aimir.dao.system.DashboardDao;
 import com.aimir.model.system.Dashboard;
@@ -16,7 +16,7 @@ import javax.jws.WebService;
 
 @WebService(endpointInterface = "com.aimir.service.system.DashboardManager")
 @Service(value = "dashboardManager")
-@RemotingDestination
+//@RemotingDestination
 @Transactional
 public class DashboardManagerImpl implements DashboardManager {
     @Autowired

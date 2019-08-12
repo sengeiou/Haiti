@@ -6,10 +6,10 @@
   <parent>
     <groupId>com.aimir</groupId>
     <artifactId>aimir-parent</artifactId>
-    <version>3.4</version>
+    <version>3.4-SNAPSHOT</version>
     <relativePath>../aimir-parent/pom.xml</relativePath>
   </parent>
-  <groupId>com.aimir</groupId>
+
   <artifactId>aimir-cms-ecg</artifactId>
   <version>${aimir.version}</version>
   <name>CMS for ECG</name>
@@ -182,13 +182,6 @@
       <artifactId>aimir-model-hibernate</artifactId>
       <version>${aimir.version}</version>
     </dependency>
-    <!-- 
-    <dependency>
-      <groupId>commons-dbcp</groupId>
-      <artifactId>commons-dbcp</artifactId>
-      <version>${commons-dbcp.version}</version>
-    </dependency>
-     -->
     <dependency>
       <groupId>regexp</groupId>
       <artifactId>regexp</artifactId>

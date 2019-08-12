@@ -5,10 +5,10 @@
   <parent>
     <groupId>com.aimir</groupId>
     <artifactId>aimir-parent</artifactId>
-    <version>3.4</version>
+    <version>3.4-SNAPSHOT</version>
     <relativePath>../aimir-parent/pom.xml</relativePath>
   </parent>
-  <groupId>com.aimir</groupId>
+
   <artifactId>aimir-schedule</artifactId>
   <packaging>jar</packaging>
   <name>Schedule Service For AiMiR 3.4 SmartGrid System</name>
@@ -290,7 +290,11 @@
       <version>${mina.version}</version>
       <type>jar</type>
     </dependency>
-
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-dbcp2</artifactId>
+      <version>${dbcp2.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-rt-frontend-jaxws</artifactId>

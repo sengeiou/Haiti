@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.jws.WebService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.flex.remoting.RemotingDestination;
+//import org.springframework.flex.remoting.RemotingDestination;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +17,7 @@ import com.aimir.service.system.GadgetRoleManager;
 
 @WebService(endpointInterface = "com.aimir.service.system.GadgetRoleManager")
 @Service(value = "gadgetRoleManager")
-@RemotingDestination
+//@RemotingDestination
 @Transactional
 public class GadgetRoleManagerImpl implements GadgetRoleManager {
 

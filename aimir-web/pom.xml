@@ -6,7 +6,7 @@
   <parent>
     <groupId>com.aimir</groupId>
     <artifactId>aimir-parent</artifactId>
-    <version>3.4</version>
+    <version>3.4-SNAPSHOT</version>
     <relativePath>../aimir-parent/pom.xml</relativePath>
   </parent>
   
@@ -176,7 +176,7 @@
     <dependency> 
 		<groupId>com.aimir</groupId> 
 		<artifactId>aimir-cms-ecg</artifactId> 
-		<version>0.0.1-SNAPSHOT</version> 
+		<version>${aimir.version}</version> 
 		<exclusions> 
 			<exclusion> 
 				<artifactId>tomcat-catalina</artifactId> 
@@ -327,11 +327,13 @@
       <artifactId>spring-webmvc-portlet</artifactId>
       <version>${spring.webmvc.portlet}</version>
     </dependency>
+    <!--  not use
     <dependency>
       <groupId>org.springframework.flex</groupId> 
       <artifactId>spring-flex-core</artifactId> 
       <version>1.5.2.RELEASE</version>
     </dependency>
+     -->
     <!-- ============================== -->
     <!--    AOP for Spring Framework    -->
     <!-- ============================== -->
@@ -749,6 +751,7 @@
       <artifactId>commons-httpclient</artifactId>
       <version>${commons-httpclient.version}</version>
     </dependency>
+    <!--  
     <dependency>
       <groupId>com.adobe</groupId>
       <artifactId>cfgatewayadapter</artifactId>
@@ -779,6 +782,7 @@
       <artifactId>blazeds-remoting</artifactId> 
       <version>4.6.0.23207</version>
     </dependency>
+    -->
     <dependency>
       <groupId>org.codehaus.jackson</groupId> 
       <artifactId>jackson-core-lgpl</artifactId> 

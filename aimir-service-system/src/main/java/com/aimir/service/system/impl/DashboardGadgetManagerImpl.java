@@ -10,7 +10,7 @@ import javax.jws.WebService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.flex.remoting.RemotingDestination;
+//import org.springframework.flex.remoting.RemotingDestination;
 
 import com.aimir.dao.system.DashboardDao;
 import com.aimir.dao.system.DashboardGadgetDao;
@@ -26,7 +26,7 @@ import com.aimir.util.Condition.Restriction;
 
 @WebService(endpointInterface = "com.aimir.service.system.DashboardGadgetManager")
 @Service(value = "dashboardGadgetManager")
-@RemotingDestination
+//@RemotingDestination
 @Transactional
 public class DashboardGadgetManagerImpl implements DashboardGadgetManager {
     @Autowired

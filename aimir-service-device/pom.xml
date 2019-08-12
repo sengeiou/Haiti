@@ -6,10 +6,9 @@
   <parent>
     <groupId>com.aimir</groupId>
     <artifactId>aimir-parent</artifactId>
-    <version>3.4</version>
+    <version>3.4-SNAPSHOT</version>
     <relativePath>../aimir-parent/pom.xml</relativePath>
   </parent>
-  <groupId>com.aimir</groupId>
   <artifactId>aimir-service-device</artifactId>
   <name>Device Service Layer For AiMiR 3.4 SmartGrid System</name>
   <url>http://aimir.com</url>

@@ -9,7 +9,7 @@ import javax.jws.WebService;
 import org.hibernate.Query;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.flex.remoting.RemotingDestination;
+//import org.springframework.flex.remoting.RemotingDestination;
 import org.springframework.stereotype.Service;
 
 import com.aimir.dao.system.GadgetDao;
@@ -19,7 +19,7 @@ import org.hibernate.SessionFactory;
 
 @WebService(endpointInterface = "com.aimir.service.system.GadgetManager")
 @Service(value = "gadgetManager")
-@RemotingDestination
+//@RemotingDestination
 public class GadgetManagerImpl implements GadgetManager {
 	
     @Autowired

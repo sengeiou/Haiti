@@ -5,7 +5,7 @@ import java.util.List;
 import javax.jws.WebService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.flex.remoting.RemotingDestination;
+//import org.springframework.flex.remoting.RemotingDestination;
 import org.springframework.stereotype.Service;
 
 import com.aimir.dao.system.TagDao;
@@ -15,7 +15,7 @@ import com.aimir.service.system.TagManager;
 
 @WebService(endpointInterface = "com.aimir.service.system.TagManager")
 @Service(value = "tagManager")
-@RemotingDestination
+//@RemotingDestination
 public class TagManagerImpl implements TagManager {
 
 	@Autowired

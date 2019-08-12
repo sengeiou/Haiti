@@ -8,10 +8,10 @@
   <parent>
     <groupId>com.aimir</groupId>
     <artifactId>aimir-parent</artifactId>
-    <version>3.4</version>
+    <version>3.4-SNAPSHOT</version>
     <relativePath>../aimir-parent/pom.xml</relativePath>
   </parent>
-  <groupId>com.aimir</groupId>
+
   <artifactId>aimir-model</artifactId>
   <packaging>jar</packaging>
   <name>Domain And Persistence Layer For AiMiR 3.4 SmartGrid System</name>

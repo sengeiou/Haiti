@@ -8,10 +8,10 @@
   <parent>
     <groupId>com.aimir</groupId>
     <artifactId>aimir-parent</artifactId>
-    <version>3.4</version>
+    <version>3.4-SNAPSHOT</version>
     <relativePath>../aimir-parent/pom.xml</relativePath>
   </parent>
-  <groupId>com.aimir</groupId>
+
   <artifactId>aimir-service-mvm</artifactId>
   <packaging>jar</packaging>
   <name>Mvm Service Layer For AiMiR 3.4 SmartGrid System</name>
@@ -185,11 +185,13 @@
     <!-- ============================== -->
     <!--    Spring BlazeDS integation    -->
     <!-- ============================== -->
+    <!-- not use 
     <dependency>
       <groupId>org.springframework.flex</groupId> 
       <artifactId>spring-flex-core</artifactId> 
       <version>1.6.0.RC1</version>
     </dependency>
+    -->
 
     <!-- ============================== -->
     <!--    AOP for Spring Framework    -->

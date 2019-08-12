@@ -15,7 +15,7 @@ import java.util.Map;
 import javax.jws.WebService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.flex.remoting.RemotingDestination;
+//import org.springframework.flex.remoting.RemotingDestination;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,7 +57,7 @@ import com.aimir.util.TimeUtil;
 @WebService(endpointInterface = "com.aimir.service.system.OperatorManager")
 @Service(value = "operatorManager")
 @Transactional
-@RemotingDestination
+//@RemotingDestination
 public class OperatorManagerImpl implements OperatorManager {
     @Autowired
     OperatorDao dao;

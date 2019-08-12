@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -55,7 +56,6 @@ import com.aimir.util.TimeLocaleUtil;
 import com.aimir.util.TimeUtil;
 import com.aimir.util.ZipUtils;
 
-import flex.messaging.io.ArrayList;
 
 @Controller
 public class DeviceRegistrationController {

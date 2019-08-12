@@ -6,14 +6,14 @@
   <parent>
     <groupId>com.aimir</groupId>
     <artifactId>aimir-parent</artifactId>
-    <version>3.4</version>
+    <version>3.4-SNAPSHOT</version>
     <relativePath>../aimir-parent/pom.xml</relativePath>
   </parent>
   
   <groupId>com.aimir</groupId>
   <artifactId>aimir-mars-exec</artifactId>
   <packaging>jar</packaging>
-  <version>3.4</version>
+  <version>3.4-SNAPSHOT</version>
   <description></description>
   
   <build>
@@ -118,9 +118,9 @@
       <version>${aimir.version}</version>
     </dependency>
     <dependency>
-      <groupId>commons-dbcp</groupId>
-      <artifactId>commons-dbcp</artifactId>
-      <version>${commons-dbcp.version}</version>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-dbcp2</artifactId>
+      <version>${dbcp2.version}</version>
     </dependency>
     <dependency>
       <groupId>regexp</groupId>

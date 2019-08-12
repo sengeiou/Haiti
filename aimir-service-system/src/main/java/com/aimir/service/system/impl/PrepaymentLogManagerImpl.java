@@ -8,7 +8,7 @@ import java.util.Set;
 import javax.jws.WebService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.flex.remoting.RemotingDestination;
+//import org.springframework.flex.remoting.RemotingDestination;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +25,7 @@ import com.aimir.util.TimeLocaleUtil;
 @WebService(endpointInterface = "com.aimir.service.system.PrepaymentLogManager")
 @Service(value = "prepaymentLogManager")
 @Transactional
-@RemotingDestination
+//@RemotingDestination
 public class PrepaymentLogManagerImpl implements PrepaymentLogManager {
 
 	@Autowired

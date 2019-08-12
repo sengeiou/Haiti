@@ -2,16 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.aimir</groupId>
     <artifactId>aimir-parent</artifactId>
-    <version>3.4</version>
+    <version>3.4-SNAPSHOT</version>
     <relativePath>../aimir-parent/pom.xml</relativePath>
   </parent>
-  <groupId>com.aimir</groupId>
   <artifactId>aimir-model-eclipselink</artifactId>
+  <packaging>jar</packaging>
+  <name>Domain And Persistence Layer For AiMiR 3.4 SmartGrid System</name>
   <version>${aimir.version}</version>
+  <url>http://aimir.com</url>
   
   <build>
     <defaultGoal>install</defaultGoal>
@@ -346,4 +349,22 @@
       </exclusions>
     </dependency>
   </dependencies>
+  
+    <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <minmemory>128m</minmemory>
+          <maxmemory>512m</maxmemory>
+          <source>1.8</source>
+          <encoding>UTF-8</encoding>
+          <charset>UTF-8</charset>
+          <docencoding>UTF-8</docencoding>
+          <show>private</show>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>

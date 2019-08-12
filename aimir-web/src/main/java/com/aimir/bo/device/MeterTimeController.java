@@ -2,6 +2,7 @@ package com.aimir.bo.device;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,8 +31,6 @@ import com.aimir.util.MeterTimeSyncMaxMakeExcel;
 import com.aimir.util.MeterTimeThresholdMaxMakeExcel;
 import com.aimir.util.TimeUtil;
 import com.aimir.util.ZipUtils;
-
-import flex.messaging.util.URLDecoder;
 
 @Controller
 public class MeterTimeController {

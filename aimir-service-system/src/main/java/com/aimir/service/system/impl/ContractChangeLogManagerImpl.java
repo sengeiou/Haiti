@@ -7,7 +7,6 @@ import java.util.Set;
 import javax.jws.WebService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.flex.remoting.RemotingDestination;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +22,7 @@ import com.aimir.util.TimeLocaleUtil;
 @WebService(endpointInterface = "com.aimir.service.system.ContractChangeLogManager")
 @Service(value = "contractChangeLogManager")
 @Transactional
-@RemotingDestination
+//@RemotingDestination
 public class ContractChangeLogManagerImpl implements ContractChangeLogManager{
 
 

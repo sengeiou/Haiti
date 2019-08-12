@@ -4,15 +4,15 @@
   xmlns:context="http://www.springframework.org/schema/context"
   xmlns:tx="http://www.springframework.org/schema/tx" xmlns:int="http://www.springframework.org/schema/integration"
   xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/aop
-        http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+        http://www.springframework.org/schema/aop/spring-aop.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-4.2.xsd
+        http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/tx
-        http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+        http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/integration
-        http://www.springframework.org/schema/integration/spring-integration-4.2.xsd
+        http://www.springframework.org/schema/integration/spring-integration.xsd
         ">
 
   <context:property-placeholder
@@ -49,7 +49,7 @@
 
   <!-- Audit Log Support Hibernate Session Factory -->
   <bean id="auditSessionFactory"
-    class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+    class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
     <property name="dataSource" ref="auditDataSource" />
     <property name="hibernateProperties">
       <props>
@@ -76,13 +76,13 @@
   <!-- Transaction manager for a single Hibernate SessionFactory (alternative
     to JTA) -->
   <bean id="auditTransactionManager"
-    class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+    class="org.springframework.orm.hibernate5.HibernateTransactionManager">
     <property name="sessionFactory" ref="auditSessionFactory" />
   </bean>
 
   <!-- Annotation Support Hibernate Session Factory -->
   <bean id="sessionFactory"
-    class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+    class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
     <property name="entityInterceptor" ref="auditLogInterceptor" />
     <property name="dataSource" ref="dataSource" />
     <property name="hibernateProperties">
@@ -112,7 +112,7 @@
   <!-- Transaction manager for a single Hibernate SessionFactory (alternative
     to JTA) -->
   <bean id="transactionManager"
-    class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+    class="org.springframework.orm.hibernate5.HibernateTransactionManager">
     <property name="sessionFactory" ref="sessionFactory" />
   </bean>
 
