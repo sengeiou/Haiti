@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+  <localRepository>C:\DEV\Repository\aimir-project-lib-3.4</localRepository> 
+  <profiles>
+    <profile>
+        <id>AIMIR-PROJECT</id>
+		<activation>
+			<activeByDefault>true</activeByDefault>
+		</activation>		
+        <properties>		      
+            <compileDebug>false</compileDebug>
+            <sourceVersion>1.8</sourceVersion>
+            <targetVersion>1.8</targetVersion>
+            <compileEncoding>UTF-8</compileEncoding>
+			<nexus.group.url>http://172.16.25.245:8081/nexus/content/groups/nuri-group/</nexus.group.url>
+			<nexus.release.url>http://172.16.25.245:8081/nexus/content/repositories/nuri-release</nexus.release.url>
+			<nexus.snapshot.url>http://172.16.25.245:8081/nexus/content/repositories/nuri-snapshot</nexus.snapshot.url>
+			<nexus.username>goodjob</nexus.username>
+        </properties>
+        <repositories>
+		
+		
+			<repository>
+				<id>java.net-Public</id>
+				<name>Maven Java Net Snapshots and Releases</name>
+				<url>https://maven.java.net/content/groups/public/</url>
+			</repository>		
+           <repository>
+               <id>Maven repository</id>
+               <url>http://repo2.maven.org/maven2/</url>
+           </repository>
+           <repository>
+               <id>hibernate-repo</id>
+               <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+           </repository>
+           <repository>
+               <id>jdbc-repo</id>
+               <url>http://maven.jahia.org/maven2</url>
+           </repository>	   
+		   <repository>
+               <id>spring-milestones</id>
+               <url>http://repo.spring.io/libs-milestone/</url>
+          </repository>
+		  <repository>
+		       <!-- https://mvnrepository.com/artifact/ojdbc/ojdbc -->
+               <id>ojdbc14-repo</id>
+               <url>http://mvnrepository.com/artifact/ojdbc/ojdbc/14/</url>
+          </repository>
+        </repositories>		
+    </profile>
+  </profiles>
+  
+  <activeProfiles>
+    <activeProfile>AIMIR-PROJECT</activeProfile>
+  </activeProfiles>
+  <mirrors>
+    <mirror>
+      <id>nexus</id>
+          <mirrorOf>*</mirrorOf>
+          <name>Local nexus repository.</name>
+          <url>http://172.16.25.245:8081/nexus/content/groups/nuri-public/</url>
+    </mirror>
+  </mirrors>
+  <servers>    
+    <server>
+        <id>nuri-release</id>
+        <username>goodjob</username>
+        <password>1234</password>
+    </server>
+    <server>
+        <id>nuri-snapshot</id>
+        <username>goodjob</username>
+        <password>1234</password>
+    </server>
+  </servers>
+</settings>
