@@ -39,7 +39,7 @@ public class AuthDelay extends BaseObject implements JSONString {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,  generator="AUTHDELAY_SEQ")
-	@SequenceGenerator(name="SEQ_AUTHDELAY", sequenceName="SEQ_AUTHDELAY", allocationSize=1)
+	@SequenceGenerator(name="AUTHDELAY_SEQ", sequenceName="AUTHDELAY_SEQ", allocationSize=1)
 	private Long id;	//	ID(PK)
 
     @Column(name="IPADDRESS", length=64)
