@@ -2828,7 +2828,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         }
         sb.append("\n           co.sic_id, ");
         sb.append("\n           baseValue AS baseValue, ");
-        sb.append("\n           SUM(dy.total) AS total ");
+        sb.append("\n           SUM(dy.total_value) AS total ");
 
         sb.append("\n    FROM ").append(DayTable).append(" dy ");
         sb.append("\n         LEFT OUTER JOIN ");
@@ -2863,9 +2863,9 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         }
 
         if (meteringSF.equals("s")) {
-            sb.append("\n    AND   dy.total IS NOT NULL ");
+            sb.append("\n    AND   dy.total_value IS NOT NULL ");
         } else {
-            sb.append("\n    AND   dy.total IS NULL ");
+            sb.append("\n    AND   dy.total_value IS NULL ");
         }
 
         if (!mdevId.isEmpty()) {
@@ -3108,7 +3108,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
 
         sb.append("\n                         co.sic_id, ");
         sb.append("\n                         baseValue     AS baseValue,           ");
-        sb.append("\n                         SUM(dy.total) AS total                ");
+        sb.append("\n                         SUM(dy.total_value) AS total                ");
         sb.append("\n                  FROM ").append(DayTable).append(" dy ");
         sb.append("\n                           LEFT OUTER JOIN contract co ON co.id = dy.contract_id   ");
         sb.append("\n                           LEFT OUTER JOIN customer cu ON cu.id = co.customer_id,  ");
@@ -3138,9 +3138,9 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         }
 
         if (meteringSF.equals("s")) {
-            sb.append("\n                              AND dy.total      IS NOT NULL      ");
+            sb.append("\n                              AND dy.total_value      IS NOT NULL      ");
         } else {
-            sb.append("\n                              AND dy.total      IS NULL      ");
+            sb.append("\n                              AND dy.total_value      IS NULL      ");
         }
 
         if (!mdevId.isEmpty()) {
@@ -3229,11 +3229,11 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         sb.append("\nLEFT OUTER JOIN ( ");
         sb.append("\n                 SELECT dy.yyyymmdd, dy.mdev_id, ");
         sb.append("\n                        baseValue     AS baseValue,");
-        sb.append("\n                        SUM(dy.total) AS preTotal\n");
-        sb.append("\n                 FROM DAY_EM dy");
+        sb.append("\n                        SUM(dy.total_value) AS preTotal\n");
+        sb.append("\n                 FROM DAY_EM_VIEW dy");
         sb.append("\n                 WHERE dy.yyyymmdd BETWEEN :prevStartDate AND :prevStartDate");
         sb.append("\n                 AND dy.channel     = 1 ");  //channel is constant
-        sb.append("\n                 AND dy.total      IS NOT NULL ");
+        sb.append("\n                 AND dy.total_value      IS NOT NULL ");
         sb.append("\n                 GROUP BY dy.yyyymmdd, dy.mdev_id, dy.baseValue ");
         sb.append("\n                ) tb2 ");
         sb.append("\nON METER_NO = tb2.mdev_id ");
@@ -3420,9 +3420,9 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         }
 
         if (meteringSF.equals("s")) {
-            sb.append("\n    AND   dy.total IS NOT NULL ");
+            sb.append("\n    AND   dy.total_value IS NOT NULL ");
         } else {
-            sb.append("\n    AND   dy.total IS NULL ");
+            sb.append("\n    AND   dy.total_value IS NULL ");
         }
 
         if (!mdevId.isEmpty()) {
@@ -3607,7 +3607,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
             sb.append("\n       device_serial AS MODEM_ID, ");
         }
         sb.append("\n       (select name from code where id = x.sic_id) as SIC_NAME, ");
-        sb.append("\n       SUM(total) AS VALUE ");
+        sb.append("\n       SUM(total_value) AS VALUE ");
         sb.append("\nFROM ( ");
         sb.append("\n    SELECT mt.mds_id, ");
         sb.append("\n           co.contract_number, ");
@@ -3621,7 +3621,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
             }
         }
         sb.append("\n           co.sic_id, ");
-        sb.append("\n           dy.total ");
+        sb.append("\n           dy.total_value ");
         sb.append("\n    FROM ").append(DayTable).append(" dy ");
         sb.append("\n         LEFT OUTER JOIN ");
         sb.append("\n         contract co ");
@@ -3660,9 +3660,9 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         }
 
         if (meteringSF.equals("s")) {
-            sb.append("\n    AND   dy.total IS NOT NULL ");
+            sb.append("\n    AND   dy.total_value IS NOT NULL ");
         } else {
-            sb.append("\n    AND   dy.total IS NULL ");
+            sb.append("\n    AND   dy.total_value IS NULL ");
         }
 
         if (!mdevId.isEmpty()) {
@@ -3918,7 +3918,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         sb.append("\n           co.sic_id, ");
         sb.append("\n           baseValue AS baseValue, ");
         sb.append("\n           lastdata.firstValue AS firstValue, ");
-        sb.append("\n           SUM(dy.total) AS total ");
+        sb.append("\n           SUM(dy.total_value) AS total ");
 
         sb.append("\n    FROM ").append(DayTable).append(" dy ");
         sb.append("\n         LEFT OUTER JOIN ");
@@ -3955,9 +3955,9 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         }
 
         if (meteringSF.equals("s")) {
-            sb.append("\n    AND   dy.total IS NOT NULL ");
+            sb.append("\n    AND   dy.total_value IS NOT NULL ");
         } else {
-            sb.append("\n    AND   dy.total IS NULL ");
+            sb.append("\n    AND   dy.total_value IS NULL ");
         }
 
         if (!mdevId.isEmpty()) {
@@ -4746,9 +4746,9 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         }
 
         if (meteringSF.equals("s")) {
-            sb.append("\n    AND   dy.total IS NOT NULL ");
+            sb.append("\n    AND   dy.total_value IS NOT NULL ");
         } else {
-            sb.append("\n    AND   dy.total IS NULL ");
+            sb.append("\n    AND   dy.total_value IS NULL ");
         }
 
         if (!mdevId.isEmpty()) {

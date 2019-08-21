@@ -880,8 +880,7 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
 
         sb.append("\n       mt.LAST_METERING_VALUE as LAST_METERING_VALUE, ");
         sb.append("\n       code.name as SIC_NAME, ");
-        sb.append("\n       mn.total as VALUE ");
-
+        sb.append("\n       mn.total_value as VALUE ");
         sb.append("\n    FROM ").append(MonthTable).append(" mn ");
         sb.append("\n         LEFT OUTER JOIN ");
         sb.append("\n         contract co ");
@@ -918,9 +917,9 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         }
 
         if (meteringSF.equals("s")) {
-            sb.append("\n    AND   mn.total IS NOT NULL ");
+            sb.append("\n    AND   mn.total_value IS NOT NULL ");
         } else {
-            sb.append("\n    AND   mn.total IS NULL ");
+            sb.append("\n    AND   mn.total_value IS NULL ");
         }
 
         if (!mdevId.isEmpty()) {
@@ -1196,9 +1195,9 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         }
 
         if (meteringSF.equals("s")) {
-            sb.append("\n    AND   mn.total IS NOT NULL ");
+            sb.append("\n    AND   mn.total_value IS NOT NULL ");
         } else {
-            sb.append("\n    AND   mn.total IS NULL ");
+            sb.append("\n    AND   mn.total_value IS NULL ");
         }
 
         if (!mdevId.isEmpty()) {
@@ -1383,7 +1382,7 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         }
         
         sb.append("\n       SIC_NAME, ");
-        sb.append("\n       SUM(total) AS VALUE ");
+        sb.append("\n       SUM(total_value) AS VALUE ");
         sb.append("\nFROM ( ");
         sb.append("\n    SELECT mt.mds_id, ");
         sb.append("\n           co.contract_number, ");
@@ -1398,7 +1397,7 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         }
         
         sb.append("\n           code.name as SIC_NAME, ");
-        sb.append("\n           mn.total ");
+        sb.append("\n           mn.total_value ");
         sb.append("\n    FROM ").append(MonthTable).append(" mn ");
         sb.append("\n         LEFT OUTER JOIN ");
         sb.append("\n         contract co ");
@@ -1440,9 +1439,9 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         }
 
         if (meteringSF.equals("s")) {
-            sb.append("\n    AND   mn.total IS NOT NULL ");
+            sb.append("\n    AND   mn.total_value IS NOT NULL ");
         } else {
-            sb.append("\n    AND   mn.total IS NULL ");
+            sb.append("\n    AND   mn.total_value IS NULL ");
         }
 
         if (!mdevId.isEmpty()) {
