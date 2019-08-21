@@ -5788,8 +5788,8 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
             }
 
             sbQuery.append(" SELECT "+ columnDate +"                    \n")
-                   .append("      , SUM(CASE WHEN CHANNEL = 1   AND TOTAL IS NOT NULL THEN TOTAL ELSE 0 END) AS USAGE   \n")
-                   .append("      , SUM(CASE WHEN CHANNEL = 0   AND TOTAL IS NOT NULL THEN TOTAL ELSE 0 END) AS CO2     \n")
+                   .append("      , SUM(CASE WHEN CHANNEL = 1   AND TOTAL_VALUE IS NOT NULL THEN TOTAL_VALUE ELSE 0 END) AS USAGE   \n")
+                   .append("      , SUM(CASE WHEN CHANNEL = 0   AND TOTAL_VALUE IS NOT NULL THEN TOTAL_VALUE ELSE 0 END) AS CO2     \n")
                    .append("   FROM "+ tableName +"                     \n")
                    .append("  WHERE METER_ID = "+ meterId +"            \n")
                    .append("    AND "+columnDate+" >= '"+startDate+"'   \n")
