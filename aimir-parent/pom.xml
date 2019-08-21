@@ -34,7 +34,7 @@
     <module>../aimir-service-device</module>
     <module>../aimir-service-mvm</module>
     <module>../aimir-service-system</module>
-    <module>../aimir-mdms-iesco</module>
+<!--     <module>../aimir-mdms-iesco</module> -->
     <module>../aimir-cms-ecg</module>
     <module>../aimir-simulator</module>
     <module>../aimir-web</module>
