@@ -1,5 +1,6 @@
 package com.aimir.fep.meter.parser;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -440,14 +441,18 @@ public class ZEUPLS extends MeterDataParser implements java.io.Serializable
                 log.debug("LPDATE["+lpData[i].getLpDate()+"]");
                 log.debug("BASEPULSE["+lpData[i].getBasePulse()[0]+"]");
 
-                double usage = lpData[i].getBasePulse()[0];
+                double usage = lpData[i].getBasePulse()[0];                
                 for (int j = 0; j < lpData[i].getLp()[0].length; j++) {
                     System.arraycopy(data, pos, LP, 0, LP.length);
                     pos += LP.length;
                     Double pulseConstant = meter.getPulseConstant()==null ? 1 : meter.getPulseConstant();
                     lpData[i].getLp()[0][j] = (double)DataUtil.getIntTo2Byte(LP) / pulseConstant;
-                    if (meteringValue < usage + lpData[i].getLp()[0][j]) {
-                        log.warn("USAGE["+usage+ "] and LPDATA[" + lpData[i].getLp()[0][j]+" greater than CURRENTPULSE["+meteringValue+"] so set ZERO");
+                    
+                    BigDecimal bd_usage = new BigDecimal(String.valueOf(usage));
+                    BigDecimal bd_lp = new BigDecimal(String.valueOf(lpData[i].getLp()[0][j]));
+                    BigDecimal bd_mv = new BigDecimal(String.valueOf(meteringValue));                    
+                    if (bd_mv.compareTo(bd_usage.add(bd_lp)) == -1) {
+                        log.warn("USAGE["+usage+ "] and LPDATA[" + lpData[i].getLp()[0][j]+"] greater than CURRENTPULSE["+meteringValue+"] so set ZERO");                        
                         lpData[i].getLp()[0][j] = 0.0;
                         usage += lpData[i].getLp()[0][j];
                     }
@@ -607,16 +612,19 @@ public class ZEUPLS extends MeterDataParser implements java.io.Serializable
             int hour = 0;
             int minute = 0;
             log.debug("lpData.length: " + lpData.length);
-            df = new SimpleDateFormat("yyyyMMddHHmm");
+            df = new SimpleDateFormat("yyyyMMddHHmmss");
+	    String lpDay = "";
             for (int i = 0; i < lpData.length; i++) {
+		lpDay = lpData[i].getLpDate();
+	        hour=0; 
                 for (int ch = 0; ch < lpData[i].getLp().length; ch++) {
                     for (int j = 0; j < lpData[i].getLp()[ch].length; j++, minute += interval) {
                         if (minute >= 60) {
                             hour++;
                             minute = 0;
                         }
-                        log.debug(lpData[i].getLp()[ch][j]);
-                        res.put(sdf14.format(df.parse(String.format("%s%02d%02d%02d", lpDate, hour, minute, 0))), 
+                        log.debug("DateTime=["+String.format("%s%02d%02d%02d", lpDay, hour, minute, 0)+"], value=["+lpData[i].getLp()[ch][j]+"]");
+                        res.put(sdf14.format(df.parse(String.format("%s%02d%02d%02d", lpDay, hour, minute, 0))), 
                                 ""+ df3.format(lpData[i].getLp()[ch][j]));
                     }
                 }
