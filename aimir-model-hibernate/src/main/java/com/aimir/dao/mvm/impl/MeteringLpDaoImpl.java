@@ -1888,8 +1888,8 @@ public class MeteringLpDaoImpl extends
         sb.append("  lp.yyyymmddhhmiss \n");
         sb.append("FROM ").append(lpTable).append(" lp \n");
         sb.append("WHERE 1=1 \n");
-        sb.append("AND lp.mdev_type = :mdevType ");
-        sb.append("AND lp.mdev_id = :meterNo");
+        sb.append("AND lp.mdev_type = :mdevType \n");
+        sb.append("AND lp.mdev_id = :meterNo \n");
         sb.append("AND lp.yyyymmddhhmiss BETWEEN :searchStartDate AND :searchEndDate \n");
         if (dst != null) {
         	sb.append("AND lp.dst = :dst \n");
