@@ -5716,9 +5716,7 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
      * @return
      */
     public Map<String, Object> getMeteringDataDetailIntervalChartData(Map<String, Object> conditionMap) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        List<Map<String, Object>> searchData = new ArrayList<Map<String, Object>>();
-        List<Map<String, Object>> searchAddData = new ArrayList<Map<String, Object>>();
+    	// Get variables from conditionMap
         Integer supplierId = (Integer)conditionMap.get("supplierId");
         String meterNo = (String)conditionMap.get("meterNo");
         String searchStartDate = (String)conditionMap.get("searchStartDate");
@@ -5726,24 +5724,12 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
         String searchStartHour = (String)conditionMap.get("searchStartHour");
         String searchEndHour = (String)conditionMap.get("searchEndHour");
         String[] channelArray = ((String)conditionMap.get("channel")).split(",");
+
+        // Define variables
         List<Integer> channelIdList = new ArrayList<Integer>();
-
-        for (String obj : channelArray) {
-            channelIdList.add(Integer.parseInt(obj));
-        }
-
-        conditionMap.put("channelIdList", channelIdList);
-
-        List<Map<String, Object>> list = meteringLpDao.getMeteringDataDetailLpData(conditionMap);
-
-        if (list == null || list.size() <= 0) {
-            resultMap.put("searchData", searchData);
-            resultMap.put("searchAddData", searchAddData);
-            return resultMap;
-        }
-
-        Map<String, Object> map = null;
-        Map<String, Double> listMap = new HashMap<String, Double>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        List<Map<String, Object>> searchData = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> searchAddData = new ArrayList<Map<String, Object>>();
         Set<String> dateSet = new LinkedHashSet<String>();
         Supplier supplier = supplierDao.get(supplierId);
         String country = supplier.getCountry().getCode_2letter();
@@ -5751,17 +5737,32 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
         DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
         Meter meter = null;
         Integer lpInterval = 0;
+//        BigDecimal bdTotalSumValue = null;
+//        BigDecimal bdTotalMaxValue = null;
+//        BigDecimal bdTotalMinValue = null;
+//        Integer intTotalCount = new Integer("0");
+        
+        int cnt = 0;
+        String tmpLocaleDateHour = searchStartDate + searchStartHour;
+        
+        // Make channel ID list from channel array.
+        for (String obj : channelArray) {
+            channelIdList.add(Integer.parseInt(obj));
+        }
 
-        BigDecimal bdTotalSumValue = null;
-        BigDecimal bdTotalMaxValue = null;
-        BigDecimal bdTotalMinValue = null;
-        Integer intTotalCount = new Integer("0");
-        BigDecimal bdValue = null;
-        Double value = null;
-        Double maxValue = null;
-        Double minValue = null;
-        Double avgValue = null;
-        Double sumValue = null;
+        // Put channel id list at conditionMap
+        conditionMap.put("channelIdList", channelIdList);
+
+        // Get lp data from DB.
+        List<Map<String, Object>> list = meteringLpDao.getMeteringDataDetailLpData(conditionMap);
+
+        // Check size of list and return.
+        if (list == null || list.isEmpty()) { 
+            resultMap.put("searchData", searchData);
+            resultMap.put("searchAddData", searchAddData);
+        	logger.debug("list is null or empty. return resultMap : "+resultMap);
+            return resultMap;
+        }
 
         if (meterNo != null) {
             meter = mtrDao.get(meterNo);
@@ -5769,10 +5770,8 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
         } else {
             lpInterval = 60;
         }
+        logger.debug("lpInterval : "+lpInterval);
 
-        int cnt = 0;
-        String tmpLocaleDate = null;
-        String tmpLocaleDateHour = searchStartDate + searchStartHour;
 
         // 조회조건 내 모든 일자 가져오기
         for (int k = 0; k < 100; k++) {     // 무한 loop 방지
@@ -5790,86 +5789,91 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
                 }
             }
         }
-
-        BigDecimal bdCurVal = null;
-        BigDecimal bdPrevVal = null;
-        Double dbPrevVal = null;
-
+        
+        // 
+        Map<String, Double> listMap = new HashMap<String, Double>();
         for (Map<String, Object> obj : list) {
-            for (int i = 0, j = 0 ; j < 60 ; i++, j = i * lpInterval) {
-                tmpLocaleDate = CalendarUtil.to2Digit(j);
-                value = DecimalUtil.ConvertNumberToDouble(obj.get("value_" + tmpLocaleDate));
-
-                if (listMap.containsKey((String)obj.get("yyyymmddhh") + tmpLocaleDate + "_" + obj.get("channel"))) {
-                    dbPrevVal = listMap.get((String)obj.get("yyyymmddhh") + tmpLocaleDate + "_" + obj.get("channel"));
-
-                    if (dbPrevVal != null) {
-
-                        if (value != null) {
-                            bdCurVal = new BigDecimal(value.toString());
-                            bdPrevVal = new BigDecimal(dbPrevVal.toString());
-                            value = bdCurVal.add(bdPrevVal).doubleValue();
-                        } else {
-                            value = dbPrevVal;
-                        }
-                    }
-                }
-                listMap.put((String)obj.get("yyyymmddhh") + tmpLocaleDate + "_" + obj.get("channel"), value);
-            }
+        	// Get data from Map
+        	String YYYYMMDDHHMISS = (String)obj.get("yyyymmddhhmiss");
+        	String CHANNEL = (String)obj.get("channel");
+        	String VALUE = (String)obj.get("value");
+        	Double value = Double.valueOf(VALUE);
+        	logger.debug("YYYYMMDDHHMISS:"+YYYYMMDDHHMISS+", CHANNEL:"+CHANNEL+", VALUE:"+VALUE);
+        	
+        	// Null and empty check.
+        	if(YYYYMMDDHHMISS == null || YYYYMMDDHHMISS.isEmpty()) {
+        		logger.debug("YYYYMMDDHHMISS is null or empty.");
+            	continue;
+        	}
+        	if(CHANNEL == null || CHANNEL.isEmpty()) {
+        		logger.debug("CHANNEL is null or empty.");
+            	continue;
+        	}
+        	if(VALUE == null || VALUE.isEmpty()) {
+        		logger.debug("VALUE is null or empty.");
+            	continue;
+        	}
+        	
+        	// Check if the value exists
+        	if(listMap.containsKey(YYYYMMDDHHMISS.substring(0, 9)+"_"+CHANNEL)) {
+        		Double tmpVal = listMap.get(YYYYMMDDHHMISS.substring(0, 9)+"_"+CHANNEL);
+                BigDecimal bdCurVal = new BigDecimal(VALUE.toString());
+                BigDecimal bdPrevVal = new BigDecimal(tmpVal.toString());
+                value = bdCurVal.add(bdPrevVal).doubleValue();
+        	}
+        	
+        	// Put value to list
+        	listMap.put(YYYYMMDDHHMISS.substring(0, 9)+"_"+CHANNEL, value);
         }
+        
+        Set<String> keys = listMap.keySet();
 
-        for (String lpDate : dateSet) {
-            for (Integer ch : channelIdList) {
-                map = new HashMap<String, Object>();
-                value = listMap.get(lpDate + "_" + ch);
-                bdValue = value == null ? null : new BigDecimal(value.toString());
-
-                map.put("reportDate", TimeLocaleUtil.getLocaleDate(lpDate + "00", lang, country));
-                map.put("localeDate", TimeLocaleUtil.getLocaleDate(lpDate + "00", lang, country));
-                map.put("channel", ch);
-                map.put("value", (value == null) ? 0D : value);
-                map.put("decimalValue", (value == null) ? mdf.format(0D) : mdf.format(value));
-                searchData.add(map);
-
-                if (cnt == 0) {
-                    bdTotalSumValue = (bdValue != null) ? bdValue : null;
-                    bdTotalMaxValue = (bdValue != null) ? bdValue : null;
-                    bdTotalMinValue = (bdValue != null) ? bdValue : null;
-                    intTotalCount = (bdValue != null) ? 1 : 0;
-                } else {
-                    if (bdValue != null) {
-                        bdTotalSumValue = (bdTotalSumValue == null) ? bdValue : bdTotalSumValue.add(bdValue);
-                        bdTotalMaxValue = (bdTotalMaxValue == null) ? bdValue : bdTotalMaxValue.max(bdValue);
-                        bdTotalMinValue = (bdTotalMinValue == null) ? bdValue : bdTotalMinValue.min(bdValue);
-                        intTotalCount = intTotalCount + 1;
-                    }
-                }
-                cnt++;
-            }
+        for(String key : keys) {
+            Map<String, Object> map = null;
+        	logger.debug("key:"+key);
+        	Double value = listMap.get(key);
+        	String date = key.split("_")[0];
+        	String channel = key.split("_")[1];
+//            BigDecimal bdValue = value == null ? null : new BigDecimal(value.toString());
+            
+            map.put("reportDate", TimeLocaleUtil.getLocaleDate(date + "00", lang, country));
+            map.put("localeDate", TimeLocaleUtil.getLocaleDate(date + "00", lang, country));
+            map.put("channel", channel);
+            map.put("value", (value == null) ? 0D : value);
+            map.put("decimalValue", (value == null) ? mdf.format(0D) : mdf.format(value));
+            searchData.add(map);
         }
+//        for (String lpDate : dateSet) {
+//            for (Integer ch : channelIdList) {
+//                Map<String, Object>  map = new HashMap<String, Object>();
+//                Double value = listMap.get(lpDate + "_" + ch);
+//                BigDecimal bdValue = value == null ? null : new BigDecimal(value.toString());
+//
+//                map.put("reportDate", TimeLocaleUtil.getLocaleDate(lpDate + "00", lang, country));
+//                map.put("localeDate", TimeLocaleUtil.getLocaleDate(lpDate + "00", lang, country));
+//                map.put("channel", ch);
+//                map.put("value", (value == null) ? 0D : value);
+//                map.put("decimalValue", (value == null) ? mdf.format(0D) : mdf.format(value));
+//                searchData.add(map);
+//
+//                if (cnt == 0) {
+//                    bdTotalSumValue = (bdValue != null) ? bdValue : null;
+//                    bdTotalMaxValue = (bdValue != null) ? bdValue : null;
+//                    bdTotalMinValue = (bdValue != null) ? bdValue : null;
+//                    intTotalCount = (bdValue != null) ? 1 : 0;
+//                } else {
+//                    if (bdValue != null) {
+//                        bdTotalSumValue = (bdTotalSumValue == null) ? bdValue : bdTotalSumValue.add(bdValue);
+//                        bdTotalMaxValue = (bdTotalMaxValue == null) ? bdValue : bdTotalMaxValue.max(bdValue);
+//                        bdTotalMinValue = (bdTotalMinValue == null) ? bdValue : bdTotalMinValue.min(bdValue);
+//                        intTotalCount = intTotalCount + 1;
+//                    }
+//                }
+//                cnt++;
+//            }
+//        }
 
         resultMap.put("searchData", searchData);
-
-        /*if (intTotalCount > 0) {
-            map = new HashMap<String, Object>();
-
-            sumValue = (bdTotalSumValue == null) ? 0D : bdTotalSumValue.doubleValue();
-            avgValue = (bdTotalSumValue == null) ? 0D : bdTotalSumValue.divide(new BigDecimal(intTotalCount.toString()), MathContext.DECIMAL32).doubleValue();
-            maxValue = (bdTotalMaxValue == null) ? 0D : bdTotalMaxValue.doubleValue();
-            minValue = (bdTotalMinValue == null) ? 0D : bdTotalMinValue.doubleValue();
-
-            map.put("sumValue", sumValue);
-            map.put("avgValue", avgValue);
-            map.put("maxValue", maxValue);
-            map.put("minValue", minValue);
-
-            map.put("sumDecimalValue", mdf.format(sumValue));
-            map.put("avgDecimalValue", mdf.format(avgValue));
-            map.put("maxDecimalValue", mdf.format(maxValue));
-            map.put("minDecimalValue", mdf.format(minValue));
-
-            searchAddData.add(map);
-        }*/
         resultMap.put("searchAddData", searchAddData);
 
         return resultMap;

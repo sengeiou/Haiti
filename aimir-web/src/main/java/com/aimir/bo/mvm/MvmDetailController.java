@@ -795,7 +795,8 @@ public class MvmDetailController {
      */
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "/gadget/mvm/getMvmDetailMeteringDataChart.do")
-    public final ModelAndView getMvmDetailMeteringDataChart(@RequestParam("searchStartDate") String searchStartDate,
+    public final ModelAndView getMvmDetailMeteringDataChart(
+    		@RequestParam("searchStartDate") String searchStartDate,
             @RequestParam("searchEndDate") String searchEndDate,
             @RequestParam("searchStartHour") String searchStartHour,
             @RequestParam("searchEndHour") String searchEndHour,

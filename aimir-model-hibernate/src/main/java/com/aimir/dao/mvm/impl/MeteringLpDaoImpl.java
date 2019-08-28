@@ -1843,7 +1843,7 @@ public class MeteringLpDaoImpl extends
     public List<Map<String, Object>> getMeteringDataDetailLpData(Map<String, Object> conditionMap) {
         List<Map<String, Object>> result = null;
 
-        Integer supplierId = (Integer)conditionMap.get("supplierId");
+//        Integer supplierId = (Integer)conditionMap.get("supplierId");
         Integer dst = (Integer)conditionMap.get("dst");
         String searchStartDate = StringUtil.nullToBlank(conditionMap.get("searchStartDate"));
         String searchEndDate = StringUtil.nullToBlank(conditionMap.get("searchEndDate"));
@@ -1851,40 +1851,58 @@ public class MeteringLpDaoImpl extends
         String searchEndHour = StringUtil.nullToBlank(conditionMap.get("searchEndHour"));
         String meterNo = StringUtil.nullToBlank(conditionMap.get("meterNo"));
         String meterType = StringUtil.nullToBlank(conditionMap.get("meterType"));
-        List<Integer> channelIdList = (List<Integer>)conditionMap.get("channelIdList");
         String lpClass = MeterType.valueOf(meterType).getLpClassName();
+        String lpTable = MeterType.valueOf(meterType).getLpTableName();
+        List<Integer> channelIdList = (List<Integer>)conditionMap.get("channelIdList");
         StringBuilder sb = new StringBuilder();
 
-        sb.append("\nSELECT lp.id.yyyymmddhh AS yyyymmddhh, ");
-
-        for (int i = 0 ; i < 60 ; i++) {
-            sb.append("\n       lp.value_").append(CalendarUtil.to2Digit(i)).append(" AS value_").append(CalendarUtil.to2Digit(i)).append(", ");
-        }
-        sb.append("\n       lp.value AS value, ");
-        sb.append("\n       lp.id.channel AS channel, ");
-        sb.append("\n       lp.id.dst AS dst ");
-        sb.append("\nFROM ").append(lpClass).append(" lp ");
-        sb.append("\nWHERE 1=1 ");
-        sb.append("\nAND   lp.id.mdevType = :mdevType ");
-        sb.append("\nAND   lp.id.mdevId = :meterNo ");
-        sb.append("\nAND   lp.id.yyyymmddhh BETWEEN :searchStartDate AND :searchEndDate ");
-
+//        sb.append("\nSELECT lp.id.yyyymmddhh AS yyyymmddhh, ");
+//
+//        for (int i = 0 ; i < 60 ; i++) {
+//            sb.append("\n       lp.value_").append(CalendarUtil.to2Digit(i)).append(" AS value_").append(CalendarUtil.to2Digit(i)).append(", ");
+//        }
+//        sb.append("\n       lp.value AS value, ");
+//        sb.append("\n       lp.id.channel AS channel, ");
+//        sb.append("\n       lp.id.dst AS dst ");
+//        sb.append("\nFROM ").append(lpClass).append(" lp ");
+//        sb.append("\nWHERE 1=1 ");
+//        sb.append("\nAND   lp.id.mdevType = :mdevType ");
+//        sb.append("\nAND   lp.id.mdevId = :meterNo ");
+//        sb.append("\nAND   lp.id.yyyymmddhh BETWEEN :searchStartDate AND :searchEndDate ");
+//
+//        if (dst != null) {
+//            sb.append("\nAND   lp.id.dst = :dst ");
+//        }
+//
+//        if (channelIdList != null && channelIdList.size() > 0) {
+//            sb.append("\nAND   lp.id.channel IN (:channelIdList) ");
+//        }
+//
+//        sb.append("\nAND   lp.supplier.id = :supplierId ");
+//        sb.append("\nORDER BY lp.id.yyyymmddhh, lp.id.channel ");
+        
+        sb.append("SELECT  \n");
+        sb.append("  lp.value \n");
+        sb.append("  lp.channel \n");
+        sb.append("  lp.dst \n");
+        sb.append("  lp.yyyymmddhhmiss \n");
+        sb.append("FROM ").append(lpTable).append(" lp \n");
+        sb.append("WHERE 1=1 \n");
+        sb.append("AND lp.mdev_type = :mdevType ");
+        sb.append("AND lp.mdev_id = :meterNo");
+        sb.append("AND lp.yyyymmddhhmiss BETWEEN :searchStartDate AND :searchEndDate \n");
         if (dst != null) {
-            sb.append("\nAND   lp.id.dst = :dst ");
+        	sb.append("AND lp.dst = :dst \n");
         }
-
         if (channelIdList != null && channelIdList.size() > 0) {
-            sb.append("\nAND   lp.id.channel IN (:channelIdList) ");
+        	sb.append("AND lp.channel IN (:channelIdList) \n");
         }
 
-        sb.append("\nAND   lp.supplier.id = :supplierId ");
-        sb.append("\nORDER BY lp.id.yyyymmddhh, lp.id.channel ");
-
-        Query query = getSession().createQuery(sb.toString());
+        Query query = getSession().createNativeQuery(sb.toString());
 
         query.setString("meterNo", meterNo);
-        query.setString("searchStartDate", (searchStartHour.isEmpty()) ? searchStartDate + "00" : searchStartDate + searchStartHour);
-        query.setString("searchEndDate", (searchEndHour.isEmpty()) ? searchEndDate + "23" : searchEndDate + searchEndHour);
+        query.setString("searchStartDate", (searchStartHour.isEmpty()) ? searchStartDate + "000000" : searchStartDate + searchStartHour + "0000");
+        query.setString("searchEndDate", (searchEndHour.isEmpty()) ? searchEndDate + "235959" : searchEndDate + searchEndHour + "5959");
         query.setString("mdevType", CommonConstants.DeviceType.Meter.name());
 
         if (dst != null) {
@@ -1894,7 +1912,7 @@ public class MeteringLpDaoImpl extends
         if (channelIdList != null && channelIdList.size() > 0) {
             query.setParameterList("channelIdList", channelIdList);
         }
-        query.setInteger("supplierId", supplierId);
+//        query.setInteger("supplierId", supplierId);
 
         result = query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
         return result;
