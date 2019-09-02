@@ -68,6 +68,7 @@ import com.aimir.model.system.SupplyType;
 import com.aimir.model.system.SupplyTypeLocation;
 import com.aimir.model.system.TOURate;
 import com.aimir.model.system.TariffEM;
+import com.aimir.model.system.TariffType;
 import com.aimir.model.system.TariffWM;
 import com.aimir.schedule.command.CmdOperationUtil;
 import com.aimir.service.device.MCUManager;
@@ -83,6 +84,7 @@ import com.aimir.service.system.SupplierManager;
 import com.aimir.service.system.SupplierMgmtManager;
 import com.aimir.service.system.SupplyTypeLocationManager;
 import com.aimir.service.system.SupplyTypeManager;
+import com.aimir.service.system.TariffTypeManager;
 import com.aimir.support.FileUploadHelper;
 import com.aimir.util.CalendarUtil;
 import com.aimir.util.CommonUtils;
@@ -134,6 +136,9 @@ public class SupplierController {
 	
 	@Autowired
 	CodeManager codeManager;
+	
+	@Autowired
+	TariffTypeManager tariffTypeManager;
 	
 	@Autowired
 	TariffEMDao tariffEMDao;
@@ -362,6 +367,29 @@ public class SupplierController {
 		}
 	
 		mav.addObject("result", "success");
+		return mav;
+	}
+    
+    /**
+     * Tariff 정보
+     * @param supplierId
+     * @return
+     */
+    @RequestMapping(value="/gadget/system/supplier/getTariffType.do")
+    public ModelAndView getSTSTariffType(String serviceType, Integer supplierId) {
+		ModelAndView mav = new ModelAndView("jsonView");
+		
+		List<TariffType> tariffType = tariffTypeManager.getTariffTypeBySupplier(serviceType, supplierId);
+		
+		List<Map<String,Object>> tariffSTSType = new ArrayList<Map<String,Object>>();
+		for (int i = 0; i < tariffType.size(); i++) {
+			Map<String,Object> tempMap = new HashMap<String,Object>();
+			tempMap.put("name", tariffType.get(i).getName());
+			tempMap.put("id", tariffType.get(i).getId());
+			tariffSTSType.add(tempMap);
+		}
+		
+		mav.addObject("result", tariffSTSType);
 		return mav;
 	}
     
@@ -1246,6 +1274,56 @@ public class SupplierController {
 		
 		return mav;
     }
+    
+    @RequestMapping("/gadget/system/supplier/getTariffGrid") 
+    public ModelAndView getTariffGrid(
+    		@RequestParam("supplierId") 		String supplierId,
+    		@RequestParam("fileType") 			String fileType,
+    		@RequestParam("yyyymmdd") 			String yyyymmdd,
+    		@RequestParam("tariffType") 			String tariffType
+    		) {
+		List<Map<String, Object>> resultWMCaliber = null; // WaterCaliber
+		List<Map<String, Object>> resultWM = null; // Water
+		List<Map<String, Object>> resultGM = null; // Gas
+		List<Map<String, Object>> resultEM = null; // Electricity
+
+		Long total = 0L;        // 데이터 조회건수
+		
+    	Map<String, Object> conditionMap = new HashMap<String, Object>();
+    	conditionMap.put("supplierId", supplierId);
+		conditionMap.put("supplyTypeName", fileType);
+		conditionMap.put("yyyymmdd", yyyymmdd);
+		conditionMap.put("tariffType", tariffType);
+    	Map<String, Object> list = new HashMap<String, Object>();
+    	ModelAndView mav = new ModelAndView("jsonView");
+    	list = supplierMgmtManager.getChargeMgmtList(conditionMap);
+
+    	if("Electricity".equals(fileType)) {
+			 resultEM = (List<Map<String, Object>>) list.get("grid");
+			 total = new Integer(resultEM.size()).longValue();
+			 mav.addObject("GridData", resultEM);
+		 } else if ("Gas".equals(fileType)) {
+			 resultGM = (List<Map<String, Object>>) list.get("grid");
+			 total = new Integer(resultGM.size()).longValue();
+			 mav.addObject("GridData", resultGM);
+		 } else if ("Water".equals(fileType)) {
+			 resultWM = (List<Map<String, Object>>) list.get("grid2");
+			 total = new Integer(resultWM.size()).longValue();
+			 mav.addObject("GridData", resultWM);
+		 } else if ("WaterCaliber".equals(fileType)) {
+			 resultWMCaliber = (List<Map<String, Object>>) list.get("grid1");
+			 total = new Integer(resultWMCaliber.size()).longValue();
+			 mav.addObject("GridData", resultWMCaliber);
+		 }
+		 
+		 mav.addObject("total", total);
+		 if (total <= 0) {
+			 return mav;
+		 }
+		 
+    	return mav;
+    }
+
     
     @RequestMapping("/gadget/system/supplier/updateTariffTable") 
     public ModelAndView updateTariffTable(String date, String data) {

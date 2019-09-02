@@ -13,6 +13,14 @@
 <link href="${ctx}/js/extjs/resources/css/ext-all.css" rel="stylesheet" type="text/css" title="blue" />
 <style type='text/css'>
 
+    /* chrome 에서 ext-js 의 grid cell layout 이 어긋나는 부분 보완 */
+    @media screen and (-webkit-min-device-pixel-ratio:0) {
+        .x-grid3-row td.x-grid3-cell {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+    }
+
     input.rate-value {
         width: 30px;
     }
@@ -71,12 +79,40 @@
     	border:1px solid #99defd; 
     	padding:0px 7px 1px 7px;		 
     }
-  
+    
+    .x-grid3-cell { vertical-align: middle !important; }
+    .x-grid3-hd-inner { text-align: center !important; font-weight: bold !important; }
+   
+   .grid-row-span .x-grid3-row {
+    border-bottom: 0;
+	}
+	.grid-row-span .x-grid3-col {
+	    border-bottom: 1px solid #ededed;
+	}
+	.grid-row-span .row-span {
+	    border-bottom: 1px solid #fff;
+	}
+	.grid-row-span .row-span-first {
+	    position: relative;
+	}
+	.grid-row-span .row-span-first .x-grid3-cell-inner {
+	    position: absolute;
+	}
+	.grid-row-span .row-span-last {
+	    border-bottom: 1px solid #ededed;
+	} 
+	.supplyModify{
+		display:inline-block;
+		text-align:center;
+		width:100px;
+	}
 </style>
 <%@ include file="/gadget/system/preLoading.jsp"%>
 <script type="text/javascript" charset="utf-8" src="${ctx}/js/public.js"></script>
 <script type="text/javascript" charset="utf-8" src="${ctx}/js/extjs/adapter/ext/ext-base.js"></script>
 <script type="text/javascript" charset="utf-8" src="${ctx}/js/extjs/ext-all.js"></script>
+<script type="text/javascript" charset="utf-8"  src="${ctx}/js/jquery-ajaxQueue.js"></script>
+<script type="text/javascript" src="${ctx}/js/tree/jquery.tree.min.js"></script>
 <script type="text/javascript" src="${ctx}/js/tree/location.tree.js"></script>
 <script type="text/javascript" src="${ctx}/js/upload/ajaxupload.js"></script>
 <script type="text/javascript">
@@ -127,7 +163,37 @@
                 '<fmt:message key="aimir.heatmeater"/>'
             ]
         };
-
+        
+        var supplyMin;
+    	var supplyMax;
+    	var condition1;
+    	var condition2;
+    	
+    	var red = '#F31523'; 
+        var orange = '#FC8F00'; 
+        var gold = '#A99903';
+    	var blue = '#006BF7';
+    	var grey = '#969696';
+    	var green = '#80E12A';
+    	var pink = '#FF607F';
+    	var setColorFrontTag = "<b style=\"color:";
+        var setColorMiddleTag = ";\">"; 
+        var setColorBackTag = "</b>";
+        
+        var licenceUse = " ";
+        var totalLicenceCount = " ";
+        var registeredLicenceCount = " ";
+        var availableLicenceCount = " ";
+        var tariffTypeId;
+        
+        // grid column tooltip
+        function addTooltip(value, metadata) {
+            if (value != null && value != "" && metadata != null) {
+                metadata.attr = 'ext:qtip="' + value + '"';
+            }
+            return value;
+        }
+        
         var getSupplyType = function (type) {
             var ret;
             $.each(SupplyTypeCon, function (index, element) {
@@ -240,15 +306,15 @@
         }
         
         $(document).ready(function() {
-            // 전기 FLEX OBJECT
-            grid1 = getFlexObject('chargeMgmtEm');
-            // 가스 FLEX OBJECT
-            grid2 = getFlexObject('chargeMgmtGm');
-            // 수도 FLEX OBJECT
-            grid3 = getFlexObject('chargeMgmtWm');
-
+            // 전기 
+            //grid1 = getFlexObject('chargeMgmtEm');
+            // 가스
+            //grid2 = getFlexObject('chargeMgmtGm');
+            // 수도 
+            //grid3 = getFlexObject('chargeMgmtWm');
+			
             $('#yyyymmddCombo').selectbox();
-
+			$('#tariffTypeCombo').selectbox();
             init();
             
             //location Tree 항목에 필요한 데이터를 불러오며, 트리를 그려주는 함수가 포함되어 있다.
@@ -357,7 +423,8 @@
             var yyyymmdd = "";
             var fileType = $('#supplierType option:selected').val();
             yyyymmdd = $('#yyyymmddCombo option:selected').val();
-
+            var tariffType = $('#tariffTypeCombo option:selected').val();
+            
             if (fileType=='3.1'){ fileType = 'Electricity';}
             else if (fileType=='3.2'){ fileType = 'Water';}
             else if (fileType=='3.3'){ fileType = 'Gas';}
@@ -368,7 +435,8 @@
             obj.supplierId          = supplierObj.id;
             obj.fileType            = fileType;
             obj.yyyymmdd            = yyyymmdd;
-
+			obj.tariffType 			= tariffType;
+			
             if(winObj) {
                 winObj.close();
             }
@@ -468,12 +536,18 @@
                         });
                     } else if (json.supplier != null) {
                         var supplier = json.supplier;
+                        licenceUse = json.licenceUse;
+                       	totalLicenceCount = json.totalLicenceCount;
+                        registeredLicenceCount = json.registeredLicenceCount;
+                        availableLicenceCount = json.availableLicenceCount;
+                        
                         var innerHtml = "<span id='supplierFont2' class='bg-white input-fake border-blue bluebold11pt'>" + supplier['name'] + "</span>";
 
                         $('#supplierList').html(innerHtml);
-
+                        
                         getCount('supplier');
                         getSupplier(supplier['id'], callback);
+                        setTab(supplier['name']);
                     }
                 }
             );
@@ -488,6 +562,12 @@
             $.getJSON('${ctx}/gadget/system/supplier/getSupplier.do', {supplierId: sId},
                 function(json) {
                     supplierObj = json.supplier;
+                    
+                    licenceUse = json.licenceUse;
+                    totalLicenceCount = json.totalLicenceCount;
+                    registeredLicenceCount = json.registeredLicenceCount;
+                    availableLicenceCount = json.availableLicenceCount;
+                    
                     bindingDefault();
                     bindingType(json.supplyTypes);
                     if (callback) {
@@ -513,6 +593,7 @@
             $('#supplierAddButton2').hide();
             $('#typeControl_title').show();
             $('#typeControl').show();
+            
             if (supplierObj == null) {
                 resetDefault();
             }
@@ -544,16 +625,8 @@
                 + "<td><input readonly class='noborder' value='" + supplierObj.mdPattern + "'/></td></tr>"
                 + "<tr><th class='darkgraybold11pt'><fmt:message key='aimir.cd.pattern'/></th>"
                 + "<td><input readonly class='noborder' value='" + supplierObj.cdPattern + "'/></td></tr>"
-                + "<tr><th class='darkgraybold11pt'><fmt:message key='aimir.md.groupingSeperator'/></th>"
-                + "<td><input readonly class='noborder' value='" + supplierObj.mdGroupingSeperator + "'/></td></tr>"
-                + "<tr><th class='darkgraybold11pt'><fmt:message key='aimir.cd.groupingSeperator'/></th>"
-                + "<td><input readonly class='noborder' value='" + supplierObj.cdGroupingSeperator + "'/></td></tr>"
-                + "<tr><th class='darkgraybold11pt'><fmt:message key='aimir.md.decimalSeperator'/></th>"
-                + "<td><input readonly class='noborder' value='" + supplierObj.mdDecimalSeperator + "'/></td></tr>"
-                + "<tr><th class='darkgraybold11pt'><fmt:message key='aimir.cd.decimalSeperator'/></th>"
-                + "<td><input readonly class='noborder' value='" + supplierObj.cdDecimalSeperator + "'/></td></tr>"
                 + "<tr><th class='darkgraybold11pt'><fmt:message key='aimir.md.round'/></th>";
-
+                
                 if (supplierObj.mdRound == "r") {
                     innerHtml += "<td><input readonly class='noborder' value='<fmt:message key='aimir.supplier.round.half'/>'/></td></tr>";
                 } else if (supplierObj.mdRound == "c") {
@@ -571,8 +644,26 @@
                 } else if (supplierObj.cdRound == "f") {
                     innerHtml += "<td><input readonly class='noborder' value='<fmt:message key='aimir.supplier.round.down'/>'/></td></tr>";
                 }
+                
+                innerHtml += "<tr><th class='darkgraybold11pt'>Licence Use</th>";
 
+                if (licenceUse == 1) {
+                	innerHtml +=  '<td><input readonly class="noborder" value="Y"/></td></tr>';
+                } else {
+                	innerHtml +=  '<td><input readonly class="noborder" value="N"/></td></tr>';
+                }
+
+           		innerHtml +=  "<tr><th class='darkgraybold11pt'>Total Contract Licence</th>"
+                   			+ '<td><input readonly class="noborder" value="' + totalLicenceCount + '"/></td></tr>'
+                   			
+                   			+ "<tr><th class='darkgraybold11pt'>Registered Licence</th>"
+                   			+ '<td><input readonly class="noborder" value="' + registeredLicenceCount + '"/></td></tr>'
+                   			
+                   			+ "<tr><th class='darkgraybold11pt'>Available Licence</th>"
+                   			+ '<td><input readonly class="noborder" value="' + availableLicenceCount + '"/></td></tr>';
+            	
                 innerHtml += "</table>";
+                
                 if (editAuth == "true") {
                     innerHtml += "<div class='btn btn_right_bottom'><ul><li style='margin:0;'><a href='javascript:updateDefault()' class='on'><fmt:message key='aimir.update'/></a></li></ul>"
                                + "</div>";
@@ -616,7 +707,7 @@
             $('#typeControl').hide();
             
             if (sLoad == true) {
-                $("#default").load("${ctx}/gadget/system/supplier/updateSupplier.do?supplierId=" + sId);
+            	$("#default").load("${ctx}/gadget/system/supplier/updateSupplier.do?supplierId=" + sId);
             }
         }
 
@@ -659,16 +750,14 @@
                 };
                 $('#supplierDefault').ajaxSubmit(options);
             } else if (type == "update" && sLoad == true) {
-                
-                var options = {
-                    success : updateSupplierResult,
-                    url : '${ctx}/gadget/system/supplier/updateSupplier.do',
-                    type : 'post',
-                    datatype : 'json'
-                };
+            	var options = {
+	                    success : updateSupplierResult,
+	                    url : '${ctx}/gadget/system/supplier/updateSupplier.do',
+	                    type : 'post',
+	                    datatype : 'json'
+					}
 
                 $('#supplierDefault').ajaxSubmit(options); 
-                
             }
         }
 
@@ -1380,8 +1469,9 @@
                             $('#yyyymmddCombo').val(json.date);
                             $('#yyyymmddCombo').selectbox('change');
                             $('#yyyymmddCombo').selectbox();
-                            send();
-
+                            
+                            getTariffGrid();
+                            
                             if (callback) {
                                 callback();
                             }
@@ -1400,6 +1490,16 @@
                                 $('#yyyymmddCombo').append("<option value='"+yyyymmdd['yyyymmdd']+"'>"+yyyymmdd['yyyymmdd']+"</option>");
                             });
                         }
+                        //selectAppliedTariffDate() EM일 경우에만 최근 date를 알 수 있기때문에 WM은 리스트의 마지막 date를 수동으로 넣어서 조회
+                        if(supplyType=='Water'){
+                        	if(json.yyyymmddList.length > 0){
+                        		$('#yyyymmddCombo').val(json.yyyymmddList[json.yyyymmddList.length-1].yyyymmdd);
+                        	}else{
+	                        	$('#yyyymmddCombo').val();
+                        	}
+                        	$('#yyyymmddCombo').selectbox('change');
+                        	getTariffGrid();
+                        }
                         $('#yyyymmddCombo').selectbox();
                         selectAppliedTariffDate(supplyType, callback);
             });
@@ -1409,7 +1509,7 @@
         function changeFlexDiv(type) {
 
             supplyType = getSupplyType(type);
-
+            getTariffTypeList();
             // 공급타입별 적용일자 콤보 리스트 로딩
             getYyyymmddList(supplyType);
 
@@ -1436,19 +1536,45 @@
         function getFmtMessage() {
             var cnt = 0;
             var fmtMessage = new Array();
-
+            
+            /*
+            //ECG
             if (supplyType == SupplierType.Electricity) {
                 cnt = 0;
                 fmtMessage[cnt++] = "<fmt:message key="aimir.tariff"/>";
                 fmtMessage[cnt++] = "<fmt:message key="aimir.season"/>";
                 fmtMessage[cnt++] = "<fmt:message key="aimir.supplySize"/>"+"(x)";
                 fmtMessage[cnt++] = "<fmt:message key="aimir.serviceCharge"/>";
+                fmtMessage[cnt++] = "Old Subsidy(S2)";
+                fmtMessage[cnt++] = "Gov Levy";
+                fmtMessage[cnt++] = "Street Light Levy";
+                fmtMessage[cnt++] = "Vat";
+                fmtMessage[cnt++] = "<fmt:message key="aimir.tou"/>";
+                fmtMessage[cnt++] = "<fmt:message key="aimir.activeEnergyCharge"/>";
+                fmtMessage[cnt++] = "Lifeline Subsidy(S1)";
+                fmtMessage[cnt++] = "New Subsidy(S3)";
+                fmtMessage[cnt++] = "<fmt:message key="aimir.excel.chargeMgmtEm"/>";
+                fmtMessage[cnt++] = "<fmt:message key="aimir.energy.excess"/>";       // 초과
+                fmtMessage[cnt++] = "<fmt:message key="aimir.below"/>";               // 미만
+                fmtMessage[cnt++] = "<fmt:message key="aimr.morethan"/>";             // 이상
+                fmtMessage[cnt++] = "<fmt:message key="aimir.less"/>";                // 이하
+                fmtMessage[cnt++] = "<fmt:message key="aimir.hour"/>";                // 시간
+                fmtMessage[cnt++] = "Utility Relief";
+            }
+            */
+
+            if (supplyType == SupplierType.Electricity) {
+                cnt = 0;
+                fmtMessage[cnt++] = "<fmt:message key="aimir.tariff"/>";    //0'Tariff'
+                fmtMessage[cnt++] = "<fmt:message key="aimir.season"/>";
+                fmtMessage[cnt++] = "<fmt:message key="aimir.supplySize"/>"+"(x)";  //2'Supply Size'
+                fmtMessage[cnt++] = "<fmt:message key="aimir.serviceCharge"/>";     //3'Service Charge'
                 fmtMessage[cnt++] = "<fmt:message key="aimir.adminCharge"/>";
                 fmtMessage[cnt++] = "<fmt:message key="aimir.transmissionNetworkCharge"/>";
                 fmtMessage[cnt++] = "<fmt:message key="aimir.distributionNetworkCharge"/>";
                 fmtMessage[cnt++] = "<fmt:message key="aimir.energyDemandCharge"/>";
                 fmtMessage[cnt++] = "<fmt:message key="aimir.tou"/>";
-                fmtMessage[cnt++] = "<fmt:message key="aimir.activeEnergyCharge"/>";
+                fmtMessage[cnt++] = "<fmt:message key="aimir.activeEnergyCharge"/>"; //9'Active Energy Charge'
                 fmtMessage[cnt++] = "<fmt:message key="aimir.reactiveEnergyCharge"/>";
                 fmtMessage[cnt++] = "<fmt:message key="aimir.rateRevalancingLevy"/>";
                 fmtMessage[cnt++] = "<fmt:message key="aimir.excel.chargeMgmtEm"/>";
@@ -1457,6 +1583,15 @@
                 fmtMessage[cnt++] = "<fmt:message key="aimr.morethan"/>";             // 이상
                 fmtMessage[cnt++] = "<fmt:message key="aimir.less"/>";                // 이하
                 fmtMessage[cnt++] = "<fmt:message key="aimir.hour"/>";                // 시간
+                fmtMessage[cnt++] = "<fmt:message key="aimir.prepayment.govSubsidy"/>"; //18'Government Subsidy'
+                fmtMessage[cnt++] = "<fmt:message key="aimir.prepayment.publicLevy"/>"; //19'Public Levy'
+                fmtMessage[cnt++] = "<fmt:message key="aimir.prepayment.vat"/>";    //20'VAT'
+                fmtMessage[cnt++] = "<fmt:message key="aimir.utilityRelief"/>";     //21'Utility Relief'
+                fmtMessage[cnt++] = "<fmt:message key="aimir.prepayment.additionalSubsidy"/>"; //22'Additional Subsidy', (S3)
+                fmtMessage[cnt++] = "<fmt:message key="aimir.prepayment.lifeLineSubsidy"/>";   //23'Lifeline Subsidy'
+                fmtMessage[cnt++] = "<fmt:message key="aimir.prepayment.govLevy"/>";    //24'Government Levy'
+                fmtMessage[cnt++] = "<fmt:message key="aimir.tariff.nhil"/>";   //25'NHIL'
+                fmtMessage[cnt++] = "<fmt:message key="aimir.tariff.getfund"/>"; //26'GETFUND'
             }
             else if (supplyType == SupplierType.Gas) {
                 cnt = 0;
@@ -1493,11 +1628,11 @@
                 fmtMessage[cnt++] = "<fmt:message key="aimir.adminCharge"/>";		  // 관리비용
                 fmtMessage[cnt++] = "<fmt:message key="aimir.waterCharge.title3"/>";  // 업종/구분
                 fmtMessage[cnt++] = "<fmt:message key="aimir.waterCharge.title4"/>";  // 구경(mm)
-                fmtMessage[cnt++] = "<fmt:message key="aimir.energyDemandCharge"/>";  // 에너지수요요금
+                fmtMessage[cnt++] = "<fmt:message key="aimir.waterCharge.title7"/>";  // 사용구분(m3)
                 fmtMessage[cnt++] = "<fmt:message key="aimir.waterCharge.title9"/>";  // 물이용부담금(원)
                 fmtMessage[cnt++] = "<fmt:message key="aimir.waterCharge.title5"/>";  // 기본요금(냉수)
                 fmtMessage[cnt++] = "<fmt:message key="aimir.waterCharge.title6"/>";  // 기본요금(온수)
-                fmtMessage[cnt++] = "<fmt:message key="aimir.waterCharge.title7"/>";  // 사용구분(m3)
+                fmtMessage[cnt++] = "<fmt:message key="aimir.rateRevalancingLevy"/>";  // 에너지수요요금
                 fmtMessage[cnt++] = "<fmt:message key="aimir.excel.chargeMgmtWm"/>";  // 수도요금관리보고서
                 fmtMessage[cnt++] = "<fmt:message key="aimir.energy.excess"/>";       // 초과
                 fmtMessage[cnt++] = "<fmt:message key="aimir.below"/>";               // 미만
@@ -1507,28 +1642,1153 @@
 			   
             }
 
-            fmtMessage[20] = "<fmt:message key="aimir.msg.updatesuccess"/>";   // 수정 성공
-            fmtMessage[21] = "<fmt:message key="aimir.msg.updatefail"/>";      // 수정 실패
-            fmtMessage[22] = "<fmt:message key="aimir.data.notexist"/>";       // 데이터 없음
-            fmtMessage[23] = "<fmt:message key="aimir.updatedata.notexist"/>"; // 수정할 데이터 없음
-            fmtMessage[29] = "<fmt:message key="aimir.alert"/>";
-            fmtMessage[30] = "<fmt:message key="aimir.firmware.msg09"/>";       //데이터를 찾을수 없습니다.
-            fmtMessage[31] = "<fmt:message key="aimir.msg.wantdelete"/>";   // 정말로 삭제하시겠습니까?
-            fmtMessage[32] = "<fmt:message key="aimir.msg.deletesuccess"/>";  //삭제 성공
-            fmtMessage[33] = "<fmt:message key="aimir.msg.deleteFail"/>";  //삭제 실패
-            fmtMessage[34] = '<fmt:message key="aimir.msg.select.cell.before.add.row"/>';
 
-            fmtMessage[35] = '<fmt:message key="aimir.supplySize"/>';   // Supply Size
-            fmtMessage[36] = '<fmt:message key="aimir.min.upper"/>';    // MIN
-            fmtMessage[37] = '<fmt:message key="aimir.max"/>';          // MAX
-            fmtMessage[38] = '<fmt:message key="aimir.msg.minmaxsupplysize"/>';   // Max Supply Size 는 Min Supply Size 보다 커야 한다.
-            fmtMessage[39] = '<fmt:message key="aimir.msg.inputminsupplysize"/>';   // 최소 공급 사이즈를 입력해 주세요.
-            fmtMessage[40] = '<fmt:message key="aimir.msg.inputmaxsupplysize"/>';   // 최대 공급 사이즈를 입력해 주세요.
+            fmtMessage[50] = "<fmt:message key="aimir.msg.updatesuccess"/>";   // 수정 성공
+            fmtMessage[51] = "<fmt:message key="aimir.msg.updatefail"/>";      // 수정 실패
+            fmtMessage[52] = "<fmt:message key="aimir.data.notexist"/>";       // 데이터 없음
+            fmtMessage[53] = "<fmt:message key="aimir.updatedata.notexist"/>"; // 수정할 데이터 없음
+            fmtMessage[54] = "<fmt:message key="aimir.alert"/>";
+            fmtMessage[55] = "<fmt:message key="aimir.firmware.msg09"/>";       //데이터를 찾을수 없습니다.
+            fmtMessage[56] = "<fmt:message key="aimir.msg.wantdelete"/>";   // 정말로 삭제하시겠습니까?
+            fmtMessage[57] = "<fmt:message key="aimir.msg.deletesuccess"/>";  //삭제 성공
+            fmtMessage[58] = "<fmt:message key="aimir.msg.deleteFail"/>";  //삭제 실패
+            fmtMessage[59] = '<fmt:message key="aimir.msg.select.cell.before.add.row"/>';
+
+            fmtMessage[60] = '<fmt:message key="aimir.supplySize"/>';   // Supply Size
+            fmtMessage[61] = '<fmt:message key="aimir.min.upper"/>';    // MIN
+            fmtMessage[62] = '<fmt:message key="aimir.max"/>';          // MAX
+            fmtMessage[63] = '<fmt:message key="aimir.msg.minmaxsupplysize"/>';   // Max Supply Size 는 Min Supply Size 보다 커야 한다.
+            fmtMessage[64] = '<fmt:message key="aimir.msg.inputminsupplysize"/>';   // 최소 공급 사이즈를 입력해 주세요.
+            fmtMessage[65] = '<fmt:message key="aimir.msg.inputmaxsupplysize"/>';   // 최대 공급 사이즈를 입력해 주세요.
 
             return fmtMessage;
         }
+		
+        function getTariffTypeList(){
+        	 var fileType = $('#supplierType option:selected').val();
+        	$.getJSON('${ctx}/gadget/system/supplier/getTariffType.do'
+    				,{ serviceType : fileType, 
+        				supplierId : sId
+    				}, function (json){ 
+    					var result = json.result;
+                        var tariffArr = Array();
+    					for(var i=0;i<result.length; i++){
+    						var obj = new Object();
+                            obj.name=result[i].name;
+                            tariffArr[i]=obj;
+    					}
+    					$("#tariffTypeCombo").loadSelect(tariffArr);
+    					$("#tariffTypeCombo option:eq(0)").replaceWith("<option value=''>" + "<fmt:message key="aimir.all"/>" + "</option>");
+    					$("#tariffTypeCombo").val("");
+    					$('#tariffTypeCombo').selectbox();
+    					
+    				});
+        }
+        
+        // Tariff 그리드 
+        var tariffModelEm; // Energy
+        var tariffModelGm; // Gas
+        var tariffModelWm; // Water
+        var tariffStore;
+        var tariffGridPanel;
+        var tariffInstanceOn = false;
+        var tariffWmInstanceOn = false;
+        function getTariffGrid(){
+        	var yyyymmdd = "";
+            var fileType = $('#supplierType option:selected').val();
+            yyyymmdd = $('#yyyymmddCombo option:selected').val();
+            var tariffType = $('#tariffTypeCombo option:selected').val();
+           
+            if (fileType=='3.1'){ fileType = 'Electricity';}
+            else if (fileType=='3.2'){ fileType = 'Water';}
+            else if (fileType=='3.3'){ fileType = 'Gas';}
 
-        // 요금관리 - 조회조건 처리
+            var fmtMsgArr = getFmtMessage();
+            
+        	tariffStore = new Ext.data.JsonStore({
+				autoLoad: true,
+				url:"${ctx}/gadget/system/supplier/getTariffGrid.do",
+				root: 'GridData',
+				baseParams:{
+					supplierId:sId,
+					fileType:fileType,
+					yyyymmdd:yyyymmdd,
+					tariffType: tariffType
+				}, 
+				fields: [
+					"ID",
+					"SEASON",
+					"SUPPLYSIZEMIN",
+					"SUPPLYSIZEMAX",
+					"CONDITION1",
+					"CONDITION2",
+					"PEAKTYPE",
+					"REACTIVEENERGYCHARGE",
+					"ADMINCHARGE",
+					"SUPPLYSIZEMAX",
+					"TARIFFTYPE",
+					"TRANSMISSIONNETWORKCHARGE",
+					"ACTIVEENERGYCHARGE",
+					"SEASON",
+					"MAXDEMAND",
+					"ENERGYDEMANDCHARGE",
+					"DISTRIBUTIONNETWORKCHARGE",
+					"SERVICECHARGE",
+					"RATEREBALANCINGLEVY",
+					//"STARTHOUR",
+					//"ENDHOUR",
+                    "NHIL",
+                    "GETFUND",
+					"HOUR",
+					"TARIFFTYPEID",
+					"ERS"
+				]
+			});//Store End
+			
+			 var edit = true;
+
+	         if (editAuth != "true") {
+	                edit = false;
+	         }
+			
+	        if(fileType == 'Electricity'){ 
+			tariffModelEm = new Ext.grid.ColumnModel({
+				columns:[
+					{
+						header:fmtMsgArr[0], //message는 getFmtMessage참조.
+						dataIndex:'TARIFFTYPE',
+						editable: edit,
+						width: 160,
+		                editor: {
+                            id : 'tariffTypeEdit',
+                            xtype: 'textfield',
+                            allowBlank : false,
+                        },
+                        renderer : function(value, me, record, rowNumber, columnIndex, store) {
+                        	var tariffType_name = record.data.TARIFFTYPE;
+	                        	if(tariffType_name=="PRE-AGRICULTURE")
+	                       			return setColorFrontTag + pink + setColorMiddleTag + value + setColorBackTag;
+	                        	if(tariffType_name=="PRE-GOVERNMENT")
+	                       			return setColorFrontTag + green  + setColorMiddleTag + value + setColorBackTag;
+	                        	if(tariffType_name=="PRE-COMMERCIAL")
+	                       			return setColorFrontTag + grey  + setColorMiddleTag + value + setColorBackTag;
+	                        	if(tariffType_name=="PRE-INDUSTRIAL")
+	                       			return setColorFrontTag + gold + setColorMiddleTag + value + setColorBackTag;
+	                        	if(tariffType_name=="PRE-RESIDENTIAL")
+	                       			return setColorFrontTag + orange + setColorMiddleTag + value + setColorBackTag;
+	                        	if(tariffType_name=="Non Residential")
+	                       			return setColorFrontTag + red + setColorMiddleTag + value + setColorBackTag;
+	                        	if(tariffType_name="Residential")
+	                       			return setColorFrontTag + blue + setColorMiddleTag + value + setColorBackTag;
+	                        	else
+	                        		return value;
+	                        	
+               				}
+					},
+					{
+						header:'TARIFFTYPEID', 
+						dataIndex:'TARIFFTYPEID',
+						hidden:true,
+						renderer: function (value, meta, record, rowIndex, colIndex, store) {
+							$.ajaxSetup({
+		       	                async : false
+		       	            });
+							
+							var tariffType_name = record.data.TARIFFTYPE;
+							var count = tariffStore.getCount();
+		                    var data = [];
+		                    for(var i=0; i < count; i++){
+		                    	data[i] = tariffStore.data.items[i].data;
+		                    	if(data[i].TARIFFTYPE == tariffType_name){
+		                    		 TARIFFTYPEID = data[i].TARIFFTYPEID;
+		                    		
+		                    		 if (tariffType_name != "" && TARIFFTYPEID == "") {
+		                    			 setTariffId(tariffType_name);
+		                    			 TARIFFTYPEID = tariffTypeId;
+		                    		 }
+		                    		 
+		                    		 break;
+		                    	}
+		                    }  
+	    					record.data.TARIFFTYPEID = TARIFFTYPEID;
+						}
+					},{
+						header:fmtMsgArr[2],
+						dataIndex:'SUPPLYSIZE',
+						width: 140,
+						editable: edit,
+						align: 'center',
+						renderer: function(value, metaData, record, index) {
+	                    	var data = record.data;
+	                    	supplyMin = data.SUPPLYSIZEMIN;
+	                    	supplyMax = data.SUPPLYSIZEMAX;
+	                    	condition1 = data.CONDITION1;
+	                    	condition2 = data.CONDITION2; 
+	                    	
+	                    	if(condition1==null) condition1 = "";
+	                    	if(condition2==null) condition2 = "";
+	                    	if(supplyMin==null) supplyMin = "";
+	                    	if(supplyMax==null) supplyMax = ""; 
+	                    	if(supplyMin==0) supplyMin = supplyMin.toString();
+	                    	if(supplyMax==0) supplyMax = supplyMax.toString();
+	                    	
+	                    	var hAe = ">=";
+	                    	var textHtml = "";
+
+	                    	if (supplyMax == "" && condition1 != "") {
+	                    		textHtml = "x" + " " + condition1 + " " + supplyMin;
+	                    	} else if (supplyMin == "" && condition2 != "") {
+	                    		textHtml = "x" + " " + condition2 + " " + supplyMax;
+	                    	} else if (supplyMax != "" && supplyMin != "") {
+	                    		if (condition1 == ">") {
+	                    			condition1 = "<";
+	                    		} else if (condition1 == hAe) {
+	                    			condition1 = "<=";
+	                    		}
+	                    		
+	                    		textHtml = supplyMin + " " + condition1 + " x " + condition2 + " " + supplyMax;
+	                    	} else {
+	                    		textHtml = "-";
+	                    	}
+
+	                    	var btnHtml = "<div class='supplyModify' style='cursor:pointer' onclick='javascript:modifySupply(\"" 
+	                    		+ supplyMin + "\"," + "\"" + supplyMax + "\"," + "\"" + condition1 + "\"," + "\"" + condition2 + "\"" + ")'>" + textHtml +"</div>";
+	                    		                    	
+	                    	var tplText = new Ext.Template(btnHtml);
+	                    	
+	                        return tplText.apply();
+	                        
+	                    }
+	                    
+					},{
+						header:fmtMsgArr[3],
+						dataIndex:'SERVICECHARGE',
+						width: 120,
+						editable: edit,
+						align:'right',
+						editor: new Ext.form.TextField({
+                            id : 'serviceChange',
+                            allowBlank : true
+                        })
+					},{
+						header:fmtMsgArr[24],
+						dataIndex:'TRANSMISSIONNETWORKCHARGE',
+						width: 140,
+						editable: edit,
+						align:'right',
+						editor: new Ext.form.TextField({
+                            id : 'tranmission',
+                            allowBlank : true
+                        })
+					},{
+						header:fmtMsgArr[19],
+						dataIndex:'DISTRIBUTIONNETWORKCHARGE',
+						width: 110,
+						editable: edit,
+						align:'right',
+						editor: new Ext.form.TextField({
+                            id : 'distribution',
+                            allowBlank : true
+                        })
+					},{
+						header:fmtMsgArr[20],
+						dataIndex:'ENERGYDEMANDCHARGE',
+						width: 90,
+						editable: edit,
+						align:'right',
+						editor: new Ext.form.TextField({
+                            id : 'energy',
+                            allowBlank : true
+                        })
+					},{
+						header:fmtMsgArr[9],
+						dataIndex:'ACTIVEENERGYCHARGE',
+						width: 150,
+						editable: edit,
+						align:'right',
+						editor: new Ext.form.TextField({
+                            id : 'activeEnergy',
+                            allowBlank : true
+                        })
+					},{
+						header:fmtMsgArr[23],
+						dataIndex:'REACTIVEENERGYCHARGE',
+						width: 120,
+						editable: edit,
+						align:'right',
+						editor: new Ext.form.TextField({
+                            id : 'reactiveEnergy',
+                            allowBlank : true
+                        })
+					},{
+						header:fmtMsgArr[18],
+						dataIndex:'ADMINCHARGE',
+						width: 150,
+						editable: edit,
+						align:'right',
+						editor: new Ext.form.TextField({
+                            id : 'adminCharge',
+                            allowBlank : true
+                        })
+					},{
+						header:fmtMsgArr[22],
+						dataIndex:'RATEREBALANCINGLEVY',
+						width: 140,
+						editable: edit,
+						align:'right',
+						editor: new Ext.form.TextField({
+                            id : 'rateRebalance',
+                            allowBlank : true
+                        })
+					},{
+						header:fmtMsgArr[21],
+						dataIndex:'MAXDEMAND',
+						width: 110,
+						editable: edit,
+						align:'right',
+						editor: new Ext.form.TextField({
+                            id : 'maxDemand',
+                            allowBlank : true
+                        })
+					},{
+						header:fmtMsgArr[25], //nhil로 변경..?
+						dataIndex:'NHIL',
+						editable: edit,
+						width: 90,
+						align:'center',
+						editor: new Ext.form.TextField({
+                            id : 'nhil',
+                            allowBlank : true
+                        })
+					},{
+						header:fmtMsgArr[26], //getfund로 변경?
+						dataIndex:'GETFUND',
+						editable: edit,
+						width: 110,
+						align:'right',
+						editor: new Ext.form.TextField({
+                            id : 'getfund',
+                            allowBlank : true
+                        })
+					},{
+						header:'Delete', 
+						width: 60,
+						//editable: edit,
+						//layout: 'fit',
+						align:'center',
+						renderer: function(value, metaData, record, index) {
+	                    	var data = record.data;
+	                    	tariffId = data.ID;
+	                    	var btnHtml = "<div class='am_button'> <a href='#;' onclick='javascript:deleteRow();' >Delete</a> </div>";
+	                        var tplBtn = new Ext.Template(btnHtml);
+	                        return tplBtn.apply();
+	                    } 
+					}
+				],
+				
+				defaults: {
+					sortable: false,
+				},
+				 
+			});
+	        }
+	        
+	        if(fileType == 'Water'){
+	        	tariffModelWm  = new Ext.grid.ColumnModel({
+					columns:[
+						{
+							header:'Tariff', 
+							dataIndex:'TARIFFTYPE',
+							editable: edit,
+							width: 180,
+			                editor: {
+	                            id : 'tariffTypeEdit',
+	                            xtype: 'textfield',
+	                            allowBlank : false,
+	                        },
+	                        renderer : function(value, me, record, rowNumber, columnIndex, store) {
+	                        	var tariffType_name = record.data.TARIFFTYPE;
+		                        	if(tariffType_name=="PRE-AGRICULTURE")
+		                       			return setColorFrontTag + pink + setColorMiddleTag + value + setColorBackTag;
+		                        	if(tariffType_name=="PRE-GOVERNMENT")
+		                       			return setColorFrontTag + green  + setColorMiddleTag + value + setColorBackTag;
+		                        	if(tariffType_name=="PRE-COMMERCIAL")
+		                       			return setColorFrontTag + grey  + setColorMiddleTag + value + setColorBackTag;
+		                        	if(tariffType_name=="PRE-INDUSTRIAL")
+		                       			return setColorFrontTag + gold + setColorMiddleTag + value + setColorBackTag;
+		                        	if(tariffType_name=="PRE-RESIDENTIAL")
+		                       			return setColorFrontTag + orange + setColorMiddleTag + value + setColorBackTag;
+		                        	if(tariffType_name=="Non Residential")
+		                       			return setColorFrontTag + red + setColorMiddleTag + value + setColorBackTag;
+		                        	if(tariffType_name="Residential")
+		                       			return setColorFrontTag + blue + setColorMiddleTag + value + setColorBackTag;
+		                        	else
+		                        		return value;
+		                        	
+	               				}
+						},
+						{
+							header:'TARIFFTYPEID', 
+							dataIndex:'TARIFFTYPEID',
+							hidden:true,
+							renderer: function (value, meta, record, rowIndex, colIndex, store) {
+								var tariffType_name = record.data.TARIFFTYPE;
+								var count = tariffStore.getCount();
+			                    var data = [];
+			                    for(var i=0; i < count; i++){
+			                    	data[i] = tariffStore.data.items[i].data;
+			                    	if(data[i].TARIFFTYPE == tariffType_name){
+			                    		 TARIFFTYPEID = data[i].TARIFFTYPEID;
+			                    		 break;
+			                    	}
+			                    }  	
+			    				record.data.TARIFFTYPEID = TARIFFTYPEID;
+							}
+						},{
+							header:'Supply Size(x)', 
+							dataIndex:'SUPPLYSIZE',
+							width: 140,
+							editable: edit,
+							align: 'center',
+							renderer: function(value, metaData, record, index) {
+		                    	var data = record.data;
+		                    	supplyMin = data.SUPPLYSIZEMIN;
+		                    	supplyMax = data.SUPPLYSIZEMAX;
+		                    	condition1 = data.CONDITION1;
+		                    	condition2 = data.CONDITION2; 
+		                    	
+		                    	if(condition1==null) condition1 = "";
+		                    	if(condition2==null) condition2 = "";
+		                    	if(supplyMin==null) supplyMin = "";
+		                    	if(supplyMax==null) supplyMax = ""; 
+		                    	if(supplyMin==0) supplyMin = supplyMin.toString();
+		                    	if(supplyMax==0) supplyMax = supplyMax.toString();
+		                    	
+		                    	var hAe = ">=";
+		                    	var textHtml = "";
+
+		                    	if (supplyMax == "" && condition1 != "") {
+		                    		textHtml = "x" + " " + condition1 + " " + supplyMin;
+		                    	} else if (supplyMin == "" && condition2 != "") {
+		                    		textHtml = "x" + " " + condition2 + " " + supplyMax;
+		                    	} else if (supplyMax != "" && supplyMin != "") {
+		                    		if (condition1 == ">") {
+		                    			condition1 = "<";
+		                    		} else if (condition1 == hAe) {
+		                    			condition1 = "<=";
+		                    		}
+		                    		
+		                    		textHtml = supplyMin + " " + condition1 + " x " + condition2 + " " + supplyMax;
+		                    	} else {
+		                    		textHtml = "-";
+		                    	}
+
+		                    	var btnHtml = "<div class='supplyModify' style='cursor:pointer' onclick='javascript:modifySupply(\"" 
+		                    		+ supplyMin + "\"," + "\"" + supplyMax + "\"," + "\"" + condition1 + "\"," + "\"" + condition2 + "\"" + ")'>" + textHtml +"</div>";
+		                    		                    	
+		                    	var tplText = new Ext.Template(btnHtml);
+		                    	
+		                        return tplText.apply();
+		                        
+		                    }
+		                    
+						},{
+							header:'Service Charge', 
+							dataIndex:'SERVICECHARGE',
+							width: 120,
+							editable: edit,
+							align:'right',
+							editor: new Ext.form.TextField({
+	                            id : 'serviceChange',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'Transmission', 
+							dataIndex:'TRANSMISSIONNETWORKCHARGE',
+							width: 120,
+							editable: edit,
+							align:'right',
+							editor: new Ext.form.TextField({
+	                            id : 'tranmission',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'Distribution', 
+							dataIndex:'DISTRIBUTIONNETWORKCHARGE',
+							width: 120,
+							editable: edit,
+							align:'right',
+							editor: new Ext.form.TextField({
+	                            id : 'distribution',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'Energy', 
+							dataIndex:'ENERGYDEMANDCHARGE',
+							width: 120,
+							editable: edit,
+							align:'right',
+							editor: new Ext.form.TextField({
+	                            id : 'energy',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'Active Energy', 
+							dataIndex:'ACTIVEENERGYCHARGE',
+							width: 120,
+							editable: edit,
+							align:'right',
+							editor: new Ext.form.TextField({
+	                            id : 'activeEnergy',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'Reative', 
+							dataIndex:'REACTIVEENERGYCHARGE',
+							width: 120,
+							editable: edit,
+							align:'right',
+							editor: new Ext.form.TextField({
+	                            id : 'reactiveEnergy',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'Admin Charge', 
+							dataIndex:'ADMINCHARGE',
+							width: 120,
+							editable: edit,
+							align:'right',
+							editor: new Ext.form.TextField({
+	                            id : 'adminCharge',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'Rate', 
+							dataIndex:'RATEREBALANCINGLEVY',
+							width: 120,
+							editable: edit,
+							align:'right',
+							editor: new Ext.form.TextField({
+	                            id : 'rateRebalance',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'MAXDEMAND', 
+							dataIndex:'MAXDEMAND',
+							width: 120,
+							editable: edit,
+							align:'right',
+							editor: new Ext.form.TextField({
+	                            id : 'maxDemand',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'SEASON', 
+							dataIndex:'SEASON',
+							editable: false,
+							width: 100,
+							align:'center',
+							editor: new Ext.form.TextField({
+	                            id : 'season',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'TOU Rate', 
+							dataIndex:'PEAKTYPE',
+							editable: false,
+							width: 100,
+							align:'right',
+							editor: new Ext.form.TextField({
+	                            id : 'tourateId',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'Hour', 
+							dataIndex:'HOUR',
+							editable: edit,
+							width: 100,
+							align:'center',
+							editor: new Ext.form.TextField({
+	                            id : 'hour',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'Delete', 
+							width: 60,
+							//editable: edit,
+							//layout: 'fit',
+							align:'center',
+							renderer: function(value, metaData, record, index) {
+		                    	var data = record.data;
+		                    	tariffId = data.ID;
+		                    	var btnHtml = "<div class='am_button'> <a href='#;' onclick='javascript:deleteRow();' >Delete</a> </div>";
+		                        var tplBtn = new Ext.Template(btnHtml);
+		                        return tplBtn.apply();
+		                    } 
+						}
+					],
+					
+					defaults: {
+						sortable: false,
+					},
+					 
+				});
+	        }
+	        
+	        if(fileType == 'Gas'){
+	        	tariffModelGm  = new Ext.grid.ColumnModel({
+					columns:[
+						{
+							header:'Tariff', 
+							dataIndex:'TARIFFTYPE',
+							editable: edit,
+							width: 180,
+			                editor: {
+	                            id : 'tariffTypeEdit',
+	                            xtype: 'textfield',
+	                            allowBlank : false,
+	                        },
+	                        renderer : function(value, me, record, rowNumber, columnIndex, store) {
+	                        	var tariffType_name = record.data.TARIFFTYPE;
+		                        	if(tariffType_name=="PRE-AGRICULTURE")
+		                       			return setColorFrontTag + pink + setColorMiddleTag + value + setColorBackTag;
+		                        	if(tariffType_name=="PRE-GOVERNMENT")
+		                       			return setColorFrontTag + green  + setColorMiddleTag + value + setColorBackTag;
+		                        	if(tariffType_name=="PRE-COMMERCIAL")
+		                       			return setColorFrontTag + grey  + setColorMiddleTag + value + setColorBackTag;
+		                        	if(tariffType_name=="PRE-INDUSTRIAL")
+		                       			return setColorFrontTag + gold + setColorMiddleTag + value + setColorBackTag;
+		                        	if(tariffType_name=="PRE-RESIDENTIAL")
+		                       			return setColorFrontTag + orange + setColorMiddleTag + value + setColorBackTag;
+		                        	if(tariffType_name=="Non Residential")
+		                       			return setColorFrontTag + red + setColorMiddleTag + value + setColorBackTag;
+		                        	if(tariffType_name="Residential")
+		                       			return setColorFrontTag + blue + setColorMiddleTag + value + setColorBackTag;
+		                        	else
+		                        		return value;
+		                        	
+	               				}
+						},
+						{
+							header:'TARIFFTYPEID', 
+							dataIndex:'TARIFFTYPEID',
+							hidden:true,
+							renderer: function (value, meta, record, rowIndex, colIndex, store) {
+								var tariffType_name = record.data.TARIFFTYPE;
+								var count = tariffStore.getCount();
+			                    var data = [];
+			                    for(var i=0; i < count; i++){
+			                    	data[i] = tariffStore.data.items[i].data;
+			                    	if(data[i].TARIFFTYPE == tariffType_name){
+			                    		 TARIFFTYPEID = data[i].TARIFFTYPEID;
+			                    		 break;
+			                    	}
+			                    }  
+		    					record.data.TARIFFTYPEID = TARIFFTYPEID;
+							}
+						},{
+							header:'Supply Size(x)', 
+							dataIndex:'SUPPLYSIZE',
+							width: 140,
+							editable: edit,
+							align: 'center',
+							renderer: function(value, metaData, record, index) {
+		                    	var data = record.data;
+		                    	supplyMin = data.SUPPLYSIZEMIN;
+		                    	supplyMax = data.SUPPLYSIZEMAX;
+		                    	condition1 = data.CONDITION1;
+		                    	condition2 = data.CONDITION2; 
+		                        
+		                    	if(condition1==null) condition1 = "";
+		                    	if(condition2==null) condition2 = "";
+		                    	if(supplyMin==null) supplyMin = "";
+		                    	if(supplyMax==null) supplyMax = ""; 
+		                    	if(supplyMin==0) supplyMin = supplyMin.toString();
+		                    	if(supplyMax==0) supplyMax = supplyMax.toString();
+		                    	
+		                    	var hAe = ">=";
+		                    	var textHtml = "";
+
+		                    	if (supplyMax == "" && condition1 != "") {
+		                    		textHtml = "x" + " " + condition1 + " " + supplyMin;
+		                    	} else if (supplyMin == "" && condition2 != "") {
+		                    		textHtml = "x" + " " + condition2 + " " + supplyMax;
+		                    	} else if (supplyMax != "" && supplyMin != "") {
+		                    		if (condition1 == ">") {
+		                    			condition1 = "<";
+		                    		} else if (condition1 == hAe) {
+		                    			condition1 = "<=";
+		                    		}
+		                    		
+		                    		textHtml = supplyMin + " " + condition1 + " x " + condition2 + " " + supplyMax;
+		                    	} else {
+		                    		textHtml = "-";
+		                    	}
+
+		                    	var btnHtml = "<div class='supplyModify' style='cursor:pointer' onclick='javascript:modifySupply(\"" 
+		                    		+ supplyMin + "\"," + "\"" + supplyMax + "\"," + "\"" + condition1 + "\"," + "\"" + condition2 + "\"" + ")'>" + textHtml +"</div>";
+		                    		                    	
+		                    	var tplText = new Ext.Template(btnHtml);
+		                    	
+		                        return tplText.apply();
+		                        
+		                    }
+		                    
+						},{
+							header:'Service Charge', 
+							dataIndex:'SERVICECHARGE',
+							width: 120,
+							editable: edit,
+							align:'right',
+							editor: new Ext.form.TextField({
+	                            id : 'serviceChange',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'Transmission', 
+							dataIndex:'TRANSMISSIONNETWORKCHARGE',
+							width: 120,
+							editable: edit,
+							align:'right',
+							editor: new Ext.form.TextField({
+	                            id : 'tranmission',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'Distribution', 
+							dataIndex:'DISTRIBUTIONNETWORKCHARGE',
+							width: 120,
+							editable: edit,
+							align:'right',
+							editor: new Ext.form.TextField({
+	                            id : 'distribution',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'Energy', 
+							dataIndex:'ENERGYDEMANDCHARGE',
+							width: 120,
+							editable: edit,
+							align:'right',
+							editor: new Ext.form.TextField({
+	                            id : 'energy',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'Active Energy', 
+							dataIndex:'ACTIVEENERGYCHARGE',
+							width: 120,
+							editable: edit,
+							align:'right',
+							editor: new Ext.form.TextField({
+	                            id : 'activeEnergy',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'Reative', 
+							dataIndex:'REACTIVEENERGYCHARGE',
+							width: 120,
+							editable: edit,
+							align:'right',
+							editor: new Ext.form.TextField({
+	                            id : 'reactiveEnergy',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'Admin Charge', 
+							dataIndex:'ADMINCHARGE',
+							width: 120,
+							editable: edit,
+							align:'right',
+							editor: new Ext.form.TextField({
+	                            id : 'adminCharge',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'Rate', 
+							dataIndex:'RATEREBALANCINGLEVY',
+							width: 120,
+							editable: edit,
+							align:'right',
+							editor: new Ext.form.TextField({
+	                            id : 'rateRebalance',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'MAXDEMAND', 
+							dataIndex:'MAXDEMAND',
+							width: 120,
+							editable: edit,
+							align:'right',
+							editor: new Ext.form.TextField({
+	                            id : 'maxDemand',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'SEASON', 
+							dataIndex:'SEASON',
+							editable: edit,
+							width: 100,
+							align:'center',
+							editor: new Ext.form.TextField({
+	                            id : 'season',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'TOU Rate', 
+							dataIndex:'PEAKTYPE',
+							editable: edit,
+							width: 100,
+							align:'right',
+							editor: new Ext.form.TextField({
+	                            id : 'tourateId',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'Hour', 
+							dataIndex:'HOUR',
+							editable: edit,
+							width: 100,
+							align:'center',
+							editor: new Ext.form.TextField({
+	                            id : 'hour',
+	                            allowBlank : true
+	                        })
+						},{
+							header:'Delete', 
+							width: 60,
+							//editable: edit,
+							//layout: 'fit',
+							align:'center',
+							renderer: function(value, metaData, record, index) {
+		                    	var data = record.data;
+		                    	tariffId = data.ID;
+		                    	var btnHtml = "<div class='am_button'> <a href='#;' onclick='javascript:deleteRow();' >Delete</a> </div>";
+		                        var tplBtn = new Ext.Template(btnHtml);
+		                        return tplBtn.apply();
+		                    } 
+						}
+					],
+					
+					defaults: {
+						sortable: false,
+					},
+					 
+				});
+	        }
+	        
+			//Column Model
+			
+			if(fileType=='Electricity'){
+				if(tariffInstanceOn == false){
+					tariffGridPanel = new Ext.grid.EditorGridPanel({
+						store: tariffStore,
+						colModel: tariffModelEm,
+						autoScroll: true,
+						scroll: true,
+						width: 'auto',
+						height: 450,
+						cls: 'grid-row-span',
+						layout: 'fit',
+						//stripeRows: true,
+						columnLines: true,
+						loadMask : {
+	                        msg : 'loading...'
+	                    },
+						clicksToEdit : 1,
+						renderTo: 'chargeMgmtEm',
+						hideHeaders: false,
+						border: false,
+						sm : new Ext.grid.RowSelectionModel({
+			    			singleSelect:true,
+			    			moveEditorOnEnter : false,
+			    			listeners: {
+			                    rowselect: function(selectionModel, row, rec) {
+			                    	var data = rec.data;
+			                    	supplyMin = data.SUPPLYSIZEMIN;
+			                    	supplyMax = data.SUPPLYSIZEMAX;
+			                    	condition1 = data.CONDITION1;
+			                    	condition2 = data.CONDITION2;
+			                    	
+			                    }
+			                }
+			    		}), 
+					});//Grid Panel End
+					tariffInstanceOn = true;
+				} else{
+					tariffGridPanel.reconfigure(tariffStore, tariffModelEm);
+				}
+			}
+			if(fileType=='Water'){
+				if(tariffWmInstanceOn == false){
+					tariffGridPanel = new Ext.grid.EditorGridPanel({
+						store: tariffStore,
+						colModel: tariffModelWm,
+						autoScroll: true,
+						scroll: true,
+						width: 'auto',
+						height: 450,
+						cls: 'grid-row-span',
+						layout: 'fit',
+						//stripeRows: true,
+						columnLines: true,
+						loadMask : {
+	                        msg : 'loading...'
+	                    },
+						clicksToEdit : 1,
+						renderTo: 'chargeMgmtWm',
+						hideHeaders: false,
+						border: false,
+						sm : new Ext.grid.RowSelectionModel({
+			    			singleSelect:true,
+			    			moveEditorOnEnter : false,
+			    			listeners: {
+			                    rowselect: function(selectionModel, row, rec) {
+			                    	var data = rec.data;
+			                    	supplyMin = data.SUPPLYSIZEMIN;
+			                    	supplyMax = data.SUPPLYSIZEMAX;
+			                    	condition1 = data.CONDITION1;
+			                    	condition2 = data.CONDITION2;
+			                    	
+			                    	
+			                    }
+			                }
+			    		}), 
+			    		
+					});//Grid Panel End
+					tariffWmInstanceOn = true;
+					
+				} else{
+					tariffGridPanel.reconfigure(tariffStore, tariffModelWm);
+				}
+			}
+			if(fileType=='Gas'){
+				if(tariffInstanceOn == false){
+					tariffGridPanel = new Ext.grid.EditorGridPanel({
+						store: tariffStore,
+						colModel: tariffModelGm,
+						autoScroll: true,
+						scroll: true,
+						width: 'auto',
+						height: 450,
+						cls: 'grid-row-span',
+						layout: 'fit',
+						//stripeRows: true,
+						columnLines: true,
+						loadMask : {
+	                        msg : 'loading...'
+	                    },
+						clicksToEdit : 1,
+						renderTo: 'chargeMgmtGm',
+						hideHeaders: false,
+						border: false,
+						sm : new Ext.grid.RowSelectionModel({
+			    			singleSelect:true,
+			    			moveEditorOnEnter : false,
+			    			listeners: {
+			                    rowselect: function(selectionModel, row, rec) {
+			                    	var data = rec.data;
+			                    	supplyMin = data.SUPPLYSIZEMIN;
+			                    	supplyMax = data.SUPPLYSIZEMAX;
+			                    	condition1 = data.CONDITION1;
+			                    	condition2 = data.CONDITION2;
+			                    	
+			                    	
+			                    }
+			                }
+			    		}), 
+			    		
+					});//Grid Panel End
+					tariffInstanceOn = true;
+					
+				} else{
+					tariffGridPanel.reconfigure(tariffStore, tariffModelGm);
+				}
+			}
+			
+        }
+        
+        function modifySupply(supplyMin,supplyMax,condition1,condition2){
+        	
+        	if(condition1=="<")
+        		condition1 = ">";
+        	else if(condition1=="<=")
+        		condition1= ">=";
+        	/* else if(condition1=="")
+        		condtion1= ""; */
+        		
+            var supplyWin = new Ext.Window({
+            	title: 'Modify Supply Size(x)',
+                id: 'supplyWin',
+                autoScroll: true,
+                modal: true, closable:true, resizable: true,
+                border:true, plain:false,  
+                width: 300, height: 200,
+                //closeAction:'hide',
+                //html: html,
+                items  : [{
+                    xtype: 'panel',
+                    frame: false, border: false,
+                    items:{
+                      id: 'modifyTariff_form',
+                      xtype: 'form',
+                      bodyStyle:'padding:10px',
+                      labelWidth: 100,
+                      frame: false, border: false,
+                      items: [
+                    	  {
+                        	  xtype: 'textfield',
+                        	  fieldLabel: 'Min value', width: 100,
+                        	  id:'min_val', name: 'min_val', value:supplyMin,
+                        	  listeners: {
+		                          change : function(record,value){
+		                        	  Ext.getCmp('min_val').setValue(value);
+		                        	  if(Ext.getCmp('min_val').value=='' || Ext.getCmp('min_val').value==null)
+		                        	 	 Ext.getCmp('min_id').setValue("");
+		                          }
+		                        }
+                          },{
+	                        xtype: 'combo', width: 50, 
+	                        id:'min_id', name: 'min_name', value:condition1,                               
+	                        fieldLabel: 'Min x', triggerAction: 'all', editable: false, mode: 'local',
+	                        store: new Ext.data.JsonStore({
+	                        	  root:'datas',
+	                        	  fields: ['code','name'],
+	                        	  //autoLoad: true,
+	                        	  data: {datas: [
+	                        		  {"code":'',"name":'-'},
+	     						  	 {"code":1,"name":'>'},
+	     						  	{"code":2,"name":'>='}
+	                        	  ]},
+	                          }),
+	                          valueField: 'code', displayField: 'name',
+		                      anchor: '100%',
+		                      listeners: {
+		                    	  select : function(combo, record, index){
+		                    		  if(record.data.name=='-'){
+		                        		  Ext.getCmp('min_id').setValue("");
+		                        		  Ext.getCmp('min_val').setValue("");
+		                    		  }
+		                    		  else
+		                        	  	  Ext.getCmp('min_id').setValue(record.data.name);
+		                          },
+		                          change : function(record, value){
+		                        	  if(Ext.getCmp('min_id').value=='' || Ext.getCmp('min_id').value==null)
+		                        	  	Ext.getCmp('min_val').setValue("");
+		                          },
+		                          
+		                     //tpl : '<tpl for="."><div class="x-combo-list-item">{name}&nbsp;</div></tpl>' 
+		                       }
+	                      },
+	                      {
+	                        xtype: 'combo', width: 50,
+	                        id:'max_id', name: 'max_name', value:condition2,          
+	                        fieldLabel: 'Max x', triggerAction: 'all', editable: false, mode: 'local',
+	                        store: new Ext.data.JsonStore({
+	                      	  root:'datas',
+	                      	  fields: ['code','name'],
+	                      	  autoLoad: true,
+	                      	  data: {datas: [
+	   						  	 {"code":'',"name":'-'},
+	   						  	{"code":1,"name":'<'},
+	   							 {"code":2,"name":'<='},
+	                      	  ]}
+	                        }),
+	                        valueField: 'code', displayField: 'name',
+	                        anchor: '100%',
+	                        listeners: {
+	                          select : function(combo, record, index){
+	                        	  if(record.data.name=='-'){
+	                        		  Ext.getCmp('max_id').setValue("");
+	                        		  Ext.getCmp('max_val').setValue("");  
+	                        	  }
+	                        	  else
+	                        	  	Ext.getCmp('max_id').setValue(record.data.name);
+	                          },
+	                          change : function(record, value){
+	                        	  if(Ext.getCmp('max_id').value=='' || Ext.getCmp('max_id').value==null)
+	                        		  Ext.getCmp('max_val').setValue('');
+	                          }
+	                        }
+                      },{
+                    	  xtype: 'textfield', width: 100,
+                    	  fieldLabel: 'Max value',
+                    	  id:'max_val', name: 'max_val', value:supplyMax,   
+                    	  listeners: {
+	                          change : function(record,value){
+	                        	  Ext.getCmp('max_val').setValue(value);
+	                        	  if(Ext.getCmp('max_val').value=='' || Ext.getCmp('max_val').value==null)
+	                        	 	  Ext.getCmp('max_id').setValue('');
+	                          }
+	                        }
+                      },
+                      ]
+                    }
+                }],
+                buttons: [
+                	{
+                    	text: 'Ok',
+                    	handler: function() {
+                         	var record = tariffGridPanel.getSelectionModel().getSelected();
+
+                         	var SUPPLYSIZEMIN = Ext.getCmp('min_val').value;
+                         	var SUPPLYSIZEMAX = Ext.getCmp('max_val').value;
+                         	var CONDITION1 = Ext.getCmp('min_id').value;
+                        	var CONDITION2 = Ext.getCmp('max_id').value;
+                        		
+                        	var flag = true;
+                        	if(SUPPLYSIZEMAX!='' && CONDITION2!=''){
+                        		var MIN = parseInt(Ext.getCmp('min_val').value);
+                              	var MAX = parseInt(Ext.getCmp('max_val').value);	
+                        	 if(MIN >= MAX)  {
+                               	  	  Ext.Msg.alert("","Please check Min and Max values");
+                               		  flag = false;
+                               	}
+                           	}
+                        	
+                        	if(SUPPLYSIZEMAX=="" && CONDITION2!=""){
+                        		Ext.Msg.alert("","Please check the values");
+                         		flag = false;
+                        	}
+                        	if(CONDITION2=="" && SUPPLYSIZEMAX!=""){
+                        		Ext.Msg.alert("","Please check the values");
+                         		flag = false;
+                        	}
+                        	if(SUPPLYSIZEMIN=="" && CONDITION1!=""){
+                        		Ext.Msg.alert("","Please check the values");
+                         		flag = false;
+                        	}
+                        	if(CONDITION1=="" && SUPPLYSIZEMIN!=""){
+                        		Ext.Msg.alert("","Please check the values");
+                         		flag = false;
+                        	}
+                        	
+                        	if(flag){
+                    			supplyWin.close();
+                         	
+	                        	record.set("SUPPLYSIZEMIN",SUPPLYSIZEMIN);
+	                        	record.set("SUPPLYSIZEMAX",SUPPLYSIZEMAX);
+	                        	record.set("CONDITION1",CONDITION1);
+	                        	record.set("CONDITION2",CONDITION2);
+                        	}
+                    	}
+                    }, {
+                        text: '<fmt:message key="aimir.cancel"/>',
+                        handler: function() {
+                        	supplyWin.close();
+                        }
+                    }
+                   ]
+            });
+        	  	
+      
+	       			
+        	supplyWin.show(this);
+
+        } 
+        
+
+       	// 요금관리 - 조회조건 처리
         function getCondition() {
             var cnt = 0;
             var condArray = new Array();
@@ -1543,7 +2803,7 @@
 
         // 요금관리 - request 전송
         function send() {
-            if (supplyType == SupplierType.Electricity) {
+             if (supplyType == SupplierType.Electricity) {
                 if (grid1.requestSend) grid1.requestSend();
                 else send.defer(300);
             }
@@ -1554,63 +2814,45 @@
             else if (supplyType == SupplierType.Water) {
                 if (grid3.requestSend) grid3.requestSend();
                 else send.defer(300);
-            }
+            } 
         }
 
         // 요금관리 - 수정
         function updateData() {
-            if (confirm('<fmt:message key="aimir.msg.updateconfirm"/>')) {
-
+        	var flag = true;
+        	var date = electricDate.datepicker('getDate');
+            date = $.format.date(date, 'yyyyMMdd');
+            if (confirm('Applied Date will be '+date+'.'+' <fmt:message key="aimir.msg.updateconfirm"/> ')) {
+				
                 if (supplyType == SupplierType.Electricity) {
                     emergePre();
-                    var data = grid1.getGridData();
-                    var date = electricDate.datepicker('getDate');
-                    date = $.format.date(date, 'yyyyMMdd');
-                    var data = JSON.stringify(data);
-                    if (supplyType == SupplierType.Electricity) {
-                        $.post('${ctx}/gadget/system/supplier/updateTariffTable.do',
-                            {data: data,
-                            date: date},
-                            function(json) {
-                                if (json.result == 'success') {
-                                    getYyyymmddList(SupplierType.Electricity,
-                                        function() {
-                                            Ext.Msg.alert('<fmt:message key='aimir.message'/>',"<fmt:message key='aimir.success'/>");
-                                            hide();
-                                        });
-                                } else {
-                                    Ext.Msg.alert('<fmt:message key='aimir.message'/>',"<fmt:message key='aimir.hems.systemError'/>");
-                                    hide();
-                                }
-                            });
-                    }
-                }
-                if (blnImport) {
-                    if (supplyType == SupplierType.Gas || supplyType == SupplierType.Heat) {
-                        grid2.insertData();
-                    }
-                    else if (supplyType == SupplierType.Water) {
-                        grid3.insertData();
-                    }
-                    blnImport = false;
-                } else {
-                    if (supplyType == SupplierType.Gas || supplyType == SupplierType.Heat) {
-                        grid2.updateData();
-                    }
-                    else if (supplyType == SupplierType.Water) {
-                        //grid3.updateData();
-                        //emergePre();
-	                    var data = grid3.getGridData();
-	                    var date = electricDate.datepicker('getDate');
-	                    date = $.format.date(date, 'yyyyMMdd');
-	                    var data = JSON.stringify(data);
-	                    if (supplyType == SupplierType.Water) {
-	                        $.post('${ctx}/gadget/system/supplier/updateTariffWMTable.do',
+                 
+                    var count = tariffStore.getCount();
+                    var data = [];
+                    for(var i=0; i < count; i++){
+                    	data[i] = tariffStore.data.items[i].data;
+                    	if(data[i].TARIFFTYPEID == null)
+                    		flag = false;
+                    } 
+                    
+                    //var date = electricDate.datepicker('getDate');
+                    //date = $.format.date(date, 'yyyyMMdd');
+                    data = JSON.stringify(data);
+                   
+                    if(!flag){
+                    	Ext.Msg.alert("","Please insert Tariff Type");
+                    	hide();
+                    	
+                    }else{
+	                    if (supplyType == SupplierType.Electricity) {
+	                        $.post('${ctx}/gadget/system/supplier/updateTariffTable.do',
 	                            {data: data,
-	                            date: date},
+	                            date: date,
+	                            
+	                            },
 	                            function(json) {
 	                                if (json.result == 'success') {
-	                                    getYyyymmddList(SupplierType.Water,
+	                                    getYyyymmddList(SupplierType.Electricity,
 	                                        function() {
 	                                            Ext.Msg.alert('<fmt:message key='aimir.message'/>',"<fmt:message key='aimir.success'/>");
 	                                            hide();
@@ -1619,8 +2861,178 @@
 	                                    Ext.Msg.alert('<fmt:message key='aimir.message'/>',"<fmt:message key='aimir.hems.systemError'/>");
 	                                    hide();
 	                                }
-	                            });	                            
+	                            });
 	                    }
+                    }
+                }
+                if (blnImport) {
+                    if (supplyType == SupplierType.Gas || supplyType == SupplierType.Heat) {
+                    	emergePre();
+                        
+                        var count = tariffStore.getCount();
+                        var data = [];
+                        for(var i=0; i < count; i++){
+                        	data[i] = tariffStore.data.items[i].data;
+                        	if(data[i].TARIFFTYPEID == null)
+                        		flag = false;
+                        } 
+                        
+                        var date = electricDate.datepicker('getDate');
+                        date = $.format.date(date, 'yyyyMMdd');
+                        data = JSON.stringify(data);
+                       
+                        if(!flag){
+                        	Ext.Msg.alert("","Please insert Tariff Type");
+                        	hide();
+                        	
+                        }else{
+    	                    if (supplyType == SupplierType.Gas || supplyType == SupplierType.Heat) {
+    	                        $.post('${ctx}/gadget/system/supplier/updateTariffTable.do',
+    	                            {data: data,
+    	                            date: date,
+    	                            
+    	                            },
+    	                            function(json) {
+    	                                if (json.result == 'success') {
+    	                                    getYyyymmddList(SupplierType.Gas,
+    	                                        function() {
+    	                                            Ext.Msg.alert('<fmt:message key='aimir.message'/>',"<fmt:message key='aimir.success'/>");
+    	                                            hide();
+    	                                        });
+    	                                } else {
+    	                                    Ext.Msg.alert('<fmt:message key='aimir.message'/>',"<fmt:message key='aimir.hems.systemError'/>");
+    	                                    hide();
+    	                                }
+    	                            });
+    	                    }
+                        }
+                    }
+                    else if (supplyType == SupplierType.Water) {
+                    	emergePre();
+                        
+                        var count = tariffStore.getCount();
+                        var data = [];
+                        for(var i=0; i < count; i++){
+                        	data[i] = tariffStore.data.items[i].data;
+                        	if(data[i].TARIFFTYPEID == null)
+                        		flag = false;
+                        } 
+                        
+                        var date = electricDate.datepicker('getDate');
+                        date = $.format.date(date, 'yyyyMMdd');
+                        data = JSON.stringify(data);
+                       
+                        if(!flag){
+                        	Ext.Msg.alert("","Please insert Tariff Type");
+                        	hide();
+                        	
+                        }else{
+    	                    if (supplyType == SupplierType.Water) {
+    	                        $.post('${ctx}/gadget/system/supplier/updateTariffTable.do',
+    	                            {data: data,
+    	                            date: date,
+    	                            
+    	                            },
+    	                            function(json) {
+    	                                if (json.result == 'success') {
+    	                                    getYyyymmddList(SupplierType.Water,
+    	                                        function() {
+    	                                            Ext.Msg.alert('<fmt:message key='aimir.message'/>',"<fmt:message key='aimir.success'/>");
+    	                                            hide();
+    	                                        });
+    	                                } else {
+    	                                    Ext.Msg.alert('<fmt:message key='aimir.message'/>',"<fmt:message key='aimir.hems.systemError'/>");
+    	                                    hide();
+    	                                }
+    	                            });
+    	                    }
+                        }
+                    }
+                    blnImport = false;
+                } else {
+                    if (supplyType == SupplierType.Gas || supplyType == SupplierType.Heat) {
+                    	emergePre();
+                        
+                        var count = tariffStore.getCount();
+                        var data = [];
+                        for(var i=0; i < count; i++){
+                        	data[i] = tariffStore.data.items[i].data;
+                        	if(data[i].TARIFFTYPEID == null)
+                        		flag = false;
+                        } 
+                        
+                        var date = electricDate.datepicker('getDate');
+                        date = $.format.date(date, 'yyyyMMdd');
+                        data = JSON.stringify(data);
+                       
+                        if(!flag){
+                        	Ext.Msg.alert("","Please insert Tariff Type");
+                        	hide();
+                        	
+                        }else{
+    	                    if (supplyType == SupplierType.Gas) {
+    	                        $.post('${ctx}/gadget/system/supplier/updateTariffTable.do',
+    	                            {data: data,
+    	                            date: date,
+    	                            
+    	                            },
+    	                            function(json) {
+    	                                if (json.result == 'success') {
+    	                                    getYyyymmddList(SupplierType.Gas,
+    	                                        function() {
+    	                                            Ext.Msg.alert('<fmt:message key='aimir.message'/>',"<fmt:message key='aimir.success'/>");
+    	                                            hide();
+    	                                        });
+    	                                } else {
+    	                                    Ext.Msg.alert('<fmt:message key='aimir.message'/>',"<fmt:message key='aimir.hems.systemError'/>");
+    	                                    hide();
+    	                                }
+    	                            });
+    	                    }
+                        }
+                    }
+                    else if (supplyType == SupplierType.Water) {
+                    	emergePre();
+                        
+                        var count = tariffStore.getCount();
+                        var data = [];
+                        for(var i=0; i < count; i++){
+                        	data[i] = tariffStore.data.items[i].data;
+                        	if(data[i].TARIFFTYPEID == null)
+                        		flag = false;
+                        } 
+                        
+                        var date = electricDate.datepicker('getDate');
+                        date = $.format.date(date, 'yyyyMMdd');
+                        data = JSON.stringify(data);
+                        
+	                   /*  var data = grid3.getGridData();
+	                    var date = electricDate.datepicker('getDate');
+	                    date = $.format.date(date, 'yyyyMMdd');
+	                    var data = JSON.stringify(data); */
+                        if(!flag){
+                        	Ext.Msg.alert("","Please insert Tariff Type");
+                        	hide();
+                        	
+                        }else{
+		                    if (supplyType == SupplierType.Water) {
+		                        $.post('${ctx}/gadget/system/supplier/updateTariffWMTable.do',
+		                            {data: data,
+		                            date: date},
+		                            function(json) {
+		                                if (json.result == 'success') {
+		                                    getYyyymmddList(SupplierType.Water,
+		                                        function() {
+		                                            Ext.Msg.alert('<fmt:message key='aimir.message'/>',"<fmt:message key='aimir.success'/>");
+		                                            hide();
+		                                        });
+		                                } else {
+		                                    Ext.Msg.alert('<fmt:message key='aimir.message'/>',"<fmt:message key='aimir.hems.systemError'/>");
+		                                    hide();
+		                                }
+		                            });	                            
+		                    }
+                   	 }
                     } // ~else if (supp...
                 } // ~else {
             }
@@ -1650,14 +3062,91 @@
                     });
         }
 
-        function addRow() {
+        /* function addRow() {
             grid1.focus();
             grid1.addRow();
+        } */
+        function addRow(){
+        	 var store = tariffGridPanel.getStore();
+             var Plant = store.recordType;
+             var textHtml = "-";
+            
+             var p = new Plant({
+                 ID : "",
+                 SEASON : "",
+                 PEAKTYPE : "",
+                 //STARTHOUR : null,
+                 //ENDHOUR : null,
+                 SUPPLYSIZEMIN : null,
+                 SUPPLYSIZEMAX : null,
+                 CONDITION1 : null,
+                 CONDITION2 : null,
+                 SERVICECHARGE : "",
+                 TRANSMISSIONNETWORKCHARGE : "",
+                 DISTRIBUTIONNETWORKCHARGE : "",
+                 ENERGYDEMANDCHARGE : "",
+                 ACTIVEENERGYCHARGE : "",
+                 REACTIVEENERGYCHARGE : "",
+                 ACTIVEENERGYCHARGE : "",
+                 RATEREBALANCINGLEVY : "",
+                 MAXDEMAND : "",
+                 ADMINCHARGE : "",
+                 TARIFFTYPE : "",
+                 TARIFFTYPEID : "",
+                 HOUR : null
+                 //status : "add"
+             });
+             var length = store.getCount();
+             tariffGridPanel.stopEditing();
+             tariffStore.insert(length, p);
+             tariffGridPanel.startEditing(length, 0);
+             tariffGridPanel.getSelectionModel().selectLastRow();
         }
         
         function addRowWm() {
             grid3.focus();
             grid3.addRow();
+        }
+		
+        function deleteRow() {
+            var record = tariffGridPanel.getSelectionModel().getSelected();
+
+            if (record == null) {
+                Ext.Msg.alert("<fmt:message key="aimir.message"/>", "Do you want to delete from Tariff?");
+                return;
+            }
+
+                // 데이터가 있는 경우 삭제안됨
+            	 /* if (record.get("") != "" && record.get("") > 0) {
+                     Ext.Msg.alert("<fmt:message key="aimir.message"/>", "You can't delete. Data exists");
+                     hide();
+                     return;
+                 } */
+                Ext.MessageBox.confirm('<fmt:message key="aimir.message"/>', '<fmt:message key="aimir.msg.wantdelete"/>',
+                        function(btn) {
+                            if (btn == 'yes') {
+                                /* $.getJSON("${ctx}/gadget/system/deleteTariffRow.do"
+                                        ,{tariffId : record.get("ID")}
+                                        ,function(json) {
+                                            hide();
+                                            if (json.result == "success") { */
+                                             if (record.get("") != "" && record.get("") > 0) {
+                                                Ext.Msg.alert("<fmt:message key="aimir.message"/>", "You can't delete. Data exists");
+                                                hide();
+                                                return;
+                                            } 
+                                            tariffStore.remove(record);
+                                               
+                                           /*  } else {
+                                                Ext.Msg.alert("<fmt:message key="aimir.message"/>", "<fmt:message key='aimir.hems.alert.failDelete'/>");
+                                            }
+                                }); */
+                            } else if(btn == 'no'){
+                            	hide();
+                            }
+                        });
+                //getTariffGrid();
+                //tariffStore.reload();
         }
 
         function addEMTariffType(tariffName) {
@@ -1673,14 +3162,598 @@
             });
         }
 
-        function deleteRow() {
+        /* function deleteRow() {
             grid1.deleteRow();
+        } */
+        
+        /* function deleteRowWm() {
+            grid3.deleteRow();
+        } */
+        
+		function setTab(name){
+			if(name == "MOE") {
+				$('#_pay').hide();
+			}
+		}
+        
+        function cmdGetTariff() {
+
+      	  	var tariffType = '';
+            var searchWin = new Ext.Window({
+              title: '<b>STS Setting</b>',
+              modal: true, closable:true, resizable: true,
+              width:300, height:130,
+              border:true, plain:false,                      
+              items:[{
+                  xtype: 'panel',
+                  frame: false, border: false,
+                  items:{
+                    id: 'getTariffMode_form',
+                    xtype: 'form',
+                    bodyStyle:'padding:10px',
+                    labelWidth: 100,
+                    frame: false, border: false,
+                    items: [{
+                      xtype: 'label', html:'<div style="text-align:left;">' + 'Please select tariff mode.' +'</div>',  anchor: '100%'
+                    },{
+                      xtype: 'combo',
+                      id:'tariffMode_id', name: 'tariffMode_name', value:'Select...',          
+                      fieldLabel: 'Tariff mode', triggerAction: 'all', editable: false, mode: 'local',
+                      store: new Ext.data.JsonStore({
+                    	  root:'datas',
+                    	  fields: ['code','name'],
+                    	  autoLoad: true,
+                    	  data: {datas: [
+ 						  	 {"code":0,"name":'Current tariff'},
+ 						  	{"code":1,"name":'Future tariff'}
+                    	  ]}
+                      }),
+                      valueField: 'code', displayField: 'name',
+                      anchor: '100%',
+                      listeners: {
+                        select : function(combo, record, index){
+                          Ext.getCmp('tariffMode_id').setValue(record.data.name);
+                          tariffType = record.data.code;
+                        }
+                      }
+                    }]
+                  }
+              }],
+              
+              buttons: [{
+                text: 'Ok',
+                handler: function() {
+  				  var flag = true;
+
+              	  if((flag && (Ext.getCmp('tariffMode_id').value == null || Ext.getCmp('tariffMode_id').value == ''))
+              			  || (Ext.getCmp('tariffMode_id').value == 'Select...')) {
+              		  Ext.Msg.alert("","Please select Tariff mode");
+              		  flag = false;
+              		  return flag;
+              	  }
+              	  
+              	  if(flag) {
+              		  searchWin.close();
+      	              
+              		  Ext.Msg.show({
+                     		title: '<b>STS Setting<b/>',
+                     		msg: 'Do you want to save?',
+                     		buttons : Ext.MessageBox.OKCANCEL,
+                     		fn : function(btn) {
+			                	if(btn == 'ok') {
+			                		$.ajaxSetup({
+				       	                async : true
+				       	            });		                	
+			                		Ext.Msg.wait('Waiting for response.', 'Wait !');
+				               		
+				       				$.getJSON('${ctx}/gadget/device/command/cmdGetTariff.do', {
+				       					'supplierId':sId,		
+				       					'target' : '',
+				       					'tariffMode' : tariffType
+				                       }, function(returnData) {
+				                    	   Ext.Msg.hide();
+				                           if(returnData.rtnStr != null && returnData.rtnStr.indexOf("FAIL") > -1) {
+				                        	   Ext.Msg.show({
+						                       		title: '',
+						                       		msg: returnData.rtnStr,
+						                       		buttons : Ext.MessageBox.OK
+					                       		});   
+				                           } else {
+				                        	   Ext.Msg.show({
+						                       		title: '',
+						                       		msg: "Please check the Result on Prepayment customer gadget.",
+						                       		buttons : Ext.MessageBox.OK
+					                       		});  
+				                           }
+				                           
+				                       });
+			                	}
+                     		}
+              		  })
+	              		
+              		  
+              	  }
+                }
+              }, {
+                text: '<fmt:message key="aimir.cancel"/>',
+                handler: function() {
+              	  searchWin.close();
+                }
+              }]
+            });
+
+            searchWin.show(this);
         }
         
-        function deleteRowWm() {
-            grid3.deleteRow();
+        function cmdSetTariff() {
+    	  var tariffType = '';
+    	  var tariffTypeName = '';
+          var searchWin = new Ext.Window({
+            title: '<b>STS Setting</b>',
+            modal: true, closable:true, resizable: true,
+            width:300, height:225,
+            border:true, plain:false,                      
+            items:[{
+                xtype: 'panel',
+                frame: false, border: false,
+                items:{
+                  id: 'reTypeAmount_form',
+                  xtype: 'form',
+                  bodyStyle:'padding:10px',
+                  labelWidth: 100,
+                  frame: false, border: false,
+                  items: [{
+                    xtype: 'label', html:'<div style="text-align:left;">' + 'Please input tariff Information.' +'</div>',  anchor: '100%'
+                  },{
+                      xtype: 'combo',
+                      id:'tariffType_id', name: 'tariffType_name', value:'Select...',          
+                      fieldLabel: 'Tariff', triggerAction: 'all', editable: false, mode: 'local',
+                      store: new Ext.data.JsonStore({
+                        autoLoad   : true,
+                        baseParams: {serviceType : $('#supplierType option:selected').val(), supplierId : sId},
+                        url: '${ctx}/gadget/system/supplier/getTariffType.do',
+                        storeId: 'tariffTypeListStore',
+                        root: 'result',
+                        idProperty: 'name',
+                        fields: ['name',{name: 'id', type: 'int'}],
+                        listeners: {
+                          load: function(store, records, options){
+                            Ext.getCmp('tariffType_id').setValue(records[0].data.name);
+                            tariffType = records[0].data.id;
+                            tariffTypeName = records[0].data.name;
+                          }
+                        }
+                      }),
+                      valueField: 'id', displayField: 'name',
+                      anchor: '100%',
+                      listeners: {
+                        render: function() {
+                          this.store.load();
+                        },
+                        select : function(combo, record, index){
+                          Ext.getCmp('tariffType_id').setValue(record.data.name);
+                          tariffType = record.data.id;
+                          tariffTypeName = record.data.name;
+                        }
+                      }
+                  }, {
+                    xtype: 'datefield', fieldLabel: 'Tariff Date', id: 'tariffDate_id', name: 'tariffDate_name', anchor: '100%'
+                  },{
+                	  xtype: 'textfield', fieldLabel: 'Gov. Subsidy Limit', id: 'condLimit1_id', name: 'condLimit1_name', anchor: '100%'  
+                  },{
+                	  xtype: 'textfield', fieldLabel: 'Utility Relief Limit', id: 'condLimit2_id', name: 'condLimit2_name', anchor: '100%'  
+                  }]
+                }
+            }],
+            
+            buttons: [{
+              text: 'Ok',
+              handler: function() {
+				  var flag = true;
+				  if(flag && Ext.getCmp('tariffType_id').getValue() == null) {
+            		  Ext.Msg.alert("","Please select Tariff");
+            		  flag = false;
+            		  return flag;
+            	  }
+				  
+				  if(flag && (Ext.getCmp('tariffDate_id').value == null || Ext.getCmp('tariffDate_id').value == '')) {
+            		  Ext.Msg.alert("","Please input Tariff Date.");
+            		  flag = false;
+            		  return flag;
+            	  }
+
+            	  if(flag && ($('#condLimit1_id').val() == null || $('#condLimit1_id').val() == '' || isNaN($('#condLimit1_id').val()))) {
+            		  Ext.Msg.alert("","Please input Gove. Subsidy limit.");
+            		  flag = false;
+            		  return flag;
+            	  }
+            	  
+            	  if(flag && ($('#condLimit2_id').val() == null || $('#condLimit2_id').val() == '' || isNaN($('#condLimit2_id').val()))) {
+            		  Ext.Msg.alert("","Please input Utility Relief limit");
+            		  flag = false;
+            		  return flag;
+            	  }
+            	 //dd/mm/yyyy 포맷으로 저장되어 있음
+          		 var yyyymmdd = Ext.getCmp('tariffDate_id').getValue().format('Ymd')
+            	  var tariffParam = {
+               	    'tariffType' : tariffType,
+            	  	'yyyymmdd' : yyyymmdd,
+            	  	'condLimit1' : $('#condLimit1_id').val(),
+            	  	'condLimit2' : $('#condLimit2_id').val(),
+                    'tariffTypeName' : tariffTypeName
+
+            	  }
+            	  
+            	  if(flag) {
+            		  searchWin.close();
+            		  var tariffStr;
+            		  
+    	              $.getJSON('${ctx}/gadget/system/supplier/getSTSTariff.do'
+    	                      , {'tariffIndexId' : tariffType,
+    	            	  		'yyyymmdd' : yyyymmdd
+    	              }, function(json) {
+    	            	  drawTariffGrid(tariffParam, json.tariffInfo); 
+                      });
+            	  }
+              }
+            }, {
+              text: '<fmt:message key="aimir.cancel"/>',
+              handler: function() {
+            	  searchWin.close();
+              }
+            }]
+          });
+
+          searchWin.show(this);
         }
 
+        var tariffSTSGrid;
+        var tariffSTSStore;
+        function drawTariffGrid(tariffParam, tariffInfo) {
+
+        	tariffSTSStore = new Ext.data.JsonStore({
+                fields : [ {name:'cons'},{name:'fixedRate'},{name:'varRate'},{name:'condRate1'},{name:'condRate2'}]
+            });
+
+		   tariffSTSStore.loadData(tariffInfo);
+
+	       var colModel = new Ext.grid.ColumnModel({
+	            defaults : {
+	                width : 80,
+	                height : 100,
+	                sortable : true
+	            },
+	            columns : [{
+	                width : 100,
+	                header : "<b>Supply Min Size(kWh)</b>",
+	                dataIndex : "cons",
+	                renderer: addTooltip,
+	                editor: new Ext.form.TextField({
+                        id : 'cons'
+                    })
+	            }, {
+	                header : "<b>Service Charge</b>",
+	                width : 90,
+	                dataIndex : "fixedRate",
+	                renderer: addTooltip,
+	                editor: new Ext.form.TextField({
+                        id : 'fixedRate'
+                    })
+	            }, {
+	                header : "<b>Var Rate</b>",
+	                width : 80,
+	                dataIndex : "varRate",
+	                renderer: addTooltip,
+	                editor: new Ext.form.TextField({
+                        id : 'varRate'
+                    })
+	            }, {
+	                header : "<b>Gove. Subsidy</b>",
+	                width : 100,
+	                dataIndex : "condRate1",
+	                renderer: addTooltip,
+	                editor: new Ext.form.TextField({
+                        id : 'condRate1'
+                    })
+	            }, {
+	                header : "<b>Utility Relief</b>",
+	                width : 100,
+	                dataIndex : "condRate2",
+	                renderer: addTooltip,
+	                editor: new Ext.form.TextField({
+                        id : 'condRate2'
+                    })
+	            }]
+	        });
+	       
+	       tariffSTSGrid = new Ext.grid.EditorGridPanel({
+	   			 store: tariffSTSStore,
+	   			 autoScroll : true,
+	   			 loadMask: true,
+	   			 colModel: colModel,
+	   			 listeners: {
+	   				afteredit: function(e) {
+	   					
+	   				}
+	   			 },
+	   			 viewConfig: {forceFit: true},
+	   			 autoScroll : true,
+	             scroll : true,
+	             stripeRows : true,
+	             columnLines : true,
+	             loadMask : {
+	                msg : 'loading...'
+	             },
+	  		      width: 600,
+	  		      height: 300,
+	  		      tbar:[{
+	  		    	  iconCls: 'icon-obis-add',
+	  		    	  text: "<b><fmt:message key='aimir.add'/></b>",
+	  		    	  handler: function() {
+	  		    		addRecordData();
+	  		    	  }
+	  		      },{
+	  		    	  iconCls: 'icon-obis-delete',
+	  		    	  text: "<b><fmt:message key='aimir.button.delete'/></b>",
+	  		    	  handler: function() {
+	  		    		delRecordData();
+	  		    	  }
+	  		      }]
+	   		  });
+	
+	        $('#setTariffDiv').empty();
+
+	        var imgWin = new Ext.Window({
+	            title : 'Set Tariff',
+	            id : 'setTariffWinId',
+	            applyTo : 'setTariffDiv',
+	            autoScroll : true,
+	            autoHeight : true,
+	            pageX : 400,
+	            pageY : 130,
+	            width : 600,
+	            height : 300,
+	            items : tariffSTSGrid,
+	            buttons : [{text : '<fmt:message key="aimir.save2"/>',
+	            	handler : function() {	
+	            		$.ajaxSetup({
+	       	                async : true
+	       	            });
+	            		
+	            		var records = tariffSTSStore.data.items;
+	            		var flag = false;
+	            		
+	            		//마지막라인에 대해서 유효성 체크
+	            		if(records.length-1 < 0) {
+	            			Ext.Msg.alert("<fmt:message key='aimir.error'/>","<fmt:message key='aimir.data.empty'/>");
+	            			flag = false;
+	            			return false;
+	            		}
+	            		
+	                   	flag = validateMandatory(tariffSTSGrid,"<fmt:message key='aimir.mandatoryValue'/>");
+        	        	if(flag) {
+        	        		var saveArrList = new Array();
+		            		for(var i = 0; i<records.length; i++) {
+		            			var saveArr = new Array();
+		            			saveArr.push({
+		            				'cons' : records[i].data.cons,
+				                    'fixedRate' : records[i].data.fixedRate,
+				                    'varRate' : records[i].data.varRate,
+				                    'condRate1' : records[i].data.condRate1,
+				                    'condRate2' : records[i].data.condRate2
+			            		})
+			            		
+			            		saveArrList.push(saveArr);
+		            		}
+		            		
+		            		Ext.Msg.show({
+	                       		title: '<b>STS Setting<b/>',
+	                       		msg: 'Do you want to save?',
+	                       		buttons : Ext.MessageBox.OKCANCEL,
+	                       		fn : function(btn) {
+				                	if(btn == 'ok') {
+				                		$.ajaxSetup({
+					       	                async : true
+					       	            });
+				                		imgWin.hide(this);
+				                		Ext.Msg.wait('Waiting for response.', 'Wait !');
+					            		$.post('${ctx}/gadget/device/command/cmdSetTariff.do',{
+											'supplierId':sId,		            			
+											'target':'',
+											'tariffType':tariffParam.tariffType,
+											'yyyymmdd':tariffParam.yyyymmdd,
+											'condLimit1':tariffParam.condLimit1,
+											'condLimit2':tariffParam.condLimit2,
+											'param':JSON.stringify(saveArrList)
+					                    }, function(returnData) {
+					                    	Ext.Msg.hide();
+					                    	if(returnData.rtnStr != null && returnData.rtnStr.indexOf("FAIL") > -1) {
+					                    		Ext.Msg.show({
+						                       		title: '',
+						                       		msg: returnData.rtnStr,
+						                       		buttons : Ext.MessageBox.OK
+					                       		});   
+				                            } else {
+				                        	   Ext.Msg.show({
+						                       		title: '',
+						                       		msg: "Please check the Result on Prepayment customer gadget.",
+						                       		buttons : Ext.MessageBox.OK
+					                       		});  
+				                            }
+					                    });
+				                	} else {
+				                		return;
+				                	}
+				              }
+                       		}); 
+        	        	}
+                	}},
+                	{text : '<fmt:message key="aimir.board.close"/>',
+                	handler : function() {
+                		
+                		imgWin.hide(this);        		
+                	}}],
+	            closeAction : 'hide',
+	            onHide : function() {
+	            }
+	        });
+	        Ext.getCmp('setTariffWinId').show();
+        }
+        
+       function addRecordData() {
+        	$.ajaxSetup({
+                async : false
+            });
+			var flag = true;
+			
+			var store = tariffSTSGrid.getStore();
+			
+        	if(store.data.length > 0) {
+	        	var preRecord = store.data.last().data;
+                
+	        	flag = validate(tariffSTSGrid,tariffSTSStore.data.length-1,preRecord.cons,"<fmt:message key='aimir.mandatoryValue'/>",0);
+	        	
+	        	if(flag && (isNaN(preRecord.cons) || (preRecord.cons + "").indexOf(".") >= 0)) {
+	        		flag=false;
+	        		Ext.Msg.alert("<fmt:message key='aimir.warning'/>", "Pelase input Number.(integer type)",
+		    				function() { tariffSTSGrid.startEditing(tariffSTSStore.data.length-1, 0); return false;});
+	        	}
+                
+                if(flag) {
+                	flag = validate(tariffSTSGrid,tariffSTSStore.data.length-1,preRecord.fixedRate,"<fmt:message key='aimir.mandatoryValue'/>",1);
+                }
+                
+                if(flag && isNaN(preRecord.fixedRate)) {
+                	flag=false;
+                	Ext.Msg.alert("<fmt:message key='aimir.warning'/>", "Pelase input Number.(double type)",
+		    				function() { tariffSTSGrid.startEditing(tariffSTSStore.data.length-1, 1); return false;});	
+                }
+                
+                if(flag) {
+                	flag = validate(tariffSTSGrid,tariffSTSStore.data.length-1,preRecord.varRate,"<fmt:message key='aimir.mandatoryValue'/>",2);
+                }
+                
+                if(flag && isNaN(preRecord.varRate)) {
+                	flag=false;
+                	Ext.Msg.alert("<fmt:message key='aimir.warning'/>", "Pelase input Number.(double type)",
+		    				function() { tariffSTSGrid.startEditing(tariffSTSStore.data.length-1, 2); return false;});	
+                }
+                
+                if(flag) {
+                	flag = validate(tariffSTSGrid,tariffSTSStore.data.length-1,preRecord.condRate1,"<fmt:message key='aimir.mandatoryValue'/>",3);
+                }
+                
+                if(flag && isNaN(preRecord.condRate1)) {
+                	flag=false;
+                	Ext.Msg.alert("<fmt:message key='aimir.warning'/>", "Pelase input Number.(double type)",
+		    				function() { tariffSTSGrid.startEditing(tariffSTSStore.data.length-1, 3); return false;});	
+                }
+                
+                if(flag) {
+                	flag = validate(tariffSTSGrid,tariffSTSStore.data.length-1,preRecord.condRate2,"<fmt:message key='aimir.mandatoryValue'/>",4);
+                }
+                
+                if(flag && isNaN(preRecord.condRate2)) {
+                	flag=false;
+                	Ext.Msg.alert("<fmt:message key='aimir.warning'/>", "Pelase input Number.(double type)",
+		    				function() { tariffSTSGrid.startEditing(tariffSTSStore.data.length-1, 4); return false;});	
+                }
+
+        	}
+
+        	if(flag) {
+                var Plant = store.recordType;
+	            var p = new Plant({
+	                consumption : "",
+	                price : "",
+	            });
+	            var length = store.getCount();
+	            tariffSTSGrid.stopEditing();
+	            tariffSTSStore.insert(length, p);
+	            tariffSTSGrid.startEditing(length, 0);
+	            tariffSTSGrid.getSelectionModel().selectLastRow();
+        	}
+        }
+       
+       function delRecordData() {
+    	   tariffSTSGrid.stopEditing();
+           var s = tariffSTSGrid.getSelectionModel().selection.record
+           tariffSTSStore.remove(s);  
+       }
+       
+       function validate(grid,rec,data,msg,row) {
+		var bol;
+       	if(data == null || (data+"" == "")) {
+			bol = false;       		
+	        	Ext.Msg.alert("<fmt:message key='aimir.warning'/>", msg,
+	    				function() {
+	    			grid.startEditing(rec, row);
+	        		return bol;
+	    		});
+       	} else {
+			bol = true;       		
+       		return bol;
+       	}
+       	return bol;
+       }
+
+       	
+       function validateMandatory(grid,msg) {
+    	   $.ajaxSetup({
+    	        async : false
+    	    });
+
+    	   var items = grid.store.data.items;
+    	   for(var i = 0; i<items.length; i++) {
+    		   var obj = items[i].data;
+    		   var flag = validate(grid,i,obj.cons,msg,0);
+    		   if(flag && (isNaN(obj.cons) || (obj.cons + "").indexOf(".") >= 0)) {
+	        		flag=false;
+	        		Ext.Msg.alert("<fmt:message key='aimir.warning'/>", "Pelase input Number.(integer type)",
+		    				function() { grid.startEditing(i, 0); return false;});
+	        	}
+               
+               if(flag) {
+               	flag = validate(grid,i,obj.fixedRate,"<fmt:message key='aimir.mandatoryValue'/>",1);
+               }
+               if(flag && isNaN(obj.fixedRate)) {
+               	flag=false;
+               	Ext.Msg.alert("<fmt:message key='aimir.warning'/>", "Pelase input Number.(double type)",
+		    				function() { grid.startEditing(i, 1); return false;});	
+               }
+               
+               if(flag) {
+                  	flag = validate(grid,i,obj.varRate,"<fmt:message key='aimir.mandatoryValue'/>",2);
+               }
+               if(flag && isNaN(obj.varRate)) {
+                  	flag=false;
+                  	Ext.Msg.alert("<fmt:message key='aimir.warning'/>", "Pelase input Number.(double type)",
+   		    				function() { grid.startEditing(i, 2); return false;});	
+                }
+                  
+               if(flag) {
+                  	flag = validate(grid,i,obj.condRate1,"<fmt:message key='aimir.mandatoryValue'/>",3);
+               }
+               if(flag && isNaN(obj.condRate1)) {
+                  	flag=false;
+                  	Ext.Msg.alert("<fmt:message key='aimir.warning'/>", "Pelase input Number.(double type)",
+   		    				function() { grid.startEditing(i, 3); return false;});	
+               }
+                     
+               if(flag) {
+                  	flag = validate(grid,i,obj.condRate2,"<fmt:message key='aimir.mandatoryValue'/>",4);
+               }
+               if(flag && isNaN(obj.condRate2)) {
+                  	flag=false;
+                  	Ext.Msg.alert("<fmt:message key='aimir.warning'/>", "Pelase input Number.(double type)",
+   		    				function() { grid.startEditing(i, 4); return false;});	
+               }
+               if(!flag) {
+            	   return flag;
+               }
+    	   }
+    	   return flag;
+       }
         //report window(Excel)
         var winLocationObj;
         function openExcelReport() {
@@ -1703,11 +3776,30 @@
                         console.log("test end!!!");
                     }); */
         }
+        
+        function setTariffId(tariffType_name) {
+			var supplierType = $('#supplierType option:selected').val();
+            
+			$.getJSON('${ctx}/gadget/system/supplier/getTariffType.do'
+					,{ serviceType : supplierType, 
+						supplierId : sId
+					}, function (json){ 
+						var result = json.result;
+						
+						for(var i=0; i < result.length; i++) {
+							if (result[i].name == tariffType_name) {
+								tariffTypeId = result[i].id;
+							}
+						}
+					});
+        	
+        }
 
     </script>
 </head>
 <body>
 
+<div id="setTariffDiv"></div>
 <!-- 검색 (S)-->
 <div id="search-background1">
 <div id="search-default">
@@ -1845,10 +3937,11 @@
         <div class="searchoption-container">
             <table class="searchoption wfree">
                 <tr>
+               		<td><select id="tariffTypeCombo" style="width: 150px;"></select></td>
                     <td><select id="supplierType" style="width: 150px;"></select></td>
                     <td><select id="yyyymmddCombo" style="width: 150px;"></select></td>
                     <td><em class="am_button">
-                        <a href="javascript:;"id="btnSearch">
+                        <a href="javascript:getTariffGrid();"id="btnSearch">
                         <fmt:message key="aimir.button.search" />
                         </a> </em>
                     </td>
@@ -1869,63 +3962,62 @@
             <select id='peakType-select' name='peakType'></select>
         </span>
     </div>
-    <div id="electricDiv" class="flexlist2" style="display: none;">
-        <ul>
-            <li>
-                <span class="tou-description">
-                    <ul>
-                        <li>CRITICAL_PEAK: Tou_Tariff1
-                        <li>PEAK: Tou_Tariff2
-                        <li>OFF_PEAK: Tou_Tariff3
-                    </ul>
-                </span>
-            </li>
-            <li>
-                <span style="float:right; margin-bottom: 5px">
-                    <span class="calendar-form">
-                        <input class="alt date" type='text' readOnly></input>
-                        <input name="date" class="no-width" type="text"></input>
-                    </span>
-                    <em class="am_button"> <a href="javascript:addRow();" id="addRow"><fmt:message key="aimir.add" /></a> </em>
-                    <em class="am_button"> <a href="javascript:deleteRow();" id="deleteRow"><fmt:message key="aimir.button.delete" /></a> </em>
-                    <em class="am_button"> <a href="javascript:exportExcel('ExportEm');" id="ExportEm"><fmt:message key="aimir.button.export" /></a> </em>
-                </span>
-            </li>
-            <li><object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-                width="100%" height="506px" id="chargeMgmtEmEx">
-                <param name='wmode' value='transparent' />
-                <param name="movie" value="${ctx}/flexapp/swf/chargeMgmtEmGrid.swf" />
-                <!--[if !IE]>--> <object type="application/x-shockwave-flash"
-                    data="${ctx}/flexapp/swf/chargeMgmtEmGrid.swf" width="100%"
-                    height="506px" id="chargeMgmtEmOt">
-                    <param name='wmode' value='transparent' />
-                    <!--<![endif]--> <!--[if !IE]>--> </object> <!--<![endif]--> </object>
-            </li>
-        </ul>
+    <!--  TariffType : Electricity -->
+    <div id="electricDiv" style="display: none;">
+    <!-- <div class="search-bg-withouttabs"> -->
+    	<div class="tou-description" style="margin-left: 1%;">
+			<ul>
+				<li>CRITICAL_PEAK: Tou_Tariff1
+			    <li>PEAK: Tou_Tariff2
+			     <li>OFF_PEAK: Tou_Tariff3
+			</ul>
+		</div>
+		<br>
+        <div class="searchoption-container">
+	    	<table class="searchoption wfree">
+	                <tr>
+	                    <td>
+	                    	 <span style="margin-bottom: 5px">
+			                	<ul>
+			                		<li>
+			                			<span id="padding-10" style="padding-left: 10px; padding-right: 10px;"><label class="check">Applied Date</label></span>
+			                			<span class="calendar-form">
+					                        <input class="alt date" type='text' readOnly></input>
+					                        <input name="date" class="no-width" type="text"></input>
+					                    </span>
+					                    <span id="padding-10">
+					                    <em class="am_button"> <a href="javascript:addRow();" id="addRow"><fmt:message key="aimir.add" /> Row</a> </em>
+					                    <%-- <em class="am_button"> <a href="javascript:deleteRow();" id="deleteRow"><fmt:message key="aimir.button.delete" /></a> </em> --%>
+					                    <em class="am_button"> <a href="javascript:exportExcel('ExportEm');" id="ExportEm"><fmt:message key="aimir.button.excel" /></a> </em>
+			                			<%-- <em class="am_button"> <a href="javascript:getTariffGrid();"id="btnSearch">	<fmt:message key="aimir.button.search" /></a></em> --%>
+			                			<!-- <em class="am_button"> <a href="javascript:cmdSetTariff();" id="setTariff">STS Set Tariff</a> </em> -->
+			                			<!-- <em class="am_button"> <a href="javascript:cmdGetTariff();" id="setTariff">STS Get Tariff</a> </em> -->
+			                			</span>
+					                    <br><br>
+			                			<span id="padding-10" style="padding-right: 10px;" >(Tariff date will be saved as Applied Date above.)</span>
+					                    <!-- <br><br> -->
+			                		</li>
+			                	</ul>
+			                	<br>
+	               			 </span>
+	               			 
+	                    </td>
+	                    <div id="tariffUpdateBtn" class="btn_right_bottom gadget_body2">
+					      <%-- <span class="lightgray11pt margin-r5"><fmt:message key="aimir.save"/></span> --%>
+					      <span><em class="am_button"><a href="javascript:updateData();">Save</a></em></span>
+					    </div>
+	                </tr>
+	        </table>
+	        </div>
+	        <br>
+	        <div id="padding-10" style="padding-left: 10px; padding-right: 10px;">
+	        	<div id="chargeMgmtEm" class="tabcontentsbox border-blue" ></div>
+	        </div>
+		<!-- </div> -->
     </div>
 
-
-    <div id="gasDiv" class="flexlist2" style="display: none;">
-        <ul>
-            <li>
-                <span style="float:right; margin-bottom: 5px">
-                    <em id="importGMBtn" class="am_button"> <a href="#;" id="importGM"><fmt:message key="aimir.button.import" /></a> </em>
-                    <em class="am_button"> <a href="javascript:exportExcel('ExportGm');" id="ExportGm"><fmt:message key="aimir.button.export" /></a> </em>
-                </span>
-            </li>
-            <li><object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-                width="100%" height="506px" id="chargeMgmtGmEx">
-                <param name='wmode' value='transparent' />
-                <param name="movie" value="${ctx}/flexapp/swf/chargeMgmtGmGrid.swf" />
-                <!--[if !IE]>--> <object type="application/x-shockwave-flash"
-                    data="${ctx}/flexapp/swf/chargeMgmtGmGrid.swf" width="100%"
-                    height="506px" id="chargeMgmtGmOt">
-                    <param name='wmode' value='transparent' />
-                    <!--<![endif]--> <!--[if !IE]>--> </object> <!--<![endif]--> </object></li>
-        </ul>
-    </div>
-
-	<div id="waterDiv" class="flexlist2" style="display: none;">
+<!--  TariffType : Gas -->
+    <div id="gasDiv" class="" style="display: none;">
         <ul>
             <li>
                 <span style="float:right; margin-bottom: 5px">
@@ -1934,28 +4026,42 @@
                         <input name="date" class="no-width" type="text"></input>
                     </span>
                     <em class="am_button"> <a href="javascript:addRowWm();" id="addRowWm"><fmt:message key="aimir.add" /></a> </em>
-                    <em class="am_button"> <a href="javascript:deleteRowWm();" id="deleteRow"><fmt:message key="aimir.button.delete" /></a> </em>
+                    <%-- <em class="am_button"> <a href="javascript:deleteRowWm();" id="deleteRow"><fmt:message key="aimir.button.delete" /></a> </em> --%>
                     <em class="am_button"> <a href="javascript:exportExcel('ExportWM');" id="ExportWm"><fmt:message key="aimir.button.export" /></a> </em>
                 </span>
             </li>
-            <li><object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-                width="100%" height="506px" id="chargeMgmtWmEx">
-                <param name='wmode' value='transparent' />
-                <param name="movie" value="${ctx}/flexapp/swf/chargeMgmtEmGrid.swf" />
-                <!--[if !IE]>--> <object type="application/x-shockwave-flash"
-                    data="${ctx}/flexapp/swf/chargeMgmtEmGrid.swf" width="100%"
-                    height="506px" id="chargeMgmtWmOt">
-                    <param name='wmode' value='transparent' />
-                    <!--<![endif]--> <!--[if !IE]>--> </object> <!--<![endif]--> </object>
-            </li>
+        	<li>
+            	<!--  <em id="chargeMgmtGmEx"></em> -->
+        	</li>
         </ul>
+    </div>
+
+	<div id="waterDiv" class="" style="display: none;">
+        <ul>
+            <li>
+                <span style="float:right; margin-right: 10px">
+                    <span class="calendar-form">
+                        <input class="alt date" type='text' readOnly></input>
+                        <input name="date" class="no-width" type="text"></input>
+                    </span>
+                    <em class="am_button"> <a href="javascript:addRowWm();" id="addRowWm"><fmt:message key="aimir.add" /></a> </em>
+                    <%-- <em class="am_button"> <a href="javascript:deleteRowWm();" id="deleteRow"><fmt:message key="aimir.button.delete" /></a> </em> --%>
+                    <em class="am_button"> <a href="javascript:exportExcel('ExportWM');" id="ExportWm"><fmt:message key="aimir.button.export" /></a> </em>
+                </span>
+            </li>
+            <li>
+            	<!-- <em id="chargeMgmtWmEx"></em> -->
+        	</li>
+        </ul>
+        <br>
+        <br>
+        <div id="padding-10" style="padding-left: 10px; padding-right: 10px;">
+        	<div id="chargeMgmtWm" class="tabcontentsbox border-blue" ></div>
+        </div>
    	</div>
 
  
-    <div id="tariffUpdateBtn" class="btn_right_bottom gadget_body2">
-      <span class="lightgray11pt margin-r5"><fmt:message key="aimir.save"/></span>
-      <span><em class="am_button"><a href="javascript:updateData();"><fmt:message key="aimir.ok"/></a></em></span>
-    </div>
+    
 </div>
 <!-- 3rd 탭 : PAY (E) --> <!-- 4th 탭 : TAX (S) -->
 </div>

@@ -101,14 +101,19 @@ public class SupplierMgmtManagerImpl implements SupplierMgmtManager {
     }
     
     public String getAppliedTariffDate(String supplierType, String yyyymmdd, Integer supplierId) {
-        String date = StringUtil.nullToBlank(yyyymmdd);
-        if ( date.equals("") ) { date = CalendarUtil.getCurrentDate();}
-        Integer emCount = tariffEMDao.getRowCount();
-        if (supplierType.equals(CommonConstants.SupplierType.Electricity.name() ) && emCount > 0 ) {        
-            return tariffEMDao.getAppliedTariffDate(date, supplierId);
-        } else { 
-            return null;
-        }
+		String date = StringUtil.nullToBlank(yyyymmdd);
+		// Integer emCount = tariffEMDao.getRowCount();
+		
+		if (date.equals("")) {
+			date = CalendarUtil.getCurrentDate();
+		}
+		
+		// if (supplierType.equals(CommonConstants.SupplierType.Electricity.name()) && emCount > 0) {
+		if (supplierType.equals(CommonConstants.SupplierType.Electricity.name())) {
+			return tariffEMDao.getAppliedTariffDate(date, supplierId);
+		} else {
+			return null;
+		}
     }
 
     public Map<String, Object> getChargeMgmtList(Map<String, Object> condition) {
