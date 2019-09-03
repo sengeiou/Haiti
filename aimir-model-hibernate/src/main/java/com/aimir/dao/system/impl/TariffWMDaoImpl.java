@@ -111,6 +111,8 @@ public class TariffWMDaoImpl extends AbstractHibernateGenericDao<TariffWM, Integ
 		
 		String yyyymmdd = (String)condition.get("yyyymmdd");
 		Integer supplierId = (Integer)condition.get("supplierId");
+		String tariffType = (String)condition.get("tariffType");
+		
 		StringBuffer sb = new StringBuffer();
 		sb.append("\n SELECT	t.id as id, ");
 		sb.append("\n       	t.tariffType.name as tariffType, ");
@@ -125,7 +127,10 @@ public class TariffWMDaoImpl extends AbstractHibernateGenericDao<TariffWM, Integ
 		sb.append("\n FROM      TariffWM t");
 		sb.append("\n WHERE     t.tariffType.supplierId =:supplierId");
 		if(yyyymmdd.length() > 0 ){
-			sb.append("\n WHERE     t.yyyymmdd = :yyyymmdd ");
+			sb.append("\n AND     t.yyyymmdd = :yyyymmdd ");
+		}
+		if(tariffType.length() > 0){
+			sb.append("\n AND     t.tariffType.name = :tariffType ");
 		}
 		sb.append("\n ORDER BY t.yyyymmdd, t.tariffType.id, t.supplySizeMin ");
 
@@ -133,6 +138,9 @@ public class TariffWMDaoImpl extends AbstractHibernateGenericDao<TariffWM, Integ
 		query.setInteger("supplierId", supplierId);
 		if(yyyymmdd.length() > 0 ){
 			query.setString("yyyymmdd", yyyymmdd);
+		}
+		if(tariffType.length() > 0){
+			query.setString("tariffType", tariffType);
 		}
 		
 		return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();

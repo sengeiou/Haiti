@@ -141,6 +141,7 @@ public class TariffEMDaoImpl extends AbstractHibernateGenericDao<TariffEM, Integ
 		
 		String yyyymmdd = (String)condition.get("yyyymmdd");
 		Integer supplierId = (Integer)condition.get("supplierId");
+		String tariffType = (String)condition.get("tariffType");
 		
 	    StringBuffer sb = new StringBuffer();
 	    sb.append("\n SELECT	t.ID as ID, ");
@@ -175,12 +176,19 @@ public class TariffEMDaoImpl extends AbstractHibernateGenericDao<TariffEM, Integ
 	  if(yyyymmdd.length() > 0){
 		  sb.append("\n AND     t.YYYYMMDD = :yyyymmdd ");
 	  }
-	  sb.append("\n ORDER BY t.YYYYMMDD, t.TARIFFTYPE_ID, s.ID, t.END_HOUR DESC");
+	  if(tariffType.length() > 0){
+		  sb.append("\n AND     tt.NAME = :tariffType ");
+	  }
+	  //sb.append("\n ORDER BY t.YYYYMMDD, t.TARIFFTYPE_ID, s.ID, t.END_HOUR DESC");
+	  sb.append("\n ORDER BY t.YYYYMMDD, t.TARIFFTYPE_ID, t.SUPPLY_SIZE_MIN DESC");
 
 	  SQLQuery query = getSession().createSQLQuery(sb.toString());
 	  query.setInteger("supplierId", supplierId);
 	  if(yyyymmdd.length() > 0){
 		  query.setString("yyyymmdd", yyyymmdd);
+	  }
+	  if(tariffType.length() > 0){
+		  query.setString("tariffType", tariffType);
 	  }
 	
 	return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();

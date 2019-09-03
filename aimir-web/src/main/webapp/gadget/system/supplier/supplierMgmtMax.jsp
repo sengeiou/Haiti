@@ -1737,8 +1737,8 @@
 					"RATEREBALANCINGLEVY",
 					//"STARTHOUR",
 					//"ENDHOUR",
-                    "NHIL",
-                    "GETFUND",
+                    //"NHIL",
+                    //"GETFUND",
 					"HOUR",
 					"TARIFFTYPEID",
 					"ERS"
@@ -1950,7 +1950,7 @@
                             id : 'maxDemand',
                             allowBlank : true
                         })
-					},{
+					/* },{
 						header:fmtMsgArr[25], //nhil로 변경..?
 						dataIndex:'NHIL',
 						editable: edit,
@@ -1968,8 +1968,8 @@
 						align:'right',
 						editor: new Ext.form.TextField({
                             id : 'getfund',
-                            allowBlank : true
-                        })
+                            allowBlank : true 
+                        }) */
 					},{
 						header:'Delete', 
 						width: 60,
@@ -2803,7 +2803,7 @@
 
         // 요금관리 - request 전송
         function send() {
-             if (supplyType == SupplierType.Electricity) {
+/*              if (supplyType == SupplierType.Electricity) {
                 if (grid1.requestSend) grid1.requestSend();
                 else send.defer(300);
             }
@@ -2814,7 +2814,7 @@
             else if (supplyType == SupplierType.Water) {
                 if (grid3.requestSend) grid3.requestSend();
                 else send.defer(300);
-            } 
+            }  */
         }
 
         // 요금관리 - 수정
