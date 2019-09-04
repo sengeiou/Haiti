@@ -352,7 +352,7 @@ public class EV_203_10_0_Action implements EV_Action
                     // 단상인데 3상처럼 처리되는 것을 막기 위해 미터 모델의 상을 이용하여 결상이벤트 처리를 하지 않는다.
                     // 2016.03.09
                     MeterConfig mc = null;
-                    if (meter.getModel() != null && meter.getModel().getDeviceConfig() != null)
+                    if (meter != null && meter.getModel() != null && meter.getModel().getDeviceConfig() != null)
                         mc = (MeterConfig)meter.getModel().getDeviceConfig();
                     
                     if (mc != null && mc.getPhase().toLowerCase().contains("1p")) {
