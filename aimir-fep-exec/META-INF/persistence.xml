@@ -6,11 +6,11 @@
 
   <persistence-unit name="eclipselink.jpa" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <jar-file>file:/home/aimir/aimiramm.dev/aimir-project-lib/com/aimir/aimir-model/3.4/aimir-model-3.4.jar</jar-file>
+    <jar-file>file:/home/aimir/aimiramm.dev/aimir-project-lib/com/aimir/aimir-model-eclipselink/3.4-SNAPSHOT/aimir-model-eclipselink-3.4-SNAPSHOT.jar</jar-file>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver" />
-      <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@172.16.10.188:aimir"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:orcl"/>
       <property name="javax.persistence.jdbc.user" value="aimir"/>
       <property name="javax.persistence.jdbc.password" value="aimir"/>
       <property name="eclipselink.ddl-generation" value="create-or-extend-tables" />
