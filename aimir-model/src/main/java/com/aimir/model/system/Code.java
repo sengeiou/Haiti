@@ -111,11 +111,16 @@ public class Code extends BaseObject implements JSONString{
 	@SequenceGenerator(name="SEQ_CODE", sequenceName="SEQ_CODE", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
 	private Integer id;		//코드 id
+	
 	@Column(unique=true, nullable=false)
 	private String code;	//코드값
+	
 	@Column(nullable=false)
 	private String name;	//코드명
+	
+	@Column(length = 100)
 	private String descr;	//코드설명
+	
 	@Column(name="codeorder")
 	private Integer order = 0; 
 
