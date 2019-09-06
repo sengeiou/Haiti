@@ -112,7 +112,7 @@ public class Code extends BaseObject implements JSONString{
     @ColumnInfo(name="PK", descr="PK")
 	private Integer id;		//코드 id
 	
-	@Column(unique=true, nullable=false)
+	@Column(unique=true, nullable=false, length=100)
 	private String code;	//코드값
 	
 	@Column(nullable=false)
