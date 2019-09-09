@@ -43,6 +43,7 @@ import com.aimir.fep.util.DataUtil;
 import com.aimir.fep.util.FMPProperty;
 import com.aimir.fep.util.Hex;
 import com.aimir.fep.util.Message;
+import com.aimir.util.ContextUtil;
 
 /**
  * MOA Startup class
@@ -499,6 +500,7 @@ public class FepAdapter {
             */
 
             DataUtil.setApplicationContext(applicationContext);
+            ContextUtil.setApplicationContext(applicationContext);
         }
         catch (Exception e) {
             logger.error(e, e);

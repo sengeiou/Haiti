@@ -166,6 +166,6 @@
     <property name="timeToLive" value="0"/>
   </bean>
     
-  <bean id="meterEventLink" class="${meter.event.link}"></bean>
+  <!-- <bean id="meterEventLink" class="${meter.event.link}"></bean>-->
     
 </beans>
