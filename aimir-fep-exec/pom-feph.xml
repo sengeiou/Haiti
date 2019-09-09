@@ -366,8 +366,8 @@
     </dependency>
     <dependency>
       <groupId>javax.jms</groupId>
-      <artifactId>jms</artifactId>
-      <version>${jms.version}</version>
+      <artifactId>javax.jms-api</artifactId>
+      <version>${jms-api.version}</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
