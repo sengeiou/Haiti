@@ -13,11 +13,11 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.aimir.dao.system.CodeDao;
 import com.aimir.model.system.Code;
+import com.aimir.util.ContextUtil;
 
 /**
  * CommonConstants.java Description 
@@ -31,12 +31,7 @@ import com.aimir.model.system.Code;
 public class CommonConstants {
     private static Log log = LogFactory.getLog(CommonConstants.class);
     
-    private static CodeDao codeDao;
-    
-    @Autowired
-    public void setCodeDao(CodeDao _codeDao) {
-        this.codeDao = _codeDao;
-    }
+    private static CodeDao codeDao = ContextUtil.getBean(CodeDao.class);
     
     /**
      * 전기,가스,수도별로 순발열량/원유1톤순발열량 값으로
