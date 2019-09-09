@@ -129,7 +129,7 @@ public class TariffWMDaoImpl extends AbstractHibernateGenericDao<TariffWM, Integ
 		if(yyyymmdd.length() > 0 ){
 			sb.append("\n AND     t.yyyymmdd = :yyyymmdd ");
 		}
-		if(tariffType.length() > 0){
+		if(tariffType!=null && tariffType!=""){
 			sb.append("\n AND     t.tariffType.name = :tariffType ");
 		}
 		sb.append("\n ORDER BY t.yyyymmdd, t.tariffType.id, t.supplySizeMin ");
@@ -139,7 +139,7 @@ public class TariffWMDaoImpl extends AbstractHibernateGenericDao<TariffWM, Integ
 		if(yyyymmdd.length() > 0 ){
 			query.setString("yyyymmdd", yyyymmdd);
 		}
-		if(tariffType.length() > 0){
+		if(tariffType!=null && tariffType!=""){
 			query.setString("tariffType", tariffType);
 		}
 		

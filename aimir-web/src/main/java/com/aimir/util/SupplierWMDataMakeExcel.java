@@ -59,28 +59,83 @@ public class SupplierWMDataMakeExcel {
             HSSFSheet sheet = workbook.createSheet(fileName);
 
             int colIdx = 0;
+            sheet.setColumnWidth(colIdx++, 256 * 15);
+            sheet.setColumnWidth(colIdx++, 256 * 20);
             sheet.setColumnWidth(colIdx++, 256 * 25);
-            sheet.setColumnWidth(colIdx++, 256 * 30);
-            sheet.setColumnWidth(colIdx++, 256 * 16);
+            sheet.setColumnWidth(colIdx++, 256 * 20);
+            sheet.setColumnWidth(colIdx++, 256 * 27);
+            sheet.setColumnWidth(colIdx++, 256 * 27);
+            sheet.setColumnWidth(colIdx++, 256 * 15);
+            sheet.setColumnWidth(colIdx++, 256 * 25);
+            sheet.setColumnWidth(colIdx++, 256 * 23);
+            sheet.setColumnWidth(colIdx++, 256 * 20);
+            sheet.setColumnWidth(colIdx++, 256 * 15);
+            sheet.setColumnWidth(colIdx++, 256 * 20);
+            sheet.setColumnWidth(colIdx++, 256 * 15);
+            sheet.setColumnWidth(colIdx++, 256 * 15);
             sheet.setColumnWidth(colIdx++, 256 * 10);
 
             row = sheet.createRow(SupplierStartRow);
  
             // Title  
             cell = row.createCell(0);
-            cell.setCellValue(titleMap.get("tariffType"));
+            cell.setCellValue(titleMap.get("date"));
             cell.setCellStyle(titleCellStyle);
             
             cell = row.createCell(1);
-            cell.setCellValue(titleMap.get("supplySize"));
+            cell.setCellValue(titleMap.get("tariff"));
             cell.setCellStyle(titleCellStyle);
             
             cell = row.createCell(2);
-            cell.setCellValue(titleMap.get("usageUnitPrice"));
+            cell.setCellValue(titleMap.get("supplySize"));
             cell.setCellStyle(titleCellStyle);
             
             cell = row.createCell(3);
-            cell.setCellValue(titleMap.get("share"));
+            cell.setCellValue(titleMap.get("serviceCharge"));
+            cell.setCellStyle(titleCellStyle);
+            
+            cell = row.createCell(4);
+            cell.setCellValue(titleMap.get("transmissionNetworkCharge"));
+            cell.setCellStyle(titleCellStyle);
+            
+            cell = row.createCell(5);
+            cell.setCellValue(titleMap.get("distributionNetworkCharge"));
+            cell.setCellStyle(titleCellStyle);            
+            
+            cell = row.createCell(6);
+            cell.setCellValue(titleMap.get("energy"));
+            cell.setCellStyle(titleCellStyle);
+            
+            cell = row.createCell(7);
+            cell.setCellValue(titleMap.get("activeEnergyCharge"));
+            cell.setCellStyle(titleCellStyle);
+            
+            cell = row.createCell(8);
+            cell.setCellValue(titleMap.get("reactiveEnergyCharge"));
+            cell.setCellStyle(titleCellStyle);
+            
+            cell = row.createCell(9);
+            cell.setCellValue(titleMap.get("adminCharge"));
+            cell.setCellStyle(titleCellStyle);
+            
+            cell = row.createCell(10);
+            cell.setCellValue(titleMap.get("rate"));
+            cell.setCellStyle(titleCellStyle);
+            
+            cell = row.createCell(11);
+            cell.setCellValue(titleMap.get("maxDemand"));
+            cell.setCellStyle(titleCellStyle);
+            
+            cell = row.createCell(12);
+            cell.setCellValue(titleMap.get("season"));
+            cell.setCellStyle(titleCellStyle);
+            
+            cell = row.createCell(13);
+            cell.setCellValue(titleMap.get("tou"));
+            cell.setCellStyle(titleCellStyle);
+            
+            cell = row.createCell(14);
+            cell.setCellValue(titleMap.get("hour"));
             cell.setCellStyle(titleCellStyle);
             //Title End
             
@@ -91,19 +146,63 @@ public class SupplierWMDataMakeExcel {
             	row = sheet.createRow(i+ (SupplierStartRow + 1));      
 
             	cell = row.createCell(0);
-            	cell.setCellValue((resultMap.get("tariffType") == null) ? "" : resultMap.get("tariffType").toString());
+            	cell.setCellValue(resultMap.get("YYYYMMDD")==null?"":resultMap.get("YYYYMMDD").toString());
             	cell.setCellStyle(dataCellStyle);
             	
             	cell = row.createCell(1);
-            	cell.setCellValue(displayData(resultMap, titleMap));
+            	cell.setCellValue((resultMap.get("TARIFFTYPE") == null)?"":resultMap.get("TARIFFTYPE").toString());
             	cell.setCellStyle(dataCellStyle);
-
+            	
             	cell = row.createCell(2);
-            	cell.setCellValue((resultMap.get("usageUnitPrice") == null) ? "" : resultMap.get("usageUnitPrice").toString());
+            	cell.setCellValue(displayData(resultMap, titleMap));
             	cell.setCellStyle(dataCellStyle);
             	
             	cell = row.createCell(3);
-            	cell.setCellValue((resultMap.get("share") == null) ? "" : resultMap.get("share").toString());
+            	cell.setCellValue((resultMap.get("SERVICECHARGE") == null) ?"": resultMap.get("SERVICECHARGE").toString());
+            	cell.setCellStyle(dataCellStyle);
+            	
+            	cell = row.createCell(4);
+            	cell.setCellValue((resultMap.get("TRANSMISSIONNETWORKCHARGE") == null) ?"": resultMap.get("TRANSMISSIONNETWORKCHARGE").toString());
+            	cell.setCellStyle(dataCellStyle);
+            	
+            	cell = row.createCell(5);
+            	cell.setCellValue((resultMap.get("DISTRIBUTIONNETWORKCHARGE") == null) ?"": resultMap.get("DISTRIBUTIONNETWORKCHARGE").toString());
+            	cell.setCellStyle(dataCellStyle);
+            	
+            	cell = row.createCell(6);
+            	cell.setCellValue((resultMap.get("ENERGYDEMANDCHARGE") == null) ?"": resultMap.get("ENERGYDEMANDCHARGE").toString());
+            	cell.setCellStyle(dataCellStyle);
+            	
+            	cell = row.createCell(7);
+            	cell.setCellValue((resultMap.get("ACTIVEENERGYCHARGE") == null) ?"": resultMap.get("ACTIVEENERGYCHARGE").toString());
+            	cell.setCellStyle(dataCellStyle);
+            	
+            	cell = row.createCell(8);
+            	cell.setCellValue((resultMap.get("REACTIVEENERGYCHARGE") == null) ?"": resultMap.get("REACTIVEENERGYCHARGE").toString());
+            	cell.setCellStyle(dataCellStyle);
+            	
+                cell = row.createCell(9);
+                cell.setCellValue((resultMap.get("ADMINCHARGE") == null) ?"": resultMap.get("ADMINCHARGE").toString());
+                cell.setCellStyle(dataCellStyle);
+                
+            	cell = row.createCell(10);
+            	cell.setCellValue((resultMap.get("RATEREBALANCINGLEVY") == null) ?"": resultMap.get("RATEREBALANCINGLEVY").toString());
+            	cell.setCellStyle(dataCellStyle);
+            	
+            	cell = row.createCell(11);
+            	cell.setCellValue((resultMap.get("MAXDEMAND") == null) ?"": resultMap.get("MAXDEMAND").toString());
+            	cell.setCellStyle(dataCellStyle);
+            	
+                cell = row.createCell(12);
+                cell.setCellValue((resultMap.get("SEASON") == null) ?"": resultMap.get("SEASON").toString());
+                cell.setCellStyle(dataCellStyle);
+                
+            	cell = row.createCell(13);
+            	cell.setCellValue((resultMap.get("PEAKTYPE") == null) ?"": resultMap.get("PEAKTYPE").toString());
+            	cell.setCellStyle(dataCellStyle);
+            	
+            	cell = row.createCell(14);
+            	cell.setCellValue((resultMap.get("HOUR") == null) ?"": resultMap.get("HOUR").toString());
             	cell.setCellStyle(dataCellStyle);
             }
             
@@ -229,10 +328,14 @@ public class SupplierWMDataMakeExcel {
     
   //display
     public String displayData (Map<String, Object> resultMap, Map<String, String> titleMap) {
-    	String max = (resultMap.get("supplySizeMax") == null ? "" : resultMap.get("supplySizeMax")).toString();
-    	String min = (resultMap.get("supplySizeMin") == null ? "" : resultMap.get("supplySizeMin")).toString();
-    	String cond1 = ">".equals(resultMap.get("condition1")) ? titleMap.get("excess").toString() : ">=".equals(resultMap.get("condition1"))  ? titleMap.get("morethan").toString() : "";
-    	String cond2 = "<=".equals(resultMap.get("condition2"))  ? titleMap.get("less").toString() : "<".equals(resultMap.get("condition2")) ? titleMap.get("below").toString() : "";
+    	String max = (resultMap.get("SUPPLYSIZEMAX") == null ? "" : resultMap.get("SUPPLYSIZEMAX")).toString();
+    	String min = (resultMap.get("SUPPLYSIZEMIN") == null ? "" : resultMap.get("SUPPLYSIZEMIN")).toString();
+    	
+    	String cond1 = ">".equals(resultMap.get("CONDITION1")) ? "EXCESS" : ">=".equals(resultMap.get("CONDITION1"))  ? "MORE THAN" : "";
+    	String cond2 = "<=".equals(resultMap.get("CONDITION2"))  ? "LESS" : "<".equals(resultMap.get("CONDITION2")) ? "BELOW" : "";
+    	
+//    	String cond1 = ">".equals(resultMap.get("CONDITION1")) ? titleMap.get("excess").toString() : ">=".equals(resultMap.get("CONDITION1"))  ? titleMap.get("morethan").toString() : "";
+//    	String cond2 = "<=".equals(resultMap.get("CONDITION2"))  ? titleMap.get("less").toString() : "<".equals(resultMap.get("CONDITION2")) ? titleMap.get("below").toString() : "";
     	
     	if(max == null || "".equals(max)){
     		return min + " " + cond1;

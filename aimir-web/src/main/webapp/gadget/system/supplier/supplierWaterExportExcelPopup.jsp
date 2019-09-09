@@ -37,7 +37,8 @@
                         "fileType"		: obj.fileType,
                         "supplierId"	: obj.supplierId,
                         "yyyymmdd"		: obj.yyyymmdd,
-                        "filePath"		:'<fmt:message key="aimir.report.fileDownloadDir"/>'
+                        "filePath"		:'<fmt:message key="aimir.report.fileDownloadDir"/>',
+                        "tariffType"	: obj.tariffType
                        	}
                     , function(json) {
                         hide();
@@ -62,15 +63,21 @@
         
         function getTitle() {
         	var title = new Array();    
-        	
-        	title[0] = "tariffType";
-        	title[1] = "supplySize";
-        	title[2] = "usageUnitPrice";
-        	title[3] = "share";
-        	title[4] = "<fmt:message key="aimir.energy.excess"/>";       // 초과"
-        	title[5] = "<fmt:message key="aimir.below"/>";               // 미만
-        	title[6] = "<fmt:message key="aimr.morethan"/>";             // 이상
-        	title[7] = "<fmt:message key="aimir.less"/>";                // 이하
+        	title[0] = "date";
+        	title[1] = "<fmt:message key="aimir.tariff"/>";
+        	title[2] = "<fmt:message key="aimir.supplySize"/>"+"(x)";
+        	title[3] = "<fmt:message key="aimir.serviceCharge"/>"; 
+            title[4] = "<fmt:message key="aimir.transmissionNetworkCharge"/>"; 
+            title[5] = "<fmt:message key="aimir.distributionNetworkCharge"/>";
+        	title[6] = "<fmt:message key="aimir.report.energy"/>"; 
+        	title[7] = "<fmt:message key="aimir.activeEnergyCharge"/>"; 
+        	title[8] = "<fmt:message key="aimir.reactiveEnergyCharge"/>";  
+        	title[9] = "<fmt:message key="aimir.adminCharge"/>";
+        	title[10] = "<fmt:message key="aimir.type.pay"/>";
+        	title[11] = "<fmt:message key="aimir.maxDemand"/>";
+        	title[12] = "<fmt:message key="aimir.season"/>";
+        	title[13] = "<fmt:message key="aimir.tou"/>";
+        	title[14] = "<fmt:message key="aimir.hour"/>";
         	
         	return title;
         }

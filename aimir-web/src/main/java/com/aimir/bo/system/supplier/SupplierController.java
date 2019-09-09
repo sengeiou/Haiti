@@ -483,7 +483,9 @@ public class SupplierController {
     		@RequestParam("fileType") 			String fileType,
     		@RequestParam("filePath") 			String filePath,
     		@RequestParam("head[]") 			String[] head,
-    		@RequestParam("yyyymmdd") 			String yyyymmdd) {
+    		@RequestParam("yyyymmdd") 			String yyyymmdd,
+    		@RequestParam(value="tariffType", required=false) 		String tariffType
+    		) {
     	
 	     ModelAndView mav = new ModelAndView("jsonView");     
 		 Map<String, String> titleMap = new HashMap<String, String>();
@@ -515,6 +517,7 @@ public class SupplierController {
 		 conditionMap.put("supplyTypeName", fileType);
 		 conditionMap.put("filePath", filePath);
 		 conditionMap.put("yyyymmdd", yyyymmdd);
+		 conditionMap.put("tariffType", tariffType);
 		 
 		 list = supplierMgmtManager.getChargeMgmtList(conditionMap);
 
@@ -541,25 +544,18 @@ public class SupplierController {
 			 
 			// message 생성
 			 if("Electricity".equals(fileType)) {
-				 titleMap.put("date", 							head[0]);
-				 titleMap.put("tariffType",						head[1]);
-				 titleMap.put("season",   						head[2]);
-				 titleMap.put("peakType",					head[3]);
-				 titleMap.put("startHour",  					head[4]);
-				 titleMap.put("endHour", 						head[5]);
-				 titleMap.put("supplySize",					head[6]);
-				 titleMap.put("serviceCharge",				head[7]);
-				 titleMap.put("adminCharge",				head[8]);
-				 titleMap.put("distributionNetworkCharge",	head[9]);
-				 titleMap.put("transmissionNetworkCharge",	head[10]);
-				 titleMap.put("energyDemandCharge",			head[11]);
-				 titleMap.put("activeEnergyCharge",			head[12]);
-				 titleMap.put("reactiveEnergyCharge",		head[13]);
-				 titleMap.put("rateRebalancingLevy",		head[14]);
-				 titleMap.put("excess",							head[15]);
-				 titleMap.put("below",							head[16]);
-				 titleMap.put("morethan",						head[17]);
-				 titleMap.put("less",								head[18]);
+				 titleMap.put("date", 						head[0]);
+				 titleMap.put("tariff",						head[1]);
+				 titleMap.put("supplySize",   				head[2]);
+				 titleMap.put("serviceCharge",				head[3]);
+				 titleMap.put("govLevy",  					head[4]);
+				 titleMap.put("publicLevy", 				head[5]);
+				 titleMap.put("vat",						head[6]);
+				 titleMap.put("activeEnergyCharge",			head[7]);
+				 titleMap.put("lifeLineSubsidy",			head[8]);
+				 titleMap.put("govSubsidy",					head[9]);
+				 titleMap.put("additionalSubsidy",			head[10]);
+				 titleMap.put("utilityRelief",				head[11]);
 			 } else if ("Gas".equals(fileType)) {
 				 titleMap.put("tariffType",					head[0]);
 				 titleMap.put("season",						head[1]);
@@ -568,14 +564,21 @@ public class SupplierController {
 				 titleMap.put("salePrice",					head[4]);
 				 titleMap.put("adjustmentFactor",			head[5]);
 			 } else if ("Water".equals(fileType)) {
-				 titleMap.put("tariffType", 				head[0]);
-				 titleMap.put("supplySize", 				head[1]);
-				 titleMap.put("usageUnitPrice", 			head[2]);
-				 titleMap.put("share",						head[3]);
-				 titleMap.put("excess",						head[4]);
-				 titleMap.put("below",						head[5]);
-				 titleMap.put("morethan",					head[6]);
-				 titleMap.put("less",						head[7]);
+				 titleMap.put("date", 						head[0]);
+				 titleMap.put("tariff",						head[1]);
+				 titleMap.put("supplySize",   				head[2]);
+				 titleMap.put("serviceCharge",				head[3]);
+				 titleMap.put("transmissionNetworkCharge",  head[4]);
+				 titleMap.put("distributionNetworkCharge", 	head[5]);
+				 titleMap.put("energy",						head[6]);
+				 titleMap.put("activeEnergyCharge",			head[7]);
+				 titleMap.put("reactiveEnergyCharge",		head[8]);
+				 titleMap.put("adminCharge",				head[9]);
+				 titleMap.put("rate",						head[10]);
+				 titleMap.put("maxDemand",					head[11]);
+				 titleMap.put("season",						head[12]);
+				 titleMap.put("tou",						head[13]);
+				 titleMap.put("hour",						head[14]);
 			 } else if ("WaterCaliber".equals(fileType)) {
 				 titleMap.put("caliber", 					head[0]);
 				 titleMap.put("basicRate", 					head[1]);
