@@ -193,32 +193,38 @@ public class SupplierMgmtManagerImpl implements SupplierMgmtManager {
             List<Map<String, Object>> listCaliber = tariffWMCaliberDao.getChargeMgmtList(condition);
             
             for (int i = 0; i < listWM.size(); i++) {
-                if(listWM.get(i).get("share") != null)
+                if(listWM.get(i).get("share") != null && !listWM.get(i).get("share").equals(""))
                     listWM.get(i).put("share", dfCd.format(Double.parseDouble(listWM.get(i).get("share").toString())));
-                if(listWM.get(i).get("usageUnitPrice") != null){
+                if(listWM.get(i).get("usageUnitPrice") != null && !listWM.get(i).get("usageUnitPrice").equals("")){
                     //listWM.get(i).put("usageUnitPrice", dfCd.format(Double.parseDouble(listWM.get(i).get("usageUnitPrice").toString())));
                     listWM.get(i).put("usageUnitPrice", dfCd.format(Double.parseDouble(listWM.get(i).get("usageUnitPrice").toString())));
                     listWM.get(i).put("SERVICECHARGE", listWM.get(i).get("usageUnitPrice"));
                 }
                 
                 // 160216 : 전기 Tariff화면에 적용하기 위한 Header 변경
-                listWM.get(i).put("TARIFFTYPE", listWM.get(i).get("tariffType").toString());
-                listWM.get(i).put("TARIFFTYPEID", listWM.get(i).get("tariffTypeId").toString());
-                listWM.get(i).put("CONDITION1", listWM.get(i).get("condition1").toString());
-                listWM.get(i).put("CONDITION2", listWM.get(i).get("condition2").toString());
-                String supplySizeMaxString = listWM.get(i).get("supplySizeMax") == null ? null : listWM.get(i).get("supplySizeMax").toString();
-                listWM.get(i).put("SUPPLYSIZEMAX", supplySizeMaxString);
-                listWM.get(i).put("SUPPLYSIZEMIN", listWM.get(i).get("supplySizeMin").toString());              
-                listWM.get(i).put("SUPPLYSIZEUNIT", listWM.get(i).get("supplySizeUnit").toString());
+                if(listWM.get(i).get("tariffType") != null && !listWM.get(i).get("tariffType").equals(""))
+                	listWM.get(i).put("TARIFFTYPE", listWM.get(i).get("tariffType").toString());
+                if(listWM.get(i).get("condition1") != null && !listWM.get(i).get("condition1").equals(""))
+                	listWM.get(i).put("CONDITION1", listWM.get(i).get("condition1").toString());
+                if(listWM.get(i).get("condition2") != null && !listWM.get(i).get("condition2").equals(""))
+                	listWM.get(i).put("CONDITION2", listWM.get(i).get("condition2").toString());
+                if(listWM.get(i).get("supplySizeMin") != null && !listWM.get(i).get("supplySizeMin").equals(""))
+                	listWM.get(i).put("SUPPLYSIZEMAX", listWM.get(i).get("supplySizeMax").toString());
+                if(listWM.get(i).get("supplySizeMin") != null && !listWM.get(i).get("supplySizeMin").equals(""))
+                	listWM.get(i).put("SUPPLYSIZEMIN", listWM.get(i).get("supplySizeMin").toString());              
+                if(listWM.get(i).get("supplySizeUnit") != null && !listWM.get(i).get("supplySizeUnit").equals(""))
+                	listWM.get(i).put("SUPPLYSIZEUNIT", listWM.get(i).get("supplySizeUnit").toString());
                 // DeleteRow 기능을 사용하기 위한 Header 추가
-                listWM.get(i).put("ID", listWM.get(i).get("id"));
-                listWM.get(i).put("SEASONID", "WATER");
+                if(listWM.get(i).get("id") != null && !listWM.get(i).get("id").equals(""))
+                	listWM.get(i).put("ID", listWM.get(i).get("id"));
+                if(listWM.get(i).get("WATER") != null && !listWM.get(i).get("WATER").equals(""))
+                	listWM.get(i).put("SEASONID", "WATER");
             }
             
             for (int i = 0; i < listCaliber.size(); i++) {
-                if(listCaliber.get(i).get("basicRate") != null)
+                if(listCaliber.get(i).get("basicRate") != null && listCaliber.get(i).get("basicRate").equals(""))
                     listCaliber.get(i).put("basicRate", dfCd.format(Double.parseDouble(listCaliber.get(i).get("basicRate").toString())));
-                if(listCaliber.get(i).get("basicRateHot") != null)
+                if(listCaliber.get(i).get("basicRateHot") != null || listCaliber.get(i).get("basicRateHot").equals(""))
                     listCaliber.get(i).put("basicRateHot", dfCd.format(Double.parseDouble(listCaliber.get(i).get("basicRateHot").toString())));
             }
             
@@ -724,7 +730,7 @@ public class SupplierMgmtManagerImpl implements SupplierMgmtManager {
                 json = dataList.getJSONObject(i);
                 TariffEM em = new TariffEM();
 
-                if (!json.isNull("HOUR")) {
+                if (!json.isNull("HOUR") && !json.get("HOUR").equals("")) {
                     String hour = json.getString("HOUR").trim();
                     String[] hours = hour.split("-");
                     String startHour = hours[0];
@@ -830,7 +836,7 @@ public class SupplierMgmtManagerImpl implements SupplierMgmtManager {
                 wm.setUsageUnitPrice(json.isNull("SERVICECHARGE") || "".equals(json.get("SERVICECHARGE")) ? null : Double
                         .valueOf(json.getString("SERVICECHARGE").replaceAll(",", "")));
                                 
-                Integer tariffTypeId = json.isNull("TARIFFTYPEID") ? null : json.getInt("TARIFFTYPEID");
+               Integer tariffTypeId = json.isNull("TARIFFTYPEID")||json.get("TARIFFTYPEID").equals("") ? null : json.getInt("TARIFFTYPEID");
                 if (tariffTypeId != null) {
                     tariffType = tariffTypeDao.get(tariffTypeId);
                 }else {

@@ -327,14 +327,14 @@
                 $("#importGMBtn").show();
                 $("#importWMBtn").show();
                 $("#importWMCaliberBtn").show();
-                $("#tariffUpdateBtn").show();
+                $(".tariffUpdateBtn").show();
             } else {
                 $("#locationBtnList").hide();
                 $("#importEMBtn").hide();
                 $("#importGMBtn").hide();
                 $("#importWMBtn").hide();
                 $("#importWMCaliberBtn").hide();
-                $("#tariffUpdateBtn").hide();
+                $(".tariffUpdateBtn").hide();
             }
 
             $(function() { $('#_basic').bind('click',function(event) { selectedTab = false; }); });
@@ -352,7 +352,7 @@
             //조회버튼클릭 이벤트 생성
             $(function() { $('#btnSearch').bind('click',function(event) { send(); } ); });
 
-            new AjaxUpload('importGM', {
+/*             new AjaxUpload('importGM', {
                 action: '${ctx}/gadget/system/supplier/getTempFileName.do',
                 data : {
                 },
@@ -371,7 +371,7 @@
                     var response = JSON.parse($(response).text());
                     setGrid(response.filePath);
                 }
-            });
+            }); */
 
             /* new AjaxUpload('importWM', {
                 action: '${ctx}/gadget/system/supplier/getTempFileName.do',
@@ -1465,7 +1465,7 @@
                     yyyymmdd: date,
                     supplierId: sId},
                     function(json) {
-                        if (json.date) {
+                    	if (json.date) {
                             $('#yyyymmddCombo').val(json.date);
                             $('#yyyymmddCombo').selectbox('change');
                             $('#yyyymmddCombo').selectbox();
@@ -1491,7 +1491,7 @@
                             });
                         }
                         //selectAppliedTariffDate() EM일 경우에만 최근 date를 알 수 있기때문에 WM은 리스트의 마지막 date를 수동으로 넣어서 조회
-                        if(supplyType=='Water'){
+                        if(supplyType == SupplierType.Water){
                         	if(json.yyyymmddList.length > 0){
                         		$('#yyyymmddCombo').val(json.yyyymmddList[json.yyyymmddList.length-1].yyyymmdd);
                         	}else{
@@ -1499,6 +1499,9 @@
                         	}
                         	$('#yyyymmddCombo').selectbox('change');
                         	getTariffGrid();
+                            if (callback) {
+                                callback();
+                            }
                         }
                         $('#yyyymmddCombo').selectbox();
                         selectAppliedTariffDate(supplyType, callback);
@@ -1750,6 +1753,9 @@
 	         if (editAuth != "true") {
 	                edit = false;
 	         }
+	         
+	         var width = $("#PAY").width()-25;
+
 			
 	        if(fileType == 'Electricity'){ 
 			tariffModelEm = new Ext.grid.ColumnModel({
@@ -1758,7 +1764,7 @@
 						header:fmtMsgArr[0], //message는 getFmtMessage참조.
 						dataIndex:'TARIFFTYPE',
 						editable: edit,
-						width: 160,
+						width: width/12*1.5 - 60,
 		                editor: {
                             id : 'tariffTypeEdit',
                             xtype: 'textfield',
@@ -1815,7 +1821,7 @@
 					},{
 						header:fmtMsgArr[2],
 						dataIndex:'SUPPLYSIZE',
-						width: 140,
+						width: width/12*1.5,
 						editable: edit,
 						align: 'center',
 						renderer: function(value, metaData, record, index) {
@@ -1863,7 +1869,7 @@
 					},{
 						header:fmtMsgArr[3],
 						dataIndex:'SERVICECHARGE',
-						width: 120,
+						width: width/12,
 						editable: edit,
 						align:'right',
 						editor: new Ext.form.TextField({
@@ -1873,7 +1879,7 @@
 					},{
 						header:fmtMsgArr[24],
 						dataIndex:'TRANSMISSIONNETWORKCHARGE',
-						width: 140,
+						width: width/12,
 						editable: edit,
 						align:'right',
 						editor: new Ext.form.TextField({
@@ -1883,7 +1889,7 @@
 					},{
 						header:fmtMsgArr[19],
 						dataIndex:'DISTRIBUTIONNETWORKCHARGE',
-						width: 110,
+						width: width/12,
 						editable: edit,
 						align:'right',
 						editor: new Ext.form.TextField({
@@ -1893,7 +1899,7 @@
 					},{
 						header:fmtMsgArr[20],
 						dataIndex:'ENERGYDEMANDCHARGE',
-						width: 90,
+						width: width/12,
 						editable: edit,
 						align:'right',
 						editor: new Ext.form.TextField({
@@ -1903,7 +1909,7 @@
 					},{
 						header:fmtMsgArr[9],
 						dataIndex:'ACTIVEENERGYCHARGE',
-						width: 150,
+						width: width/12,
 						editable: edit,
 						align:'right',
 						editor: new Ext.form.TextField({
@@ -1913,7 +1919,7 @@
 					},{
 						header:fmtMsgArr[23],
 						dataIndex:'REACTIVEENERGYCHARGE',
-						width: 120,
+						width: width/12,
 						editable: edit,
 						align:'right',
 						editor: new Ext.form.TextField({
@@ -1923,7 +1929,7 @@
 					},{
 						header:fmtMsgArr[18],
 						dataIndex:'ADMINCHARGE',
-						width: 150,
+						width: width/12,
 						editable: edit,
 						align:'right',
 						editor: new Ext.form.TextField({
@@ -1933,7 +1939,7 @@
 					},{
 						header:fmtMsgArr[22],
 						dataIndex:'RATEREBALANCINGLEVY',
-						width: 140,
+						width: width/12,
 						editable: edit,
 						align:'right',
 						editor: new Ext.form.TextField({
@@ -1943,7 +1949,7 @@
 					},{
 						header:fmtMsgArr[21],
 						dataIndex:'MAXDEMAND',
-						width: 110,
+						width: width/12,
 						editable: edit,
 						align:'right',
 						editor: new Ext.form.TextField({
@@ -2000,7 +2006,7 @@
 							header:'Tariff', 
 							dataIndex:'TARIFFTYPE',
 							editable: edit,
-							width: 180,
+							width: width/15*1.5 -60,
 			                editor: {
 	                            id : 'tariffTypeEdit',
 	                            xtype: 'textfield',
@@ -2047,7 +2053,7 @@
 						},{
 							header:'Supply Size(x)', 
 							dataIndex:'SUPPLYSIZE',
-							width: 140,
+							width: width/15*1.5,
 							editable: edit,
 							align: 'center',
 							renderer: function(value, metaData, record, index) {
@@ -2095,7 +2101,7 @@
 						},{
 							header:'Service Charge', 
 							dataIndex:'SERVICECHARGE',
-							width: 120,
+							width: width/15,
 							editable: edit,
 							align:'right',
 							editor: new Ext.form.TextField({
@@ -2105,7 +2111,7 @@
 						},{
 							header:'Transmission', 
 							dataIndex:'TRANSMISSIONNETWORKCHARGE',
-							width: 120,
+							width: width/15,
 							editable: edit,
 							align:'right',
 							editor: new Ext.form.TextField({
@@ -2115,7 +2121,7 @@
 						},{
 							header:'Distribution', 
 							dataIndex:'DISTRIBUTIONNETWORKCHARGE',
-							width: 120,
+							width: width/15,
 							editable: edit,
 							align:'right',
 							editor: new Ext.form.TextField({
@@ -2125,7 +2131,7 @@
 						},{
 							header:'Energy', 
 							dataIndex:'ENERGYDEMANDCHARGE',
-							width: 120,
+							width: width/15,
 							editable: edit,
 							align:'right',
 							editor: new Ext.form.TextField({
@@ -2135,7 +2141,7 @@
 						},{
 							header:'Active Energy', 
 							dataIndex:'ACTIVEENERGYCHARGE',
-							width: 120,
+							width: width/15,
 							editable: edit,
 							align:'right',
 							editor: new Ext.form.TextField({
@@ -2145,7 +2151,7 @@
 						},{
 							header:'Reative', 
 							dataIndex:'REACTIVEENERGYCHARGE',
-							width: 120,
+							width: width/15,
 							editable: edit,
 							align:'right',
 							editor: new Ext.form.TextField({
@@ -2155,7 +2161,7 @@
 						},{
 							header:'Admin Charge', 
 							dataIndex:'ADMINCHARGE',
-							width: 120,
+							width: width/15,
 							editable: edit,
 							align:'right',
 							editor: new Ext.form.TextField({
@@ -2165,7 +2171,7 @@
 						},{
 							header:'Rate', 
 							dataIndex:'RATEREBALANCINGLEVY',
-							width: 120,
+							width: width/15,
 							editable: edit,
 							align:'right',
 							editor: new Ext.form.TextField({
@@ -2175,7 +2181,7 @@
 						},{
 							header:'MAXDEMAND', 
 							dataIndex:'MAXDEMAND',
-							width: 120,
+							width: width/15,
 							editable: edit,
 							align:'right',
 							editor: new Ext.form.TextField({
@@ -2186,7 +2192,7 @@
 							header:'SEASON', 
 							dataIndex:'SEASON',
 							editable: false,
-							width: 100,
+							width: width/15,
 							align:'center',
 							editor: new Ext.form.TextField({
 	                            id : 'season',
@@ -2196,7 +2202,7 @@
 							header:'TOU Rate', 
 							dataIndex:'PEAKTYPE',
 							editable: false,
-							width: 100,
+							width: width/15,
 							align:'right',
 							editor: new Ext.form.TextField({
 	                            id : 'tourateId',
@@ -2206,7 +2212,7 @@
 							header:'Hour', 
 							dataIndex:'HOUR',
 							editable: edit,
-							width: 100,
+							width: width/15,
 							align:'center',
 							editor: new Ext.form.TextField({
 	                            id : 'hour',
@@ -3103,11 +3109,6 @@
              tariffGridPanel.getSelectionModel().selectLastRow();
         }
         
-        function addRowWm() {
-            grid3.focus();
-            grid3.addRow();
-        }
-		
         function deleteRow() {
             var record = tariffGridPanel.getSelectionModel().getSelected();
 
@@ -4002,7 +4003,7 @@
 	               			 </span>
 	               			 
 	                    </td>
-	                    <div id="tariffUpdateBtn" class="btn_right_bottom gadget_body2">
+	                    <div class="tariffUpdateBtn btn_right_bottom gadget_body2">
 					      <%-- <span class="lightgray11pt margin-r5"><fmt:message key="aimir.save"/></span> --%>
 					      <span><em class="am_button"><a href="javascript:updateData();">Save</a></em></span>
 					    </div>
@@ -4017,7 +4018,7 @@
     </div>
 
 <!--  TariffType : Gas -->
-    <div id="gasDiv" class="" style="display: none;">
+<%--     <div id="gasDiv" class="" style="display: none;">
         <ul>
             <li>
                 <span style="float:right; margin-bottom: 5px">
@@ -4026,7 +4027,7 @@
                         <input name="date" class="no-width" type="text"></input>
                     </span>
                     <em class="am_button"> <a href="javascript:addRowWm();" id="addRowWm"><fmt:message key="aimir.add" /></a> </em>
-                    <%-- <em class="am_button"> <a href="javascript:deleteRowWm();" id="deleteRow"><fmt:message key="aimir.button.delete" /></a> </em> --%>
+                    <em class="am_button"> <a href="javascript:deleteRowWm();" id="deleteRow"><fmt:message key="aimir.button.delete" /></a> </em>
                     <em class="am_button"> <a href="javascript:exportExcel('ExportWM');" id="ExportWm"><fmt:message key="aimir.button.export" /></a> </em>
                 </span>
             </li>
@@ -4035,24 +4036,40 @@
         	</li>
         </ul>
     </div>
-
-	<div id="waterDiv" class="" style="display: none;">
-        <ul>
-            <li>
-                <span style="float:right; margin-right: 10px">
-                    <span class="calendar-form">
-                        <input class="alt date" type='text' readOnly></input>
-                        <input name="date" class="no-width" type="text"></input>
-                    </span>
-                    <em class="am_button"> <a href="javascript:addRowWm();" id="addRowWm"><fmt:message key="aimir.add" /></a> </em>
-                    <%-- <em class="am_button"> <a href="javascript:deleteRowWm();" id="deleteRow"><fmt:message key="aimir.button.delete" /></a> </em> --%>
-                    <em class="am_button"> <a href="javascript:exportExcel('ExportWM');" id="ExportWm"><fmt:message key="aimir.button.export" /></a> </em>
-                </span>
-            </li>
-            <li>
-            	<!-- <em id="chargeMgmtWmEx"></em> -->
-        	</li>
-        </ul>
+ --%>
+ 
+	<div id="waterDiv" style="display: none;">
+	
+        <div class="searchoption-container">
+	    	<table class="searchoption wfree">
+	                <tr>
+	                    <td>
+	                    	 <span style="margin-bottom: 5px">
+			                	<ul>
+			                		<li>
+			                			<span id="padding-10" style="padding-left: 10px; padding-right: 10px;"><label class="check">Applied Date</label></span>
+			                			<span class="calendar-form">
+					                        <input class="alt date" type='text' readOnly></input>
+					                        <input name="date" class="no-width" type="text"></input>
+					                    </span>
+					                    <span id="padding-10">
+					                    <em class="am_button"> <a href="javascript:addRow();"><fmt:message key="aimir.add" /></a> </em>
+	                    				<em class="am_button"> <a href="javascript:exportExcel('ExportWM');" id="ExportWm"><fmt:message key="aimir.button.export" /></a> </em>
+			                			</span>
+					                    <br><br>
+			                			<span id="padding-10" style="padding-right: 10px;" >(Tariff date will be saved as Applied Date above.)</span>
+			                		</li>
+			                	</ul>
+			                	<br>
+	               			 </span>
+	                    </td>
+	                    <div class="tariffUpdateBtn btn_right_bottom gadget_body2">
+					      <span><em class="am_button"><a href="javascript:updateData();">Save</a></em></span>
+					    </div>
+	                </tr>
+	        </table>
+        </div>
+		
         <br>
         <br>
         <div id="padding-10" style="padding-left: 10px; padding-right: 10px;">

@@ -37,7 +37,8 @@
                         "fileType"				: obj.fileType,
                         "supplierId"			: obj.supplierId,
                         "yyyymmdd"				: obj.yyyymmdd,
-                        "filePath"				:'<fmt:message key="aimir.report.fileDownloadDir"/>'
+                        "filePath"				:'<fmt:message key="aimir.report.fileDownloadDir"/>',
+                        "tariffType"			: obj.tariffType
                        	}
                     , function(json) {
                         hide();
@@ -63,24 +64,17 @@
         function getTitle() {
         	var title = new Array();      
         	title[0] = "date";
-        	title[1] = "tariffType";
-        	title[2] = "season";
-        	title[3] = "peakType";
-            title[4] = "startHour";
-            title[5] = "endHour";
-        	title[6] = "supplySize";
-        	title[7] = "serviceCharge";
-        	title[8] = "adminCharge";
-        	title[9] = "distributionNetworkCharge";
-        	title[10] = "transmissionNetworkCharge";
-        	title[11] = "energyDemandCharge";
-        	title[12] = "activeEnergyCharge";
-        	title[13] = "reactiveEnergyCharge";
-        	title[14] = "rateRebalancingLevy";
-        	title[15] = "<fmt:message key="aimir.energy.excess"/>";       // 초과"
-        	title[16] = "<fmt:message key="aimir.below"/>";               // 미만
-        	title[17] = "<fmt:message key="aimr.morethan"/>";             // 이상
-        	title[18] = "<fmt:message key="aimir.less"/>";                // 이하
+        	title[1] = "<fmt:message key="aimir.tariff"/>";
+        	title[2] = "<fmt:message key="aimir.supplySize"/>"+"(x)";
+        	title[3] = "<fmt:message key="aimir.serviceCharge"/>"; 
+            title[4] = "<fmt:message key="aimir.prepayment.govLevy"/>"; 
+            title[5] = "<fmt:message key="aimir.prepayment.publicLevy"/>";
+        	title[6] = "<fmt:message key="aimir.prepayment.vat"/>"; 
+        	title[7] = "<fmt:message key="aimir.activeEnergyCharge"/>"; 
+        	title[8] = "<fmt:message key="aimir.prepayment.lifeLineSubsidy"/>";  
+        	title[9] = "<fmt:message key="aimir.prepayment.govSubsidy"/>";
+        	title[10] = "<fmt:message key="aimir.prepayment.additionalSubsidy"/>";
+        	title[11] = "<fmt:message key="aimir.utilityRelief"/>";
         	
         	return title;
         }

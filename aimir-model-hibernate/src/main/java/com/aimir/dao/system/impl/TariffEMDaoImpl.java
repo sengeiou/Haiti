@@ -176,7 +176,7 @@ public class TariffEMDaoImpl extends AbstractHibernateGenericDao<TariffEM, Integ
 	  if(yyyymmdd.length() > 0){
 		  sb.append("\n AND     t.YYYYMMDD = :yyyymmdd ");
 	  }
-	  if(tariffType.length() > 0){
+	  if(tariffType!=null && tariffType!=""){
 		  sb.append("\n AND     tt.NAME = :tariffType ");
 	  }
 	  //sb.append("\n ORDER BY t.YYYYMMDD, t.TARIFFTYPE_ID, s.ID, t.END_HOUR DESC");
@@ -187,7 +187,7 @@ public class TariffEMDaoImpl extends AbstractHibernateGenericDao<TariffEM, Integ
 	  if(yyyymmdd.length() > 0){
 		  query.setString("yyyymmdd", yyyymmdd);
 	  }
-	  if(tariffType.length() > 0){
+	  if(tariffType!=null && tariffType!=""){
 		  query.setString("tariffType", tariffType);
 	  }
 	
