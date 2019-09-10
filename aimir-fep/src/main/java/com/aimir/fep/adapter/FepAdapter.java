@@ -68,7 +68,7 @@ public class FepAdapter {
     private String  authTcpPort;
     private String  authUdpPort;
     // INSERT END SP-121 //
-    private boolean dtlsUse =  "true".equals(FMPProperty.getProperty("protocol.dtls.use"));
+    private boolean dtlsUse =  "true".equals(FMPProperty.getProperty("protocol.dtls.use", "false"));
     
     public void init()
     {

@@ -10,6 +10,7 @@ import org.springframework.remoting.jaxws.SimpleHttpServerJaxWsServiceExporter;
 import com.aimir.constants.CommonConstants;
 import com.aimir.fep.logger.snowflake.SnowflakeGeneration;
 import com.aimir.fep.util.DataUtil;
+import com.aimir.util.ContextUtil;
 
 /**
  * MOA Startup class
@@ -62,6 +63,7 @@ public class FepProcessor {
         }
         
         DataUtil.setApplicationContext(new ClassPathXmlApplicationContext(new String[]{"/config/spring-fepd.xml"}));
+        ContextUtil.setApplicationContext(new ClassPathXmlApplicationContext(new String[]{"/config/spring-fepd.xml"}));
         FepProcessor fep = DataUtil.getBean(FepProcessor.class);
         fep.init();
         

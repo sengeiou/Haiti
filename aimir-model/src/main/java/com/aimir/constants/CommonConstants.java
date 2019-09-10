@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.aimir.dao.system.CodeDao;
 import com.aimir.model.system.Code;
@@ -27,7 +27,7 @@ import com.aimir.util.ContextUtil;
  * 2011. 5. 26.   v1.0       김상연         기기별 카테고리 타입
  *
  */
-@Component
+@Transactional
 public class CommonConstants {
     private static Log log = LogFactory.getLog(CommonConstants.class);
     
