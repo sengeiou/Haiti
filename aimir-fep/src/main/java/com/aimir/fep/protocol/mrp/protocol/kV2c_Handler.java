@@ -789,6 +789,7 @@ public class kV2c_Handler extends MeterProtocolHandler {
         return ba;
     }
 
+    //인증 절차를 모두처리.
     public void initProcess(IoSession session) throws MRPException
     {
         
@@ -844,7 +845,7 @@ public class kV2c_Handler extends MeterProtocolHandler {
             log.debug("IDENTIFICATION: "+buf.getHexDump());
             session.write(buf);
             
-            Thread.sleep(100);
+            Thread.sleep(100); //미터에 따라 조정할 수 있음
             log.debug("READ IDENT RESPONSE");
             read = read(session,ANSI.IDENT,false);
         }catch(Exception e){

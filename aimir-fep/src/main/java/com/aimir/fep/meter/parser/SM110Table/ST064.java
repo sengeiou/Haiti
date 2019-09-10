@@ -99,13 +99,13 @@ public class ST064 implements java.io.Serializable {
         this.meterId = meterId;
 
         try{
-        	log.debug("NBR_BLKS_SET1="+NBR_BLKS_SET1);
+        	log.debug("NBR_BLKS_SET1="+NBR_BLKS_SET1); //ansi규격정보들.
         	log.debug("NBR_BLK_INTS_SET1="+NBR_BLK_INTS_SET1);
         	log.debug("NBR_CHANS_SET1="+NBR_CHANS_SET1);
         	log.debug("INT_TIME_SET1="+INT_TIME_SET1);
             log.debug("scalar0=>"+st062.getSCALAR(0)+" scalar1=>"+st062.getSCALAR(1));
             log.debug("divisor0=>"+st062.getDIVISOR(0)+" divisor1=>"+st062.getDIVISOR(1));
-            log.debug("Block Order=>"+getBlockOrderString()+", Interval Order=>"+getIntervalOrderString());
+            log.debug("Block Order=>"+getBlockOrderString()+", Interval Order=>"+getIntervalOrderString()); //블럭순서는 asc,desc가변.
             log.debug("Is LP Active Mode=>"+st063.isActiveMode());
         }catch(Exception e){log.warn(e);}
 
