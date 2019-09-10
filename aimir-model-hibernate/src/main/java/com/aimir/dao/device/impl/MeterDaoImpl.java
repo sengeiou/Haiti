@@ -143,10 +143,10 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
 
         query.append(" SELECT   m.id ");
         query.append(" FROM     Meter m INNER JOIN m.modem.mcu mcu  ");
-        query.append(" WHERE    mcu.sysID = ? ");
+        query.append(" WHERE    mcu.sysID = :vName ");
 
         Query _query = getSession().createQuery(query.toString());
-        _query.setString(1,  name);
+        _query.setString("vName",  name);
         return _query.list();
     }
 
@@ -157,11 +157,11 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
 
         query.append(" SELECT   m ");
         query.append(" FROM     Meter m INNER JOIN m.modem.mcu mcu  ");
-        query.append(" WHERE    mcu.sysID = ? and m.shortId = ? ");
+        query.append(" WHERE    mcu.sysID = :mcuId and m.shortId = :shortId ");
 
         Query _query = getSession().createQuery(query.toString());
-        _query.setString(1,  mcuId);
-        _query.setInteger(2,  shortId);
+        _query.setString("mcuId",  mcuId);
+        _query.setInteger("shortId",  shortId);
         return _query.list();
     }
 
