@@ -3074,7 +3074,7 @@ public abstract class AbstractMDSaver
                 if( envSensor == null){
                     envSensor = new ZEUPLS();
                     envSensor.setDeviceSerial(envData.getSensorId());
-                    envSensor.setModemType(ModemType.ZEU_PLS.name());
+                    envSensor.setModemType(ModemType.ZEUPLS.name());
                     envSensor.setInstallDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
                     envSensor.setCommState(1);
                     envSensor.setLastLinkTime(modem.getInstallDate());

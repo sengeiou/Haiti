@@ -185,7 +185,7 @@ public class ModemManagerImpl implements ModemManager {
 
 		if (modemType.equals(ModemType.ZRU.toString()))
 			rtnModem = zruDao.get(modemId);
-		else if (modemType.equals(ModemType.ZEU_PLS.toString()))
+		else if (modemType.equals(ModemType.ZEUPLS.toString()))
 			rtnModem = zeuplsDao.get(modemId);
 		else if (modemType.equals(ModemType.MMIU.toString()))
 			rtnModem = mmiuDao.get(modemId);
@@ -234,7 +234,7 @@ public class ModemManagerImpl implements ModemManager {
 
 		if (modemType.equals(ModemType.ZRU.toString()))
 			rtnModem = zruDao.get(modemId);
-		else if (modemType.equals(ModemType.ZEU_PLS.toString()))
+		else if (modemType.equals(ModemType.ZEUPLS.toString()))
 			rtnModem = zeuplsDao.get(modemId);
 		else if (modemType.equals(ModemType.MMIU.toString()))
 			rtnModem = mmiuDao.get(modemId);

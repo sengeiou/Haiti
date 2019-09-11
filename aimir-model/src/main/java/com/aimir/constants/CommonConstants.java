@@ -1068,7 +1068,7 @@ public class CommonConstants {
         , ZMU(2)
         , ZEU_PC(3)
         , ZEU_PDA(4)
-        , ZEU_PLS(5)
+        , ZEUPLS(5) //ClassName이 ZEU_PLS대신 ZEUPLS로 관리됨에 따른 변경.
         , ZEU_EISS(6)
         , ZEU_PQ(7)
         , ZEU_IO(8)

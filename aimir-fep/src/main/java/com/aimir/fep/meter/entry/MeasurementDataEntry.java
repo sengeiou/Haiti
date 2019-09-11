@@ -594,7 +594,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
             switch (getModemType()) {
             	case ZRU : modemType = ModemType.ZRU;
             	break;
-            	case ZEU_PLS : modemType = ModemType.ZEU_PLS;
+            	case ZEUPLS : modemType = ModemType.ZEUPLS;
             	break;
             	case Repeater : modemType = ModemType.Repeater;
             	break;
@@ -629,7 +629,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
             switch (modemType) {
             case ZRU : modem = (com.aimir.model.device.ZRU)obj;
             break;
-            case ZEU_PLS : modem = (com.aimir.model.device.ZEUPLS)obj;
+            case ZEUPLS : modem = (com.aimir.model.device.ZEUPLS)obj;
             break;
             case Repeater : modem = (com.aimir.model.device.ZBRepeater)obj;
             break;
@@ -714,7 +714,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
                 if (models.size() == 1)
                     modem.setModel(models.get(0));
             }
-            else if (modem.getModemType() == ModemType.ZEU_PLS) {
+            else if (modem.getModemType() == ModemType.ZEUPLS) {
                 if (ns == null || "".equals(ns)) {
                     switch (getSvcType()) {
                     case Gas :
