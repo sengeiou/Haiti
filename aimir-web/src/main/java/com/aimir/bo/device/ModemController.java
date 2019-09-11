@@ -608,7 +608,7 @@ public class ModemController {
 
         if (modemType.equals(ModemType.ZRU.name()))
             mav = new ModelAndView("/gadget/device/modemMaxGadgetInfoZRU");
-        else if (modemType.equals(ModemType.ZEU_PLS.name()))
+        else if (modemType.equals(ModemType.ZEUPLS.name()))
             mav = new ModelAndView("/gadget/device/modemMaxGadgetInfoZEUPLS");
         else if (modemType.equals(ModemType.MMIU.name()))
             mav = new ModelAndView("/gadget/device/modemMaxGadgetInfoMMIU");

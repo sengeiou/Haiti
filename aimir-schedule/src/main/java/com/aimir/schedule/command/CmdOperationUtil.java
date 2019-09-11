@@ -866,7 +866,7 @@ public class CmdOperationUtil {
                         zmu.setZdzdIfVersion(sNode.getZdzdInterfaceVersion());
                     }
 
-                    if ((sensor.getModemType().equals(ModemType.ZEU_PLS) || sensor
+                    if ((sensor.getModemType().equals(ModemType.ZEUPLS) || sensor
                             .getModemType().equals(ModemType.Repeater))
                             && fwVersion.compareTo("2.1") >= 0
                             && fwBuild.compareTo("18") >= 0) {
@@ -2302,7 +2302,7 @@ public class CmdOperationUtil {
         ModemType modemType = meter.getModem().getModemType();
 
         if (fromDate.length() > 0 && toDate.length() > 0) {
-            if (modemType != ModemType.ZEU_PLS
+            if (modemType != ModemType.ZEUPLS
                     || (fromDate != null && fromDate.length() >= 8)) {// all
                 // type
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -2339,7 +2339,7 @@ public class CmdOperationUtil {
                 nCount = Integer.parseInt(toDate);
             }
         } else {
-            if (modemType != ModemType.ZEU_PLS) {// all type
+            if (modemType != ModemType.ZEUPLS) {// all type
                 nOffset = 1;
                 nCount = 1;
             } else {
@@ -3415,7 +3415,7 @@ public class CmdOperationUtil {
             zmu.setLastLinkTime(new TIMESTAMP(sne.getSensorLastConnect().getValue()).getValue());
             zmu.setNodeKind(new OCTET(sne.getSensorModel().getValue()).toString());
             zmuDao.add(zmu);
-        } else if (sensorType.equals(ModemType.ZEU_PLS)) {
+        } else if (sensorType.equals(ModemType.ZEUPLS)) {
             ZEUPLS zeupls = new ZEUPLS();
 
             zeupls.setDeviceSerial(new HEX(sne.getSensorID().getValue()).getValue());
@@ -3670,7 +3670,7 @@ public class CmdOperationUtil {
     }
 
     public ModemType getSensorType(String meterModel) {
-        ModemType modemType = ModemType.ZEU_PLS;
+        ModemType modemType = ModemType.ZEUPLS;
 
         if (meterModel.contains("Kamstrup")
                 || meterModel.contains("Aidon")
@@ -3690,7 +3690,7 @@ public class CmdOperationUtil {
         } else if (meterModel.equals("Elster M 140")
                 || meterModel.equals("Elster V 220")
                 || meterModel.equals("MD13")) {
-            modemType = ModemType.ZEU_PLS;
+            modemType = ModemType.ZEUPLS;
         } else if (meterModel.equals("REPEATER")) {
             modemType = ModemType.Repeater;
         }
@@ -3829,8 +3829,8 @@ public class CmdOperationUtil {
             log.debug("sensorType: " + sensorType);
             if (sensorType == ModemType.ZRU) {
                 dummySensor.setModemType(ModemType.ZRU.name());
-            } else if (sensorType == ModemType.ZEU_PLS) {
-                dummySensor.setModemType(ModemType.ZEU_PLS.name());
+            } else if (sensorType == ModemType.ZEUPLS) {
+                dummySensor.setModemType(ModemType.ZEUPLS.name());
             } else if (sensorType == ModemType.Repeater) {
                 dummySensor.setModemType(ModemType.Repeater.name());
             } else if (sensorType == ModemType.ZEU_MBus) {
@@ -4125,7 +4125,7 @@ public class CmdOperationUtil {
     }
 
     public boolean isAsynch(Modem modem) throws Exception {
-        if (modem.getModemType() == ModemType.ZEU_PLS) {
+        if (modem.getModemType() == ModemType.ZEUPLS) {
             com.aimir.model.device.ZEUPLS zeupls = zeuplsDao.get(modem.getDeviceSerial());
             if (zeupls.getPowerType() == ModemPowerType.Battery
                     && zeupls.getNetworkType() == ModemNetworkType.FFD)

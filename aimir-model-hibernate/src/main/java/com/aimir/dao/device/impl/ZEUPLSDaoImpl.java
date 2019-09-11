@@ -51,7 +51,7 @@ public class ZEUPLSDaoImpl extends AbstractHibernateGenericDao<ZEUPLS, Integer> 
 
 	// ZEUPLS Modem 정보 저장
 	public Serializable setModem(ZEUPLS modem) {
-	    modem.setModemType(ModemType.ZEU_PLS.name());
+	    modem.setModemType(ModemType.ZEUPLS.name());
 		return getSession().save(modem);
 	}
 }

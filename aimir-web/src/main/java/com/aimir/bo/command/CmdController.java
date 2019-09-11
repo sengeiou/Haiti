@@ -6595,7 +6595,7 @@ public class CmdController<V> {
 	}
 
 	private boolean getModemTypeCheck(Modem modem) {
-		if (modem.getModemType() == ModemType.ZEU_PLS) {
+		if (modem.getModemType() == ModemType.ZEUPLS) {
 			return true;
 		}
 		log.debug("Modem Type Check: FALSE");
