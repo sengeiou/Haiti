@@ -937,6 +937,7 @@ public class PrepaymentLogDaoImpl  extends AbstractHibernateGenericDao< Prepayme
     }
 
     @Override
+    @Deprecated
     public Long getNextVal() {
     	StringBuilder sb = new StringBuilder();
     	Long nextVal = 0L;
