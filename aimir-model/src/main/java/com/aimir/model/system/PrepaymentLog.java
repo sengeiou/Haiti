@@ -90,6 +90,8 @@ public class PrepaymentLog extends BaseObject implements JSONString{
 	@Column(length=14, nullable=false)
 	@ColumnInfo(descr="마지막 충전한 시간")
 	private String lastTokenDate;	//마지막 충전한 시간
+	
+	@Column(length=40)
 	private String lastTokenId;		//충전 세션키
 	private Integer emergencyCreditAvailable;	//
 	
