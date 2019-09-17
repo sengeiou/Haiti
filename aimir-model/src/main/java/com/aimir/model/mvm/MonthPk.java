@@ -17,11 +17,13 @@ public class MonthPk extends MeteringPk{
 
 	private static final long serialVersionUID = 7753103428595452543L;
 	
+	@Column(length=3,nullable=false)
 	@ColumnInfo(name="채널")
     private Integer channel;
 	
 	@Column(name="yyyymm",length=6,nullable=false)
 	private String yyyymm;	
+	
 	
 	@ColumnInfo(name="검침일")
 	private String dd;

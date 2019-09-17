@@ -29,7 +29,7 @@ public class PowerQualityPk extends BasePk{
 	@Column(name="yyyymmddhhmm",length=12,nullable=false)
 	private String yyyymmddhhmm;	
 	
-	@Column(columnDefinition="INTEGER default 0")
+	@Column(columnDefinition="INTEGER default 0", length=2)
 	@ColumnInfo(name="DST", descr="Summer Time ex ) +1 -1 +0")
 	private Integer dst;
 	

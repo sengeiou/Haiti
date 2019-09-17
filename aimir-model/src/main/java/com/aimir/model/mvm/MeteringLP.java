@@ -37,7 +37,7 @@ public abstract class MeteringLP {
 	@ColumnInfo(name="장비타입", descr="집중기, 모뎀")
 	private DeviceType deviceType;
 	
-	@Column(name="meteringtype")
+	@Column(name="meteringtype", length= 1)
 	@ColumnInfo(descr="검침타입 0:정기검침, 1:온디맨드, 2:실패검침  3 : 수검침")
 	private Integer meteringType;	
 		
@@ -55,7 +55,7 @@ public abstract class MeteringLP {
 	@ColumnInfo(descr="energy profile에 함께 들어오는 profile status 항목을 저장")
 	private String lpStatus;
 	
-	@Column(name="interval_yn")
+	@Column(name="interval_yn", length=1)
 	@ColumnInfo(descr="meter interval 간격으로 정상적으로 값이 들어왔다면 1, 비정상적인 시간에 들어왔다면  0")
 	private Integer intervalYN;
 	

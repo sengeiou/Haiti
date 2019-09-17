@@ -15,9 +15,9 @@ import org.eclipse.persistence.annotations.Indexes;
  */
 @Entity
 @Table(name = "REALTIME_BILLING_EM")
-@Indexes({
-    @Index(name="IDX_REALTIME_BILLING_EM_01", columnNames={"mdev_type", "mdev_id", "yyyymmdd"})
-})
+//@Indexes({
+//    @Index(name="IDX_REALTIME_BILLING_EM_01", columnNames={"mdev_type", "mdev_id", "yyyymmdd"}) 정규화로 인해 DDL별도 생성
+//})
 public class RealTimeBillingEM  extends BillingEM {
 
 }

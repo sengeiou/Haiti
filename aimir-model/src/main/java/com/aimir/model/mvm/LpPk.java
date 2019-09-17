@@ -16,6 +16,7 @@ public class LpPk extends MeteringPk{
 
 	private static final long serialVersionUID = -5852154185942553378L;
 	
+	@Column(name="channel", length=3, nullable=false)
     @ColumnInfo(name="채널")
     private Integer channel;
 	   
