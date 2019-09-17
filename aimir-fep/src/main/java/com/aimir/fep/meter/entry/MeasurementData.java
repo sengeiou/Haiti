@@ -167,7 +167,7 @@ public class MeasurementData implements IMeasurementData
         } catch (ArrayIndexOutOfBoundsException ex) {
             log.error("pos["+pos+"] mdDataLen["+data.length+"] "
                     +" datalen["+bx.length+"]");
-            log.error(ex);
+            log.error(ex,ex);
             
             /*
              * Invalid Frame has to be checked with threshold
@@ -182,7 +182,7 @@ public class MeasurementData implements IMeasurementData
         catch(Exception ex) {
             log.error("pos["+pos+"] mdDataLen["+data.length+"] "
                     +" datalen["+bx.length+"]");
-            log.error(ex);
+            log.error(ex,ex);
         }
         // +2 is length data
         return getLength()+2;

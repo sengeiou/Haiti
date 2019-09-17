@@ -1003,7 +1003,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
                 // return null;
             }
         } else {
-        	if(meter.getModel() == null && meter.getModel().getName().equals("")){
+        	if(meter.getModel() == null || meter.getModel().getName().equals("")){
             	List<DeviceModel> models = deviceModelDao.getDeviceModelByName(modem.getSupplier().getId(), "METER-DUMMY");  
             	if (models.size() == 1) {
             		meter.setModel(models.get(0));
