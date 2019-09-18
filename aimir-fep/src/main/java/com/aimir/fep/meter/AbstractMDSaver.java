@@ -897,9 +897,11 @@ public abstract class AbstractMDSaver
     {
     	if(lplist != null && lplist.length > 0) {
     		LPData[] lpData = new LPData[lplist[0].length];
-    		
-    		for(int i=0; i<lplist[i].length; i++) {
+
+    		//for each LP cnt. 0번(첫번째) 채널의 LPvalue 개수를 기준으로 함.
+    		for(int i=0; i<lplist[0].length; i++) {
     			Double[] lps = new Double[lplist.length];
+    			//for each Channel.
     			for(int j=0; j<lplist.length; j++) {
     				lps[j] = lplist[j][i];
     			}
@@ -987,6 +989,7 @@ public abstract class AbstractMDSaver
 				meteringLP.setDeviceId(meter.getMdsId());
 				meteringLP.setMDevId(meter.getMdsId());
 				meteringLP.setMDevType(DeviceType.Meter.name());
+                meteringLP.setDeviceType(DeviceType.Meter);
 				meteringLP.setMeteringType(meteringType);
 				meteringLP.setValue(lp.getCh()[i]);
 				meteringLP.setDst(dst);
