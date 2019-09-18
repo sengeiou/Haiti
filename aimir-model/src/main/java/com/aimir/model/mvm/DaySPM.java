@@ -12,7 +12,7 @@ import org.eclipse.persistence.annotations.Indexes;
  */
 @Entity
 @Table(name = "DAY_SPM")
-@Indexes({
-    @Index(name="IDX_DAY_SPM_01", columnNames={"mdev_type", "mdev_id", "dst", "yyyymmdd", "channel", "full_location"})
-})
+//@Indexes({
+//    @Index(name="IDX_DAY_SPM_01", columnNames={"mdev_type", "mdev_id", "dst", "yyyymmdd", "channel", "full_location"}) //정규화로 인해 인덱스 불필요
+//})
 public class DaySPM extends MeteringDay {}

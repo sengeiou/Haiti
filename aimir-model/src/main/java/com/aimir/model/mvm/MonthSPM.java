@@ -12,7 +12,7 @@ import org.eclipse.persistence.annotations.Indexes;
  */
 @Entity
 @Table(name = "MONTH_SPM")
-@Indexes({
-    @Index(name="IDX_MONTH_SPM_01", columnNames={"mdev_type", "mdev_id", "dst", "yyyymm","channel","full_location"})
-})
+//@Indexes({
+//    @Index(name="IDX_MONTH_SPM_01", columnNames={"mdev_type", "mdev_id", "dst", "yyyymm","channel","full_location"}) 정규화로 인해 DDL로 별도 선언
+//})
 public class MonthSPM extends MeteringMonth {}

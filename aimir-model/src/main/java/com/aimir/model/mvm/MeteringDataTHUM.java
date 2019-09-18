@@ -10,7 +10,7 @@ import org.eclipse.persistence.annotations.Index;
  */
 @Entity
 @Table(name = "METERINGDATA_THUM")
-@Index(name="IDX_METERINGDATA_THUM_01", columnNames={"yyyymmddhhmmss", "mdev_Type", "mdev_Id", "location_id"})
+//@Index(name="IDX_METERINGDATA_THUM_01", columnNames={"yyyymmddhhmmss", "mdev_Type", "mdev_Id", "location_id"}) //정규화로 인해 인덱스 생성 삭제 별도의 DDL에서 선언
 public class MeteringDataTHUM extends MeteringDataTHU {
 
 }

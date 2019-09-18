@@ -11,9 +11,9 @@ import org.eclipse.persistence.annotations.Indexes;
  */
 @Entity
 @Table(name = "DAY_VC")
-@Indexes({
-    @Index(name="IDX_DAY_VC_01", columnNames={"mdev_type", "mdev_id", "dst", "yyyymmdd", "channel", "full_location"})
-    })
+//@Indexes({
+//    @Index(name="IDX_DAY_VC_01", columnNames={"mdev_type", "mdev_id", "dst", "yyyymmdd", "channel", "full_location"}) //정규화로 인해 인덱스 선언 불필요
+//    })
 public class DayVC extends MeteringDay {
 
 }

@@ -118,6 +118,7 @@ public abstract class MeteringDay implements JSONString {
 	@ColumnInfo(name="count value, LP에서 합쳐진 개수")
 	private Integer c_value;
 	
+	@Column(name="ch_method", length=10)
 	@ColumnInfo(name="채널별 정의 메소드")
 	private String ch_method;
 	
