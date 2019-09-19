@@ -19,9 +19,10 @@ import org.eclipse.persistence.annotations.Index;
  * @author Ji Hoon KIM(jihoon)
  *
  */
-@Entity
-@Table(name = "SAPIntegrationLog")
-@Index(name="IDX_SAPINTEGRATIONLOG_01", columnNames={"Meter_Reading_Order_Number"})
+//@Entity
+//@Table(name = "SAPIntegrationLog")
+//@Index(name="IDX_SAPINTEGRATIONLOG_01", columnNames={"Meter_Reading_Order_Number"})
+@Deprecated
 public class SAPIntegrationLog extends BaseObject implements JSONString{
 	
 	private static final long serialVersionUID = -6594382001300312223L;

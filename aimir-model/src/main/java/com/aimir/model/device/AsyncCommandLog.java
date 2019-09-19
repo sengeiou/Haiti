@@ -25,7 +25,7 @@ import com.aimir.model.BaseObject;
  */
 @Entity
 @Table(name = "ASYNC_COMMAND_LOG")
-@Index(name="AYNC_COMMAND_LOG_01", columnNames={"DEVICEID", "STATE"})
+//@Index(name="AYNC_COMMAND_LOG_01", columnNames={"DEVICEID", "STATE"})
 public class AsyncCommandLog extends BaseObject {
 
 	private static final long serialVersionUID = -913243250705177861L;

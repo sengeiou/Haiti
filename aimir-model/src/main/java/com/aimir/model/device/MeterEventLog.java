@@ -38,7 +38,7 @@ import org.eclipse.persistence.annotations.Index;
  */
 @Entity
 @Table(name="METEREVENT_LOG")
-@Index(name="IDX_METEREVENT_LOG_01", columnNames={"METEREVENT_ID", "ACTIVATOR_ID", "YYYYMMDD", "OPEN_TIME"})
+//@Index(name="IDX_METEREVENT_LOG_01", columnNames={"METEREVENT_ID", "ACTIVATOR_ID", "YYYYMMDD", "OPEN_TIME"})
 public class MeterEventLog extends BaseObject implements JSONString {
 
 	private static final long serialVersionUID = 3704829716152527781L;

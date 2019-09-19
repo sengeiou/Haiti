@@ -42,7 +42,7 @@ import com.aimir.util.TimeLocaleUtil;
  */
 @Entity
 @Table(name="EVENTALERTLOG")
-@Index(name="IDX_EVENTALERTLOG_01", columnNames={"ACTIVATOR_TYPE", "activatorId", "eventAlert_id"})
+//@Index(name="IDX_EVENTALERTLOG_01", columnNames={"ACTIVATOR_TYPE", "activatorId", "eventAlert_id"})
 public class EventAlertLog extends BaseObject implements JSONString {
 
     private static final long serialVersionUID = 905580435229726851L;

@@ -23,7 +23,7 @@ import org.eclipse.persistence.annotations.Index;
  */
 @Entity
 @Table(name = "MEASUREMENT_HISTORY")
-@Index(name="IDX_MEASUREMENT_HISTORY_01", columnNames={"DEVICE_TYPE", "DEVICE_ID", "YYYYMMDD"})
+//@Index(name="IDX_MEASUREMENT_HISTORY_01", columnNames={"DEVICE_TYPE", "DEVICE_ID", "YYYYMMDD"})
 public class MeasurementHistory extends BaseObject {
 
 	private static final long serialVersionUID = -6648957129102667976L;

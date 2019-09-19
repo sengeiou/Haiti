@@ -10,7 +10,7 @@ import org.eclipse.persistence.annotations.Index;
  */
 @Entity
 @Table(name = "BILLING_DAY_GM")
-@Index(name="IDX_BILLING_DAY_GM_01", columnNames={"mdev_Type", "mdev_Id", "yyyymmdd"})
+//@Index(name="IDX_BILLING_DAY_GM_01", columnNames={"mdev_Type", "mdev_Id", "yyyymmdd"})
 public class BillingDayGM extends Billing {
 
 }

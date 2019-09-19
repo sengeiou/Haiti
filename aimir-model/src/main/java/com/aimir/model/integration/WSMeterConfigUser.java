@@ -27,9 +27,9 @@ import com.aimir.model.system.Supplier;
 
 
 @Entity
-@Indexes({
-	@Index(name="IDX_WS_METERCONFIG_USER_01", columnNames={"USERID"}),
-})
+//@Indexes({
+//	@Index(name="IDX_WS_METERCONFIG_USER_01", columnNames={"USERID"}),
+//})
 @Table(name="WS_METERCONFIG_USER")
 public class WSMeterConfigUser  extends BaseObject implements JSONString, IAuditable {
 

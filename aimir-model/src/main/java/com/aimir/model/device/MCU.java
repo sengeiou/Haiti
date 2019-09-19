@@ -58,10 +58,10 @@ import com.aimir.model.system.Supplier;
  *
  */
 @Entity
-@Indexes({
-    @Index(name="IDX_MCU_01", columnNames={"IP_ADDR"}),
-    @Index(name="IDX_MCU_02", columnNames={"IPV6_ADDR"})
-})
+//@Indexes({
+//    @Index(name="IDX_MCU_01", columnNames={"IP_ADDR"}),
+//    @Index(name="IDX_MCU_02", columnNames={"IPV6_ADDR"})
+//})
 public class MCU extends BaseObject implements JSONString, IAuditable {
 
     private static final long serialVersionUID = 6386644292331049382L;

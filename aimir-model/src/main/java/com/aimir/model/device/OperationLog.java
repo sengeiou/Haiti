@@ -32,10 +32,9 @@ import com.aimir.model.system.Supplier;
  */
 @Entity
 @Table(name="OPERATION_LOG")
-@Indexes({
-    @Index(name="IDX_OPERATION_LOG_01", columnNames={"YYYYMMDDHHMMSS"})
-})
-
+//@Indexes({
+//    @Index(name="IDX_OPERATION_LOG_01", columnNames={"YYYYMMDDHHMMSS"})
+//})
 public class OperationLog extends BaseObject {
 
 	private static final long serialVersionUID = -2057362708625647099L;

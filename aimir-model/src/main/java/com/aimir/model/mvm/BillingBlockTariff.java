@@ -26,9 +26,9 @@ import org.eclipse.persistence.annotations.Indexes;
  */
 @Entity
 @Table(name = "BILLING_BLOCK_TARIFF")
-@Indexes(value={
-        @Index(name="IDX_BILLING_BLOCK_TARIFF_01", columnNames={"mdev_Type", "mdev_Id", "yyyymmdd"}),
-        @Index(name="IDX_BILLING_BLOCK_TARIFF_02", columnNames={"CONTRACT_ID", "WRITEDATE"})})
+//@Indexes(value={
+//        @Index(name="IDX_BILLING_BLOCK_TARIFF_01", columnNames={"mdev_Type", "mdev_Id", "yyyymmdd"}),
+//        @Index(name="IDX_BILLING_BLOCK_TARIFF_02", columnNames={"CONTRACT_ID", "WRITEDATE"})})
 public class BillingBlockTariff {
     @EmbeddedId public BillingPk id;
 

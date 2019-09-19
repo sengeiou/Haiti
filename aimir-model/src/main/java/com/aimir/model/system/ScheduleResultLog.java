@@ -30,9 +30,9 @@ import org.eclipse.persistence.annotations.Indexes;
  */
 @Entity
 @Table(name="SCHEDULERESULTLOG")
-@Indexes({
-    @Index(name="IDX_SCHEDULERESULTLOG_01", columnNames={"JOB_NAME", "TRIGGER_NAME", "CREATE_TIME"})
-})
+//@Indexes({
+//    @Index(name="IDX_SCHEDULERESULTLOG_01", columnNames={"JOB_NAME", "TRIGGER_NAME", "CREATE_TIME"})
+//})
 public class ScheduleResultLog extends BaseObject implements JSONString{
 
 	private static final long serialVersionUID = 8456161866692456444L;

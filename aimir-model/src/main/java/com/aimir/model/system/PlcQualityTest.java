@@ -20,9 +20,10 @@ import org.eclipse.persistence.annotations.Index;
 import com.aimir.annotation.ColumnInfo;
 import com.aimir.model.BaseObject;
 
-@Entity
-@Table(name="PLC_QUALITY_TEST")
-@Index(name="IDX_PLC_QUALITY_TEST_01", columnNames={"COMPLETE_DATE","ZIG_NAME"})
+//@Entity
+//@Table(name="PLC_QUALITY_TEST")
+//@Index(name="IDX_PLC_QUALITY_TEST_01", columnNames={"COMPLETE_DATE","ZIG_NAME"})
+@Deprecated
 public class PlcQualityTest extends BaseObject {
 
 	private static final long serialVersionUID = -2381916563391390006L;

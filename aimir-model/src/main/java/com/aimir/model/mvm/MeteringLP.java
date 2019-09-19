@@ -63,7 +63,7 @@ public abstract class MeteringLP {
 	@ColumnInfo(descr="검침값")
 	private Double value;	
 	
-	@Column(name = "writedate", length=14)
+	@Column(name = "writedate")
 	@ColumnInfo(descr="데이터 작성시간")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date writeDate;
@@ -77,12 +77,12 @@ public abstract class MeteringLP {
 	@Column(name="contract_id", nullable=true, updatable=false, insertable=false)
 	private Integer contractId;
 	
-	@Column(name = "modem_time", length=14)
+	@Column(name = "modem_time")
 	@ColumnInfo(descr="데이터 작성시간")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modemTime;
 	
-	@Column(name = "dcu_time", length=14)
+	@Column(name = "dcu_time")
 	@ColumnInfo(descr="데이터 작성시간")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dcuTime;

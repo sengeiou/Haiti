@@ -32,10 +32,10 @@ import net.sf.json.util.JSONStringer;
  *
  */
 @Entity
-@Indexes({
-	@Index(name="IDX_MBUSSLAVEIOMODULE_01", columnNames={"MDS_ID"}),
-	@Index(name="IDX_MBUSSLAVEIOMODULE_02", columnNames={"METER_ID"}),
-})
+//@Indexes({
+//	@Index(name="IDX_MBUSSLAVEIOMODULE_01", columnNames={"MDS_ID"}),
+//	@Index(name="IDX_MBUSSLAVEIOMODULE_02", columnNames={"METER_ID"}),
+//})
 @Table(name="MBUS_SLAVE_IO_MODULE")
 public class MbusSlaveIOModule extends BaseObject implements JSONString, IAuditable {
 

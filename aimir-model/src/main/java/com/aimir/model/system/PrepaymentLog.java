@@ -31,10 +31,10 @@ import com.aimir.model.prepayment.VendorCasher;
  */
 @Entity
 @Table(name="PREPAYMENTLOG")
-@Indexes({
-        @Index(name="IDX_PREPAYMENTLOG_01", columnNames={"LASTTOKENDATE"}),
-        @Index(name="IDX_PREPAYMENTLOG_02", columnNames={"CONTRACT_ID", "LASTTOKENDATE"})
-})
+//@Indexes({
+//        @Index(name="IDX_PREPAYMENTLOG_01", columnNames={"LASTTOKENDATE"}),
+//        @Index(name="IDX_PREPAYMENTLOG_02", columnNames={"CONTRACT_ID", "LASTTOKENDATE"})
+//})
 public class PrepaymentLog extends BaseObject implements JSONString{
 
 	private static final long serialVersionUID = 4218162564823781897L;
