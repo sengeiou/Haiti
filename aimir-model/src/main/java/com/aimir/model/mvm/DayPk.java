@@ -16,12 +16,14 @@ public class DayPk extends MeteringPk{
 
 	private static final long serialVersionUID = 3801120852112519366L;
 	
+	@Column(name="channel", length=3,nullable=false)
     @ColumnInfo(name="채널")
     private Integer channel;
 	   
 	@Column(name="yyyymmdd",length=8,nullable=false)
 	private String yyyymmdd;
 	
+	@Column(name="channel", length=2,nullable=false)
 	@ColumnInfo(name="검침시간")
 	private String hh;
 	

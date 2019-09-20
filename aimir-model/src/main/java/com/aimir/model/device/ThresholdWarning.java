@@ -34,10 +34,10 @@ import com.aimir.model.system.Supplier;
  */
 @Entity
 @Table(name="THRESHOLDWARNING")
-@Indexes({
-    @Index(name="IDX_THRESHOLDWARNING_01", columnNames={"THRESHOLD_ID", "VALUE"}),
-    @Index(name="IDX_THRESHOLDWARNING_02", columnNames={"ID_ADDR", "THRESHOLD_ID"})
-})
+//@Indexes({
+//    @Index(name="IDX_THRESHOLDWARNING_01", columnNames={"THRESHOLD_ID", "VALUE"}),
+//    @Index(name="IDX_THRESHOLDWARNING_02", columnNames={"ID_ADDR", "THRESHOLD_ID"})
+//})
 public class ThresholdWarning extends BaseObject implements JSONString {
 
 	private static final long serialVersionUID = -87595803050175852L;

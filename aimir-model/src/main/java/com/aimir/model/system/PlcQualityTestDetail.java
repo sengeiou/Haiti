@@ -18,9 +18,10 @@ import com.aimir.annotation.ColumnInfo;
 import com.aimir.annotation.ReferencedBy;
 import com.aimir.model.BaseObject;
 
-@Entity
-@Table(name="PLC_QUALITY_TEST_DETAIL")
-@Index(name="IDX_PLC_QUALITY_TEST_DETAIL_01", columnNames={"COMPLETE_DATE","ZIG_ID"})
+//@Entity
+//@Table(name="PLC_QUALITY_TEST_DETAIL")
+//@Index(name="IDX_PLC_QUALITY_TEST_DETAIL_01", columnNames={"COMPLETE_DATE","ZIG_ID"})
+@Deprecated
 public class PlcQualityTestDetail extends BaseObject {
 
 	private static final long serialVersionUID = -3248040699035316304L;

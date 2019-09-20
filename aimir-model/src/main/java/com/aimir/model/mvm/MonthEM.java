@@ -12,9 +12,9 @@ import org.eclipse.persistence.annotations.Indexes;
  */
 @Entity
 @Table(name = "MONTH_EM")
-@Indexes({
-	@Index(name="IDX_MONTH_EM_01", columnNames={"mdev_type", "mdev_id", "dst", "yyyymm","channel"})
-})
+//@Indexes({
+//	@Index(name="IDX_MONTH_EM_01", columnNames={"mdev_type", "mdev_id", "dst", "yyyymm","channel"}) 정규화로 인해 별도 DDL로 선언
+//})
 public class MonthEM extends MeteringMonth {
 
 }

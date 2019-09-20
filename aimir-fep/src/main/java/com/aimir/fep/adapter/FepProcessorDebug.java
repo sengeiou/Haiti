@@ -10,6 +10,7 @@ import org.springframework.remoting.jaxws.SimpleHttpServerJaxWsServiceExporter;
 import org.springframework.stereotype.Service;
 
 import com.aimir.fep.util.DataUtil;
+import com.aimir.util.ContextUtil;
 import com.aimir.util.DateTimeUtil;
 
 /**
@@ -53,6 +54,7 @@ public class FepProcessorDebug {
     	boolean enableWS = true;
 
         DataUtil.setApplicationContext(new ClassPathXmlApplicationContext(new String[]{"/config/spring-fepd.xml"}));
+        ContextUtil.setApplicationContext(new ClassPathXmlApplicationContext(new String[]{"/config/spring-fepd.xml"}));
         FepProcessorDebug fep = DataUtil.getBean(FepProcessorDebug.class);
         fep.init();
         if (!enableWS) {

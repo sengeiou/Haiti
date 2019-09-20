@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import com.aimir.model.BaseObject;
 
@@ -16,6 +17,7 @@ import com.aimir.model.BaseObject;
  * @version 1.0
  */
 @Entity
+@Table(name="LANGUAGE")
 public class Language extends BaseObject{
     private static final long serialVersionUID = -4348862749074118175L;
 

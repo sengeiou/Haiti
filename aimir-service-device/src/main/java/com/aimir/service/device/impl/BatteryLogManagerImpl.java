@@ -58,8 +58,8 @@ public class BatteryLogManagerImpl implements BatteryLogManager{
         resultList.add(resultMap);
         
         resultMap = new HashMap<String, Object>();
-        resultMap.put("id", ModemType.ZEU_PLS);
-        resultMap.put("name", ModemType.ZEU_PLS.name());
+        resultMap.put("id", ModemType.ZEUPLS);
+        resultMap.put("name", ModemType.ZEUPLS.name());
         resultList.add(resultMap);
 
         return resultList;
@@ -202,10 +202,10 @@ public class BatteryLogManagerImpl implements BatteryLogManager{
 
         // 모뎀타입을 선택하지 않았을 경우 각 모뎀타입에 대한 파이차트 데이터만 조회
         if ("".equals(modemType)) {
-            modemTypes.add(CommonConstants.ModemType.ZEU_PLS.toString());
+            modemTypes.add(CommonConstants.ModemType.ZEUPLS.toString());
             modemTypes.add(CommonConstants.ModemType.Repeater.toString());
 
-            condition.put("modemType", CommonConstants.ModemType.ZEU_PLS.toString());
+            condition.put("modemType", CommonConstants.ModemType.ZEUPLS.toString());
             result.put("chart1", getBatteryLog(condition));
             condition.put("modemType", CommonConstants.ModemType.Repeater.toString());
             result.put("chart2", getBatteryLog(condition));
@@ -341,7 +341,7 @@ public class BatteryLogManagerImpl implements BatteryLogManager{
 
         // 모뎀타입을 선택하지 않았을 경우 각 모뎀타입에 대한 파이차트 데이터만 조회
         if ("".equals(modemType)) {
-            modemTypes.add(CommonConstants.ModemType.ZEU_PLS.toString());
+            modemTypes.add(CommonConstants.ModemType.ZEUPLS.toString());
             modemTypes.add(CommonConstants.ModemType.Repeater.toString());
         }
         // 모뎀타입 선택 시 각 모뎀타입에 대한 파이차트, 컬럼차트 데이터 조회

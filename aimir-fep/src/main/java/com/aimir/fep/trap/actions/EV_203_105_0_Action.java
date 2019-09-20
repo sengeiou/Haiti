@@ -184,7 +184,7 @@ public class EV_203_105_0_Action implements EV_Action
                     dmList = dmDao.getDeviceModelByName(mcu.getSupplier().getId(), FMPProperty.getProperty("install.modem.hmu.model.name"));
                 else if (modemType == ModemType.ZEU_MBus)
                     dmList = dmDao.getDeviceModelByName(mcu.getSupplier().getId(), FMPProperty.getProperty("install.modem.zeumbus.model.name"));
-                else if (modemType == ModemType.ZEU_PLS) {
+                else if (modemType == ModemType.ZEUPLS) {
                     if (meterType == MeterType.EnergyMeter)
                         dmList = dmDao.getDeviceModelByName(mcu.getSupplier().getId(), FMPProperty.getProperty("install.modem.zeupls.energy.model.name"));
                     else if (meterType == MeterType.GasMeter)
@@ -283,7 +283,7 @@ public class EV_203_105_0_Action implements EV_Action
                 else {
                     // modemType으로 pulseConst를 유추한다.
                     double pulseConstant = 1.0;
-                    if (modemType == ModemType.ZEU_PLS)
+                    if (modemType == ModemType.ZEUPLS)
                         pulseConstant = 100.0;
                     else if (modemType == ModemType.ZRU)
                         pulseConstant = 0.01;

@@ -30,7 +30,7 @@ import org.eclipse.persistence.annotations.Index;
  */
 @Entity
 @Table(name="MODEM_POWER_LOG")
-@Index(name="IDX_MODEM_POWER_LOG_01", columnNames={"device_Type", "device_Id", "yyyymmdd", "hhmmss"})
+//@Index(name="IDX_MODEM_POWER_LOG_01", columnNames={"device_Type", "device_Id", "yyyymmdd", "hhmmss"})
 public class ModemPowerLog extends BaseObject {
 
 	private static final long serialVersionUID = 569890129366544288L;

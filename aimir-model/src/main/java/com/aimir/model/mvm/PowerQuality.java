@@ -50,7 +50,7 @@ import com.aimir.model.system.Supplier;
  */
 @Entity
 @Table(name = "POWER_QUALITY")
-@Index(name="IDX_POWER_QUALITY_01", columnNames={"YYYYMMDDHHMM", "SUPPLIER_ID"})
+//@Index(name="IDX_POWER_QUALITY_01", columnNames={"YYYYMMDDHHMM", "SUPPLIER_ID"}) 정규화로 인해 인덱스 별도 생성
 public class PowerQuality extends BaseObject{   
 
     private static final long serialVersionUID = -6083987782436504060L;

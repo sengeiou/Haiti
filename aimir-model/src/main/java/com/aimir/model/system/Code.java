@@ -35,6 +35,9 @@ import com.aimir.model.BaseObject;
 @Entity
 @Table(name = "CODE")
 public class Code extends BaseObject implements JSONString{ 	
+	
+	private static final long serialVersionUID = -1322900068244541952L;
+	
 	//공급상태	
 	public final static String STATUS = "2.1";
 	//지불타입
@@ -104,7 +107,7 @@ public class Code extends BaseObject implements JSONString{
 	// Energy Balance Monitoring Device - Main Incomer
 	public final static String MAIN_INCOMER = "19.1.1";
 
-	private static final long serialVersionUID = -1322900068244541952L;
+
 	
 	@Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_CODE")

@@ -173,10 +173,10 @@ import com.aimir.model.system.Supplier;
 @DiscriminatorColumn(name="METER",discriminatorType=DiscriminatorType.STRING)
 @Table(name="METER")
 // @Cache(type=CacheType.SOFT)
-@Indexes({
-    @Index(name="IDX_METER_01", columnNames={"modem_id"}),
-    @Index(name="IDX_METER_02", columnNames={"gs1"})
-})
+//@Indexes({
+//    @Index(name="IDX_METER_01", columnNames={"modem_id"}),
+//    @Index(name="IDX_METER_02", columnNames={"gs1"})
+//})
 public class Meter extends BaseObject implements JSONString, IAuditable {
     
 	private static final long serialVersionUID = 4425586603710572606L;

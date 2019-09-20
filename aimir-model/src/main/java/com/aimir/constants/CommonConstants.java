@@ -13,11 +13,11 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.aimir.dao.system.CodeDao;
 import com.aimir.model.system.Code;
+import com.aimir.util.ContextUtil;
 
 /**
  * CommonConstants.java Description 
@@ -27,16 +27,11 @@ import com.aimir.model.system.Code;
  * 2011. 5. 26.   v1.0       김상연         기기별 카테고리 타입
  *
  */
-@Component
+@Transactional
 public class CommonConstants {
     private static Log log = LogFactory.getLog(CommonConstants.class);
     
-    private static CodeDao codeDao;
-    
-    @Autowired
-    public void setCodeDao(CodeDao _codeDao) {
-        this.codeDao = _codeDao;
-    }
+    private static CodeDao codeDao = ContextUtil.getBean(CodeDao.class);
     
     /**
      * 전기,가스,수도별로 순발열량/원유1톤순발열량 값으로
@@ -1073,7 +1068,7 @@ public class CommonConstants {
         , ZMU(2)
         , ZEU_PC(3)
         , ZEU_PDA(4)
-        , ZEU_PLS(5)
+        , ZEUPLS(5) //ClassName이 ZEU_PLS대신 ZEUPLS로 관리됨에 따른 변경.
         , ZEU_EISS(6)
         , ZEU_PQ(7)
         , ZEU_IO(8)

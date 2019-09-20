@@ -65,15 +65,15 @@ public class DeviceModelDaoImpl extends AbstractHibernateGenericDao<DeviceModel,
 	
 	@SuppressWarnings("unchecked")
 	public List<DeviceModel> getDeviceModelByName(Integer supplierId, String name) {
-		Query query = getSession().createQuery("select d from DeviceModel d where d.name = ?");
-		query.setString(0, name);
+		Query query = getSession().createQuery("select d from DeviceModel d where d.name = :vName");
+		query.setString("vName", name);
 		return query.list();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<DeviceModel> getDeviceModelBySupplierId(Integer supplierId) {
-		Query query = getSession().createQuery("select d from DeviceModel d inner join d.deviceVendor v with v.supplier.id = ?");
-		query.setInteger(0, supplierId);
+		Query query = getSession().createQuery("select d from DeviceModel d inner join d.deviceVendor v with v.supplier.id = :supplierId");
+		query.setInteger("supplierId", supplierId);
 		
 		return query.list();
 	}
@@ -116,9 +116,9 @@ public class DeviceModelDaoImpl extends AbstractHibernateGenericDao<DeviceModel,
 	@SuppressWarnings("unchecked")
 	public DeviceModel getDeviceModelByCode(Integer supplierId, Integer code, Integer deviceTypeCodeId) {
 		
-		Query query = getSession().createQuery("select d from DeviceModel d where d.code = ? and d.deviceType.id = ?");
-		query.setInteger(0, code);
-		query.setInteger(1, deviceTypeCodeId);
+		Query query = getSession().createQuery("select d from DeviceModel d where d.code = :vCode and d.deviceType.id = :deviceTypeCodeId");
+		query.setInteger("vCode", code);
+		query.setInteger("deviceTypeCodeId", deviceTypeCodeId);
 		DeviceModel deviceModel = new DeviceModel();
 		if (query.list().size() > 0) {
 			deviceModel = (DeviceModel)(query.list()).get(0);
@@ -128,8 +128,8 @@ public class DeviceModelDaoImpl extends AbstractHibernateGenericDao<DeviceModel,
 	
 	@SuppressWarnings("unchecked")
 	public List<DeviceModel> getDeviceModelByTypeId(Integer supplierId, Integer typeId) {
-		Query query = getSession().createQuery("select d from DeviceModel d inner join d.deviceVendor v where d.deviceType.id = ? order by v.name asc");
-		query.setInteger(0, typeId);
+		Query query = getSession().createQuery("select d from DeviceModel d inner join d.deviceVendor v where d.deviceType.id = :typeId order by v.name asc");
+		query.setInteger("typeId", typeId);
 		return query.list();
 	}
 	

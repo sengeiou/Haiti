@@ -681,7 +681,7 @@ public class EMnVMeterDataSaverMain {
 
 		if (orgModem == null || !orgModem.getDeviceSerial().equals(modem.getDeviceSerial())) {
 			meter.setModem(modem);
-			if (modem.getModemType() == ModemType.ZRU || modem.getModemType() == ModemType.ZEU_PLS || modem.getModemType() == ModemType.LTE) {
+			if (modem.getModemType() == ModemType.ZRU || modem.getModemType() == ModemType.ZEUPLS || modem.getModemType() == ModemType.LTE) {
 				Set<Meter> m = new HashSet<Meter>();
 				m.add(meter);
 				modem.setMeter(m);

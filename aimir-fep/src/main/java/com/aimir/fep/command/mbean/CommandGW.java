@@ -11688,7 +11688,7 @@ public class CommandGW implements CommandGWMBean {
 						zmu.setZdzdIfVersion(sNode.getZdzdInterfaceVersion());
 					}
 
-					if ((sensor.getModemType().equals(ModemType.ZEU_PLS)
+					if ((sensor.getModemType().equals(ModemType.ZEUPLS)
 							|| sensor.getModemType().equals(ModemType.Repeater)) && fwVersion.compareTo("2.1") >= 0
 							&& fwBuild.compareTo("18") >= 0) {
 						if (zeupls != null) {
@@ -11849,7 +11849,7 @@ public class CommandGW implements CommandGWMBean {
 	}
 
 	public boolean isAsynch(Modem modem) throws Exception {
-		if (modem.getModemType() == ModemType.ZEU_PLS) {
+		if (modem.getModemType() == ModemType.ZEUPLS) {
 			com.aimir.model.device.ZEUPLS zeupls = (com.aimir.model.device.ZEUPLS) modem;
 			if (zeupls.getPowerType() == ModemPowerType.Battery && zeupls.getNetworkType() == ModemNetworkType.FFD)
 				return true;

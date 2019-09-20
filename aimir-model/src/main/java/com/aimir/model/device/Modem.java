@@ -185,10 +185,10 @@ import net.sf.json.util.JSONStringer;
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="MODEM",discriminatorType=DiscriminatorType.STRING)
 @Table(name="MODEM")
-@Indexes({
-    @Index(name="IDX_MODEM_01", columnNames={"IP_ADDR"}),
-    @Index(name="IDX_MODEM_02", columnNames={"IPV6_ADDRESS"})
-})
+//@Indexes({
+//    @Index(name="IDX_MODEM_01", columnNames={"IP_ADDR"}),
+//   @Index(name="IDX_MODEM_02", columnNames={"IPV6_ADDRESS"})
+//})
 public class Modem extends BaseObject implements JSONString, IAuditable { 
     
     private static final long serialVersionUID = -299021006738263346L;

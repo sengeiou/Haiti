@@ -38,7 +38,7 @@ import org.eclipse.persistence.annotations.Index;
  */
 @Entity
 @Table(name="POWER_ALARM_LOG")
-@Index(name="IDX_POWER_ALARM_LOG_01", columnNames={"meter_id","type_id","supplier_id", "openTime", "closeTime"})
+//@Index(name="IDX_POWER_ALARM_LOG_01", columnNames={"meter_id","type_id","supplier_id", "openTime", "closeTime"})
 public class PowerAlarmLog extends BaseObject implements JSONString {
 
 	private static final long serialVersionUID = 7921488105951923562L;

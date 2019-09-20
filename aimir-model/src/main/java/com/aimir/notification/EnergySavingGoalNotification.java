@@ -19,6 +19,7 @@ import com.aimir.dao.mvm.BillingDayWMDao;
 import com.aimir.dao.mvm.BillingMonthEMDao;
 import com.aimir.dao.mvm.BillingMonthGMDao;
 import com.aimir.dao.mvm.BillingMonthWMDao;
+import com.aimir.dao.system.CodeDao;
 import com.aimir.dao.system.energySavingGoal.EnergySavingTargetDao;
 import com.aimir.dao.system.membership.OperatorContractDao;
 import com.aimir.model.mvm.BillingDayEM;
@@ -30,6 +31,7 @@ import com.aimir.model.mvm.BillingMonthWM;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.EnergySavingTarget;
 import com.aimir.model.system.OperatorContract;
+import com.aimir.util.ContextUtil;
 
 /**
  * EnergySavingGoalNotification.java Description 
@@ -43,64 +45,15 @@ import com.aimir.model.system.OperatorContract;
 public class EnergySavingGoalNotification {
 	
 
-	private static OperatorContractDao operatorContractDao;
+	private static OperatorContractDao operatorContractDao = ContextUtil.getBean(OperatorContractDao.class);
+	private static EnergySavingTargetDao energySavingTargetDao = ContextUtil.getBean(EnergySavingTargetDao.class);
+	private static BillingMonthEMDao billingMonthEMDao = ContextUtil.getBean(BillingMonthEMDao.class);
+	private static BillingMonthGMDao billingMonthGMDao = ContextUtil.getBean(BillingMonthGMDao.class);
+	private static BillingMonthWMDao billingMonthWMDao = ContextUtil.getBean(BillingMonthWMDao.class);
+	private static BillingDayEMDao billingDayEMDao = ContextUtil.getBean(BillingDayEMDao.class);
+	private static BillingDayGMDao billingDayGMDao = ContextUtil.getBean(BillingDayGMDao.class);
+	private static BillingDayWMDao billingDayWMDao = ContextUtil.getBean(BillingDayWMDao.class);
 
-	private static EnergySavingTargetDao energySavingTargetDao;
-
-	private static BillingMonthEMDao billingMonthEMDao;
-
-	private static BillingMonthGMDao billingMonthGMDao;
-
-	private static BillingMonthWMDao billingMonthWMDao;
-
-	private static BillingDayEMDao billingDayEMDao;
-
-	private static BillingDayGMDao billingDayGMDao;
-
-	private static BillingDayWMDao billingDayWMDao;
-
-	@Autowired
-	public void setOperatorContractDao(
-			OperatorContractDao operatorContractDao) {
-		EnergySavingGoalNotification.operatorContractDao = operatorContractDao;
-	}
-
-
-	@Autowired
-	public void setEnergySavingTargetDao(
-			EnergySavingTargetDao energySavingTargetDao) {
-		EnergySavingGoalNotification.energySavingTargetDao = energySavingTargetDao;
-	}
-
-	@Autowired
-	public void setBillingMonthEMDao(BillingMonthEMDao billingMonthEMDao) {
-		EnergySavingGoalNotification.billingMonthEMDao = billingMonthEMDao;
-	}
-
-	@Autowired
-	public void setBillingMonthGMDao(BillingMonthGMDao billingMonthGMDao) {
-		EnergySavingGoalNotification.billingMonthGMDao = billingMonthGMDao;
-	}
-
-	@Autowired
-	public void setBillingMonthWMDao(BillingMonthWMDao billingMonthWMDao) {
-		EnergySavingGoalNotification.billingMonthWMDao = billingMonthWMDao;
-	}
-
-	@Autowired
-	public void setBillingDayEMDao(BillingDayEMDao billingDayEMDao) {
-		EnergySavingGoalNotification.billingDayEMDao = billingDayEMDao;
-	}
-
-	@Autowired
-	public void setBillingDayGMDao(BillingDayGMDao billingDayGMDao) {
-		EnergySavingGoalNotification.billingDayGMDao = billingDayGMDao;
-	}
-
-	@Autowired
-	public void setBillingDayWMDao(BillingDayWMDao billingDayWMDao) {
-		EnergySavingGoalNotification.billingDayWMDao = billingDayWMDao;
-	}
 
 	/**
 	 * method name : Notification

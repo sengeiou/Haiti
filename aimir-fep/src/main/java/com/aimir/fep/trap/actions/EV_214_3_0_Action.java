@@ -450,8 +450,8 @@ public class EV_214_3_0_Action implements EV_Action
 			log.debug("sensorType: " + sensorType);
 			if (sensorType == ModemType.ZRU) {
 				dummySensor.setModemType(ModemType.ZRU.name());
-			} else if (sensorType == ModemType.ZEU_PLS) {
-				dummySensor.setModemType(ModemType.ZEU_PLS.name());
+			} else if (sensorType == ModemType.ZEUPLS) {
+				dummySensor.setModemType(ModemType.ZEUPLS.name());
 			} else if (sensorType == ModemType.Repeater) {
 				dummySensor.setModemType(ModemType.Repeater.name());
 			} else if (sensorType == ModemType.ZEU_MBus) {
@@ -578,7 +578,7 @@ public class EV_214_3_0_Action implements EV_Action
 
 
 	public static ModemType getSensorType(String meterModel) {
-		ModemType modemType = ModemType.ZEU_PLS;
+		ModemType modemType = ModemType.ZEUPLS;
 
 		if (meterModel.equals("Kamstrup 162")
 				|| meterModel.equals("Kamstrup 382")
@@ -604,7 +604,7 @@ public class EV_214_3_0_Action implements EV_Action
 		} else if (meterModel.equals("Elster M 140")
 				|| meterModel.equals("Elster V 220")
 				|| meterModel.equals("MD13")) {
-			modemType = ModemType.ZEU_PLS;
+			modemType = ModemType.ZEUPLS;
 		} else if (meterModel.equals("REPEATER")) {
 			modemType = ModemType.Repeater;
 		}

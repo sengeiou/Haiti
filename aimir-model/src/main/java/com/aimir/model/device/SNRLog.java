@@ -28,7 +28,7 @@ import com.aimir.model.BaseObject;
  */
 @Entity
 @Table(name="SNR_LOG")
-@Index(name="IDX_SNR_LOG_01", columnNames={"DEVICE_TYPE", "DEVICE_ID", "YYYYMMDD", "HHMMSS"})
+//@Index(name="IDX_SNR_LOG_01", columnNames={"DEVICE_TYPE", "DEVICE_ID", "YYYYMMDD", "HHMMSS"})
 public class SNRLog extends BaseObject {
 
     private static final long serialVersionUID = 3742831176414187373L;

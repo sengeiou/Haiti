@@ -2,7 +2,7 @@ package com.aimir.constants;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.aimir.dao.device.EndDeviceDao;
@@ -43,60 +43,21 @@ import com.aimir.model.device.ZMU;
 import com.aimir.model.device.ZRU;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.DeviceModel;
+import com.aimir.util.ContextUtil;
 
 @Component
 public class DeviceRegistrationFormat {
 
-	private static SupplierDao supplierDao;
-	private static DeviceModelDao deviceModelDao;
-    private static LocationDao locationDao;
-    private static CodeDao codeDao;
-	private static MCUVarDao mcuVarDao;
-	private static MCUCodiDao mcuCodiDao;
-	private static ContractDao contractDao;
-	private static ModemDao modemDao;
-	private static EndDeviceDao endDeviceDao;
-	private static MCUDao mcuDao;
-
-    @Autowired
-    public void setSupplierDao(SupplierDao _supplierDao) {
-    	supplierDao = _supplierDao;
-    }
-    
-    @Autowired
-    public void setDeviceModelDao(DeviceModelDao _deviceModelDao) {
-    	deviceModelDao = _deviceModelDao;
-    }
-    
-    @Autowired
-    public void setLocationDao(LocationDao _locationDao) {
-    	locationDao = _locationDao;
-    }
-    
-    @Autowired
-    public void setCodeDao(CodeDao _codeDao) {
-        codeDao = _codeDao;
-    }
-	
-	@Autowired
-    public void setMCUVarDao(MCUVarDao _mcuVarDao) {
-		mcuVarDao = _mcuVarDao;
-    }
-	
-	@Autowired	
-    public void setMCUCodiDao(MCUCodiDao _mcuCodiDao) {
-		mcuCodiDao = _mcuCodiDao;
-    }
-	
-	@Autowired	
-    public void setContractDao(ContractDao _contractDao) {
-		contractDao = _contractDao;
-    }
-	
-	@Autowired	
-    public void setModemDao(ModemDao _modemDao) {
-		modemDao = _modemDao;
-    }
+	private static SupplierDao supplierDao = ContextUtil.getBean(SupplierDao.class);
+	private static DeviceModelDao deviceModelDao = ContextUtil.getBean(DeviceModelDao.class);
+    private static LocationDao locationDao = ContextUtil.getBean(LocationDao.class);
+    private static CodeDao codeDao = ContextUtil.getBean(CodeDao.class);
+	private static MCUVarDao mcuVarDao = ContextUtil.getBean(MCUVarDao.class);
+	private static MCUCodiDao mcuCodiDao = ContextUtil.getBean(MCUCodiDao.class);
+	private static ContractDao contractDao = ContextUtil.getBean( ContractDao.class);
+	private static ModemDao modemDao = ContextUtil.getBean(ModemDao.class);
+	private static EndDeviceDao endDeviceDao = ContextUtil.getBean(EndDeviceDao.class);
+	private static MCUDao mcuDao = ContextUtil.getBean(MCUDao.class);
     
 	/**
 	 * MCU

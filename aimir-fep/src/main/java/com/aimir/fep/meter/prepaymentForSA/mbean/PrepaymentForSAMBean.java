@@ -3,6 +3,7 @@ package com.aimir.fep.meter.prepaymentForSA.mbean;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +84,12 @@ import com.aimir.util.DateTimeUtil;
 import com.aimir.util.DecimalUtil;
 import com.aimir.util.StringUtil;
 import com.aimir.util.TimeUtil;
+
+/**
+ * Prepayment Web service for SPASA
+ * @author user
+ *
+ */
 
 @Service
 @Scope("prototype")
@@ -1639,7 +1646,8 @@ public class PrepaymentForSAMBean {
             prepaymentLog.setTariffIndex(tariffType);
             prepaymentLog.setVendorCasher(vendorCasher.get(0));
             prepaymentLog.setDaysFromCharge(daysFromCharge);
-            prepaymentLog.setLastTokenId(String.valueOf(prepaymentLogDao.getNextVal()));
+            prepaymentLog.setLastTokenId(meter.getMdsId()+String.valueOf(System.currentTimeMillis()));
+
             prepaymentLogDao.add(prepaymentLog);
             
             //insert deposit

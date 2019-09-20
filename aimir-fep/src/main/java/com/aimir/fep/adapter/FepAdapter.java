@@ -43,6 +43,7 @@ import com.aimir.fep.util.DataUtil;
 import com.aimir.fep.util.FMPProperty;
 import com.aimir.fep.util.Hex;
 import com.aimir.fep.util.Message;
+import com.aimir.util.ContextUtil;
 
 /**
  * MOA Startup class
@@ -67,7 +68,7 @@ public class FepAdapter {
     private String  authTcpPort;
     private String  authUdpPort;
     // INSERT END SP-121 //
-    private boolean dtlsUse =  "true".equals(FMPProperty.getProperty("protocol.dtls.use"));
+    private boolean dtlsUse =  "true".equals(FMPProperty.getProperty("protocol.dtls.use", "false"));
     
     public void init()
     {
@@ -499,6 +500,7 @@ public class FepAdapter {
             */
 
             DataUtil.setApplicationContext(applicationContext);
+            ContextUtil.setApplicationContext(applicationContext);
         }
         catch (Exception e) {
             logger.error(e, e);

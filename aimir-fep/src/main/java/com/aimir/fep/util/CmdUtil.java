@@ -1162,7 +1162,7 @@ public class CmdUtil
     public static boolean isAsynch(Modem modem)
     throws Exception
     {
-        if (modem.getModemType() == ModemType.ZEU_PLS) {
+        if (modem.getModemType() == ModemType.ZEUPLS) {
             com.aimir.model.device.ZEUPLS zeupls = (com.aimir.model.device.ZEUPLS)modem;
             if (zeupls.getPowerType() == ModemPowerType.Battery && 
                     zeupls.getNetworkType() ==  ModemNetworkType.FFD)

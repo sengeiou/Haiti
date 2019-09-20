@@ -31,10 +31,10 @@ import com.aimir.model.prepayment.VendorCasher;
  */
 @Entity
 @Table(name="PREPAYMENTLOG")
-@Indexes({
-        @Index(name="IDX_PREPAYMENTLOG_01", columnNames={"LASTTOKENDATE"}),
-        @Index(name="IDX_PREPAYMENTLOG_02", columnNames={"CONTRACT_ID", "LASTTOKENDATE"})
-})
+//@Indexes({
+//        @Index(name="IDX_PREPAYMENTLOG_01", columnNames={"LASTTOKENDATE"}),
+//        @Index(name="IDX_PREPAYMENTLOG_02", columnNames={"CONTRACT_ID", "LASTTOKENDATE"})
+//})
 public class PrepaymentLog extends BaseObject implements JSONString{
 
 	private static final long serialVersionUID = 4218162564823781897L;
@@ -90,6 +90,8 @@ public class PrepaymentLog extends BaseObject implements JSONString{
 	@Column(length=14, nullable=false)
 	@ColumnInfo(descr="마지막 충전한 시간")
 	private String lastTokenDate;	//마지막 충전한 시간
+	
+	@Column(length=40)
 	private String lastTokenId;		//충전 세션키
 	private Integer emergencyCreditAvailable;	//
 	

@@ -11,3 +11,4 @@ aimir-web/src/main/resources/command.properties
 penta
 .settings
 *.log
+bin/

@@ -240,7 +240,7 @@ public class EV_215_1_0_Action implements EV_Action
             	((ZRU)modem).setNetworkKey(sn.getNetworkKey());
             	((ZRU)modem).setExtPanId(sn.getExtPanId());
         	}
-        	if(modem.getModemType().equals(ModemType.ZEU_PLS)){
+        	if(modem.getModemType().equals(ModemType.ZEUPLS)){
             	((ZEUPLS)modem).setChannelId(sn.getChannel());
             	((ZEUPLS)modem).setManualEnable((sn.getManualEnable()==255? false:true));
             	((ZEUPLS)modem).setPanId(sn.getPanId());
@@ -281,7 +281,7 @@ public class EV_215_1_0_Action implements EV_Action
         	modem.setFwVer(sNode.getFirmwareVersion());
         	modem.setFwRevision(sNode.getFirmwareBuild());
             
-          	if (modemType.equals(ModemType.ZEU_PLS)&&
+          	if (modemType.equals(ModemType.ZEUPLS)&&
                         fwVersion.compareTo("2.1") >= 0 && fwBuild.compareTo("18") >= 0) {	
             	((ZEUPLS)modem).setSolarADV(sNode.getSolarADVolt());
             	((ZEUPLS)modem).setSolarBDCV(sNode.getSolarChgBattVolt());

@@ -14,9 +14,9 @@ import org.eclipse.persistence.annotations.Indexes;
  */
 @Entity
 @Table(name = "MONTH_WM")
-@Indexes({
-    @Index(name="IDX_MONTH_WM_01", columnNames={"mdev_type", "mdev_id", "dst", "yyyymm","channel","full_location"})
-})
+//@Indexes({
+//    @Index(name="IDX_MONTH_WM_01", columnNames={"mdev_type", "mdev_id", "dst", "yyyymm","channel","full_location"})
+//})
 public class MonthWM extends MeteringMonth {
 
 }

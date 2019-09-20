@@ -32,9 +32,9 @@ import com.aimir.model.system.Location;
  */
 @Entity
 @Table(name="COMMLOG")
-@Indexes({
-    @Index(name="IDX_COMMLOG_01", columnNames={"SUPPLIERED_ID", "SVC_TYPE_CODE", "START_DATE", "SENDER_ID", "LOCATION_ID"})
-})
+//@Indexes({
+//    @Index(name="IDX_COMMLOG_01", columnNames={"SUPPLIERED_ID", "SVC_TYPE_CODE", "START_DATE", "SENDER_ID", "LOCATION_ID"})
+//})
 public class CommLog extends BaseObject {
 
 	private static final long serialVersionUID = -1382111074919152428L;

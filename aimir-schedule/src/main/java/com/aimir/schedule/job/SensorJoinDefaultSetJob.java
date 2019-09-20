@@ -56,7 +56,7 @@ public class SensorJoinDefaultSetJob extends AimirJob
                 isRun = true;
 
                 Set<Condition> condition = new HashSet<Condition>();
-                condition.add(new Condition("modemType", new Object[]{ModemType.ZRU,ModemType.ZEU_PLS}, null, Restriction.IN));
+                condition.add(new Condition("modemType", new Object[]{ModemType.ZRU,ModemType.ZEUPLS}, null, Restriction.IN));
                 condition.add(new Condition("needJoinSet", new Object[]{"0"}, null, Restriction.NOT));
                 List<Modem> list = modemDao.findByConditions(condition);
                 CommandWS gw = null; // cm.getCommandGW();
@@ -110,7 +110,7 @@ public class SensorJoinDefaultSetJob extends AimirJob
 
             ((ZRU)modem).setTestFlag(testFlag != 0 ? Boolean.TRUE : Boolean.FALSE);
             
-        }else if(modemType.equals(ModemType.ZEU_PLS))
+        }else if(modemType.equals(ModemType.ZEUPLS))
         {
             ModemCommandData data = new ModemCommandData();
             data.setCmdType(ModemCommandData.CMD_TYPE_LP_PERIOD);

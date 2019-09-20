@@ -47,16 +47,16 @@ public class DeviceVendorDaoImpl extends AbstractHibernateGenericDao<DeviceVendo
     public List<DeviceVendor> getDeviceVendorByName(final Integer supplierId, final String name) {
     	
     	Query query = getSession().createQuery("select v from DeviceVendor v " +
-                " where v.name like ?");
-    	query.setString(0, name+'%');
+                " where v.name like :vName");
+    	query.setString("vName", name+'%');
     	return query.list();
     }
 
     @SuppressWarnings("unchecked")
     public List<DeviceVendor> getDeviceVendorByCode(final Integer supplierId, final Integer code) {
     	Query query = getSession().createQuery("from DeviceVendor v " +
-                " where v.code = ?");
-    	query.setInteger(0, code);
+                " where v.code = :vCode");
+    	query.setInteger("vCode", code);
     	return query.list();
     }
 
