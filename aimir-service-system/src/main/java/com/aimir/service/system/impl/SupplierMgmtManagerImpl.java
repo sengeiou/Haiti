@@ -208,7 +208,7 @@ public class SupplierMgmtManagerImpl implements SupplierMgmtManager {
                 	listWM.get(i).put("CONDITION1", listWM.get(i).get("condition1").toString());
                 if(listWM.get(i).get("condition2") != null && !listWM.get(i).get("condition2").equals(""))
                 	listWM.get(i).put("CONDITION2", listWM.get(i).get("condition2").toString());
-                if(listWM.get(i).get("supplySizeMin") != null && !listWM.get(i).get("supplySizeMin").equals(""))
+                if(listWM.get(i).get("supplySizeMax") != null && !listWM.get(i).get("supplySizeMax").equals(""))
                 	listWM.get(i).put("SUPPLYSIZEMAX", listWM.get(i).get("supplySizeMax").toString());
                 if(listWM.get(i).get("supplySizeMin") != null && !listWM.get(i).get("supplySizeMin").equals(""))
                 	listWM.get(i).put("SUPPLYSIZEMIN", listWM.get(i).get("supplySizeMin").toString());              
