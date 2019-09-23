@@ -20,7 +20,6 @@
             padding-right: 0px;
         }
     }
-
     input.rate-value {
         width: 30px;
     }
@@ -1694,6 +1693,7 @@
         var tariffModelWm; // Water
         var tariffStore;
         var tariffGridPanel;
+        var tariffGridPanelWm;
         var tariffInstanceOn = false;
         var tariffWmInstanceOn = false;
         function getTariffGrid(){
@@ -2227,7 +2227,7 @@
 							renderer: function(value, metaData, record, index) {
 		                    	var data = record.data;
 		                    	tariffId = data.ID;
-		                    	var btnHtml = "<div class='am_button'> <a href='#;' onclick='javascript:deleteRow();' >Delete</a> </div>";
+		                    	var btnHtml = "<div class='am_button'> <a href='#;' onclick='javascript:deleteRowWm();' >Delete</a> </div>";
 		                        var tplBtn = new Ext.Template(btnHtml);
 		                        return tplBtn.apply();
 		                    } 
@@ -2527,7 +2527,7 @@
 			}
 			if(fileType=='Water'){
 				if(tariffWmInstanceOn == false){
-					tariffGridPanel = new Ext.grid.EditorGridPanel({
+					tariffGridPanelWm = new Ext.grid.EditorGridPanel({
 						store: tariffStore,
 						colModel: tariffModelWm,
 						autoScroll: true,
@@ -2565,7 +2565,7 @@
 					tariffWmInstanceOn = true;
 					
 				} else{
-					tariffGridPanel.reconfigure(tariffStore, tariffModelWm);
+					tariffGridPanelWm.reconfigure(tariffStore, tariffModelWm);
 				}
 			}
 			if(fileType=='Gas'){
@@ -2735,7 +2735,13 @@
                 	{
                     	text: 'Ok',
                     	handler: function() {
-                         	var record = tariffGridPanel.getSelectionModel().getSelected();
+                         	var record;
+                         	
+                         	if(supplyType=='Electricity'){
+	                         	record = tariffGridPanel.getSelectionModel().getSelected();
+                         	}else if(supplyType=='Water'){
+                         		record = tariffGridPanelWm.getSelectionModel().getSelected();
+                         	}
 
                          	var SUPPLYSIZEMIN = Ext.getCmp('min_val').value;
                          	var SUPPLYSIZEMAX = Ext.getCmp('max_val').value;
@@ -3068,12 +3074,45 @@
                     });
         }
 
-        /* function addRow() {
-            grid1.focus();
-            grid1.addRow();
-        } */
         function addRow(){
-        	 var store = tariffGridPanel.getStore();
+       	 var store = tariffGridPanel.getStore();
+            var Plant = store.recordType;
+            var textHtml = "-";
+           
+            var p = new Plant({
+                ID : "",
+                SEASON : "",
+                PEAKTYPE : "",
+                //STARTHOUR : null,
+                //ENDHOUR : null,
+                SUPPLYSIZEMIN : null,
+                SUPPLYSIZEMAX : null,
+                CONDITION1 : null,
+                CONDITION2 : null,
+                SERVICECHARGE : "",
+                TRANSMISSIONNETWORKCHARGE : "",
+                DISTRIBUTIONNETWORKCHARGE : "",
+                ENERGYDEMANDCHARGE : "",
+                ACTIVEENERGYCHARGE : "",
+                REACTIVEENERGYCHARGE : "",
+                ACTIVEENERGYCHARGE : "",
+                RATEREBALANCINGLEVY : "",
+                MAXDEMAND : "",
+                ADMINCHARGE : "",
+                TARIFFTYPE : "",
+                TARIFFTYPEID : "",
+                HOUR : null
+                //status : "add"
+            });
+            var length = store.getCount();
+            tariffGridPanel.stopEditing();
+            tariffStore.insert(length, p);
+            tariffGridPanel.startEditing(length, 0);
+            tariffGridPanel.getSelectionModel().selectLastRow();
+       }
+        
+        function addRowWm(){
+        	 var store = tariffGridPanelWm.getStore();
              var Plant = store.recordType;
              var textHtml = "-";
             
@@ -3103,10 +3142,10 @@
                  //status : "add"
              });
              var length = store.getCount();
-             tariffGridPanel.stopEditing();
+             tariffGridPanelWm.stopEditing();
              tariffStore.insert(length, p);
-             tariffGridPanel.startEditing(length, 0);
-             tariffGridPanel.getSelectionModel().selectLastRow();
+             tariffGridPanelWm.startEditing(length, 0);
+             tariffGridPanelWm.getSelectionModel().selectLastRow();
         }
         
         function deleteRow() {
@@ -3148,6 +3187,27 @@
                         });
                 //getTariffGrid();
                 //tariffStore.reload();
+        }
+        function deleteRowWm() {
+            var record = tariffGridPanelWm.getSelectionModel().getSelected();
+
+            if (record == null) {
+                Ext.Msg.alert("<fmt:message key="aimir.message"/>", "Do you want to delete from Tariff?");
+                return;
+            }
+                Ext.MessageBox.confirm('<fmt:message key="aimir.message"/>', '<fmt:message key="aimir.msg.wantdelete"/>',
+                	function(btn) {
+                        if (btn == 'yes') {
+                            if (record.get("") != "" && record.get("") > 0) {
+                                Ext.Msg.alert("<fmt:message key="aimir.message"/>", "You can't delete. Data exists");
+                                hide();
+                                return;
+                            } 
+                            tariffStore.remove(record);
+                        } else if(btn == 'no'){
+                            hide();
+                        }
+                    });
         }
 
         function addEMTariffType(tariffName) {
@@ -3966,7 +4026,7 @@
     <!--  TariffType : Electricity -->
     <div id="electricDiv" style="display: none;">
     <!-- <div class="search-bg-withouttabs"> -->
-    	<div class="tou-description" style="margin-left: 1%;">
+    	<div class="tou-description" style="margin-left: 10px;">
 			<ul>
 				<li>CRITICAL_PEAK: Tou_Tariff1
 			    <li>PEAK: Tou_Tariff2
@@ -3981,21 +4041,21 @@
 	                    	 <span style="margin-bottom: 5px">
 			                	<ul>
 			                		<li>
-			                			<span id="padding-10" style="padding-left: 10px; padding-right: 10px;"><label class="check">Applied Date</label></span>
+			                			<span class="padding-10" style="padding-right: 10px;"><label class="check">Applied Date</label></span>
 			                			<span class="calendar-form">
 					                        <input class="alt date" type='text' readOnly></input>
 					                        <input name="date" class="no-width" type="text"></input>
 					                    </span>
-					                    <span id="padding-10">
-					                    <em class="am_button"> <a href="javascript:addRow();" id="addRow"><fmt:message key="aimir.add" /> Row</a> </em>
+					                    <span class="padding-10">
+					                    <span class="am_button" style="padding-right:2px;"> <a href="javascript:addRow();" id="addRow"><fmt:message key="aimir.add" /></a></span>
+					                    <span class="am_button"> <a href="javascript:exportExcel('ExportEm');" id="ExportEm"><fmt:message key="aimir.button.excel"/></a></span> </em>
 					                    <%-- <em class="am_button"> <a href="javascript:deleteRow();" id="deleteRow"><fmt:message key="aimir.button.delete" /></a> </em> --%>
-					                    <em class="am_button"> <a href="javascript:exportExcel('ExportEm');" id="ExportEm"><fmt:message key="aimir.button.excel" /></a> </em>
 			                			<%-- <em class="am_button"> <a href="javascript:getTariffGrid();"id="btnSearch">	<fmt:message key="aimir.button.search" /></a></em> --%>
 			                			<!-- <em class="am_button"> <a href="javascript:cmdSetTariff();" id="setTariff">STS Set Tariff</a> </em> -->
 			                			<!-- <em class="am_button"> <a href="javascript:cmdGetTariff();" id="setTariff">STS Get Tariff</a> </em> -->
 			                			</span>
 					                    <br><br>
-			                			<span id="padding-10" style="padding-right: 10px;" >(Tariff date will be saved as Applied Date above.)</span>
+			                			<span class="padding-10" >(<fmt:message key="aimir.msg.tariffdate" />)</span>
 					                    <!-- <br><br> -->
 			                		</li>
 			                	</ul>
@@ -4047,17 +4107,17 @@
 	                    	 <span style="margin-bottom: 5px">
 			                	<ul>
 			                		<li>
-			                			<span id="padding-10" style="padding-left: 10px; padding-right: 10px;"><label class="check">Applied Date</label></span>
+			                			<span class="padding-10" style="padding-right: 10px;"><label class="check">Applied Date</label></span>
 			                			<span class="calendar-form">
 					                        <input class="alt date" type='text' readOnly></input>
 					                        <input name="date" class="no-width" type="text"></input>
 					                    </span>
-					                    <span id="padding-10">
-					                    <em class="am_button"> <a href="javascript:addRow();"><fmt:message key="aimir.add" /></a> </em>
-	                    				<em class="am_button"> <a href="javascript:exportExcel('ExportWM');" id="ExportWm"><fmt:message key="aimir.button.export" /></a> </em>
+					                    <span class="padding-10">
+					                    <span class="am_button" style="padding-right:2px;"> <a href="javascript:addRowWm();"><fmt:message key="aimir.add" /></a></span>
+	                    				<span class="am_button"> <a href="javascript:exportExcel('ExportWM');" id="ExportWm"><fmt:message key="aimir.button.excel" /></a> </span>
 			                			</span>
 					                    <br><br>
-			                			<span id="padding-10" style="padding-right: 10px;" >(Tariff date will be saved as Applied Date above.)</span>
+			                			<span class="padding-10">(<fmt:message key="aimir.msg.tariffdate" />)</span>
 			                		</li>
 			                	</ul>
 			                	<br>
