@@ -26,15 +26,15 @@ import com.aimir.model.BaseObject;
  * 2011. 6. 7.   v1.0       eunmiae  초판 생성      
  *
  */
-@Entity
-@Table(name = "ENERGY_SAVING_TARGET")
+//@Entity
+//@Table(name = "ENERGY_SAVING_TARGET")
 public class EnergySavingTarget extends BaseObject {
 
 	static final long serialVersionUID = -1741775424720596367L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ENERGY_SAVING_TARGET_SEQ")
-    @SequenceGenerator(name="ENERGY_SAVING_TARGET_SEQ", sequenceName="ENERGY_SAVING_TARGET_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_ENERGY_SAVING_TARGET")
+    @SequenceGenerator(name="SEQ_ENERGY_SAVING_TARGET", sequenceName="SEQ_ENERGY_SAVING_TARGET", allocationSize=1)
 	private Integer id;
 
     @ColumnInfo(name="계약정보", descr="계약 번호")    

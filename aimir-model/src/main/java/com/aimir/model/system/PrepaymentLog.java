@@ -40,8 +40,8 @@ public class PrepaymentLog extends BaseObject implements JSONString{
 	private static final long serialVersionUID = 4218162564823781897L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PREPAYMENTLOG_SEQ")
-	@SequenceGenerator(name="PREPAYMENTLOG_SEQ", sequenceName="PREPAYMENTLOG_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_PREPAYMENTLOG")
+	@SequenceGenerator(name="SEQ_PREPAYMENTLOG_SEQ", sequenceName="SEQ_PREPAYMENTLOG", allocationSize=1) 
 	private Long id;
 	
 	@ManyToOne(fetch=FetchType.LAZY)

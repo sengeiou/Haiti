@@ -34,8 +34,8 @@ public class DebtLog extends BaseObject implements JSONString{
 	private static final long serialVersionUID = 4218162564823781897L;
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DEBTLOG_SEQ")
-    @SequenceGenerator(name="DEBTLOG_SEQ", sequenceName="DEBTLOG_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_DEBTLOG")
+    @SequenceGenerator(name="SEQ_DEBTLOG", sequenceName="SEQ_DEBTLOG", allocationSize=1) 
 	private Long id;
 	
 	@ManyToOne(fetch=FetchType.LAZY)

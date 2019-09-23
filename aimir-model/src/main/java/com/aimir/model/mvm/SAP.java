@@ -39,8 +39,8 @@ import com.aimir.model.device.Meter;
  * @author kskim
  *
  */
-@Entity
-@Table(name = "SAP")
+//@Entity
+//@Table(name = "SAP")
 public class SAP extends BaseObject implements JSONString{
 	private static Log log = LogFactory.getLog(SAP.class);
 	

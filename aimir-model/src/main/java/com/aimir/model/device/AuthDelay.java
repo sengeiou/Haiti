@@ -38,8 +38,8 @@ public class AuthDelay extends BaseObject implements JSONString {
 	private static final long serialVersionUID = 7286204841628018710L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE,  generator="AUTHDELAY_SEQ")
-	@SequenceGenerator(name="AUTHDELAY_SEQ", sequenceName="AUTHDELAY_SEQ", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,  generator="SEQ_AUTHDELAY")
+	@SequenceGenerator(name="SEQ_AUTHDELAY", sequenceName="SEQ_AUTHDELAY", allocationSize=1)
 	private Long id;	//	ID(PK)
 
     @Column(name="IPADDRESS", length=64)

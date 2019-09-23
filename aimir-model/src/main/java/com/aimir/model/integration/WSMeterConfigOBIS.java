@@ -36,8 +36,8 @@ public class WSMeterConfigOBIS  extends BaseObject implements JSONString, IAudit
 	private static final long serialVersionUID = 1093034428694248354L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="WS_METERCONFIG_OBIS_SEQ")
-	@SequenceGenerator(name="WS_METERCONFIG_OBIS_SEQ", sequenceName="WS_METERCONFIG_OBIS_SEQ", allocationSize=1)	
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_WS_METERCONFIG_OBIS")
+	@SequenceGenerator(name="SEQ_WS_METERCONFIG_OBIS", sequenceName="SEQ_WS_METERCONFIG_OBIS", allocationSize=1)	
 	private Integer id;	    
 
     @ManyToOne(fetch = FetchType.LAZY)

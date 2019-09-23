@@ -44,8 +44,8 @@ public class PowerAlarmLog extends BaseObject implements JSONString {
 	private static final long serialVersionUID = 7921488105951923562L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="POWER_ALARM_LOG_SEQ")
-    @SequenceGenerator(name="POWER_ALARM_LOG_SEQ", sequenceName="POWER_ALARM_LOG_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_POWER_ALARM_LOG")
+    @SequenceGenerator(name="SEQ_POWER_ALARM_LOG", sequenceName="SEQ_POWER_ALARM_LOG", allocationSize=1) 
 	private Long id;	//	ID(PK)
 	
     @ManyToOne(fetch = FetchType.LAZY)

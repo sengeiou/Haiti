@@ -16,8 +16,8 @@ import com.aimir.model.BaseObject;
  * 에너지 절감 목표 2
  * @author 박종성(elevas)
  */
-@Entity
-@Table(name = "ENERGY_SAVING_GOAL2")
+//@Entity
+//@Table(name = "ENERGY_SAVING_GOAL2")
 public class EnergySavingGoal2 extends BaseObject {
 
 	private static final long serialVersionUID = -1594259724448629680L;

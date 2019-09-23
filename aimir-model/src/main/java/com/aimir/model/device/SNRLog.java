@@ -34,8 +34,8 @@ public class SNRLog extends BaseObject {
     private static final long serialVersionUID = 3742831176414187373L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SNR_LOG_SEQ")
-    @SequenceGenerator(name="SNR_LOG_SEQ", sequenceName="SNR_LOG_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_SNR_LOG")
+    @SequenceGenerator(name="SEQ_SNR_LOG", sequenceName="SEQ_SNR_LOG", allocationSize=1)
     private Long id;
 
     @Column(name="device_type")

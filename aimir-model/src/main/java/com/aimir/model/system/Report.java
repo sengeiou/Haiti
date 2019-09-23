@@ -38,8 +38,8 @@ public class Report extends BaseObject implements JSONString{
     private static final long serialVersionUID = -3015901250343920906L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="REPORT_SEQ")
-    @SequenceGenerator(name="REPORT_SEQ", sequenceName="REPORT_SEQ", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_REPORT")
+    @SequenceGenerator(name="SEQ_REPORT", sequenceName="SEQ_REPORT", allocationSize=1)
     @ColumnInfo(name="PK", descr="PK")
 	private Integer id;
 

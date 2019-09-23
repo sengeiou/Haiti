@@ -36,8 +36,8 @@ public class WSMeterConfigUser  extends BaseObject implements JSONString, IAudit
 	private static final long serialVersionUID = 6762197046322697441L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="WS_METERCONFIG_USER_SEQ")
-	@SequenceGenerator(name="WS_METERCONFIG_USER_SEQ", sequenceName="WS_METERCONFIG_USER_SEQ", allocationSize=1)	
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_WS_METERCONFIG_USER")
+	@SequenceGenerator(name="SEQ_WS_METERCONFIG_USER", sequenceName="SEQ_WS_METERCONFIG_USER", allocationSize=1)	
 	private Integer id;	    
     
 	@Column(name="userid",length=100, nullable=false, unique=true)

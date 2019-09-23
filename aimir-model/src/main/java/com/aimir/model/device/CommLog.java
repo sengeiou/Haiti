@@ -135,8 +135,8 @@ public class CommLog extends BaseObject {
 	}
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="COMM_LOG_SEQ")
-	@SequenceGenerator(name="COMM_LOG_SEQ", sequenceName="COMM_LOG_SEQ", allocationSize=1) 
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_COMM_LOG")
+	@SequenceGenerator(name="SEQ_COMM_LOG", sequenceName="SEQ_COMM_LOG", allocationSize=1) 
 	private Long id;
     
     @ColumnInfo(name="공급사 아이디")
