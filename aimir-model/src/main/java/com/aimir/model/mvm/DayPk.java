@@ -23,7 +23,7 @@ public class DayPk extends MeteringPk{
 	@Column(name="yyyymmdd",length=8,nullable=false)
 	private String yyyymmdd;
 	
-	@Column(name="channel", length=2,nullable=false)
+	@Column(name="hh", length=2,nullable=false)
 	@ColumnInfo(name="검침시간")
 	private String hh;
 	

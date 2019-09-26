@@ -151,11 +151,11 @@ public class Supplier extends BaseObject implements JSONString, IAuditable {
     @ColumnInfo(name = "이미지", descr = "공급사 로고 이미지")
     private String image;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "supplier_id")
-    @ColumnInfo(name = "에너지 절감 목표")
-    private Set<EnergySavingGoal> energySavingGoal = new HashSet<EnergySavingGoal>(
-            0);
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "supplier_id")
+//    @ColumnInfo(name = "에너지 절감 목표")
+//    private Set<EnergySavingGoal> energySavingGoal = new HashSet<EnergySavingGoal>(
+//            0);
 
     @Column(name = "TAX_RATE", columnDefinition = "float default 0")
     @ColumnInfo(name = "세율", descr = "가나 ECG Vendor 세율")
@@ -359,14 +359,14 @@ public class Supplier extends BaseObject implements JSONString, IAuditable {
         this.image = image;
     }
 
-    @XmlTransient
-    public Set<EnergySavingGoal> getEnergySavingGoal() {
-        return energySavingGoal;
-    }
-
-    public void setEnergySavingGoal(Set<EnergySavingGoal> energySavingGoal) {
-        this.energySavingGoal = energySavingGoal;
-    }
+//    @XmlTransient
+//    public Set<EnergySavingGoal> getEnergySavingGoal() {
+//        return energySavingGoal;
+//    }
+//
+//    public void setEnergySavingGoal(Set<EnergySavingGoal> energySavingGoal) {
+//        this.energySavingGoal = energySavingGoal;
+//    }
 
     public Integer getCountryId() {
         return countryId;
