@@ -162,6 +162,84 @@ public class MvmDetailController {
         mav.addObject("ondemandAuth", authMap.get("ondemand"));  // 수정권한(command = true)
         return mav;
     }
+    @RequestMapping(value={"/gadget/mvm/mvmDetailView3.do", "/gadget/mvm/mvmMeterValueDetailView.do"})
+    public final ModelAndView executeEM3(@RequestParam("meterNo") String meterNo,
+            @RequestParam("mvmMiniType") String mvmMiniType,
+            @RequestParam("tabType") String tabType,
+            @RequestParam("stdDate") String startDate,
+            @RequestParam("endDate") String endDate,
+            @RequestParam("comboValue") String comboValue,
+            @RequestParam("dayComboValue") String dayComboValue,
+            @RequestParam("contractId") String contractId,
+            @RequestParam("supplierId") String supplierId,
+            HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView();
+        String uriParam = request.getRequestURI();
+        List<ChannelInfo> channelInfo = null;
+        
+        if(uriParam.contains("/gadget/mvm/mvmDetailView3.do")) {
+        	channelInfo = mvmDetailViewManager.getChannelInfoAll(meterNo, mvmMiniType);
+        	mav.setViewName("/gadget/mvm/mvmDetailView3");
+        } else if(uriParam.contains("/gadget/mvm/mvmMeterValueDetailView.do")) {
+        	channelInfo = mvmMeterValueManager.getChannelInfoAll(meterNo, mvmMiniType);
+        	mav.setViewName("/gadget/mvm/mvmMeterValueDetailView");
+        }
+
+        mav.addObject("supplierId", supplierId);
+        mav.addObject("mvmMiniType", mvmMiniType);
+        mav.addObject("tabType", tabType);
+
+        String startMonth = changeDateToMonth(startDate);
+        String endMonth   = changeDateToMonth(endDate);
+        String startYear  = changDateToYear(startDate);
+        String endYear    = changDateToYear(endDate);
+
+        Integer meterId = 0;
+        if(meterNo != null && !meterNo.isEmpty()){
+            Meter meter = meterDao.get(meterNo);
+            meterId = meter != null ? meter.getId() : 0;
+        }
+
+        Supplier supplier = supplierManager.getSupplier((Integer.parseInt(supplierId)));
+        String country = supplier.getCountry().getCode_2letter();
+        String lang    = supplier.getLang().getCode_2letter();
+
+        String formatStartDate = TimeLocaleUtil.getLocaleDate(startDate.substring(0, 8), lang, country);
+        String formatEndDate = TimeLocaleUtil.getLocaleDate(endDate.substring(0, 8), lang, country);
+
+        String md = supplier.getMd().getPattern();
+        int decimalPos = 0;     // 소수점 자릿수
+
+        if (md.indexOf(".") != -1) {
+            decimalPos = md.length() - (md.indexOf(".") + 1);
+        }
+        mav.addObject("decimalPos", decimalPos);
+        mav.addObject("comboValue", comboValue);
+        mav.addObject("dayComboValue", dayComboValue);
+        mav.addObject("startDate", startDate);
+        mav.addObject("endDate", endDate);
+        mav.addObject("formatStartDate", formatStartDate);
+        mav.addObject("formatEndDate", formatEndDate);
+        mav.addObject("startMonth", startMonth);
+        mav.addObject("endMonth", endMonth);
+        mav.addObject("startYear", startYear);
+        mav.addObject("endYear", endYear);
+        mav.addObject("contractId", contractId);
+        mav.addObject("meterId",meterId);
+
+        mav.addObject("customerInfo", mvmDetailViewManager.getCustomerInfo(meterNo, supplierId));
+        //mav.addObject("channelList", mvmDetailViewManager.getChannelInfo(meterNo, mvmMiniType));
+        mav.addObject("channelList", channelInfo);
+
+        AimirAuthenticator instance = (AimirAuthenticator) ESAPI.authenticator();
+        AimirUser user = (AimirUser) instance.getUserFromSession();
+
+        Role role = roleManager.getRole(user.getRoleData().getId());
+        Map<String, Object> authMap = CommonUtils.getAllAuthorityByRole(role);
+
+        mav.addObject("ondemandAuth", authMap.get("ondemand"));  // 수정권한(command = true)
+        return mav;
+    }
     
     @RequestMapping(value={"/gadget/mvm/mvmDetailView2.do", "/gadget/mvm/mvmMeterValueDetailView.do"})
     public final ModelAndView executeEM2(@RequestParam("meterNo") String meterNo,
@@ -1147,8 +1225,10 @@ public class MvmDetailController {
                 case INTERVAL:
                     conditionMap.put("searchStartHour", searchStartHour);
                     conditionMap.put("searchEndHour", searchEndHour);
-                    result = mvmDetailViewManager.getMeteringDataDetailHourlyData(conditionMap, true);
+                    result = mvmDetailViewManager.getMeteringDataDetailIntervalData(conditionMap);
                     break;
+                default:
+                	break;
             }
         } else {
             for (DateType obj : DateType.values()) {
@@ -1177,6 +1257,8 @@ public class MvmDetailController {
                 case SEASONAL:
                     result = mvmDetailViewManager.getMeteringDataDetailSeasonalData(conditionMap);
                     break;
+                default:
+                	break;
             }
         }
 

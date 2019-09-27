@@ -249,7 +249,7 @@
             stdDate =  $('#searchStartDate').val();
             endDate = $('#searchEndDate').val();
             
-            var path = "${ctx}/gadget/mvm/mvmDetailView.do";
+            var path = "${ctx}/gadget/mvm/mvmDetailView3.do";
             var params = {meterNo : meterNo,
                     contractId : contractId,
                     mvmMiniType : "${mvmMiniType}",
@@ -260,8 +260,6 @@
                     dayComboValue : dayComboValue,
                     supplierId : supplierId
                 };
-            
-            
             
 			if(stdDate != ''){
 				$('#detail_dialog').dialog('open');
@@ -515,8 +513,6 @@
                             }
                         });                        
                     }
-
-
                 }
             
             else if (mvmMiniType.toString() == "GM" || mvmMiniType.toString() == "WM") {

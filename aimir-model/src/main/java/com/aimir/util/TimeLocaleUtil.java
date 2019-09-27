@@ -431,6 +431,40 @@ public class TimeLocaleUtil {
     }
 
     /**
+     * 로케일에 맞는 형식의 연월일시분(YearMonthDateHourMinute) 날짜 형식을 반환 
+     * 
+     * @param strDate
+     *            스트링 형식의 날짜.
+     * @param lang
+     *            언어 코드
+     * @param country
+     *            국가 코드
+     * @return 로케일이 적용된 yyyyMMddHHmm 패턴의 날짜
+     */
+    public static String getLocaleDateHourMinute(String strDate, String lang, String country) {
+        Locale locale = new Locale(lang, country);
+        String locDate = null;
+        SimpleDateFormat sdf10 = new SimpleDateFormat("yyyyMMddHHmm", locale);
+
+        try {
+            String dateFormat = getDateFormat(14, lang, country);
+            // TODO - 적용조건 : 시간 pattern 의 시,분,초 사이 delimiter 가 1byte 특수문자일 경우만 적용가능. 그 외 케이스가 있을 경우 수정요망.
+            SimpleDateFormat dateMinuteFormat = new SimpleDateFormat(dateFormat.replaceAll(".ss", ""), locale);
+
+            if (!strDate.equals("000000000000")) {
+                locDate = dateMinuteFormat.format(sdf10.parse(strDate));
+            } else {
+                locDate = "";
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return locDate;
+    }
+    
+    /**
      * 로케일에 맞는 형식의 연월일시(YearMonthDateHour) 날짜 형식을 반환 2012-11-20 추가 : 태국 locale
      * 에서 날짜오류가 발생하여 SimpleDateFormat 파라메터에 locale 추가
      * 

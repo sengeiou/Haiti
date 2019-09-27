@@ -4143,7 +4143,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
 
         sb.append("\n    SELECT da.yyyymmdd AS YYYYMMDD, ");
         sb.append("\n           da.channel AS CHANNEL, ");
-        sb.append("\n           da.total AS VALUE, ");
+        sb.append("\n           da.total_value AS VALUE, ");
         sb.append("\n          (SELECT DISTINCT dc.ch_method ");
         sb.append("\n           FROM meter mt, ");
         sb.append("\n                meterconfig mc, ");

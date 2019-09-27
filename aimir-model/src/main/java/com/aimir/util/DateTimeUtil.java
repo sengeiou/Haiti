@@ -308,6 +308,23 @@ public class DateTimeUtil {
         return getFormatTime(cal);
     }
     
+    /**
+     * Returns the result of subtracting the <i><b>minute</b></i> from the <i><b>time</b></i>.<br>
+     * If time string length is under 14, append '0..' <br>
+     * 
+     * @param time 
+     * @param minute
+     * @return time - minute
+     * @throws ParseException
+     */
+    public static String getPreMinute(String time, int minute)
+    throws ParseException
+    {
+    	Calendar cal = getCalendar(time);
+    	cal.add(Calendar.MINUTE,(0-minute));
+    	return getFormatTime(cal);
+    }
+    
     public static int inDST(String timezoneId, String yyyyMMddHHmmss)
     throws ParseException
     {

@@ -81,6 +81,10 @@ public interface MvmDetailViewManager {
     @WebMethod(operationName ="MeteringDataDetailHourlyDataByInterval")
     @WebResult(name="MeteringDataDetailHourlyDataList")
     public List<Map<String, Object>> getMeteringDataDetailHourlyData(Map<String, Object> conditionMap, boolean isLpInterval);
+    
+    @WebMethod(operationName ="MeteringDataDetailIntervalData")
+    @WebResult(name="MeteringDataDetailHourlyDataList")
+    public List<Map<String, Object>> getMeteringDataDetailIntervalData(Map<String, Object> conditionMap);
 
     @WebMethod
     @WebResult(name="MeteringDataDetailLpDataList")
