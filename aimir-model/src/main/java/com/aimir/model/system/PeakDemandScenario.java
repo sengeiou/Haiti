@@ -34,8 +34,8 @@ import com.aimir.model.system.PeakDemandSetting;
  * @date 2012-07-16
  */
 
-@Entity
-@Table(name="PEAKDEMAND_SCENARIO")
+//@Entity
+//@Table(name="PEAKDEMAND_SCENARIO")
 public class PeakDemandScenario extends BaseObject implements JSONString {
 
     private static final long serialVersionUID = -3726084692444191291L;

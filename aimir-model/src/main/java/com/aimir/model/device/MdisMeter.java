@@ -23,8 +23,8 @@ import com.aimir.model.BaseObject;
  * 2012. 05. 10  v1.1        문동규   package 위치변경(mvm -> device)
  *
  */
-@Entity
-@Table(name="MDIS_METER")
+//@Entity
+//@Table(name="MDIS_METER")
 public class MdisMeter extends BaseObject implements JSONString {
 
     private static final long serialVersionUID = 7085782000933550055L;

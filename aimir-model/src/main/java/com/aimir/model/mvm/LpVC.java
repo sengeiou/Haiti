@@ -12,8 +12,8 @@ import org.eclipse.persistence.annotations.Indexes;
  * @author YeonKyoung Park(goodjob)
  *
  */
-@Entity
-@Table(name = "LP_VC")
+//@Entity
+//@Table(name = "LP_VC")
 //@Indexes({
 //    @Index(name="IDX_LP_VC_01", columnNames={"mdev_type", "mdev_id", "dst", "yyyymmdd", "channel", "full_location"})  //DB정규화로 인해 해당 인덱스 불필요
 //})

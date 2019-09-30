@@ -15,8 +15,8 @@ import com.aimir.annotation.ColumnInfo;
  *
  */
 
-@Entity
-@Table(name="MDIS_HEADEND_CTRL")
+//@Entity
+//@Table(name="MDIS_HEADEND_CTRL")
 public class HeadendCtrl {
 	@EmbeddedId public HeadendPK id;
 	

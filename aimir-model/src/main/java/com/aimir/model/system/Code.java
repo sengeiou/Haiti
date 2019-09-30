@@ -118,7 +118,7 @@ public class Code extends BaseObject implements JSONString{
 	@Column(unique=true, nullable=false, length=100)
 	private String code;	//코드값
 	
-	@Column(nullable=false)
+	@Column(nullable=false, length=100)
 	private String name;	//코드명
 	
 	@Column(length = 100)

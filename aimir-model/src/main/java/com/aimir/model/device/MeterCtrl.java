@@ -29,8 +29,8 @@ import com.aimir.model.BaseObject;
  * 2011. 11. 4.   v1.0       enj      Data Link App check database table   
  * </pre>
  */
-@Entity
-@Table(name="METERCTRL")
+//@Entity
+//@Table(name="METERCTRL")
 public class MeterCtrl extends BaseObject implements JSONString {
 
 	private static final long serialVersionUID = 724980946603365810L;

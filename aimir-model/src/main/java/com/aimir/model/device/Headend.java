@@ -20,8 +20,8 @@ import com.aimir.model.BaseObject;
  *
  */
 
-@Entity
-@Table(name="MDIS_HEADEND")
+//@Entity
+//@Table(name="MDIS_HEADEND")
 public class Headend extends BaseObject {
 	
 	private static final long serialVersionUID = -7588707526107168442L;

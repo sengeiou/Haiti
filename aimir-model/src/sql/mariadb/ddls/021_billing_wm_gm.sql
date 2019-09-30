@@ -1,0 +1,118 @@
+CREATE TABLE `billing_day_gm` (
+  `mdev_id` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `yyyymmdd` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hhmmss` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '000000',
+  `mdev_type` int(11) NOT NULL,
+  `writeDate` varchar(14) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` double DEFAULT NULL,
+  `location_id` int(11) DEFAULT NULL,
+  `meter_id` int(11) DEFAULT NULL,
+  `modem_id` int(11) DEFAULT NULL,
+  `supplier_id` int(11) DEFAULT NULL,
+  `additionalCosts` double DEFAULT NULL,
+  `bill` double DEFAULT NULL,
+  `CO2_EMISSIONS` double DEFAULT NULL,
+  `co2Miles` double DEFAULT NULL,
+  `discountedRates` double DEFAULT NULL,
+  `newMiles` double DEFAULT NULL,
+  `remainingmiles` double DEFAULT NULL,
+  `consum_usage` double DEFAULT NULL,
+  `USAGE_READ_FROM_DATE` varchar(14) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `USAGE_READ_TO_DATE` varchar(14) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `usingMiles` double DEFAULT NULL,
+  `SEND_RESULT` bit(1) DEFAULT NULL,
+  `contract_id` int(11) DEFAULT NULL,
+  `enddevice_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`mdev_id`,`yyyymmdd`,`hhmmss`,`mdev_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE `billing_day_wm` (
+  `mdev_id` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `yyyymmdd` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hhmmss` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '000000',
+  `mdev_type` int(11) NOT NULL,
+  `writeDate` varchar(14) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` double DEFAULT NULL,
+  `location_id` int(11) DEFAULT NULL,
+  `meter_id` int(11) DEFAULT NULL,
+  `modem_id` int(11) DEFAULT NULL,
+  `supplier_id` int(11) DEFAULT NULL,
+  `additionalCosts` double DEFAULT NULL,
+  `bill` double DEFAULT NULL,
+  `CO2_EMISSIONS` double DEFAULT NULL,
+  `co2Miles` double DEFAULT NULL,
+  `discountedRates` double DEFAULT NULL,
+  `newMiles` double DEFAULT NULL,
+  `remainingmiles` double DEFAULT NULL,
+  `consum_usage` double DEFAULT NULL,
+  `USAGE_READ_FROM_DATE` varchar(14) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `USAGE_READ_TO_DATE` varchar(14) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `usingMiles` double DEFAULT NULL,
+  `SEND_RESULT` bit(1) DEFAULT NULL,
+  `contract_id` int(11) DEFAULT NULL,
+  `enddevice_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`mdev_id`,`yyyymmdd`,`hhmmss`,`mdev_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+CREATE TABLE `billing_month_gm` (
+  `mdev_id` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `yyyymmdd` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hhmmss` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '000000',
+  `mdev_type` int(11) NOT NULL,
+  `writeDate` varchar(14) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` double DEFAULT NULL,
+  `location_id` int(11) DEFAULT NULL,
+  `meter_id` int(11) DEFAULT NULL,
+  `modem_id` int(11) DEFAULT NULL,
+  `supplier_id` int(11) DEFAULT NULL,
+  `additionalCosts` double DEFAULT NULL,
+  `bill` double DEFAULT NULL,
+  `CO2_EMISSIONS` double DEFAULT NULL,
+  `co2Miles` double DEFAULT NULL,
+  `discountedRates` double DEFAULT NULL,
+  `newMiles` double DEFAULT NULL,
+  `remainingmiles` double DEFAULT NULL,
+  `consum_usage` double DEFAULT NULL,
+  `USAGE_READ_FROM_DATE` varchar(14) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `USAGE_READ_TO_DATE` varchar(14) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `usingMiles` double DEFAULT NULL,
+  `SEND_RESULT` bit(1) DEFAULT NULL,
+  `contract_id` int(11) DEFAULT NULL,
+  `enddevice_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`mdev_id`,`yyyymmdd`,`hhmmss`,`mdev_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `billing_month_wm` (
+  `mdev_id` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `yyyymmdd` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hhmmss` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '000000',
+  `mdev_type` int(11) NOT NULL,
+  `writeDate` varchar(14) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` double DEFAULT NULL,
+  `location_id` int(11) DEFAULT NULL,
+  `meter_id` int(11) DEFAULT NULL,
+  `modem_id` int(11) DEFAULT NULL,
+  `supplier_id` int(11) DEFAULT NULL,
+  `additionalCosts` double DEFAULT NULL,
+  `bill` double DEFAULT NULL,
+  `CO2_EMISSIONS` double DEFAULT NULL,
+  `co2Miles` double DEFAULT NULL,
+  `discountedRates` double DEFAULT NULL,
+  `newMiles` double DEFAULT NULL,
+  `remainingmiles` double DEFAULT NULL,
+  `consum_usage` double DEFAULT NULL,
+  `USAGE_READ_FROM_DATE` varchar(14) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `USAGE_READ_TO_DATE` varchar(14) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `usingMiles` double DEFAULT NULL,
+  `SEND_RESULT` bit(1) DEFAULT NULL,
+  `contract_id` int(11) DEFAULT NULL,
+  `enddevice_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`mdev_id`,`yyyymmdd`,`hhmmss`,`mdev_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+

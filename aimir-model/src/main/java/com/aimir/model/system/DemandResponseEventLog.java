@@ -29,8 +29,8 @@ import com.aimir.model.BaseObject;
  * @author 은미애(eunmiae)
  *
  */
-@Entity
-@Table(name = "DEMAND_RESPONSE_EVENT_LOG")
+//@Entity
+//@Table(name = "DEMAND_RESPONSE_EVENT_LOG")
 public class DemandResponseEventLog extends BaseObject {
 
 	static final long serialVersionUID = -3900010223809724820L;

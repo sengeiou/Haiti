@@ -21,8 +21,8 @@ import com.aimir.model.BaseObject;
  * @author YeonKyoung Park(goodjob)
  *
  */
-@Entity
-@Table(name = "NOTICE")
+//@Entity
+//@Table(name = "NOTICE")
 public class Notice extends BaseObject implements JSONString{
 
 	private static final long serialVersionUID = 325930741994679915L;

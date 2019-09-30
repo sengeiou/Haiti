@@ -40,13 +40,28 @@ public class CommLog extends BaseObject {
 	private static final long serialVersionUID = -1382111074919152428L;
 	
 	//추가 프로퍼티 for extjs ui display .   
+	@Transient
 	private String receiver;
+	
+	@Transient
 	private String sender;
-	private String result;
+	
+	@Transient
+	private String result;	
+	
+	@Transient
 	private String strSendBytes = "";
+	
+	@Transient
 	private String strReceiverBytes= "";
+	
+	@Transient
 	private String time;
+	
+	@Transient
 	private String strTotalCommTime;
+	
+	@Transient
 	private String idx1;
 
 	public String getIdx1()

@@ -26,8 +26,8 @@ import com.aimir.model.BaseObject;
  * </pre>
  * @author 박종성(elevas)
  */
-@Entity
-@Table(name = "AVERAGE_USAGE")
+//@Entity
+//@Table(name = "AVERAGE_USAGE")
 public class AverageUsage extends BaseObject {
 
 	private static final long serialVersionUID = 6925279936233352839L;

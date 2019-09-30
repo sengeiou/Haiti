@@ -28,8 +28,8 @@ import com.aimir.model.device.Meter;
  * @author 김재식(kaze)
  *
  */
-@Entity
-@Table(name = "CBLCURVES")
+//@Entity
+//@Table(name = "CBLCURVES")
 public class CBLCurves  extends BaseObject{
 
 	private static final long serialVersionUID = -6501081960477276283L;

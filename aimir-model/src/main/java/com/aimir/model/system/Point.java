@@ -16,8 +16,8 @@ import com.aimir.model.BaseObject;
  * 
  * @author 신인호(inhoshin)
  */
-@Entity
-@Table(name = "POINT")
+//@Entity
+//@Table(name = "POINT")
 public class Point extends BaseObject {
 
 	private static final long serialVersionUID = 6925279936233352839L;

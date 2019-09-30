@@ -26,8 +26,8 @@ import com.aimir.model.BaseObject;
  *
  * @author Mie Eun(enj)
  */
-@Entity
-@Table(name="SAP_ASSET_INFOS")
+//@Entity
+//@Table(name="SAP_ASSET_INFOS")
 public class SAPAssetInfos extends BaseObject implements JSONString{
 
 	static final long serialVersionUID = 2973162458901580968L;

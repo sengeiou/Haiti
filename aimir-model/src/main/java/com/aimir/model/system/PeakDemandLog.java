@@ -32,8 +32,8 @@ import com.aimir.util.TimeLocaleUtil;
  * @date 2012-07-16
  */
 
-@Entity
-@Table(name="PEAKDEMAND_LOG")
+//@Entity
+//@Table(name="PEAKDEMAND_LOG")
 public class PeakDemandLog extends BaseObject implements JSONString {
 
 	private static final long serialVersionUID = -3726084692444191291L;

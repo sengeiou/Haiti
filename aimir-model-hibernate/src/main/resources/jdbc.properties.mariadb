@@ -1,11 +1,14 @@
-#jdbc.driverClassName=org.mariadb.jdbc.Driver
-#jdbc.driverClassName=org.mariadb.jdbc.MariaDbDataSource
 jdbc.driverClassName=org.mariadb.jdbc.MySQLDataSource
 jdbc.url=jdbc:mariadb://15.164.90.39:4006/aimir
 jdbc.username=aimir
 jdbc.password=aimiramm
 jdbc.minimumIdleSize=10
 jdbc.maximumSize=20
+
+jdbc.generateDdl=false
+jdbc.showSql=false
+
+
 
 # You can remove this property if you're not using Hibernate
 hibernate.dialect=org.hibernate.dialect.MariaDB53Dialect

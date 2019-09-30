@@ -27,8 +27,8 @@ import com.aimir.model.BaseObject;
  * @date 2012-07-16
  */
 
-@Entity
-@Table(name="PEAKDEMAND_SETTING")
+//@Entity
+//@Table(name="PEAKDEMAND_SETTING")
 public class PeakDemandSetting extends BaseObject implements JSONString {
 
 	private static final long serialVersionUID = -3726084692444191291L;
