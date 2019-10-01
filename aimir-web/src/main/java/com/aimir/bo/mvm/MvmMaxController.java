@@ -1136,13 +1136,16 @@ public class MvmMaxController {
                     totalCount = searchMeteringDataManager.getMeteringDataWeeklyDataTotalCount(conditionMap);
                     break;
                 case MONTHLY:
-                	if("WM".equals(mvmMiniType) || "GM".equals(mvmMiniType)) {
+                	/* 정규화 이후 LastDay_테이블을 사용하지 않음. 이에따라 함수를 하나로 사용.
+                    if("WM".equals(mvmMiniType) || "GM".equals(mvmMiniType)) {
     					result = searchMeteringDataManager.getMeteringValueMonthlyData(conditionMap);
                     	totalCount = searchMeteringDataManager.getMeteringValueMonthlyDataTotalCount(conditionMap);
                 	} else {
                     	result = searchMeteringDataManager.getMeteringDataMonthlyData(conditionMap);
                     	totalCount = searchMeteringDataManager.getMeteringDataMonthlyDataTotalCount(conditionMap);
-                    }
+                    } */
+                    result = searchMeteringDataManager.getMeteringDataMonthlyData(conditionMap);
+                    totalCount = searchMeteringDataManager.getMeteringDataMonthlyDataTotalCount(conditionMap);
                     break;
                 case WEEKDAILY:
                     result = searchMeteringDataManager.getMeteringDataWeekDailyData(conditionMap);
