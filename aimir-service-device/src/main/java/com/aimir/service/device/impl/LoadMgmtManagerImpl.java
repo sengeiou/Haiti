@@ -340,7 +340,7 @@ public class LoadMgmtManagerImpl implements LoadMgmtManager {
 				schedules.add(s);
 			}
 			// 스케쥴 목록 추가
-			g.setLoadShedSchedules(schedules);
+//			g.setLoadShedSchedules(schedules);
 			
 			returnList.add(g);
 		}

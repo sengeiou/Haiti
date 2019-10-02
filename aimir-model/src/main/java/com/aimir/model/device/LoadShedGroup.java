@@ -52,9 +52,9 @@ public class LoadShedGroup extends AimirGroup {
     @Column(name="TRACE_LOG")
 	private Boolean traceLog;    
     
-    @OneToMany(fetch=FetchType.LAZY)
-	@JoinColumn(name="loadshedschedule_id")
-	private Set<LoadShedSchedule> loadShedSchedules = new HashSet<LoadShedSchedule>(0);
+//    @OneToMany(fetch=FetchType.LAZY)
+//	@JoinColumn(name="loadshedschedule_id")
+//	private Set<LoadShedSchedule> loadShedSchedules = new HashSet<LoadShedSchedule>(0);
 
 	public Double getSupplyCapacity() {
 		return supplyCapacity;
@@ -96,13 +96,13 @@ public class LoadShedGroup extends AimirGroup {
 		this.traceLog = traceLog;
 	}
 
-	@XmlTransient
-	public Set<LoadShedSchedule> getLoadShedSchedules() {
-		return loadShedSchedules;
-	}
-
-	public void setLoadShedSchedules(Set<LoadShedSchedule> loadShedSchedules) {
-		this.loadShedSchedules = loadShedSchedules;
-	}
+//	@XmlTransient
+//	public Set<LoadShedSchedule> getLoadShedSchedules() {
+//		return loadShedSchedules;
+//	}
+//
+//	public void setLoadShedSchedules(Set<LoadShedSchedule> loadShedSchedules) {
+//		this.loadShedSchedules = loadShedSchedules;
+//	}
 
 }
