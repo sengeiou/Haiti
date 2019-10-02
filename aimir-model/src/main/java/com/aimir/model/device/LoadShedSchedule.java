@@ -30,8 +30,8 @@ import com.aimir.model.system.Supplier;
  * 
  * @author YeonKyoung Park(goodjob)
  */
-//@Entity
-//@Table(name="LOAD_SHED_SCHEDULE")
+@Entity
+@Table(name="LOAD_SHED_SCHEDULE")
 public class LoadShedSchedule extends BaseObject {
 
 	private static final long serialVersionUID = 5064442695778529580L;

@@ -65,15 +65,6 @@ public class SupplierWMDataMakeExcel {
             sheet.setColumnWidth(colIdx++, 256 * 20);
             sheet.setColumnWidth(colIdx++, 256 * 27);
             sheet.setColumnWidth(colIdx++, 256 * 27);
-            sheet.setColumnWidth(colIdx++, 256 * 15);
-            sheet.setColumnWidth(colIdx++, 256 * 25);
-            sheet.setColumnWidth(colIdx++, 256 * 23);
-            sheet.setColumnWidth(colIdx++, 256 * 20);
-            sheet.setColumnWidth(colIdx++, 256 * 15);
-            sheet.setColumnWidth(colIdx++, 256 * 20);
-            sheet.setColumnWidth(colIdx++, 256 * 15);
-            sheet.setColumnWidth(colIdx++, 256 * 15);
-            sheet.setColumnWidth(colIdx++, 256 * 10);
 
             row = sheet.createRow(SupplierStartRow);
  
@@ -95,48 +86,12 @@ public class SupplierWMDataMakeExcel {
             cell.setCellStyle(titleCellStyle);
             
             cell = row.createCell(4);
-            cell.setCellValue(titleMap.get("transmissionNetworkCharge"));
+            cell.setCellValue(titleMap.get("supplySizeUnit"));
             cell.setCellStyle(titleCellStyle);
             
             cell = row.createCell(5);
-            cell.setCellValue(titleMap.get("distributionNetworkCharge"));
+            cell.setCellValue(titleMap.get("share"));
             cell.setCellStyle(titleCellStyle);            
-            
-            cell = row.createCell(6);
-            cell.setCellValue(titleMap.get("energy"));
-            cell.setCellStyle(titleCellStyle);
-            
-            cell = row.createCell(7);
-            cell.setCellValue(titleMap.get("activeEnergyCharge"));
-            cell.setCellStyle(titleCellStyle);
-            
-            cell = row.createCell(8);
-            cell.setCellValue(titleMap.get("reactiveEnergyCharge"));
-            cell.setCellStyle(titleCellStyle);
-            
-            cell = row.createCell(9);
-            cell.setCellValue(titleMap.get("adminCharge"));
-            cell.setCellStyle(titleCellStyle);
-            
-            cell = row.createCell(10);
-            cell.setCellValue(titleMap.get("rate"));
-            cell.setCellStyle(titleCellStyle);
-            
-            cell = row.createCell(11);
-            cell.setCellValue(titleMap.get("maxDemand"));
-            cell.setCellStyle(titleCellStyle);
-            
-            cell = row.createCell(12);
-            cell.setCellValue(titleMap.get("season"));
-            cell.setCellStyle(titleCellStyle);
-            
-            cell = row.createCell(13);
-            cell.setCellValue(titleMap.get("tou"));
-            cell.setCellStyle(titleCellStyle);
-            
-            cell = row.createCell(14);
-            cell.setCellValue(titleMap.get("hour"));
-            cell.setCellStyle(titleCellStyle);
             //Title End
             
             //Data
@@ -146,7 +101,7 @@ public class SupplierWMDataMakeExcel {
             	row = sheet.createRow(i+ (SupplierStartRow + 1));      
 
             	cell = row.createCell(0);
-            	cell.setCellValue(resultMap.get("YYYYMMDD")==null?"":resultMap.get("YYYYMMDD").toString());
+            	cell.setCellValue(resultMap.get("yyyymmdd")==null?"":resultMap.get("yyyymmdd").toString());
             	cell.setCellStyle(dataCellStyle);
             	
             	cell = row.createCell(1);
@@ -162,48 +117,13 @@ public class SupplierWMDataMakeExcel {
             	cell.setCellStyle(dataCellStyle);
             	
             	cell = row.createCell(4);
-            	cell.setCellValue((resultMap.get("TRANSMISSIONNETWORKCHARGE") == null) ?"": resultMap.get("TRANSMISSIONNETWORKCHARGE").toString());
+            	cell.setCellValue((resultMap.get("SUPPLYSIZEUNIT") == null) ?"": resultMap.get("SUPPLYSIZEUNIT").toString());
             	cell.setCellStyle(dataCellStyle);
             	
             	cell = row.createCell(5);
-            	cell.setCellValue((resultMap.get("DISTRIBUTIONNETWORKCHARGE") == null) ?"": resultMap.get("DISTRIBUTIONNETWORKCHARGE").toString());
+            	cell.setCellValue((resultMap.get("share") == null) ?"": resultMap.get("share").toString());
             	cell.setCellStyle(dataCellStyle);
             	
-            	cell = row.createCell(6);
-            	cell.setCellValue((resultMap.get("ENERGYDEMANDCHARGE") == null) ?"": resultMap.get("ENERGYDEMANDCHARGE").toString());
-            	cell.setCellStyle(dataCellStyle);
-            	
-            	cell = row.createCell(7);
-            	cell.setCellValue((resultMap.get("ACTIVEENERGYCHARGE") == null) ?"": resultMap.get("ACTIVEENERGYCHARGE").toString());
-            	cell.setCellStyle(dataCellStyle);
-            	
-            	cell = row.createCell(8);
-            	cell.setCellValue((resultMap.get("REACTIVEENERGYCHARGE") == null) ?"": resultMap.get("REACTIVEENERGYCHARGE").toString());
-            	cell.setCellStyle(dataCellStyle);
-            	
-                cell = row.createCell(9);
-                cell.setCellValue((resultMap.get("ADMINCHARGE") == null) ?"": resultMap.get("ADMINCHARGE").toString());
-                cell.setCellStyle(dataCellStyle);
-                
-            	cell = row.createCell(10);
-            	cell.setCellValue((resultMap.get("RATEREBALANCINGLEVY") == null) ?"": resultMap.get("RATEREBALANCINGLEVY").toString());
-            	cell.setCellStyle(dataCellStyle);
-            	
-            	cell = row.createCell(11);
-            	cell.setCellValue((resultMap.get("MAXDEMAND") == null) ?"": resultMap.get("MAXDEMAND").toString());
-            	cell.setCellStyle(dataCellStyle);
-            	
-                cell = row.createCell(12);
-                cell.setCellValue((resultMap.get("SEASON") == null) ?"": resultMap.get("SEASON").toString());
-                cell.setCellStyle(dataCellStyle);
-                
-            	cell = row.createCell(13);
-            	cell.setCellValue((resultMap.get("PEAKTYPE") == null) ?"": resultMap.get("PEAKTYPE").toString());
-            	cell.setCellStyle(dataCellStyle);
-            	
-            	cell = row.createCell(14);
-            	cell.setCellValue((resultMap.get("HOUR") == null) ?"": resultMap.get("HOUR").toString());
-            	cell.setCellStyle(dataCellStyle);
             }
             
             //End Data

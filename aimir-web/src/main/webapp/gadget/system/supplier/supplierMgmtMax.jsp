@@ -168,22 +168,29 @@
     	var condition1;
     	var condition2;
     	
-    	var red = '#F31523'; 
-        var orange = '#FC8F00'; 
-        var gold = '#A99903';
-    	var blue = '#006BF7';
-    	var grey = '#969696';
-    	var green = '#80E12A';
-    	var pink = '#FF607F';
     	var setColorFrontTag = "<b style=\"color:";
         var setColorMiddleTag = ";\">"; 
         var setColorBackTag = "</b>";
+        var tariffTypeColor =['red','blue','orange','green','pink','brown','gold','silver','yellow','grey'];
+        var tariffTypeArr = [];
         
         var licenceUse = " ";
         var totalLicenceCount = " ";
         var registeredLicenceCount = " ";
         var availableLicenceCount = " ";
         var tariffTypeId;
+        
+        function changeFontColor(text) {
+			var idx = tariffTypeArr.indexOf(text);
+			if(idx > -1){
+				console.log(tariffTypeArr)
+				return tariffTypeColor[idx];
+			 }else{
+				 tariffTypeArr.push(text);
+			   console.log(tariffTypeArr);
+			   return tariffTypeColor[tariffTypeArr.length-1];
+			 }
+        }
         
         // grid column tooltip
         function addTooltip(value, metadata) {
@@ -1567,33 +1574,31 @@
 
             if (supplyType == SupplierType.Electricity) {
                 cnt = 0;
-                fmtMessage[cnt++] = "<fmt:message key="aimir.tariff"/>";    //0'Tariff'
+                fmtMessage[cnt++] = "<fmt:message key="aimir.tariff"/>";    			//0'Tariff'
                 fmtMessage[cnt++] = "<fmt:message key="aimir.season"/>";
-                fmtMessage[cnt++] = "<fmt:message key="aimir.supplySize"/>"+"(x)";  //2'Supply Size'
-                fmtMessage[cnt++] = "<fmt:message key="aimir.serviceCharge"/>";     //3'Service Charge'
+                fmtMessage[cnt++] = "<fmt:message key="aimir.supplySize"/>"+"(x)";  	//2'Supply Size'
+                fmtMessage[cnt++] = "<fmt:message key="aimir.serviceCharge"/>";     	//3'Service Charge'
                 fmtMessage[cnt++] = "<fmt:message key="aimir.adminCharge"/>";
                 fmtMessage[cnt++] = "<fmt:message key="aimir.transmissionNetworkCharge"/>";
                 fmtMessage[cnt++] = "<fmt:message key="aimir.distributionNetworkCharge"/>";
                 fmtMessage[cnt++] = "<fmt:message key="aimir.energyDemandCharge"/>";
                 fmtMessage[cnt++] = "<fmt:message key="aimir.tou"/>";
-                fmtMessage[cnt++] = "<fmt:message key="aimir.activeEnergyCharge"/>"; //9'Active Energy Charge'
+                fmtMessage[cnt++] = "<fmt:message key="aimir.activeEnergyCharge"/>"; 	//9'Active Energy Charge'
                 fmtMessage[cnt++] = "<fmt:message key="aimir.reactiveEnergyCharge"/>";
                 fmtMessage[cnt++] = "<fmt:message key="aimir.rateRevalancingLevy"/>";
                 fmtMessage[cnt++] = "<fmt:message key="aimir.excel.chargeMgmtEm"/>";
-                fmtMessage[cnt++] = "<fmt:message key="aimir.energy.excess"/>";       // 초과
-                fmtMessage[cnt++] = "<fmt:message key="aimir.below"/>";               // 미만
-                fmtMessage[cnt++] = "<fmt:message key="aimr.morethan"/>";             // 이상
-                fmtMessage[cnt++] = "<fmt:message key="aimir.less"/>";                // 이하
-                fmtMessage[cnt++] = "<fmt:message key="aimir.hour"/>";                // 시간
+                fmtMessage[cnt++] = "<fmt:message key="aimir.energy.excess"/>";       	// 초과
+                fmtMessage[cnt++] = "<fmt:message key="aimir.below"/>";               	// 미만
+                fmtMessage[cnt++] = "<fmt:message key="aimr.morethan"/>";             	// 이상
+                fmtMessage[cnt++] = "<fmt:message key="aimir.less"/>";                	// 이하
+                fmtMessage[cnt++] = "<fmt:message key="aimir.hour"/>";                	// 시간
                 fmtMessage[cnt++] = "<fmt:message key="aimir.prepayment.govSubsidy"/>"; //18'Government Subsidy'
                 fmtMessage[cnt++] = "<fmt:message key="aimir.prepayment.publicLevy"/>"; //19'Public Levy'
-                fmtMessage[cnt++] = "<fmt:message key="aimir.prepayment.vat"/>";    //20'VAT'
-                fmtMessage[cnt++] = "<fmt:message key="aimir.utilityRelief"/>";     //21'Utility Relief'
-                fmtMessage[cnt++] = "<fmt:message key="aimir.prepayment.additionalSubsidy"/>"; //22'Additional Subsidy', (S3)
-                fmtMessage[cnt++] = "<fmt:message key="aimir.prepayment.lifeLineSubsidy"/>";   //23'Lifeline Subsidy'
-                fmtMessage[cnt++] = "<fmt:message key="aimir.prepayment.govLevy"/>";    //24'Government Levy'
-                fmtMessage[cnt++] = "<fmt:message key="aimir.tariff.nhil"/>";   //25'NHIL'
-                fmtMessage[cnt++] = "<fmt:message key="aimir.tariff.getfund"/>"; //26'GETFUND'
+                fmtMessage[cnt++] = "<fmt:message key="aimir.prepayment.vat"/>";    	//20'VAT'
+                fmtMessage[cnt++] = "<fmt:message key="aimir.utilityRelief"/>";     	//21'Utility Relief'
+                fmtMessage[cnt++] = "<fmt:message key="aimir.prepayment.additionalSubsidy"/>"; 	//22'Additional Subsidy', (S3)
+                fmtMessage[cnt++] = "<fmt:message key="aimir.prepayment.lifeLineSubsidy"/>";   	//23'Lifeline Subsidy'
+                fmtMessage[cnt++] = "<fmt:message key="aimir.prepayment.govLevy"/>";    		//24'Government Levy'
             }
             else if (supplyType == SupplierType.Gas) {
                 cnt = 0;
@@ -1641,7 +1646,8 @@
                 fmtMessage[cnt++] = "<fmt:message key="aimr.morethan"/>";             // 이상
                 fmtMessage[cnt++] = "<fmt:message key="aimir.less"/>";                // 이하
                 fmtMessage[cnt++] = "<fmt:message key="aimir.hour"/>";                // 시간
-			   
+                fmtMessage[cnt++] = "<fmt:message key="aimir.supplySize"/> "+"<fmt:message key="aimir.supplier.unit"/>"; //supply Size Unit
+                fmtMessage[cnt++] = "<fmt:message key="aimir.share"/>";               // 시간
             }
 
 
@@ -1696,6 +1702,7 @@
         var tariffGridPanelWm;
         var tariffInstanceOn = false;
         var tariffWmInstanceOn = false;
+        
         function getTariffGrid(){
         	var yyyymmdd = "";
             var fileType = $('#supplierType option:selected').val();
@@ -1707,6 +1714,8 @@
             else if (fileType=='3.3'){ fileType = 'Gas';}
 
             var fmtMsgArr = getFmtMessage();
+            tariffTypeArr=[];
+	        console.log(tariffTypeArr);
             
         	tariffStore = new Ext.data.JsonStore({
 				autoLoad: true,
@@ -1737,6 +1746,8 @@
 					"ENERGYDEMANDCHARGE",
 					"DISTRIBUTIONNETWORKCHARGE",
 					"SERVICECHARGE",
+					"SUPPLYSIZEUNIT",
+					"share",
 					"RATEREBALANCINGLEVY",
 					//"STARTHOUR",
 					//"ENDHOUR",
@@ -1772,23 +1783,8 @@
                         },
                         renderer : function(value, me, record, rowNumber, columnIndex, store) {
                         	var tariffType_name = record.data.TARIFFTYPE;
-	                        	if(tariffType_name=="PRE-AGRICULTURE")
-	                       			return setColorFrontTag + pink + setColorMiddleTag + value + setColorBackTag;
-	                        	if(tariffType_name=="PRE-GOVERNMENT")
-	                       			return setColorFrontTag + green  + setColorMiddleTag + value + setColorBackTag;
-	                        	if(tariffType_name=="PRE-COMMERCIAL")
-	                       			return setColorFrontTag + grey  + setColorMiddleTag + value + setColorBackTag;
-	                        	if(tariffType_name=="PRE-INDUSTRIAL")
-	                       			return setColorFrontTag + gold + setColorMiddleTag + value + setColorBackTag;
-	                        	if(tariffType_name=="PRE-RESIDENTIAL")
-	                       			return setColorFrontTag + orange + setColorMiddleTag + value + setColorBackTag;
-	                        	if(tariffType_name=="Non Residential")
-	                       			return setColorFrontTag + red + setColorMiddleTag + value + setColorBackTag;
-	                        	if(tariffType_name="Residential")
-	                       			return setColorFrontTag + blue + setColorMiddleTag + value + setColorBackTag;
-	                        	else
-	                        		return value;
-	                        	
+                        	var color = changeFontColor(tariffType_name);
+                        	return setColorFrontTag + color + setColorMiddleTag + value + setColorBackTag;
                				}
 					},
 					{
@@ -1956,26 +1952,6 @@
                             id : 'maxDemand',
                             allowBlank : true
                         })
-					/* },{
-						header:fmtMsgArr[25], //nhil로 변경..?
-						dataIndex:'NHIL',
-						editable: edit,
-						width: 90,
-						align:'center',
-						editor: new Ext.form.TextField({
-                            id : 'nhil',
-                            allowBlank : true
-                        })
-					},{
-						header:fmtMsgArr[26], //getfund로 변경?
-						dataIndex:'GETFUND',
-						editable: edit,
-						width: 110,
-						align:'right',
-						editor: new Ext.form.TextField({
-                            id : 'getfund',
-                            allowBlank : true 
-                        }) */
 					},{
 						header:'Delete', 
 						width: 60,
@@ -2003,10 +1979,10 @@
 	        	tariffModelWm  = new Ext.grid.ColumnModel({
 					columns:[
 						{
-							header:'Tariff', 
+							header:fmtMsgArr[0],
 							dataIndex:'TARIFFTYPE',
 							editable: edit,
-							width: width/15*1.5 -60,
+							width: width/6*1.5 -60,
 			                editor: {
 	                            id : 'tariffTypeEdit',
 	                            xtype: 'textfield',
@@ -2014,23 +1990,8 @@
 	                        },
 	                        renderer : function(value, me, record, rowNumber, columnIndex, store) {
 	                        	var tariffType_name = record.data.TARIFFTYPE;
-		                        	if(tariffType_name=="PRE-AGRICULTURE")
-		                       			return setColorFrontTag + pink + setColorMiddleTag + value + setColorBackTag;
-		                        	if(tariffType_name=="PRE-GOVERNMENT")
-		                       			return setColorFrontTag + green  + setColorMiddleTag + value + setColorBackTag;
-		                        	if(tariffType_name=="PRE-COMMERCIAL")
-		                       			return setColorFrontTag + grey  + setColorMiddleTag + value + setColorBackTag;
-		                        	if(tariffType_name=="PRE-INDUSTRIAL")
-		                       			return setColorFrontTag + gold + setColorMiddleTag + value + setColorBackTag;
-		                        	if(tariffType_name=="PRE-RESIDENTIAL")
-		                       			return setColorFrontTag + orange + setColorMiddleTag + value + setColorBackTag;
-		                        	if(tariffType_name=="Non Residential")
-		                       			return setColorFrontTag + red + setColorMiddleTag + value + setColorBackTag;
-		                        	if(tariffType_name="Residential")
-		                       			return setColorFrontTag + blue + setColorMiddleTag + value + setColorBackTag;
-		                        	else
-		                        		return value;
-		                        	
+	                        	var color = changeFontColor(tariffType_name);
+	                        	return setColorFrontTag + color + setColorMiddleTag + value + setColorBackTag;
 	               				}
 						},
 						{
@@ -2051,9 +2012,9 @@
 			    				record.data.TARIFFTYPEID = TARIFFTYPEID;
 							}
 						},{
-							header:'Supply Size(x)', 
+							header:fmtMsgArr[2], 
 							dataIndex:'SUPPLYSIZE',
-							width: width/15*1.5,
+							width: width/6*1.5,
 							editable: edit,
 							align: 'center',
 							renderer: function(value, metaData, record, index) {
@@ -2099,9 +2060,9 @@
 		                    }
 		                    
 						},{
-							header:'Service Charge', 
+							header:fmtMsgArr[3], 
 							dataIndex:'SERVICECHARGE',
-							width: width/15,
+							width: width/6,
 							editable: edit,
 							align:'right',
 							editor: new Ext.form.TextField({
@@ -2109,113 +2070,23 @@
 	                            allowBlank : true
 	                        })
 						},{
-							header:'Transmission', 
-							dataIndex:'TRANSMISSIONNETWORKCHARGE',
-							width: width/15,
+							header:fmtMsgArr[18], 
+							dataIndex:'SUPPLYSIZEUNIT',
 							editable: edit,
-							align:'right',
-							editor: new Ext.form.TextField({
-	                            id : 'tranmission',
-	                            allowBlank : true
-	                        })
-						},{
-							header:'Distribution', 
-							dataIndex:'DISTRIBUTIONNETWORKCHARGE',
-							width: width/15,
-							editable: edit,
-							align:'right',
-							editor: new Ext.form.TextField({
-	                            id : 'distribution',
-	                            allowBlank : true
-	                        })
-						},{
-							header:'Energy', 
-							dataIndex:'ENERGYDEMANDCHARGE',
-							width: width/15,
-							editable: edit,
-							align:'right',
-							editor: new Ext.form.TextField({
-	                            id : 'energy',
-	                            allowBlank : true
-	                        })
-						},{
-							header:'Active Energy', 
-							dataIndex:'ACTIVEENERGYCHARGE',
-							width: width/15,
-							editable: edit,
-							align:'right',
-							editor: new Ext.form.TextField({
-	                            id : 'activeEnergy',
-	                            allowBlank : true
-	                        })
-						},{
-							header:'Reative', 
-							dataIndex:'REACTIVEENERGYCHARGE',
-							width: width/15,
-							editable: edit,
-							align:'right',
-							editor: new Ext.form.TextField({
-	                            id : 'reactiveEnergy',
-	                            allowBlank : true
-	                        })
-						},{
-							header:'Admin Charge', 
-							dataIndex:'ADMINCHARGE',
-							width: width/15,
-							editable: edit,
-							align:'right',
-							editor: new Ext.form.TextField({
-	                            id : 'adminCharge',
-	                            allowBlank : true
-	                        })
-						},{
-							header:'Rate', 
-							dataIndex:'RATEREBALANCINGLEVY',
-							width: width/15,
-							editable: edit,
-							align:'right',
-							editor: new Ext.form.TextField({
-	                            id : 'rateRebalance',
-	                            allowBlank : true
-	                        })
-						},{
-							header:'MAXDEMAND', 
-							dataIndex:'MAXDEMAND',
-							width: width/15,
-							editable: edit,
-							align:'right',
-							editor: new Ext.form.TextField({
-	                            id : 'maxDemand',
-	                            allowBlank : true
-	                        })
-						},{
-							header:'SEASON', 
-							dataIndex:'SEASON',
-							editable: false,
-							width: width/15,
+							width: width/6,
 							align:'center',
 							editor: new Ext.form.TextField({
-	                            id : 'season',
+	                            id : 'supplysizeunit',
 	                            allowBlank : true
 	                        })
 						},{
-							header:'TOU Rate', 
-							dataIndex:'PEAKTYPE',
-							editable: false,
-							width: width/15,
-							align:'right',
-							editor: new Ext.form.TextField({
-	                            id : 'tourateId',
-	                            allowBlank : true
-	                        })
-						},{
-							header:'Hour', 
-							dataIndex:'HOUR',
+							header:fmtMsgArr[19], 
+							dataIndex:'share',
 							editable: edit,
-							width: width/15,
+							width: width/6,
 							align:'center',
 							editor: new Ext.form.TextField({
-	                            id : 'hour',
+	                            id : 'share',
 	                            allowBlank : true
 	                        })
 						},{
@@ -3118,28 +2989,15 @@
             
              var p = new Plant({
                  ID : "",
-                 SEASON : "",
-                 PEAKTYPE : "",
-                 //STARTHOUR : null,
-                 //ENDHOUR : null,
                  SUPPLYSIZEMIN : null,
                  SUPPLYSIZEMAX : null,
                  CONDITION1 : null,
                  CONDITION2 : null,
+                 SUPPLYSIZEUNIT: "",
+                 share : "",
                  SERVICECHARGE : "",
-                 TRANSMISSIONNETWORKCHARGE : "",
-                 DISTRIBUTIONNETWORKCHARGE : "",
-                 ENERGYDEMANDCHARGE : "",
-                 ACTIVEENERGYCHARGE : "",
-                 REACTIVEENERGYCHARGE : "",
-                 ACTIVEENERGYCHARGE : "",
-                 RATEREBALANCINGLEVY : "",
-                 MAXDEMAND : "",
-                 ADMINCHARGE : "",
                  TARIFFTYPE : "",
                  TARIFFTYPEID : "",
-                 HOUR : null
-                 //status : "add"
              });
              var length = store.getCount();
              tariffGridPanelWm.stopEditing();

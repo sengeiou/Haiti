@@ -67,18 +67,8 @@
         	title[1] = "<fmt:message key="aimir.tariff"/>";
         	title[2] = "<fmt:message key="aimir.supplySize"/>"+"(x)";
         	title[3] = "<fmt:message key="aimir.serviceCharge"/>"; 
-            title[4] = "<fmt:message key="aimir.transmissionNetworkCharge"/>"; 
-            title[5] = "<fmt:message key="aimir.distributionNetworkCharge"/>";
-        	title[6] = "<fmt:message key="aimir.report.energy"/>"; 
-        	title[7] = "<fmt:message key="aimir.activeEnergyCharge"/>"; 
-        	title[8] = "<fmt:message key="aimir.reactiveEnergyCharge"/>";  
-        	title[9] = "<fmt:message key="aimir.adminCharge"/>";
-        	title[10] = "<fmt:message key="aimir.type.pay"/>";
-        	title[11] = "<fmt:message key="aimir.maxDemand"/>";
-        	title[12] = "<fmt:message key="aimir.season"/>";
-        	title[13] = "<fmt:message key="aimir.tou"/>";
-        	title[14] = "<fmt:message key="aimir.hour"/>";
-        	
+            title[4] = "<fmt:message key="aimir.supplySize"/> "+"<fmt:message key="aimir.supplier.unit"/>";
+            title[5] = "<fmt:message key="aimir.share"/>";
         	return title;
         }
 

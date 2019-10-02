@@ -568,17 +568,8 @@ public class SupplierController {
 				 titleMap.put("tariff",						head[1]);
 				 titleMap.put("supplySize",   				head[2]);
 				 titleMap.put("serviceCharge",				head[3]);
-				 titleMap.put("transmissionNetworkCharge",  head[4]);
-				 titleMap.put("distributionNetworkCharge", 	head[5]);
-				 titleMap.put("energy",						head[6]);
-				 titleMap.put("activeEnergyCharge",			head[7]);
-				 titleMap.put("reactiveEnergyCharge",		head[8]);
-				 titleMap.put("adminCharge",				head[9]);
-				 titleMap.put("rate",						head[10]);
-				 titleMap.put("maxDemand",					head[11]);
-				 titleMap.put("season",						head[12]);
-				 titleMap.put("tou",						head[13]);
-				 titleMap.put("hour",						head[14]);
+				 titleMap.put("supplySizeUnit",  			head[4]);
+				 titleMap.put("share", 						head[5]);
 			 } else if ("WaterCaliber".equals(fileType)) {
 				 titleMap.put("caliber", 					head[0]);
 				 titleMap.put("basicRate", 					head[1]);
