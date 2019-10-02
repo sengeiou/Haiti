@@ -183,11 +183,9 @@
         function changeFontColor(text) {
 			var idx = tariffTypeArr.indexOf(text);
 			if(idx > -1){
-				console.log(tariffTypeArr)
 				return tariffTypeColor[idx];
 			 }else{
 				 tariffTypeArr.push(text);
-			   console.log(tariffTypeArr);
 			   return tariffTypeColor[tariffTypeArr.length-1];
 			 }
         }
@@ -1715,7 +1713,6 @@
 
             var fmtMsgArr = getFmtMessage();
             tariffTypeArr=[];
-	        console.log(tariffTypeArr);
             
         	tariffStore = new Ext.data.JsonStore({
 				autoLoad: true,
