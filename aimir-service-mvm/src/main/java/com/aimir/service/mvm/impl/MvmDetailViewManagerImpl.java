@@ -3323,7 +3323,7 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 		Meter meter = mtrDao.get((String) conditionMap.get("meterNo"));
 
 		// Define variables
-		Integer lpInterval = (meter.getLpInterval() != null) ? meter.getLpInterval() : 60;
+//		Integer lpInterval = (meter.getLpInterval() != null) ? meter.getLpInterval() : 60;
 		Supplier supplier = supplierDao.get(supplierId);
 		DecimalFormat df = DecimalUtil.getDecimalFormat(supplier.getMd());
 		String lang = supplier.getLang().getCode_2letter();
@@ -3334,10 +3334,7 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 		List<Map<String, Object>> searchAddData = new ArrayList<Map<String, Object>>();
 		Map<String, Object> listMap = new HashMap<String, Object>();
 		Map<String, Object> tmpMap = null;
-		Double tmpValue = null;
 		BigDecimal bdTmpValue = null;
-		BigDecimal bdAddValue = null;
-		int avgCnt = 0;
 
 		// Make channel ID list from channel array.
 		for (String obj : channelArray) {
@@ -3347,7 +3344,7 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 		// Put channel id list at conditionMap
 		conditionMap.put("channelIdList", channelIdList);
 
-		// Get lp data from DB.
+		// Get LP data from DB.
 		List<Map<String, Object>> list = meteringLpDao.getMeteringDataDetailHourlyData(conditionMap, false);
 
 		// Check size of list and return.
@@ -3357,12 +3354,13 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 			logger.debug("list is null or empty. return result : " + resultMap);
 			return resultMap;
 		}
-
+		
+		// Processing data.
 		for (Map<String, Object> obj : list) {
 			String YYYYMMDDHHMISS = (String) obj.get("YYYYMMDDHHMISS");
 			String YYYYMMDDHH = YYYYMMDDHHMISS.substring(0, 10);
 			String CHANNEL = ((BigDecimal) obj.get("CHANNEL")).toString();
-			String DST = ((BigDecimal) obj.get("DST")).toString();
+//			String DST = ((BigDecimal) obj.get("DST")).toString();
 			String VALUE = ((BigDecimal) obj.get("VALUE")).toString();
 			String CH_METHOD = (String) obj.get("CH_METHOD");
 
@@ -3388,7 +3386,6 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 					map.put("AVG_VALUE", avgVal);
 					map.put("CNT", cnt);
 				}
-				logger.debug(YYYYMMDDHH + "_" + CHANNEL + " " + map);
 			} else {
 				Map<String, Object> map = new HashMap<>();
 				map.put("MAX_VALUE", new BigDecimal(VALUE));
@@ -3397,7 +3394,6 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 				map.put("CNT", new BigDecimal(1));
 				map.put("METHOD", CH_METHOD);
 				listMap.put(YYYYMMDDHH + "_" + CHANNEL, map);
-				logger.debug(YYYYMMDDHH + "_" + CHANNEL + " " + map);
 			}
 		}
 
@@ -3689,7 +3685,7 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 			result.add(map);
 		}
 
-		List<Map<String, Object>> sumList = meteringDayDao.getMeteringDataDetailDailyData(conditionMap, true);
+//		List<Map<String, Object>> sumList = meteringDayDao.getMeteringDataDetailDailyData(conditionMap, true);
 
 		/*
 		 * if (sumList != null && sumList.size() > 0) { for (Map<String, Object> obj :
@@ -3883,7 +3879,7 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 		StringBuilder sbAvgValue = null;
 
 		for (Map<String, Object> obj : list) {
-			listMap.put((String) obj.get("YYYYMMDD") + "_" + (Number) obj.get("CHANNEL"), obj.get("VALUE"));
+			listMap.put((String) obj.get("YYYYMMDD") + "_" + (String) obj.get("CHANNEL"), obj.get("VALUE"));
 			dateSet.add((String) obj.get("YYYYMMDD"));
 			chMethodMap.put(obj.get("CHANNEL").toString(), obj.get("CH_METHOD"));
 		}
@@ -4146,7 +4142,7 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 		Double value = null; // 계산용 임시변수
 
 		for (Map<String, Object> obj : list) {
-			listMap.put((String) obj.get("YYYYMMDD") + "_" + (Number) obj.get("CHANNEL"), obj.get("VALUE"));
+			listMap.put((String) obj.get("YYYYMMDD") + "_" + (String) obj.get("CHANNEL"), obj.get("VALUE"));
 			dateSet.add((String) obj.get("YYYYMMDD"));
 			chMethodMap.put(obj.get("CHANNEL").toString(), obj.get("CH_METHOD"));
 		}
@@ -4369,7 +4365,7 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 		}
 
 		for (Map<String, Object> obj : list) {
-			listMap.put((String) obj.get("YYYYMM") + "_" + (Number) obj.get("CHANNEL"), obj.get("VALUE"));
+			listMap.put((String) obj.get("YYYYMM") + "_" + (String) obj.get("CHANNEL"), obj.get("VALUE"));
 		}
 
 		Iterator<String> itr = dateSet.iterator();
@@ -4581,7 +4577,7 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 		}
 
 		for (Map<String, Object> obj : list) {
-			listMap.put((String) obj.get("YYYYMMDD") + "_" + (Number) obj.get("CHANNEL"), obj.get("VALUE"));
+			listMap.put((String) obj.get("YYYYMMDD") + "_" + (String) obj.get("CHANNEL"), obj.get("VALUE"));
 		}
 
 		Iterator<String> itr = dateSet.iterator();
@@ -4826,10 +4822,10 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 
 		for (Map<String, Object> obj : list) {
 			if (hasDay) {
-				listMap.put((String) obj.get("YYYYMMDD") + "_" + (Number) obj.get("CHANNEL"), obj.get("VALUE"));
+				listMap.put((String) obj.get("YYYYMMDD") + "_" + (String) obj.get("CHANNEL"), obj.get("VALUE"));
 				dateSet.add((String) obj.get("YYYYMMDD"));
 			} else {
-				listMap.put((String) obj.get("YYYYMM") + "_" + (Number) obj.get("CHANNEL"), obj.get("VALUE"));
+				listMap.put((String) obj.get("YYYYMM") + "_" + (String) obj.get("CHANNEL"), obj.get("VALUE"));
 				dateSet.add((String) obj.get("YYYYMM"));
 			}
 			chMethodMap.put(obj.get("CHANNEL").toString(), obj.get("CH_METHOD"));
@@ -5063,10 +5059,10 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 
 		for (Map<String, Object> obj : list) {
 			if (hasDay) {
-				listMap.put((String) obj.get("YYYYMMDD") + "_" + (Number) obj.get("CHANNEL"), obj.get("VALUE"));
+				listMap.put((String) obj.get("YYYYMMDD") + "_" + (String) obj.get("CHANNEL"), obj.get("VALUE"));
 				dateSet.add((String) obj.get("YYYYMMDD"));
 			} else {
-				listMap.put((String) obj.get("YYYYMM") + "_" + (Number) obj.get("CHANNEL"), obj.get("VALUE"));
+				listMap.put((String) obj.get("YYYYMM") + "_" + (String) obj.get("CHANNEL"), obj.get("VALUE"));
 				dateSet.add((String) obj.get("YYYYMM"));
 			}
 			chMethodMap.put(obj.get("CHANNEL").toString(), obj.get("CH_METHOD"));

@@ -1629,7 +1629,7 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
 
         sb.append("\n    SELECT mo.yyyymm AS YYYYMM, ");
         sb.append("\n           mo.channel AS CHANNEL, ");
-        sb.append("\n           mo.total AS VALUE, ");
+        sb.append("\n           mo.total_value AS VALUE, ");
         sb.append("\n          (SELECT DISTINCT dc.ch_method ");
         sb.append("\n           FROM meter mt, ");
         sb.append("\n                meterconfig mc, ");

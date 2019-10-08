@@ -1512,28 +1512,22 @@ public class MeteringLpDaoImpl extends
         } else {
             sb.append("\nSELECT contract_number AS CONTRACT_NUMBER, ");
             sb.append("\n       customer_name AS CUSTOMER_NAME, ");
-            sb.append("\n       yyyymmddhh AS YYYYMMDDHH, ");
-            sb.append("\n       yyyymmdd AS YYYYMMDD, ");
+            sb.append("\n       yyyymmddhhmiss AS YYYYMMDDHHMISS, ");
             sb.append("\n       dst AS DST, ");
-            sb.append("\n       hh AS HH, ");
             sb.append("\n       mds_id AS METER_NO, ");
             sb.append("\n       friendly_name AS FRIENDLY_NAME, ");
-            sb.append("\n       VALUE_1 AS CHANNEL_1, ");
-            sb.append("\n       VALUE_2 AS CHANNEL_2, ");
-            sb.append("\n       VALUE_3 AS CHANNEL_3, ");
-            sb.append("\n       VALUE_4 AS CHANNEL_4, ");
+            sb.append("\n       CHANNEL, ");
 
             if (!isPrev) {
                 sb.append("\n       device_serial AS MODEM_ID, ");
             }
 
             sb.append("\n       (select name from code where id = x.sic_id) as SIC_NAME, ");
-            sb.append("\n       total AS VALUE ");
+            sb.append("\n       value AS VALUE ");
             sb.append("\nFROM ( ");
-            sb.append("\n    SELECT lp.yyyymmddhh, ");
-            sb.append("\n           lp.yyyymmdd, ");
+            sb.append("\n    SELECT lp.yyyymmddhhmiss, ");
+            sb.append("\n           lp.channel, ");
             sb.append("\n           lp.dst, ");
-            sb.append("\n           lp.hh, ");
             sb.append("\n           mt.mds_id, ");
             sb.append("\n           mt.friendly_name, ");
             sb.append("\n           co.contract_number, ");
@@ -1548,31 +1542,12 @@ public class MeteringLpDaoImpl extends
                 }
             }
 
-            sb.append("\n           ");
-            for (int i = 0; i < 60; i++) {
-                if (i > 0) {
-                    sb.append(" + ");
-                }
-                sb.append("COALESCE(value_").append(CalendarUtil.to2Digit(i)).append(", 0)");
-            }
-
-            sb.append(" AS total ");
-
-            Integer numindex = 1;
-            for (int i = 0; i < 60; i = i + interval) {
-                sb.append("\n , COALESCE(value_").append(CalendarUtil.to2Digit(i)).append(", 0)");
-                sb.append(" AS  VALUE_" + numindex);
-                numindex++;
-            }
+            sb.append("\n           lp.value");
 
         }
         sb.append("\n    FROM ").append(LpTable).append(" lp ");
-        sb.append("\n         LEFT OUTER JOIN ");
-        sb.append("\n         contract co ");
-        sb.append("\n         ON co.id = lp.contract_id ");
-        sb.append("\n         LEFT OUTER JOIN ");
-        sb.append("\n         customer cu ");
-        sb.append("\n         ON cu.id = co.customer_id, ");
+        sb.append("\n    LEFT OUTER JOIN contract co ON co.id = lp.contract_id ");
+        sb.append("\n    LEFT OUTER JOIN customer cu ON cu.id = co.customer_id, ");
 
         if (!contractGroup.isEmpty()) {
             sb.append("\n         group_member gm, ");
@@ -1589,14 +1564,14 @@ public class MeteringLpDaoImpl extends
         	sb.append("\n         ,modem mo ");
         }
 
-        sb.append("\n    WHERE lp.yyyymmddhh BETWEEN :startDate AND :endDate ");
+        sb.append("\n    WHERE lp.yyyymmddhhmiss BETWEEN :startDate AND :endDate ");
         sb.append("\n    AND   lp.channel = 1 ");
 
         if (meterNoList != null) {
             sb.append("\n    AND   lp.mdev_id IN (:meterNoList) ");
         }
 
-        sb.append("\n    AND   mt.id = lp.meter_id ");
+        sb.append("\n    AND   mt.mds_id = lp.mdev_id ");
         sb.append("\n    AND   mt.supplier_id = :supplierId ");
 
         if (!mdsId.isEmpty()) {
@@ -1678,12 +1653,15 @@ public class MeteringLpDaoImpl extends
         }
 
         if (!isTotal) {
-//            sb.append("\n    ORDER BY lp.yyyymmddhh, lp.mdev_id, lp.dst ");
+            sb.append("\n    ORDER BY lp.yyyymmddhhmiss, lp.mdev_id, lp.dst ");
             sb.append("\n) x ");
         }
 
+        logger.debug(sb.toString());
         SQLQuery query = getSession().createSQLQuery(new SQLWrapper().getQuery(sb.toString()));
 
+        startDate = (startDate.length() < 14) ? startDate+"0000" : startDate;
+        endDate = (endDate.length() < 14) ? endDate+"5959" : endDate;
         query.setString("startDate", startDate);
         query.setString("endDate", endDate);
         query.setInteger("supplierId", supplierId);
