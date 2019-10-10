@@ -1,19 +1,5 @@
 package com.aimir.model.mvm;
 
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-
 import com.aimir.annotation.ColumnInfo;
 import com.aimir.annotation.ReferencedBy;
 import com.aimir.constants.CommonConstants.DeviceType;
@@ -21,7 +7,8 @@ import com.aimir.constants.CommonConstants.MeteringType;
 import com.aimir.model.device.Meter;
 import com.aimir.model.device.Modem;
 import com.aimir.model.system.Contract;
-import com.aimir.util.DateTimeUtil;
+
+import javax.persistence.*;
 
 @MappedSuperclass
 public abstract class MeteringLP {
@@ -63,10 +50,9 @@ public abstract class MeteringLP {
 	@ColumnInfo(descr="검침값")
 	private Double value;	
 	
-	@Column(name = "writedate")
+	@Column(name = "writedate", length = 14)
 	@ColumnInfo(descr="데이터 작성시간")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date writeDate;
+	private String writeDate;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "contract_id")
@@ -77,15 +63,13 @@ public abstract class MeteringLP {
 	@Column(name="contract_id", nullable=true, updatable=false, insertable=false)
 	private Integer contractId;
 	
-	@Column(name = "modem_time")
+	@Column(name = "modem_time", length = 14)
 	@ColumnInfo(descr="데이터 작성시간")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date modemTime;
+	private String modemTime;
 	
-	@Column(name = "dcu_time")
+	@Column(name = "dcu_time", length = 14)
 	@ColumnInfo(descr="데이터 작성시간")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dcuTime;
+	private String dcuTime;
 	
 	@Transient
 	private double lpFlag;
@@ -154,22 +138,14 @@ public abstract class MeteringLP {
 		this.value = value;
 	}
 
-	public Date getWriteDate() {
+	public String getWriteDate() {
 		return writeDate;
 	}
 
-	public void setWriteDate(Date writeDate) {
+	public void setWriteDate(String writeDate) {
 		this.writeDate = writeDate;
 	}
 	
-	public void setWriteDate(String yyyymmddhhmmss) {
-		try {
-			this.writeDate = DateTimeUtil.getDateFromYYYYMMDDHHMMSS(yyyymmddhhmmss);
-		}catch(Exception e) { 
-			
-		}
-	}
-
 	public Contract getContract() {
 		return contract;
 	}
@@ -186,25 +162,19 @@ public abstract class MeteringLP {
 		this.contractId = contractId;
 	}
 
-	public Date getModemTime() {
+	public String getModemTime() {
 		return modemTime;
 	}
 
-	public void setModemTime(Date modemTime) {
+	public void setModemTime(String modemTime) {
 		this.modemTime = modemTime;
 	}
-	
-	public void setModemTime(String modemTime) {
-		try {
-			this.modemTime = DateTimeUtil.getDateFromYYYYMMDDHHMMSS(modemTime);	
-		}catch(Exception e) {}
-	}
 
-	public Date getDcuTime() {
+	public String getDcuTime() {
 		return dcuTime;
 	}
 
-	public void setDcuTime(Date dcuTime) {
+	public void setDcuTime(String dcuTime) {
 		this.dcuTime = dcuTime;
 	}
 	
@@ -332,9 +302,9 @@ public abstract class MeteringLP {
 		builder.append(getLpStatus()).append("|");
 		builder.append(getIntervalYN()).append("|");
 		builder.append(getValue()).append("|");
-		builder.append(DateTimeUtil.getDateString(getWriteDate())).append("|");
+		builder.append(getWriteDate()).append("|");
 		builder.append(getContractId()).append("|");
-		builder.append(DateTimeUtil.getDateString(getModemTime())).append("|");
+		builder.append(getModemTime()).append("|");
 		builder.append(getDcuTime());
 		builder.append("\n");
 		return builder.toString();

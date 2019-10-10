@@ -78,9 +78,6 @@ public class LoginController{
 	@Resource(name = "sessionContextFactory")
     ObjectFactory<?> sessionContextFactory;
 
-    AimirUser aimirUser;
-    Map<String, Object> condition;
-
     /**
      * method name : login
      * method Desc : Post 방식 로그인
@@ -95,7 +92,8 @@ public class LoginController{
     protected ModelAndView login(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         log.info("login POST");
-
+        Map<String, Object> condition = null;
+        
         ESAPI.httpUtilities().setCurrentHTTP(request, response);
         ModelAndView mav = new ModelAndView("jsonView");
 
@@ -121,6 +119,7 @@ public class LoginController{
             // mav.addObject(ESAPI.securityConfiguration().getUsernameParameterName(), ""+user.getLoginId());
             // mav.addObject(ESAPI.securityConfiguration().getPasswordParameterName(), "");
         }
+        
         String browserLang = request.getParameter("lang");        
 		Properties messageProp = new Properties();
 		
@@ -413,7 +412,7 @@ public class LoginController{
    //     AimirUser user = (AimirUser)instance.getUserFromSession();
 
         // else if there's a remember token then use that
-        if ( aimirUser == null ) {
+        //if ( aimirUser == null ) {
             /*
             data = instance.getUserFromRememberToken();
 
@@ -425,11 +424,11 @@ public class LoginController{
                 mav.addObject(ESAPI.securityConfiguration().getUsernameParameterName(), "");
             }
             */
-        } else {
+        //} else {
 
         //  mav.addObject(ESAPI.securityConfiguration().getUsernameParameterName(), ""+user.getLoginId());
         //      mav.addObject(ESAPI.securityConfiguration().getPasswordParameterName(), "");
-        }
+        //}
         mav.addAttribute("result", "");
         return mav;
     }
