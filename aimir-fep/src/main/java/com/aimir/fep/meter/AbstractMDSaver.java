@@ -993,7 +993,7 @@ public abstract class AbstractMDSaver
 				meteringLP.setMeteringType(meteringType);
 				meteringLP.setValue(lp.getCh()[i]);
 				meteringLP.setDst(dst);
-				meteringLP.setWriteDate(new Date());
+				meteringLP.setWriteDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
 				meteringLP.setDate(lp.getDatetime());
 				meteringLP.setLpFlag(lp.getFlag());
 				meteringLP.setContract(meter.getContract());
