@@ -63,9 +63,8 @@ public abstract class MeteringLP {
 	@ColumnInfo(descr="검침값")
 	private Double value;	
 	
-	@Column(name = "writedate")
+	@Column(name = "writedate", length = 14)
 	@ColumnInfo(descr="데이터 작성시간")
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date writeDate;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -77,14 +76,12 @@ public abstract class MeteringLP {
 	@Column(name="contract_id", nullable=true, updatable=false, insertable=false)
 	private Integer contractId;
 	
-	@Column(name = "modem_time")
+	@Column(name = "modem_time", length = 14)
 	@ColumnInfo(descr="데이터 작성시간")
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date modemTime;
 	
-	@Column(name = "dcu_time")
+	@Column(name = "dcu_time", length = 14)
 	@ColumnInfo(descr="데이터 작성시간")
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date dcuTime;
 	
 	@Transient
