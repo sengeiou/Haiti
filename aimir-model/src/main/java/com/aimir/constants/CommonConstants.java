@@ -142,32 +142,45 @@ public class CommonConstants {
     }
 
     public enum MeterType {
-        EnergyMeter     ("METERINGDATA_EM","LP_EM","DAY_EM_VIEW", "MONTH_EM_VIEW", "MeteringDataEM","LpEM","DayEM", "MonthEM", "3.1"),
-        GasMeter        ("METERINGDATA_GM","LP_GM","DAY_GM", "MONTH_GM", "MeteringDataGM","LpGM","DayGM", "MonthGM", "3.3"),
-        WaterMeter      ("METERINGDATA_WM","LP_WM","DAY_WM_VIEW", "MONTH_WM_VIEW", "MeteringDataWM","LpWM","DayWM", "MonthWM", "3.2"),
-        HeatMeter       ("METERINGDATA_HM","LP_HM","DAY_HM", "MONTH_HM", "MeteringDataHM","LpHM","DayHM", "MonthHM", "3.4"),
-        VolumeCorrector("METERINGDATA_VC","LP_VC","DAY_VC", "MONTH_VC", "MeteringDataVC","LpVC","DayVC", "MonthVC", "3.5"),
-        Electric        ("METERINGDATA_EM","LP_EM","DAY_EM", "MONTH_EM", "MeteringDataEM","LpEM","DayEM", "MonthEM", "3.1"),
-        SolarPowerMeter("METERINGDATA_SPM","LP_SPM","DAY_SPM", "MONTH_SPM", "MeteringDataSPM","LpSPM","DaySPM", "MonthSPM", "3.6"),
-        Inverter         ("METERINGDATA_EM","LP_EM","DAY_EM", "MONTH_EM", "MeteringDataEM","LpEM","DayEM", "MonthEM", "3.1");
+        EnergyMeter     ("METERINGDATA_EM","LP_EM","DAY_EM","MONTH_EM","DAY_EM_VIEW", "MONTH_EM_VIEW", "MeteringDataEM","LpEM","DayEM", "MonthEM", "3.1"),
+        GasMeter        ("METERINGDATA_GM","LP_GM","DAY_GM","MONTH_GM","DAY_GM_VIEW", "MONTH_GM_VIEW", "MeteringDataGM","LpGM","DayGM", "MonthGM", "3.3"),
+        WaterMeter      ("METERINGDATA_WM","LP_WM","DAY_WM","MONTH_WM","DAY_WM_VIEW", "MONTH_WM_VIEW", "MeteringDataWM","LpWM","DayWM", "MonthWM", "3.2"),
+        HeatMeter       ("METERINGDATA_HM","LP_HM","DAY_HM","MONTH_HM","DAY_HM_VIEW", "MONTH_HM_VIEW", "MeteringDataHM","LpHM","DayHM", "MonthHM", "3.4"),
+        VolumeCorrector ("METERINGDATA_VC","LP_VC","DAY_VC","MONTH_VC","DAY_VC_VIEW", "MONTH_VC_VIEW", "MeteringDataVC","LpVC","DayVC", "MonthVC", "3.5"),
+        Electric        ("METERINGDATA_EM","LP_EM","DAY_EM","MONTH_EM","DAY_EM_VIEW", "MONTH_EM_VIEW", "MeteringDataEM","LpEM","DayEM", "MonthEM", "3.1"),
+        SolarPowerMeter ("METERINGDATA_SPM","LP_SPM","DAY_SPM","MONTH_SPM","DAY_SPM_VIEW","MONTH_SPM_VIEW", "MeteringDataSPM","LpSPM","DaySPM", "MonthSPM", "3.6"),
+        Inverter        ("METERINGDATA_EM","LP_EM","DAY_EM","MONTH_EM","DAY_EM_VIEW", "MONTH_EM_VIEW", "MeteringDataEM","LpEM","DayEM", "MonthEM", "3.1");
         
         private String meteringTableName;
         private String lpTableName;
         private String dayTableName;
         private String monthTableName;
+        private String dayViewName;
+        private String monthViewName;
         private String meteringClassName;
         private String lpClassName;
         private String dayClassName;
         private String monthClassName;
         private String serviceType;
         
-        MeterType(String meteringTableName,String lpTableName, String dayTableName,
-                String monthTableName,String meteringClassName,String lpClassName,
-                String dayClassName, String monthClassName, String serviceType) {
+        MeterType(
+        		String meteringTableName,
+        		String lpTableName, 
+        		String dayTableName,
+                String monthTableName,
+        		String dayViewName,
+                String monthViewName,
+                String meteringClassName,
+                String lpClassName,
+                String dayClassName, 
+                String monthClassName, 
+                String serviceType) {
             this.meteringTableName  = meteringTableName;
             this.lpTableName        = lpTableName;
             this.dayTableName       = dayTableName;
             this.monthTableName     = monthTableName;
+            this.dayViewName       = dayViewName;
+            this.monthViewName     = monthViewName;
             this.meteringClassName  = meteringClassName;
             this.lpClassName        = lpClassName;
             this.dayClassName       = dayClassName;
@@ -186,6 +199,12 @@ public class CommonConstants {
         }
         public String getMonthTableName() {
             return monthTableName;
+        }
+        public String getDayViewName() {
+            return dayViewName;
+        }
+        public String getMonthViewName() {
+            return monthViewName;
         }
         public String getServiceType() {
             return serviceType;
