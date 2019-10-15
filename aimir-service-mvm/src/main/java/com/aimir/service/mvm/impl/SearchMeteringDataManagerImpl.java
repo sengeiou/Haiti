@@ -3154,7 +3154,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
         conditionMap.put("startHour", searchStartHour);
         conditionMap.put("endHour", searchEndHour);
 
-        List<Map<String, Object>> list = meteringLpDao.getMeteringDataHourlyData(conditionMap, false);
+        List<Map<String, Object>> list = meteringdayDao.getMeteringDataHourlyData(conditionMap, false);
         Map<String, Object> prevValueMap = new HashMap<String, Object>(); // { YYYYMMDDHH : PrevValue } 
 
         if (page != null && limit != null) { // paging
@@ -3182,7 +3182,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
 				}
 
                 // Get prevList
-                List<Map<String, Object>> prevList = meteringLpDao.getMeteringDataHourlyData(conditionMap, false, true);
+                List<Map<String, Object>> prevList = meteringdayDao.getMeteringDataHourlyData(conditionMap, false, true);
                 
                 // Put value to map { YYYYMMDDHH_METER : VALUE }
                 for (Map<String, Object> obj : prevList) {
@@ -3261,7 +3261,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
         conditionMap.put("startHour"	, searchStartHour	);
         conditionMap.put("endHour"		, searchEndHour		);
 
-        List<Map<String, Object>> result = meteringLpDao.getMeteringDataHourlyData(conditionMap, true);
+        List<Map<String, Object>> result = meteringdayDao.getMeteringDataHourlyData(conditionMap, true);
         return (Integer)(result.get(0).get("total"));
     }
     

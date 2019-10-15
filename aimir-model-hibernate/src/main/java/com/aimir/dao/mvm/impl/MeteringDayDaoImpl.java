@@ -3065,7 +3065,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         String meterType = StringUtil.nullToBlank(conditionMap.get("meterType"));
         List<Integer> sicIdList = (List<Integer>) conditionMap.get("sicIdList");
         List<Integer> locationIdList = (List<Integer>) conditionMap.get("locationIdList");
-        String DayTable = MeterType.valueOf(meterType).getDayTableName();
+        String DayTable = MeterType.valueOf(meterType).getDayViewName();
 
         String startDate = StringUtil.nullToBlank(conditionMap.get("startDate"));
         String endDate = StringUtil.nullToBlank(conditionMap.get("endDate"));
@@ -5036,5 +5036,259 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
        
 		return result;
 	}
-    
+	/**
+     * method name : getMeteringDataHourlyData<b/>
+     * method Desc : Metering Data 맥스가젯에서 시간별 검침데이터를 조회한다.
+     *
+     * @param conditionMap
+     * @param isTotal
+     * @return
+     */
+    public List<Map<String, Object>> getMeteringDataHourlyData(Map<String, Object> conditionMap, boolean isTotal) {
+        return getMeteringDataHourlyData(conditionMap, isTotal, false);
+    }
+
+    /**
+     * method name : getMeteringDataHourlyData<b/>
+     * method Desc : Metering Data 맥스가젯에서 시간별 검침데이터를 조회한다.
+     *
+     * @param conditionMap
+     * @param isTotal
+     * @param isPrev
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public List<Map<String, Object>> getMeteringDataHourlyData(Map<String, Object> conditionMap, boolean isTotal, boolean isPrev) {
+        List<Map<String, Object>> result;
+
+        Integer supplierId = (Integer)conditionMap.get("supplierId");
+        Integer tariffType = (Integer)conditionMap.get("tariffType");
+
+        Integer sicId = (Integer)conditionMap.get("sicId");
+        Integer page = (Integer)conditionMap.get("page");
+        Integer limit = (Integer)conditionMap.get("limit");
+        Integer interval = 15;
+
+        String startDate = null;
+        String endDate = null;
+        String startHour = null;
+        String endHour = null;
+        String contractNumber = StringUtil.nullToBlank(conditionMap.get("contractNumber"));
+        String customerName = StringUtil.nullToBlank(conditionMap.get("customerName"));
+        String mdsId = StringUtil.nullToBlank(conditionMap.get("friendlyName"));
+        String meteringSF = StringUtil.nullToBlank(conditionMap.get("meteringSF"));
+        String mcuId = StringUtil.nullToBlank(conditionMap.get("mcuId"));
+        String modemId = StringUtil.nullToBlank(conditionMap.get("modemId"));
+        String deviceType = StringUtil.nullToBlank(conditionMap.get("deviceType"));
+        String mdevId = StringUtil.nullToBlank(conditionMap.get("mdevId"));
+        String contractGroup = StringUtil.nullToBlank(conditionMap.get("contractGroup"));
+        String meterType = StringUtil.nullToBlank(conditionMap.get("meterType"));
+        List<Integer> sicIdList = (List<Integer>)conditionMap.get("sicIdList");
+
+        List<Integer> locationIdList = (List<Integer>)conditionMap.get("locationIdList");
+        Set<String> meterNoList = (Set<String>)conditionMap.get("meterNoList");
+//        String LpTable = MeterType.valueOf(meterType).getLpTableName();
+        String dayTable = MeterType.valueOf(meterType).getDayTableName();
+
+        if (isPrev) {
+            startDate = StringUtil.nullToBlank(conditionMap.get("prevStartDate"));
+            endDate = StringUtil.nullToBlank(conditionMap.get("prevEndDate"));
+            startHour = StringUtil.nullToBlank(conditionMap.get("startHour"));
+            endHour = StringUtil.nullToBlank(conditionMap.get("endHour"));
+        } else {
+            startDate = StringUtil.nullToBlank(conditionMap.get("startDate"));
+            endDate = StringUtil.nullToBlank(conditionMap.get("endDate"));
+            startHour = StringUtil.nullToBlank(conditionMap.get("startHour"));
+            endHour = StringUtil.nullToBlank(conditionMap.get("endHour"));
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        if (isTotal) {
+            sb.append("\nSELECT COUNT(*) ");
+        } else {
+        	sb.append("\nSELECT de.yyyymmdd||de.HH AS YYYYMMDDHH,");
+        	sb.append("\n		de.dst AS DST,				");
+        	sb.append("\n		de.mdev_id AS METER_NO,		");
+        	sb.append("\n		mt.friendly_name AS FRIENDLY_NAME,");
+        	sb.append("\n		co.contract_number,			");
+        	sb.append("\n		code.name AS SIC_NAME,		");
+        	sb.append("\n		mo.device_serial AS MODEM_ID,");
+        	sb.append("\n		de.value AS VALUE			");
+        }
+        sb.append("\nFROM ").append(dayTable).append(" de 				"); 
+        sb.append("\nLEFT OUTER JOIN meter mt ON mt.mds_id = de.mdev_id ");
+        sb.append("\nLEFT OUTER JOIN modem mo ON mo.id = de.modem_id 	");
+        sb.append("\nLEFT OUTER JOIN mcu mc ON mc.id = mo.mcu_id	 	");
+        sb.append("\nLEFT OUTER JOIN contract co ON co.id = de.contract_id	");
+        sb.append("\nLEFT OUTER JOIN code code ON co.sic_id = code.id 		");
+        sb.append("\nLEFT OUTER JOIN customer cu ON cu.id = co.customer_id	");
+
+        if (!contractGroup.isEmpty()) {
+            sb.append("\n         ,group_member gm ");
+        }
+
+        sb.append("\nWHERE de.yyyymmdd BETWEEN :startDate AND :endDate "); 
+        sb.append("\nAND de.hh >= CASE de.yyyymmdd WHEN :startDate THEN :startHour ELSE '00' END "); 
+        sb.append("\nAND de.hh <= CASE de.yyyymmdd WHEN :endDate   THEN :endHour   ELSE '23' END "); 
+        sb.append("\nAND   de.channel = 1 ");
+        sb.append("\nAND   mt.supplier_id = :supplierId ");
+
+        if (meterNoList != null) {
+            sb.append("\nAND   de.mdev_id IN (:meterNoList) ");
+        }
+        if (!mdsId.isEmpty()) {
+            sb.append("\nAND   de.mdev_id = :mdsId ");
+        }
+        if (!deviceType.isEmpty()) {
+            sb.append("\nAND   de.mdev_type = :deviceType ");
+        }
+        if (meteringSF.equals("s")) {
+            sb.append("\nAND   de.value IS NOT NULL ");
+        } else {
+            sb.append("\nAND   de.value IS NULL ");
+        }
+
+        if (!mdevId.isEmpty()) {
+        	if(mdevId.indexOf('%') == 0 || mdevId.indexOf('%') == (mdevId.length()-1)) { // %문자가 양 끝에 있을경우
+                sb.append("\nAND   de.mdev_id LIKE :mdevId ");
+        	}else {
+                sb.append("\nAND   de.mdev_id = :mdevId ");
+        	}
+        }
+
+        if (!contractNumber.isEmpty()) {
+        	if(contractNumber.indexOf('%') == 0 || contractNumber.indexOf('%') == (contractNumber.length()-1)) { // %문자가 양 끝에 있을경우
+                sb.append("\nAND   co.contract_number LIKE :contractNumber ");
+        	}else {
+                sb.append("\nAND   co.contract_number = :contractNumber ");
+        	}
+        }
+
+        if (sicIdList != null) {
+            sb.append("\nAND   co.sic_id IN (:sicIdList) ");
+        }
+
+        if (sicId != null) {
+            sb.append("\nAND   co.sic_id = :sicId ");
+        }
+
+        if (tariffType != null) {
+            sb.append("\nAND   co.tariffindex_id = :tariffType ");
+        }
+
+        if (locationIdList != null) {
+            sb.append("\nAND   mt.location_id IN (:locationIdList) ");
+        }
+
+        if (!contractGroup.isEmpty()) {
+            sb.append("\nAND   gm.member = co.contract_number ");
+            sb.append("\nAND   gm.group_id = :contractGroup ");
+        }
+
+        if (!customerName.isEmpty()) {
+        	if(customerName.indexOf('%') == 0 || customerName.indexOf('%') == (customerName.length()-1)) { // %문자가 양 끝에 있을경우
+                sb.append("\nAND   cu.name LIKE :customerName ");
+        	}else {
+                sb.append("\nAND   cu.name = :customerName ");
+        	}
+        }
+
+        if (!mcuId.isEmpty()) {
+        	if(mcuId.indexOf('%') == 0 || mcuId.indexOf('%') == (mcuId.length()-1)) { // %문자가 양 끝에 있을경우
+            	sb.append("\nAND   mc.sys_id LIKE :mcuId ");
+        	}else{
+            	sb.append("\nAND   mc.sys_id = :mcuId ");
+        	}
+        }
+        
+        if(!modemId.isEmpty()){
+        	if(modemId.indexOf('%') == 0 || modemId.indexOf('%') == (modemId.length()-1)) { // %문자가 양 끝에 있을경우
+                sb.append("\nAND   mo.device_serial LIKE :modemId ");
+        	}else {
+                sb.append("\nAND   mo.device_serial = :modemId ");
+        	}
+        }
+
+        if (!isTotal) {
+            sb.append("\nORDER BY de.yyyymmdd, de.hh, de.mdev_id, de.dst ");
+        }
+
+        SQLQuery query = getSession().createSQLQuery(new SQLWrapper().getQuery(sb.toString()));
+
+        query.setString("startDate", startDate);
+        query.setString("endDate", endDate);
+        query.setString("startHour", startHour);
+        query.setString("endHour", endHour);
+        query.setInteger("supplierId", supplierId);
+
+        if (meterNoList != null) {
+            query.setParameterList("meterNoList", meterNoList);
+        }
+
+        if (!deviceType.isEmpty()) {
+            query.setString("deviceType", deviceType);
+        }
+
+        if (!mdevId.isEmpty()) {
+            query.setString("mdevId", mdevId);
+        }
+
+        if (!contractNumber.isEmpty()) {
+            query.setString("contractNumber", contractNumber);
+        }
+
+        if (sicIdList != null) {
+            query.setParameterList("sicIdList", sicIdList);
+        }
+
+        if (sicId != null) {
+            query.setInteger("sicId", sicId);
+        }
+
+        if (tariffType != null) {
+            query.setInteger("tariffType", tariffType);
+        }
+
+        if (locationIdList != null) {
+            query.setParameterList("locationIdList", locationIdList);
+        }
+
+        if (!contractGroup.isEmpty()) {
+            query.setString("contractGroup", contractGroup);
+        }
+
+        if (!customerName.isEmpty()) {
+            query.setString("customerName", customerName);
+        }
+
+        if (!mcuId.isEmpty()) {
+            query.setString("mcuId", mcuId);
+        }
+        
+        if(!modemId.isEmpty()){
+        	query.setString("modemId", modemId);
+        }
+
+        if (!mdsId.isEmpty()) {
+            query.setString("mdsId", mdsId);
+        }
+
+        if (isTotal) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            int count = 0;
+            count = ((Number)query.uniqueResult()).intValue();
+            map.put("total", count);
+            result = new ArrayList<Map<String, Object>>();
+            result.add(map);
+        } else {
+            if (!isPrev && page != null && limit != null) {
+                query.setFirstResult((page - 1) * limit);
+                query.setMaxResults(limit);
+            }
+            result = query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+        }
+
+        return result;
+    }
 }

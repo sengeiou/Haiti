@@ -30,27 +30,6 @@ public interface MeteringLpDao extends GenericDao<MeteringLP, Integer>{
     public List<Map<String, Object>> getDetailHourData4fc(Map<String, Object> condition, boolean isSum);
 
     /**
-     * method name : getMeteringDataHourlyData<b/>
-     * method Desc : Metering Data 맥스가젯에서 시간별 검침데이터를 조회한다.
-     *
-     * @param conditionMap
-     * @param isTotal
-     * @return
-     */
-    public List<Map<String, Object>> getMeteringDataHourlyData(Map<String, Object> conditionMap, boolean isTotal);
-
-    /**
-     * method name : getMeteringDataHourlyData<b/>
-     * method Desc : Metering Data 맥스가젯에서 시간별 검침데이터를 조회한다.
-     *
-     * @param conditionMap
-     * @param isTotal
-     * @param isPrev
-     * @return
-     */
-    public List<Map<String, Object>> getMeteringDataHourlyData(Map<String, Object> conditionMap, boolean isTotal, boolean isPrev);
-
-    /**
      * method name : getMeteringDataDetailHourlyData<b/>
      * method Desc : Metering Data 맥스가젯 상세화면에서 시간별 검침데이터를 조회한다.
      *
