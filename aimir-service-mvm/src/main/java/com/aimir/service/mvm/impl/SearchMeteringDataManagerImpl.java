@@ -3125,9 +3125,6 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
         String searchStartHour = (String)conditionMap.get("searchStartHour");
         String searchEndDate = (String)conditionMap.get("searchEndDate");
         String searchEndHour = (String)conditionMap.get("searchEndHour"); 
-        String searchStartTime = searchStartDate + searchStartHour + "0000"; // YYYYMMDDMISS
-        String searchEndTime = searchEndDate + searchEndHour + "5959"; // YYYYMMDDMISS
-        String searchPrevStartTime = searchStartTime;
         Supplier supplier = supplierDao.get(supplierId);
         String country = supplier.getCountry().getCode_2letter();
         String lang    = supplier.getLang().getCode_2letter();
@@ -3144,36 +3141,27 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             locationIdList.add(permitLocationId);
             conditionMap.put("locationIdList", locationIdList);
         }
-
-        int num = 0;
-        if (page != null && limit != null) { // paging 
-            conditionMap.put("startDate", searchStartTime);
+        
+        // paging 
+        int num = 1;
+        if (page != null && limit != null) {
             num = ((page - 1) * limit) + 1;
-        } else { // all
-            num = 1;
-            try {
-            	searchPrevStartTime = TimeUtil.getPreHour(searchStartTime);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            conditionMap.put("startDate", searchPrevStartTime);
         }
-        conditionMap.put("endDate", searchEndTime);
+        
+        // Set Date & Hour
+        conditionMap.put("startDate", searchStartDate);
+        conditionMap.put("endDate", searchEndDate);
+        conditionMap.put("startHour", searchStartHour);
+        conditionMap.put("endHour", searchEndHour);
 
         List<Map<String, Object>> list = meteringLpDao.getMeteringDataHourlyData(conditionMap, false);
-        List<Map<String, Object>> prevList = new ArrayList<Map<String, Object>>();
-        Map<String, Object> listMap = new HashMap<String, Object>();
-        Map<String, HashMap<String, Object>> resultMap = new HashMap<>();
-        Double prevValue = null;
-        Set<String> meterNoList = new HashSet<String>();
+        Map<String, Object> prevValueMap = new HashMap<String, Object>(); // { YYYYMMDDHH : PrevValue } 
 
         if (page != null && limit != null) { // paging
-
             if (list != null && list.size() > 0) {
-                String prevStartDate = null; 
-                String prevEndDate = null;
                 
-                // Make meterNoList
+                // Set meterNoList
+                Set<String> meterNoList = new HashSet<String>();
                 for (Map<String, Object> obj : list) {
                 	String meterNo = (String)obj.get("METER_NO");
                     if(!meterNoList.contains(meterNo)) 
@@ -3181,83 +3169,63 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
                 }
                 conditionMap.put("meterNoList", meterNoList);
 
-                int cnt = list.size();
-                Map<String, Object> fstMap = list.get(0);     // Pick first Map
-                Map<String, Object> lstMap = list.get(cnt-1); // Pick Last Map
-                
+                // Get maps
+                Map<String, Object> fstMap = list.get(0);     			// Pick first Map
+                Map<String, Object> lstMap = list.get(list.size()-1);	// Pick Last Map
+
+                // Set prevDate
                 try {
-					prevStartDate = TimeUtil.getPreHour((String)fstMap.get("YYYYMMDDHHMISS"));
-				} catch (ParseException e1) {
-					e1.printStackTrace();
+                	conditionMap.put("prevStartDate",	TimeUtil.getPreDay((String)fstMap.get("YYYYMMDDHH")).substring(0, 8));
+                	conditionMap.put("prevEndDate",		TimeUtil.getPreDay((String)lstMap.get("YYYYMMDDHH")).substring(0, 8));
+				} catch (ParseException e) {
+					logger.error(e,e);
 				}
-                prevEndDate = ((String)lstMap.get("YYYYMMDDHHMISS"));
 
-                conditionMap.put("prevStartDate", prevStartDate); // fstMap time -1 ~ lstMap time
-                conditionMap.put("prevEndDate", prevEndDate);
-
-                prevList = meteringLpDao.getMeteringDataHourlyData(conditionMap, false, true);
-
+                // Get prevList
+                List<Map<String, Object>> prevList = meteringLpDao.getMeteringDataHourlyData(conditionMap, false, true);
+                
+                // Put value to map { YYYYMMDDHH_METER : VALUE }
                 for (Map<String, Object> obj : prevList) {
-                	String key = ((String)obj.get("YYYYMMDDHHMISS")).substring(0,10) + "_" + (String)obj.get("METER_NO");
+                	String key = ((String)obj.get("YYYYMMDDHH")) + "_" + (String)obj.get("METER_NO");
                 	BigDecimal value = (BigDecimal) obj.get("VALUE");
                 	
-                	if(listMap.containsKey(key)) {
-                		value = value.add((BigDecimal) obj.get("VALUE"));
-                	}
-                    listMap.put(key, value);
+                	prevValueMap.put(key, value);
                 }
             }
-        } else { // all
+        } else {
             for (Map<String, Object> obj : list) {
-            	String key = ((String)obj.get("YYYYMMDDHHMISS")).substring(0,10) + "_" + (String)obj.get("METER_NO");
+            	String key = ((String)obj.get("YYYYMMDDHH")) + "_" + (String)obj.get("METER_NO");
             	BigDecimal value = (BigDecimal) obj.get("VALUE");
             	
-            	if(listMap.containsKey(key)) {
-            		value = value.add((BigDecimal) obj.get("VALUE"));
-            	}
-                listMap.put(key, value);
+            	prevValueMap.put(key, value);
             }
         }
 
         for (Map<String, Object> obj : list) {
-            if ((page == null || limit == null) && ((String)obj.get("YYYYMMDDHHMISS")).compareTo(searchPrevStartTime) == 0) {
-                continue;
-            }
-            String YYYYMMDDHHMISS = (String)obj.get("YYYYMMDDHHMISS");
-            String YYYYMMDDHH = YYYYMMDDHHMISS.substring(0, 10);
+        	String YYYYMMDDHH = (String)obj.get("YYYYMMDDHH");
             String METER_NO = (String)obj.get("METER_NO");
-        	String key = YYYYMMDDHH + "_" + METER_NO;
-
-        	if(resultMap.containsKey(key)) {
-        		HashMap<String, Object> tmpMap = resultMap.get(key);
-        		Double tmpVal = DecimalUtil.ConvertNumberToDouble(tmpMap.get("value"));
-        		tmpMap.put("value", mdf.format(tmpVal + DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
-        		continue;
-        	}
+            
             HashMap<String, Object> map = new HashMap<String, Object>();
-
             map.put("num", num++);
             map.put("contractNumber", (String)obj.get("CONTRACT_NUMBER"));
             map.put("friendlyName", (String)obj.get("FRIENDLY_NAME"));
             map.put("customerName", (String)obj.get("CUSTOMER_NAME"));
-            map.put("meteringTime", TimeLocaleUtil.getLocaleDateHour(((String)obj.get("YYYYMMDDHHMISS")).substring(0,10), lang, country));
-
+            map.put("meteringTime", TimeLocaleUtil.getLocaleDateHour(YYYYMMDDHH, lang, country));
             map.put("meterNo", (String)obj.get("METER_NO"));
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));
             map.put("value", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
 
             try {
-                prevValue = DecimalUtil.ConvertNumberToDouble(listMap.get(TimeUtil.getPreHour(YYYYMMDDHH) + "_" + (String)obj.get("METER_NO")));
+            	String prevKey = TimeUtil.getPreDay(YYYYMMDDHH).substring(0, 10) + "_" + METER_NO;
+            	Double prevValue = DecimalUtil.ConvertNumberToDouble(prevValueMap.get(prevKey));
+                map.put("prevValue", (prevValue == null) ? "" : mdf.format(prevValue));
             } catch (ParseException e) {
-                e.printStackTrace();
+                logger.error(e, e);
             }
 
-            map.put("prevValue", (prevValue == null) ? "" : mdf.format(prevValue));
-            resultMap.put(key, map);
+            result.add(map);
         }
-        result.addAll(resultMap.values());
-
         return result;
     }
 
@@ -3287,9 +3255,11 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             conditionMap.put("locationIdList", locationIdList);
         }
 
-        conditionMap.put("meterNoList", null);
-        conditionMap.put("startDate", searchStartDate + searchStartHour);
-        conditionMap.put("endDate", searchEndDate + searchEndHour);
+        conditionMap.put("meterNoList"	, null				);
+        conditionMap.put("startDate"	, searchStartDate	);
+        conditionMap.put("endDate"		, searchEndDate		);
+        conditionMap.put("startHour"	, searchStartHour	);
+        conditionMap.put("endHour"		, searchEndHour		);
 
         List<Map<String, Object>> result = meteringLpDao.getMeteringDataHourlyData(conditionMap, true);
         return (Integer)(result.get(0).get("total"));
@@ -3381,7 +3351,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
                 prevList = meteringdayDao.getMeteringDataDailyData(conditionMap, false, true);
 
                 for (Map<String, Object> obj : prevList) {
-                    listMap.put((String)obj.get("YYYYMMDD") + "_" + (String)obj.get("METER_NO"), obj.get("BASEVALUE"));
+                    listMap.put((String)obj.get("YYYYMMDD") + "_" + (String)obj.get("METER_NO"), obj.get("VALUE"));
                 }
             }
         } else {        // all

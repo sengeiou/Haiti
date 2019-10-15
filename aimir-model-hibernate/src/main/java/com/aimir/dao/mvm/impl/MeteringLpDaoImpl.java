@@ -1481,6 +1481,8 @@ public class MeteringLpDaoImpl extends
 
         String startDate = null;
         String endDate = null;
+        String startHour = null;
+        String endHour = null;
         String contractNumber = StringUtil.nullToBlank(conditionMap.get("contractNumber"));
         String customerName = StringUtil.nullToBlank(conditionMap.get("customerName"));
         String mdsId = StringUtil.nullToBlank(conditionMap.get("friendlyName"));
@@ -1495,14 +1497,19 @@ public class MeteringLpDaoImpl extends
 
         List<Integer> locationIdList = (List<Integer>)conditionMap.get("locationIdList");
         Set<String> meterNoList = (Set<String>)conditionMap.get("meterNoList");
-        String LpTable = MeterType.valueOf(meterType).getLpTableName();
+//        String LpTable = MeterType.valueOf(meterType).getLpTableName();
+        String dayTable = MeterType.valueOf(meterType).getDayTableName();
 
         if (isPrev) {
             startDate = StringUtil.nullToBlank(conditionMap.get("prevStartDate"));
             endDate = StringUtil.nullToBlank(conditionMap.get("prevEndDate"));
+            startHour = StringUtil.nullToBlank(conditionMap.get("startHour"));
+            endHour = StringUtil.nullToBlank(conditionMap.get("endHour"));
         } else {
             startDate = StringUtil.nullToBlank(conditionMap.get("startDate"));
             endDate = StringUtil.nullToBlank(conditionMap.get("endDate"));
+            startHour = StringUtil.nullToBlank(conditionMap.get("startHour"));
+            endHour = StringUtil.nullToBlank(conditionMap.get("endHour"));
         }
 
         StringBuilder sb = new StringBuilder();
@@ -1510,160 +1517,120 @@ public class MeteringLpDaoImpl extends
         if (isTotal) {
             sb.append("\nSELECT COUNT(*) ");
         } else {
-            sb.append("\nSELECT contract_number AS CONTRACT_NUMBER, ");
-            sb.append("\n       customer_name AS CUSTOMER_NAME, ");
-            sb.append("\n       yyyymmddhhmiss AS YYYYMMDDHHMISS, ");
-            sb.append("\n       dst AS DST, ");
-            sb.append("\n       mds_id AS METER_NO, ");
-            sb.append("\n       friendly_name AS FRIENDLY_NAME, ");
-            sb.append("\n       CHANNEL, ");
-
-            if (!isPrev) {
-                sb.append("\n       device_serial AS MODEM_ID, ");
-            }
-
-            sb.append("\n       (select name from code where id = x.sic_id) as SIC_NAME, ");
-            sb.append("\n       value AS VALUE ");
-            sb.append("\nFROM ( ");
-            sb.append("\n    SELECT lp.yyyymmddhhmiss, ");
-            sb.append("\n           lp.channel, ");
-            sb.append("\n           lp.dst, ");
-            sb.append("\n           mt.mds_id, ");
-            sb.append("\n           mt.friendly_name, ");
-            sb.append("\n           co.contract_number, ");
-            sb.append("\n           cu.name AS customer_name, ");
-            sb.append("\n           co.sic_id, ");
-            
-            if (!isPrev) {
-                if (!mcuId.isEmpty()) {
-                    sb.append("\n           mo.device_serial, ");
-                } else {
-                    sb.append("\n           (SELECT md.device_serial FROM modem md WHERE md.id = mt.modem_id ) AS device_serial, ");
-                }
-            }
-
-            sb.append("\n           lp.value");
-
+        	sb.append("\nSELECT de.yyyymmdd||de.HH AS YYYYMMDDHH,");
+        	sb.append("\n		de.dst AS DST,				");
+        	sb.append("\n		de.mdev_id AS METER_NO,		");
+        	sb.append("\n		mt.friendly_name AS FRIENDLY_NAME,");
+        	sb.append("\n		co.contract_number,			");
+        	sb.append("\n		code.name AS SIC_NAME,		");
+        	sb.append("\n		mo.device_serial AS MODEM_ID,");
+        	sb.append("\n		de.value AS VALUE			");
         }
-        sb.append("\n    FROM ").append(LpTable).append(" lp ");
-        sb.append("\n    LEFT OUTER JOIN contract co ON co.id = lp.contract_id ");
-        sb.append("\n    LEFT OUTER JOIN customer cu ON cu.id = co.customer_id, ");
+        sb.append("\nFROM ").append(dayTable).append(" de 				"); 
+        sb.append("\nLEFT OUTER JOIN meter mt ON mt.mds_id = de.mdev_id ");
+        sb.append("\nLEFT OUTER JOIN modem mo ON mo.id = de.modem_id 	");
+        sb.append("\nLEFT OUTER JOIN mcu mc ON mc.id = mo.mcu_id	 	");
+        sb.append("\nLEFT OUTER JOIN contract co ON co.id = de.contract_id	");
+        sb.append("\nLEFT OUTER JOIN code code ON co.sic_id = code.id 		");
+        sb.append("\nLEFT OUTER JOIN customer cu ON cu.id = co.customer_id	");
 
         if (!contractGroup.isEmpty()) {
-            sb.append("\n         group_member gm, ");
+            sb.append("\n         ,group_member gm ");
         }
 
-        sb.append("\n         meter mt ");
-
-        if (!mcuId.isEmpty()) {
-            sb.append("\n         ,modem mo ");
-            sb.append("\n         ,mcu mc ");
-        }
-        
-        if(!modemId.isEmpty()){
-        	sb.append("\n         ,modem mo ");
-        }
-
-        sb.append("\n    WHERE lp.yyyymmddhhmiss BETWEEN :startDate AND :endDate ");
-        sb.append("\n    AND   lp.channel = 1 ");
+        sb.append("\nWHERE de.yyyymmdd BETWEEN :startDate AND :endDate "); 
+        sb.append("\nAND de.hh >= CASE de.yyyymmdd WHEN :startDate THEN :startHour ELSE '00' END "); 
+        sb.append("\nAND de.hh <= CASE de.yyyymmdd WHEN :endDate   THEN :endHour   ELSE '23' END "); 
+        sb.append("\nAND   de.channel = 1 ");
+        sb.append("\nAND   mt.supplier_id = :supplierId ");
 
         if (meterNoList != null) {
-            sb.append("\n    AND   lp.mdev_id IN (:meterNoList) ");
+            sb.append("\nAND   de.mdev_id IN (:meterNoList) ");
         }
-
-        sb.append("\n    AND   mt.mds_id = lp.mdev_id ");
-        sb.append("\n    AND   mt.supplier_id = :supplierId ");
-
         if (!mdsId.isEmpty()) {
-            sb.append("\n    AND   mt.mds_id = :mdsId ");
+            sb.append("\nAND   de.mdev_id = :mdsId ");
         }
-
         if (!deviceType.isEmpty()) {
-            sb.append("\n    AND   lp.mdev_type = :deviceType ");
+            sb.append("\nAND   de.mdev_type = :deviceType ");
         }
-
         if (meteringSF.equals("s")) {
-            sb.append("\n    AND   lp.value IS NOT NULL ");
+            sb.append("\nAND   de.value IS NOT NULL ");
         } else {
-            sb.append("\n    AND   lp.value IS NULL ");
+            sb.append("\nAND   de.value IS NULL ");
         }
 
         if (!mdevId.isEmpty()) {
         	if(mdevId.indexOf('%') == 0 || mdevId.indexOf('%') == (mdevId.length()-1)) { // %문자가 양 끝에 있을경우
-                sb.append("\n    AND   lp.mdev_id LIKE :mdevId ");
+                sb.append("\nAND   de.mdev_id LIKE :mdevId ");
         	}else {
-                sb.append("\n    AND   lp.mdev_id = :mdevId ");
+                sb.append("\nAND   de.mdev_id = :mdevId ");
         	}
         }
 
         if (!contractNumber.isEmpty()) {
         	if(contractNumber.indexOf('%') == 0 || contractNumber.indexOf('%') == (contractNumber.length()-1)) { // %문자가 양 끝에 있을경우
-                sb.append("\n    AND   co.contract_number LIKE :contractNumber ");
+                sb.append("\nAND   co.contract_number LIKE :contractNumber ");
         	}else {
-                sb.append("\n    AND   co.contract_number = :contractNumber ");
+                sb.append("\nAND   co.contract_number = :contractNumber ");
         	}
         }
 
         if (sicIdList != null) {
-            sb.append("\n    AND   co.sic_id IN (:sicIdList) ");
+            sb.append("\nAND   co.sic_id IN (:sicIdList) ");
         }
 
         if (sicId != null) {
-            sb.append("\n    AND   co.sic_id = :sicId ");
+            sb.append("\nAND   co.sic_id = :sicId ");
         }
 
         if (tariffType != null) {
-            sb.append("\n    AND   co.tariffindex_id = :tariffType ");
+            sb.append("\nAND   co.tariffindex_id = :tariffType ");
         }
 
         if (locationIdList != null) {
-            sb.append("\n    AND   mt.location_id IN (:locationIdList) ");
+            sb.append("\nAND   mt.location_id IN (:locationIdList) ");
         }
 
         if (!contractGroup.isEmpty()) {
-            sb.append("\n    AND   gm.member = co.contract_number ");
-            sb.append("\n    AND   gm.group_id = :contractGroup ");
+            sb.append("\nAND   gm.member = co.contract_number ");
+            sb.append("\nAND   gm.group_id = :contractGroup ");
         }
 
         if (!customerName.isEmpty()) {
         	if(customerName.indexOf('%') == 0 || customerName.indexOf('%') == (customerName.length()-1)) { // %문자가 양 끝에 있을경우
-                sb.append("\n    AND   cu.name LIKE :customerName ");
+                sb.append("\nAND   cu.name LIKE :customerName ");
         	}else {
-                sb.append("\n    AND   cu.name = :customerName ");
+                sb.append("\nAND   cu.name = :customerName ");
         	}
         }
 
         if (!mcuId.isEmpty()) {
-            sb.append("\n    AND   mo.id = mt.modem_id ");
-            sb.append("\n    AND   mc.id = mo.mcu_id ");
         	if(mcuId.indexOf('%') == 0 || mcuId.indexOf('%') == (mcuId.length()-1)) { // %문자가 양 끝에 있을경우
-            	sb.append("\n    AND   mc.sys_id LIKE :mcuId ");
-        	}else {
-            	sb.append("\n    AND   mc.sys_id = :mcuId ");
+            	sb.append("\nAND   mc.sys_id LIKE :mcuId ");
+        	}else{
+            	sb.append("\nAND   mc.sys_id = :mcuId ");
         	}
         }
         
         if(!modemId.isEmpty()){
-            sb.append("\n    AND   mt.modem_id = mo.id ");
         	if(modemId.indexOf('%') == 0 || modemId.indexOf('%') == (modemId.length()-1)) { // %문자가 양 끝에 있을경우
-                sb.append("\n    AND   mo.device_serial LIKE :modemId ");
+                sb.append("\nAND   mo.device_serial LIKE :modemId ");
         	}else {
-                sb.append("\n    AND   mo.device_serial = :modemId ");
+                sb.append("\nAND   mo.device_serial = :modemId ");
         	}
         }
 
         if (!isTotal) {
-            sb.append("\n    ORDER BY lp.yyyymmddhhmiss, lp.mdev_id, lp.dst ");
-            sb.append("\n) x ");
+            sb.append("\nORDER BY de.yyyymmdd, de.hh, de.mdev_id, de.dst ");
         }
 
         logger.debug(sb.toString());
         SQLQuery query = getSession().createSQLQuery(new SQLWrapper().getQuery(sb.toString()));
 
-        startDate = (startDate.length() < 14) ? startDate+"0000" : startDate;
-        endDate = (endDate.length() < 14) ? endDate+"5959" : endDate;
         query.setString("startDate", startDate);
         query.setString("endDate", endDate);
+        query.setString("startHour", startHour);
+        query.setString("endHour", endHour);
         query.setInteger("supplierId", supplierId);
 
         if (meterNoList != null) {
