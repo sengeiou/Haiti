@@ -1381,7 +1381,7 @@ public abstract class AbstractMDSaver
     	MeterType meterType = MeterType.valueOf(meter.getMeterType().getName());
     	
     	if(Boolean.valueOf(FMPProperty.getProperty("fep.lp.using.procedure", "true"))
-    			&& meterType == MeterType.EnergyMeter) {
+    			&& (meterType == MeterType.EnergyMeter || meterType == MeterType.WaterMeter)) {
     		saveLPDataUsingLPTimeUsingProcedure(meteringType, lpMap, meter, mdevType);
     	} else {
     		saveLPDataUsingLPTimeUsingJPA(meteringType, lpMap, meter, mdevType);
@@ -1406,7 +1406,9 @@ public abstract class AbstractMDSaver
     	
         log.debug("Using JPA - Procedure | mdevId["+meter.getMdsId()+"] channel["+lpMap.size()+"] channel[1] count["+lpMap.get(1).size()+"]");
         Iterator<Integer> channels = lpMap.keySet().iterator();
-        
+
+        String filePrefix = "LP_EM_EXT_";
+        String procedureName = "LP_EXTERNAL_MERGE"; //수도도 정규화가 적용되면서, 타입에 따라 구분 가능한 변수 추가.
         if(meteringType != null && meterType.equals(meterType.EnergyMeter)) { //현재 EnergyMeter 만 표시, 만약 다른 Meter Type 필요하다면 하단에 처리 필요
         	appendBuilder = new StringBuilder();
             while(channels.hasNext()) {
@@ -1418,17 +1420,32 @@ public abstract class AbstractMDSaver
         			appendBuilder.append(mLP.getExternalTableValue());
             	}	
             }
+            filePrefix = "LP_EM_EXT_";
+            procedureName = "LP_EXTERNAL_MERGE";
+        }else if(meteringType != null && meterType.equals(meterType.WaterMeter)) { //EnergyMeter와 동일하지만 나중을 위해서 분리
+            appendBuilder = new StringBuilder();
+            while(channels.hasNext()) {
+                Integer channel = channels.next();
+                LinkedList<MeteringLP> lpList = lpMap.get(channel);
+
+                for(MeteringLP mLP : lpList) {
+                    mLP.setModem(meter.getModem());
+                    appendBuilder.append(mLP.getExternalTableValue());
+                }
+            }
+            filePrefix = "LP_WM_EXT_";
+            procedureName = "LP_EXTERNAL_MERGE_WM";
         }
         
     	if(appendBuilder != null) {
         	String mappingID = AimirThreadMapper.getInstance().getMapperId(Thread.currentThread().getId());
-        	String filename = "LP_EM_EXT_" + mappingID;
+        	String filename = filePrefix + mappingID; //"LP_EM_EXT_xxx"
         	
         	ExternalTableLogger logger = new ExternalTableLogger();
         	logger.writeObject(filename, appendBuilder.toString());
         	
         	Map<String, Object> parameter = new HashMap<String, Object>();
-        	parameter.put("PROCEDURE_NAME", "LP_EXTERNAL_MERGE");
+        	parameter.put("PROCEDURE_NAME", procedureName); //"LP_EXTERNAL_MERGE"
         	
         	parameter.put("THREAD_NUM", mappingID);
         	String procedureReuslt = lpEMDao.callProcedure(parameter);        	
