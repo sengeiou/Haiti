@@ -3638,11 +3638,14 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
         Integer supplierId = (Integer)conditionMap.get("supplierId");
         Integer page = (Integer)conditionMap.get("page");
         Integer limit = (Integer)conditionMap.get("limit");
+        Supplier supplier = supplierDao.get(supplierId);
+        String country = supplier.getCountry().getCode_2letter();
+        String lang    = supplier.getLang().getCode_2letter();
+        DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
+        
         Integer locationId = (Integer)conditionMap.get("locationId");
         Integer permitLocationId = (Integer)conditionMap.get("permitLocationId");
-
         List<Integer> locationIdList = null;
-
         if (locationId != null) {
             locationIdList = locationDao.getChildLocationId(locationId);
             locationIdList.add(locationId);
@@ -3653,75 +3656,40 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             conditionMap.put("locationIdList", locationIdList);
         }
 
+        // Set dates
         String searchStartDate = (String)conditionMap.get("searchStartDate");
         String searchEndDate = (String)conditionMap.get("searchEndDate");
-        String searchPrevStartDate = null;
-
+        conditionMap.put("startDate", searchStartDate);
+        conditionMap.put("endDate", searchEndDate);
         try {
-            if (page != null && limit != null) {        // paging
-                conditionMap.put("startDate", searchStartDate);
-                searchPrevStartDate = TimeUtil.getPreDay(searchStartDate).substring(0, 8);
-                conditionMap.put("prevStartDate", searchPrevStartDate);
-
-            }else{    // all
-                searchPrevStartDate = TimeUtil.getPreDay(searchStartDate).substring(0, 8);
-                conditionMap.put("startDate", searchPrevStartDate);
-
-            }
+        	conditionMap.put("prevStartDate", TimeUtil.getPreDay(searchStartDate).substring(0, 8));
+        	conditionMap.put("prevEndDate",   TimeUtil.getPreDay(searchEndDate).substring(0, 8));
         } catch (ParseException e) {
             logger.error(e,e);
         }
 
-        conditionMap.put("endDate", searchEndDate);
-
-        // Replace to the reformed function for reduce the processing time.
+        // Get data from DB
         List<Map<String, Object>> list = meteringdayDao.getMeteringDataDailyData2(conditionMap, false);
-        Map<String, Object> listMap = new HashMap<String, Object>();
-        Map<String, Object> map = null;
-
-        Supplier supplier = supplierDao.get(supplierId);
-        String country = supplier.getCountry().getCode_2letter();
-        String lang    = supplier.getLang().getCode_2letter();
-        DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
-
-        if (page != null && limit != null) {        // paging
-
-        } else {        // all
-            for (Map<String, Object> obj : list) {
-                listMap.put((String)obj.get("YYYYMMDD") + "_" + (String)obj.get("METER_NO"), obj.get("VALUE"));
-            }
-        }
-
-        int num = 0;
-
+        
+        // Set paging
+        int num = 1;
         if (page != null && limit != null) {
             num = ((page - 1) * limit) + 1;
-        } else {
-            num = 1;
         }
 
+        // Make data for view
         for (Map<String, Object> obj : list) {
-            // 전체조회일 경우 이전일자 데이터는 skip
-            if ((page == null || limit == null) && ((String)obj.get("YYYYMMDD")).compareTo(searchPrevStartDate) == 0) {
-                continue;
-            }
-
-            map = new HashMap<String, Object>();
-
+        	Map<String, Object> map = new HashMap<String, Object>();
             map.put("num", num++);
             map.put("contractNumber", (String)obj.get("CONTRACT_NUMBER"));
             map.put("customerName", (String)obj.get("CUSTOMER_NAME"));
             map.put("friendlyName", (String)obj.get("FRIENDLY_NAME"));
             map.put("meteringTime", TimeLocaleUtil.getLocaleDate((String)obj.get("YYYYMMDD"), lang, country));
-
             map.put("meterNo", (String)obj.get("METER_NO"));
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));
             map.put("value", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
-
-            if(!StringUtil.nullToBlank(obj.get("PRETOTAL")).isEmpty()){
-                map.put("prevValue", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRETOTAL"))));
-            }
+            map.put("prevValue", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE"))));
 
             result.add(map);
         }
@@ -3778,8 +3746,17 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             conditionMap.put("locationIdList", locationIdList);
         }
 
-        conditionMap.put("startDate", (String)conditionMap.get("searchStartDate"));
-        conditionMap.put("endDate", (String)conditionMap.get("searchEndDate"));
+        // Set dates
+        String searchStartDate = (String)conditionMap.get("searchStartDate");
+        String searchEndDate = (String)conditionMap.get("searchEndDate");
+        conditionMap.put("startDate", searchStartDate);
+        conditionMap.put("endDate", searchEndDate);
+        try {
+        	conditionMap.put("prevStartDate", TimeUtil.getPreDay(searchStartDate).substring(0, 8));
+        	conditionMap.put("prevEndDate",   TimeUtil.getPreDay(searchEndDate).substring(0, 8));
+        } catch (ParseException e) {
+            logger.error(e,e);
+        }
 
         List<Map<String, Object>> result = meteringdayDao.getMeteringDataDailyData2(conditionMap, true);
         return (Integer)(result.get(0).get("total"));
@@ -3797,11 +3774,13 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
         Integer supplierId = (Integer)conditionMap.get("supplierId");
         Integer page = (Integer)conditionMap.get("page");
         Integer limit = (Integer)conditionMap.get("limit");
+        Supplier supplier = supplierDao.get(supplierId);
+        DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
+
+        // Set locations
         Integer locationId = (Integer)conditionMap.get("locationId");
         Integer permitLocationId = (Integer)conditionMap.get("permitLocationId");
-
         List<Integer> locationIdList = null;
-
         if (locationId != null) {
             locationIdList = locationDao.getChildLocationId(locationId);
             locationIdList.add(locationId);
@@ -3812,81 +3791,35 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             conditionMap.put("locationIdList", locationIdList);
         }
 
+        // Set dates
         String searchStartDate = (String)conditionMap.get("searchStartDate");
         String searchEndDate = (String)conditionMap.get("searchEndDate");
         String searchWeek = (String)conditionMap.get("searchWeek");
-
         conditionMap.put("startDate", searchStartDate);
         conditionMap.put("endDate", searchEndDate);
-
-        List<Map<String, Object>> list = meteringdayDao.getMeteringDataWeeklyData(conditionMap, false);
-        List<Map<String, Object>> prevList = new ArrayList<Map<String, Object>>();
-        Map<String, Object> listMap = new HashMap<String, Object>();
-        Map<String, Object> map = null;
-
-        Supplier supplier = supplierDao.get(supplierId);
-        DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
-        Double prevValue = null;
-        Set<String> meterNoList = new HashSet<String>();
-
-        if (list != null && list.size() > 0) {
-            if (page != null && limit != null) {        // paging
-                for (Map<String, Object> obj : list) {
-                    meterNoList.add((String)obj.get("METER_NO"));
-                }
-                conditionMap.put("meterNoList", meterNoList);
-            }
-
-            String prevDate = null; 
-            Map<String, String> prevWeek = null;
-
-            try {
-                // 조회시작일자 이전일자
-                prevDate = TimeUtil.getPreDay(searchStartDate).substring(0, 8);
-
-                // 이전일자 주차 구하기
-                int weekNum = CalendarUtil.getWeekOfMonth(prevDate);
-
-                // 주차에 해당하는 from to
-                prevWeek = CalendarUtil.getDateWeekOfMonth(prevDate.substring(0, 4), prevDate.substring(4, 6), weekNum+"");
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-            conditionMap.put("prevStartDate", prevWeek.get("startDate"));
+        try {
+        	String prevDate = TimeUtil.getPreDay(searchStartDate).substring(0, 8);
+        	int weekNum = CalendarUtil.getWeekOfMonth(prevDate);
+        	Map<String, String> prevWeek = CalendarUtil.getDateWeekOfMonth(
+        			prevDate.substring(0, 4), prevDate.substring(4, 6), weekNum+"");
+        	conditionMap.put("prevStartDate", prevWeek.get("startDate"));
             conditionMap.put("prevEndDate", prevWeek.get("endDate"));
-
-            prevList = meteringdayDao.getMeteringDataWeeklyData(conditionMap, false, true);
-
-            for (Map<String, Object> obj : prevList) {
-                listMap.put((String)obj.get("METER_NO"), obj.get("VALUE"));
-            }
-
-            if("대성에너지".equals(supplier.getName())) {
-                conditionMap.put("startDate", searchStartDate.substring(0, 6));
-                conditionMap.put("endDate", searchEndDate.substring(0, 6));
-                conditionMap.put("startDetailDate", searchStartDate.substring(6, 8));
-                conditionMap.put("endDetailDate", searchEndDate.substring(6, 8));
-            
-                List<Map<String, Object>> accumulateList = meteringMonthDao.getMeteringDataMonthlyChannel2Data(conditionMap);
-            
-                for (Map<String, Object> obj : accumulateList) {
-                    listMap.put((String)obj.get("METER_NO")+"_ACCUMULATE", obj.get("ACCUMULATEVALUE"));
-                }
-            }
+        } catch (ParseException e) {
+            logger.error(e,e);
         }
 
-        int num = 0;
+        // Get data from DB
+        List<Map<String, Object>> list = meteringdayDao.getMeteringDataWeeklyData(conditionMap, false);
 
+        // Set paging
+        int num = 1;
         if (page != null && limit != null) {
             num = ((page - 1) * limit) + 1;
-        } else {
-            num = 1;
         }
 
+        // Make date for view
         for (Map<String, Object> obj : list) {
-            map = new HashMap<String, Object>();
-            Double accumulate = null;
+        	Map<String, Object> map = new HashMap<String, Object>();
             
             map.put("num", num++);
             map.put("contractNumber", (String)obj.get("CONTRACT_NUMBER"));
@@ -3896,14 +3829,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));
             map.put("value", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
-
-            prevValue = DecimalUtil.ConvertNumberToDouble(listMap.get((String)obj.get("METER_NO")));
-            if("대성에너지".equals(supplier.getName())) 
-                accumulate = DecimalUtil.ConvertNumberToDouble(listMap.get((String)obj.get("METER_NO")+"_ACCUMULATE"));
-            
-            map.put("prevValue", (prevValue == null) ? "" : mdf.format(prevValue));
-            if("대성에너지".equals(supplier.getName())) 
-                map.put("accumulateValue", (accumulate == null) ? "" : mdf.format(accumulate));
+            map.put("prevValue", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE"))));
             result.add(map);
         }
 
@@ -3932,9 +3858,21 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             conditionMap.put("locationIdList", locationIdList);
         }
 
-        conditionMap.put("meterNoList", null);
-        conditionMap.put("startDate", (String)conditionMap.get("searchStartDate"));
-        conditionMap.put("endDate", (String)conditionMap.get("searchEndDate"));
+        // Set dates
+        String searchStartDate = (String)conditionMap.get("searchStartDate");
+        String searchEndDate = (String)conditionMap.get("searchEndDate");
+        conditionMap.put("startDate", searchStartDate);
+        conditionMap.put("endDate", searchEndDate);
+        try {
+        	String prevDate = TimeUtil.getPreDay(searchStartDate).substring(0, 8);
+        	int weekNum = CalendarUtil.getWeekOfMonth(prevDate);
+        	Map<String, String> prevWeek = CalendarUtil.getDateWeekOfMonth(
+        			prevDate.substring(0, 4), prevDate.substring(4, 6), weekNum+"");
+        	conditionMap.put("prevStartDate", prevWeek.get("startDate"));
+            conditionMap.put("prevEndDate", prevWeek.get("endDate"));
+        } catch (ParseException e) {
+            logger.error(e,e);
+        }
 
         List<Map<String, Object>> result = meteringdayDao.getMeteringDataWeeklyData(conditionMap, true);
         return (Integer)(result.get(0).get("total"));
