@@ -1381,7 +1381,7 @@ public abstract class AbstractMDSaver
     	MeterType meterType = MeterType.valueOf(meter.getMeterType().getName());
     	
     	if(Boolean.valueOf(FMPProperty.getProperty("fep.lp.using.procedure", "true"))
-    			&& meterType == MeterType.EnergyMeter) {
+    			&& (meterType == MeterType.EnergyMeter || meterType == MeterType.WaterMeter)) {
     		saveLPDataUsingLPTimeUsingProcedure(meteringType, lpMap, meter, mdevType);
     	} else {
     		saveLPDataUsingLPTimeUsingJPA(meteringType, lpMap, meter, mdevType);
