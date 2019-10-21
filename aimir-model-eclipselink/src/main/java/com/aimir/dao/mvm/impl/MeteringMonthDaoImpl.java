@@ -102,13 +102,6 @@ public class MeteringMonthDaoImpl extends AbstractJpaDao<MeteringMonth, Integer>
     }
 
     @Override
-    public List<Map<String, Object>> getMeteringDataMonthlyData(
-            Map<String, Object> conditionMap, boolean isTotal, boolean isPrev) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     public List<Map<String, Object>> getMeteringDataYearlyData(
             Map<String, Object> conditionMap, boolean isTotal) {
         // TODO Auto-generated method stub

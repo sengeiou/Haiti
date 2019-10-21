@@ -91,17 +91,6 @@ public interface MeteringMonthDao extends GenericDao<MeteringMonth, Integer>{
      */
     public List<Map<String, Object>> getMeteringDataMonthlyChannel2Data(Map<String, Object> conditionMap);
 
-    /**
-     * method name : getMeteringDataMonthlyData<b/>
-     * method Desc : Metering Data 맥스가젯에서 월별 검침데이터를 조회한다.
-     *
-     * @param conditionMap
-     * @param isTotal
-     * @param isPrev
-     * @return
-     */
-    public List<Map<String, Object>> getMeteringDataMonthlyData(Map<String, Object> conditionMap, boolean isTotal, boolean isPrev);
-
 
     /**
      * method name : getMeteringDataYearlyData<b/>

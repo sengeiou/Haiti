@@ -826,7 +826,7 @@ public class MvmMaxController {
 	            	}
 	                break;
 	            case DAILY:
-	                result = searchMeteringDataManager.getMeteringDataDailyData(conditionMap);
+	                result = searchMeteringDataManager.getMeteringDataDailyData2(conditionMap);
 	                sbFileName.append(dayPrefix);
 	                break;
 	            case WEEKLY:

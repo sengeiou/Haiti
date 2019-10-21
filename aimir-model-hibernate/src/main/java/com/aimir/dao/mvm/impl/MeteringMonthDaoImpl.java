@@ -790,20 +790,8 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
      * @param isTotal
      * @return
      */
-    public List<Map<String, Object>> getMeteringDataMonthlyData(Map<String, Object> conditionMap, boolean isTotal) {
-        return getMeteringDataMonthlyData(conditionMap, isTotal, false);
-    }
-
-    /**
-     * method name : getMeteringDataMonthlyData<b/>
-     * method Desc : Metering Data 맥스가젯에서 월별 검침데이터를 조회한다.
-     *
-     * @param conditionMap
-     * @param isTotal
-     * @param isPrev
-     * @return
-     */
-    public List<Map<String, Object>> getMeteringDataMonthlyData(Map<String, Object> conditionMap, boolean isTotal, boolean isPrev) {
+    @SuppressWarnings("deprecation")
+	public List<Map<String, Object>> getMeteringDataMonthlyData(Map<String, Object> conditionMap, boolean isTotal) {
         List<Map<String, Object>> result;
 
         Integer supplierId = (Integer)conditionMap.get("supplierId");
@@ -811,212 +799,131 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         Integer sicId = (Integer)conditionMap.get("sicId");    // 임시
         Integer page = (Integer)conditionMap.get("page");
         Integer limit = (Integer)conditionMap.get("limit");
-
         String contractNumber = StringUtil.nullToBlank(conditionMap.get("contractNumber"));
         String customerName = StringUtil.nullToBlank(conditionMap.get("customerName"));
         String meteringSF = StringUtil.nullToBlank(conditionMap.get("meteringSF"));
-
         String friendlyName = StringUtil.nullToBlank(conditionMap.get("friendlyName"));
         Integer isManualMeter = (Integer) conditionMap.get("isManualMeter");
-        
-        String startDate = null;
-        String endDate = null;
-        
+        String startDate = StringUtil.nullToBlank(conditionMap.get("startDate"));
+        String endDate = StringUtil.nullToBlank(conditionMap.get("endDate"));
+        String prevStartDate = StringUtil.nullToBlank(conditionMap.get("prevStartDate"));
+        String prevEndDate = StringUtil.nullToBlank(conditionMap.get("prevEndDate"));
         String mcuId = StringUtil.nullToBlank(conditionMap.get("mcuId"));
         String modemId = StringUtil.nullToBlank(conditionMap.get("modemId"));
         String deviceType = StringUtil.nullToBlank(conditionMap.get("deviceType"));
         String mdevId = StringUtil.nullToBlank(conditionMap.get("mdevId"));
         String contractGroup = StringUtil.nullToBlank(conditionMap.get("contractGroup"));
         String meterType = StringUtil.nullToBlank(conditionMap.get("meterType"));
-//        String tlbType = StringUtil.nullToBlank(conditionMap.get("tlbType"));
         List<Integer> sicIdList = (List<Integer>)conditionMap.get("sicIdList");
         List<Integer> locationIdList = (List<Integer>)conditionMap.get("locationIdList");
-        String MonthTable = MeterType.valueOf(meterType).getMonthTableName();
-
-        if (isPrev) {
-            startDate = StringUtil.nullToBlank(conditionMap.get("prevStartDate"));
-            endDate = StringUtil.nullToBlank(conditionMap.get("prevEndDate"));
-        } else {
-            startDate = StringUtil.nullToBlank(conditionMap.get("startDate"));
-            endDate = StringUtil.nullToBlank(conditionMap.get("endDate"));
-        }
+        
+        String monthView = MeterType.valueOf(meterType).getMonthViewName();
 
         StringBuilder sb = new StringBuilder();
 
         if (isTotal) {
-            sb.append("\nSELECT COUNT(*) FROM ( ");
-            sb.append("\n    SELECT CONTRACT_NUMBER ");
-            sb.append("\n    FROM ( ");
+            sb.append("\nSELECT COUNT(*) ");
         } else {
-            sb.append("\nSELECT CONTRACT_NUMBER, ");
-            sb.append("\n       CUSTOMER_NAME, ");
-            sb.append("\n       YYYYMM, ");
-            sb.append("\n       METER_NO, ");
-            sb.append("\n       FRIENDLY_NAME, ");
-
-            if (!isPrev) {
-                sb.append("\n       MODEM_ID, ");
-            }
-
-            sb.append("\n       LAST_METERING_VALUE,");
-            sb.append("\n       SIC_NAME, ");
-            sb.append("\n       SUM(VALUE) AS VALUE ");
-            sb.append("\nFROM ( ");
+            sb.append("\nSELECT mv.yyyymm AS YYYYMM, ");
+            sb.append("\n       mv.mdev_id AS METER_NO, ");
+            sb.append("\n       mo.device_serial AS MODEM_ID, ");
+            sb.append("\n       code.name AS SIC_NAME, ");
+            sb.append("\n       NVL(me.last_metering_value,0) AS LAST_METERING_VALUE, ");
+            sb.append("\n       NVL(mv.total_value,0) AS VALUE,");
+            sb.append("\n       NVL(pre.total_value,0) AS PRE_VALUE ");
         }
-
-        sb.append("\nSELECT co.contract_number AS CONTRACT_NUMBER, ");
-        sb.append("\n       cu.name AS CUSTOMER_NAME, ");
-        sb.append("\n       yyyymm AS YYYYMM, ");
-        sb.append("\n       mds_id AS METER_NO, ");
-        sb.append("\n       friendly_name AS FRIENDLY_NAME, ");
-
-        if (!isPrev) {
-            if (!mcuId.isEmpty()) {
-                sb.append("\n           mo.device_serial as MODEM_ID, ");
-            } else {
-                sb.append("\n           (SELECT md.device_serial FROM modem md WHERE md.id = mt.modem_id ) AS MODEM_ID, ");
-            }
-        }
-
-        sb.append("\n       mt.LAST_METERING_VALUE as LAST_METERING_VALUE, ");
-        sb.append("\n       code.name as SIC_NAME, ");
-        sb.append("\n       mn.total_value as VALUE ");
-        sb.append("\n    FROM ").append(MonthTable).append(" mn ");
-        sb.append("\n         LEFT OUTER JOIN ");
-        sb.append("\n         contract co ");
-        sb.append("\n         ON co.id = mn.contract_id ");
-        sb.append("\n         LEFT OUTER JOIN ");
-        sb.append("\n         code code ");
-        sb.append("\n         ON co.sic_id=code.id ");
-        sb.append("\n         LEFT OUTER JOIN ");
-        sb.append("\n         customer cu ");
-        sb.append("\n         ON cu.id = co.customer_id, ");
-
-        if (!contractGroup.isEmpty()) {
-            sb.append("\n         group_member gm, ");
-        }
-
-        sb.append("\n         meter mt ");
-
-        if (!mcuId.isEmpty()) {
-            sb.append("\n         ,modem mo ");
-            sb.append("\n         ,mcu mc ");
-        }
-
-        if(!modemId.isEmpty()){
-        	sb.append("\n         ,modem mo ");
-        }
-        
-        sb.append("\n    WHERE mn.yyyymm BETWEEN :startDate AND :endDate ");
-        sb.append("\n    AND   mn.channel = 1 ");
-        sb.append("\n    AND   mt.id = mn.meter_id ");
-        sb.append("\n    AND   mt.supplier_id = :supplierId ");
+        sb.append("\nFROM ").append(monthView).append(" mv ");
+        sb.append("\nLEFT OUTER JOIN meter me ON mv.mdev_id = me.mds_id ");
+        sb.append("\nLEFT OUTER JOIN modem mo ON mv.modem_id = mo.id ");
+        sb.append("\nLEFT OUTER JOIN mcu mc ON mv.device_id = mc.sys_id ");
+        sb.append("\nLEFT OUTER JOIN contract co ON mv.contract_id = co.id ");
+        sb.append("\nLEFT OUTER JOIN customer cu ON co.customer_id = cu.id ");
+        sb.append("\nLEFT OUTER JOIN code code ON co.sic_id = code.id ");
+        sb.append("\nLEFT OUTER JOIN group_member gm ON gm.member = co.contract_number ");
+        sb.append("\nLEFT OUTER JOIN ( ");
+        sb.append("\n    SELECT mv.total_value AS TOTAL_VALUE,");
+        sb.append("\n           mv.mdev_id");
+        sb.append("\n    FROM MONTH_EM_VIEW mv");
+        sb.append("\n    WHERE mv.yyyymm BETWEEN :prevStartDate AND :prevEndDate");
+        sb.append("\n    and mv.channel = 1 ");
+        sb.append("\n) pre ON mv.mdev_id = pre.mdev_id ");
+        sb.append("\nWHERE mv.yyyymm BETWEEN :startDate AND :endDate ");
+        sb.append("\nAND   mv.channel = 1 ");
+        sb.append("\nAND   me.supplier_id = :supplierId ");
 
         if (!deviceType.isEmpty()) {
-            sb.append("\n    AND   mn.mdev_type = :deviceType ");
+            sb.append("\nAND   mv.mdev_type = :deviceType ");
         }
-
         if (meteringSF.equals("s")) {
-            sb.append("\n    AND   mn.total_value IS NOT NULL ");
+            sb.append("\nAND   mv.total_value IS NOT NULL ");
         } else {
-            sb.append("\n    AND   mn.total_value IS NULL ");
+            sb.append("\nAND   mv.total_value IS NULL ");
         }
-
-        if (!mdevId.isEmpty()) {
-        	if(mdevId.indexOf('%') == 0 || mdevId.indexOf('%') == (mdevId.length()-1)) { // %문자가 양 끝에 있을경우
-                sb.append("\n    AND   mt.mds_id LIKE :mdevId ");
-        	}else {
-                sb.append("\n    AND   mt.mds_id = :mdevId ");
-        	}
-        }
-
-        // XXX: 수검침 조건
-        if (!friendlyName.isEmpty()) {
-            sb.append("\n    AND   mt.friendly_name = :friendlyName ");
-        }
-        if (isManualMeter != null) {
-            sb.append("\n    AND   mt.is_manual_meter = :isManualMeter ");
-        }
-
-        if (!contractNumber.isEmpty()) {
-        	if(contractNumber.indexOf('%') == 0 || contractNumber.indexOf('%') == (contractNumber.length()-1)) { // %문자가 양 끝에 있을경우
-                sb.append("\n    AND   co.contract_number LIKE :contractNumber ");
-        	}else {
-                sb.append("\n    AND   co.contract_number = :contractNumber ");
-        	}
-        }
-
-        if (sicIdList != null) {
-            sb.append("\n    AND   co.sic_id IN (:sicIdList) ");
-        }
-
-        if (sicId != null) {
-            sb.append("\n    AND   co.sic_id = :sicId ");
-        }
-
-        if (tariffType != null) {
-            sb.append("\n    AND   co.tariffindex_id = :tariffType ");
-        }
-
-        if (locationIdList != null) {
-            sb.append("\n    AND   mt.location_id IN (:locationIdList) ");
-        }
-
-        if (!contractGroup.isEmpty()) {
-            sb.append("\n    AND   gm.member = co.contract_number ");
-            sb.append("\n    AND   gm.group_id = :contractGroup ");
-        }
-
         if (!customerName.isEmpty()) {
         	if(customerName.indexOf('%') == 0 || customerName.indexOf('%') == (customerName.length()-1)) { // %문자가 양 끝에 있을경우
-                sb.append("\n    AND   cu.name LIKE :customerName ");
+                sb.append("\nAND   cu.name LIKE :customerName ");
         	}else {
-                sb.append("\n    AND   cu.name = :customerName ");
+                sb.append("\nAND   cu.name = :customerName ");
         	}
         }
-
         if (!mcuId.isEmpty()) {
-            sb.append("\n    AND   mo.id = mt.modem_id ");
-            sb.append("\n    AND   mc.id = mo.mcu_id ");
         	if(mcuId.indexOf('%') == 0 || mcuId.indexOf('%') == (mcuId.length()-1)) { // %문자가 양 끝에 있을경우
-            	sb.append("\n    AND   mc.sys_id LIKE :mcuId ");
+            	sb.append("\nAND   mc.sys_id LIKE :mcuId ");
         	}else {
-            	sb.append("\n    AND   mc.sys_id = :mcuId ");
+            	sb.append("\nAND   mc.sys_id = :mcuId ");
         	}
         }
-
         if(!modemId.isEmpty()){
-            sb.append("\n    AND   mt.modem_id = mo.id ");
         	if(modemId.indexOf('%') == 0 || modemId.indexOf('%') == (modemId.length()-1)) { // %문자가 양 끝에 있을경우
-                sb.append("\n    AND   mo.device_serial LIKE :modemId ");
+                sb.append("\nAND   mo.device_serial LIKE :modemId ");
         	}else {
-                sb.append("\n    AND   mo.device_serial = :modemId ");
+                sb.append("\nAND   mo.device_serial = :modemId ");
         	}
         }
+        if (!mdevId.isEmpty()) {
+        	if(mdevId.indexOf('%') == 0 || mdevId.indexOf('%') == (mdevId.length()-1)) { // %문자가 양 끝에 있을경우
+                sb.append("\nAND   mv.mdev_id LIKE :mdevId ");
+        	}else {
+                sb.append("\nAND   mv.mdev_id = :mdevId ");
+        	}
+        }
+        if (!contractNumber.isEmpty()) {
+        	if(contractNumber.indexOf('%') == 0 || contractNumber.indexOf('%') == (contractNumber.length()-1)) { // %문자가 양 끝에 있을경우
+                sb.append("\nAND   co.contract_number LIKE :contractNumber ");
+        	}else {
+                sb.append("\nAND   co.contract_number = :contractNumber ");
+        	}
+        }
+
+        if (!friendlyName.isEmpty()) {
+            sb.append("\nAND   mv.friendly_name = :friendlyName ");
+        }
+        if (isManualMeter != null) {
+            sb.append("\nAND   mv.is_manual_meter = :isManualMeter ");
+        }
+        if (sicIdList != null) {
+            sb.append("\nAND   co.sic_id IN (:sicIdList) ");
+        }
+        if (sicId != null) {
+            sb.append("\nAND   co.sic_id = :sicId ");
+        }
+        if (tariffType != null) {
+            sb.append("\nAND   co.tariffindex_id = :tariffType ");
+        }
+        if (locationIdList != null) {
+            sb.append("\nAND   mt.location_id IN (:locationIdList) ");
+        }
+        if (!contractGroup.isEmpty()) {
+            sb.append("\nAND   gm.group_id = :contractGroup ");
+        }
+        sb.append("\nORDER BY   mv.yyyymm, mv.mdev_id ");
         
-        sb.append("\n) tbl ");
-        sb.append("\nGROUP BY CONTRACT_NUMBER, ");
-        sb.append("\n         CUSTOMER_NAME, ");
-        sb.append("\n         YYYYMM, ");
-        sb.append("\n         METER_NO, ");
-        sb.append("\n         FRIENDLY_NAME ");
-
-        if (!isPrev) {
-            sb.append("\n         ,MODEM_ID ");
-        }
-        sb.append("\n         ,LAST_METERING_VALUE ");
-        sb.append("\n         ,SIC_NAME ");
-
-
-        if (isTotal) {
-            sb.append("\n) y ");
-        }
-
-        logger.debug(sb.toString());
         SQLQuery query = getSession().createSQLQuery(new SQLWrapper().getQuery(sb.toString()));
 
         query.setString("startDate", startDate);
         query.setString("endDate", endDate);
+        query.setString("prevStartDate", prevStartDate);
+        query.setString("prevEndDate", prevEndDate);
         query.setInteger("supplierId", supplierId);
 
         if (!deviceType.isEmpty()) {
@@ -1079,7 +986,7 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
             result = new ArrayList<Map<String, Object>>();
             result.add(map);
         } else {
-            if (!isPrev && page != null && limit != null) {
+            if (page != null && limit != null) {
                 query.setFirstResult((page - 1) * limit);
                 query.setMaxResults(limit);
             }
@@ -1332,7 +1239,8 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
      * @param isPrev
      * @return
      */
-    public List<Map<String, Object>> getMeteringDataYearlyData(Map<String, Object> conditionMap, boolean isTotal, boolean isPrev) {
+    @SuppressWarnings("deprecation")
+	public List<Map<String, Object>> getMeteringDataYearlyData(Map<String, Object> conditionMap, boolean isTotal, boolean isPrev) {
         List<Map<String, Object>> result;
 
         Integer supplierId = (Integer)conditionMap.get("supplierId");
@@ -1345,8 +1253,10 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         String customerName = StringUtil.nullToBlank(conditionMap.get("customerName"));
         String meteringSF = StringUtil.nullToBlank(conditionMap.get("meteringSF"));
 
-        String startDate = null;
-        String endDate = null;
+        String startDate = StringUtil.nullToBlank(conditionMap.get("startDate"));
+        String endDate = StringUtil.nullToBlank(conditionMap.get("endDate"));
+        String prevStartDate = StringUtil.nullToBlank(conditionMap.get("prevStartDate"));
+        String prevEndDate = StringUtil.nullToBlank(conditionMap.get("prevEndDate"));
 
         String mcuId = StringUtil.nullToBlank(conditionMap.get("mcuId"));
         String modemId = StringUtil.nullToBlank(conditionMap.get("modemId"));
@@ -1356,219 +1266,140 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         String meterType = StringUtil.nullToBlank(conditionMap.get("meterType"));
         List<Integer> sicIdList = (List<Integer>)conditionMap.get("sicIdList");
         List<Integer> locationIdList = (List<Integer>)conditionMap.get("locationIdList");
-        Set<String> meterNoList = (Set<String>)conditionMap.get("meterNoList");
-        String MonthTable = MeterType.valueOf(meterType).getMonthTableName();
-
-        if (isPrev) {
-            startDate = StringUtil.nullToBlank(conditionMap.get("prevStartDate"));
-            endDate = StringUtil.nullToBlank(conditionMap.get("prevEndDate"));
-        } else {
-            startDate = StringUtil.nullToBlank(conditionMap.get("startDate"));
-            endDate = StringUtil.nullToBlank(conditionMap.get("endDate"));
-        }
+//        Set<String> meterNoList = (Set<String>)conditionMap.get("meterNoList");
+        String monthView = MeterType.valueOf(meterType).getMonthViewName();
 
         StringBuilder sb = new StringBuilder();
         
         if (isTotal) {
-            sb.append("\nSELECT COUNT(*) FROM (");
+            sb.append("\nSELECT COUNT(SUM(NVL(mv.total_value,0))) ");
+        } else {
+            sb.append("\nSELECT co.contract_number AS CONTRACT_NUMBER,	");
+            sb.append("\n       cu.name AS CUSTOMER_NAME, 				");
+            sb.append("\n       mv.mdev_id AS METER_NO, 				");
+            sb.append("\n       code.name AS SIC_NAME, 					");
+            sb.append("\n       SUM(NVL(mv.total_value,0)) AS VALUE, 	");
+            sb.append("\n       NVL(pre.total_value,0) AS PRE_VALUE 	");
         }
-        
-        sb.append("\nSELECT contract_number AS CONTRACT_NUMBER, ");
-        sb.append("\n       customer_name AS CUSTOMER_NAME, ");
-        sb.append("\n       mds_id AS METER_NO, ");
-
-        if (!isPrev) {
-            sb.append("\n       device_serial AS MODEM_ID, ");
-        }
-        
-        sb.append("\n       SIC_NAME, ");
-        sb.append("\n       SUM(total_value) AS VALUE ");
-        sb.append("\nFROM ( ");
-        sb.append("\n    SELECT mt.mds_id, ");
-        sb.append("\n           co.contract_number, ");
-        sb.append("\n           cu.name AS customer_name, ");
-
-        if (!isPrev) {
-            if (!mcuId.isEmpty()) {
-                sb.append("\n           mo.device_serial, ");
-            } else {
-                sb.append("\n           (SELECT md.device_serial FROM modem md WHERE md.id = mt.modem_id ) AS device_serial, ");
-            }
-        }
-        
-        sb.append("\n           code.name as SIC_NAME, ");
-        sb.append("\n           mn.total_value ");
-        sb.append("\n    FROM ").append(MonthTable).append(" mn ");
-        sb.append("\n         LEFT OUTER JOIN ");
-        sb.append("\n         contract co ");
-        sb.append("\n         ON co.id = mn.contract_id ");
-        sb.append("\n         LEFT OUTER JOIN ");
-        sb.append("\n         code code ");
-        sb.append("\n         ON co.sic_id = code.id ");
-        sb.append("\n         LEFT OUTER JOIN ");
-        sb.append("\n         customer cu ");
-        sb.append("\n         ON cu.id = co.customer_id, ");
-
-        if (!contractGroup.isEmpty()) {
-            sb.append("\n         group_member gm, ");
-        }
-
-        sb.append("\n         meter mt ");
-
-        if (!mcuId.isEmpty()) {
-            sb.append("\n         ,modem mo ");
-            sb.append("\n         ,mcu mc ");
-        }
-
-        if(!modemId.isEmpty()){
-        	sb.append("\n         ,modem mo ");
-        }
-        
-        sb.append("\n    WHERE mn.yyyymm BETWEEN :startDate AND :endDate ");
-        sb.append("\n    AND   mn.channel = 1 ");
-
-        if (meterNoList != null) {
-            sb.append("\n    AND   mn.mdev_id IN (:meterNoList) ");
-        }
-
-        sb.append("\n    AND   mt.id = mn.meter_id ");
-        sb.append("\n    AND   mt.supplier_id = :supplierId ");
+        sb.append("\nFROM ").append(monthView).append(" mv 					");
+        sb.append("\nLEFT OUTER JOIN meter mt ON mt.mds_id = mv.mdev_id 	");
+        sb.append("\nLEFT OUTER JOIN modem mo ON mo.id = mv.modem_id 		");
+        sb.append("\nLEFT OUTER JOIN mcu mc ON mc.sys_id = mv.device_id 	");
+        sb.append("\nLEFT OUTER JOIN contract co ON co.id = mv.contract_id 	");
+        sb.append("\nLEFT OUTER JOIN customer cu ON cu.id = co.customer_id 	");
+        sb.append("\nLEFT OUTER JOIN code code ON co.sic_id = code.id 		");
+        sb.append("\nLEFT OUTER JOIN group_member gm ON gm.member = co.contract_number ");
+        sb.append("\nLEFT OUTER JOIN ( 										");
+        sb.append("\n    SELECT SUM(NVL(mv.total_value,0)) AS TOTAL_VALUE, 	");
+        sb.append("\n           mv.mdev_id 									");
+        sb.append("\n    FROM ").append(monthView).append(" mv 				");
+        sb.append("\n    WHERE mv.yyyymm between :prevStartDate and :prevEndDate ");
+        sb.append("\n    AND mv.channel = 1 			"); 
+        sb.append("\n    GROUP BY mv.mdev_id 			"); 
+        sb.append("\n) pre ON mv.mdev_id = pre.mdev_id 	");
+        sb.append("\nWHERE mv.yyyymm BETWEEN :startDate AND :endDate ");
+        sb.append("\nAND   mv.channel = 1 				");
+        sb.append("\nAND   mt.supplier_id = :supplierId ");
 
         if (!deviceType.isEmpty()) {
-            sb.append("\n    AND   mn.mdev_type = :deviceType ");
+            sb.append("\nAND   mv.mdev_type = :deviceType ");
         }
-
         if (meteringSF.equals("s")) {
-            sb.append("\n    AND   mn.total_value IS NOT NULL ");
+            sb.append("\nAND   mv.total_value IS NOT NULL ");
         } else {
-            sb.append("\n    AND   mn.total_value IS NULL ");
+            sb.append("\nAND   mv.total_value IS NULL ");
         }
-
         if (!mdevId.isEmpty()) {
         	if(mdevId.indexOf('%') == 0 || mdevId.indexOf('%') == (mdevId.length()-1)) { // %문자가 양 끝에 있을경우
-                sb.append("\n    AND   mt.mds_id LIKE :mdevId ");
+                sb.append("\nAND   mt.mds_id LIKE :mdevId ");
         	}else {
-                sb.append("\n    AND   mt.mds_id = :mdevId ");
+                sb.append("\nAND   mt.mds_id = :mdevId ");
         	}
         }
-
         if (!contractNumber.isEmpty()) {
         	if(contractNumber.indexOf('%') == 0 || contractNumber.indexOf('%') == (contractNumber.length()-1)) { // %문자가 양 끝에 있을경우
-                sb.append("\n    AND   co.contract_number LIKE :contractNumber ");
+                sb.append("\nAND   co.contract_number LIKE :contractNumber ");
         	}else {
-                sb.append("\n    AND   co.contract_number = :contractNumber ");
+                sb.append("\nAND   co.contract_number = :contractNumber ");
         	}
         }
-
-        if (sicIdList != null) {
-            sb.append("\n    AND   co.sic_id IN (:sicIdList) ");
-        }
-
-        if (sicId != null) {
-            sb.append("\n    AND   co.sic_id = :sicId ");
-        }
-
-        if (tariffType != null) {
-            sb.append("\n    AND   co.tariffindex_id = :tariffType ");
-        }
-
-        if (locationIdList != null) {
-            sb.append("\n    AND   mt.location_id IN (:locationIdList) ");
-        }
-
-        if (!contractGroup.isEmpty()) {
-            sb.append("\n    AND   gm.member = co.contract_number ");
-            sb.append("\n    AND   gm.group_id = :contractGroup ");
-        }
-
         if (!customerName.isEmpty()) {
         	if(customerName.indexOf('%') == 0 || customerName.indexOf('%') == (customerName.length()-1)) { // %문자가 양 끝에 있을경우
-                sb.append("\n    AND   cu.name LIKE :customerName ");
+                sb.append("\nAND   cu.name LIKE :customerName ");
         	}else {
-                sb.append("\n    AND   cu.name = :customerName ");
+                sb.append("\nAND   cu.name = :customerName ");
         	}
         }
-
         if (!mcuId.isEmpty()) {
-            sb.append("\n    AND   mo.id = mt.modem_id ");
-            sb.append("\n    AND   mc.id = mo.mcu_id ");
         	if(mcuId.indexOf('%') == 0 || mcuId.indexOf('%') == (mcuId.length()-1)) { // %문자가 양 끝에 있을경우
-            	sb.append("\n    AND   mc.sys_id LIKE :mcuId ");
+            	sb.append("\nAND   mc.sys_id LIKE :mcuId ");
         	}else {
-            	sb.append("\n    AND   mc.sys_id = :mcuId ");
+            	sb.append("\nAND   mc.sys_id = :mcuId ");
         	}
         }
-       
         if(!modemId.isEmpty()){
-            sb.append("\n    AND   mt.modem_id = mo.id ");
         	if(modemId.indexOf('%') == 0 || modemId.indexOf('%') == (modemId.length()-1)) { // %문자가 양 끝에 있을경우
-                sb.append("\n    AND   mo.device_serial LIKE :modemId ");
+                sb.append("\nAND   mo.device_serial LIKE :modemId ");
         	}else {
-                sb.append("\n    AND   mo.device_serial = :modemId ");
+                sb.append("\nAND   mo.device_serial = :modemId ");
         	}
         }
-        
-        sb.append("\n) x ");
-        sb.append("\nGROUP BY mds_id, contract_number, customer_name, SIC_NAME ");
-
-        if (!isPrev) {
-            sb.append(", device_serial ");
+        if (sicIdList != null) {
+            sb.append("\nAND   co.sic_id IN (:sicIdList) ");
         }
-
-        if (isTotal) {
-            sb.append(") y ");
+        if (sicId != null) {
+            sb.append("\nAND   co.sic_id = :sicId ");
         }
+        if (tariffType != null) {
+            sb.append("\nAND   co.tariffindex_id = :tariffType ");
+        }
+        if (locationIdList != null) {
+            sb.append("\nAND   mt.location_id IN (:locationIdList) ");
+        }
+        if (!contractGroup.isEmpty()) {
+            sb.append("\nAND   gm.group_id = :contractGroup ");
+        }
+        sb.append("\nGROUP BY co.contract_number, cu.name, mv.mdev_id, code.name, NVL(pre.total_value,0) ");
+        sb.append("\nORDER BY mv.mdev_id ");
 
         SQLQuery query = getSession().createSQLQuery(new SQLWrapper().getQuery(sb.toString()));
 
         query.setString("startDate", startDate);
         query.setString("endDate", endDate);
+        query.setString("prevStartDate", prevStartDate);
+        query.setString("prevEndDate", prevEndDate);
         query.setInteger("supplierId", supplierId);
-
-        if (meterNoList != null) {
-            query.setParameterList("meterNoList", meterNoList);
-        }
-
+        
         if (!deviceType.isEmpty()) {
             query.setString("deviceType", deviceType);
         }
-
         if (!mdevId.isEmpty()) {
             query.setString("mdevId", mdevId);
         }
-
         if (!contractNumber.isEmpty()) {
             query.setString("contractNumber", contractNumber);
         }
-
         if (sicIdList != null) {
             query.setParameterList("sicIdList", sicIdList);
         }
-
         if (sicId != null) {
             query.setInteger("sicId", sicId);
         }
-
         if (tariffType != null) {
             query.setInteger("tariffType", tariffType);
         }
-
         if (locationIdList != null) {
             query.setParameterList("locationIdList", locationIdList);
         }
-
         if (!contractGroup.isEmpty()) {
             query.setString("contractGroup", contractGroup);
         }
-
         if (!customerName.isEmpty()) {
             query.setString("customerName", customerName);
         }
-
         if (!mcuId.isEmpty()) {
             query.setString("mcuId", mcuId);
         }
-
         if(!modemId.isEmpty()){
         	query.setString("modemId", modemId);
         }

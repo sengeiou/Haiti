@@ -3085,10 +3085,10 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
             sb.append("\n       pre.total_value AS PRE_VALUE ");
         }
         sb.append("\nFROM ").append(dayView).append(" dv ");
-        sb.append("\nLEFT OUTER JOIN meter mt ON mt.mds_id = dv.mdev_id  ");
-        sb.append("\nLEFT OUTER JOIN modem mo ON mo.id = dv.modem_id  ");
-        sb.append("\nLEFT OUTER JOIN mcu mc ON mc.sys_id = dv.device_id  ");
-        sb.append("\nLEFT OUTER JOIN contract co ON co.id = dv.contract_id   ");
+        sb.append("\nLEFT OUTER JOIN meter mt ON mt.mds_id = dv.mdev_id		");
+        sb.append("\nLEFT OUTER JOIN modem mo ON mo.id = dv.modem_id		");
+        sb.append("\nLEFT OUTER JOIN mcu mc ON mc.sys_id = dv.device_id		");
+        sb.append("\nLEFT OUTER JOIN contract co ON co.id = dv.contract_id  ");
         sb.append("\nLEFT OUTER JOIN customer cu ON cu.id = co.customer_id  ");
         sb.append("\nLEFT OUTER JOIN code code ON co.sic_id = code.id 		");
         sb.append("\nLEFT OUTER JOIN group_member gm ON gm.member = co.contract_number ");

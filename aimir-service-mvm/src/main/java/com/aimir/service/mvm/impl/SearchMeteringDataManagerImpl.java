@@ -3890,11 +3890,14 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
         Integer supplierId = (Integer)conditionMap.get("supplierId");
         Integer page = (Integer)conditionMap.get("page");
         Integer limit = (Integer)conditionMap.get("limit");
+        Supplier supplier = supplierDao.get(supplierId);
+        String country = supplier.getCountry().getCode_2letter();
+        String lang    = supplier.getLang().getCode_2letter();
+        DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
+        
         Integer locationId = (Integer)conditionMap.get("locationId");
         Integer permitLocationId = (Integer)conditionMap.get("permitLocationId");
-
         List<Integer> locationIdList = null;
-
         if (locationId != null) {
             locationIdList = locationDao.getChildLocationId(locationId);
             locationIdList.add(locationId);
@@ -3905,82 +3908,30 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             conditionMap.put("locationIdList", locationIdList);
         }
 
+        // Set dates
         String searchStartDate = (String)conditionMap.get("searchStartDate");
         String searchEndDate = (String)conditionMap.get("searchEndDate");
-        String searchPrevStartDate = null;
-
-        if (page != null && limit != null) {        // paging
-            conditionMap.put("startDate", searchStartDate);
-        } else {        // all
-            try {
-                searchPrevStartDate = TimeUtil.getPreDay(searchStartDate).substring(0, 8);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            conditionMap.put("startDate", searchPrevStartDate);
-        }
-
+        conditionMap.put("startDate", searchStartDate);
         conditionMap.put("endDate", searchEndDate);
-
-        List<Map<String, Object>> list = meteringdayDao.getMeteringDataDailyData(conditionMap, false);
-        List<Map<String, Object>> prevList = new ArrayList<Map<String, Object>>();
-        Map<String, Object> listMap = new HashMap<String, Object>();
-        Map<String, Object> map = null;
-
-        Supplier supplier = supplierDao.get(supplierId);
-        String country = supplier.getCountry().getCode_2letter();
-        String lang    = supplier.getLang().getCode_2letter();
-        DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
-        Double prevValue = null;
-        int num = 0;
-
-        if (page != null && limit != null) {        // paging
-            int cnt = 0;
-            String prevStartDate = null;
-            String prevEndDate = null;
-            Map<String, Object> fstMap = null;
-            Map<String, Object> lstMap = null;
-
-            if (list != null && list.size() > 0) {
-                cnt = list.size();
-                fstMap = list.get(0);
-                lstMap = list.get(cnt-1);
-                try {
-                    prevStartDate = TimeUtil.getPreDay((String)fstMap.get("YYYYMMDD")).substring(0, 8);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                prevEndDate = (String)lstMap.get("YYYYMMDD");
-
-                conditionMap.put("prevStartDate", prevStartDate);
-                conditionMap.put("prevEndDate", prevEndDate);
-
-                prevList = meteringdayDao.getMeteringDataDailyData(conditionMap, false, true);
-
-                for (Map<String, Object> obj : prevList) {
-                    listMap.put((String)obj.get("YYYYMMDD") + "_" + (String)obj.get("METER_NO"), obj.get("VALUE"));
-                }
-            }
-        } else {        // all
-            for (Map<String, Object> obj : list) {
-                listMap.put((String)obj.get("YYYYMMDD") + "_" + (String)obj.get("METER_NO"), obj.get("VALUE"));
-            }
+        try {
+        	conditionMap.put("prevStartDate", TimeUtil.getPreDay(searchStartDate).substring(0, 8));
+        	conditionMap.put("prevEndDate",   TimeUtil.getPreDay(searchEndDate).substring(0, 8));
+        } catch (ParseException e) {
+            logger.error(e,e);
         }
 
+        // Get data from DB
+        List<Map<String, Object>> list = meteringdayDao.getMeteringDataDailyData2(conditionMap, false);
+        
+        // Set paging
+        int num = 1;
         if (page != null && limit != null) {
             num = ((page - 1) * limit) + 1;
-        } else {
-            num = 1;
         }
 
+        // Make data for view
         for (Map<String, Object> obj : list) {
-            // 전체조회일 경우 이전일자 데이터는 skip
-            if ((page == null || limit == null) && ((String)obj.get("YYYYMMDD")).compareTo(searchPrevStartDate) == 0) {
-                continue;
-            }
-
-            map = new HashMap<String, Object>();
-
+        	Map<String, Object> map = new HashMap<String, Object>();
             map.put("num", num++);
             map.put("contractNumber", (String)obj.get("CONTRACT_NUMBER"));
             map.put("customerName", (String)obj.get("CUSTOMER_NAME"));
@@ -3989,14 +3940,8 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));       
             map.put("value", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
-
-            try {
-                prevValue = DecimalUtil.ConvertNumberToDouble(listMap.get(TimeUtil.getPreDay((String)obj.get("YYYYMMDD")).substring(0, 8) + "_" + (String)obj.get("METER_NO")));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-            map.put("prevValue", (prevValue == null) ? "" : mdf.format(prevValue));
+            map.put("prevValue", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE"))));
+            
             result.add(map);
         }
 
@@ -4025,10 +3970,19 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             conditionMap.put("locationIdList", locationIdList);
         }
 
-        conditionMap.put("startDate", (String)conditionMap.get("searchStartDate"));
-        conditionMap.put("endDate", (String)conditionMap.get("searchEndDate"));
+        // Set dates
+        String searchStartDate = (String)conditionMap.get("searchStartDate");
+        String searchEndDate = (String)conditionMap.get("searchEndDate");
+        conditionMap.put("startDate", searchStartDate);
+        conditionMap.put("endDate", searchEndDate);
+        try {
+        	conditionMap.put("prevStartDate", TimeUtil.getPreDay(searchStartDate).substring(0, 8));
+        	conditionMap.put("prevEndDate",   TimeUtil.getPreDay(searchEndDate).substring(0, 8));
+        } catch (ParseException e) {
+            logger.error(e,e);
+        }
 
-        List<Map<String, Object>> result = meteringdayDao.getMeteringDataDailyData(conditionMap, true);
+        List<Map<String, Object>> result = meteringdayDao.getMeteringDataDailyData2(conditionMap, true);
         return (Integer)(result.get(0).get("total"));
     }
     
@@ -4208,9 +4162,12 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
         Integer limit = (Integer)conditionMap.get("limit");
         Integer locationId = (Integer)conditionMap.get("locationId");
         Integer permitLocationId = (Integer)conditionMap.get("permitLocationId");
+        Supplier supplier = supplierDao.get(supplierId);
+        String country = supplier.getCountry().getCode_2letter();
+        String lang    = supplier.getLang().getCode_2letter();
+        DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
 
         List<Integer> locationIdList = null;
-
         if (locationId != null) {
             locationIdList = locationDao.getChildLocationId(locationId);
             locationIdList.add(locationId);
@@ -4223,95 +4180,25 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
 
         String searchStartDate = (String)conditionMap.get("searchStartDate");
         String searchEndDate = (String)conditionMap.get("searchEndDate");
-        String searchPrevStartDate = null;
-
-        if (page != null && limit != null) {        // paging
-            conditionMap.put("startDate", searchStartDate.substring(0, 6));
-        } else {        // all
-            try {
-                searchPrevStartDate = TimeUtil.getPreMonth(searchStartDate).substring(0, 6);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            conditionMap.put("startDate", searchPrevStartDate);
-        }
-
+        conditionMap.put("startDate", searchStartDate.substring(0, 6));
         conditionMap.put("endDate", searchEndDate.substring(0, 6));
+        try {
+            conditionMap.put("prevStartDate", TimeUtil.getPreMonth(searchStartDate).substring(0, 6));
+            conditionMap.put("prevEndDate", TimeUtil.getPreMonth(searchEndDate).substring(0, 6));
+        } catch (ParseException e) {
+            logger.error(e,e);
+        }
 
         List<Map<String, Object>> list = meteringMonthDao.getMeteringDataMonthlyData(conditionMap, false);
-        List<Map<String, Object>> prevList = new ArrayList<Map<String, Object>>();
-        List<Map<String, Object>> accumulateList = new ArrayList<Map<String, Object>>();
-        Map<String, Object> listMap = new HashMap<String, Object>();
-        Map<String, Object> map = null;
 
-        Supplier supplier = supplierDao.get(supplierId);
-        String country = supplier.getCountry().getCode_2letter();
-        String lang    = supplier.getLang().getCode_2letter();
-        DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
-        Double prevValue = null;
-
-        if (page != null && limit != null) {        // paging
-            int cnt = 0;
-            String prevStartDate = null;
-            String prevEndDate = null;
-            Map<String, Object> fstMap = null;
-            Map<String, Object> lstMap = null;
-
-            if (list != null && list.size() > 0) {
-                cnt = list.size();
-                fstMap = list.get(0);
-                lstMap = list.get(cnt-1);
-                try {
-                    prevStartDate = TimeUtil.getPreMonth((String)fstMap.get("YYYYMM") + "01").substring(0, 6);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                prevEndDate = (String)lstMap.get("YYYYMM");
-
-                conditionMap.put("prevStartDate", prevStartDate);
-                conditionMap.put("prevEndDate", prevEndDate);
-
-                prevList = meteringMonthDao.getMeteringDataMonthlyData(conditionMap, false, true);
-
-                for (Map<String, Object> obj : prevList) {
-                    listMap.put((String)obj.get("YYYYMM") + "_" + (String)obj.get("METER_NO"), obj.get("VALUE"));
-                }
-            }
-        } else {        // all
-            for (Map<String, Object> obj : list) {
-                listMap.put((String)obj.get("YYYYMM") + "_" + (String)obj.get("METER_NO"), obj.get("VALUE"));
-            }
-            
-            //채널 2번(누적유효전력량) 추가
-            if("대성에너지".equals(supplier.getName())) {
-                conditionMap.put("startDate", searchStartDate.substring(0,6));
-                conditionMap.put("endDate", searchEndDate.substring(0,6));
-                conditionMap.put("startDetailDate", searchStartDate.substring(6,8));
-                conditionMap.put("endDetailDate", searchEndDate.substring(6,8));
-            
-                accumulateList = meteringMonthDao.getMeteringDataMonthlyChannel2Data(conditionMap);
-            
-                for (Map<String, Object> obj : accumulateList) {
-                    listMap.put((String)obj.get("METER_NO")+"_ACCUMULATE", obj.get("ACCUMULATEVALUE"));
-                }
-            }
-        }
-
-        int num = 0;
-        
+        int num = 1;
         if (page != null && limit != null) {
             num = ((page - 1) * limit) + 1;
-        } else {
-            num = 1;
         }
 
         for (Map<String, Object> obj : list) {
-            // 전체조회일 경우 이전일자 데이터는 skip
-            if ((page == null || limit == null) && ((String)obj.get("YYYYMM")).compareTo(searchPrevStartDate) == 0) {
-                continue;
-            }
 
-            map = new HashMap<String, Object>();
+        	Map<String, Object>  map = new HashMap<String, Object>();
 
             map.put("num", num++);
             map.put("contractNumber", (String)obj.get("CONTRACT_NUMBER"));
@@ -4323,23 +4210,11 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));
             map.put("value", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
-            String lastMeteringValue = obj.get("LAST_METERING_VALUE") == null ? null : mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("LAST_METERING_VALUE")));
-            map.put("meterValue", lastMeteringValue);
+            map.put("prevValue", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE"))));
+            map.put("meterValue", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("LAST_METERING_VALUE"))));
             //Monthly로 겁색할때 표시하는 값이며 해당월의 baseValue + total 값으로 이루어져 있다.
-            map.put("meteringValue", obj.get("METERING_VALUE") == null ? null : mdf.format(obj.get("METERING_VALUE")));
+//            map.put("meteringValue", obj.get("METERING_VALUE") == null ? null : mdf.format(obj.get("METERING_VALUE")));
 
-            Double accumulate = null;
-            try {
-                prevValue = DecimalUtil.ConvertNumberToDouble(listMap.get(TimeUtil.getPreMonth((String)obj.get("YYYYMM") + "01").substring(0, 6) + "_" + (String)obj.get("METER_NO")));
-                if("대성에너지".equals(supplier.getName())) 
-                    accumulate = DecimalUtil.ConvertNumberToDouble(listMap.get((String)obj.get("METER_NO")+"_ACCUMULATE"));
-            } catch (ParseException e) {
-                logger.error(e,e);
-            }
-
-            map.put("prevValue", (prevValue == null) ? "" : mdf.format(prevValue));
-            if("대성에너지".equals(supplier.getName())) 
-                map.put("accumulateValue", (accumulate == null) ? "" : mdf.format(accumulate));
             result.add(map);
         }
 
@@ -4390,9 +4265,11 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
         Integer page = (Integer)conditionMap.get("page");
         Integer limit = (Integer)conditionMap.get("limit");
         Integer locationId = (Integer)conditionMap.get("locationId");
+        Supplier supplier = supplierDao.get(supplierId);
+        DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
+        
         Integer permitLocationId = (Integer)conditionMap.get("permitLocationId");
         List<Integer> locationIdList = null;
-
         if (locationId != null) {
             locationIdList = locationDao.getChildLocationId(locationId);
             locationIdList.add(locationId);
@@ -4415,73 +4292,35 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
         }
         
         List<Map<String, Object>> list = null;
+        Map<String, String> prevSeasonMap = null;
+        try {
+        	String prevDate = TimeUtil.getPreDay(searchStartDate).substring(0, 8);
+            prevSeasonMap = seasonManager.getSeasonPeriodByDate(prevDate); // 이전일자 계절주기 구하기
+        } catch (ParseException e) {
+            logger.error(e,e);
+        }
         
         if (hasDay) {   // 계절기간에 일자가 포함되어있을 경우 일자로 조회
             conditionMap.put("startDate", searchStartDate);
             conditionMap.put("endDate", searchEndDate);
+            conditionMap.put("prevStartDate", prevSeasonMap.get("startDate"));
+            conditionMap.put("prevEndDate", prevSeasonMap.get("endDate"));
             list = meteringdayDao.getMeteringDataWeeklyData(conditionMap, false);   // weekly 와 조회 query 가 동일하므로 재사용
         } else {        // 계절기간에 일자가 포함안되어있을 경우 월로 조회
             conditionMap.put("startDate", searchStartDate.substring(0, 6));
             conditionMap.put("endDate", searchEndDate.substring(0, 6));
+            conditionMap.put("prevStartDate", prevSeasonMap.get("startDate").substring(0, 6));
+            conditionMap.put("prevEndDate", prevSeasonMap.get("endDate").substring(0, 6));
             list = meteringMonthDao.getMeteringDataYearlyData(conditionMap, false); // yearly 와 조회 query 가 동일하므로 재사용
         }
 
-        List<Map<String, Object>> prevList = new ArrayList<Map<String, Object>>();
-        Map<String, Object> listMap = new HashMap<String, Object>();
-        Map<String, Object> map = null;
-
-        Supplier supplier = supplierDao.get(supplierId);
-        DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
-        Double prevValue = null;
-        Set<String> meterNoList = new HashSet<String>();
-
-        if (list != null && list.size() > 0) {
-            if (page != null && limit != null) {        // paging
-                for (Map<String, Object> obj : list) {
-                    meterNoList.add((String)obj.get("METER_NO"));
-                }
-                conditionMap.put("meterNoList", meterNoList);
-            }
-
-            String prevDate = null; 
-            Map<String, String> prevSeasonMap = null;
-
-            try {
-                // 조회시작일자 이전일자
-                prevDate = TimeUtil.getPreDay(searchStartDate).substring(0, 8);
-
-                // 이전일자 계절주기 구하기
-                prevSeasonMap = seasonManager.getSeasonPeriodByDate(prevDate);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-            if (hasDay) {   // 계절기간에 일자가 포함되어있을 경우 일자로 조회
-                conditionMap.put("prevStartDate", prevSeasonMap.get("startDate"));
-                conditionMap.put("prevEndDate", prevSeasonMap.get("endDate"));
-                prevList = meteringdayDao.getMeteringDataWeeklyData(conditionMap, false, true);     // weekly 와 조회 query 가 동일하므로 재사용
-            } else {        // 계절기간에 일자가 포함안되어있을 경우 월로 조회
-                conditionMap.put("prevStartDate", prevSeasonMap.get("startDate").substring(0, 6));
-                conditionMap.put("prevEndDate", prevSeasonMap.get("endDate").substring(0, 6));
-                prevList = meteringMonthDao.getMeteringDataYearlyData(conditionMap, false, true);   // yearly 와 조회 query 가 동일하므로 재사용
-            }
-
-            for (Map<String, Object> obj : prevList) {
-                listMap.put((String)obj.get("METER_NO"), obj.get("VALUE"));
-            }
-        }
-
-        int num = 0;
-        
+        int num = 1;
         if (page != null && limit != null) {
             num = ((page - 1) * limit) + 1;
-        } else {
-            num = 1;
         }
 
         for (Map<String, Object> obj : list) {
-            map = new HashMap<String, Object>();
-
+        	Map<String, Object> map = new HashMap<String, Object>();
             map.put("num", num++);
             map.put("contractNumber", (String)obj.get("CONTRACT_NUMBER"));
             map.put("customerName", (String)obj.get("CUSTOMER_NAME"));
@@ -4490,10 +4329,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));       
             map.put("value", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
-
-            prevValue = DecimalUtil.ConvertNumberToDouble(listMap.get((String)obj.get("METER_NO")));
-
-            map.put("prevValue", (prevValue == null) ? "" : mdf.format(prevValue));
+            map.put("prevValue", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE"))));
             result.add(map);
         }
 
@@ -4559,11 +4395,13 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
         Integer supplierId = (Integer)conditionMap.get("supplierId");
         Integer page = (Integer)conditionMap.get("page");
         Integer limit = (Integer)conditionMap.get("limit");
+        Supplier supplier = supplierDao.get(supplierId);
+        DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
+        
+        // Set locations
         Integer locationId = (Integer)conditionMap.get("locationId");
         Integer permitLocationId = (Integer)conditionMap.get("permitLocationId");
-
         List<Integer> locationIdList = null;
-
         if (locationId != null) {
             locationIdList = locationDao.getChildLocationId(locationId);
             locationIdList.add(locationId);
@@ -4577,58 +4415,26 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
         String searchStartDate = (String)conditionMap.get("searchStartDate");
         String searchEndDate = (String)conditionMap.get("searchEndDate");
         String searchYear = searchStartDate.substring(0, 4);
-
         conditionMap.put("startDate", searchStartDate.substring(0, 6));
         conditionMap.put("endDate", searchEndDate.substring(0, 6));
+        String prevYear = null; 
+        try {
+            prevYear = TimeUtil.getPreMonth(searchStartDate).substring(0, 4);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        conditionMap.put("prevStartDate", prevYear + "01");
+        conditionMap.put("prevEndDate", prevYear + "12");
 
         List<Map<String, Object>> list = meteringMonthDao.getMeteringDataYearlyData(conditionMap, false);
-        List<Map<String, Object>> prevList = new ArrayList<Map<String, Object>>();
-        Map<String, Object> listMap = new HashMap<String, Object>();
-        Map<String, Object> map = null;
 
-        Supplier supplier = supplierDao.get(supplierId);
-        DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
-        Double value = null;
-        Double prevValue = null;
-        Set<String> meterNoList = new HashSet<String>();
-
-        if (list != null && list.size() > 0) {
-            if (page != null && limit != null) {        // paging
-                for (Map<String, Object> obj : list) {
-                    meterNoList.add((String)obj.get("METER_NO"));
-                }
-                conditionMap.put("meterNoList", meterNoList);
-            }
-            String prevYear = null; 
-
-            try {
-                // 조회이전 년도
-                prevYear = TimeUtil.getPreMonth(searchStartDate).substring(0, 4);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-            conditionMap.put("prevStartDate", prevYear + "01");
-            conditionMap.put("prevEndDate", prevYear + "12");
-
-            prevList = meteringMonthDao.getMeteringDataYearlyData(conditionMap, false, true);
-
-            for (Map<String, Object> obj : prevList) {
-                listMap.put((String)obj.get("METER_NO"), obj.get("VALUE"));
-            }
-        }
-
-        int num = 0;
-        
+        int num = 1;
         if (page != null && limit != null) {
             num = ((page - 1) * limit) + 1;
-        } else {
-            num = 1;
         }
 
         for (Map<String, Object> obj : list) {
-            map = new HashMap<String, Object>();
-
+        	Map<String, Object> map = new HashMap<String, Object>();
             map.put("num", num++);
             map.put("contractNumber", (String)obj.get("CONTRACT_NUMBER"));
             map.put("customerName", (String)obj.get("CUSTOMER_NAME"));
@@ -4636,12 +4442,8 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("meterNo", (String)obj.get("METER_NO"));
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));       
-            
-            value = DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"));
-            map.put("value", (value == null) ? "" : mdf.format(value));
-
-            prevValue = DecimalUtil.ConvertNumberToDouble(listMap.get((String)obj.get("METER_NO")));
-            map.put("prevValue", (prevValue == null) ? "" : mdf.format(prevValue));
+            map.put("value", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
+            map.put("prevValue", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE"))));
             result.add(map);
         }
 
