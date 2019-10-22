@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.aimir.fep.meter.parser.MeterDataParser;
 import com.aimir.fep.util.DataFormat;
+import com.aimir.fep.util.Hex;
 import com.aimir.model.device.Meter;
 import com.aimir.model.system.DeviceConfig;
 import com.aimir.model.system.MeterConfig;
@@ -164,8 +165,7 @@ public class MeasurementData implements IMeasurementData
                 this.parser.setMeteringType(meteringType);
                 this.parser.parse(bx);
                 
-                String meteringData = new String(bx);
-                log.debug("HEX analysis / "+meter.getMdsId()+" / "+deviceConfig.getParserName()+" / "+meteringData);
+                log.debug("HEX analysis / "+meter.getMdsId()+" / "+deviceConfig.getParserName()+" / "+Hex.decode(bx));
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
             log.error("pos["+pos+"] mdDataLen["+data.length+"] "
