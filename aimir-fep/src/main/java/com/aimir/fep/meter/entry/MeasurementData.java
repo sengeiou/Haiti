@@ -163,6 +163,9 @@ public class MeasurementData implements IMeasurementData
                 this.parser.setMeteringTime(getTimeStamp());
                 this.parser.setMeteringType(meteringType);
                 this.parser.parse(bx);
+                
+                String meteringData = new String(bx);
+                log.debug("HEX analysis / "+meter.getMdsId()+" / "+deviceConfig.getParserName()+" / "+meteringData);
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
             log.error("pos["+pos+"] mdDataLen["+data.length+"] "
