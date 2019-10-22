@@ -116,20 +116,6 @@ public class MeteringLpDaoImpl extends
     }
 
     @Override
-    public List<Map<String, Object>> getMeteringDataHourlyData(
-            Map<String, Object> conditionMap, boolean isTotal) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public List<Map<String, Object>> getMeteringDataHourlyData(
-            Map<String, Object> conditionMap, boolean isTotal, boolean isPrev) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     public List<Map<String, Object>> getMeteringDataDetailHourlyData(
             Map<String, Object> conditionMap, boolean isSum) {
         // TODO Auto-generated method stub

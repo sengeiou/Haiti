@@ -166,49 +166,32 @@ $(window).resize(function() {
     }
 });
 
-        var beforeDateType = null;
-        function changeViewAll(dateType) {
-            if (beforeDateType != null && beforeDateType == dateType) {
-                return;
-            }
+var beforeDateType = null;
+function changeViewAll(dateType) {
+    if (beforeDateType != null && beforeDateType == dateType) {
+        return;
+    }
 
-             if (dateType == DateType.HOURLY ||
-            		dateType == DateTabOther.INTERVAL) {
-                $("#channelList").show();
-                $("#chartType").css("left", "220px");
-                $("#viewAllDiv").show();
-                $("#detailRateGridDiv").hide();
-                $("#detailGridDiv").hide();
-                $("#detailAllGridDiv").show();
+	$("#channelList").show();
+    $("#chartType").css("left", "220px");
+    $("#detailRateGridDiv").hide();
+    $("#detailGridDiv").hide();
+    $("#detailAllGridDiv").show();
 
-                if (detailDataGrid == null) {
-                	getDetailDataList();
-                }
-            } else {
-                $("#channelList").show();
-                $("#chartType").css("left", "220px");
-                $("#detailRateGridDiv").hide();
-                $("#detailGridDiv").show();
-                $("#detailAllGridDiv").hide();
+    if (detailDataGrid == null) {
+      	getDetailDataList();
+    }
 
-                $("#viewAll").attr("checked", "");
-                $("#viewAllDiv").hide();
+    if ((beforeDateType == null || beforeDateType != DateType.MONTHLY) && dateType == DateType.MONTHLY) {
+        $("#weeklyComChart").show();
+    } else if (beforeDateType == null || beforeDateType == DateType.MONTHLY) {
+        $("#weeklyComChart").hide();
+        $("#defaultChart").attr("checked", "checked");
+        chanageChartControl(false);
+    }
 
-                if (detailDataGrid == null) {
-                    makeDetailDataList();
-                }
-            }
-
-            if ((beforeDateType == null || beforeDateType != DateType.MONTHLY) && dateType == DateType.MONTHLY) {
-                $("#weeklyComChart").show();
-            } else if (beforeDateType == null || beforeDateType == DateType.MONTHLY) {
-                $("#weeklyComChart").hide();
-                $("#defaultChart").attr("checked", "checked");
-                chanageChartControl(false);
-            }
-
-            beforeDateType = dateType;
-        }
+    beforeDateType = dateType;
+}
 
 // 공통조회화면 필수 function
 function send(){
@@ -552,15 +535,15 @@ function getDetailDataList() {
 		msgMax : "<fmt:message key="aimir.max"/>",
 		msgMin : "<fmt:message key="aimir.min.upper"/>",
 		msgSum : "<fmt:message key="aimir.sum"/>",
-		viewAll : ($("#viewAll").is(":checked")) ? "yes" : "no",
+		viewAll : "no",
 		supplierId : supplierId
 	};
 
 	makeDetailDataList(params);
 }
 
-        var detailData = [];
-        var detailHourData = [];
+var detailData = [];
+var detailHourData = [];
 
 var detailDataGrid;
 function makeDetailDataList(params) {        	
@@ -630,7 +613,6 @@ function makeDetailDataList(params) {
         stripeRows : true,
         columnLines : true,
         viewConfig : {
-           	forceFit: true,
            	scrollOffset: 0,
             enableRowBody : true,
             showPreview : true,
@@ -707,7 +689,7 @@ function makeDetailDataList(params) {
 			obj.meterNo 		= meterNo;
 			obj.channel 		= channel;
 			obj.type 			= $("#mvmMiniType").val();
-			obj.viewAll         = ($("#viewAll").is(":checked")) ? "yes" : "no"
+			obj.viewAll         = "no"
 
             if (winObj) {
             	winObj.close();
@@ -720,119 +702,100 @@ function makeDetailDataList(params) {
 </head>
 <body>
 	<div class="mvm-popwin-body" style="width: 860px">
-		<input type="hidden" id="meterNo" name="meterNo"
-			value="${customerInfo.meterNo}"> <input type="hidden"
-			id="mvmMiniType" name="mvmMiniType" value="${mvmMiniType}"> <input
-			type="hidden" id="contractId" name="contractId" value="${contractId}">
+		<input type="hidden" id="meterNo" name="meterNo" value="${customerInfo.meterNo}"> 
+		<input type="hidden" id="mvmMiniType" name="mvmMiniType" value="${mvmMiniType}"> 
+		<input type="hidden" id="contractId" name="contractId" value="${contractId}">
 
 		<div style="float: right;" id="btn" class="btn_right_top2">
-			<a href="javascript:openDetailExcelReport()" class="btn_blue"><span><fmt:message
-						key="aimir.button.excel" /></span></a>
+			<a href="javascript:openDetailExcelReport()" class="btn_blue">
+				<span><fmt:message key="aimir.button.excel" /></span>
+			</a>
 		</div>
-		<br></br>
+		<br>
 		<div class="mvm-custinfo radius6">
 			<table class="wfree table_detail" style="width: 99%;">
 				<tr>
-					<th style="width: 13% !important;"><fmt:message
-							key="aimir.customerview" /></th>
-					<td style="width: 20% !important;"><input type="text"
-						value="${customerInfo.customerName}" class="border-trans bg-trans"
-						style="width: 100%;"></td>
-					<th style="width: 14% !important;"><fmt:message
-							key="aimir.contractNumber" /></th>
-					<td style="width: 19% !important;"><input type="text"
-						value="${customerInfo.contractNo}" class="border-trans bg-trans"
-						style="width: 100%;"></td>
-					<th style="width: 13% !important;"><fmt:message
-							key="aimir.contract.tariff.type" /></th>
-					<td style="width: 20% !important;"><input type="text"
-						value="${customerInfo.tariffType}" class="border-trans bg-trans"
-						style="width: 100%;"></td>
+					<th style="width: 13% !important;"><fmt:message key="aimir.customerview" /></th>
+					<td style="width: 20% !important;">
+						<input type="text" value="${customerInfo.customerName}" class="border-trans bg-trans" style="width: 100%;">
+					</td>
+					<th style="width: 14% !important;"><fmt:message key="aimir.contractNumber" /></th>
+					<td style="width: 19% !important;">
+						<input type="text" value="${customerInfo.contractNo}" class="border-trans bg-trans" style="width: 100%;">
+					</td>
+					<th style="width: 13% !important;"><fmt:message key="aimir.contract.tariff.type" /></th>
+					<td style="width: 20% !important;">
+						<input type="text" value="${customerInfo.tariffType}" class="border-trans bg-trans" style="width: 100%;">
+					</td>
 				</tr>
 				<tr>
-					<th style="width: 13% !important;"><fmt:message
-							key="aimir.address" /></th>
-					<td colspan="3"><input type="text" readonly
-						value="${customerInfo.adress}" style="width: 100%;"
-						class="border-trans bg-trans"></td>
-					<th style="width: 13% !important;"><fmt:message
-							key="aimir.location" /></th>
-					<td style="width: 20% !important;"><input type="text"
-						value="${customerInfo.location}" class="border-trans bg-trans"
-						style="width: 100%;"></td>
+					<th style="width: 13% !important;"><fmt:message key="aimir.address" /></th>
+					<td colspan="3">
+						<input type="text" readonly value="${customerInfo.adress}" style="width: 100%;" class="border-trans bg-trans">
+					</td>
+					<th style="width: 13% !important;"><fmt:message key="aimir.location" /></th>
+					<td style="width: 20% !important;">
+						<input type="text" value="${customerInfo.location}" class="border-trans bg-trans" style="width: 100%;">
+					</td>
 				</tr>
 				<tr>
-					<th style="width: 13% !important;"><fmt:message
-							key="aimir.telephoneno" /></th>
-					<td style="width: 20% !important;"><input type="text" readonly
-						value="${customerInfo.telephoneNo}" class="border-trans bg-trans"
-						style="width: 100%;"></td>
-					<td style="width: 14%; !important" class="blue11pt withinput"><fmt:message
-							key="aimir.cpno" /></td>
-					<td colspan="3"><input type="text" readonly
-						value="${customerInfo.mobileNo}" class="border-trans bg-trans"
-						style="width: 100%;"></td>
+					<th style="width: 13% !important;"><fmt:message key="aimir.telephoneno" /></th>
+					<td style="width: 20% !important;">
+						<input type="text" readonly value="${customerInfo.telephoneNo}" class="border-trans bg-trans" style="width: 100%;">
+					</td>
+					<td style="width: 14%; !important" class="blue11pt withinput"><fmt:message key="aimir.cpno" /></td>
+					<td colspan="3">
+						<input type="text" readonly value="${customerInfo.mobileNo}" class="border-trans bg-trans" style="width: 100%;">
+					</td>
 				</tr>
 				<tr>
-					<th style="width: 13% !important;"><fmt:message
-							key="aimir.metertype" /></th>
-					<td style="width: 20% !important;"><input type="text" readonly
-						value="${customerInfo.meterType}" class="border-trans bg-trans"
-						style="width: 100%;"></td>
-					<th style="width: 14% !important;"><fmt:message
-							key="aimir.meterid" /></th>
-					<td style="width: 19% !important;"><input type="text" readonly
-						value="${customerInfo.meterNo}" class="border-trans bg-trans"
-						style="width: 100%;"></td>
-					<th style="width: 13% !important;"><fmt:message
-							key="aimir.mcuid2" /></th>
-					<td style="width: 20% !important;"><input type="text" readonly
-						value="${customerInfo.mcuNo}" class="border-trans bg-trans"
-						style="width: 100%;"></td>
+					<th style="width: 13% !important;"><fmt:message key="aimir.metertype" /></th>
+					<td style="width: 20% !important;">
+						<input type="text" readonly value="${customerInfo.meterType}" class="border-trans bg-trans" style="width: 100%;">
+					</td>
+					<th style="width: 14% !important;"><fmt:message key="aimir.meterid" /></th>
+					<td style="width: 19% !important;">
+						<input type="text" readonly value="${customerInfo.meterNo}" class="border-trans bg-trans" style="width: 100%;">
+					</td>
+					<th style="width: 13% !important;"><fmt:message key="aimir.mcuid2" /></th>
+					<td style="width: 20% !important;">
+						<input type="text" readonly value="${customerInfo.mcuNo}" class="border-trans bg-trans" style="width: 100%;">
+					</td>
 				</tr>
 				<tr>
 					<th style="width: 13%;"><fmt:message key="aimir.meteringtime" /></th>
-					<td style="width: 20%;"><input type="text" readonly
-						value="${customerInfo.lastTime}" class="border-trans bg-trans"
-						style="width: 100%;"></td>
+					<td style="width: 20%;">
+						<input type="text" readonly value="${customerInfo.lastTime}" class="border-trans bg-trans" style="width: 100%;">
+					</td>
 					<c:if test="${customerInfo.meterType == 'EnergyMeter'}">
-						<th style="width: 14%;"><fmt:message key="aimir.meteringdata" />[<fmt:message
-								key="aimir.unit.kwh" />]</th>
+						<th style="width: 14%;"><fmt:message key="aimir.meteringdata" />[<fmt:message key="aimir.unit.kwh" />]</th>
 					</c:if>
 					<c:if test="${customerInfo.meterType == 'GasMeter'}">
-						<th style="width: 14%;"><fmt:message key="aimir.meteringdata" />[<fmt:message
-								key="aimir.unit.m3" />]</th>
+						<th style="width: 14%;"><fmt:message key="aimir.meteringdata" />[<fmt:message key="aimir.unit.m3" />]</th>
 					</c:if>
 					<c:if test="${customerInfo.meterType == 'WaterMeter'}">
-						<th style="width: 14%;"><fmt:message key="aimir.meteringdata" />[<fmt:message
-								key="aimir.unit.m3" />]</th>
+						<th style="width: 14%;"><fmt:message key="aimir.meteringdata" />[<fmt:message key="aimir.unit.m3" />]</th>
 					</c:if>
-					<td colspan="3"><input type="text" readonly
-						value="${customerInfo.lastMeteringData}"
-						class="border-trans bg-trans" style="width: 100%;"></td>
+					<td colspan="3">
+						<input type="text" readonly value="${customerInfo.lastMeteringData}"class="border-trans bg-trans" style="width: 100%;">
+					</td>
 				</tr>
 			</table>
 		</div>
 
 		<!-- search-background DIV (S) -->
-		<div id="conditionDiv" class="search-bg-withtabs"
-			style="height: 98px;">
+		<div id="conditionDiv" class="search-bg-withtabs" style="height: 98px;">
 
 			<div class="dayoptions" style="border-top: 1px solid #d3e6f5;">
 				<%@ include file="../commonDateTabDetailView.jsp"%>
 			</div>
 			<div class="dashedline"></div>
-
-
-			<div class="mvm-multiselect border-blue" id="channelList"
-				style="position: absolute; z-index: 1; width: 195px;">
-				<table class="wfree" onclick="controlCombo(1);"
-					onmouseover="endCloseCombo(1);" onmouseout="startCloseCombo(1);"
-					style="width: 100%">
+			<div class="mvm-multiselect border-blue" id="channelList" style="position: absolute; z-index: 1; width: 195px;">
+				<table class="wfree" onclick="controlCombo(1);" 
+					onmouseover="endCloseCombo(1);" onmouseout="startCloseCombo(1);" style="width: 100%">
 					<tr>
 						<td class="space10"></td>
-						<td class="graybold11pt withinput"><fmt:message
-								key="aimir.channelid" /></td>
+						<td class="graybold11pt withinput"><fmt:message key="aimir.channelid" /></td>
 					</tr>
 				</table>
 
@@ -841,30 +804,25 @@ function makeDetailDataList(params) {
 					<table class="wfree">
 						<c:forEach items="${channelList}" var="channel" varStatus="idx">
 							<tr>
-								<td><input class="checkbox_space2" id="channelCode"
-									name="channelCode" type="checkbox" checked="checked"
-									value="${channel.codeId}"></td>
-								<td class="gray11pt withinput">${channel.codeName}<input
-									id="channelName${idx.count-1}" name="channelName" type="hidden"
-									value="${channel.codeName}"></input> <input
-									id="channel${idx.count-1}" name="channel" type="hidden"
-									value="${channel.codeId}"></input></td>
+								<td>
+									<input class="checkbox_space2" id="channelCode" name="channelCode" type="checkbox" checked="checked" value="${channel.codeId}">
+								</td>
+								<td class="gray11pt withinput">
+									${channel.codeName}
+									<input id="channelName${idx.count-1}" name="channelName" type="hidden" value="${channel.codeName}"></input> 
+									<input id="channel${idx.count-1}" name="channel" type="hidden" value="${channel.codeId}"></input>
+								</td>
 							</tr>
 						</c:forEach>
 					</table>
 				</div>
 			</div>
 
-
-			<div class="mvm-multiselect border-blue"
-				style="left: 220px; position: absolute; z-index: 1;" id="chartType">
-				<table class="wfree" onclick="controlCombo(3);"
-					onmouseover="endCloseCombo(3);" onmouseout="startCloseCombo(3);"
-					style="width: 100%">
+			<div class="mvm-multiselect border-blue" style="left: 220px; position: absolute; z-index: 1;" id="chartType">
+				<table class="wfree" onclick="controlCombo(3);" onmouseover="endCloseCombo(3);" onmouseout="startCloseCombo(3);" style="width: 100%">
 					<tr>
 						<td class="space10"></td>
-						<td class="graybold11pt withinput"><fmt:message
-								key="aimir.chartType" /></td>
+						<td class="graybold11pt withinput"><fmt:message key="aimir.chartType" /></td>
 					</tr>
 				</table>
 
@@ -895,23 +853,6 @@ function makeDetailDataList(params) {
 					</table>
 				</div>
 			</div>
-
-			<div id="viewAllDiv"
-				style="position: absolute; width: 180px; left: 455px;">
-				<table>
-					<tr>
-						<td><input type="checkbox" id="viewAll" name="viewAll"
-							checked></input></td>
-						<td class="gray11pt withinput"><fmt:message
-								key="aimir.mvm.viewLoadProfileAll" /></td>
-					</tr>
-				</table>
-			</div>
-
-			<!-- <div id="btn-right" class="margin-t5px">
-        <ul><li><a href="javascript:showCalendarChart(${endYear}, ${endMonth})" class="on"><fmt:message key="aimir.calendarchart"/></a></li></ul>
-    </div> -->
-
 		</div>
 		<!--상세검색 끝-->
 

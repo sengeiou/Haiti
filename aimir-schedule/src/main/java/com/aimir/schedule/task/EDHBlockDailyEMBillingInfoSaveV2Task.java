@@ -19,6 +19,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.JobExecutionContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 
@@ -35,6 +37,7 @@ import com.aimir.dao.system.SupplyTypeDao;
 import com.aimir.dao.system.TariffEMDao;
 import com.aimir.dao.system.TariffTypeDao;
 import com.aimir.dao.view.MonthEMViewDao;
+import com.aimir.fep.util.DataUtil;
 import com.aimir.model.device.Meter;
 import com.aimir.model.mvm.BillingBlockTariff;
 import com.aimir.model.mvm.LpEM;
@@ -121,6 +124,22 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         public Integer getChannel() {
             return this.channel;
         }
+    }
+    
+    public static void main(String[] args) {
+    	try {
+        	ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[]{"spring-BlockDailyEMBillingTask.xml"}); 
+            DataUtil.setApplicationContext(ctx);
+            
+            EDHBlockDailyEMBillingInfoSaveV2Task task = ctx.getBean(EDHBlockDailyEMBillingInfoSaveV2Task.class);
+            task.execute(null);
+			
+		} catch (Exception e) {
+			log.error("EDHBlockDailyEMBillingInfoSaveV2Task excute error - " + e, e);
+		} finally {
+			log.info("#### EDHBlockDailyEMBillingInfoSaveV2Task finished. ####");
+			System.exit(0);
+		}        
     }
 
     @Override

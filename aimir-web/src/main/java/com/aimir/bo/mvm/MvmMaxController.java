@@ -826,7 +826,7 @@ public class MvmMaxController {
 	            	}
 	                break;
 	            case DAILY:
-	                result = searchMeteringDataManager.getMeteringDataDailyData(conditionMap);
+	                result = searchMeteringDataManager.getMeteringDataDailyData2(conditionMap);
 	                sbFileName.append(dayPrefix);
 	                break;
 	            case WEEKLY:
@@ -1017,7 +1017,8 @@ public class MvmMaxController {
      * @return
      */
     @RequestMapping(value = "/gadget/mvm/getMeteringDataList")
-    public ModelAndView getMeteringDataList(@RequestParam("supplierId") Integer supplierId,
+    public ModelAndView getMeteringDataList(
+    		@RequestParam("supplierId") Integer supplierId,
             @RequestParam("contractNumber") String contractNumber,
             @RequestParam("customerName") String customerName,
             @RequestParam("meteringSF") String meteringSF,
