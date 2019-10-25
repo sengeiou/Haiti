@@ -1150,7 +1150,8 @@ public class MvmDetailController {
      * @return
      */
     @RequestMapping(value = "/gadget/mvm/getMvmDetailMeteringData.do")
-    public final ModelAndView getMvmDetailMeteringData(@RequestParam("searchDateType") String searchDateType,
+    public final ModelAndView getMvmDetailMeteringData(
+    		@RequestParam("searchDateType") String searchDateType,
             @RequestParam("searchStartDate") String searchStartDate,
             @RequestParam("searchEndDate") String searchEndDate,
             @RequestParam("searchStartHour") String searchStartHour,
@@ -1204,6 +1205,8 @@ public class MvmDetailController {
         conditionMap.put("searchDateType", searchDateType);
         conditionMap.put("searchStartDate", searchStartDate);
         conditionMap.put("searchEndDate", searchEndDate);
+        conditionMap.put("searchStartHour", searchStartHour);
+        conditionMap.put("searchEndHour", searchEndHour);
 
         for (DateTabOther obj : DateTabOther.values()) {
             if (obj.getCode().equals(searchDateType)) {
@@ -1223,8 +1226,6 @@ public class MvmDetailController {
                     result = mvmDetailViewManager.getMeteringDataDetailRatelyData(conditionMap);
                     break;
                 case INTERVAL:
-                    conditionMap.put("searchStartHour", searchStartHour);
-                    conditionMap.put("searchEndHour", searchEndHour);
                     result = mvmDetailViewManager.getMeteringDataDetailIntervalData(conditionMap);
                     break;
                 default:
