@@ -787,7 +787,7 @@ function makeDetailDataList(params) {
 		<div id="conditionDiv" class="search-bg-withtabs" style="height: 98px;">
 
 			<div class="dayoptions" style="border-top: 1px solid #d3e6f5;">
-				<%@ include file="../commonDateTabDetailView.jsp"%>
+				<%@ include file="../commonDateTabDetailView3.jsp"%>
 			</div>
 			<div class="dashedline"></div>
 			<div class="mvm-multiselect border-blue" id="channelList" style="position: absolute; z-index: 1; width: 195px;">

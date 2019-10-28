@@ -1429,7 +1429,8 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
      * @param conditionMap
      * @return
      */
-    public List<Map<String, Object>> getMeteringDataDetailMonthlyData(Map<String, Object> conditionMap, boolean isSum) {
+    @SuppressWarnings("deprecation")
+	public List<Map<String, Object>> getMeteringDataDetailMonthlyData(Map<String, Object> conditionMap, boolean isSum) {
         List<Map<String, Object>> result;
 
         Integer supplierId = (Integer)conditionMap.get("supplierId");
@@ -1439,63 +1440,48 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         String meterType = StringUtil.nullToBlank(conditionMap.get("meterType"));
         String tlbType = StringUtil.nullToBlank(conditionMap.get("tlbType"));
         List<Integer> channelIdList = (List<Integer>)conditionMap.get("channelIdList");
+        String monthView = MeterType.valueOf(meterType).getMonthViewName();
         String monthTable = MeterType.valueOf(meterType).getMonthTableName();
 
         StringBuilder sb = new StringBuilder();
 
         if (isSum) {
             sb.append("\nSELECT CHANNEL AS CHANNEL, ");
-            sb.append("\n       MAX(VALUE) AS MAX_VAL, ");
-            sb.append("\n       MIN(VALUE) AS MIN_VAL, ");
-            sb.append("\n       AVG(VALUE) AS AVG_VAL, ");
-            sb.append("\n       SUM(VALUE) AS SUM_VAL ");
-            sb.append("\nFROM ( ");
+            sb.append("\n       MAX(mv.total_value) AS MAX_VAL, ");
+            sb.append("\n       MIN(mv.total_value) AS MIN_VAL, ");
+            sb.append("\n       AVG(mv.total_value) AS AVG_VAL, ");
+            sb.append("\n       SUM(mv.total_value) AS SUM_VAL ");
         } else {
-            sb.append("\nSELECT YYYYMM, ");
-            sb.append("\n       CHANNEL, ");
-            sb.append("\n       CH_METHOD, ");
-            sb.append("\n       SUM(VALUE) AS VALUE ");
-            sb.append("\nFROM ( ");
+            sb.append("\nSELECT mv.yyyymm AS YYYYMM, ");
+            sb.append("\n       mv.channel AS CHANNEL, ");
+            sb.append("\n       mv.total_value AS VALUE ");
         }
-
-        sb.append("\n    SELECT mo.yyyymm AS YYYYMM, ");
-        sb.append("\n           mo.channel AS CHANNEL, ");
-        sb.append("\n           mo.total_value AS VALUE, ");
-        sb.append("\n          (SELECT DISTINCT dc.ch_method ");
-        sb.append("\n           FROM meter mt, ");
-        sb.append("\n                meterconfig mc, ");
-        sb.append("\n                display_channel dc, ");
-        sb.append("\n                channel_config  cc ");
-        sb.append("\n           WHERE mc.devicemodel_fk = mt.devicemodel_id ");
-        sb.append("\n           AND   cc.meterconfig_id = mc.id ");
-        sb.append("\n           AND   cc.data_type = :tlbType ");
-        sb.append("\n           AND   dc.id = cc.channel_id ");
-        sb.append("\n           AND   mt.id = mo.meter_id ");
-        sb.append("\n           AND   cc.channel_index = mo.channel) AS CH_METHOD ");
-        sb.append("\n    FROM ").append(monthTable).append(" mo ");
+        sb.append("\nFROM ").append(monthView).append(" mv 		");
+        sb.append("\nLEFT OUTER JOIN ( 							");
+        sb.append("\n    SELECT DISTINCT mo.mdev_id, 			");
+        sb.append("\n           mo.ch_method 					");
+        sb.append("\n    FROM ").append(monthTable).append(" mo	");
         sb.append("\n    WHERE mo.yyyymm BETWEEN :startDate AND :endDate ");
+        sb.append("\n	 AND   mo.mdev_id = :meterNo 			");
+        sb.append("\n) x ON mv.mdev_id = x.mdev_id 				");
+        sb.append("\nWHERE mv.yyyymm BETWEEN :startDate AND :endDate ");
 
         if (channelIdList != null) {
-            sb.append("\n    AND   mo.channel IN (:channelIdList) ");
+            sb.append("\nAND   mv.channel IN (:channelIdList) ");
         }
 
-        sb.append("\n    AND   mo.mdev_id = :meterNo ");
-        sb.append("\n    AND   mo.supplier_id = :supplierId ");
+        sb.append("\nAND   mv.mdev_id = :meterNo ");
+        sb.append("\nAND   mv.supplier_id = :supplierId ");
 
         if (isSum) {
-            sb.append("\n) y ");
             sb.append("\nGROUP BY CHANNEL ");
         } else {
-            sb.append("\n) y ");
-            sb.append("\nGROUP BY YYYYMM, ");
-            sb.append("\n         CHANNEL, ");
-            sb.append("\n         CH_METHOD ");
-            sb.append("\nORDER BY YYYYMM, CHANNEL ");
+            sb.append("\nORDER BY mv.yyyymm, mv.channel ");
         }
 
         SQLQuery query = getSession().createSQLQuery(new SQLWrapper().getQuery(sb.toString()));
 
-        query.setString("tlbType", tlbType);
+//        query.setString("tlbType", tlbType);
         query.setString("startDate", searchStartDate.substring(0, 6));
         query.setString("endDate", searchEndDate.substring(0, 6));
         query.setString("meterNo", meterNo);

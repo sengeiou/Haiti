@@ -3982,59 +3982,45 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         String meterType = StringUtil.nullToBlank(conditionMap.get("meterType"));
         String tlbType = StringUtil.nullToBlank(conditionMap.get("tlbType"));
         List<Integer> channelIdList = (List<Integer>)conditionMap.get("channelIdList");
+        String dayView = MeterType.valueOf(meterType).getDayViewName();
         String dayTable = MeterType.valueOf(meterType).getDayTableName();
 
         StringBuilder sb = new StringBuilder();
 
         if (isSum) {
-            sb.append("\nSELECT CHANNEL AS CHANNEL, ");
-            sb.append("\n       MAX(VALUE) AS MAX_VAL, ");
-            sb.append("\n       MIN(VALUE) AS MIN_VAL, ");
-            sb.append("\n       AVG(VALUE) AS AVG_VAL, ");
-            sb.append("\n       SUM(VALUE) AS SUM_VAL ");
-            sb.append("\nFROM ( ");
+            sb.append("\nSELECT dv.channel AS CHANNEL, ");
+            sb.append("\n       MAX(dv.total_value) AS MAX_VAL, ");
+            sb.append("\n       MIN(dv.total_value) AS MIN_VAL, ");
+            sb.append("\n       AVG(dv.total_value) AS AVG_VAL, ");
+            sb.append("\n       SUM(dv.total_value) AS SUM_VAL ");
         } else {
-            sb.append("\nSELECT YYYYMMDD, ");
-            sb.append("\n       CHANNEL, ");
-            sb.append("\n       SUM(VALUE) AS VALUE ");
-            sb.append("\nFROM ( ");
+            sb.append("\nSELECT dv.yyyymmdd AS YYYYMMDD, 		");
+            sb.append("\n       dv.channel AS CHANNEL, 			");
+            sb.append("\n       dv.total_value AS VALUE, 		");
+            sb.append("\n       x.ch_method AS CH_METHOD 		");
         }
-
-        sb.append("\n    SELECT da.yyyymmdd AS YYYYMMDD, ");
-        sb.append("\n           da.channel AS CHANNEL, ");
-        sb.append("\n           da.total_value AS VALUE, ");
-        sb.append("\n          (SELECT DISTINCT dc.ch_method ");
-        sb.append("\n           FROM meter mt, ");
-        sb.append("\n                meterconfig mc, ");
-        sb.append("\n                display_channel dc, ");
-        sb.append("\n                channel_config  cc ");
-        sb.append("\n           WHERE mc.devicemodel_fk = mt.devicemodel_id ");
-        sb.append("\n           AND   cc.meterconfig_id = mc.id ");
-        sb.append("\n           AND   cc.data_type = :tlbType ");
-        sb.append("\n           AND   dc.id = cc.channel_id ");
-        sb.append("\n           AND   mt.id = da.meter_id ");
-        sb.append("\n           AND   cc.channel_index = da.channel) AS CH_METHOD ");
-        sb.append("\n    FROM ").append(dayTable).append(" da ");
-        sb.append("\n    WHERE da.yyyymmdd BETWEEN :startDate AND :endDate ");
-
+        sb.append("\nFROM ").append(dayView).append(" dv		");
+        sb.append("\nLEFT OUTER JOIN ( 							");
+        sb.append("\n    SELECT DISTINCT de.mdev_id, 			");
+        sb.append("\n           de.ch_method 					");
+        sb.append("\n    FROM ").append(dayTable).append(" de	");
+        sb.append("\n    WHERE de.yyyymmdd BETWEEN :startDate AND :endDate ");
+        sb.append("\n	 AND   de.mdev_id = :meterNo 			");
+        sb.append("\n) x ON dv.mdev_id = x.mdev_id 				");
+        sb.append("\nWHERE dv.yyyymmdd BETWEEN :startDate AND :endDate ");
         if (channelIdList != null) {
-            sb.append("\n    AND   da.channel IN (:channelIdList) ");
+            sb.append("\nAND   dv.channel IN (:channelIdList) 	");
         }
-
-        sb.append("\n    AND   da.mdev_id = :meterNo ");
-        sb.append("\n    AND   da.supplier_id = :supplierId ");
+        sb.append("\nAND   dv.mdev_id = :meterNo ");
+        sb.append("\nAND   dv.supplier_id = :supplierId ");
 
         if (isSum) {
-            sb.append("\n) y ");
             sb.append("\nGROUP BY CHANNEL ");
-        } else {
-            sb.append("\n) y ");
-            sb.append("\nGROUP BY YYYYMMDD, CHANNEL ");
         }
 
         SQLQuery query = getSession().createSQLQuery(new SQLWrapper().getQuery(sb.toString()));
 
-        query.setString("tlbType", tlbType);
+//        query.setString("tlbType", tlbType);
         query.setString("startDate", searchStartDate);
         query.setString("endDate", searchEndDate);
         query.setString("meterNo", meterNo);

@@ -3064,6 +3064,8 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 		Integer supplierId = (Integer) conditionMap.get("supplierId");
 		String searchStartDate = (String) conditionMap.get("searchStartDate");
 		String searchEndDate = (String) conditionMap.get("searchEndDate");
+//		String searchStartHour = (String) conditionMap.get("searchStartHour");
+//		String searchEndHour = (String) conditionMap.get("searchEndHour");
 		// "ch1,ch2,ch3,..." -> ["ch1","ch2","ch3",...]
 		String[] channelArray = ((String) conditionMap.get("channel")).split(",");
 //		Meter meter = mtrDao.get((String) conditionMap.get("meterNo"));
@@ -3091,46 +3093,18 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 		// Merge by hour and channel
 		Map<String, Map<String, Object>> mergeHourMap = new LinkedHashMap<>();
 		for(Map<String, Object> obj : list) {
-			String YYYYMMDDHHMISS = (String) obj.get("YYYYMMDDHHMISS");
-			String YYYYMMDDHH = YYYYMMDDHHMISS.substring(0, 10);
-			String CH_METHOD = (String) obj.get("CH_METHOD");
-			BigDecimal CHANNEL = (BigDecimal) obj.get("CHANNEL");
+			String YYYYMMDDHH = (String) obj.get("YYYYMMDDHH");
+			String CHANNEL = (String) obj.get("CHANNEL");
 			BigDecimal DST = (BigDecimal) obj.get("DST");
 			BigDecimal VALUE = (BigDecimal) obj.get("VALUE");
 			
-			if(mergeHourMap.containsKey(YYYYMMDDHH)) { // Old YYYYMMDDHH -> Merge 
+			if(mergeHourMap.containsKey(YYYYMMDDHH)) { // Old YYYYMMDDHH -> Add Channel
 				Map<String, Object> tmpMap = mergeHourMap.get(YYYYMMDDHH);
-				if(tmpMap.containsKey("channel_"+CHANNEL)) { // Old channel -> Calc by method
-					BigDecimal bdTmp = (BigDecimal) tmpMap.get("channel_"+CHANNEL);
-					
-					// Calc by method
-					if (CH_METHOD.equals(ChannelCalcMethod.MAX.name())) {
-						bdTmp = bdTmp.max(VALUE);
-						tmpMap.put("channel_"+CHANNEL, bdTmp);
-					} else if (CH_METHOD.equals(ChannelCalcMethod.SUM.name())) {
-						bdTmp = bdTmp.add(VALUE);
-						tmpMap.put("channel_"+CHANNEL, bdTmp);
-					} else if (CH_METHOD.equals(ChannelCalcMethod.AVG.name())) {
-						int cntTmp = (int) tmpMap.get("channel_"+CHANNEL+"_cnt");
-						BigDecimal sumTmp = (BigDecimal) tmpMap.get("channel_"+CHANNEL+"_sum");
-						sumTmp = sumTmp.add(VALUE);
-						cntTmp++;
-						tmpMap.put("channel_"+CHANNEL, sumTmp.divide(new BigDecimal(cntTmp), MathContext.DECIMAL32));
-						tmpMap.put("channel_"+CHANNEL+"_cnt", cntTmp);
-						tmpMap.put("channel_"+CHANNEL+"_sum", sumTmp);
-					}
-				}else { // New channel -> Just put data
-					tmpMap.put("channel_"+CHANNEL, VALUE);
-				}
+				tmpMap.put("channel_"+CHANNEL, VALUE);
 			}else { // New YYYYMMDDHH -> Just put data with Time
 				Map<String, Object> tmpMap = new HashMap<>();
 				tmpMap.put("channel_"+CHANNEL, VALUE);
-				if(CH_METHOD.equals(ChannelCalcMethod.AVG)) { // AVG need init value
-					tmpMap.put("channel_"+CHANNEL+"_cnt", 1);
-					tmpMap.put("channel_"+CHANNEL+"_sum", VALUE);
-				}
 				tmpMap.put("meteringTime", TimeLocaleUtil.getLocaleDateHourMinute(YYYYMMDDHH+"00", lang, country));
-//				tmpMap.put("iconCls", "no-icon");
 				mergeHourMap.put(YYYYMMDDHH, tmpMap);
 			}
 		}
@@ -3154,7 +3128,6 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 		Iterator<String> itr = dateSet.iterator();
 		while (itr.hasNext()) {
 			String date = itr.next();
-			logger.debug("date : "+date);
 			if(mergeHourMap.containsKey(date)) {
 				Map<String, Object> tmpMap = mergeHourMap.get(date);
 				// Set format to value
@@ -3164,12 +3137,10 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 				result.add(tmpMap);
 			}else{
 				Map<String, Object> tmpMap = new HashMap<String, Object>();
-//				tmpMap.put("dst", null);
 				for (String obj : channelArray) {
 					tmpMap.put("channel_"+obj, "-");
 				}
 				tmpMap.put("meteringTime", TimeLocaleUtil.getLocaleDateHour(date+"00", lang, country));
-//				tmpMap.put("iconCls", "no-icon");
 				result.add(tmpMap);
 			}
 		}
@@ -3320,7 +3291,7 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 		String searchStartDate = (String) conditionMap.get("searchStartDate");
 		Integer supplierId = (Integer) conditionMap.get("supplierId");
 		String[] channelArray = ((String) conditionMap.get("channel")).split(",");
-		Meter meter = mtrDao.get((String) conditionMap.get("meterNo"));
+//		Meter meter = mtrDao.get((String) conditionMap.get("meterNo"));
 
 		// Define variables
 //		Integer lpInterval = (meter.getLpInterval() != null) ? meter.getLpInterval() : 60;
@@ -3332,9 +3303,6 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		List<Map<String, Object>> searchData = new ArrayList<Map<String, Object>>();
 		List<Map<String, Object>> searchAddData = new ArrayList<Map<String, Object>>();
-		Map<String, Object> listMap = new HashMap<String, Object>();
-		Map<String, Object> tmpMap = null;
-		BigDecimal bdTmpValue = null;
 
 		// Make channel ID list from channel array.
 		for (String obj : channelArray) {
@@ -3355,166 +3323,69 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 			return resultMap;
 		}
 		
-		// Processing data.
-		for (Map<String, Object> obj : list) {
-			String YYYYMMDDHHMISS = (String) obj.get("YYYYMMDDHHMISS");
-			String YYYYMMDDHH = YYYYMMDDHHMISS.substring(0, 10);
-			String CHANNEL = ((BigDecimal) obj.get("CHANNEL")).toString();
-//			String DST = ((BigDecimal) obj.get("DST")).toString();
-			String VALUE = ((BigDecimal) obj.get("VALUE")).toString();
-			String CH_METHOD = (String) obj.get("CH_METHOD");
-
-			if (listMap.containsKey(YYYYMMDDHH + "_" + CHANNEL)) {
-				@SuppressWarnings("unchecked")
-				Map<String, Object> map = (Map<String, Object>) listMap.get(YYYYMMDDHH + "_" + CHANNEL);
-
-				if (CH_METHOD.equals(ChannelCalcMethod.MAX.name())) {
-					BigDecimal maxVal = (BigDecimal) map.get("MAX_VALUE");
-					maxVal = maxVal.max(new BigDecimal(VALUE));
-					map.put("MAX_VALUE", maxVal);
-				} else if (CH_METHOD.equals(ChannelCalcMethod.SUM.name())) {
-					BigDecimal sumVal = (BigDecimal) map.get("SUM_VALUE");
-					sumVal = sumVal.add(new BigDecimal(VALUE));
-					map.put("SUM_VALUE", sumVal);
-				} else if (CH_METHOD.equals(ChannelCalcMethod.AVG.name())) {
-					BigDecimal sumVal = (BigDecimal) map.get("SUM_VALUE");
-					BigDecimal cnt = (BigDecimal) map.get("CNT");
-					sumVal = sumVal.add(new BigDecimal(VALUE));
-					cnt.add(new BigDecimal(1)); // cnt++;
-					BigDecimal avgVal = sumVal.divide(cnt, MathContext.DECIMAL32);
-					map.put("SUM_VALUE", sumVal);
-					map.put("AVG_VALUE", avgVal);
-					map.put("CNT", cnt);
-				}
-			} else {
-				Map<String, Object> map = new HashMap<>();
-				map.put("MAX_VALUE", new BigDecimal(VALUE));
-				map.put("SUM_VALUE", new BigDecimal(VALUE));
-				map.put("AVG_VALUE", new BigDecimal(VALUE));
-				map.put("CNT", new BigDecimal(1));
-				map.put("METHOD", CH_METHOD);
-				listMap.put(YYYYMMDDHH + "_" + CHANNEL, map);
-			}
+		// Merge by hour and channel
+		List<BigDecimal> sumList = new ArrayList<>();
+		List<BigDecimal> maxList = new ArrayList<>();
+		List<BigDecimal> minList = new ArrayList<>(); 
+		for(int i = 0; i < channelIdList.size(); i++) { // Init
+			sumList.add(new BigDecimal(0));
+			maxList.add(new BigDecimal(0));
+			minList.add(new BigDecimal(0));
 		}
+		Map<String, BigDecimal> valMap = new LinkedHashMap<>();
+		for(Map<String, Object> obj : list) {
+			String YYYYMMDDHH = (String) obj.get("YYYYMMDDHH");
+			String CHANNEL = (String) obj.get("CHANNEL");
+//			BigDecimal DST = (BigDecimal) obj.get("DST");
+			BigDecimal VALUE = (BigDecimal) obj.get("VALUE");
+			
+			//
+//			int chIdx = channelIdList.indexOf(Integer.valueOf(CHANNEL));
+//			if(VALUE != null) {
+//				BigDecimal sumVal = sumList.get(chIdx);
+//				BigDecimal maxVal = maxList.get(chIdx);
+//				BigDecimal minVal = minList.get(chIdx);
+//				sumVal = sumVal.add(VALUE);
+//				maxVal = maxVal.max(VALUE);
+//				minVal = minVal.min(VALUE);
+//				sumList.add(chIdx, sumVal);
+//				maxList.add(chIdx, maxVal);
+//				minList.add(chIdx, minVal);
+//			}
 
-		Set<String> keys = listMap.keySet();
-		for (String key : keys) {
-			@SuppressWarnings("unchecked")
-			Map<String, Object> map = (Map<String, Object>) listMap.get(key);
-			String METHOD = (String) map.get("METHOD");
-			BigDecimal tmpDb = new BigDecimal(0);
-			if (METHOD.equals(ChannelCalcMethod.MAX.name())) {
-				tmpDb = (BigDecimal) map.get("MAX_VALUE");
-			} else if (METHOD.equals(ChannelCalcMethod.SUM.name())) {
-				tmpDb = (BigDecimal) map.get("SUM_VALUE");
-			} else if (METHOD.equals(ChannelCalcMethod.AVG.name())) {
-				tmpDb = (BigDecimal) map.get("AVG_VALUE");
-			}
-			listMap.put(key, tmpDb);
-//			logger.debug(key + " " + tmpDb);
+			valMap.put(YYYYMMDDHH+"_"+CHANNEL, VALUE);
 		}
-
-		List<BigDecimal> bdTotalSumList = new ArrayList<BigDecimal>();
-		List<BigDecimal> bdTotalMaxList = new ArrayList<BigDecimal>();
-		List<BigDecimal> bdTotalMinList = new ArrayList<BigDecimal>();
-		List<Integer> intTotalCount = new ArrayList<Integer>();
-
-		int chIndex = 0;
-		bdTmpValue = null;
-
-		for (int i = 0; i < 24; i++) {
-			chIndex = 0;
-			for (Integer ch : channelIdList) {
-				tmpMap = new HashMap<String, Object>();
-
-				tmpMap.put("date", i + "");
-				tmpMap.put("localeDate", i + "");
+		for(int i = 0; i < 24; i++) { // Hourly
+			for(Integer ch : channelIdList) {
+				Map<String, Object> tmpMap = new HashMap<>();
+				tmpMap.put("date", i);
+				tmpMap.put("localeDate", i);
 				tmpMap.put("channel", ch);
-
-				bdTmpValue = (BigDecimal) listMap.get(searchStartDate + CalendarUtil.to2Digit(i) + "_" + ch.toString());
-
-				tmpMap.put("value", (bdTmpValue == null) ? 0D : bdTmpValue.doubleValue());
-				tmpMap.put("decimalValue", (bdTmpValue == null) ? df.format(0D) : df.format(bdTmpValue));
+				BigDecimal tmpBd = (BigDecimal) valMap.get(searchStartDate + CalendarUtil.to2Digit(i) + "_" + ch.toString());
+				tmpMap.put("value", (tmpBd == null) ? 0D : tmpBd.doubleValue());
+				tmpMap.put("decimalValue", (tmpBd == null) ? df.format(0D) : df.format(tmpBd));
 				tmpMap.put("reportDate",
 						TimeLocaleUtil.getLocaleDateHour(searchStartDate + CalendarUtil.to2Digit(i), lang, country));
-
-				if (i == 0) {
-					if (bdTmpValue != null) {
-						bdTotalSumList.add(bdTmpValue);
-						bdTotalMaxList.add(bdTmpValue);
-						bdTotalMinList.add(bdTmpValue);
-						intTotalCount.add(1);
-					} else {
-
-						bdTotalSumList.add(null);
-						bdTotalMaxList.add(null);
-						bdTotalMinList.add(null);
-						intTotalCount.add(0);
-					}
-				} else {
-					if (bdTmpValue != null) {
-						if (bdTotalSumList.get(chIndex) == null) {
-							bdTotalSumList.set(chIndex, bdTmpValue);
-						} else {
-							bdTotalSumList.set(chIndex, bdTotalSumList.get(chIndex).add(bdTmpValue));
-						}
-
-						if (bdTotalMaxList.get(chIndex) == null) {
-							bdTotalMaxList.set(chIndex, bdTmpValue);
-						} else {
-							bdTotalMaxList.set(chIndex, bdTotalMaxList.get(chIndex).max(bdTmpValue));
-						}
-
-						if (bdTotalMinList.get(chIndex) == null) {
-							bdTotalMinList.set(chIndex, bdTmpValue);
-						} else {
-							bdTotalMinList.set(chIndex, bdTotalMinList.get(chIndex).min(bdTmpValue));
-						}
-						intTotalCount.set(chIndex, intTotalCount.get(chIndex) + 1);
-					}
-				}
-
 				searchData.add(tmpMap);
-				chIndex++;
 			}
 		}
-
-		Double maxValue = null;
-		Double minValue = null;
-		Double avgValue = null;
-		Double sumValue = null;
-
-		if (bdTotalSumList != null && bdTotalSumList.size() > 0) {
-			chIndex = 0;
-			for (Integer ch : channelIdList) {
-				tmpMap = new HashMap<String, Object>();
-
-				maxValue = (bdTotalMaxList.get(chIndex) == null) ? 0D : bdTotalMaxList.get(chIndex).doubleValue();
-				minValue = (bdTotalMinList.get(chIndex) == null) ? 0D : bdTotalMinList.get(chIndex).doubleValue();
-
-				if (bdTotalSumList.get(chIndex) == null || intTotalCount.get(chIndex) == 0) {
-					avgValue = 0D;
-				} else {
-					avgValue = bdTotalSumList.get(chIndex)
-							.divide(new BigDecimal(intTotalCount.get(chIndex)), MathContext.DECIMAL32).doubleValue();
-				}
-
-				sumValue = (bdTotalSumList.get(chIndex) == null) ? 0D : bdTotalSumList.get(chIndex).doubleValue();
-
-				tmpMap.put("channel", ch);
-				tmpMap.put("minValue", minValue);
-				tmpMap.put("maxValue", maxValue);
-				tmpMap.put("avgValue", avgValue);
-				tmpMap.put("sumValue", sumValue);
-				tmpMap.put("minDecimalValue", df.format(minValue));
-				tmpMap.put("maxDecimalValue", df.format(maxValue));
-				tmpMap.put("avgDecimalValue", df.format(avgValue));
-				tmpMap.put("sumDecimalValue", df.format(sumValue));
-
-				searchAddData.add(tmpMap);
-				chIndex++;
-			}
-		}
+//		for(Integer channel : channelIdList) {
+//			Map<String, Object> tmpMap = new HashMap<>();
+//			int chIdx = channelIdList.indexOf(channel);
+//			BigDecimal sumVal = sumList.get(chIdx);
+//			BigDecimal maxVal = maxList.get(chIdx);
+//			BigDecimal minVal = minList.get(chIdx);
+//			tmpMap.put("channel", channel);
+//			tmpMap.put("minValue", minVal);
+//			tmpMap.put("maxValue", maxVal);
+//			tmpMap.put("avgValue", sumVal.divide(new BigDecimal(24), BigDecimal.ROUND_CEILING));
+//			tmpMap.put("sumValue", sumVal);
+//			tmpMap.put("minDecimalValue", df.format(minVal));
+//			tmpMap.put("maxDecimalValue", df.format(maxVal));
+//			tmpMap.put("avgDecimalValue", df.format(sumVal.divide(new BigDecimal(list.size()), BigDecimal.ROUND_CEILING)));
+//			tmpMap.put("sumDecimalValue", df.format(sumVal));
+//			searchAddData.add(tmpMap);
+//		}
 
 		resultMap.put("searchData", searchData);
 		resultMap.put("searchAddData", searchAddData);
@@ -3619,47 +3490,41 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 		Integer supplierId = (Integer) conditionMap.get("supplierId");
 		String searchStartDate = (String) conditionMap.get("searchStartDate");
 		String searchEndDate = (String) conditionMap.get("searchEndDate");
-		String[] channelArray = ((String) conditionMap.get("channel")).split(",");
-		List<Integer> channelIdList = new ArrayList<Integer>();
-
-		for (String obj : channelArray) {
-			channelIdList.add(Integer.parseInt(obj));
-		}
-
-		conditionMap.put("channelIdList", channelIdList);
-
-		List<Map<String, Object>> list = meteringDayDao.getMeteringDataDetailDailyData(conditionMap, false);
-		Map<String, Object> listMap = new HashMap<String, Object>();
-		Map<String, Object> sumListMap = new HashMap<String, Object>();
-		Set<String> dateSet = new LinkedHashSet<String>();
-		Map<String, Object> map = null;
 		Supplier supplier = supplierDao.get(supplierId);
 		String country = supplier.getCountry().getCode_2letter();
 		String lang = supplier.getLang().getCode_2letter();
 		DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
-		Double value = null;
-		Double maxValue = null;
-		Double minValue = null;
-		Double avgValue = null;
-		Double sumValue = null;
-		StringBuilder sbAvgValue = null;
+		
+		// Set channelIdList
+		String[] channelArray = ((String) conditionMap.get("channel")).split(",");
+		List<Integer> channelIdList = new ArrayList<Integer>();
+		for (String obj : channelArray) {
+			channelIdList.add(Integer.parseInt(obj));
+		}
+		conditionMap.put("channelIdList", channelIdList);
 
+		// Get data from DB
+		List<Map<String, Object>> list = meteringDayDao.getMeteringDataDetailDailyData(conditionMap, false);
+		
+		Map<String, Object> listMap = new HashMap<String, Object>();
+
+		// Get duration for maximum loop
 		int duration = 0;
-
 		try {
 			duration = TimeUtil.getDayDuration(searchStartDate, searchEndDate);
-		} catch (ParseException e1) {
-			e1.printStackTrace();
+		} catch (ParseException e) {
+			logger.error(e,e);
 		}
 
+		// Set dateSet
+		Set<String> dateSet = new LinkedHashSet<String>();
 		String tmpDate = searchStartDate;
-
 		for (int i = 0; i <= duration; i++) {
 			dateSet.add(tmpDate);
 			try {
 				tmpDate = TimeUtil.getPreDay(tmpDate + "000000", -1).substring(0, 8);
 			} catch (ParseException e) {
-				e.printStackTrace();
+				logger.error(e,e);
 			}
 		}
 
@@ -3673,55 +3538,17 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 
 		while (itr.hasNext()) {
 			date = itr.next();
-			map = new HashMap<String, Object>();
+			Map<String, Object> map = new HashMap<String, Object>();
 
 			map.put("meteringTime", TimeLocaleUtil.getLocaleDate(date, lang, country));
 
 			for (Integer obj : channelIdList) {
-				value = DecimalUtil.ConvertNumberToDouble(listMap.get(date + "_" + obj));
+				Double value = DecimalUtil.ConvertNumberToDouble(listMap.get(date + "_" + obj));
 				map.put("channel_" + obj, (value == null) ? "- " : mdf.format(value));
 			}
 
 			result.add(map);
 		}
-
-//		List<Map<String, Object>> sumList = meteringDayDao.getMeteringDataDetailDailyData(conditionMap, true);
-
-		/*
-		 * if (sumList != null && sumList.size() > 0) { for (Map<String, Object> obj :
-		 * sumList) { sumListMap.put("MAX_" + (Number)obj.get("CHANNEL"),
-		 * obj.get("MAX_VAL")); sumListMap.put("MIN_" + (Number)obj.get("CHANNEL"),
-		 * obj.get("MIN_VAL")); sumListMap.put("AVG_" + (Number)obj.get("CHANNEL"),
-		 * obj.get("AVG_VAL")); sumListMap.put("SUM_" + (Number)obj.get("CHANNEL"),
-		 * obj.get("SUM_VAL")); }
-		 * 
-		 * map = new HashMap<String, Object>(); map.put("meteringTime",
-		 * conditionMap.get("msgSum")); map.put("id", "sum");
-		 * 
-		 * for (Integer ch : channelIdList) { sumValue =
-		 * DecimalUtil.ConvertNumberToDouble(sumListMap.get("SUM_" + ch));
-		 * map.put("channel_" + ch, (sumValue == null) ? "- " : mdf.format(sumValue)); }
-		 * 
-		 * result.add(map);
-		 * 
-		 * map = new HashMap<String, Object>(); map.put("meteringTime",
-		 * conditionMap.get("msgAvg") + "(" + conditionMap.get("msgMax") + "/" +
-		 * conditionMap.get("msgMin") + ")");
-		 * 
-		 * for (Integer ch : channelIdList) { sbAvgValue = new StringBuilder(); maxValue
-		 * = DecimalUtil.ConvertNumberToDouble(sumListMap.get("MAX_" + ch)); minValue =
-		 * DecimalUtil.ConvertNumberToDouble(sumListMap.get("MIN_" + ch)); avgValue =
-		 * DecimalUtil.ConvertNumberToDouble(sumListMap.get("AVG_" + ch));
-		 * 
-		 * if (maxValue != null || minValue != null || avgValue != null) {
-		 * sbAvgValue.append((avgValue == null) ? "- " : mdf.format(avgValue));
-		 * sbAvgValue.append("("); sbAvgValue.append((maxValue == null) ? " - " :
-		 * mdf.format(maxValue)); sbAvgValue.append("/"); sbAvgValue.append((minValue ==
-		 * null) ? " - " : mdf.format(minValue)); sbAvgValue.append(")"); }
-		 * map.put("channel_" + ch, sbAvgValue.toString()); map.put("id", "avg"); }
-		 * 
-		 * result.add(map); }
-		 */
 		return result;
 	}
 
@@ -3808,7 +3635,7 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 
 		resultMap.put("searchData", searchData);
 
-		List<Map<String, Object>> sumList = meteringDayDao.getMeteringDataDetailDailyData(conditionMap, true);
+//		List<Map<String, Object>> sumList = meteringDayDao.getMeteringDataDetailDailyData(conditionMap, true);
 		/*
 		 * if (sumList != null && sumList.size() > 0) { for (Map<String, Object> obj :
 		 * sumList) { if
@@ -3849,12 +3676,11 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 		Integer supplierId = (Integer) conditionMap.get("supplierId");
 		String[] channelArray = ((String) conditionMap.get("channel")).split(",");
+		
 		List<Integer> channelIdList = new ArrayList<Integer>();
-
 		for (String obj : channelArray) {
 			channelIdList.add(Integer.parseInt(obj));
 		}
-
 		conditionMap.put("channelIdList", channelIdList);
 
 		List<Map<String, Object>> list = meteringDayDao.getMeteringDataDetailDailyData(conditionMap, false);
@@ -3872,11 +3698,6 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 		String lang = supplier.getLang().getCode_2letter();
 		DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
 		Double value = null; // 계산용 임시변수
-		Double maxValue = null;
-		Double minValue = null;
-		Double avgValue = null;
-		Double sumValue = null;
-		StringBuilder sbAvgValue = null;
 
 		for (Map<String, Object> obj : list) {
 			listMap.put((String) obj.get("YYYYMMDD") + "_" + (String) obj.get("CHANNEL"), obj.get("VALUE"));
@@ -4353,11 +4174,6 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 		String lang = supplier.getLang().getCode_2letter();
 		DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
 		Double value = null;
-		Double maxValue = null;
-		Double minValue = null;
-		Double avgValue = null;
-		Double sumValue = null;
-		StringBuilder sbAvgValue = null;
 		String startYear = searchStartDate.substring(0, 4);
 
 		for (int i = 1; i <= 12; i++) {
@@ -4383,44 +4199,6 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 
 			result.add(map);
 		}
-
-		List<Map<String, Object>> sumList = meteringMonthDao.getMeteringDataDetailMonthlyData(conditionMap, true);
-
-		/*
-		 * if (sumList != null && sumList.size() > 0) { for (Map<String, Object> obj :
-		 * sumList) { sumListMap.put("MAX_" + (Number)obj.get("CHANNEL"),
-		 * obj.get("MAX_VAL")); sumListMap.put("MIN_" + (Number)obj.get("CHANNEL"),
-		 * obj.get("MIN_VAL")); sumListMap.put("AVG_" + (Number)obj.get("CHANNEL"),
-		 * obj.get("AVG_VAL")); sumListMap.put("SUM_" + (Number)obj.get("CHANNEL"),
-		 * obj.get("SUM_VAL")); }
-		 * 
-		 * map = new HashMap<String, Object>(); map.put("meteringTime",
-		 * conditionMap.get("msgSum")); map.put("id", "sum");
-		 * 
-		 * for (Integer ch : channelIdList) { sumValue =
-		 * DecimalUtil.ConvertNumberToDouble(sumListMap.get("SUM_" + ch));
-		 * map.put("channel_" + ch, (sumValue == null) ? "- " : mdf.format(sumValue)); }
-		 * 
-		 * result.add(map);
-		 * 
-		 * map = new HashMap<String, Object>(); map.put("meteringTime",
-		 * conditionMap.get("msgAvg") + "(" + conditionMap.get("msgMax") + "/" +
-		 * conditionMap.get("msgMin") + ")"); map.put("id", "avg");
-		 * 
-		 * for (Integer ch : channelIdList) { sbAvgValue = new StringBuilder(); maxValue
-		 * = DecimalUtil.ConvertNumberToDouble(sumListMap.get("MAX_" + ch)); minValue =
-		 * DecimalUtil.ConvertNumberToDouble(sumListMap.get("MIN_" + ch)); avgValue =
-		 * DecimalUtil.ConvertNumberToDouble(sumListMap.get("AVG_" + ch));
-		 * 
-		 * if (maxValue != null || minValue != null || avgValue != null) {
-		 * sbAvgValue.append((avgValue == null) ? "- " : mdf.format(avgValue));
-		 * sbAvgValue.append("("); sbAvgValue.append((maxValue == null) ? " - " :
-		 * mdf.format(maxValue)); sbAvgValue.append("/"); sbAvgValue.append((minValue ==
-		 * null) ? " - " : mdf.format(minValue)); sbAvgValue.append(")"); }
-		 * map.put("channel_" + ch, sbAvgValue.toString()); }
-		 * 
-		 * result.add(map); }
-		 */
 		return result;
 	}
 
@@ -4544,7 +4322,6 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 
 		List<Map<String, Object>> list = meteringDayDao.getMeteringDataDetailDailyData(conditionMap, false);
 		Map<String, Object> listMap = new HashMap<String, Object>();
-		Map<String, Object> sumListMap = new HashMap<String, Object>();
 		Set<String> dateSet = new LinkedHashSet<String>();
 		Map<String, Object> map = null;
 		Supplier supplier = supplierDao.get(supplierId);
@@ -4552,11 +4329,6 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 		String lang = supplier.getLang().getCode_2letter();
 		DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
 		Double value = null;
-		Double maxValue = null;
-		Double minValue = null;
-		Double avgValue = null;
-		Double sumValue = null;
-		StringBuilder sbAvgValue = null;
 
 		int year = 0;
 		int month = 0;
@@ -4597,7 +4369,7 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 			result.add(map);
 		}
 
-		List<Map<String, Object>> sumList = meteringDayDao.getMeteringDataDetailDailyData(conditionMap, true);
+//		List<Map<String, Object>> sumList = meteringDayDao.getMeteringDataDetailDailyData(conditionMap, true);
 
 		/*
 		 * if (sumList != null && sumList.size() > 0) { for (Map<String, Object> obj :
@@ -4668,7 +4440,7 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 		}
 
 		Map<String, Double> listMap = new HashMap<String, Double>();
-		Map<String, Object> sumListMap = new HashMap<String, Object>();
+//		Map<String, Object> sumListMap = new HashMap<String, Object>();
 		Set<String> dateSet = new LinkedHashSet<String>();
 		Map<String, Object> map = null;
 		Supplier supplier = supplierDao.get(supplierId);
@@ -4676,10 +4448,10 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 		String lang = supplier.getLang().getCode_2letter();
 		DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
 		Double value = null;
-		Double maxValue = null;
-		Double minValue = null;
-		Double avgValue = null;
-		Double sumValue = null;
+//		Double maxValue = null;
+//		Double minValue = null;
+//		Double avgValue = null;
+//		Double sumValue = null;
 
 		int year = 0;
 		int month = 0;
@@ -4730,7 +4502,7 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 		}
 		resultMap.put("searchData", searchData);
 
-		List<Map<String, Object>> sumList = meteringDayDao.getMeteringDataDetailDailyData(conditionMap, true);
+//		List<Map<String, Object>> sumList = meteringDayDao.getMeteringDataDetailDailyData(conditionMap, true);
 
 		/*
 		 * if (sumList != null && sumList.size() > 0) { for (Map<String, Object> obj :
@@ -4791,11 +4563,6 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 		Supplier supplier = supplierDao.get(supplierId);
 		DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
 		Double value = null; // 계산용 임시변수
-		Double maxValue = null;
-		Double minValue = null;
-		Double avgValue = null;
-		Double sumValue = null;
-		StringBuilder sbAvgValue = null;
 
 		Map<String, Object> seasonsListMap = null;
 		List<SeasonData> seasonDataList = null;
@@ -4962,43 +4729,6 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 			map.put("meteringTime", startDate.substring(0, 4) + " " + seasonData.getName());
 			result.add(map);
 		}
-
-		/*
-		 * if (bdTotalSumList != null && bdTotalSumList.size() > 0) { map = new
-		 * HashMap<String, Object>(); map.put("meteringTime",
-		 * conditionMap.get("msgSum")); map.put("id", "sum");
-		 * 
-		 * chIndex = 0; for (Integer ch : channelIdList) { sumValue =
-		 * (bdTotalSumList.get(chIndex) == null) ? null :
-		 * bdTotalSumList.get(chIndex).doubleValue(); map.put("channel_" + ch, (sumValue
-		 * == null) ? "- " : mdf.format(sumValue)); chIndex++; }
-		 * 
-		 * result.add(map);
-		 * 
-		 * map = new HashMap<String, Object>(); map.put("meteringTime",
-		 * conditionMap.get("msgAvg") + "(" + conditionMap.get("msgMax") + "/" +
-		 * conditionMap.get("msgMin") + ")"); map.put("id", "avg");
-		 * 
-		 * chIndex = 0; for (Integer ch : channelIdList) { sbAvgValue = new
-		 * StringBuilder(); maxValue = (bdTotalMaxList.get(chIndex) == null) ? null :
-		 * bdTotalMaxList.get(chIndex).doubleValue(); minValue =
-		 * (bdTotalMinList.get(chIndex) == null) ? null :
-		 * bdTotalMinList.get(chIndex).doubleValue();
-		 * 
-		 * if (bdTotalSumList.get(chIndex) == null || intTotalCount.get(chIndex) ==
-		 * null) { avgValue = null; } else if (intTotalCount.get(chIndex) == 0) {
-		 * avgValue = 0D; } else { avgValue = bdTotalSumList.get(chIndex).divide(new
-		 * BigDecimal(intTotalCount.get(chIndex)), MathContext.DECIMAL32).doubleValue();
-		 * }
-		 * 
-		 * if (maxValue != null || minValue != null || avgValue != null) {
-		 * sbAvgValue.append((avgValue == null) ? "- " : mdf.format(avgValue));
-		 * sbAvgValue.append("("); sbAvgValue.append((maxValue == null) ? " - " :
-		 * mdf.format(maxValue)); sbAvgValue.append("/"); sbAvgValue.append((minValue ==
-		 * null) ? " - " : mdf.format(minValue)); sbAvgValue.append(")"); }
-		 * map.put("channel_" + ch, sbAvgValue.toString()); chIndex++; }
-		 * result.add(map); }
-		 */
 
 		return result;
 	}

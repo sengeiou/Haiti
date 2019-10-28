@@ -1462,52 +1462,36 @@ public class MeteringLpDaoImpl extends
         Integer supplierId = (Integer)conditionMap.get("supplierId");
         String searchStartDate = StringUtil.nullToBlank(conditionMap.get("searchStartDate"));
         String searchEndDate = StringUtil.nullToBlank(conditionMap.get("searchEndDate"));
-        String searchStartHour = StringUtil.nullToBlank(conditionMap.get("searchStartHour"));
-        String searchEndHour = StringUtil.nullToBlank(conditionMap.get("searchEndHour"));
         String meterNo = StringUtil.nullToBlank(conditionMap.get("meterNo"));
         String meterType = StringUtil.nullToBlank(conditionMap.get("meterType"));
         String tlbType = StringUtil.nullToBlank(conditionMap.get("tlbType"));
         List<Integer> channelIdList = (List<Integer>)conditionMap.get("channelIdList");
         String lpTable = MeterType.valueOf(meterType).getLpTableName();
+        String dayTable = MeterType.valueOf(meterType).getDayTableName();
 
         StringBuilder sb = new StringBuilder();
-
-        sb.append("SELECT 									\n");
-        sb.append("  lp.yyyymmddhhmiss AS YYYYMMDDHHMISS, 	\n");
-        sb.append("  lp.channel AS CHANNEL, 				\n");
-        sb.append("  lp.dst AS DST, 						\n");
-        sb.append("  lp.value AS VALUE, 					\n");
-        sb.append("  (SELECT DISTINCT dc.ch_method 			\n");
-        sb.append("   FROM meter me, 						\n");
-        sb.append("        meterconfig mf, 					\n");
-        sb.append("        display_channel dc, 				\n");
-        sb.append("        channel_config  cc 				\n");
-        sb.append("   WHERE 1=1 							\n");
-        sb.append("   AND mf.devicemodel_fk = me.devicemodel_id \n");
-        sb.append("   AND cc.meterconfig_id = mf.id 		\n");
-        sb.append("   AND cc.data_type = :tlbType 			\n");
-        sb.append("   AND dc.id = cc.channel_id 			\n");
-        sb.append("   AND me.mds_id = lp.mdev_id 			\n");
-        sb.append("   AND cc.channel_index = lp.channel) AS CH_METHOD \n");
-        sb.append("FROM ").append(lpTable).append(" lp 		\n");
-        sb.append("WHERE lp.mdev_type = :mdevType 			\n");
-        sb.append("AND   lp.mdev_id = :meterNo 				\n");
-        sb.append("AND   lp.yyyymmddhhmiss BETWEEN :startDate AND :endDate \n");
+        sb.append("SELECT	de.yyyymmdd||de.hh AS YYYYMMDDHH, 	\n");
+        sb.append("			de.channel AS CHANNEL, 				\n");
+        sb.append("			de.dst AS DST, 						\n");
+        sb.append("  		de.value AS VALUE					\n");
+        sb.append("FROM ").append(dayTable).append(" de			\n");
+        sb.append("WHERE	de.mdev_type = :mdevType 			\n");
+        sb.append("AND 		de.mdev_id = :meterNo 				\n");
+        sb.append("AND 		de.yyyymmdd BETWEEN :startDate ANd :endDate \n");
+        sb.append("AND		de.supplier_id = :supplierId 		\n");
         if (channelIdList != null) {
-            sb.append("AND   lp.channel IN (:channelIdList) \n");
+            sb.append("AND	de.channel IN (:channelIdList) \n");
         }
 
-//        sb.append("\nAND   lp.supplier_id = :supplierId ");
-        sb.append("ORDER BY lp.yyyymmddhhmiss, lp.dst, lp.channel \n");
+        sb.append("ORDER BY de.yyyymmdd||de.hh, de.channel \n");
 
         SQLQuery query = getSession().createSQLQuery(new SQLWrapper().getQuery(sb.toString()));
 
-        query.setString("tlbType", tlbType);
-        query.setString("startDate", (searchStartHour.isEmpty()) ? searchStartDate+"000000" : searchStartDate + searchStartHour+"0000");
-        query.setString("endDate", (searchEndHour.isEmpty()) ? searchEndDate+"235959" : searchEndDate + searchEndHour+"5959");
+        query.setString("startDate", searchStartDate.substring(0,8));
+        query.setString("endDate", searchEndDate.substring(0,8));
         query.setString("meterNo", meterNo);
         query.setString("mdevType", CommonConstants.DeviceType.Meter.name());
-//        query.setInteger("supplierId", supplierId);
+        query.setInteger("supplierId", supplierId);
 
         if (channelIdList != null) {
             query.setParameterList("channelIdList", channelIdList);
