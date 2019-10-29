@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 
+import com.aimir.constants.CommonConstants;
 import com.aimir.constants.CommonConstants.MeteringFlag;
 import com.aimir.constants.CommonConstants.MeteringType;
 import com.aimir.fep.command.conf.KamstrupCIDMeta;
@@ -13,6 +14,7 @@ import com.aimir.fep.command.mbean.CommandGW;
 import com.aimir.fep.meter.AbstractMDSaver;
 import com.aimir.fep.meter.data.BillingData;
 import com.aimir.fep.meter.data.Instrument;
+import com.aimir.fep.meter.data.LPData;
 import com.aimir.fep.meter.entry.IMeasurementData;
 import com.aimir.fep.meter.parser.I210Plus;
 import com.aimir.fep.meter.parser.Kamstrup;
@@ -31,6 +33,18 @@ public class I210PlusMDSaver extends AbstractMDSaver {
 	protected boolean save(IMeasurementData md) throws Exception {
 		I210Plus parser = (I210Plus) md.getMeterDataParser();
 		log.info(parser.toString());
+		
+		LPData[] lpArr = new LPData[1];
+		lpArr[0] = new LPData();
+		
+		saveLPUsingLpNormalization(
+				CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()),
+				md,
+				lpArr,
+				parser.getMDevId(),
+				parser.getDeviceId(),
+				parser.getMDevType(), 
+				parser.getMeteringTime());
 		
 //		int interval = 60 / (parser.getPeriod() != 0 ? parser.getPeriod() : 1);
 //		if (parser.getMeter().getLpInterval() == null || interval != parser.getMeter().getLpInterval())
