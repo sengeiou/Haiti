@@ -2334,10 +2334,10 @@
                         case 'Relay Status':
                             $('#cmdRelayStatusButton').show();
                             break;
-                        case 'On Demand Metering(Meter)':
+                        case 'On Demand Metering':
                             $('#onDemandButton').show();
                             break;
-                        case 'Meter Time Synch':
+                        case 'Meter Time Synchronization':
                             $('#meterTimeSyncButton').show();
                             break;
                         case 'Get Tariff':
