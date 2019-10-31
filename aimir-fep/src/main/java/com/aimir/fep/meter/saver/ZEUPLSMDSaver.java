@@ -1,25 +1,23 @@
 package com.aimir.fep.meter.saver;
 
-import java.util.HashSet;
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import com.aimir.constants.CommonConstants;
 import com.aimir.constants.CommonConstants.MeterType;
 import com.aimir.constants.CommonConstants.MeteringFlag;
 import com.aimir.constants.CommonConstants.MeteringType;
 import com.aimir.fep.meter.AbstractMDSaver;
+import com.aimir.fep.meter.data.LPData;
 import com.aimir.fep.meter.entry.IMeasurementData;
 import com.aimir.fep.meter.parser.BatteryLog;
 import com.aimir.fep.meter.parser.ModemLPData;
 import com.aimir.fep.meter.parser.ZEUPLS;
-import com.aimir.fep.meter.parser.ZEUPLS2;
 import com.aimir.model.device.HMU;
 import com.aimir.model.mvm.MeteringLP;
 import com.aimir.util.Condition;
-import com.aimir.util.DateTimeUtil;
 import com.aimir.util.Condition.Restriction;
+import com.aimir.util.DateTimeUtil;
+
+import java.util.HashSet;
+import java.util.List;
 
 public class ZEUPLSMDSaver extends AbstractMDSaver {
 	
@@ -63,7 +61,7 @@ public class ZEUPLSMDSaver extends AbstractMDSaver {
             hh = 0;
             maxIdx = 0;
             startIdx = 0;
-            
+
             if (lpdata == null || lpdata.getLp() == null)
                 continue;
             
@@ -96,10 +94,14 @@ public class ZEUPLSMDSaver extends AbstractMDSaver {
                     break;
                 case HeatMeter :
                     lplist = lpHMDao.getLpHMsByListCondition(condition);
+                    break;
+                default:
+                    lplist = null;
+                    break;
                 }
     
                 // 값이 있는 것까지의 주기를 구하고 base를 계산한다.
-                if (lplist != null && lplist.size() != 0) {
+                if (lplist != null && !lplist.isEmpty()) {
                     // 저장된 최근 시간을 가져온다.
                     for (int i = 0; i < lplist.size(); i++) {
                         mlp = (MeteringLP)lplist.get(i);
@@ -140,16 +142,19 @@ public class ZEUPLSMDSaver extends AbstractMDSaver {
             
             // 같은 날짜에만 해당한다.
             if (lpdate.equals(lpdata.getLpDate())) {
-                startIdx = hh * parser.getPeriod() + 
+                startIdx = hh * parser.getPeriod() +
                             (mm / parser.getMeter().getLpInterval());
+                log.debug("Set StartIDX["+ startIdx + "], HH[" + hh + "] MM[" + mm + "]");
             }
             else {
                 // if (hh == 24)
                 // 날짜가 다르면 무조건 00시부터 2011.06.30
                 hh = 0;
+                mm = 0;
+                startIdx = 0;
             }
             
-            log.info("START IDX[" + startIdx + "]");
+            log.info("START IDX[" + startIdx + "], HH[" + hh +"], MM[" + mm + "]");
             if (startIdx > lpdata.getLp()[0].length) {
                 log.info("LP length is lower than start index. so skip..");
                 continue;
@@ -163,22 +168,45 @@ public class ZEUPLSMDSaver extends AbstractMDSaver {
             
             lp = new double[flaglist.length];
             
-         // ModemLPData의 lp 배열구조가 변경됨. 주의
+            // ModemLPData의 lp 배열구조가 변경됨. 주의
             for (int flagcnt=0; flagcnt < flaglist.length; flagcnt++) {
                 lp[flagcnt] = lpdata.getLp()[0][startIdx+flagcnt];
                 
                 for (int ch = 0; ch < lpdata.getLp().length; ch++) {
-                    if (lpdata.getLp()[ch][flagcnt] > 65535)
+                    if (lpdata.getLp()[ch][startIdx+flagcnt] > 65535) //lp[f..]와 조건문의 index를 맞춰줌.
                         flaglist[flagcnt] = MeteringFlag.Fail.getFlag();
                     else
                         flaglist[flagcnt] = MeteringFlag.Correct.getFlag();
                 }
             }
-            
-            saveLPData(MeteringType.Normal, lpdata.getLpDate(), (hh<10?"0":"")+ hh + (mm<10?"0":"")+mm,
-                    new double[][]{lp}, flaglist, baseValue, parser.getMeter(),
-                    parser.getDeviceType(), parser.getDeviceId(), parser.getMDevType(), parser.getMDevId(), parser.getMeteringTime());
-            
+
+            // 정규화 적용에 따른 LP 배열 정리 + 시간 설정
+            int period = parser.getPeriod();
+            LPData[] newLP = new LPData[flaglist.length];
+            for (int va=0; va < flaglist.length; va++) {
+                Double[] lps = new Double[lpdata.getLp().length];
+                //각 채널별 값
+                for(int ch=0; ch < lpdata.getLp().length; ch++) {
+                    lps[ch] = lpdata.getLp()[ch][startIdx+va];
+                }
+                //시간 설정
+                int hour = (startIdx+va)/period;
+                int min = ((startIdx+va)%period)*interval;
+                String strHH = (hour<10?"0":"")+hour;
+                String strMM = (min<10?"0":"")+min;
+                //값 설정
+                newLP[va] = new LPData((lpdate+strHH+strMM), lps[0], lps[0]);
+                newLP[va].setCh(lps);
+                newLP[va].setFlag(flaglist[va]);
+                log.debug("DEBUG newLP[" + va + "], lpDateTime["+newLP[va].getDatetime()+"], ChVal["+lps[0]+"]");
+
+            }
+
+            log.debug("Call saveLPUsingNorm[" + parser.getMDevId() + "], DeviceID[" + parser.getDeviceId() + "]" +
+                    ", MdevType[" + parser.getMDevType() + "], MeteringTime[" +  parser.getMeteringTime() + "].");
+            saveLPUsingLpNormalization(MeteringType.Normal, null, newLP, parser.getMDevId(),
+                    parser.getDeviceId(), parser.getMDevType(), parser.getMeteringTime());
+
             // 모든 lp를 더해서 baseValue에 더하여 다음 LP 저장에 사용한다.
             for (double _lp : lp) {
                 baseValue += _lp;
