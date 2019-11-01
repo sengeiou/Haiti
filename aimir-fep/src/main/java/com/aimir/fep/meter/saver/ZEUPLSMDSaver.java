@@ -195,7 +195,7 @@ public class ZEUPLSMDSaver extends AbstractMDSaver {
                 String strHH = (hour<10?"0":"")+hour;
                 String strMM = (min<10?"0":"")+min;
                 //값 설정
-                newLP[va] = new LPData((lpdate+strHH+strMM), lps[0], lps[0]);
+                newLP[va] = new LPData((lpdata.getLpDate()+strHH+strMM), lps[0], lps[0]);
                 newLP[va].setCh(lps);
                 newLP[va].setFlag(flaglist[va]);
                 log.debug("DEBUG newLP[" + va + "], lpDateTime["+newLP[va].getDatetime()+"], ChVal["+lps[0]+"]");
