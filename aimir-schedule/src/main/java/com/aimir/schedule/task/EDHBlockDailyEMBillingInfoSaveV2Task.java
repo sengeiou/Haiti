@@ -240,7 +240,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
             //해당 Tariff 정보를 가져온다.
             TariffType tariffType = tariffTypeDao.get(contract.getTariffIndexId());
             Integer tariffTypeCode = tariffType.getCode();
-            Map<String, Object> tariffParam = new HashMap<String, Object>();
+            Map<String, Object> tariffParam = new HashMap<>();
 
             tariffParam.put("tariffTypeCode", tariffTypeCode);
             tariffParam.put("tariffIndex", tariffType);
