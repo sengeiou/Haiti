@@ -23891,7 +23891,7 @@ public class CommandGW implements CommandGWMBean {
 
 		Target target = CmdUtil.getTarget(mcuId);
 		Vector<SMIValue> datas = new Vector<SMIValue>();
-		SMIValue smiValue = DataUtil.getSMIValue(new STRING(parserName));
+		SMIValue smiValue = DataUtil.getSMIValueByObject("stringEntry", parserName);
 		datas.add(smiValue);
 
 		Object[] params = new Object[] { target, "cmdGetSensorPath", datas };
