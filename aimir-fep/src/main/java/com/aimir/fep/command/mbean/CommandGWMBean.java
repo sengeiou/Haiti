@@ -3006,4 +3006,14 @@ public interface CommandGWMBean
 	 */
 	public Map<String, Object> cmdFOTA(MMIU targetModem, String ftpUrl, String ftpPort, String ftpDirectory, String targetFile, String username, String password) throws Exception;
 
+
+    /**
+     * MCU Set Time
+     *
+     * @param mcuId MCU Indentifier
+     * @param time MCU Time (yyyymmddhhmmss)
+     * @throws FMPMcuException, Exception
+     */
+    public void cmdGetSensorPath(String mcuId, String parserName)
+        throws FMPMcuException, Exception;
 }

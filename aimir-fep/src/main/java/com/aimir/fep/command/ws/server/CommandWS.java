@@ -5241,5 +5241,25 @@ public class CommandWS
         response.setResponse(command.cmdFOTA(targetModem, ftpUrl, ftpPort, ftpDirectory, targetFile, username, password));
     	return response;
     }
+    
+    /**
+     * OPF-1159 IF4 protocol v1.1 <br>
+     * 102.33	cmdGetSeosrPath <br>
+     * 
+     * @param mcuId			DCU ID
+     * @param parserName	Parser Name
+     * @return
+     * @throws Exception
+     */
+    @WebMethod
+    public void cmdGetSensorPath(
+    		@WebParam(name="McuId") String mcuId,
+    		@WebParam(name="ParserName") String parserName
+    		) throws Exception{
+//        ResponseMap response = new ResponseMap();
+        command.cmdGetSensorPath(mcuId, parserName);
+//        response.setResponse(command.cmdGetSensorPath(mcuId, parserName));
+//    	return response;
+    }
 }
 

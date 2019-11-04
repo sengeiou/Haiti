@@ -183,6 +183,7 @@ import com.aimir.fep.protocol.fmp.frame.service.entry.pluginEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.procEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.sensorBatteryEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.sensorInfoNewEntry;
+import com.aimir.fep.protocol.fmp.frame.service.entry.sensorPathEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.sysEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.timeEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.trInfoEntry;
@@ -23882,6 +23883,52 @@ public class CommandGW implements CommandGWMBean {
 		map.put("password", result.getPassword());
 		log.debug("map : " + map);
 		return map;
+	}
+
+	@Override
+	public void cmdGetSensorPath(String mcuId, String parserName) throws FMPMcuException, Exception {
+		log.debug("cmdGetSeosrPath("+mcuId+", "+parserName+")");
+
+		Target target = CmdUtil.getTarget(mcuId);
+		Vector<SMIValue> datas = new Vector<SMIValue>();
+		SMIValue smiValue = DataUtil.getSMIValue(new STRING(parserName));
+		datas.add(smiValue);
+
+		Object[] params = new Object[] { target, "cmdMcuSetTime", datas };
+
+		String[] types = new String[] { TARGET_SRC, "java.lang.String", "java.util.Vector", };
+
+		Object obj = null;
+		try {
+			obj = invoke(params, types);
+		} catch (Exception e) {
+			log.error(e, e);
+			throw new Exception(makeMessage(e.getMessage()));
+		}
+		
+		SMIValue[] smiValues = null;
+		if (obj instanceof Integer) {
+			log.error("Error Code Return");
+			throw makeMcuException(((Integer) obj).intValue());
+		} else if (obj instanceof SMIValue[]) {
+			smiValues = (SMIValue[]) obj;
+		} else {
+			log.error("Unknown Return Value");
+			throw new Exception("Unknown Return Value");
+		}
+		
+		sensorPathEntry spe = null;
+		if (smiValues.length > 0) {
+			Object o = smiValues[0].getVariable();
+			if (o instanceof OPAQUE) {
+				spe = (sensorPathEntry) ((OPAQUE) o).getValue();
+			} else {
+				log.error("Unknown Return Value");
+				throw new Exception("Unknown Return Value");
+			}
+		}
+		log.debug(spe);
+		
 	}	
 
 }

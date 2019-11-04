@@ -167,3 +167,4 @@ cmdDeleteGroup,102.71,Group and Member Delete
 cmdGetGroup,102.72,Group Search Request
 cmdSetIHDTable,102.73,Install CODI Information (Set).
 cmdDelIHDTable,102.74,Install CODI Information (Delete).
+cmdGetSensorPath,102.33,Routing Path Information (Zigbee).

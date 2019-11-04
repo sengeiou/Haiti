@@ -3756,4 +3756,14 @@ public interface CommandWS {
     	String password
     ) throws Exception_Exception;
     
+    @WebResult(name = "return", targetNamespace = "")
+    @RequestWrapper(localName = "cmdGetSensorPath", targetNamespace = "http://server.ws.command.fep.aimir.com/", className = "com.aimir.fep.command.ws.client.CmdGetSensorPath")
+    @WebMethod
+    @ResponseWrapper(localName = "cmdGetSensorPathResponse", targetNamespace = "http://server.ws.command.fep.aimir.com/", className = "com.aimir.fep.command.ws.client.CmdGetSensorPathResponse")
+    public sysEntry cmdGetSensorPath(
+        @WebParam(name = "McuId", targetNamespace = "")
+        java.lang.String mcuId,
+        @WebParam(name = "ParserName", targetNamespace = "")
+        java.lang.String parserName
+    ) throws Exception_Exception;
 }
