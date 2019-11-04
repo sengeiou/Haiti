@@ -23890,6 +23890,7 @@ public class CommandGW implements CommandGWMBean {
 		log.debug("cmdGetSeosrPath("+mcuId+", "+parserName+")");
 
 		Target target = CmdUtil.getTarget(mcuId);
+		
 		Vector<SMIValue> datas = new Vector<SMIValue>();
 		SMIValue smiValue = DataUtil.getSMIValueByObject("stringEntry", parserName);
 		datas.add(smiValue);
@@ -23912,23 +23913,19 @@ public class CommandGW implements CommandGWMBean {
 			throw makeMcuException(((Integer) obj).intValue());
 		} else if (obj instanceof SMIValue[]) {
 			smiValues = (SMIValue[]) obj;
+			List<sensorPathEntry> list = new ArrayList<sensorPathEntry>();
+			for (int i = 0; i < smiValues.length; i++) {
+				smiValue = smiValues[i];
+				OPAQUE mdv = (OPAQUE) smiValue.getVariable();
+				sensorPathEntry value = (sensorPathEntry) mdv.getValue();
+				log.debug(value);
+				list.add(value);
+			}
+			log.debug(list);
 		} else {
 			log.error("Unknown Return Value");
 			throw new Exception("Unknown Return Value");
-		}
-		
-		sensorPathEntry spe = null;
-		if (smiValues.length > 0) {
-			Object o = smiValues[0].getVariable();
-			if (o instanceof OPAQUE) {
-				spe = (sensorPathEntry) ((OPAQUE) o).getValue();
-			} else {
-				log.error("Unknown Return Value");
-				throw new Exception("Unknown Return Value");
-			}
-		}
-		log.debug(spe);
-		
+		}		
 	}	
 
 }
