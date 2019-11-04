@@ -470,8 +470,10 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
             DeviceModel model = deviceModelDao.findByCondition("name", "DCU-DUMMY");
 			if (model != null) {
 				mcu.setDeviceModel(model);
+	            log.debug("DCU["+mcuId+"] SET MODEL["+model.getName()+"]");
+			}else {
+				log.debug("DeviceModel is null");
 			}
-            log.debug("DCU["+meter.getMdsId()+"] SET MODEL["+model.getName()+"]");
 			mcu.setSysModel(model.getName());
 			
 			if(mcuIpAddress != null) {
