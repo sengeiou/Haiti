@@ -41,7 +41,7 @@ public class PrepaymentLog extends BaseObject implements JSONString{
 
 	@Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_PREPAYMENTLOG")
-	@SequenceGenerator(name="SEQ_PREPAYMENTLOG_SEQ", sequenceName="SEQ_PREPAYMENTLOG", allocationSize=1) 
+	@SequenceGenerator(name="SEQ_PREPAYMENTLOG", sequenceName="SEQ_PREPAYMENTLOG", allocationSize=1) 
 	private Long id;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
