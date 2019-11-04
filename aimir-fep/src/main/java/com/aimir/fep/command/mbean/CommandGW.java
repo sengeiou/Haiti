@@ -23894,7 +23894,7 @@ public class CommandGW implements CommandGWMBean {
 		SMIValue smiValue = DataUtil.getSMIValue(new STRING(parserName));
 		datas.add(smiValue);
 
-		Object[] params = new Object[] { target, "cmdMcuSetTime", datas };
+		Object[] params = new Object[] { target, "cmdGetSensorPath", datas };
 
 		String[] types = new String[] { TARGET_SRC, "java.lang.String", "java.util.Vector", };
 
