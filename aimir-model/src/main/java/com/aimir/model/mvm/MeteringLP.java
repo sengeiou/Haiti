@@ -27,13 +27,7 @@ public abstract class MeteringLP {
 	@Column(name="meteringtype", length= 1)
 	@ColumnInfo(descr="검침타입 0:정기검침, 1:온디맨드, 2:실패검침  3 : 수검침")
 	private Integer meteringType;	
-		
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name = "device_serial")
-	@ColumnInfo(name="모뎀번호")
-    @ReferencedBy(name="deviceSerial")
-	private Modem modem;
-	
+
 	@Column(name="device_serial", nullable=true, updatable=false, insertable=false)
 	@ColumnInfo(descr="모뎀 시리얼 번호")
 	private String modemSerial;	
@@ -250,14 +244,6 @@ public abstract class MeteringLP {
 		this.id.setChannel(channel);
 	}
 	
-	public Modem getModem() {
-		return modem;
-	}
-
-	public void setModem(Modem modem) {
-		this.modem = modem;
-	}
-
 	public String getModemSerial() {
 		return modemSerial;
 	}
@@ -294,9 +280,7 @@ public abstract class MeteringLP {
 		builder.append(getDeviceType()).append("|");
 		builder.append(getMeteringType()).append("|");
 		
-		if(getModem() != null)
-			builder.append(modem.getDeviceSerial()).append("|");
-		else if(modemSerial != null)
+		if(modemSerial != null)
 			builder.append(modemSerial).append("|");
 		
 		builder.append(getLpStatus()).append("|");
