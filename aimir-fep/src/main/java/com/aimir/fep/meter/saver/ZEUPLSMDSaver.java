@@ -74,7 +74,7 @@ public class ZEUPLSMDSaver extends AbstractMDSaver {
             // 당일 것이 없으면 전일 것을 가져올 수 있도록 한번 돌린다. 
             for (int repeat = 0; repeat < 2; repeat++) {
                 log.info("LP DATE[" + lpdate + "]");
-                // lpDate의 lp를 조회해서 값이 있는 것까지의 주기를 구하고 base를 위해 value를 계산한다.
+                // lpDate의 lp를 조회해서 값이 있는 것까지의 주기를 구하고 base를 해 value를 계산한다.
                 condition = new HashSet<Condition>();
                 condition.add(new Condition("id.mdevType", new Object[]{parser.getMDevType()}, null, Restriction.EQ));
                 condition.add(new Condition("id.mdevId", new Object[]{parser.getMDevId()}, null, Restriction.EQ));
@@ -198,7 +198,7 @@ public class ZEUPLSMDSaver extends AbstractMDSaver {
                 newLP[va] = new LPData((lpdata.getLpDate()+strHH+strMM), lps[0], lps[0]);
                 newLP[va].setCh(lps);
                 newLP[va].setFlag(flaglist[va]);
-                log.debug("DEBUG newLP[" + va + "], lpDateTime["+newLP[va].getDatetime()+"], ChVal["+lps[0]+"]");
+                log.debug("newLPIdx[" + va + "], lpDateTime["+newLP[va].getDatetime()+"], ChVal["+lps[0]+"]");
 
             }
 
