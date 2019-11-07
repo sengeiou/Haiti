@@ -49,7 +49,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-@Controller("/poc")
+@Controller
 @Transactional
 public class PocController {
     private static Log log = LogFactory.getLog(PocController.class);

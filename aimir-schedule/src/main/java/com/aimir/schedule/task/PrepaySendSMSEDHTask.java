@@ -20,6 +20,9 @@ import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.Trigger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aimir.constants.CommonConstants.WeekDay;
@@ -29,6 +32,7 @@ import com.aimir.dao.system.ContractDao;
 import com.aimir.dao.system.CustomerDao;
 import com.aimir.dao.system.LanguageDao;
 import com.aimir.dao.system.SupplierDao;
+import com.aimir.fep.util.DataUtil;
 import com.aimir.fep.util.sms.SendSMS;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.Customer;
@@ -53,6 +57,7 @@ import com.aimir.util.TimeUtil;
  * delivery-Reports URL : http://api.smsgh.com/v2/account/delivery-reports?username=xxx&password=xxx
  *
  */
+@Service
 @Transactional
 public class PrepaySendSMSEDHTask extends ScheduleTask {
 
@@ -91,6 +96,16 @@ public class PrepaySendSMSEDHTask extends ScheduleTask {
 	HashMap<String, String> messageMap; // 보낼 메시지 내용
 	Properties messageProp = null;
 	private boolean isNowRunning = false;
+	
+	public static void main(String[] args) {
+//        ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[]{"spring-forcrontab.xml"}); 
+        ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[]{"spring-BlockDailyEMBillingTask.xml"}); 
+        DataUtil.setApplicationContext(ctx);
+        
+        PrepaySendSMSEDHTask task = ctx.getBean(PrepaySendSMSEDHTask.class);
+        task.execute(null);
+        System.exit(0);
+    }
 	
 	@SuppressWarnings("unchecked")
 	@Override
