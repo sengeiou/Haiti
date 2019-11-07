@@ -2778,7 +2778,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
 //        String tlbType = StringUtil.nullToBlank(conditionMap.get("tlbType"));
         List<Integer> sicIdList = (List<Integer>)conditionMap.get("sicIdList");
         List<Integer> locationIdList = (List<Integer>)conditionMap.get("locationIdList");
-        String DayTable = MeterType.valueOf(meterType).getDayTableName();
+        String DayTableView = MeterType.valueOf(meterType).getDayViewName();
 
         if (isPrev) {
             startDate = StringUtil.nullToBlank(conditionMap.get("prevStartDate"));
@@ -2830,7 +2830,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         sb.append("\n           baseValue AS baseValue, ");
         sb.append("\n           SUM(dy.total_value) AS total ");
 
-        sb.append("\n    FROM ").append(DayTable).append(" dy ");
+        sb.append("\n    FROM ").append(DayTableView).append(" dy ");
         sb.append("\n         LEFT OUTER JOIN ");
         sb.append("\n         contract co ");
         sb.append("\n         ON co.id = dy.contract_id ");

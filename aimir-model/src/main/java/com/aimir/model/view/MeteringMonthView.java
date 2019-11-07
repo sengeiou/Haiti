@@ -1,7 +1,6 @@
 package com.aimir.model.view;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -97,6 +96,9 @@ public class MeteringMonthView {
 	
 	@ColumnInfo(name="일 총사용량")
 	private Double total_value;
+	
+	@Column(name="yyyymm", nullable=false, updatable=false, insertable=false)
+	private String yyyymm;
 	
 	@ColumnInfo(name="검침값", descr="01(d)")
 	private Double value_01;
@@ -459,4 +461,11 @@ public class MeteringMonthView {
 	public String getMDevId() {
 		return id.getMdevId();
 	}
+	public String getYyyymm() {
+		return yyyymm;
+	}
+	public void setYyyymm(String yyyymm) {
+		this.yyyymm = yyyymm;
+	}
+	
 }

@@ -12,3 +12,4 @@ penta
 .settings
 *.log
 bin/
+aimir-fep/src/test/*

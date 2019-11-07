@@ -1022,12 +1022,12 @@ public abstract class AbstractMDSaver
 				case Meter:
 					meteringLP.setMeter(meter);
 					if(meter.getModem() != null) {
-						meteringLP.setModem(modem);
+						meteringLP.setModemSerial(modem.getDeviceSerial());
 					}
 					break;
 				case Modem:
 					if(modem != null) {
-						meteringLP.setModem(meter.getModem());	
+						meteringLP.setModemSerial(meter.getModem().getDeviceSerial());
 					}
 					break;
 				case EndDevice:
@@ -1416,7 +1416,7 @@ public abstract class AbstractMDSaver
             	LinkedList<MeteringLP> lpList = lpMap.get(channel);
             	
         		for(MeteringLP mLP : lpList) {
-        			mLP.setModem(meter.getModem());
+        			mLP.setModemSerial(meter.getModem().getDeviceSerial());
         			appendBuilder.append(mLP.getExternalTableValue());
             	}	
             }
@@ -1429,7 +1429,7 @@ public abstract class AbstractMDSaver
                 LinkedList<MeteringLP> lpList = lpMap.get(channel);
 
                 for(MeteringLP mLP : lpList) {
-                    mLP.setModem(meter.getModem());
+                    mLP.setModemSerial(meter.getModem().getDeviceSerial());
                     appendBuilder.append(mLP.getExternalTableValue());
                 }
             }
@@ -1497,7 +1497,7 @@ public abstract class AbstractMDSaver
         	
         	for(MeteringLP mLP : lpList) {
         		MeteringLP _mLP = null;
-        		mLP.setModem(meter.getModem());
+        		mLP.setModemSerial(meter.getModem().getDeviceSerial());
         		if((_mLP = _chLPs.get(mLP.getId())) != null) {
         			//update source
         			// 2012.10.16 추가. Normal 인 경우만 업데이트하지 않는다.
