@@ -1,5 +1,5 @@
 /** 
- * @(#)ST130.java       1.0 06/12/14 *
+ * @(#)MT115.java       1.0 2019-11-07 *
  * 
  * Relay Status table Class.
  * Copyright (c) 2006-2007 NuriTelecom, Inc.
@@ -13,139 +13,199 @@
  
 package com.aimir.fep.meter.parser.SM110Table;
 
-import java.util.LinkedHashMap;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * 04 00 04 00 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
- * 00 00
- * This table contains the necessary data to describe the current load control operation. 
- * The field, ECP_OR_PPM_ACCUM is a shared between PPM and ECP Override, 
- * therefore a meter should be configured for one of these modes. 
- * When a meter is configured for prepayment operation it is recommended that ECP operation is set to ECP Ignore or ECP Normal, 
- * neither of which uses the accumulator. 
- * If meter is to be used for ECP Override All or ECP Override Delta operation, 
- * then it is recommended that prepayment operation never be activated for this meter. 
- * Alternating between ECP Override operation and prepayment mode will cause the shared accumulator to become unreliable.
- * 
  * Load Control Status Table
- * @author Park YeonKyoung goodjob@nuritelecom.com
+ * @author Park Jiwoong wll27471297@nuritelecom.com
  */
 public class MT115 implements java.io.Serializable {
 
 	private static final long serialVersionUID = 5490087588582714186L;
+	
 	private static Log log = LogFactory.getLog(MT115.class);
-	private byte[] data;
-	private int relay_status = 0;
-	private int relay_activate_status = 0;
 
-    private byte[] LC_STATUS_FLAGS = new byte[2];    
-    private byte[] LC_STATUS_HISTORY = new byte[2];
-    private byte[] RCDC_STATE = new byte[1];
-    private byte[] LC_STATE = new byte[1];
-    private byte[] LC_RECONNECT_ATTEMPT_COUNT = new byte[1];
-    
-    public enum RCDCSTATE {
-   	
-    	ACTUAL_SWITCH_STATE((byte)0x01), //0 = Open(off), 1 = Closed (on)
-    	DESIRED_SWITCH_STATE((byte)0x02),//0 = Open(off), 1 = Closed (on)
-    	OPEN_HOLD_FOR_COMMAND((byte)0x04),
-    	WAITING_TO_ARM((byte)0x08),
-    	ARMED_FOR_CLOSURE((byte)0x10), //1 = The meter received the arm for manual closure been has not been successful in sending request to arm to switch control board. It will continue to retry automatically. 0 = Indicates that there is no pending need to request the switch control board to arm for manual closure.
-    	OUTAGE_OPEN_IN_EFFECT((byte)0x20),
-    	LOCKOUT_IN_EFFECT((byte)0x40),
-    	RESERVED((byte)0x80);
-    	
-    	private byte code;
-    	
-    	RCDCSTATE(byte code){
-    		this.code = code;
-    	}
-    	
-        public byte getCode() {
-            return this.code;
-        }
-    }
+	private byte[] TMP_BYTE = new byte[1];
+	
+	// STATUS : 16 Bit -> 2 Byte
+	private boolean[] FILLER_1 = new boolean[5]; // 15-11
+	private boolean[] LOAD_SIDE_FREQ_ERROR = new boolean[1]; // 10
+	private boolean[] LINE_SIDE_FREQ_ERROR = new boolean[1]; // 9
+	private boolean[] MANUAL_ARMED_TIME_OUT = new boolean[1]; // 8
+	private boolean[] PPM_ALERT = new boolean[1]; // 7
+	private boolean[] SWITCH_FAILED_TO_OPEN = new boolean[1]; // 6 
+	private boolean[] BYPASSED = new boolean[1]; // 5
+	private boolean[] FILLER_2 = new boolean[1]; // 4
+	private boolean[] ALTERNATE_SOURCE = new boolean[1]; // 3
+	private boolean[] SWITCH_FAILED_TO_CLOSE = new boolean[1]; // 2
+	private boolean[] SWITCH_CONTROLLER_ERROR = new boolean[1]; // 1
+	private boolean[] COMMUNICATION_ERROR = new boolean[1]; // 0
+	// HISTORY : 16 Bit -> 2 Byte
+	// -> RCDC_STATUS : 8 Bit
+	private boolean[] FILLER_3 = new boolean[1]; // 7
+	private boolean[] WAITING_TO_ARM = new boolean[1]; // 6 
+	private boolean[] LOCKOUT_IN_EFFECT = new boolean[1]; // 5
+	private boolean[] OUTAGE_OPEN_IN_EFFECT = new boolean[1]; // 4
+	private boolean[] ARMED_WAITING_TO_CLOSE = new boolean[1]; // 3
+	private boolean[] OPEN_HOLD_FOR_COMMAND = new boolean[1]; // 2
+	private boolean[] DESIRED_SWITCH_STATE = new boolean[1]; // 1
+	private boolean[] ACTUAL_SWITCH_STATE = new boolean[1]; // 0
+	// -> LC_STATE
+	private boolean[] PPM_DISCONNECT = new boolean[1]; // 7
+	private boolean[] DLP_DISCONNECT = new boolean[1]; // 6 
+	private boolean[] ECP_DISCONNECT = new boolean[1]; // 5
+	private boolean[] FILLER_4 = new boolean[1]; // 4
+	private boolean[] PPM_ENABLED = new boolean[1]; // 3
+	private boolean[] DLP_ENABLED = new boolean[1]; // 2
+	private boolean[] ECP_ENABLED = new boolean[1]; // 1
+	private boolean[] FILLER_5 = new boolean[1]; // 0
+
+	private byte[] LC_RECONNECT_ATTEMPT_COUNT = new byte[1];
+	private byte[] ECP_ACCUMULATOR_OR_PPM_REMAINING_CREDIT = new byte[4];
+	private byte[] LC_DEMAND_CALCULATED = new byte[4];
+	private byte[] DURATION_COUNT_DOWN = new byte[2];
+	private byte[] HOURS = new byte[1];
+	private byte[] MINUTES = new byte[1];
+	private byte[] LAST_CMD_STATUS = new byte[1];
+	private byte[] FILLER_6 = new byte[4];
+	private byte[] CRC = new byte[2];
+	
+	
+//	private byte[] data;
 
 	public MT115() {}
 	
-	/**
-	 * Constructor .<p>
-	 */
-	public MT115(byte[] data) 
-    {
-		this.data = data;
-        parse();
+	public MT115(byte[] data) {
+//		this.data = data;
+        parse(data);
+        printAll();
 	}
 	
+	public static boolean[] booleanArrayFromByte(byte x) {
+	    boolean bs[] = new boolean[8];
+	    bs[0] = ((x & 0x01) != 0);
+	    bs[1] = ((x & 0x02) != 0);
+	    bs[2] = ((x & 0x04) != 0);
+	    bs[3] = ((x & 0x08) != 0);
+	    bs[4] = ((x & 0x10) != 0);
+	    bs[5] = ((x & 0x20) != 0);
+	    bs[6] = ((x & 0x40) != 0);
+	    bs[7] = ((x & 0x80) != 0);
+	    return bs;
+	}
 
-    public void parse() 
-    {
+	public String booleanArr2Str(boolean[] arr) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		for(boolean bool : arr) {
+			sb.append((bool == true) ? "1" : "0").append(" ");
+		}
+		sb.append("]");
+		return sb.toString();
+	}
+	
+    public void parse(byte[] data) {
     	int pos = 0;
-		System.arraycopy(data, pos, LC_STATUS_FLAGS, 0, LC_STATUS_FLAGS.length);
-		pos += LC_STATUS_FLAGS.length;			
-		System.arraycopy(data, pos, LC_STATUS_HISTORY, 0, LC_STATUS_HISTORY.length);
-		pos += LC_STATUS_HISTORY.length;
-		System.arraycopy(data, pos, RCDC_STATE, 0, RCDC_STATE.length);
-		pos += RCDC_STATE.length;
-		System.arraycopy(data, pos, LC_STATE, 0, LC_STATE.length);
-		pos += LC_STATE.length;			
-		System.arraycopy(data, pos, LC_RECONNECT_ATTEMPT_COUNT, 0, LC_RECONNECT_ATTEMPT_COUNT.length);
-		pos += LC_RECONNECT_ATTEMPT_COUNT.length;
+		int boolPos = 0;
+    	boolean[] tmpBoolArr = new boolean[8];		
+		
+		System.arraycopy(data, pos, TMP_BYTE, 0, TMP_BYTE.length); pos += TMP_BYTE.length;
+		tmpBoolArr = booleanArrayFromByte(TMP_BYTE[0]);
+		 System.arraycopy(tmpBoolArr, boolPos, FILLER_1, 0, FILLER_1.length);  boolPos += FILLER_1.length;
+		System.arraycopy(tmpBoolArr, boolPos, LOAD_SIDE_FREQ_ERROR, 0, LOAD_SIDE_FREQ_ERROR.length); boolPos += LOAD_SIDE_FREQ_ERROR.length;
+		System.arraycopy(tmpBoolArr, boolPos, LINE_SIDE_FREQ_ERROR, 0, LINE_SIDE_FREQ_ERROR.length); boolPos += LINE_SIDE_FREQ_ERROR.length;
+		System.arraycopy(tmpBoolArr, boolPos, MANUAL_ARMED_TIME_OUT, 0, MANUAL_ARMED_TIME_OUT.length);  boolPos = 0;
 
-		if((RCDC_STATE[0] & RCDCSTATE.ACTUAL_SWITCH_STATE.getCode()) > 0){
-			this.relay_status = 1;
-		}else{
-			this.relay_status = 0;
-		}
+		System.arraycopy(data, pos, TMP_BYTE, 0, TMP_BYTE.length); pos += TMP_BYTE.length;
+		tmpBoolArr = booleanArrayFromByte(TMP_BYTE[0]);
+		System.arraycopy(tmpBoolArr, boolPos, PPM_ALERT, 0, PPM_ALERT.length); boolPos += PPM_ALERT.length;
+		System.arraycopy(tmpBoolArr, boolPos, SWITCH_FAILED_TO_OPEN, 0, SWITCH_FAILED_TO_OPEN.length); boolPos += SWITCH_FAILED_TO_OPEN.length;
+		System.arraycopy(tmpBoolArr, boolPos, BYPASSED, 0, BYPASSED.length); boolPos += BYPASSED.length;
+		System.arraycopy(tmpBoolArr, boolPos, FILLER_2, 0, FILLER_2.length); boolPos += FILLER_2.length;
+		System.arraycopy(tmpBoolArr, boolPos, ALTERNATE_SOURCE, 0, ALTERNATE_SOURCE.length); boolPos += ALTERNATE_SOURCE.length;
+		System.arraycopy(tmpBoolArr, boolPos, SWITCH_FAILED_TO_CLOSE, 0, SWITCH_FAILED_TO_CLOSE.length); boolPos += SWITCH_FAILED_TO_CLOSE.length;
+		System.arraycopy(tmpBoolArr, boolPos, SWITCH_CONTROLLER_ERROR, 0, SWITCH_CONTROLLER_ERROR.length); boolPos += SWITCH_CONTROLLER_ERROR.length;
+		System.arraycopy(tmpBoolArr, boolPos, COMMUNICATION_ERROR, 0, COMMUNICATION_ERROR.length); boolPos = 0;
 
-		if((RCDC_STATE[0] & RCDCSTATE.ARMED_FOR_CLOSURE.getCode()) > 0){
-			this.relay_activate_status = 1;
-		}else{
-			this.relay_activate_status = 0;
-		}
+		System.arraycopy(data, pos, TMP_BYTE, 0, TMP_BYTE.length); pos += TMP_BYTE.length;
+		tmpBoolArr = booleanArrayFromByte(TMP_BYTE[0]);
+		System.arraycopy(tmpBoolArr, boolPos, FILLER_3, 0, FILLER_3.length); boolPos += FILLER_3.length;
+		System.arraycopy(tmpBoolArr, boolPos, WAITING_TO_ARM, 0, WAITING_TO_ARM.length); boolPos += WAITING_TO_ARM.length;
+		System.arraycopy(tmpBoolArr, boolPos, LOCKOUT_IN_EFFECT, 0, LOCKOUT_IN_EFFECT.length); boolPos += LOCKOUT_IN_EFFECT.length;
+		System.arraycopy(tmpBoolArr, boolPos, OUTAGE_OPEN_IN_EFFECT, 0, OUTAGE_OPEN_IN_EFFECT.length); boolPos += OUTAGE_OPEN_IN_EFFECT.length;
+		System.arraycopy(tmpBoolArr, boolPos, ARMED_WAITING_TO_CLOSE, 0, ARMED_WAITING_TO_CLOSE.length); boolPos += ARMED_WAITING_TO_CLOSE.length;
+		System.arraycopy(tmpBoolArr, boolPos, OPEN_HOLD_FOR_COMMAND, 0, OPEN_HOLD_FOR_COMMAND.length); boolPos += OPEN_HOLD_FOR_COMMAND.length;
+		System.arraycopy(tmpBoolArr, boolPos, DESIRED_SWITCH_STATE, 0, DESIRED_SWITCH_STATE.length); boolPos += DESIRED_SWITCH_STATE.length;
+		System.arraycopy(tmpBoolArr, boolPos, ACTUAL_SWITCH_STATE, 0, ACTUAL_SWITCH_STATE.length); boolPos = 0;
+		
+		System.arraycopy(data, pos, TMP_BYTE, 0, TMP_BYTE.length); pos += TMP_BYTE.length;
+		tmpBoolArr = booleanArrayFromByte(TMP_BYTE[0]);
+		System.arraycopy(tmpBoolArr, boolPos, PPM_DISCONNECT, 0, PPM_DISCONNECT.length); boolPos += PPM_DISCONNECT.length;
+		System.arraycopy(tmpBoolArr, boolPos, DLP_DISCONNECT, 0, DLP_DISCONNECT.length); boolPos += DLP_DISCONNECT.length;
+		System.arraycopy(tmpBoolArr, boolPos, ECP_DISCONNECT, 0, ECP_DISCONNECT.length); boolPos += ECP_DISCONNECT.length;
+		System.arraycopy(tmpBoolArr, boolPos, FILLER_4, 0, FILLER_4.length);  boolPos += FILLER_4.length;
+		System.arraycopy(tmpBoolArr, boolPos, PPM_ENABLED, 0, PPM_ENABLED.length); boolPos += PPM_ENABLED.length;
+		System.arraycopy(tmpBoolArr, boolPos, DLP_ENABLED, 0, DLP_ENABLED.length); boolPos += DLP_ENABLED.length;
+		System.arraycopy(tmpBoolArr, boolPos, ECP_ENABLED, 0, ECP_ENABLED.length); boolPos += ECP_ENABLED.length;
+		System.arraycopy(tmpBoolArr, boolPos, FILLER_5, 0, FILLER_5.length);  boolPos = 0;
+		
+		System.arraycopy(data, pos, LC_RECONNECT_ATTEMPT_COUNT, 0, LC_RECONNECT_ATTEMPT_COUNT.length); pos += LC_RECONNECT_ATTEMPT_COUNT.length;
+		System.arraycopy(data, pos, ECP_ACCUMULATOR_OR_PPM_REMAINING_CREDIT, 0, ECP_ACCUMULATOR_OR_PPM_REMAINING_CREDIT.length); pos += ECP_ACCUMULATOR_OR_PPM_REMAINING_CREDIT.length;
+		System.arraycopy(data, pos, LC_DEMAND_CALCULATED, 0, LC_DEMAND_CALCULATED.length); pos += LC_DEMAND_CALCULATED.length;
+		System.arraycopy(data, pos, DURATION_COUNT_DOWN, 0, DURATION_COUNT_DOWN.length); pos += DURATION_COUNT_DOWN.length;
+		System.arraycopy(data, pos, HOURS, 0, HOURS.length); pos += HOURS.length;
+		System.arraycopy(data, pos, MINUTES, 0, MINUTES.length); pos += MINUTES.length;
+		System.arraycopy(data, pos, LAST_CMD_STATUS, 0, LAST_CMD_STATUS.length); pos += LAST_CMD_STATUS.length;
+		System.arraycopy(data, pos, FILLER_6, 0, FILLER_6.length);  pos += FILLER_6.length;
+		System.arraycopy(data, pos, CRC, 0, CRC.length); pos += CRC.length;
+		
+		log.debug("pos = "+pos+", data.length = "+data.length);
     }
-    
-    public String getRelayStatusString() 
-    {
-        if(this.relay_status == 0){
-            return "Off";
-        }else {
-            return "On";
-        }
-    }
-    
-    public String getRelayActivateStatusString() 
-    {
-        if(this.relay_activate_status == 0){
-            return "Off";
-        }else {
-            return "On";
-        }
-    }
-    
-	public int getRelayStatus() 
-    {
-        return this.relay_status;
-	}
 	
-	public int getRelayActivateStatus() 
-    {
-        return this.relay_activate_status;
+	public void printAll() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("FILLER_1="+booleanArr2Str(FILLER_1).trim()).append(", ")
+		  .append("LOAD_SIDE_FREQ_ERROR="+booleanArr2Str(LOAD_SIDE_FREQ_ERROR).trim()).append(", ")
+		  .append("LINE_SIDE_FREQ_ERROR="+booleanArr2Str(LINE_SIDE_FREQ_ERROR).trim()).append(", ")
+		  .append("MANUAL_ARMED_TIME_OUT="+booleanArr2Str(MANUAL_ARMED_TIME_OUT).trim()).append(", ")
+		  .append("PPM_ALERT="+booleanArr2Str(PPM_ALERT).trim()).append(", ")
+		  .append("SWITCH_FAILED_TO_OPEN="+booleanArr2Str(SWITCH_FAILED_TO_OPEN).trim()).append(", ")
+		  .append("BYPASSED="+booleanArr2Str(BYPASSED).trim()).append(", ")
+		  .append("FILLER_2="+booleanArr2Str(FILLER_2).trim()).append(", ")
+		  .append("ALTERNATE_SOURCE="+booleanArr2Str(ALTERNATE_SOURCE).trim()).append(", ")
+		  .append("SWITCH_FAILED_TO_CLOSE="+booleanArr2Str(SWITCH_FAILED_TO_CLOSE).trim()).append(", ")
+		  .append("SWITCH_CONTROLLER_ERROR="+booleanArr2Str(SWITCH_CONTROLLER_ERROR).trim()).append(", ")
+		  .append("COMMUNICATION_ERROR="+booleanArr2Str(COMMUNICATION_ERROR).trim()).append(", ")
+		  
+		  .append("FILLER_3="+booleanArr2Str(FILLER_3).trim()).append(", ")
+		  .append("WAITING_TO_ARM="+booleanArr2Str(WAITING_TO_ARM).trim()).append(", ")
+		  .append("LOCKOUT_IN_EFFECT="+booleanArr2Str(LOCKOUT_IN_EFFECT).trim()).append(", ")
+		  .append("OUTAGE_OPEN_IN_EFFECT="+booleanArr2Str(OUTAGE_OPEN_IN_EFFECT).trim()).append(", ")
+		  .append("ARMED_WAITING_TO_CLOSE="+booleanArr2Str(ARMED_WAITING_TO_CLOSE).trim()).append(", ")
+		  .append("OPEN_HOLD_FOR_COMMAND="+booleanArr2Str(OPEN_HOLD_FOR_COMMAND).trim()).append(", ")
+		  .append("DESIRED_SWITCH_STATE="+booleanArr2Str(DESIRED_SWITCH_STATE).trim()).append(", ")
+		  .append("ACTUAL_SWITCH_STATE="+booleanArr2Str(ACTUAL_SWITCH_STATE).trim()).append(", ")
+		  
+		  .append("PPM_DISCONNECT="+booleanArr2Str(PPM_DISCONNECT).trim()).append(", ")
+		  .append("DLP_DISCONNECT="+booleanArr2Str(DLP_DISCONNECT).trim()).append(", ")
+		  .append("ECP_DISCONNECT="+booleanArr2Str(ECP_DISCONNECT).trim()).append(", ")
+		  .append("FILLER_4="+booleanArr2Str(FILLER_4).trim()).append(", ")
+		  .append("PPM_ENABLED="+booleanArr2Str(PPM_ENABLED).trim()).append(", ")
+		  .append("DLP_ENABLED="+booleanArr2Str(DLP_ENABLED).trim()).append(", ")
+		  .append("ECP_ENABLED="+booleanArr2Str(ECP_ENABLED).trim()).append(", ")
+		  .append("FILLER_5="+booleanArr2Str(FILLER_5).trim()).append(", ")
+		  
+		  .append("LC_RECONNECT_ATTEMPT_COUNT="+new String(LC_RECONNECT_ATTEMPT_COUNT).trim()).append(", ")
+		  .append("ECP_ACCUMULATOR_OR_PPM_REMAINING_CREDIT="+new String(ECP_ACCUMULATOR_OR_PPM_REMAINING_CREDIT).trim()).append(", ")
+		  .append("LC_DEMAND_CALCULATED="+new String(LC_DEMAND_CALCULATED).trim()).append(", ")
+		  .append("DURATION_COUNT_DOWN="+new String(DURATION_COUNT_DOWN).trim()).append(", ")
+		  .append("HOURS="+new String(HOURS).trim()).append(", ")
+		  .append("MINUTES="+new String(MINUTES).trim()).append(", ")
+		  .append("LAST_CMD_STATUS"+new String(LAST_CMD_STATUS).trim()).append(", ")
+		  .append("FILLER_6="+new String(FILLER_6).trim()).append(", ")
+		  .append("CRC="+new String(CRC).trim());
+		
+		log.info("MT115["+sb.toString()+"]");
 	}
-
-    public LinkedHashMap getData()
-    {
-        if(data == null || data.length < 20){
-            return null;
-        }else{
-            LinkedHashMap res = new LinkedHashMap(2);            
-            res.put("relay status"          , ""+this.relay_status);
-            res.put("relay activate status" , ""+this.relay_activate_status);
-            return res;
-        }
-    }
-
 }
