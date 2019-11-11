@@ -13,6 +13,8 @@
  
 package com.aimir.fep.meter.parser.SM110Table;
 
+import java.util.LinkedHashMap;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -208,4 +210,15 @@ public class MT115 implements java.io.Serializable {
 		
 		log.info("MT115["+sb.toString()+"]");
 	}
+	
+    public LinkedHashMap getData(){
+//        if(data == null || data.length < 20){
+//            return null;
+//        }else{
+            LinkedHashMap res = new LinkedHashMap(2);            
+//            res.put("relay status"          , ""+this.relay_status);
+//            res.put("relay activate status" , ""+this.relay_activate_status);
+            return res;
+//        }
+    }
 }
