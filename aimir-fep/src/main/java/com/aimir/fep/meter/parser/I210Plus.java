@@ -8,8 +8,10 @@ import java.util.LinkedHashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aimir.constants.CommonConstants.MeterStatus;
+import com.aimir.dao.device.MeterDao;
 import com.aimir.fep.meter.data.EventLogData;
 import com.aimir.fep.meter.data.Instrument;
 import com.aimir.fep.meter.data.LPData;
@@ -21,6 +23,7 @@ import com.aimir.fep.meter.parser.SM110Table.MT115;
 import com.aimir.fep.meter.parser.SM110Table.NT509;
 import com.aimir.fep.meter.parser.SM110Table.ST001;
 import com.aimir.fep.util.Util;
+import com.aimir.model.device.Meter;
 import com.aimir.model.system.Supplier;
 import com.aimir.util.DateTimeUtil;
 import com.aimir.util.TimeLocaleUtil;
@@ -38,18 +41,17 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
 	private static final long serialVersionUID = 7503986198693601423L;
 
 	private static Log log = LogFactory.getLog(I210Plus.class);
+	
+	@Autowired
+	MeterDao meterDao;
     
 	private byte[] rawData = null;
     private int lpcount;
+    private ArrayList<LPData> lpDataList = new ArrayList<>();
     private Double meteringValue = null;
     private String meterId = null;
     private int flag = 0;
-	private int displayMultiplier = 1;
-	private int displayScalar = 1; 	
-	private int VAH_SF = 1;
-	private int VA_SF = 1;
-	
-    private byte[] s001 = null;
+	private byte[] s001 = null;
     private byte[] m019 = null;
     private byte[] m115 = null;
     private byte[] n509 = null;
@@ -103,6 +105,7 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
     }
 
     public void parse(byte[] data) throws Exception {
+    	rawData = data;
         int totlen = data.length;
         log.debug("TOTLEN[" + totlen + "]");
 
@@ -125,45 +128,75 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
 
             if(tbName.equals("S001")) {
                 s001 = b;
-                log.debug("[S001] len=["+len+"] data=>"+Util.getHexString(b));
+                log.debug("[S001] len=["+len+"] data=>\n"+Util.getHexString(b));
+//                System.out.println("[S001] len=["+len+"] data=>\n"+Util.getHexString(b));
             } else if(tbName.equals("M019")) {
             	m019 = b;
-                log.debug("[M019] len=["+len+"] data=>"+Util.getHexString(b));
+                log.debug("[M019] len=["+len+"] data=>\n"+Util.getHexString(b));
+//                System.out.println("[M019] len=["+len+"] data=>\n"+Util.getHexString(b));
             } else if(tbName.equals("M115")) {
                 m115 = b;
-                log.debug("[M115] len=["+len+"] data=>"+Util.getHexString(b));
+                log.debug("[M115] len=["+len+"] data=>\n"+Util.getHexString(b));
+//                System.out.println("[M115] len=["+len+"] data=>\n"+Util.getHexString(b));
             } else if(tbName.equals("N509")) {
             	n509 = b;
-                log.debug("[N509] len=["+len+"] data=>"+Util.getHexString(b));
+                log.debug("[N509] len=["+len+"] data=>\n"+Util.getHexString(b));
+//                System.out.println("[N509] len=["+len+"] data=>\n"+Util.getHexString(b));
             }  else {
-                log.debug("unknown table=["+tbName+"] data=>"+Util.getHexString(b));
+                log.debug("unknown table=["+tbName+"] data=>\n"+Util.getHexString(b));
+//                System.out.println("unknown table=["+tbName+"] data=>\n"+Util.getHexString(b));
             }
+            try {
+            	if(s001 != null){
+                    st001 = new ST001(s001);
+                    
+                    meterId = st001.getMSerial();
+                    Meter tmpMeter = meterDao.get(meterId);
+                    if(tmpMeter == null) meter.setMdsId(meterId);
+                    else meter = tmpMeter;
+                    
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("ST001[\n")
+                      .append("  MANUFACTURER="+st001.getMANUFACTURER()+", \n")
+                      .append("  ED_MODEL="+st001.getED_MODEL()+", \n")
+                      .append("  HW_VERSION_NUMBER="+st001.getHW_VERSION_NUMBER()+", \n")
+                      .append("  HW_REVISION_NUMBER="+st001.getHW_REVISION_NUMBER()+", \n")
+                      .append("  FW_VERSION_NUMBER="+st001.getFW_VERSION_NUMBER()+", \n")
+                      .append("  FW_REVISION_NUMBE="+st001.getFW_REVISION_NUMBER()+", \n")
+                      .append("  MSerial="+st001.getMSerial()+"\n]\n");
+//                    System.out.println(sb.toString());
+                    log.debug(sb.toString());
+                    s001 = null;
+                }
+                if(m019 != null){
+                	mt019 = new MT019(m019);
+                	log.debug(mt019.printAll());
+//                	System.out.println(mt019.printAll());
+                	m019 = null;
+                }
+                if(m115 != null){
+                	mt115 = new MT115(m115);
+                	log.debug(mt115.printAll());
+//                	System.out.println(mt115.printAll());
+                	m115 = null;
+                }
+                if(n509 !=null){
+                    nt509 = new NT509(n509);
+                    
+                	log.debug(nt509.printAll());
+//                	System.out.println(nt509.printAll());
+                	setMeteringTime(nt509.getFrameInfoDateFormat("yyyyMMddHHmm"));
+                	lpDataList.addAll(nt509.getLpData());
+                	meter.setLpInterval(nt509.getLpPeriodMin());
+                	n509 = null;
+                }
+            	
+            }catch(Exception e) {
+            	e.printStackTrace();
+            }
+            
+            
         }
-
-        if(s001 != null){
-            st001 = new ST001(s001);
-            this.meterId = st001.getMSerial();
-            StringBuilder sb = new StringBuilder();
-            sb.append("ST001[")
-              .append("MANUFACTURER="+st001.getMANUFACTURER()+", ")
-              .append("ED_MODEL="+st001.getED_MODEL()+", ")
-              .append("HW_VERSION_NUMBER="+st001.getHW_VERSION_NUMBER()+", ")
-              .append("HW_REVISION_NUMBER="+st001.getHW_REVISION_NUMBER()+", ")
-              .append("FW_VERSION_NUMBER="+st001.getFW_VERSION_NUMBER()+", ")
-              .append("FW_REVISION_NUMBE="+st001.getFW_REVISION_NUMBER()+", ")
-              .append("MSerial="+st001.getMSerial()+", ");
-            log.info(sb.toString());
-        }
-        if(m019 != null){
-        	mt019 = new MT019(m019);
-        }
-        if(m115 != null){
-        	mt115 = new MT115(m115);
-        }
-        if(n509 !=null){
-            nt509 = new NT509(n509);
-        }
-        
         log.debug("I210+ Data Parse Finished :: DATA["+toString()+"]");
     }
 
@@ -419,14 +452,12 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
         TOU_BLOCK[] tou_block = null;
         LPData[] lplist = null;
         EventLogData[] evlog = null;
-        EventLogData[] relayevlog = null;
         String meter_mode = null;
 
         DecimalFormat df3 = TimeLocaleUtil.getDecimalFormat(meter.getSupplier());
       //날짜 포멧팅
 		SimpleDateFormat normalDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         
-        DecimalFormat decimalf=null;
         SimpleDateFormat datef14=null;
          
         if(meter!=null && meter.getSupplier()!=null){
@@ -435,12 +466,11 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
                 String lang = supplier.getLang().getCode_2letter();
                 String country = supplier.getCountry().getCode_2letter();
                 
-                decimalf = TimeLocaleUtil.getDecimalFormat(supplier);
+                TimeLocaleUtil.getDecimalFormat(supplier);
                 datef14 = new SimpleDateFormat(TimeLocaleUtil.getDateFormat(14, lang, country));
             }
         }else{
-            //locail 정보가 없을때는 기본 포멧을 사용한다.
-            decimalf = new DecimalFormat();
+            new DecimalFormat();
             datef14 = new SimpleDateFormat();
         }
 
@@ -632,18 +662,16 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
                         String lang = supplier.getLang().getCode_2letter();
                         String country = supplier.getCountry().getCode_2letter();
                         
-                        decimalf = TimeLocaleUtil.getDecimalFormat(supplier);
+                        TimeLocaleUtil.getDecimalFormat(supplier);
                         datef14 = new SimpleDateFormat(TimeLocaleUtil.getDateFormat(14, lang, country));
                     }
                 	}else{
-                    //locail 정보가 없을때는 기본 포멧을 사용한다.
-                    decimalf = new DecimalFormat();
+                    new DecimalFormat();
                     datef14 = new SimpleDateFormat();
                 }
-                    String date;
-                	date = datef14.format(DateTimeUtil.getDateFromYYYYMMDDHHMMSS(datetime+"00"));
+                    datef14.format(DateTimeUtil.getDateFromYYYYMMDDHHMMSS(datetime+"00"));
                    
-                    String tempDateTime = lplist[i].getDatetime();
+                    lplist[i].getDatetime();
                     String val = "";
                     Double[] ch = lplist[i].getCh();
                     for(int k = 0; k < ch.length ; k++){
@@ -673,7 +701,6 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
 
             if(evlog != null && evlog.length > 0){
                 res.put("[Event Log]", "");
-                int idx = 0;
                 for(int i = 0; i < evlog.length; i++){
                     String datetime = evlog[i].getDate() + evlog[i].getTime();
                     if(!datetime.startsWith("0000") && !datetime.equals("")){
@@ -736,7 +763,7 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
 
     public MeterTimeSyncData getMeterTimeSync(){
 
-        MeterTimeSyncData meterTimeSyncData = new MeterTimeSyncData();
+        new MeterTimeSyncData();
 
         try{
 //            if(st055 != null && bt055 != null && at055 != null){

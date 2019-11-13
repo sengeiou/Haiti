@@ -29,6 +29,10 @@ import com.google.gson.JsonObject;
 @Service
 public class I210PlusMDSaver extends AbstractMDSaver {
 
+	public void savePublic(IMeasurementData md) throws Exception {
+		save(md);
+	}
+	
 	@Override
 	protected boolean save(IMeasurementData md) throws Exception {
 		I210Plus parser = (I210Plus) md.getMeterDataParser();
