@@ -197,8 +197,8 @@ public class NT509 implements java.io.Serializable {
 			for (i = 0; i < lpCnt; i++) {
 				LP_ARR[i] = new byte[2];
 				System.arraycopy(data, pos, LP_ARR[i], 0, LP_ARR[i].length);
-				if(byteArrValidate(LP_ARR[i])) LP_ARR[i] = null;
 				pos += LP_ARR[i].length;
+				if(byteArrValidate(LP_ARR[i])) LP_ARR[i] = null;
 			}
 		} catch (IndexOutOfBoundsException ie) {
 			log.error("IndexOutOfBoundsException | data.length:" + data.length + ", pos:" + pos + ", lpCnt:" + lpCnt
