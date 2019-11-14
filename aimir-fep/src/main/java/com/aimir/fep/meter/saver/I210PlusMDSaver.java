@@ -38,13 +38,10 @@ public class I210PlusMDSaver extends AbstractMDSaver {
 		I210Plus parser = (I210Plus) md.getMeterDataParser();
 		log.info(parser.toString());
 		
-		LPData[] lpArr = new LPData[1];
-		lpArr[0] = new LPData();
-		
 		saveLPUsingLpNormalization(
 				CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()),
 				md,
-				lpArr,
+				parser.getLPData(),
 				parser.getMDevId(),
 				parser.getDeviceId(),
 				parser.getMDevType(), 

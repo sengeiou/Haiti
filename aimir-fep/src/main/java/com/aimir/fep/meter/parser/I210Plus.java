@@ -311,15 +311,7 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
     }
 
     public LPData[] getLPData(){
-//        try{
-//            if(st064 != null)
-//                return st064.getLPData();
-//            else
-//                return null;
-//        } catch(Exception e){
-//                log.warn("SM110 get LP Error:"+e.getMessage());
-//        }
-        return null;
+        return lpDataList.toArray(new LPData[0]);
     }
 
     public TOU_BLOCK[] getPrevBilling(){
