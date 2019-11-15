@@ -16,6 +16,8 @@ package com.aimir.fep.meter.parser.SM110Table;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.aimir.fep.util.DataFormat;
+
 /**
  * AMR SPI Frame2 Table
  * @author Park Jiwoong wll27471297@nuritelecom.com
@@ -95,7 +97,7 @@ public class MT019 implements java.io.Serializable {
 
 	public String booleanArr2Str(boolean[] arr) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("[");
+		sb.append("[ ");
 		for(boolean bool : arr) {
 			sb.append((bool == true) ? "1" : "0").append(" ");
 		}
@@ -120,6 +122,7 @@ public class MT019 implements java.io.Serializable {
 		System.arraycopy(tmpBoolArr, boolPos, DISPLAY_DIGITS, 0, DISPLAY_DIGITS.length); boolPos += DISPLAY_DIGITS.length;
 		System.arraycopy(tmpBoolArr, boolPos, SPI_MESSAGE_TYPE, 0, SPI_MESSAGE_TYPE.length); boolPos = 0;
 
+		
 		System.arraycopy(data, pos, TMP_BYTE, 0, TMP_BYTE.length); pos += TMP_BYTE.length;
 		tmpBoolArr = booleanArrayFromByte(TMP_BYTE[0]);
 		System.arraycopy(tmpBoolArr, boolPos, SERVICE_ERROR, 0, SERVICE_ERROR.length); boolPos += SERVICE_ERROR.length;
@@ -148,7 +151,7 @@ public class MT019 implements java.io.Serializable {
 		System.arraycopy(data, pos, INSTANTANEOUS_KW, 0, INSTANTANEOUS_KW.length); pos += INSTANTANEOUS_KW.length;
 		System.arraycopy(data, pos, TF, 0, TF.length); pos += TF.length;
 		System.arraycopy(data, pos, RMS_VOLT, 0, RMS_VOLT.length); pos += RMS_VOLT.length;
-		System.arraycopy(data, pos, PF_CTR, 0, PF_CTR.length); pos += SPI_MESSAGE_TYPE.length;
+		System.arraycopy(data, pos, PF_CTR, 0, PF_CTR.length); pos += PF_CTR.length;
 		System.arraycopy(data, pos, SAG_CTR, 0, SAG_CTR.length); pos += SAG_CTR.length;
 		System.arraycopy(data, pos, SWELL_CTR, 0, SWELL_CTR.length); pos += SWELL_CTR.length;
 		System.arraycopy(data, pos, INVERSION_CTR, 0, INVERSION_CTR.length); pos += INVERSION_CTR.length;
@@ -159,49 +162,54 @@ public class MT019 implements java.io.Serializable {
 		log.debug("pos = "+pos+", data.length = "+data.length);
     }
     
-	public void printAll() {
+	public String printAll() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("START_CHR="+new String(START_CHR).trim()).append(", ")
+		try {
+			sb.append("  START_CHR="+new String(START_CHR).trim()).append(", \n")
+			
+			  .append("  RESET_TAMPER="+booleanArr2Str(RESET_TAMPER).trim()).append(", \n")
+			  .append("  METERING_PROBLEM="+booleanArr2Str(METERING_PROBLEM).trim()).append(", \n")
+			  .append("  REVERSE_ENERGY_FLOW="+booleanArr2Str(REVERSE_ENERGY_FLOW).trim()).append(", \n")
+			  .append("  FILLER_1="+booleanArr2Str(FILLER_1).trim()).append(", \n")
+			  .append("  DISPLAY_MULTIPLIER="+booleanArr2Str(DISPLAY_MULTIPLIER).trim()).append(", \n")
+			  .append("  DISPLAY_DIGITS="+booleanArr2Str(DISPLAY_DIGITS).trim()).append(", \n")
+			  .append("  SPI_MESSAGE_TYPE="+booleanArr2Str(SPI_MESSAGE_TYPE).trim()).append(", \n")
+			  
+			  .append("  SERVICE_ERROR="+booleanArr2Str(SERVICE_ERROR).trim()).append(", \n")
+			  .append("  DC_DETECTION="+booleanArr2Str(DC_DETECTION).trim()).append(", \n")
+			  .append("  METER_INVERSION_REVERSED="+booleanArr2Str(METER_INVERSION_REVERSED).trim()).append(", \n")
+			  .append("  TEMPERATURE_CAUTION_1="+booleanArr2Str(TEMPERATURE_CAUTION_1).trim()).append(", \n")
+			  .append("  FILLER_2="+booleanArr2Str(FILLER_2).trim()).append(", \n")
+			  .append("  DETENT="+booleanArr2Str(DETENT).trim()).append(", \n")
+			  
+			  .append("  RECEIVED_KWH="+booleanArr2Str(RECEIVED_KWH).trim()).append(", \n")
+			  .append("  METER_INVERSION_FLAG="+booleanArr2Str(METER_INVERSION_FLAG).trim()).append(", \n")
+			  .append("  DC_CAUTION="+booleanArr2Str(DC_CAUTION).trim()).append(", \n")
+			  .append("  SERVICE_CAUTION="+booleanArr2Str(SERVICE_CAUTION).trim()).append(", \n")
+			  .append("  TEMPERATURE_CAUTION_2="+booleanArr2Str(TEMPERATURE_CAUTION_2).trim()).append(", \n")
+			  .append("  METER_ERROR="+booleanArr2Str(METER_ERROR).trim()).append(", \n")
+			  .append("  NVRAM_CRC="+booleanArr2Str(NVRAM_CRC).trim()).append(", \n")
+			  .append("  NVRAM_I2C="+booleanArr2Str(NVRAM_I2C).trim()).append(", \n")
+			  
+			  .append("  TOTAL_DEL_KWH="+DataFormat.hex2dec(TOTAL_DEL_KWH)).append(", \n")
+			  .append("  TOTAL_DEL_PLUS_RCVD_KWH="+DataFormat.hex2dec(TOTAL_DEL_PLUS_RCVD_KWH)).append(", \n")
+			  .append("  TOTAL_DEL_MINUS_RCVD_KWH="+DataFormat.hex2dec(TOTAL_DEL_MINUS_RCVD_KWH)).append(", \n")
+			  .append("  TOTAL_REC_KWH="+DataFormat.hex2dec(TOTAL_REC_KWH)).append(", \n")
+			  .append("  INSTANTANEOUS_KW="+DataFormat.hex2dec(INSTANTANEOUS_KW)).append(", \n")
+			  .append("  TF="+DataFormat.hex2dec(TF)).append(", \n")
+			  .append("  RMS_VOLT="+DataFormat.hex2dec(RMS_VOLT)).append(", \n")
+			  .append("  PF_CTR="+DataFormat.hex2dec(PF_CTR)).append(", \n")
+			  .append("  SAG_CTR="+DataFormat.hex2dec(SAG_CTR)).append(", \n")
+			  .append("  SWELL_CTR="+DataFormat.hex2dec(SWELL_CTR)).append(", \n")
+			  .append("  INVERSION_CTR="+DataFormat.hex2dec(INVERSION_CTR)).append(", \n")
+			  .append("  TEMPERATURE="+DataFormat.hex2dec(TEMPERATURE)).append(", \n")
+			  .append("  CRC="+DataFormat.hex2dec(CRC));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		  .append("RESET_TAMPER="+booleanArr2Str(RESET_TAMPER).trim()).append(", ")
-		  .append("METERING_PROBLEM="+booleanArr2Str(METERING_PROBLEM).trim()).append(", ")
-		  .append("REVERSE_ENERGY_FLOW="+booleanArr2Str(REVERSE_ENERGY_FLOW).trim()).append(", ")
-		  .append("FILLER_1="+booleanArr2Str(FILLER_1).trim()).append(", ")
-		  .append("DISPLAY_MULTIPLIER="+booleanArr2Str(DISPLAY_MULTIPLIER).trim()).append(", ")
-		  .append("DISPLAY_DIGITS="+booleanArr2Str(DISPLAY_DIGITS).trim()).append(", ")
-		  .append("SPI_MESSAGE_TYPE="+booleanArr2Str(SPI_MESSAGE_TYPE).trim()).append(", ")
-		  
-		  .append("SERVICE_ERROR="+booleanArr2Str(SERVICE_ERROR).trim()).append(", ")
-		  .append("DC_DETECTION="+booleanArr2Str(DC_DETECTION).trim()).append(", ")
-		  .append("METER_INVERSION_REVERSED="+booleanArr2Str(METER_INVERSION_REVERSED).trim()).append(", ")
-		  .append("TEMPERATURE_CAUTION_1="+booleanArr2Str(TEMPERATURE_CAUTION_1).trim()).append(", ")
-		  .append("FILLER_2="+booleanArr2Str(FILLER_2).trim()).append(", ")
-		  .append("DETENT="+booleanArr2Str(DETENT).trim()).append(", ")
-		  
-		  .append("RECEIVED_KWH="+booleanArr2Str(RECEIVED_KWH).trim()).append(", ")
-		  .append("METER_INVERSION_FLAG="+booleanArr2Str(METER_INVERSION_FLAG).trim()).append(", ")
-		  .append("DC_CAUTION="+booleanArr2Str(DC_CAUTION).trim()).append(", ")
-		  .append("SERVICE_CAUTION="+booleanArr2Str(SERVICE_CAUTION).trim()).append(", ")
-		  .append("TEMPERATURE_CAUTION_2="+booleanArr2Str(TEMPERATURE_CAUTION_2).trim()).append(", ")
-		  .append("METER_ERROR="+booleanArr2Str(METER_ERROR).trim()).append(", ")
-		  .append("NVRAM_CRC="+booleanArr2Str(NVRAM_CRC).trim()).append(", ")
-		  .append("NVRAM_I2C="+booleanArr2Str(NVRAM_I2C).trim()).append(", ")
-		  
-		  .append("TOTAL_DEL_KWH="+new String(TOTAL_DEL_KWH).trim()).append(", ")
-		  .append("TOTAL_DEL_PLUS_RCVD_KWH="+new String(TOTAL_DEL_PLUS_RCVD_KWH).trim()).append(", ")
-		  .append("TOTAL_DEL_MINUS_RCVD_KWH="+new String(TOTAL_DEL_MINUS_RCVD_KWH).trim()).append(", ")
-		  .append("TOTAL_REC_KWH="+new String(TOTAL_REC_KWH).trim()).append(", ")
-		  .append("INSTANTANEOUS_KW="+new String(INSTANTANEOUS_KW).trim()).append(", ")
-		  .append("TF="+new String(TF).trim()).append(", ")
-		  .append("RMS_VOLT"+new String(RMS_VOLT).trim()).append(", ")
-		  .append("PF_CTR="+new String(PF_CTR).trim()).append(", ")
-		  .append("SAG_CTR="+new String(SAG_CTR).trim()).append(", ")
-		  .append("SWELL_CTR="+new String(SWELL_CTR).trim()).append(", ")
-		  .append("INVERSION_CTR="+new String(INVERSION_CTR).trim()).append(", ")
-		  .append("TEMPERATURE="+new String(TEMPERATURE).trim()).append(", ")
-		  .append("FILLER_3="+new String(FILLER_3).trim()).append(", ")
-		  .append("CRC="+new String(CRC).trim());
+		log.debug("MT019[\n"+sb.toString()+"\n]\n");
 		
-		log.info("MT019["+sb.toString()+"]");
+		return "MT019[\n"+sb.toString()+"\n]\n";
 	}
 }

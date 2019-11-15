@@ -18,6 +18,8 @@ import java.util.LinkedHashMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.aimir.fep.util.DataFormat;
+
 /**
  * Load Control Status Table
  * @author Park Jiwoong wll27471297@nuritelecom.com
@@ -99,7 +101,7 @@ public class MT115 implements java.io.Serializable {
 
 	public String booleanArr2Str(boolean[] arr) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("[");
+		sb.append("[ ");
 		for(boolean bool : arr) {
 			sb.append((bool == true) ? "1" : "0").append(" ");
 		}
@@ -114,7 +116,7 @@ public class MT115 implements java.io.Serializable {
 		
 		System.arraycopy(data, pos, TMP_BYTE, 0, TMP_BYTE.length); pos += TMP_BYTE.length;
 		tmpBoolArr = booleanArrayFromByte(TMP_BYTE[0]);
-		 System.arraycopy(tmpBoolArr, boolPos, FILLER_1, 0, FILLER_1.length);  boolPos += FILLER_1.length;
+		System.arraycopy(tmpBoolArr, boolPos, FILLER_1, 0, FILLER_1.length);  boolPos += FILLER_1.length;
 		System.arraycopy(tmpBoolArr, boolPos, LOAD_SIDE_FREQ_ERROR, 0, LOAD_SIDE_FREQ_ERROR.length); boolPos += LOAD_SIDE_FREQ_ERROR.length;
 		System.arraycopy(tmpBoolArr, boolPos, LINE_SIDE_FREQ_ERROR, 0, LINE_SIDE_FREQ_ERROR.length); boolPos += LINE_SIDE_FREQ_ERROR.length;
 		System.arraycopy(tmpBoolArr, boolPos, MANUAL_ARMED_TIME_OUT, 0, MANUAL_ARMED_TIME_OUT.length);  boolPos = 0;
@@ -165,50 +167,56 @@ public class MT115 implements java.io.Serializable {
 		log.debug("pos = "+pos+", data.length = "+data.length);
     }
 	
-	public void printAll() {
+	public String printAll() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("FILLER_1="+booleanArr2Str(FILLER_1).trim()).append(", ")
-		  .append("LOAD_SIDE_FREQ_ERROR="+booleanArr2Str(LOAD_SIDE_FREQ_ERROR).trim()).append(", ")
-		  .append("LINE_SIDE_FREQ_ERROR="+booleanArr2Str(LINE_SIDE_FREQ_ERROR).trim()).append(", ")
-		  .append("MANUAL_ARMED_TIME_OUT="+booleanArr2Str(MANUAL_ARMED_TIME_OUT).trim()).append(", ")
-		  .append("PPM_ALERT="+booleanArr2Str(PPM_ALERT).trim()).append(", ")
-		  .append("SWITCH_FAILED_TO_OPEN="+booleanArr2Str(SWITCH_FAILED_TO_OPEN).trim()).append(", ")
-		  .append("BYPASSED="+booleanArr2Str(BYPASSED).trim()).append(", ")
-		  .append("FILLER_2="+booleanArr2Str(FILLER_2).trim()).append(", ")
-		  .append("ALTERNATE_SOURCE="+booleanArr2Str(ALTERNATE_SOURCE).trim()).append(", ")
-		  .append("SWITCH_FAILED_TO_CLOSE="+booleanArr2Str(SWITCH_FAILED_TO_CLOSE).trim()).append(", ")
-		  .append("SWITCH_CONTROLLER_ERROR="+booleanArr2Str(SWITCH_CONTROLLER_ERROR).trim()).append(", ")
-		  .append("COMMUNICATION_ERROR="+booleanArr2Str(COMMUNICATION_ERROR).trim()).append(", ")
-		  
-		  .append("FILLER_3="+booleanArr2Str(FILLER_3).trim()).append(", ")
-		  .append("WAITING_TO_ARM="+booleanArr2Str(WAITING_TO_ARM).trim()).append(", ")
-		  .append("LOCKOUT_IN_EFFECT="+booleanArr2Str(LOCKOUT_IN_EFFECT).trim()).append(", ")
-		  .append("OUTAGE_OPEN_IN_EFFECT="+booleanArr2Str(OUTAGE_OPEN_IN_EFFECT).trim()).append(", ")
-		  .append("ARMED_WAITING_TO_CLOSE="+booleanArr2Str(ARMED_WAITING_TO_CLOSE).trim()).append(", ")
-		  .append("OPEN_HOLD_FOR_COMMAND="+booleanArr2Str(OPEN_HOLD_FOR_COMMAND).trim()).append(", ")
-		  .append("DESIRED_SWITCH_STATE="+booleanArr2Str(DESIRED_SWITCH_STATE).trim()).append(", ")
-		  .append("ACTUAL_SWITCH_STATE="+booleanArr2Str(ACTUAL_SWITCH_STATE).trim()).append(", ")
-		  
-		  .append("PPM_DISCONNECT="+booleanArr2Str(PPM_DISCONNECT).trim()).append(", ")
-		  .append("DLP_DISCONNECT="+booleanArr2Str(DLP_DISCONNECT).trim()).append(", ")
-		  .append("ECP_DISCONNECT="+booleanArr2Str(ECP_DISCONNECT).trim()).append(", ")
-		  .append("FILLER_4="+booleanArr2Str(FILLER_4).trim()).append(", ")
-		  .append("PPM_ENABLED="+booleanArr2Str(PPM_ENABLED).trim()).append(", ")
-		  .append("DLP_ENABLED="+booleanArr2Str(DLP_ENABLED).trim()).append(", ")
-		  .append("ECP_ENABLED="+booleanArr2Str(ECP_ENABLED).trim()).append(", ")
-		  .append("FILLER_5="+booleanArr2Str(FILLER_5).trim()).append(", ")
-		  
-		  .append("LC_RECONNECT_ATTEMPT_COUNT="+new String(LC_RECONNECT_ATTEMPT_COUNT).trim()).append(", ")
-		  .append("ECP_ACCUMULATOR_OR_PPM_REMAINING_CREDIT="+new String(ECP_ACCUMULATOR_OR_PPM_REMAINING_CREDIT).trim()).append(", ")
-		  .append("LC_DEMAND_CALCULATED="+new String(LC_DEMAND_CALCULATED).trim()).append(", ")
-		  .append("DURATION_COUNT_DOWN="+new String(DURATION_COUNT_DOWN).trim()).append(", ")
-		  .append("HOURS="+new String(HOURS).trim()).append(", ")
-		  .append("MINUTES="+new String(MINUTES).trim()).append(", ")
-		  .append("LAST_CMD_STATUS"+new String(LAST_CMD_STATUS).trim()).append(", ")
-		  .append("FILLER_6="+new String(FILLER_6).trim()).append(", ")
-		  .append("CRC="+new String(CRC).trim());
+		try {
+			sb.append("  FILLER_1="+booleanArr2Str(FILLER_1).trim()).append(", \n")
+			  .append("  LOAD_SIDE_FREQ_ERROR="+booleanArr2Str(LOAD_SIDE_FREQ_ERROR).trim()).append(", \n")
+			  .append("  LINE_SIDE_FREQ_ERROR="+booleanArr2Str(LINE_SIDE_FREQ_ERROR).trim()).append(", \n")
+			  .append("  MANUAL_ARMED_TIME_OUT="+booleanArr2Str(MANUAL_ARMED_TIME_OUT).trim()).append(", \n")
+			  .append("  PPM_ALERT="+booleanArr2Str(PPM_ALERT).trim()).append(", \n")
+			  .append("  SWITCH_FAILED_TO_OPEN="+booleanArr2Str(SWITCH_FAILED_TO_OPEN).trim()).append(", \n")
+			  .append("  BYPASSED="+booleanArr2Str(BYPASSED).trim()).append(", \n")
+			  .append("  FILLER_2="+booleanArr2Str(FILLER_2).trim()).append(", \n")
+			  .append("  ALTERNATE_SOURCE="+booleanArr2Str(ALTERNATE_SOURCE).trim()).append(", \n")
+			  .append("  SWITCH_FAILED_TO_CLOSE="+booleanArr2Str(SWITCH_FAILED_TO_CLOSE).trim()).append(", \n")
+			  .append("  SWITCH_CONTROLLER_ERROR="+booleanArr2Str(SWITCH_CONTROLLER_ERROR).trim()).append(", \n")
+			  .append("  COMMUNICATION_ERROR="+booleanArr2Str(COMMUNICATION_ERROR).trim()).append(", \n")
+			  
+			  .append("  FILLER_3="+booleanArr2Str(FILLER_3).trim()).append(", \n")
+			  .append("  WAITING_TO_ARM="+booleanArr2Str(WAITING_TO_ARM).trim()).append(", \n")
+			  .append("  LOCKOUT_IN_EFFECT="+booleanArr2Str(LOCKOUT_IN_EFFECT).trim()).append(", \n")
+			  .append("  OUTAGE_OPEN_IN_EFFECT="+booleanArr2Str(OUTAGE_OPEN_IN_EFFECT).trim()).append(", \n")
+			  .append("  ARMED_WAITING_TO_CLOSE="+booleanArr2Str(ARMED_WAITING_TO_CLOSE).trim()).append(", \n")
+			  .append("  OPEN_HOLD_FOR_COMMAND="+booleanArr2Str(OPEN_HOLD_FOR_COMMAND).trim()).append(", \n")
+			  .append("  DESIRED_SWITCH_STATE="+booleanArr2Str(DESIRED_SWITCH_STATE).trim()).append(", \n")
+			  .append("  ACTUAL_SWITCH_STATE="+booleanArr2Str(ACTUAL_SWITCH_STATE).trim()).append(", \n")
+			  
+			  .append("  PPM_DISCONNECT="+booleanArr2Str(PPM_DISCONNECT).trim()).append(", \n")
+			  .append("  DLP_DISCONNECT="+booleanArr2Str(DLP_DISCONNECT).trim()).append(", \n")
+			  .append("  ECP_DISCONNECT="+booleanArr2Str(ECP_DISCONNECT).trim()).append(", \n")
+			  .append("  FILLER_4="+booleanArr2Str(FILLER_4).trim()).append(", \n")
+			  .append("  PPM_ENABLED="+booleanArr2Str(PPM_ENABLED).trim()).append(", \n")
+			  .append("  DLP_ENABLED="+booleanArr2Str(DLP_ENABLED).trim()).append(", \n")
+			  .append("  ECP_ENABLED="+booleanArr2Str(ECP_ENABLED).trim()).append(", \n")
+			  .append("  FILLER_5="+booleanArr2Str(FILLER_5).trim()).append(", \n")
+			  
+			  .append("  LC_RECONNECT_ATTEMPT_COUNT="+DataFormat.hex2dec(LC_RECONNECT_ATTEMPT_COUNT)).append(", \n")
+			  .append("  ECP_ACCUMULATOR_OR_PPM_REMAINING_CREDIT="+DataFormat.hex2dec(ECP_ACCUMULATOR_OR_PPM_REMAINING_CREDIT)).append(", \n")
+			  .append("  LC_DEMAND_CALCULATED="+DataFormat.hex2dec(LC_DEMAND_CALCULATED)).append(", \n")
+			  .append("  DURATION_COUNT_DOWN="+DataFormat.hex2dec(DURATION_COUNT_DOWN)).append(", \n")
+			  .append("  HOURS="+DataFormat.hex2dec(HOURS)).append(", \n")
+			  .append("  MINUTES="+DataFormat.hex2dec(MINUTES)).append(", \n")
+			  .append("  LAST_CMD_STATUS"+DataFormat.hex2dec(LAST_CMD_STATUS)).append(", \n")
+			  .append("  FILLER_6="+DataFormat.hex2dec(FILLER_6)).append(", ")
+			  .append("  CRC="+DataFormat.hex2dec(CRC));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		log.info("MT115["+sb.toString()+"]");
+		log.debug("MT115[\n"+sb.toString()+"\n]\n");
+		
+		return "MT115[\n"+sb.toString()+"\n]\n";
 	}
 	
     public LinkedHashMap getData(){

@@ -29,18 +29,19 @@ import com.google.gson.JsonObject;
 @Service
 public class I210PlusMDSaver extends AbstractMDSaver {
 
+	public void savePublic(IMeasurementData md) throws Exception {
+		save(md);
+	}
+	
 	@Override
 	protected boolean save(IMeasurementData md) throws Exception {
 		I210Plus parser = (I210Plus) md.getMeterDataParser();
 		log.info(parser.toString());
 		
-		LPData[] lpArr = new LPData[1];
-		lpArr[0] = new LPData();
-		
 		saveLPUsingLpNormalization(
 				CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()),
 				md,
-				lpArr,
+				parser.getLPData(),
 				parser.getMDevId(),
 				parser.getDeviceId(),
 				parser.getMDevType(), 
