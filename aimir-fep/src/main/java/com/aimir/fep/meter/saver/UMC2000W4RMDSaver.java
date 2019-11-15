@@ -99,7 +99,9 @@ public class UMC2000W4RMDSaver extends ZEUPLSMDSaver {
             // meterStatus 정보를 읽어와 code값에 해당하는 Name을 읽어온다.
             if(resultMap.containsKey("meterStatus") && resultMap.get("meterStatus")!=null){
                 Integer meterStatus = (Integer)resultMap.get("meterStatus");
-                Code code = CommonConstants.getWaterMeterStatus(meterStatus.toString());
+                //code와 업로드 값이 다름. 다만, 기초데이터 변경하기엔 그 영향을 확인하기 어려워서 여기서 임시 수정.
+                Integer meterStatusCode = meterStatus + 2000;
+                Code code = CommonConstants.getWaterMeterStatus(meterStatusCode.toString());
                 wmeter.setMeterStatus(code);
                 resultMap.remove("meterStatus");
                 resultMap.put("meterStatus", code.getName());
@@ -117,6 +119,7 @@ public class UMC2000W4RMDSaver extends ZEUPLSMDSaver {
             meterDao.update(wmeter);
         }
         catch(Exception e) {
+        	log.error(e,e);
             resultMap.put("failReason", e.getMessage());
         }
         
