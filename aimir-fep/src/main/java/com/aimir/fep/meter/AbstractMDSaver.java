@@ -1069,7 +1069,19 @@ public abstract class AbstractMDSaver
 		}
 		
 		try {
-			saveLPDataUsingLPTime(meteringType, lpMap, meter, mdevType);
+			log.debug("meteringType = "+meteringType);
+			log.debug("lpMap = ");
+			Set<Integer> keys = lpMap.keySet();
+			for(Integer key : keys) {
+				log.debug("  ["+key+"] ");
+				LinkedList<MeteringLP> lpList = lpMap.get(key);
+				for(MeteringLP lp : lpList) {
+					log.debug("    - "+lp.getMDevId()+" / "+lp.getChannel()+ " / " + lp.getYyyymmddhhmiss() + " / "+lp.getValue());
+				}
+			}
+			log.debug("meter = " + meter.toString());
+			log.debug("mdevType = " + mdevType);
+//			saveLPDataUsingLPTime(meteringType, lpMap, meter, mdevType);
 		}catch(Exception e) {
 			log.error(e,e);
 			log.error(e.getMessage());
