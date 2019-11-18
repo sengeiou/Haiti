@@ -956,9 +956,12 @@ public abstract class AbstractMDSaver
 				String myKey = meter.getMdsId()+"_"+ch+"_"+lp.getDatetime();
 				if(!valSum.containsKey(sumKey)) {
 					valSum.put(sumKey, (double) lp.getBasePulse());
-				}else if(!valSum.containsKey(myKey)){
+				}
+				if(!valSum.containsKey(myKey)){
 					valSum.put(myKey, lp.getCh()[i]);
 					valSum.put(sumKey, valSum.get(sumKey)+lp.getCh()[i]);
+				}else {
+					continue;
 				}
 				
 				if(lpMap.get(ch) == null) 
