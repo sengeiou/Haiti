@@ -24,6 +24,7 @@ import com.aimir.fep.meter.parser.I210Plus;
 import com.aimir.fep.meter.parser.Kamstrup;
 import com.aimir.fep.meter.parser.Kamstrup162;
 import com.aimir.fep.meter.parser.ModemLPData;
+import com.aimir.fep.util.CmdUtil;
 import com.aimir.fep.util.DataUtil;
 import com.aimir.model.device.Meter;
 import com.aimir.util.DateTimeUtil;
@@ -94,102 +95,117 @@ public class I210PlusMDSaver extends AbstractMDSaver {
 		return true;
 	}
 
-	private String[] getMeterModelProtocol(String meterId) {
-		TransactionStatus txstatus = null;
-		String[] meterModelProtocolType = new String[2];
-		try {
-			txstatus = txmanager.getTransaction(null);
-			Meter meter = meterDao.get(meterId);
-			meterModelProtocolType[0] = meter.getModel().getName();
-			if (meter.getModem() != null && meter.getModem().getProtocolType() != null)
-				meterModelProtocolType[1] = meter.getModem().getProtocolType().name();
-			txmanager.commit(txstatus);
-		} catch (Exception e) {
-			if (txstatus != null)
-				txmanager.rollback(txstatus);
-		}
-		return meterModelProtocolType;
-	}
-
 	@Override
-	public String relayValveOn(String mcuId, String meterId) {
-		Object[] result = null;
-		try {
-			String[] meterModelProtocol = getMeterModelProtocol(meterId);
+    public String relayValveOff(String mcuId, String meterId) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        
+        try {
+            CommandGW commandGw = DataUtil.getBean(CommandGW.class);
+            commandGw.cmdOnDemandMeter( mcuId, meterId, OnDemandOption.WRITE_OPTION_RELAYOFF.getCode());
 
-			CommandGW commandGw = DataUtil.getBean(CommandGW.class);
+            String str = relayValveStatus(mcuId, meterId);
+            JsonArray ja = StringToJsonArray(str).getAsJsonArray();
+            
+            JsonObject jo = null;
+            for (int i = 0; i < ja.size(); i++) {
+                jo = ja.get(i).getAsJsonObject();
+                if (jo.get("name").getAsString().equals("switchStatus") && jo.get("value").getAsString().equals("Off")) {
+                    ja.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
+                }
+            }
+            return ja.toString();
+        }
+        catch (Exception e) {
+            resultMap.put("failReason", e.getMessage());
+        }
+        
+        return MapToJSON(resultMap);
+    }
+    
+    @Override
+    public String relayValveOn(String mcuId, String meterId)  {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        
+        try {
+            CommandGW commandGw = DataUtil.getBean(CommandGW.class);
+            commandGw.cmdOnDemandMeter( mcuId, meterId, OnDemandOption.WRITE_OPTION_ACTON.getCode());
+            commandGw.cmdOnDemandMeter( mcuId, meterId, OnDemandOption.WRITE_OPTION_RELAYON.getCode());
+            
+            String str = relayValveStatus(mcuId, meterId);
+            JsonArray ja = StringToJsonArray(str).getAsJsonArray();
+            
+            JsonObject jo = null;
+            for (int i = 0; i < ja.size(); i++) {
+                jo = ja.get(i).getAsJsonObject();
+                if (jo.get("name").getAsString().equals("switchStatus") && jo.get("value").getAsString().equals("On")) {
+                    ja.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
+                }
+            }
+            return ja.toString();
+        }
+        catch (Exception e) {
+            resultMap.put("failReason", e.getMessage());
+        }
+        
+        return MapToJSON(resultMap);
+    }
+    
+    @Override
+    public String relayValveActivate(String mcuId, String meterId)  {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        
+        try {
+            CommandGW commandGw = DataUtil.getBean(CommandGW.class);
+            commandGw.cmdOnDemandMeter( mcuId, meterId, OnDemandOption.WRITE_OPTION_ACTON.getCode());
 
-			// relay released
-			result = KamstrupCIDMeta
-					.getResult(
-							commandGw.cmdKamstrupCID(mcuId, meterId,
-									new String[] { KamstrupCIDMeta.CID.SetCutOffState.getCommand(),
-											KamstrupCIDMeta.CID.SetCutOffState.getArgs()[1][0] }),
-							meterModelProtocol[0]);
+            String str = relayValveStatus(mcuId, meterId);
+            JsonArray ja = StringToJsonArray(str).getAsJsonArray();
+            
+            JsonObject jo = null;
+            for (int i = 0; i < ja.size(); i++) {
+                jo = ja.get(i).getAsJsonObject();
+                if (jo.get("name").getAsString().equals("activateStatus") && jo.get("value").getAsString().equals("Activation")) {
+                    ja.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
+                }
+            }
+            return ja.toString();
+        }
+        catch (Exception e) {
+            resultMap.put("failReason", e.getMessage());
+        }
+        
+        return MapToJSON(resultMap);
+    }
+    
+    @Override
+    public String relayValveDeactivate(String mcuId, String meterId)  {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        
+        try {
+            CommandGW commandGw = DataUtil.getBean(CommandGW.class);
+            commandGw.cmdOnDemandMeter( mcuId, meterId, OnDemandOption.WRITE_OPTION_ACTOFF.getCode());
 
-			if (result[0] != null && result[0].equals("Relays released for reconnection")) {
-				result = KamstrupCIDMeta
-						.getResult(
-								commandGw.cmdKamstrupCID(mcuId, meterId,
-										new String[] { KamstrupCIDMeta.CID.SetCutOffState.getCommand(),
-												KamstrupCIDMeta.CID.SetCutOffState.getArgs()[2][0] }),
-								meterModelProtocol[0]);
-			}
-		} catch (Exception e) {
-			result = new String[] { e.getMessage() };
-		}
-
-		Meter meter = new Meter();
-		meter.setMdsId(meterId);
-		String str = MapToJSON((String[]) result);
-		JsonArray ja = StringToJsonArray(str).getAsJsonArray();
-		JsonObject jo = null;
-		for (int i = 0; i < ja.size(); i++) {
-			jo = ja.get(i).getAsJsonObject();
-			if (jo.get("value").getAsString().equals("Relays connected")) {
-				updateMeterStatusNormal(meter);
-				ja.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
-			}
-		}
-
-		return ja.toString();
-	}
-
-	@Override
-	public String relayValveOff(String mcuId, String meterId) {
-		Object[] result = null;
-		try {
-			String[] meterModelProtocol = getMeterModelProtocol(meterId);
-			CommandGW commandGw = DataUtil.getBean(CommandGW.class);
-
-			result = KamstrupCIDMeta
-					.getResult(
-							commandGw.cmdKamstrupCID(mcuId, meterId,
-									new String[] { KamstrupCIDMeta.CID.SetCutOffState.getCommand(),
-											KamstrupCIDMeta.CID.SetCutOffState.getArgs()[0][0] }),
-							meterModelProtocol[0]);
-		} catch (Exception e) {
-			result = new String[] { e.getMessage() };
-		}
-
-		Meter meter = new Meter();
-		meter.setMdsId(meterId);
-		String str = MapToJSON((String[]) result);
-		JsonArray ja = StringToJsonArray(str).getAsJsonArray();
-		JsonObject jo = null;
-		for (int i = 0; i < ja.size(); i++) {
-			jo = ja.get(i).getAsJsonObject();
-			if (jo.get("value").getAsString().equals("Relays disconnected by command")) {
-				updateMeterStatusCutOff(meter);
-				ja.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
-			}
-		}
-
-		return ja.toString();
-	}
-
-	@Override
-	public String relayValveStatus(String mcuId, String meterId) {
+            String str = relayValveStatus(mcuId, meterId);
+            JsonArray ja = StringToJsonArray(str).getAsJsonArray();
+            
+            JsonObject jo = null;
+            for (int i = 0; i < ja.size(); i++) {
+                jo = ja.get(i).getAsJsonObject();
+                if (jo.get("name").getAsString().equals("activateStatus") && jo.get("value").getAsString().equals("Deactivation")) {
+                    ja.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
+                }
+            }
+            return ja.toString();
+        }
+        catch (Exception e) {
+            resultMap.put("failReason", e.getMessage());
+        }
+        
+        return MapToJSON(resultMap);
+    }
+    
+    @Override
+    public String relayValveStatus(String mcuId, String meterId) {
         Meter meter = meterDao.get(meterId);
         Map<String, Object> resultMap = new HashMap<String, Object>();
         
@@ -222,46 +238,27 @@ public class I210PlusMDSaver extends AbstractMDSaver {
         
         return MapToJSON(resultMap);
     }
-
-	@Override
-	public String syncTime(String mcuId, String meterId) {
-		Object[] result = null;
-
-		try {
-			String[] meterModelProtocol = getMeterModelProtocol(meterId);
-			CommandGW commandGw = DataUtil.getBean(CommandGW.class);
-			result = KamstrupCIDMeta
-					.getResult(
-							commandGw
-									.cmdKamstrupCID(mcuId, meterId,
-											new String[] { KamstrupCIDMeta.CID.SetClock.getCommand(),
-													KamstrupCIDMeta.CID.SetClock.getArgs()[0][0] }),
-							meterModelProtocol[0]);
-
-			// saveMeterTimeSyncLog(meter, (String)result[0], (String)result[1], 0);
-		} catch (Exception e) {
-			result = new String[] { e.getMessage() };
-		}
-		return MapToJSON((String[]) result);
-	}
-
-	@Override
-	public String relayValveActivate(String mcuId, String meterId) {
-		Object[] result = null;
-		try {
-			String[] meterModelProtocol = getMeterModelProtocol(meterId);
-			CommandGW commandGw = DataUtil.getBean(CommandGW.class);
-
-			// relay released
-			result = KamstrupCIDMeta
-					.getResult(
-							commandGw.cmdKamstrupCID(mcuId, meterId,
-									new String[] { KamstrupCIDMeta.CID.SetCutOffState.getCommand(),
-											KamstrupCIDMeta.CID.SetCutOffState.getArgs()[1][0] }),
-							meterModelProtocol[0]);
-		} catch (Exception e) {
-			result = new String[] { e.getMessage() };
-		}
-		return MapToJSON((String[]) result);
-	}
+    
+    @Override
+    public String syncTime(String mcuId, String meterId) {
+        Meter meter = meterDao.get(meterId);
+        String[] result = null;
+        
+        try {
+            CommandGW commandGw = DataUtil.getBean(CommandGW.class);
+            byte[] bx = commandGw.cmdMeterTimeSync(mcuId,meter.getMdsId());
+            
+            String beforeTime = CmdUtil.getYymmddhhmmss(bx,58,6);
+            String afterTime = CmdUtil.getYymmddhhmmss(bx,73,6);
+            
+            saveMeterTimeSyncLog(meter, beforeTime, afterTime, 1);
+            
+            result = new String[]{beforeTime, afterTime};
+        }
+        catch (Exception e) {
+            result = new String[]{e.getMessage()};
+        }
+        
+        return MapToJSON(result);
+    }
 }
