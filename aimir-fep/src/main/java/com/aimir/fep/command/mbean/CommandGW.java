@@ -4180,7 +4180,7 @@ public class CommandGW implements CommandGWMBean {
 		Vector<SMIValue> datas = new Vector<SMIValue>();
 		byte[][] reqBit = KamstrupCIDMeta.getRequest(req);
 
-		String mcuRevision = FMPProperty.getProperty("mcu.revision.support.mbus");
+		String mcuRevision = FMPProperty.getProperty("mcu.revision.support.mbus", "0");
 		SMIValue smiValue = null;
 
 		try {
@@ -4237,6 +4237,7 @@ public class CommandGW implements CommandGWMBean {
 			}
 
 		} catch (Exception e) {
+			log.error(e,e);
 			throw e;
 		}
 
