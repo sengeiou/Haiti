@@ -214,8 +214,6 @@ public class MT115 implements java.io.Serializable {
 			e.printStackTrace();
 		}
 		
-		log.debug("MT115[\n"+sb.toString()+"\n]\n");
-		
 		return "MT115[\n"+sb.toString()+"\n]\n";
 	}
 	

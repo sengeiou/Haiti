@@ -991,7 +991,7 @@ public abstract class AbstractMDSaver
 				meteringLP.setMDevType(DeviceType.Meter.name());
                 meteringLP.setDeviceType(DeviceType.Meter);
 				meteringLP.setMeteringType(meteringType);
-				meteringLP.setValue(lp.getCh()[i]);
+				meteringLP.setValue(lp.getBasePulse() + lp.getCh()[i]);
 				meteringLP.setDst(dst);
 				meteringLP.setWriteDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
 				meteringLP.setDate(lp.getDatetime());
@@ -1062,14 +1062,14 @@ public abstract class AbstractMDSaver
 				}
 				
 				subList.add(meteringLP);
-				log.debug("meteringLP["+meteringLP.getMDevId()+" - "+lp.getDatetime()+"]");
+				log.debug("meteringLP["+meteringLP.getMDevId()+" - "+lp.getDatetime()+"] : "+meteringLP.getValue());
 		
 				lpMap.put(ch, subList);
 			}
 		}
 		
 		try {
-//			saveLPDataUsingLPTime(meteringType, lpMap, meter, mdevType);
+			saveLPDataUsingLPTime(meteringType, lpMap, meter, mdevType);
 		}catch(Exception e) {
 			log.error(e,e);
 			log.error(e.getMessage());
@@ -1403,7 +1403,7 @@ public abstract class AbstractMDSaver
              throw new Exception("LP size is 0!!!");
         }
     	
-    	boolean dayMonthSave = Boolean.parseBoolean(FMPProperty.getProperty("daymonth.save", "true"));
+//    	boolean dayMonthSave = Boolean.parseBoolean(FMPProperty.getProperty("daymonth.save", "true"));
     	
     	MeterType meterType = MeterType.valueOf(meter.getMeterType().getName());
     	
@@ -1414,10 +1414,10 @@ public abstract class AbstractMDSaver
     		saveLPDataUsingLPTimeUsingJPA(meteringType, lpMap, meter, mdevType);
     	}
     	
-    	if(dayMonthSave) {
+//    	if(dayMonthSave) {
     		//saveDayDataUsingLPTimeUsingJPA(meteringType, lpMap, meter, mdevType);
 			//saveMonthDataUsingLPTimeUsingJPA(meteringType, lpMap, meter, mdevType);
-    	}
+//    	}
     }
     
     private void saveLPDataUsingLPTimeUsingProcedure(MeteringType meteringType, Map<Integer, LinkedList<MeteringLP>> lpMap, 

@@ -208,8 +208,6 @@ public class MT019 implements java.io.Serializable {
 			e.printStackTrace();
 		}
 		
-		log.debug("MT019[\n"+sb.toString()+"\n]\n");
-		
 		return "MT019[\n"+sb.toString()+"\n]\n";
 	}
 }

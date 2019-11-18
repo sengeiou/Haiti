@@ -129,22 +129,17 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
             if(tbName.equals("S001")) {
                 s001 = b;
                 log.debug("[S001] len=["+len+"] data=>\n"+Util.getHexString(b));
-//                System.out.println("[S001] len=["+len+"] data=>\n"+Util.getHexString(b));
             } else if(tbName.equals("M019")) {
             	m019 = b;
                 log.debug("[M019] len=["+len+"] data=>\n"+Util.getHexString(b));
-//                System.out.println("[M019] len=["+len+"] data=>\n"+Util.getHexString(b));
             } else if(tbName.equals("M115")) {
                 m115 = b;
                 log.debug("[M115] len=["+len+"] data=>\n"+Util.getHexString(b));
-//                System.out.println("[M115] len=["+len+"] data=>\n"+Util.getHexString(b));
             } else if(tbName.equals("N509")) {
             	n509 = b;
                 log.debug("[N509] len=["+len+"] data=>\n"+Util.getHexString(b));
-//                System.out.println("[N509] len=["+len+"] data=>\n"+Util.getHexString(b));
             }  else {
                 log.debug("unknown table=["+tbName+"] data=>\n"+Util.getHexString(b));
-//                System.out.println("unknown table=["+tbName+"] data=>\n"+Util.getHexString(b));
             }
             try {
             	if(s001 != null){
@@ -164,27 +159,22 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
                       .append("  FW_VERSION_NUMBER="+st001.getFW_VERSION_NUMBER()+", \n")
                       .append("  FW_REVISION_NUMBE="+st001.getFW_REVISION_NUMBER()+", \n")
                       .append("  MSerial="+st001.getMSerial()+"\n]\n");
-//                    System.out.println(sb.toString());
                     log.debug(sb.toString());
                     s001 = null;
                 }
                 if(m019 != null){
                 	mt019 = new MT019(m019);
                 	log.debug(mt019.printAll());
-//                	System.out.println(mt019.printAll());
                 	m019 = null;
                 }
                 if(m115 != null){
                 	mt115 = new MT115(m115);
                 	log.debug(mt115.printAll());
-//                	System.out.println(mt115.printAll());
                 	m115 = null;
                 }
                 if(n509 !=null){
                     nt509 = new NT509(n509);
-                    
                 	log.debug(nt509.printAll());
-//                	System.out.println(nt509.printAll());
                 	setMeteringTime(nt509.getFrameInfoDateFormat("yyyyMMddHHmm"));
                 	lpDataList.addAll(nt509.getLpData());
                 	meter.setLpInterval(nt509.getLpPeriodMin());
