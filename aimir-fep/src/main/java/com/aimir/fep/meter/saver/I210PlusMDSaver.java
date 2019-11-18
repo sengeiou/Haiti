@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 
 import com.aimir.constants.CommonConstants;
+import com.aimir.constants.CommonConstants.MeterStatus;
 import com.aimir.constants.CommonConstants.MeteringFlag;
 import com.aimir.constants.CommonConstants.MeteringType;
 import com.aimir.fep.command.conf.KamstrupCIDMeta;
+import com.aimir.fep.command.conf.SM110Meta;
 import com.aimir.fep.command.mbean.CommandGW;
 import com.aimir.fep.command.mbean.CommandGW.OnDemandOption;
 import com.aimir.fep.meter.AbstractMDSaver;
@@ -188,23 +190,31 @@ public class I210PlusMDSaver extends AbstractMDSaver {
 
 	@Override
 	public String relayValveStatus(String mcuId, String meterId) {
+        Meter meter = meterDao.get(meterId);
         Map<String, Object> resultMap = new HashMap<String, Object>();
         
         try {
             CommandGW commandGw = DataUtil.getBean(CommandGW.class);
-            commandGw.cmdOnDemandMeter( mcuId, meterId, OnDemandOption.WRITE_OPTION_RELAYOFF.getCode());
+            resultMap = commandGw.cmdOnDemandMeter( mcuId, meterId, OnDemandOption.READ_OPTION_RELAY.getCode());
 
-            String str = relayValveStatus(mcuId, meterId);
-            JsonArray ja = StringToJsonArray(str).getAsJsonArray();
-            
-            JsonObject jo = null;
-            for (int i = 0; i < ja.size(); i++) {
-                jo = ja.get(i).getAsJsonObject();
-                if (jo.get("name").getAsString().equals("switchStatus") && jo.get("value").getAsString().equals("Off")) {
-                    ja.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
+            if(resultMap != null){
+                // SM110 or I210
+                resultMap.put( "switchStatus", SM110Meta.getSwitchStatus((String)resultMap.get("relay status")) );
+                resultMap.put( "activateStatus", SM110Meta.getActivateStatus((String)resultMap.get("relay activate status")) );
+            }
+        
+            if (resultMap != null && resultMap.get("switchStatus") != null) {
+                if(resultMap.get("switchStatus").equals("On")){
+                    updateMeterStatusNormal(meter);
+                }
+                else if(resultMap.get("switchStatus").equals("Off")){
+                    updateMeterStatusCutOff(meter);
+                }
+                else if(resultMap.get("activateStatus").equals("Activation")) {
+                    meter.setMeterStatus(CommonConstants.getMeterStatusByName(MeterStatus.Activation.name()));
+                    meterDao.update(meter);
                 }
             }
-            return ja.toString();
         }
         catch (Exception e) {
             resultMap.put("failReason", e.getMessage());
