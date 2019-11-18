@@ -1,6 +1,7 @@
 package com.aimir.fep.meter.saver;
 
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import com.aimir.constants.CommonConstants.MeteringFlag;
 import com.aimir.constants.CommonConstants.MeteringType;
 import com.aimir.fep.command.conf.KamstrupCIDMeta;
 import com.aimir.fep.command.mbean.CommandGW;
+import com.aimir.fep.command.mbean.CommandGW.OnDemandOption;
 import com.aimir.fep.meter.AbstractMDSaver;
 import com.aimir.fep.meter.data.BillingData;
 import com.aimir.fep.meter.data.Instrument;
@@ -186,34 +188,30 @@ public class I210PlusMDSaver extends AbstractMDSaver {
 
 	@Override
 	public String relayValveStatus(String mcuId, String meterId) {
-		Object[] result = null;
-		try {
-			String[] meterModelProtocol = getMeterModelProtocol(meterId);
-			CommandGW commandGw = DataUtil.getBean(CommandGW.class);
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        
+        try {
+            CommandGW commandGw = DataUtil.getBean(CommandGW.class);
+            commandGw.cmdOnDemandMeter( mcuId, meterId, OnDemandOption.WRITE_OPTION_RELAYOFF.getCode());
 
-			result = KamstrupCIDMeta.getResult(commandGw.cmdKamstrupCID(mcuId, meterId,
-					new String[] { KamstrupCIDMeta.CID.GetCutOffState.getCommand() }), meterModelProtocol[0]);
-
-			for (Object o : result) {
-				log.debug(o);
-			}
-
-			Meter meter = new Meter();
-			meter.setMdsId(meterId);
-			if (result[0] != null) {
-				if (((String) result[0]).contains("Relays connected")) {
-					updateMeterStatusNormal(meter);
-				} else if (((String) result[0]).contains("Disconnect relays")
-						|| ((String) result[0]).contains("Relays disconnected by command")) {
-					updateMeterStatusCutOff(meter);
-				}
-			}
-		} catch (Exception e) {
-			result = new String[] { e.getMessage() };
-		}
-
-		return MapToJSON((String[]) result);
-	}
+            String str = relayValveStatus(mcuId, meterId);
+            JsonArray ja = StringToJsonArray(str).getAsJsonArray();
+            
+            JsonObject jo = null;
+            for (int i = 0; i < ja.size(); i++) {
+                jo = ja.get(i).getAsJsonObject();
+                if (jo.get("name").getAsString().equals("switchStatus") && jo.get("value").getAsString().equals("Off")) {
+                    ja.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
+                }
+            }
+            return ja.toString();
+        }
+        catch (Exception e) {
+            resultMap.put("failReason", e.getMessage());
+        }
+        
+        return MapToJSON(resultMap);
+    }
 
 	@Override
 	public String syncTime(String mcuId, String meterId) {
