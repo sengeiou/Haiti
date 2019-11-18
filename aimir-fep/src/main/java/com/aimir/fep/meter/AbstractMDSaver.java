@@ -944,14 +944,22 @@ public abstract class AbstractMDSaver
 		
 		Meter meter = meterDao.get(mdevId);
 		Modem modem= meter.getModem();
-		MeterType meterType = MeterType.valueOf(meter.getMeterType().getName());		
+		MeterType meterType = MeterType.valueOf(meter.getMeterType().getName());
+		Map<String, Double> valSum = new HashMap<String, Double>();
 		
 		for(LPData lp : validlplist) {
 			int chLen = lp.getCh().length;
 			LinkedList<MeteringLP> subList = null;
-			
 			for(int i=0; i<chLen; i++) {
 				int ch = i + 1;
+				String sumKey = meter.getMdsId()+"_"+ch+"_"+lp.getDatetime().substring(0, 8);
+				String myKey = meter.getMdsId()+"_"+ch+"_"+lp.getDatetime();
+				if(!valSum.containsKey(sumKey)) {
+					valSum.put(sumKey, (double) lp.getBasePulse());
+				}else if(!valSum.containsKey(myKey)){
+					valSum.put(myKey, lp.getCh()[i]);
+					valSum.put(sumKey, valSum.get(sumKey)+lp.getCh()[i]);
+				}
 				
 				if(lpMap.get(ch) == null) 
 					subList = new LinkedList<MeteringLP>();
@@ -991,7 +999,7 @@ public abstract class AbstractMDSaver
 				meteringLP.setMDevType(DeviceType.Meter.name());
                 meteringLP.setDeviceType(DeviceType.Meter);
 				meteringLP.setMeteringType(meteringType);
-				meteringLP.setValue(lp.getBasePulse() + lp.getCh()[i]);
+				meteringLP.setValue(valSum.get(sumKey));
 				meteringLP.setDst(dst);
 				meteringLP.setWriteDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
 				meteringLP.setDate(lp.getDatetime());
@@ -1062,26 +1070,13 @@ public abstract class AbstractMDSaver
 				}
 				
 				subList.add(meteringLP);
-				log.debug("meteringLP["+meteringLP.getMDevId()+" - "+lp.getDatetime()+"] : "+meteringLP.getValue());
 		
 				lpMap.put(ch, subList);
 			}
 		}
 		
 		try {
-			log.debug("meteringType = "+meteringType);
-			log.debug("lpMap = ");
-			Set<Integer> keys = lpMap.keySet();
-			for(Integer key : keys) {
-				log.debug("  ["+key+"] ");
-				LinkedList<MeteringLP> lpList = lpMap.get(key);
-				for(MeteringLP lp : lpList) {
-					log.debug("    - "+lp.getMDevId()+" / "+lp.getChannel()+ " / " + lp.getYyyymmddhhmiss() + " / "+lp.getValue());
-				}
-			}
-			log.debug("meter = " + meter.toString());
-			log.debug("mdevType = " + mdevType);
-//			saveLPDataUsingLPTime(meteringType, lpMap, meter, mdevType);
+			saveLPDataUsingLPTime(meteringType, lpMap, meter, mdevType);
 		}catch(Exception e) {
 			log.error(e,e);
 			log.error(e.getMessage());
@@ -1748,31 +1743,31 @@ public abstract class AbstractMDSaver
         	}
         }
         
-        MeteringLP[] co = new MeteringLP[chLpCnt];
-        MeteringLP[] flag = new MeteringLP[chLpCnt];
+//        MeteringLP[] co = new MeteringLP[chLpCnt];
+//        MeteringLP[] flag = new MeteringLP[chLpCnt];
         MeteringLP[] integratedFlag = new MeteringLP[chLpCnt];
         
-        Co2Formula co2f = co2FormulaDao.getCo2FormulaBySupplyType(meterType.getServiceType());
+//        Co2Formula co2f = co2FormulaDao.getCo2FormulaBySupplyType(meterType.getServiceType());
         LinkedList<MeteringLP> ch1List = lpMap.get(ElectricityChannel.Usage.getChannel());
         
         for(int i=0; i<chLpCnt; i++) {
             MeteringLP mLP = ch1List.get(i);
             
-            co[i] = newMeteringLP(meterType, mLP);
-            flag[i] = newMeteringLP(meterType, mLP);
+//            co[i] = newMeteringLP(meterType, mLP);
+//            flag[i] = newMeteringLP(meterType, mLP);
             integratedFlag[i] = newMeteringLP(meterType, mLP);
             
-            co[i].setChannel(ElectricityChannel.Co2.getChannel());
-            flag[i].setChannel(ElectricityChannel.ValidationStatus.getChannel());
+//            co[i].setChannel(ElectricityChannel.Co2.getChannel());
+//            flag[i].setChannel(ElectricityChannel.ValidationStatus.getChannel());
             integratedFlag[i].setChannel(ElectricityChannel.Integrated.getChannel());
             
-            co[i].setValue(dformat(mLP.getValue() * co2f.getCo2factor()));
-            flag[i].setValue(mLP.getLpFlag());
+//            co[i].setValue(dformat(mLP.getValue() * co2f.getCo2factor()));
+//            flag[i].setValue(mLP.getLpFlag());
             integratedFlag[i].setValue((double)IntegratedFlag.NOTSENDED.getFlag());
         }
         
-        lpMap.put(ElectricityChannel.Co2.getChannel(), new LinkedList<>(Arrays.asList(co)));
-        lpMap.put(ElectricityChannel.ValidationStatus.getChannel(), new LinkedList<>(Arrays.asList(flag)));
+//        lpMap.put(ElectricityChannel.Co2.getChannel(), new LinkedList<>(Arrays.asList(co)));
+//        lpMap.put(ElectricityChannel.ValidationStatus.getChannel(), new LinkedList<>(Arrays.asList(flag)));
         //OPF-713 || Unnecessary channel delete(integrated, power factor)
         //lpMap.put(ElectricityChannel.Integrated.getChannel(), new LinkedList<>(Arrays.asList(integratedFlag)));
     }
