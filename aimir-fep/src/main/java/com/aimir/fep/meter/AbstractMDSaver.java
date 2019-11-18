@@ -1001,10 +1001,35 @@ public abstract class AbstractMDSaver
 				meteringLP.setModemTime(meteringTime);
 				
 				if(modem != null) {
-					if(modem.getModemType() == ModemType.MMIU) {
+					if(modem.getModemType() == ModemType.MMIU ||
+							modem.getModemType() == ModemType.SINK ||
+							modem.getModemType() == ModemType.Converter_Ethernet ||
+							modem.getModemType() == ModemType.Coordinator ||
+							modem.getModemType() == ModemType.LTE ||
+							modem.getModemType() == ModemType.ZEU_PDA) {
 						meteringLP.setDeviceId(modem.getDeviceSerial());
 						meteringLP.setDeviceType(DeviceType.Modem.name());
-					} else if(modem.getModemType() == ModemType.SubGiga) {
+					} else if(modem.getModemType() == ModemType.SubGiga ||
+							modem.getModemType() == ModemType.ZRU ||
+							modem.getModemType() == ModemType.ZMU ||
+							modem.getModemType() == ModemType.ZEU_PC ||
+							modem.getModemType() == ModemType.ZEUPLS ||
+							modem.getModemType() == ModemType.ZEU_EISS ||
+							modem.getModemType() == ModemType.ZEU_PQ ||
+							modem.getModemType() == ModemType.ZEU_IO ||
+							modem.getModemType() == ModemType.IEIU ||
+							modem.getModemType() == ModemType.ZEU_MBus ||
+							modem.getModemType() == ModemType.IHD ||
+							modem.getModemType() == ModemType.ACD ||
+							modem.getModemType() == ModemType.HMU ||
+							modem.getModemType() == ModemType.KPX ||
+							modem.getModemType() == ModemType.KPX_NEW ||
+							modem.getModemType() == ModemType.KPX_HD ||
+							modem.getModemType() == ModemType.PLC_G3 ||
+							modem.getModemType() == ModemType.PLC_PRIME ||
+							modem.getModemType() == ModemType.Repeater ||
+							modem.getModemType() == ModemType.PLC_HD ||
+							modem.getModemType() == ModemType.ZigBee ) {
 						meteringLP.setDeviceId(deviceId);
 						meteringLP.setDeviceType(DeviceType.MCU.name());
 					} else {
@@ -1037,12 +1062,14 @@ public abstract class AbstractMDSaver
 				}
 				
 				subList.add(meteringLP);
+				log.debug("meteringLP["+meteringLP.getMDevId()+" - "+lp.getDatetime()+"]");
+		
 				lpMap.put(ch, subList);
 			}
 		}
 		
 		try {
-			saveLPDataUsingLPTime(meteringType, lpMap, meter, mdevType);
+//			saveLPDataUsingLPTime(meteringType, lpMap, meter, mdevType);
 		}catch(Exception e) {
 			log.error(e,e);
 			log.error(e.getMessage());
