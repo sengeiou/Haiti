@@ -165,7 +165,7 @@ public class sensorPathEntry extends Entry {
 		sb.append("]\n");
         sb.append("sensorPathTime: " + sensorPathTime + "\n");
         sb.append("sensorPathLQI: " + sensorPathLQI + "\n");
-        sb.append("sensorPathRSSI: " + Integer.parseUnsignedInt(Hex.decode(sensorPathRSSI.encode())) + "\n");
+        sb.append("sensorPathRSSI: " + (short)Integer.parseInt(Hex.decode(sensorPathRSSI.encode()), 16) + "\n");
         return sb.toString();
     }
 }
