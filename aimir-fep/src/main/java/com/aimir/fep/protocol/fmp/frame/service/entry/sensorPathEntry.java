@@ -151,21 +151,21 @@ public class sensorPathEntry extends Entry {
         StringBuffer sb = new StringBuffer();
 
 		sb.append("CLASS["+this.getClass().getName()+"]\n");
-		sb.append("sensorPathID: " + sensorPathID + "\n");
+		sb.append("sensorPathID["+sensorPathID.getValue()+"]: " + sensorPathID + "\n");
 		sb.append("sensorPathSerial["+sensorPathSerial.toHexString()+"]: " + sensorPathSerial + "\n");
 		sb.append("sensorPathModel["+sensorPathModel.toHexString()+"]: " + sensorPathModel + "\n");
 		sb.append("sensorPathShortID: " + Hex.decode(sensorPathShortID.encode()) + "\n");
-		sb.append("sensorPathHops: " + sensorPathHops + "\n");
-		sb.append("sensorPathNode[");
+		sb.append("sensorPathHops["+Hex.decode(sensorPathHops.encode())+"]: " + sensorPathHops + "\n");
+		sb.append("sensorPathNode: [");
 		for(int i = 0; i < sensorPathNode.toHexString().length(); i += 4) {
 			sb.append(sensorPathNode.toHexString().substring(i, i+4));
 			if(i+4 < sensorPathNode.toHexString().length())
 				sb.append("-");
 		}
 		sb.append("]\n");
-        sb.append("sensorPathTime: " + sensorPathTime + "\n");
-        sb.append("sensorPathLQI: " + sensorPathLQI + "\n");
-        sb.append("sensorPathRSSI: " + (short)Integer.parseInt(Hex.decode(sensorPathRSSI.encode()), 16) + "\n");
+        sb.append("sensorPathTime["+Hex.decode(sensorPathTime.encode())+"]: " + sensorPathTime + "\n");
+        sb.append("sensorPathLQI["+Hex.decode(sensorPathLQI.encode())+"]: " + sensorPathLQI + "\n");
+        sb.append("sensorPathRSSI["+Hex.decode(sensorPathRSSI.encode())+"]: " + (short)Integer.parseInt(Hex.decode(sensorPathRSSI.encode()), 16) + "\n");
         return sb.toString();
     }
 }

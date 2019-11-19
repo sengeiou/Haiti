@@ -23919,7 +23919,7 @@ public class CommandGW implements CommandGWMBean {
 				smiValue = smiValues[i];
 				OPAQUE mdv = (OPAQUE) smiValue.getVariable();
 				sensorPathEntry value = (sensorPathEntry) mdv.getValue();
-				log.debug(value);
+//				log.debug(value);
 				list.add(value);
 			}
 			log.debug(list);
