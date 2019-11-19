@@ -151,11 +151,11 @@ public class sensorPathEntry extends Entry {
 
 		sb.append("CLASS["+this.getClass().getName()+"]\n");
 		sb.append("sensorPathID: " + sensorPathID + "\n");
-		sb.append("sensorPathSerial: " + sensorPathSerial + "\n");
-		sb.append("sensorPathModel: " + sensorPathModel + "\n");
+		sb.append("sensorPathSerial["+sensorPathSerial.toHexString()+"]: " + sensorPathSerial + "\n");
+		sb.append("sensorPathModel["+sensorPathModel.toHexString()+"]: " + sensorPathModel + "\n");
 		sb.append("sensorPathShortID: " + sensorPathShortID + "\n");
 		sb.append("sensorPathHops: " + sensorPathHops + "\n");
-		sb.append("sensorPathNode: " + sensorPathNode + "\n");
+		sb.append("sensorPathNode["+sensorPathNode.toHexString()+"]: " + sensorPathNode + "\n");
         sb.append("sensorPathTime: " + sensorPathTime + "\n");
         sb.append("sensorPathLQI: " + sensorPathLQI + "\n");
         sb.append("sensorPathRSSI: " + sensorPathRSSI + "\n");

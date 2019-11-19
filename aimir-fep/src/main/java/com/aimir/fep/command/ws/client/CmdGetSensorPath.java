@@ -40,4 +40,8 @@ public class CmdGetSensorPath {
 		return parserName;
 	}
 
+	public void setParserName(String parserName) {
+		this.parserName = parserName;
+	}
+
 }
