@@ -26,7 +26,7 @@ public class sensorPathEntry extends Entry {
 	public OCTET sensorPathSerial = new OCTET(20);
 
 	/* 4.4.3 */
-	public OCTET sensorPathModel = new OCTET(20);
+	public OCTET sensorPathModel = new OCTET(18);
 
 	/* 4.4.4 */
 	public WORD sensorPathShortID =	new WORD();
