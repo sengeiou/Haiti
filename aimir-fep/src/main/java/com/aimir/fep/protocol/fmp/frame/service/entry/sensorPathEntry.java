@@ -1,5 +1,7 @@
 package com.aimir.fep.protocol.fmp.frame.service.entry;
 
+import java.nio.ByteBuffer;
+
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.aimir.fep.protocol.fmp.datatype.BYTE;
@@ -20,7 +22,9 @@ import com.aimir.fep.util.Hex;
  */
 public class sensorPathEntry extends Entry {
 
-    /* 4.4.1 */
+	private static final long serialVersionUID = 5727872132110978185L;
+
+	/* 4.4.1 */
     public HEX sensorPathID = new HEX(8);
 
     /* 4.4.2 */
@@ -165,7 +169,7 @@ public class sensorPathEntry extends Entry {
 		sb.append("]\n");
         sb.append("sensorPathTime["+Hex.decode(sensorPathTime.encode())+"]: " + sensorPathTime + "\n");
         sb.append("sensorPathLQI["+Hex.decode(sensorPathLQI.encode())+"]: " + sensorPathLQI + "\n");
-        sb.append("sensorPathRSSI["+Hex.decode(sensorPathRSSI.encode())+"]: " + (short)Integer.parseInt(Hex.decode(sensorPathRSSI.encode()), 16) + "\n");
+        sb.append("sensorPathRSSI["+Hex.decode(sensorPathRSSI.encode())+"]: " + (byte)Integer.valueOf(Hex.decode(sensorPathRSSI.encode()), 16).intValue() + "\n");
         return sb.toString();
     }
 }
