@@ -9,6 +9,7 @@ import com.aimir.fep.protocol.fmp.datatype.OCTET;
 import com.aimir.fep.protocol.fmp.datatype.TIMESTAMP;
 import com.aimir.fep.protocol.fmp.datatype.WORD;
 import com.aimir.fep.protocol.fmp.frame.service.Entry;
+import com.aimir.fep.util.Hex;
 
 /**
  * sensorPathEntry (4.4)
@@ -153,7 +154,7 @@ public class sensorPathEntry extends Entry {
 		sb.append("sensorPathID: " + sensorPathID + "\n");
 		sb.append("sensorPathSerial["+sensorPathSerial.toHexString()+"]: " + sensorPathSerial + "\n");
 		sb.append("sensorPathModel["+sensorPathModel.toHexString()+"]: " + sensorPathModel + "\n");
-		sb.append("sensorPathShortID: " + sensorPathShortID + "\n");
+		sb.append("sensorPathShortID: " + Hex.decode(sensorPathShortID.encode()) + "\n");
 		sb.append("sensorPathHops: " + sensorPathHops + "\n");
 		sb.append("sensorPathNode[");
 		for(int i = 0; i < sensorPathNode.toHexString().length(); i += 4) {
