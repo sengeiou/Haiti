@@ -3015,6 +3015,6 @@ public interface CommandGWMBean
      * @param time MCU Time (yyyymmddhhmmss)
      * @throws FMPMcuException, Exception
      */
-    public List<sensorPathEntry> cmdGetSensorPath(String mcuId, String parserName)
+    public sensorPathEntry[] cmdGetSensorPath(String mcuId, String parserName)
         throws FMPMcuException, Exception;
 }

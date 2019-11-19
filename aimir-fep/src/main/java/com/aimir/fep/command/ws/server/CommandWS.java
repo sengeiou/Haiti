@@ -5253,7 +5253,7 @@ public class CommandWS
      * @throws Exception
      */
     @WebMethod
-    public List<sensorPathEntry> cmdGetSensorPath(
+    public sensorPathEntry[] cmdGetSensorPath(
     		@WebParam(name="McuId") String mcuId,
     		@WebParam(name="ParserName") String parserName
     		) throws Exception{

@@ -3761,7 +3761,7 @@ public interface CommandWS {
     @RequestWrapper(localName = "cmdGetSensorPath", targetNamespace = "http://server.ws.command.fep.aimir.com/", className = "com.aimir.fep.command.ws.client.CmdGetSensorPath")
     @WebMethod
     @ResponseWrapper(localName = "cmdGetSensorPathResponse", targetNamespace = "http://server.ws.command.fep.aimir.com/", className = "com.aimir.fep.command.ws.client.CmdGetSensorPathResponse")
-    public List<sensorPathEntry> cmdGetSensorPath(
+    public java.util.List<sensorPathEntry> cmdGetSensorPath(
         @WebParam(name = "McuId", targetNamespace = "")
         java.lang.String mcuId,
         @WebParam(name = "ParserName", targetNamespace = "")

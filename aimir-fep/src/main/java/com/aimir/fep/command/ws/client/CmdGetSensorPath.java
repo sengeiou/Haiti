@@ -31,17 +31,62 @@ import com.aimir.model.device.MMIU;
  */
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "cmdGetSensorPath", propOrder = { "parserName" })
+@XmlType(name = "cmdGetSensorPath", propOrder = { 
+		"mcuId",
+		"parserName" 
+})
 public class CmdGetSensorPath {
+    @XmlElement(name = "McuId")
+    protected String mcuId;
 	@XmlElement(name = "ParserName")
 	protected String parserName;
+	
+	/**
+     * Gets the value of the mcuId property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getMcuId() {
+        return mcuId;
+    }
 
-	public String getParserName() {
-		return parserName;
-	}
+    /**
+     * Sets the value of the mcuId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setMcuId(String value) {
+        this.mcuId = value;
+    }
 
-	public void setParserName(String parserName) {
-		this.parserName = parserName;
-	}
+    /**
+     * Gets the value of the parserName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getParserName() {
+        return parserName;
+    }
+
+    /**
+     * Sets the value of the parserName property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setParserName(String value) {
+        this.parserName = value;
+    }
 
 }
