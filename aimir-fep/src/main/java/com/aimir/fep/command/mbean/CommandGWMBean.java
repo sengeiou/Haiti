@@ -42,6 +42,7 @@ import com.aimir.fep.protocol.fmp.frame.service.entry.mobileEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.pluginEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.procEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.sensorInfoNewEntry;
+import com.aimir.fep.protocol.fmp.frame.service.entry.sensorPathEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.sysEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.timeEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.trInfoEntry;
@@ -3014,6 +3015,6 @@ public interface CommandGWMBean
      * @param time MCU Time (yyyymmddhhmmss)
      * @throws FMPMcuException, Exception
      */
-    public void cmdGetSensorPath(String mcuId, String parserName)
+    public List<sensorPathEntry> cmdGetSensorPath(String mcuId, String parserName)
         throws FMPMcuException, Exception;
 }
