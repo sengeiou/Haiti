@@ -155,10 +155,16 @@ public class sensorPathEntry extends Entry {
 		sb.append("sensorPathModel["+sensorPathModel.toHexString()+"]: " + sensorPathModel + "\n");
 		sb.append("sensorPathShortID: " + sensorPathShortID + "\n");
 		sb.append("sensorPathHops: " + sensorPathHops + "\n");
-		sb.append("sensorPathNode["+sensorPathNode.toHexString()+"]: " + sensorPathNode + "\n");
+		sb.append("sensorPathNode[");
+		for(int i = 0; i < sensorPathNode.toHexString().length(); i += 4) {
+			sb.append(sensorPathNode.toHexString().substring(i, i+4));
+			if(i+4 < sensorPathNode.toHexString().length())
+				sb.append("-");
+		}
+		sb.append("]\n");
         sb.append("sensorPathTime: " + sensorPathTime + "\n");
         sb.append("sensorPathLQI: " + sensorPathLQI + "\n");
-        sb.append("sensorPathRSSI: " + sensorPathRSSI + "\n");
+        sb.append("sensorPathRSSI: " + Integer.parseUnsignedInt(sensorPathRSSI.toString()) + "\n");
         return sb.toString();
     }
 }
