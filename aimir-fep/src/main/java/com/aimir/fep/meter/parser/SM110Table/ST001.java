@@ -62,9 +62,7 @@ public class ST001 implements java.io.Serializable {
         String val = new String();
 
         try{
-            val = new String(
-                      DataFormat.select(data,OFS_MANUFACTURER,LEN_MANUFACTURER)).trim();
-
+            val = new String(DataFormat.select(data,OFS_MANUFACTURER,LEN_MANUFACTURER)).trim();
         }catch(Exception e){
             log.warn("invalid value->"+e.getMessage());
         }
@@ -87,7 +85,7 @@ public class ST001 implements java.io.Serializable {
     }
     
     public int getHW_VERSION_NUMBER(){
-       return DataFormat.hex2unsigned8(data[OFS_HW_VERSION_NUMBER]);
+    	return DataFormat.hex2unsigned8(data[OFS_HW_VERSION_NUMBER]);
     }
     
     public int getHW_REVISION_NUMBER(){
@@ -120,7 +118,6 @@ public class ST001 implements java.io.Serializable {
 
 		try{
 			mserial = new String(DataFormat.select(data,OFS_MSERIAL,LEN_MSERIAL)).trim();
-
 		}catch(Exception e){
 			log.warn("invalid meter id->"+e.getMessage());
 		}

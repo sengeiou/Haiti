@@ -71,16 +71,10 @@ public class MT019 implements java.io.Serializable {
 	private byte[] FILLER_3  = new byte[5];
 	private byte[] CRC  = new byte[2];
 
-	
-//	private byte[] data;
-    
-
 	public MT019() {}
 	
 	public MT019(byte[] data) {
-//		this.data = data;
         parse(data);
-        printAll();
 	}
 	public static boolean[] booleanArrayFromByte(byte x) {
 	    boolean bs[] = new boolean[8];
@@ -205,7 +199,7 @@ public class MT019 implements java.io.Serializable {
 			  .append("  TEMPERATURE="+DataFormat.hex2dec(TEMPERATURE)).append(", \n")
 			  .append("  CRC="+DataFormat.hex2dec(CRC));
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e,e);
 		}
 		
 		return "MT019[\n"+sb.toString()+"\n]\n";

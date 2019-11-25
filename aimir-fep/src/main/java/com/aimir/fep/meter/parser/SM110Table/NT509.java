@@ -77,13 +77,10 @@ public class NT509 implements java.io.Serializable {
 	private String networkType;
 	private int energyLevel;
 
-	public NT509() {
-	}
+	public NT509() { }
 
 	public NT509(byte[] data) throws Exception {
 		parse(data);
-		printAll();
-//		getLpData();
 	}
 
 	public Calendar getFrameInfoDate() {
@@ -257,7 +254,7 @@ public class NT509 implements java.io.Serializable {
 				sb.append("\n").append("    LP_DATA[" + i + "]=" + ((LP_ARR[i] == null) ? "-" :DataFormat.hex2dec(LP_ARR[i])));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e,e);
 		}
 
 		return "NT509[\n" + sb.toString() + "\n]\n";

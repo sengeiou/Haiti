@@ -75,15 +75,10 @@ public class MT115 implements java.io.Serializable {
 	private byte[] FILLER_6 = new byte[4];
 	private byte[] CRC = new byte[2];
 	
-	
-//	private byte[] data;
-
 	public MT115() {}
 	
 	public MT115(byte[] data) {
-//		this.data = data;
         parse(data);
-        printAll();
 	}
 	
 	public static boolean[] booleanArrayFromByte(byte x) {
@@ -211,7 +206,7 @@ public class MT115 implements java.io.Serializable {
 			  .append("  FILLER_6="+DataFormat.hex2dec(FILLER_6)).append(", ")
 			  .append("  CRC="+DataFormat.hex2dec(CRC));
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e,e);
 		}
 		
 		return "MT115[\n"+sb.toString()+"\n]\n";

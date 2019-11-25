@@ -182,7 +182,7 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
                 }
             	
             }catch(Exception e) {
-            	e.printStackTrace();
+            	log.error(e,e);
             }
         }
         log.debug("I210+ Data Parse Finished :: DATA["+toString()+"]");
