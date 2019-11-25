@@ -41,9 +41,6 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
 	private static final long serialVersionUID = 7503986198693601423L;
 
 	private static Log log = LogFactory.getLog(I210Plus.class);
-	
-	@Autowired
-	MeterDao meterDao;
     
 	private byte[] rawData = null;
     private int lpcount;
@@ -127,63 +124,88 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
             offset += len;
 
             if(tbName.equals("S001")) {
-                s001 = b;
+//                s001 = b;
                 log.debug("[S001] len=["+len+"] data=>\n"+Util.getHexString(b));
+                st001 = new ST001(b);
+                
+                meterId = st001.getMSerial();
+                
+                StringBuilder sb = new StringBuilder();
+                sb.append("ST001[\n")
+                  .append("  MANUFACTURER="+st001.getMANUFACTURER()+", \n")
+                  .append("  ED_MODEL="+st001.getED_MODEL()+", \n")
+                  .append("  HW_VERSION_NUMBER="+st001.getHW_VERSION_NUMBER()+", \n")
+                  .append("  HW_REVISION_NUMBER="+st001.getHW_REVISION_NUMBER()+", \n")
+                  .append("  FW_VERSION_NUMBER="+st001.getFW_VERSION_NUMBER()+", \n")
+                  .append("  FW_REVISION_NUMBE="+st001.getFW_REVISION_NUMBER()+", \n")
+                  .append("  MSerial="+st001.getMSerial()+"\n]\n");
+                log.debug(sb.toString());
             } else if(tbName.equals("M019")) {
-            	m019 = b;
+//            	m019 = b;
                 log.debug("[M019] len=["+len+"] data=>\n"+Util.getHexString(b));
+            	mt019 = new MT019(b);
+            	log.debug(mt019.printAll());
             } else if(tbName.equals("M115")) {
-                m115 = b;
+//                m115 = b;
                 log.debug("[M115] len=["+len+"] data=>\n"+Util.getHexString(b));
+            	mt115 = new MT115(b);
+            	log.debug(mt115.printAll());
             } else if(tbName.equals("N509")) {
-            	n509 = b;
+//            	n509 = b;
                 log.debug("[N509] len=["+len+"] data=>\n"+Util.getHexString(b));
+                nt509 = new NT509(b);
+            	log.debug(nt509.printAll());
+            	setMeteringTime(nt509.getFrameInfoDateFormat("yyyyMMddHHmm"));
+            	lpDataList.addAll(nt509.getLpData());
+            	if(meter != null)
+            		meter.setLpInterval(nt509.getLpPeriodMin());
+            	else
+            		log.debug("meter is null! Can not set LpInterval.");
             }  else {
                 log.debug("unknown table=["+tbName+"] data=>\n"+Util.getHexString(b));
             }
-            try {
-            	if(s001 != null){
-                    st001 = new ST001(s001);
-                    
-                    meterId = st001.getMSerial();
-                    Meter tmpMeter = meterDao.get(meterId);
-                    if(tmpMeter == null) meter.setMdsId(meterId);
-                    else meter = tmpMeter;
-                    
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("ST001[\n")
-                      .append("  MANUFACTURER="+st001.getMANUFACTURER()+", \n")
-                      .append("  ED_MODEL="+st001.getED_MODEL()+", \n")
-                      .append("  HW_VERSION_NUMBER="+st001.getHW_VERSION_NUMBER()+", \n")
-                      .append("  HW_REVISION_NUMBER="+st001.getHW_REVISION_NUMBER()+", \n")
-                      .append("  FW_VERSION_NUMBER="+st001.getFW_VERSION_NUMBER()+", \n")
-                      .append("  FW_REVISION_NUMBE="+st001.getFW_REVISION_NUMBER()+", \n")
-                      .append("  MSerial="+st001.getMSerial()+"\n]\n");
-                    log.debug(sb.toString());
-                    s001 = null;
-                }
-                if(m019 != null){
-                	mt019 = new MT019(m019);
-                	log.debug(mt019.printAll());
-                	m019 = null;
-                }
-                if(m115 != null){
-                	mt115 = new MT115(m115);
-                	log.debug(mt115.printAll());
-                	m115 = null;
-                }
-                if(n509 !=null){
-                    nt509 = new NT509(n509);
-                	log.debug(nt509.printAll());
-                	setMeteringTime(nt509.getFrameInfoDateFormat("yyyyMMddHHmm"));
-                	lpDataList.addAll(nt509.getLpData());
-                	meter.setLpInterval(nt509.getLpPeriodMin());
-                	n509 = null;
-                }
-            	
-            }catch(Exception e) {
-            	log.error(e,e);
-            }
+//            try {
+//            	if(s001 != null){
+//                    st001 = new ST001(s001);
+//                    
+//                    meterId = st001.getMSerial();
+//                    
+//                    StringBuilder sb = new StringBuilder();
+//                    sb.append("ST001[\n")
+//                      .append("  MANUFACTURER="+st001.getMANUFACTURER()+", \n")
+//                      .append("  ED_MODEL="+st001.getED_MODEL()+", \n")
+//                      .append("  HW_VERSION_NUMBER="+st001.getHW_VERSION_NUMBER()+", \n")
+//                      .append("  HW_REVISION_NUMBER="+st001.getHW_REVISION_NUMBER()+", \n")
+//                      .append("  FW_VERSION_NUMBER="+st001.getFW_VERSION_NUMBER()+", \n")
+//                      .append("  FW_REVISION_NUMBE="+st001.getFW_REVISION_NUMBER()+", \n")
+//                      .append("  MSerial="+st001.getMSerial()+"\n]\n");
+//                    log.debug(sb.toString());
+//                    s001 = null;
+//                }
+//                if(m019 != null){
+//                	mt019 = new MT019(m019);
+//                	log.debug(mt019.printAll());
+//                	m019 = null;
+//                }
+//                if(m115 != null){
+//                	mt115 = new MT115(m115);
+//                	log.debug(mt115.printAll());
+//                	m115 = null;
+//                }
+//                if(n509 !=null){
+//                    nt509 = new NT509(n509);
+//                	log.debug(nt509.printAll());
+//                	setMeteringTime(nt509.getFrameInfoDateFormat("yyyyMMddHHmm"));
+//                	lpDataList.addAll(nt509.getLpData());
+//                	if(meter != null)
+//                		meter.setLpInterval(nt509.getLpPeriodMin());
+//                	else
+//                		log.debug("meter is null! Can not set LpInterval.");
+//                	n509 = null;
+//                }
+//            }catch(Exception e) {
+//            	log.error(e,e);
+//            }
         }
         log.debug("I210+ Data Parse Finished :: DATA["+toString()+"]");
     }
