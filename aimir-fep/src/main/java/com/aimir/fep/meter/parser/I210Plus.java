@@ -29,207 +29,155 @@ import com.aimir.util.DateTimeUtil;
 import com.aimir.util.TimeLocaleUtil;
 
 /**
- * parsing I210 Pulse Meter Data
- * implemented in Haiti
+ * parsing I210 Pulse Meter Data implemented in Haiti
  *
- * @author Yeon Kyoung Park (goodjob@nuritelecom.com) 
- *      <br>modified by Ji Woong Park (wll27471297@nuritelecom.com)
+ * @author Yeon Kyoung Park (goodjob@nuritelecom.com) <br>
+ *         modified by Ji Woong Park (wll27471297@nuritelecom.com)
  * 
  * @version 1.0
  */
-public class I210Plus extends MeterDataParser implements java.io.Serializable{
+public class I210Plus extends MeterDataParser implements java.io.Serializable {
 	private static final long serialVersionUID = 7503986198693601423L;
 
 	private static Log log = LogFactory.getLog(I210Plus.class);
-    
+
 	private byte[] rawData = null;
-    private int lpcount;
-    private ArrayList<LPData> lpDataList = new ArrayList<>();
-    private Double meteringValue = null;
-    private String meterId = null;
-    private int flag = 0;
-	private byte[] s001 = null;
-    private byte[] m019 = null;
-    private byte[] m115 = null;
-    private byte[] n509 = null;
+	private int lpcount;
+	private ArrayList<LPData> lpDataList = new ArrayList<>();
+	private Double meteringValue = null;
+	private String meterId = null;
+	private int flag = 0;
 
-    private ST001 st001 = null;
-    private MT019 mt019 = null;
-    private MT115 mt115 = null;
-    private NT509 nt509 = null;
+	private ST001 st001 = null;
+	private MT019 mt019 = null;
+	private MT115 mt115 = null;
+	private NT509 nt509 = null;
 
-    public I210Plus(){ }
+	public I210Plus() {
+	}
 
-    public Double getMeteringValue() {
-    	TOU_BLOCK[] curr = getCurrBilling();
-    	ArrayList list = getSelfReads();
+	public Double getMeteringValue() {
+		TOU_BLOCK[] curr = getCurrBilling();
+		ArrayList list = getSelfReads();
 
-    	if(curr != null && curr.length > 0
-    	        && curr[0] != null
-    			&& curr[0].getSummations() != null
-    			&& curr[0].getSummations().size() > 0
-    			&& curr[0].getSummation(0) != null){
-    		this.meteringValue = (Double) curr[0].getSummation(0);
-    	}else {
-    		if(list!= null && list.size() > 0){ //제일 마지막 self read 날짜의 total값을 찾아서 넣어줌 오름차순으로 데이터가 옴
-            	TOU_BLOCK[] tou_day = (TOU_BLOCK[]) list.get(list.size()-1);
-                if(tou_day != null && tou_day.length > 0
-                		&& tou_day[0].getSummations() != null
-                		&& tou_day[0].getSummations().size() > 0
-                		&& tou_day[0].getSummation(0) != null ){
-                	this.meteringValue = (Double) tou_day[0].getSummation(0);//해당날짜의 total사용량
-                	log.debug("tou event time: "+tou_day[0].getEventTime(0)+" tou sum:"+meteringValue);
-                }
-    		}
-    	}
-        return this.meteringValue;
-    }
+		if (curr != null && curr.length > 0 && curr[0] != null && curr[0].getSummations() != null
+				&& curr[0].getSummations().size() > 0 && curr[0].getSummation(0) != null) {
+			this.meteringValue = (Double) curr[0].getSummation(0);
+		} else {
+			if (list != null && list.size() > 0) { // 제일 마지막 self read 날짜의 total값을 찾아서 넣어줌 오름차순으로 데이터가 옴
+				TOU_BLOCK[] tou_day = (TOU_BLOCK[]) list.get(list.size() - 1);
+				if (tou_day != null && tou_day.length > 0 && tou_day[0].getSummations() != null
+						&& tou_day[0].getSummations().size() > 0 && tou_day[0].getSummation(0) != null) {
+					this.meteringValue = (Double) tou_day[0].getSummation(0);// 해당날짜의 total사용량
+					log.debug("tou event time: " + tou_day[0].getEventTime(0) + " tou sum:" + meteringValue);
+				}
+			}
+		}
+		return this.meteringValue;
+	}
 
-    public String getMeterId() {
-        return meterId;
-    }
+	public String getMeterId() {
+		return meterId;
+	}
 
-    public byte[] getRawData() {
-        return this.rawData;
-    }
+	public byte[] getRawData() {
+		return this.rawData;
+	}
 
-    public int getLength() {
-        return this.rawData.length;
-    }
+	public int getLength() {
+		return this.rawData.length;
+	}
 
-    public int getLPCount() {
-        return this.lpcount;
-    }
+	public int getLPCount() {
+		return this.lpcount;
+	}
 
-    public void parse(byte[] data) throws Exception {
-    	rawData = data;
-        int totlen = data.length;
-        log.debug("TOTLEN[" + totlen + "]");
+	public void parse(byte[] data) throws Exception {
+		rawData = data;
+		int totlen = data.length;
+		log.debug("TOTLEN[" + totlen + "]");
 
-        int offset = 0;
-        while(offset + 6 < totlen){
-            log.debug("OFFSET[" + offset + "]");
+		int offset = 0;
+		while (offset + 6 < totlen) {
+			log.debug("OFFSET[" + offset + "]");
 
-            String tbName = new String(data,offset,4);
-            offset += 4;
-            int len = 0;
-            len |= (data[offset++] & 0xff) << 8;
-            len |= (data[offset++] & 0xff);
-            byte[] b = new byte[len];
+			String tbName = new String(data, offset, 4);
+			offset += 4;
+			int len = 0;
+			len |= (data[offset++] & 0xff) << 8;
+			len |= (data[offset++] & 0xff);
+			byte[] b = new byte[len];
 
-            if (data.length - offset < len)
-                break;
+			if (data.length - offset < len)
+				break;
 
-            System.arraycopy(data,offset,b,0,len);
-            offset += len;
+			System.arraycopy(data, offset, b, 0, len);
+			offset += len;
 
-            if(tbName.equals("S001")) {
-//                s001 = b;
-                log.debug("[S001] len=["+len+"] data=>\n"+Util.getHexString(b));
-                st001 = new ST001(b);
-                
-                meterId = st001.getMSerial();
-                
-                StringBuilder sb = new StringBuilder();
-                sb.append("ST001[\n")
-                  .append("  MANUFACTURER="+st001.getMANUFACTURER()+", \n")
-                  .append("  ED_MODEL="+st001.getED_MODEL()+", \n")
-                  .append("  HW_VERSION_NUMBER="+st001.getHW_VERSION_NUMBER()+", \n")
-                  .append("  HW_REVISION_NUMBER="+st001.getHW_REVISION_NUMBER()+", \n")
-                  .append("  FW_VERSION_NUMBER="+st001.getFW_VERSION_NUMBER()+", \n")
-                  .append("  FW_REVISION_NUMBE="+st001.getFW_REVISION_NUMBER()+", \n")
-                  .append("  MSerial="+st001.getMSerial()+"\n]\n");
-                log.debug(sb.toString());
-            } else if(tbName.equals("M019")) {
-//            	m019 = b;
-                log.debug("[M019] len=["+len+"] data=>\n"+Util.getHexString(b));
-            	mt019 = new MT019(b);
-            	log.debug(mt019.printAll());
-            } else if(tbName.equals("M115")) {
-//                m115 = b;
-                log.debug("[M115] len=["+len+"] data=>\n"+Util.getHexString(b));
-            	mt115 = new MT115(b);
-            	log.debug(mt115.printAll());
-            } else if(tbName.equals("N509")) {
-//            	n509 = b;
-                log.debug("[N509] len=["+len+"] data=>\n"+Util.getHexString(b));
-                nt509 = new NT509(b);
-            	log.debug(nt509.printAll());
-            	setMeteringTime(nt509.getFrameInfoDateFormat("yyyyMMddHHmm"));
-            	lpDataList.addAll(nt509.getLpData());
-            	if(meter != null)
-            		meter.setLpInterval(nt509.getLpPeriodMin());
-            	else
-            		log.debug("meter is null! Can not set LpInterval.");
-            }  else {
-                log.debug("unknown table=["+tbName+"] data=>\n"+Util.getHexString(b));
-            }
-//            try {
-//            	if(s001 != null){
-//                    st001 = new ST001(s001);
-//                    
-//                    meterId = st001.getMSerial();
-//                    
-//                    StringBuilder sb = new StringBuilder();
-//                    sb.append("ST001[\n")
-//                      .append("  MANUFACTURER="+st001.getMANUFACTURER()+", \n")
-//                      .append("  ED_MODEL="+st001.getED_MODEL()+", \n")
-//                      .append("  HW_VERSION_NUMBER="+st001.getHW_VERSION_NUMBER()+", \n")
-//                      .append("  HW_REVISION_NUMBER="+st001.getHW_REVISION_NUMBER()+", \n")
-//                      .append("  FW_VERSION_NUMBER="+st001.getFW_VERSION_NUMBER()+", \n")
-//                      .append("  FW_REVISION_NUMBE="+st001.getFW_REVISION_NUMBER()+", \n")
-//                      .append("  MSerial="+st001.getMSerial()+"\n]\n");
-//                    log.debug(sb.toString());
-//                    s001 = null;
-//                }
-//                if(m019 != null){
-//                	mt019 = new MT019(m019);
-//                	log.debug(mt019.printAll());
-//                	m019 = null;
-//                }
-//                if(m115 != null){
-//                	mt115 = new MT115(m115);
-//                	log.debug(mt115.printAll());
-//                	m115 = null;
-//                }
-//                if(n509 !=null){
-//                    nt509 = new NT509(n509);
-//                	log.debug(nt509.printAll());
-//                	setMeteringTime(nt509.getFrameInfoDateFormat("yyyyMMddHHmm"));
-//                	lpDataList.addAll(nt509.getLpData());
-//                	if(meter != null)
-//                		meter.setLpInterval(nt509.getLpPeriodMin());
-//                	else
-//                		log.debug("meter is null! Can not set LpInterval.");
-//                	n509 = null;
-//                }
-//            }catch(Exception e) {
-//            	log.error(e,e);
-//            }
-        }
-        log.debug("I210+ Data Parse Finished :: DATA["+toString()+"]");
-    }
+			try {
+				if (tbName.equals("S001")) {
+					log.debug("[S001] len=[" + len + "] data=>\n" + Util.getHexString(b));
+					st001 = new ST001(b);
 
-    public int getFlag() {
-        return this.flag;
-    }
+					meterId = st001.getMSerial();
 
-    public void setFlag(int flag) {
-        this.flag = flag;
-    }
+					StringBuilder sb = new StringBuilder();
+					sb.append("ST001[\n").append("  MANUFACTURER=" + st001.getMANUFACTURER() + ", \n")
+							.append("  ED_MODEL=" + st001.getED_MODEL() + ", \n")
+							.append("  HW_VERSION_NUMBER=" + st001.getHW_VERSION_NUMBER() + ", \n")
+							.append("  HW_REVISION_NUMBER=" + st001.getHW_REVISION_NUMBER() + ", \n")
+							.append("  FW_VERSION_NUMBER=" + st001.getFW_VERSION_NUMBER() + ", \n")
+							.append("  FW_REVISION_NUMBE=" + st001.getFW_REVISION_NUMBER() + ", \n")
+							.append("  MSerial=" + st001.getMSerial() + "\n]\n");
+					log.debug(sb.toString());
+				} else if (tbName.equals("M019")) {
+					log.debug("[M019] len=[" + len + "] data=>\n" + Util.getHexString(b));
+					mt019 = new MT019(b);
+					log.debug(mt019.printAll());
+				} else if (tbName.equals("M115")) {
+					log.debug("[M115] len=[" + len + "] data=>\n" + Util.getHexString(b));
+					mt115 = new MT115(b);
+					log.debug(mt115.printAll());
+				} else if (tbName.equals("N509")) {
+					log.debug("[N509] len=[" + len + "] data=>\n" + Util.getHexString(b));
+					nt509 = new NT509(b);
+					log.debug(nt509.printAll());
+					setMeteringTime(nt509.getFrameInfoDateFormat("yyyyMMddHHmm"));
+					lpDataList.addAll(nt509.getLpData());
+					if (meter != null)
+						meter.setLpInterval(nt509.getLpPeriodMin());
+					else
+						log.debug("meter is null! Can not set LpInterval.");
+				} else {
+					log.debug("unknown table=[" + tbName + "] data=>\n" + Util.getHexString(b));
+				}
+			} catch (Exception e) {
+				log.error(e, e);
+			}
+		}
+		log.debug("I210+ Data Parse Finished :: DATA[" + toString() + "]");
+	}
 
-    public String toString() {
-        StringBuffer sb = new StringBuffer();
+	public int getFlag() {
+		return this.flag;
+	}
 
-        sb.append("I210+ Meter DATA[");
-        sb.append("(meterId=").append(meterId).append("),");
-        //sb.append("(meterSerial=").append(meterSerial).append(")");
-        sb.append("]\n");
+	public void setFlag(int flag) {
+		this.flag = flag;
+	}
 
-        return sb.toString();
-    }
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
 
-    public String getLPChannelMap() {
+		sb.append("I210+ Meter DATA[");
+		sb.append("(meterId=").append(meterId).append("),");
+		// sb.append("(meterSerial=").append(meterSerial).append(")");
+		sb.append("]\n");
+
+		return sb.toString();
+	}
+
+	public String getLPChannelMap() {
 //        try{
 //            UNIT_OF_MTR unit_of_mtr = new UNIT_OF_MTR();
 //            if(s062!= null && s012 != null){
@@ -245,10 +193,10 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
 //        }catch(Exception e){
 //            log.warn(e);
 //        }
-        return "";
-    }
+		return "";
+	}
 
-    public int getLPChannelCount() {
+	public int getLPChannelCount() {
 //        try{
 //            if(st061 != null){
 //                return st061.getNBR_CHNS_SET1()*2+1;
@@ -257,10 +205,10 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
 //                return 5; //ch1,ch2,v1,v2,pf
 //            }
 //        } catch(Exception e){ }
-        return 5; //ch1,ch2,v1,v2,pf
-    }
+		return 5; // ch1,ch2,v1,v2,pf
+	}
 
-    public int getLPChannelCount(String model) {
+	public int getLPChannelCount(String model) {
 //        try{
 //            if(st061 != null){
 //                return st061.getNBR_CHNS_SET1()*2+1;
@@ -275,13 +223,13 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
 //        	log.error(e,e);
 //        }
 
-        if(model.equals("12"))
-        	return 3;//ch1,ch2,v1,v2,pf
-        else
-        	return 5;
-    }
+		if (model.equals("12"))
+			return 3;// ch1,ch2,v1,v2,pf
+		else
+			return 5;
+	}
 
-    public int getResolution() {
+	public int getResolution() {
 //        try{
 //            if(st061 != null){
 //                return st061.getINT_TIME_SET1();
@@ -292,39 +240,39 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
 //        } catch(Exception e){
 //        	log.error(e,e);
 //        }
-        return 60;
-    }
+		return 60;
+	}
 
-    public String getMeterLog(){
+	public String getMeterLog() {
 //        if(st003 != null){
 //            return st003.getMeterLog();
 //        }else{
-            return "";
+		return "";
 //        }
-    }
+	}
 
-    public EventLogData[] getMeterStatusLog(){
+	public EventLogData[] getMeterStatusLog() {
 //        if(st003 != null){
 //            return st003.getEventLog();
 //        }else{
-            return null;
+		return null;
 //        }
-    }
+	}
 
-    public MeterStatus getMeterStatusCode() {
+	public MeterStatus getMeterStatusCode() {
 //        if (st003 != null) {
 //            return st003.getStatus();
 //        }
 //        else {
-            return MeterStatus.Normal;
+		return MeterStatus.Normal;
 //        }
-    }
+	}
 
-    public LPData[] getLPData(){
-        return lpDataList.toArray(new LPData[0]);
-    }
+	public LPData[] getLPData() {
+		return lpDataList.toArray(new LPData[0]);
+	}
 
-    public TOU_BLOCK[] getPrevBilling(){
+	public TOU_BLOCK[] getPrevBilling() {
 //        try{
 //            if(st025 != null)
 //                return st025.getTOU_BLOCK();
@@ -335,10 +283,10 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
 //        } catch(Exception e){
 //            log.warn("SM110 get Prev Billing Error:"+e.getMessage());
 //        }
-        return null;
-    }
+		return null;
+	}
 
-    public TOU_BLOCK[] getCurrBilling(){
+	public TOU_BLOCK[] getCurrBilling() {
 //        try{
 //            if(st023 != null)
 //                return st023.getTOU_BLOCK();
@@ -349,10 +297,10 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
 //        } catch(Exception e){
 //            log.warn("SM110 get Curr Billing Error:"+e.getMessage());
 //        }
-        return null;
-    }
+		return null;
+	}
 
-    public ArrayList getSelfReads(){
+	public ArrayList getSelfReads() {
 
 //        TOU_BLOCK[] tou = null;
 //        ArrayList list = new ArrayList();
@@ -387,112 +335,97 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
 //        } catch(Exception e) {
 //            log.warn("SM110 get Self Read Error:",e);
 //        }
-        return null;
-    }
+		return null;
+	}
 
-
-    public LinkedHashMap getRelayStatus(){
+	public LinkedHashMap getRelayStatus() {
 //        try{
 //            if(mt115 != null){
 //            	return mt115.getData();
 //            }else if(st112 != null){
 //        		return st112.getData();
 //        	}
-            
-        	/*
-            if(mt115 == null){
-                if(mt117 != null){
-                	return mt117.getData();
-                }
-            }else{
-                return mt115.getData();
-            }
-            */
+
+		/*
+		 * if(mt115 == null){ if(mt117 != null){ return mt117.getData(); } }else{ return
+		 * mt115.getData(); }
+		 */
 //        } catch(Exception e){
 //            log.warn("I210PlusCSeries get RelayStatus Error:"+e.getMessage());
 //        }
-        return null;
-    }
+		return null;
+	}
 
-    /*
-    public EventLogData[] getRelayEventLog(){
-        try{
-            if(st132 != null )
-                return st132.getEventLog();
-            else
-                return null;
-        } catch(Exception e){
-            log.warn("SM110 get RelayEvent Error:"+e.getMessage());
-        }
-        return null;
-    }
-    */
+	/*
+	 * public EventLogData[] getRelayEventLog(){ try{ if(st132 != null ) return
+	 * st132.getEventLog(); else return null; } catch(Exception e){
+	 * log.warn("SM110 get RelayEvent Error:"+e.getMessage()); } return null; }
+	 */
 
-    public EventLogData[] getEventLog(){
+	public EventLogData[] getEventLog() {
 //        if(st076 != null){
 //            return st076.getEvent();
 //        }else{
-            return null;
+		return null;
 //        }
-    }
+	}
 
-    public Instrument[] getInstrument(){
+	public Instrument[] getInstrument() {
 //        if(mt113 != null){
 //            return mt113.getInstrument();
 //        }else{
-            return null;
+		return null;
 //        }
-    }
+	}
 
-    /**
-     * get Data
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public LinkedHashMap getData() {
-        LinkedHashMap res = new LinkedHashMap(16,0.75f,false);
-        TOU_BLOCK[] tou_block = null;
-        LPData[] lplist = null;
-        EventLogData[] evlog = null;
-        String meter_mode = null;
+	/**
+	 * get Data
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public LinkedHashMap getData() {
+		LinkedHashMap res = new LinkedHashMap(16, 0.75f, false);
+		TOU_BLOCK[] tou_block = null;
+		LPData[] lplist = null;
+		EventLogData[] evlog = null;
+		String meter_mode = null;
 
-        DecimalFormat df3 = TimeLocaleUtil.getDecimalFormat(meter.getSupplier());
-      //날짜 포멧팅
+		DecimalFormat df3 = TimeLocaleUtil.getDecimalFormat(meter.getSupplier());
+		// 날짜 포멧팅
 		SimpleDateFormat normalDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-        
-        SimpleDateFormat datef14=null;
-         
-        if(meter!=null && meter.getSupplier()!=null){
-            Supplier supplier = meter.getSupplier();
-            if(supplier !=null){
-                String lang = supplier.getLang().getCode_2letter();
-                String country = supplier.getCountry().getCode_2letter();
-                
-                TimeLocaleUtil.getDecimalFormat(supplier);
-                datef14 = new SimpleDateFormat(TimeLocaleUtil.getDateFormat(14, lang, country));
-            }
-        }else{
-            new DecimalFormat();
-            datef14 = new SimpleDateFormat();
-        }
 
-        try
-        {
-            tou_block = getCurrBilling();
-            lplist = getLPData();
-            evlog = getEventLog();
-            meter_mode = getMeterMode();
+		SimpleDateFormat datef14 = null;
+
+		if (meter != null && meter.getSupplier() != null) {
+			Supplier supplier = meter.getSupplier();
+			if (supplier != null) {
+				String lang = supplier.getLang().getCode_2letter();
+				String country = supplier.getCountry().getCode_2letter();
+
+				TimeLocaleUtil.getDecimalFormat(supplier);
+				datef14 = new SimpleDateFormat(TimeLocaleUtil.getDateFormat(14, lang, country));
+			}
+		} else {
+			new DecimalFormat();
+			datef14 = new SimpleDateFormat();
+		}
+
+		try {
+			tou_block = getCurrBilling();
+			lplist = getLPData();
+			evlog = getEventLog();
+			meter_mode = getMeterMode();
 
 			res.put("<b>[Meter Configuration Data]</b>", "");
-            if(st001 != null){
-                res.put("Manufacturer",st001.getMANUFACTURER());
-                res.put("Model",st001.getED_MODEL());
-                res.put("Manufacturer Serial Number",st001.getMSerial());
-                res.put("HW Version Number",df3.format(st001.getHW_VERSION_NUMBER())+"");
-                res.put("HW Revision Number",df3.format(st001.getHW_REVISION_NUMBER())+"");
-                res.put("FW Version Number",df3.format(st001.getFW_VERSION_NUMBER())+"");
-                res.put("FW Revision Number",df3.format(st001.getFW_REVISION_NUMBER())+"");
-            }
+			if (st001 != null) {
+				res.put("Manufacturer", st001.getMANUFACTURER());
+				res.put("Model", st001.getED_MODEL());
+				res.put("Manufacturer Serial Number", st001.getMSerial());
+				res.put("HW Version Number", df3.format(st001.getHW_VERSION_NUMBER()) + "");
+				res.put("HW Revision Number", df3.format(st001.getHW_REVISION_NUMBER()) + "");
+				res.put("FW Version Number", df3.format(st001.getFW_VERSION_NUMBER()) + "");
+				res.put("FW Revision Number", df3.format(st001.getFW_REVISION_NUMBER()) + "");
+			}
 //            if(st005 != null)
 //                res.put("Device Serial Number",st005.getMSerial());
 //            if(st003 != null)
@@ -551,223 +484,219 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
 //                res.put("Relay status" , st112.getRelayStatusString());
 //                res.put("Relay activate status" , st112.getRelayActivateStatusString());
 //            }
-            
-            /*
-            if(mt115 != null){
-                res.put("[Relay Status]", "");
-                res.put("Relay status" , mt115.getRelayStatusString());
-                res.put("Relay activate status" , mt115.getRelayActivateStatusString());
-            }
-            
-            if(mt117 != null){
-                res.put("[Relay Status]", "");
-                res.put("Relay status" , mt117.getRelayStatusString());
-                res.put("Relay activate status" , mt117.getRelayActivateStatusString());
-            }
-            */
 
-            if(tou_block != null && tou_block.length > 0 && tou_block[0] != null && tou_block[0].getSummations() != null && tou_block[0].getSummations().size() > 0){
+			/*
+			 * if(mt115 != null){ res.put("[Relay Status]", ""); res.put("Relay status" ,
+			 * mt115.getRelayStatusString()); res.put("Relay activate status" ,
+			 * mt115.getRelayActivateStatusString()); }
+			 * 
+			 * if(mt117 != null){ res.put("[Relay Status]", ""); res.put("Relay status" ,
+			 * mt117.getRelayStatusString()); res.put("Relay activate status" ,
+			 * mt117.getRelayActivateStatusString()); }
+			 */
 
-                try{
-                    res.put("[Current Billing Data]", "");
-                    res.put("Total Active Energy(kWh)"              ,df3.format(tou_block[0].getSummation(0)));
-                    meteringValue = new Double(df3.format(tou_block[0].getSummation(0)));
-                    res.put("Total Reactive Energy(kWh)"            ,df3.format(tou_block[0].getSummation(1)));
-                    res.put("Total Active Power Max.Demand(kW)"     ,df3.format(tou_block[0].getCurrDemand(0)));
-                    res.put("Total Active Power Max.Demand Time"    ,tou_block[0].getEventTime(0));
-                    res.put("Total Reactive Power Max.Demand(kW)"   ,df3.format(tou_block[0].getCurrDemand(1)));
-                    res.put("Total Reactive Power Max.Demand Time"  ,tou_block[0].getEventTime(1));
-                    res.put("Total Active Power Cum.Demand(kW)"     ,df3.format(tou_block[0].getCumDemand(0)));
-                    res.put("Total Reactive Power Cum.Demand(kW)"   ,df3.format(tou_block[0].getCumDemand(1)));
-                    
-                    if(tou_block[0].getCoincident() != null && tou_block[0].getCoincident().size() > 0){
-                        res.put("Total Active Power Cont.Demand(kW)"    ,df3.format(tou_block[0].getCoincident(0)));
-                        res.put("Total Reactive Power Cont.Demand(kW)"  ,df3.format(tou_block[0].getCoincident(1)));
-                    }
+			if (tou_block != null && tou_block.length > 0 && tou_block[0] != null
+					&& tou_block[0].getSummations() != null && tou_block[0].getSummations().size() > 0) {
 
-                    if(tou_block.length >= 2){
-                        res.put("Rate A Active Energy(kWh)"             ,df3.format(tou_block[1].getSummation(0)));
-                        res.put("Rate A Reactive Energy(kWh)"           ,df3.format(tou_block[1].getSummation(1)));
-                        res.put("Rate A Active Power Max.Demand(kW)"    ,df3.format(tou_block[1].getCurrDemand(0)));
-                        res.put("Rate A Active Power Max.Demand Time"   ,tou_block[1].getEventTime(0));
-                        res.put("Rate A Reactive Power Max.Demand(kW)"  ,df3.format(tou_block[1].getCurrDemand(1)));
-                        res.put("Rate A Reactive Power Max.Demand Time" ,tou_block[1].getEventTime(1));
-                        res.put("Rate A Active Power Cum.Demand(kW)"    ,df3.format(tou_block[1].getCumDemand(0)));
-                        res.put("Rate A Reactive Power Cum.Demand(kW)"  ,df3.format(tou_block[1].getCumDemand(1)));
+				try {
+					res.put("[Current Billing Data]", "");
+					res.put("Total Active Energy(kWh)", df3.format(tou_block[0].getSummation(0)));
+					meteringValue = new Double(df3.format(tou_block[0].getSummation(0)));
+					res.put("Total Reactive Energy(kWh)", df3.format(tou_block[0].getSummation(1)));
+					res.put("Total Active Power Max.Demand(kW)", df3.format(tou_block[0].getCurrDemand(0)));
+					res.put("Total Active Power Max.Demand Time", tou_block[0].getEventTime(0));
+					res.put("Total Reactive Power Max.Demand(kW)", df3.format(tou_block[0].getCurrDemand(1)));
+					res.put("Total Reactive Power Max.Demand Time", tou_block[0].getEventTime(1));
+					res.put("Total Active Power Cum.Demand(kW)", df3.format(tou_block[0].getCumDemand(0)));
+					res.put("Total Reactive Power Cum.Demand(kW)", df3.format(tou_block[0].getCumDemand(1)));
 
-                        if(tou_block[1].getCoincident() != null && tou_block[1].getCoincident().size() > 0){
-                        	res.put("Rate A Active Power Cont.Demand(kW)"   ,df3.format(tou_block[1].getCoincident(0)));
-                        	res.put("Rate A Reactive Power Cont.Demand(kW)" ,df3.format(tou_block[1].getCoincident(1)));
-                        }
-                    }
+					if (tou_block[0].getCoincident() != null && tou_block[0].getCoincident().size() > 0) {
+						res.put("Total Active Power Cont.Demand(kW)", df3.format(tou_block[0].getCoincident(0)));
+						res.put("Total Reactive Power Cont.Demand(kW)", df3.format(tou_block[0].getCoincident(1)));
+					}
 
-                    if(tou_block.length >= 3){
-                        res.put("Rate B Active Energy(kWh)"             ,df3.format(tou_block[2].getSummation(0)));
-                        res.put("Rate B Reactive Energy(kWh)"           ,df3.format(tou_block[2].getSummation(1)));
-                        res.put("Rate B Active Power Max.Demand(kW)"    ,df3.format(tou_block[2].getCurrDemand(0)));
-                        res.put("Rate B Active Power Max.Demand Time"   ,tou_block[2].getEventTime(0));
-                        res.put("Rate B Reactive Power Max.Demand(kW)"  ,df3.format(tou_block[2].getCurrDemand(1)));
-                        res.put("Rate B Reactive Power Max.Demand Time" ,tou_block[2].getEventTime(1));
-                        res.put("Rate B Active Power Cum.Demand(kW)"    ,df3.format(tou_block[2].getCumDemand(0)));
-                        res.put("Rate B Reactive Power Cum.Demand(kW)"  ,df3.format(tou_block[2].getCumDemand(1)));
+					if (tou_block.length >= 2) {
+						res.put("Rate A Active Energy(kWh)", df3.format(tou_block[1].getSummation(0)));
+						res.put("Rate A Reactive Energy(kWh)", df3.format(tou_block[1].getSummation(1)));
+						res.put("Rate A Active Power Max.Demand(kW)", df3.format(tou_block[1].getCurrDemand(0)));
+						res.put("Rate A Active Power Max.Demand Time", tou_block[1].getEventTime(0));
+						res.put("Rate A Reactive Power Max.Demand(kW)", df3.format(tou_block[1].getCurrDemand(1)));
+						res.put("Rate A Reactive Power Max.Demand Time", tou_block[1].getEventTime(1));
+						res.put("Rate A Active Power Cum.Demand(kW)", df3.format(tou_block[1].getCumDemand(0)));
+						res.put("Rate A Reactive Power Cum.Demand(kW)", df3.format(tou_block[1].getCumDemand(1)));
 
-                        if(tou_block[2].getCoincident() != null && tou_block[2].getCoincident().size() > 0){
-                        	res.put("Rate B Active Power Cont.Demand(kW)"   ,df3.format(tou_block[2].getCoincident(0)));
-                        	res.put("Rate B Reactive Power Cont.Demand(kW)" ,df3.format(tou_block[2].getCoincident(1)));
-                        }
-                    }
+						if (tou_block[1].getCoincident() != null && tou_block[1].getCoincident().size() > 0) {
+							res.put("Rate A Active Power Cont.Demand(kW)", df3.format(tou_block[1].getCoincident(0)));
+							res.put("Rate A Reactive Power Cont.Demand(kW)", df3.format(tou_block[1].getCoincident(1)));
+						}
+					}
 
-                    if(tou_block.length >= 4){
-                        res.put("Rate C Active Energy(kWh)"             ,df3.format(tou_block[3].getSummation(0)));
-                        res.put("Rate C Reactive Energy(kWh)"           ,df3.format(tou_block[3].getSummation(1)));
-                        res.put("Rate C Active Power Max.Demand(kW)"    ,df3.format(tou_block[3].getCurrDemand(0)));
-                        res.put("Rate C Active Power Max.Demand Time"   ,tou_block[3].getEventTime(0));
-                        res.put("Rate C Reactive Power Max.Demand(kW)"  ,df3.format(tou_block[3].getCurrDemand(1)));
-                        res.put("Rate C Reactive Power Max.Demand Time" ,tou_block[3].getEventTime(1));
-                        res.put("Rate C Active Power Cum.Demand(kW)"    ,df3.format(tou_block[3].getCumDemand(0)));
-                        res.put("Rate C Reactive Power Cum.Demand(kW)"  ,df3.format(tou_block[3].getCumDemand(1)));
-                        if(tou_block[3].getCoincident() != null && tou_block[3].getCoincident().size() > 0){
-                        	res.put("Rate C Active Power Cont.Demand(kW)"   ,df3.format(tou_block[3].getCoincident(0)));
-                        	res.put("Rate C Reactive Power Cont.Demand(kW)" ,df3.format(tou_block[3].getCoincident(1)));
-                        }
-                    }
-                }catch(Exception e){log.warn(e,e);}
+					if (tou_block.length >= 3) {
+						res.put("Rate B Active Energy(kWh)", df3.format(tou_block[2].getSummation(0)));
+						res.put("Rate B Reactive Energy(kWh)", df3.format(tou_block[2].getSummation(1)));
+						res.put("Rate B Active Power Max.Demand(kW)", df3.format(tou_block[2].getCurrDemand(0)));
+						res.put("Rate B Active Power Max.Demand Time", tou_block[2].getEventTime(0));
+						res.put("Rate B Reactive Power Max.Demand(kW)", df3.format(tou_block[2].getCurrDemand(1)));
+						res.put("Rate B Reactive Power Max.Demand Time", tou_block[2].getEventTime(1));
+						res.put("Rate B Active Power Cum.Demand(kW)", df3.format(tou_block[2].getCumDemand(0)));
+						res.put("Rate B Reactive Power Cum.Demand(kW)", df3.format(tou_block[2].getCumDemand(1)));
 
-            }
+						if (tou_block[2].getCoincident() != null && tou_block[2].getCoincident().size() > 0) {
+							res.put("Rate B Active Power Cont.Demand(kW)", df3.format(tou_block[2].getCoincident(0)));
+							res.put("Rate B Reactive Power Cont.Demand(kW)", df3.format(tou_block[2].getCoincident(1)));
+						}
+					}
 
-            if(meter_mode != null){
-                res.put("Meter Mode", meter_mode);
-            }
+					if (tou_block.length >= 4) {
+						res.put("Rate C Active Energy(kWh)", df3.format(tou_block[3].getSummation(0)));
+						res.put("Rate C Reactive Energy(kWh)", df3.format(tou_block[3].getSummation(1)));
+						res.put("Rate C Active Power Max.Demand(kW)", df3.format(tou_block[3].getCurrDemand(0)));
+						res.put("Rate C Active Power Max.Demand Time", tou_block[3].getEventTime(0));
+						res.put("Rate C Reactive Power Max.Demand(kW)", df3.format(tou_block[3].getCurrDemand(1)));
+						res.put("Rate C Reactive Power Max.Demand Time", tou_block[3].getEventTime(1));
+						res.put("Rate C Active Power Cum.Demand(kW)", df3.format(tou_block[3].getCumDemand(0)));
+						res.put("Rate C Reactive Power Cum.Demand(kW)", df3.format(tou_block[3].getCumDemand(1)));
+						if (tou_block[3].getCoincident() != null && tou_block[3].getCoincident().size() > 0) {
+							res.put("Rate C Active Power Cont.Demand(kW)", df3.format(tou_block[3].getCoincident(0)));
+							res.put("Rate C Reactive Power Cont.Demand(kW)", df3.format(tou_block[3].getCoincident(1)));
+						}
+					}
+				} catch (Exception e) {
+					log.warn(e, e);
+				}
+
+			}
+
+			if (meter_mode != null) {
+				res.put("Meter Mode", meter_mode);
+			}
 
 //            if(s012 != null && s061!= null && st062!= null){
 //                res.put("LP Channel Information", getLPChannelMap());
 //            }
-            
-            if(lplist != null && lplist.length > 0){
-                res.put("[Load Profile Data(kWh)]", "");
-                int nbr_chn = 2;//ch1,ch2
+
+			if (lplist != null && lplist.length > 0) {
+				res.put("[Load Profile Data(kWh)]", "");
+				int nbr_chn = 2;// ch1,ch2
 //                if(st061 != null){
 //                    nbr_chn = st061.getNBR_CHNS_SET1();
 //                }
-                //ArrayList chartData0 = new ArrayList();//time chart
-                //ArrayList[] chartDatas = new ArrayList[nbr_chn]; //channel chart(ch1,ch2,...)
-                //for(int k = 0; k < nbr_chn ; k++){
-                //    chartDatas[k] = new ArrayList();
-                //}
-                ArrayList lpDataTime = new ArrayList();
-                for(int i = 0; i < lplist.length; i++){
-                    String datetime = lplist[i].getDatetime();
+				// ArrayList chartData0 = new ArrayList();//time chart
+				// ArrayList[] chartDatas = new ArrayList[nbr_chn]; //channel chart(ch1,ch2,...)
+				// for(int k = 0; k < nbr_chn ; k++){
+				// chartDatas[k] = new ArrayList();
+				// }
+				ArrayList lpDataTime = new ArrayList();
+				for (int i = 0; i < lplist.length; i++) {
+					String datetime = lplist[i].getDatetime();
 
-                    if(meter!=null && meter.getSupplier()!=null){
-                    Supplier supplier = meter.getSupplier();
-                    if(supplier !=null){
-                        String lang = supplier.getLang().getCode_2letter();
-                        String country = supplier.getCountry().getCode_2letter();
-                        
-                        TimeLocaleUtil.getDecimalFormat(supplier);
-                        datef14 = new SimpleDateFormat(TimeLocaleUtil.getDateFormat(14, lang, country));
-                    }
-                	}else{
-                    new DecimalFormat();
-                    datef14 = new SimpleDateFormat();
-                }
-                    datef14.format(DateTimeUtil.getDateFromYYYYMMDDHHMMSS(datetime+"00"));
-                   
-                    lplist[i].getDatetime();
-                    String val = "";
-                    Double[] ch = lplist[i].getCh();
-                    for(int k = 0; k < ch.length ; k++){
-                        val += "<span style='margin-right: 40px;'>ch"+(k+1)+"="+df3.format(ch[k])+"</span>";
-                    }
-                   
-                	Date meterDate = normalDateFormat.parse(datetime+"00");
-                    res.put(datef14.format(meterDate), val);
+					if (meter != null && meter.getSupplier() != null) {
+						Supplier supplier = meter.getSupplier();
+						if (supplier != null) {
+							String lang = supplier.getLang().getCode_2letter();
+							String country = supplier.getCountry().getCode_2letter();
 
-                    //chartData0.add(tempDateTime.substring(6,8)
-                    //              +tempDateTime.substring(8,10)
-                    //              +tempDateTime.substring(10,12));
-                    //for(int k = 0; k < ch.length ; k++){
-                    //    chartDatas[k].add(ch[k].doubleValue());
-                    //}
-                    lpDataTime.add(lplist[i].getDatetime());
-                }
+							TimeLocaleUtil.getDecimalFormat(supplier);
+							datef14 = new SimpleDateFormat(TimeLocaleUtil.getDateFormat(14, lang, country));
+						}
+					} else {
+						new DecimalFormat();
+						datef14 = new SimpleDateFormat();
+					}
+					datef14.format(DateTimeUtil.getDateFromYYYYMMDDHHMMSS(datetime + "00"));
 
-                //res.put("chartData0", chartData0);
-                //for(int k = 0; k < chartDatas.length ; k++){
-                //    res.put("chartData"+(k+1), chartDatas[k]);
-                //}
-                //res.put("lpDataTime", lpDataTime);
-                //res.put("chartDatas", chartDatas);
-                res.put("[ChannelCount]", nbr_chn);
-            }
+					lplist[i].getDatetime();
+					String val = "";
+					Double[] ch = lplist[i].getCh();
+					for (int k = 0; k < ch.length; k++) {
+						val += "<span style='margin-right: 40px;'>ch" + (k + 1) + "=" + df3.format(ch[k]) + "</span>";
+					}
 
-            if(evlog != null && evlog.length > 0){
-                res.put("[Event Log]", "");
-                for(int i = 0; i < evlog.length; i++){
-                    String datetime = evlog[i].getDate() + evlog[i].getTime();
-                    if(!datetime.startsWith("0000") && !datetime.equals("")){
-                    	Date meterDate = normalDateFormat.parse(datetime+"00");
-                        res.put(datef14.format(meterDate), evlog[i].getMsg());
-                    }
-                }
-            }
+					Date meterDate = normalDateFormat.parse(datetime + "00");
+					res.put(datef14.format(meterDate), val);
 
+					// chartData0.add(tempDateTime.substring(6,8)
+					// +tempDateTime.substring(8,10)
+					// +tempDateTime.substring(10,12));
+					// for(int k = 0; k < ch.length ; k++){
+					// chartDatas[k].add(ch[k].doubleValue());
+					// }
+					lpDataTime.add(lplist[i].getDatetime());
+				}
 
-        }
-        catch (Exception e)
-        {
-            log.warn("Get Data Error=>",e);
-        }
+				// res.put("chartData0", chartData0);
+				// for(int k = 0; k < chartDatas.length ; k++){
+				// res.put("chartData"+(k+1), chartDatas[k]);
+				// }
+				// res.put("lpDataTime", lpDataTime);
+				// res.put("chartDatas", chartDatas);
+				res.put("[ChannelCount]", nbr_chn);
+			}
 
-        return res;
-    }
+			if (evlog != null && evlog.length > 0) {
+				res.put("[Event Log]", "");
+				for (int i = 0; i < evlog.length; i++) {
+					String datetime = evlog[i].getDate() + evlog[i].getTime();
+					if (!datetime.startsWith("0000") && !datetime.equals("")) {
+						Date meterDate = normalDateFormat.parse(datetime + "00");
+						res.put(datef14.format(meterDate), evlog[i].getMsg());
+					}
+				}
+			}
 
-    public int getDstApplyOn() throws Exception {
+		} catch (Exception e) {
+			log.warn("Get Data Error=>", e);
+		}
+
+		return res;
+	}
+
+	public int getDstApplyOn() throws Exception {
 //        if(st055!= null){
 //            return st055.getDstApplyOn();
 //        }else if(st052!= null){
 //        	return st052.getDstApplyOn();
 //        }else{
-            return 0;
+		return 0;
 //        }
 
-    }
+	}
 
-    public int getDstSeasonOn() throws Exception {
+	public int getDstSeasonOn() throws Exception {
 //        if(st052!= null){
 //            return st052.getDstSeasonOn();
 //        }
 //        else if(st055!= null){
 //            return st055.getDstSeasonOn();
 //        }else{
-            return 0;
+		return 0;
 //        }
 
-    }
+	}
 
-    public String getMeterMode() throws Exception {
+	public String getMeterMode() throws Exception {
 //        if(mt000 != null){
 //            return mt000.getMETER_MODE_NAME();
 //        }else{
-            return null;
+		return null;
 //        }
-    }
+	}
 
-    public String getTimeDiff() throws Exception {
+	public String getTimeDiff() throws Exception {
 //        if(st055 != null && nt055 != null) {
 //            return (int)((nt055.getTime() - st055.getTime())/1000)+"";
 //        }else if(st052 != null && nt055 != null) {
 //            return (int)((nt055.getTime() - st052.getTime())/1000)+"";
 //        } else {
-            return null;
+		return null;
 //        }
-    }
+	}
 
-    public MeterTimeSyncData getMeterTimeSync(){
+	public MeterTimeSyncData getMeterTimeSync() {
 
-        new MeterTimeSyncData();
+		new MeterTimeSyncData();
 
-        try{
+		try {
 //            if(st055 != null && bt055 != null && at055 != null){
 //                String meterTime = st055.getDateTime();
 //                String beforeTime = bt055.getDateTime();
@@ -808,32 +737,32 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable{
 //            {
 //                return null;
 //            }
-        }catch(Exception e){
-            log.warn("get meter time sync log error: "+e.getMessage());
-        }
-        return null;
-    }
+		} catch (Exception e) {
+			log.warn("get meter time sync log error: " + e.getMessage());
+		}
+		return null;
+	}
 
-    public boolean isSavingLP(){
+	public boolean isSavingLP() {
 
-        try{
+		try {
 //            if(st063 != null){
 //                int blkCnt = st063.getNBR_VALID_BLOCKS();
 //                if(blkCnt == 0){
 //                    return true;
 //                }
 //            }
-        }catch(Exception e){
-            log.warn("Get valid lp block count Error=>"+e.getMessage());
-        }
-        return false;
-    }
+		} catch (Exception e) {
+			log.warn("Get valid lp block count Error=>" + e.getMessage());
+		}
+		return false;
+	}
 
-    public MeteringFail getMeteringFail(){
+	public MeteringFail getMeteringFail() {
 //        if(nuri_t002 != null){
 //            return nuri_t002.getMeteringFail();
 //        }else{
-            return null;
+		return null;
 //        }
-    }
+	}
 }
