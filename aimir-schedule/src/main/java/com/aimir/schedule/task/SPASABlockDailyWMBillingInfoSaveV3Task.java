@@ -226,10 +226,10 @@ public class SPASABlockDailyWMBillingInfoSaveV3Task extends ScheduleTask {
             conditions.add(new Condition("id.channel", new Object[]{1},
                     null, Restriction.EQ));
             conditions.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
-            conditions.add(new Condition("id.yyyymmddhh", new Object[]{fromYyyymmddhh, toYyyymmddhh}, null, Restriction.BETWEEN));
+            conditions.add(new Condition("id.yyyymmddhhmiss", new Object[]{fromYyyymmddhh, toYyyymmddhh}, null, Restriction.BETWEEN));
             
             List<Projection> projections = new ArrayList<Projection>();
-            projections.add(Projections.alias(Projections.max("id.yyyymmddhh"), "maxYyyymmddhh"));
+            projections.add(Projections.alias(Projections.max("id.yyyymmddhhmiss"), "maxYyyymmddhh"));
             
             List<Map<String, Object>> maxyyyymmddhh = ((LpWMDaoImpl)lpWMDao).findByConditionsAndProjections(conditions, projections);
             
@@ -242,7 +242,7 @@ public class SPASABlockDailyWMBillingInfoSaveV3Task extends ScheduleTask {
                 }
                 
                 conditions = new HashSet<Condition>();
-                conditions.add(new Condition("id.yyyymmddhh", new Object[]{_yyyymmddhh}, null, Restriction.EQ));
+                conditions.add(new Condition("id.yyyymmddhhmiss", new Object[]{_yyyymmddhh}, null, Restriction.EQ));
                 conditions.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
                 conditions.add(new Condition("id.mdevType", new Object[]{DeviceType.Meter}, null, Restriction.EQ));
                 conditions.add(new Condition("id.mdevId", new Object[]{meterId}, null, Restriction.EQ));
@@ -308,12 +308,12 @@ public class SPASABlockDailyWMBillingInfoSaveV3Task extends ScheduleTask {
         conditions.add(new Condition("id.channel", new Object[]{1},
                 null, Restriction.EQ));
         conditions.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
-        conditions.add(new Condition("id.yyyymmddhh", new Object[]{prepayStartTime.substring(0, 10)}, null, Restriction.GE));
+        conditions.add(new Condition("id.yyyymmddhhmiss", new Object[]{prepayStartTime.substring(0, 10)}, null, Restriction.GE));
         conditions.add(new Condition("contract", null, null, Restriction.NULL));
         // conditions.add(new Condition("c.contractNumber", null, null, Restriction.NULL));
         
         List<Projection> projections = new ArrayList<Projection>();
-        projections.add(Projections.alias(Projections.min("id.yyyymmddhh"), "minYyyymmddhh"));
+        projections.add(Projections.alias(Projections.min("id.yyyymmddhhmiss"), "minYyyymmddhh"));
         
         List<Map<String, Object>> minyyyymmddhh = ((LpWMDaoImpl)lpWMDao).findByConditionsAndProjections(conditions, projections);
         
@@ -326,7 +326,7 @@ public class SPASABlockDailyWMBillingInfoSaveV3Task extends ScheduleTask {
         conditions.add(new Condition("id.channel", new Object[]{1},
                 null, Restriction.EQ));
         conditions.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
-        conditions.add(new Condition("id.yyyymmddhh", new Object[]{prepayStartTime.substring(0, 10)}, null, Restriction.GE));
+        conditions.add(new Condition("id.yyyymmddhhmiss", new Object[]{prepayStartTime.substring(0, 10)}, null, Restriction.GE));
         conditions.add(new Condition("contract", new Object[]{"c"}, null, Restriction.ALIAS));
         conditions.add(new Condition("c.contractNumber", new Object[]{contractNumber}, null, Restriction.EQ));
         
@@ -350,7 +350,7 @@ public class SPASABlockDailyWMBillingInfoSaveV3Task extends ScheduleTask {
 
         log.info(_yyyymmddhh);
         conditions = new HashSet<Condition>();
-        conditions.add(new Condition("id.yyyymmddhh", new Object[]{_yyyymmddhh}, null, Restriction.EQ));
+        conditions.add(new Condition("id.yyyymmddhhmiss", new Object[]{_yyyymmddhh}, null, Restriction.EQ));
         conditions.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
         conditions.add(new Condition("id.mdevType", new Object[]{DeviceType.Meter}, null, Restriction.EQ));
         conditions.add(new Condition("id.mdevId", new Object[]{meterId}, null, Restriction.EQ));
