@@ -190,12 +190,6 @@ public abstract class MeterDataParser implements Serializable
             return DeviceType.Modem;
         else
             return DeviceType.Meter;
-        /*
-        if (meter.getModem().getModemType() == ModemType.ACD || meter.getModem().getModemType() == ModemType.HMU)
-            return DeviceType.Modem;
-        else
-            return DeviceType.Meter;
-            */
     }
 
     /**

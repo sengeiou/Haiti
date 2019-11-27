@@ -1,32 +1,22 @@
 package com.aimir.fep.meter.saver;
 
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionStatus;
-
 import com.aimir.constants.CommonConstants;
+import com.aimir.constants.CommonConstants.DeviceType;
 import com.aimir.constants.CommonConstants.MeterStatus;
-import com.aimir.constants.CommonConstants.MeteringFlag;
-import com.aimir.constants.CommonConstants.MeteringType;
-import com.aimir.fep.command.conf.KamstrupCIDMeta;
 import com.aimir.fep.command.conf.SM110Meta;
 import com.aimir.fep.command.mbean.CommandGW;
 import com.aimir.fep.command.mbean.CommandGW.OnDemandOption;
 import com.aimir.fep.meter.AbstractMDSaver;
-import com.aimir.fep.meter.data.BillingData;
-import com.aimir.fep.meter.data.Instrument;
-import com.aimir.fep.meter.data.LPData;
 import com.aimir.fep.meter.entry.IMeasurementData;
 import com.aimir.fep.meter.parser.I210Plus;
-import com.aimir.fep.meter.parser.Kamstrup;
-import com.aimir.fep.meter.parser.Kamstrup162;
-import com.aimir.fep.meter.parser.ModemLPData;
 import com.aimir.fep.util.CmdUtil;
 import com.aimir.fep.util.DataUtil;
 import com.aimir.model.device.Meter;
+import com.aimir.model.mvm.MeteringDataEM;
 import com.aimir.util.DateTimeUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -43,6 +33,8 @@ public class I210PlusMDSaver extends AbstractMDSaver {
 		I210Plus parser = (I210Plus) md.getMeterDataParser();
 		log.info(parser.toString());
 		
+		Meter meter = meterDao.get(parser.getMDevId());
+		
 		saveLPUsingLpNormalization(
 				CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()),
 				md,
@@ -52,45 +44,27 @@ public class I210PlusMDSaver extends AbstractMDSaver {
 				parser.getMDevType(), 
 				parser.getMeteringTime());
 		
-//		int interval = 60 / (parser.getPeriod() != 0 ? parser.getPeriod() : 1);
-//		if (parser.getMeter().getLpInterval() == null || interval != parser.getMeter().getLpInterval())
-//			parser.getMeter().setLpInterval(interval);
-//
-//		// TODO 정기검침으로 설정했는데 후에 변경해야 함.
-//		saveMeteringData(MeteringType.Manual, parser.getMeteringTime().substring(0, 8),
-//				parser.getMeteringTime().substring(8, 14), parser.getMeteringValue(), parser.getMeter(),
-//				parser.getDeviceType(), parser.getDeviceId(), parser.getMDevType(), parser.getMDevId(),
-//				parser.getMeterTime());
-//
-//		int[] flaglist = null;
-//		if (parser.getLpData() != null && parser.getLpData().length > 0) {
-//			ModemLPData data = parser.getLpData()[parser.getLpData().length - 1];
-//			if (data == null || data.getLp() == null || data.getLp()[0].length == 0) {
-//				log.warn("LP size is 0 then skip");
-//			} else {
-//
-//				flaglist = new int[data.getLp()[0].length];
-//				for (int flagcnt = 0; flagcnt < flaglist.length; flagcnt++) {
-//					for (int ch = 0; ch < data.getLp().length; ch++) {
-//						if (data.getLp()[ch][flagcnt] == 65535) {
-//							flaglist[flagcnt] = MeteringFlag.Fail.getFlag();
-//							data.getLp()[ch][flagcnt] = 0;
-//						} else
-//							flaglist[flagcnt] = MeteringFlag.Correct.getFlag();
-//					}
-//				}
-//
-//				saveLPData(MeteringType.Manual, data.getLpDate().substring(0, 8), data.getLpDate().substring(8, 12),
-//						data.getLp(), flaglist, data.getBasePulse(), parser.getMeter(), parser.getDeviceType(),
-//						parser.getDeviceId(), parser.getMDevType(), parser.getMDevId(), parser.getMeteringTime());
-//			}
-//		}
-
-//		Kamstrup kamstrupMeta = parser.getKamstrupMeta();
-//		Instrument[] instrument = kamstrupMeta.getInstrument();
-
-//		savePowerQuality(parser.getMeter(), parser.getMeteringTime(), instrument, parser.getDeviceType(),
-//				parser.getDeviceId(), parser.getMDevType(), parser.getMDevId());
+		MeteringDataEM meteringDataEM = new MeteringDataEM();
+		meteringDataEM.setCh1(parser.getTOTAL_DEL_KWH());
+		meteringDataEM.setCh2(parser.getTOTAL_DEL_PLUS_RCVD_KWH());
+		meteringDataEM.setCh3(parser.getTOTAL_DEL_MINUS_RCVD_KWH());
+		meteringDataEM.setCh4(parser.getTOTAL_REC_KWH());
+		meteringDataEM.setDeviceId(meter.getMcu().getSysID());
+		meteringDataEM.setDeviceType(DeviceType.MCU.toString());
+		meteringDataEM.setHhmmss(parser.getMeteringTime().substring(8));
+		meteringDataEM.setMeteringType(CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()).getType());
+		meteringDataEM.setValue(parser.getTOTAL_DEL_KWH());
+		meteringDataEM.setWriteDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
+		meteringDataEM.setYyyymmdd(parser.getMeteringTime().substring(0,8));
+		meteringDataEM.setMDevId(parser.getMDevId());
+		meteringDataEM.setYyyymmddhhmmss(parser.getMeteringTime());
+		meteringDataEM.setDst(parser.getDst());
+		meteringDataEM.setMDevType(parser.getMDevType().toString());
+		meteringDataEM.setLocation(meter.getLocation());
+		meteringDataEM.setMeter(meter);
+		meteringDataEM.setModem(meter.getModem());
+		meteringDataEM.setSupplier(meter.getSupplier());
+		meteringDataDao.add(meteringDataEM);
 
 		return true;
 	}
