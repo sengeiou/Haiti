@@ -76,28 +76,6 @@ public class MT019 implements java.io.Serializable {
 	public MT019(byte[] data) {
         parse(data);
 	}
-	public static boolean[] booleanArrayFromByte(byte x) {
-	    boolean bs[] = new boolean[8];
-	    bs[0] = ((x & 0x01) != 0);
-	    bs[1] = ((x & 0x02) != 0);
-	    bs[2] = ((x & 0x04) != 0);
-	    bs[3] = ((x & 0x08) != 0);
-	    bs[4] = ((x & 0x10) != 0);
-	    bs[5] = ((x & 0x20) != 0);
-	    bs[6] = ((x & 0x40) != 0);
-	    bs[7] = ((x & 0x80) != 0);
-	    return bs;
-	}
-
-	public String booleanArr2Str(boolean[] arr) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("[ ");
-		for(boolean bool : arr) {
-			sb.append((bool == true) ? "1" : "0").append(" ");
-		}
-		sb.append("]");
-		return sb.toString();
-	}
 
     public void parse(byte[] data) {
     	int pos = 0;
@@ -156,6 +134,23 @@ public class MT019 implements java.io.Serializable {
 		log.debug("pos = "+pos+", data.length = "+data.length);
     }
     
+	public Double getTOTAL_DEL_KWH() throws Exception {
+		return Double.valueOf(DataFormat.hex2dec(TOTAL_DEL_KWH));
+	}
+
+	public Double getTOTAL_DEL_PLUS_RCVD_KWH() throws Exception {
+		return Double.valueOf(DataFormat.hex2dec(TOTAL_DEL_PLUS_RCVD_KWH));
+	}
+
+	public Double getTOTAL_DEL_MINUS_RCVD_KWH() throws Exception {
+		return Double.valueOf(DataFormat.hex2dec(TOTAL_DEL_MINUS_RCVD_KWH));
+	}
+
+	public Double getTOTAL_REC_KWH() throws Exception {
+		return Double.valueOf(DataFormat.hex2dec(TOTAL_REC_KWH));
+	}
+
+
 	public String printAll() {
 		StringBuilder sb = new StringBuilder();
 		try {
@@ -203,5 +198,28 @@ public class MT019 implements java.io.Serializable {
 		}
 		
 		return "MT019[\n"+sb.toString()+"\n]\n";
+	}
+
+	public static boolean[] booleanArrayFromByte(byte x) {
+	    boolean bs[] = new boolean[8];
+	    bs[0] = ((x & 0x01) != 0);
+	    bs[1] = ((x & 0x02) != 0);
+	    bs[2] = ((x & 0x04) != 0);
+	    bs[3] = ((x & 0x08) != 0);
+	    bs[4] = ((x & 0x10) != 0);
+	    bs[5] = ((x & 0x20) != 0);
+	    bs[6] = ((x & 0x40) != 0);
+	    bs[7] = ((x & 0x80) != 0);
+	    return bs;
+	}
+
+	public String booleanArr2Str(boolean[] arr) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[ ");
+		for(boolean bool : arr) {
+			sb.append((bool == true) ? "1" : "0").append(" ");
+		}
+		sb.append("]");
+		return sb.toString();
 	}
 }

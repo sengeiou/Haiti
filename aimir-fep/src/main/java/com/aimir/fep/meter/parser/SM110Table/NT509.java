@@ -428,4 +428,8 @@ public class NT509 implements java.io.Serializable {
 		}
 		return Arrays.equals(arr, tmpByteArr);
 	}
+	
+	public int getDst() throws Exception {
+		return Integer.valueOf(DataFormat.hex2dec(DAY));
+	}
 }

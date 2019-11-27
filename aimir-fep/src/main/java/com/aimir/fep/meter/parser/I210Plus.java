@@ -8,10 +8,7 @@ import java.util.LinkedHashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.aimir.constants.CommonConstants.MeterStatus;
-import com.aimir.dao.device.MeterDao;
 import com.aimir.fep.meter.data.EventLogData;
 import com.aimir.fep.meter.data.Instrument;
 import com.aimir.fep.meter.data.LPData;
@@ -23,7 +20,6 @@ import com.aimir.fep.meter.parser.SM110Table.MT115;
 import com.aimir.fep.meter.parser.SM110Table.NT509;
 import com.aimir.fep.meter.parser.SM110Table.ST001;
 import com.aimir.fep.util.Util;
-import com.aimir.model.device.Meter;
 import com.aimir.model.system.Supplier;
 import com.aimir.util.DateTimeUtil;
 import com.aimir.util.TimeLocaleUtil;
@@ -42,19 +38,25 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 	private static Log log = LogFactory.getLog(I210Plus.class);
 
 	private byte[] rawData = null;
-	private int lpcount;
+
 	private ArrayList<LPData> lpDataList = new ArrayList<>();
 	private Double meteringValue = null;
 	private String meterId = null;
+	private String meterDeviceModelName = "";
+	private int dst;
 	private int flag = 0;
 
 	private ST001 st001 = null;
 	private MT019 mt019 = null;
 	private MT115 mt115 = null;
 	private NT509 nt509 = null;
+	
+	private Double TOTAL_DEL_KWH = null;
+	private Double TOTAL_DEL_PLUS_RCVD_KWH = null;
+	private Double TOTAL_DEL_MINUS_RCVD_KWH = null;
+	private Double TOTAL_REC_KWH = null;
 
-	public I210Plus() {
-	}
+	public I210Plus() { }
 
 	public Double getMeteringValue() {
 		TOU_BLOCK[] curr = getCurrBilling();
@@ -88,10 +90,6 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 		return this.rawData.length;
 	}
 
-	public int getLPCount() {
-		return this.lpcount;
-	}
-
 	public void parse(byte[] data) throws Exception {
 		rawData = data;
 		int totlen = data.length;
@@ -117,23 +115,36 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 			try {
 				if (tbName.equals("S001")) {
 					log.debug("[S001] len=[" + len + "] data=>\n" + Util.getHexString(b));
+					// Parse
 					st001 = new ST001(b);
 
-					meterId = st001.getMSerial();
-
+//					meter.setModel(DeviceModel.);
 					StringBuilder sb = new StringBuilder();
-					sb.append("ST001[\n").append("  MANUFACTURER=" + st001.getMANUFACTURER() + ", \n")
+					sb.append("ST001[ \n")
+					        .append("  MANUFACTURER=" + st001.getMANUFACTURER() + ", \n")
 							.append("  ED_MODEL=" + st001.getED_MODEL() + ", \n")
 							.append("  HW_VERSION_NUMBER=" + st001.getHW_VERSION_NUMBER() + ", \n")
 							.append("  HW_REVISION_NUMBER=" + st001.getHW_REVISION_NUMBER() + ", \n")
 							.append("  FW_VERSION_NUMBER=" + st001.getFW_VERSION_NUMBER() + ", \n")
 							.append("  FW_REVISION_NUMBE=" + st001.getFW_REVISION_NUMBER() + ", \n")
-							.append("  MSerial=" + st001.getMSerial() + "\n]\n");
+							.append("  MSerial=" + st001.getMSerial() + "\n] \n");
 					log.debug(sb.toString());
+					
+					// Set Veriables
+					meterId = st001.getMSerial();
+					meterDeviceModelName = st001.getED_MODEL();
+					
+					
 				} else if (tbName.equals("M019")) {
 					log.debug("[M019] len=[" + len + "] data=>\n" + Util.getHexString(b));
 					mt019 = new MT019(b);
 					log.debug(mt019.printAll());
+					
+					// Set Veriables
+					TOTAL_DEL_KWH = mt019.getTOTAL_DEL_KWH();
+					TOTAL_DEL_PLUS_RCVD_KWH = mt019.getTOTAL_DEL_PLUS_RCVD_KWH();
+					TOTAL_DEL_MINUS_RCVD_KWH = mt019.getTOTAL_DEL_MINUS_RCVD_KWH();
+					TOTAL_REC_KWH = mt019.getTOTAL_REC_KWH();
 				} else if (tbName.equals("M115")) {
 					log.debug("[M115] len=[" + len + "] data=>\n" + Util.getHexString(b));
 					mt115 = new MT115(b);
@@ -142,7 +153,10 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 					log.debug("[N509] len=[" + len + "] data=>\n" + Util.getHexString(b));
 					nt509 = new NT509(b);
 					log.debug(nt509.printAll());
-					setMeteringTime(nt509.getFrameInfoDateFormat("yyyyMMddHHmm"));
+
+					// Set Veriables
+					meteringTime = nt509.getFrameInfoDateFormat("yyyyMMddHHmmss");
+					dst = nt509.getDst();
 					lpDataList.addAll(nt509.getLpData());
 					if (meter != null)
 						meter.setLpInterval(nt509.getLpPeriodMin());
@@ -156,6 +170,27 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 			}
 		}
 		log.debug("I210+ Data Parse Finished :: DATA[" + toString() + "]");
+	}
+
+	
+	public Double getTOTAL_DEL_KWH() {
+		return TOTAL_DEL_KWH;
+	}
+
+	public Double getTOTAL_DEL_PLUS_RCVD_KWH() {
+		return TOTAL_DEL_PLUS_RCVD_KWH;
+	}
+
+	public Double getTOTAL_DEL_MINUS_RCVD_KWH() {
+		return TOTAL_DEL_MINUS_RCVD_KWH;
+	}
+
+	public Double getTOTAL_REC_KWH() {
+		return TOTAL_REC_KWH;
+	}
+	
+	public int getDst() {
+		return dst;
 	}
 
 	public int getFlag() {
@@ -765,4 +800,6 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 		return null;
 //        }
 	}
+	
+	
 }
