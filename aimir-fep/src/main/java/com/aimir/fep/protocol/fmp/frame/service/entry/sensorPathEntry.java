@@ -160,10 +160,10 @@ public class sensorPathEntry extends Entry {
     	JSONObject json = new JSONObject();
     	
     	json.put("sensorPathID", sensorPathID.getValue());
-    	json.put("sensorPathSerial", sensorPathSerial);
-    	json.put("sensorPathModel", sensorPathModel);
+    	json.put("sensorPathSerial", sensorPathSerial.toHexString());
+    	json.put("sensorPathModel", sensorPathModel.toHexString());
     	json.put("sensorPathShortID", Hex.decode(sensorPathShortID.encode()));
-    	json.put("sensorPathHops", sensorPathHops);
+    	json.put("sensorPathHops", sensorPathHops.toString());
         StringBuffer sb = new StringBuffer();
 		for(int i = 0; i < sensorPathNode.toHexString().length(); i += 4) {
 			sb.append(sensorPathNode.toHexString().substring(i, i+4));
@@ -171,8 +171,8 @@ public class sensorPathEntry extends Entry {
 				sb.append("-");
 		}
     	json.put("sensorPathNode", sb.toString());
-    	json.put("sensorPathTime", sensorPathTime);
-    	json.put("sensorPathLQI", sensorPathLQI);
+    	json.put("sensorPathTime", sensorPathTime.toString());
+    	json.put("sensorPathLQI", sensorPathLQI.toString());
     	json.put("sensorPathRSSI", (byte)Integer.valueOf(Hex.decode(sensorPathRSSI.encode()), 16).intValue());
     	
     	return json;
