@@ -23922,8 +23922,7 @@ public class CommandGW implements CommandGWMBean {
 				list.add(value);
 			}
 			log.debug(list);
-			return null;
-//			return list.toArray(new sensorPathEntry[list.size()]);
+			return list.toArray(new sensorPathEntry[list.size()]);
 		} else {
 			log.error("Unknown Return Value");
 			throw new Exception("Unknown Return Value");
