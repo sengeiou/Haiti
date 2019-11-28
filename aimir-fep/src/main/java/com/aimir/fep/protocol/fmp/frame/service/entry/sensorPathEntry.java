@@ -26,7 +26,7 @@ import com.aimir.fep.util.Hex;
  */
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "CustEnt", propOrder = {
+@XmlType(name = "sensorPathEntry", propOrder = {
     "sensorPathID",
     "sensorPathSerial",
     "sensorPathModel",
@@ -79,8 +79,8 @@ public class sensorPathEntry extends Entry {
     public CHAR sensorPathRSSI = new CHAR();
 
 //    @XmlTransient
-    public HEX getSensorPathID(){
-        return sensorPathID;
+    public String getSensorPathID(){
+        return sensorPathID.getValue();
     }
 
     public void setSensorPathID(HEX sensorPathID){
@@ -97,8 +97,8 @@ public class sensorPathEntry extends Entry {
     }
 
 //    @XmlTransient
-    public OCTET getSensorPathModel(){
-        return sensorPathModel;
+    public String getSensorPathModel(){
+        return sensorPathModel.toHexString();
     }
 
     public void setSensorPathModel(OCTET sensorPathModel){
