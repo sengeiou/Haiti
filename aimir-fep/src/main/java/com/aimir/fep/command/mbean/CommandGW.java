@@ -23887,7 +23887,7 @@ public class CommandGW implements CommandGWMBean {
 	}
 
 	@Override
-	public sensorPathEntry[] cmdGetSensorPath(String mcuId, String parserName) throws FMPMcuException, Exception {
+	public String cmdGetSensorPath(String mcuId, String parserName) throws FMPMcuException, Exception {
 		log.debug("cmdGetSeosrPath("+mcuId+", "+parserName+")");
 
 		Target target = CmdUtil.getTarget(mcuId);
@@ -23922,7 +23922,8 @@ public class CommandGW implements CommandGWMBean {
 				list.add(value);
 			}
 			log.debug(list);
-			return list.toArray(new sensorPathEntry[list.size()]);
+//			return list.toArray(new sensorPathEntry[list.size()]);
+			return list.toString();
 		} else {
 			log.error("Unknown Return Value");
 			throw new Exception("Unknown Return Value");

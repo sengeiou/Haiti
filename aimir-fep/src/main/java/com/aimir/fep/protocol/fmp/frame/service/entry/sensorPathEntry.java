@@ -1,10 +1,6 @@
 package com.aimir.fep.protocol.fmp.frame.service.entry;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
 
 import com.aimir.fep.protocol.fmp.datatype.BYTE;
 import com.aimir.fep.protocol.fmp.datatype.CHAR;
@@ -24,70 +20,47 @@ import com.aimir.fep.util.Hex;
  * @author J.S Park (elevas@nuritelecom.com)
  * @version 1.1 2019-11-21
  */
-
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "sensorPathEntry", propOrder = {
-    "sensorPathID",
-    "sensorPathSerial",
-    "sensorPathModel",
-    "sensorPathShortID",
-    "sensorPathHops",
-    "sensorPathNode",
-    "sensorPathTime",
-    "sensorPathLQI",
-    "sensorPathRSSI"
-})
-
 public class sensorPathEntry extends Entry {
 
 	private static final long serialVersionUID = 5727872132110978185L;
 
 	/* 4.4.1 */
-	@XmlElement(name = "sensorPathID")
     public HEX sensorPathID = new HEX(8);
  
     /* 4.4.2 */
-	@XmlElement(name = "sensorPathSerial")
 	public OCTET sensorPathSerial = new OCTET(20);
 
 	/* 4.4.3 */
-	@XmlElement(name = "sensorPathModel")
 	public OCTET sensorPathModel = new OCTET(18);
 
 	/* 4.4.4 */
-	@XmlElement(name = "sensorPathShortID")
 	public WORD sensorPathShortID =	new WORD();
 	
 	/* 4.4.5 */
-	@XmlElement(name = "sensorPathHops")
 	public BYTE sensorPathHops = new BYTE();
 	
 	/* 4.4.6 */
-	@XmlElement(name = "sensorPathNode")
 	public OCTET sensorPathNode = new OCTET(60);
     
 	/* 4.4.7 */
-	@XmlElement(name = "sensorPathTime")
     public TIMESTAMP sensorPathTime = new TIMESTAMP(7); 
     
     /* 4.4.8 */
-	@XmlElement(name = "sensorPathLQI")
     public BYTE sensorPathLQI = new BYTE();
     
     /* 4.4.9 */
-	@XmlElement(name = "sensorPathRSSI")
     public CHAR sensorPathRSSI = new CHAR();
 
-//    @XmlTransient
-    public String getSensorPathID(){
-        return sensorPathID.getValue();
+    @XmlTransient
+    public HEX getSensorPathID(){
+        return sensorPathID;
     }
 
     public void setSensorPathID(HEX sensorPathID){
         this.sensorPathID = sensorPathID;
     }
 
-//    @XmlTransient
+    @XmlTransient
     public OCTET getSensorPathSerial(){
         return sensorPathSerial;
     }
@@ -96,16 +69,16 @@ public class sensorPathEntry extends Entry {
         this.sensorPathSerial = sensorPathSerial;
     }
 
-//    @XmlTransient
-    public String getSensorPathModel(){
-        return sensorPathModel.toHexString();
+    @XmlTransient
+    public OCTET getSensorPathModel(){
+        return sensorPathModel;
     }
 
     public void setSensorPathModel(OCTET sensorPathModel){
         this.sensorPathModel = sensorPathModel;
     }
 
-//    @XmlTransient
+    @XmlTransient
     public WORD getSensorPathShortID(){
         return sensorPathShortID;
     }
@@ -114,7 +87,7 @@ public class sensorPathEntry extends Entry {
         this.sensorPathShortID = sensorPathShortID;
     }
 
-//    @XmlTransient
+    @XmlTransient
     public BYTE getSensorPathHops(){
         return sensorPathHops;
     }
@@ -123,7 +96,7 @@ public class sensorPathEntry extends Entry {
         this.sensorPathHops = sensorPathHops;
     }
 
-//    @XmlTransient
+    @XmlTransient
     public OCTET getSensorPathNode(){
         return sensorPathNode;
     }
@@ -132,7 +105,7 @@ public class sensorPathEntry extends Entry {
         this.sensorPathNode = sensorPathNode;
     }
 
-//    @XmlTransient
+    @XmlTransient
     public TIMESTAMP getSensorPathTime(){
         return sensorPathTime;
     }
@@ -141,7 +114,7 @@ public class sensorPathEntry extends Entry {
         this.sensorPathTime = sensorPathTime;
     }
 
-//    @XmlTransient
+    @XmlTransient
     public BYTE getSensorPathLQI(){
         return sensorPathLQI;
     }
@@ -150,7 +123,7 @@ public class sensorPathEntry extends Entry {
         this.sensorPathLQI = sensorPathLQI;
     }
 
-//    @XmlTransient
+    @XmlTransient
     public CHAR getSensorPathRSSI(){
         return sensorPathRSSI;
     }
