@@ -54,6 +54,8 @@ import com.aimir.model.device.MMIU;
 import com.aimir.model.device.Modem;
 import com.aimir.model.system.MeterProgram;
 
+import net.sf.json.JSONObject;
+
 /**
  * Command Proxy MBean which execute to MCU
  *
@@ -3015,6 +3017,6 @@ public interface CommandGWMBean
      * @param time MCU Time (yyyymmddhhmmss)
      * @throws FMPMcuException, Exception
      */
-    public String cmdGetSensorPath(String mcuId, String parserName)
+    public List<JSONObject> cmdGetSensorPath(String mcuId, String parserName)
         throws FMPMcuException, Exception;
 }

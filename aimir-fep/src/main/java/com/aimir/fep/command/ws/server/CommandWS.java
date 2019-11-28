@@ -84,6 +84,8 @@ import com.aimir.model.device.Meter;
 import com.aimir.model.device.Modem;
 import com.aimir.model.system.MeterProgram;
 
+import net.sf.json.JSONObject;
+
 /**
  * Command Gateway WebService
  *
@@ -5249,11 +5251,11 @@ public class CommandWS
      * 
      * @param mcuId			DCU ID
      * @param parserName	Parser Name
-     * @return List<sensorPathEntry>
+     * @return List<JSONObject>
      * @throws Exception
      */
     @WebMethod
-    public String cmdGetSensorPath(
+    public List<JSONObject> cmdGetSensorPath(
     		@WebParam(name="McuId") String mcuId,
     		@WebParam(name="ParserName") String parserName
     		) throws Exception{
