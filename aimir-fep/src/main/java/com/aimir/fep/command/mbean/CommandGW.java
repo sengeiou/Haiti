@@ -23887,7 +23887,7 @@ public class CommandGW implements CommandGWMBean {
 	}
 
 	@Override
-	public List<JSONObject> cmdGetSensorPath(String mcuId, String parserName) throws FMPMcuException, Exception {
+	public List<String> cmdGetSensorPath(String mcuId, String parserName) throws FMPMcuException, Exception {
 		log.debug("cmdGetSeosrPath("+mcuId+", "+parserName+")");
 
 		Target target = CmdUtil.getTarget(mcuId);
@@ -23914,12 +23914,12 @@ public class CommandGW implements CommandGWMBean {
 			throw makeMcuException(((Integer) obj).intValue());
 		} else if (obj instanceof SMIValue[]) {
 			smiValues = (SMIValue[]) obj;
-			List<JSONObject> list = new ArrayList<JSONObject>();
+			List<String> list = new ArrayList<String>();
 			for (int i = 0; i < smiValues.length; i++) {
 				smiValue = smiValues[i];
 				OPAQUE mdv = (OPAQUE) smiValue.getVariable();
 				sensorPathEntry value = (sensorPathEntry) mdv.getValue();
-				list.add(value.toJSONObject());
+				list.add(value.toJSONObject().toString());
 			}
 			log.debug(list);
 			return list;

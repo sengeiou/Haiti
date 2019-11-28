@@ -5251,11 +5251,11 @@ public class CommandWS
      * 
      * @param mcuId			DCU ID
      * @param parserName	Parser Name
-     * @return List<JSONObject>
+     * @return List<String>
      * @throws Exception
      */
     @WebMethod
-    public List<JSONObject> cmdGetSensorPath(
+    public List<String> cmdGetSensorPath(
     		@WebParam(name="McuId") String mcuId,
     		@WebParam(name="ParserName") String parserName
     		) throws Exception{
