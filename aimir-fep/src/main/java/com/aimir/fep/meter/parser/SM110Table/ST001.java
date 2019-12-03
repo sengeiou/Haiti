@@ -19,24 +19,21 @@ import org.apache.commons.logging.LogFactory;
 import com.aimir.fep.util.DataFormat;
 
 /**
+ * Manufacturer Identification Table
  * 
- * ex ) 
- *         : 20 20 30 30 30 30 30 30 30 30 30 30 
- * MSERIAL : 32 38 36 30 30 33 32 36 
- */
-
-/**
  * @author Park YeonKyoung goodjob@nuritelecom.com
  */
 public class ST001 implements java.io.Serializable {
 
 	private static final long serialVersionUID = 513191471170980896L;
+	
 	public static final int OFS_MANUFACTURER = 0;
     public static final int OFS_ED_MODEL = 4;
     public static final int OFS_HW_VERSION_NUMBER = 12;
     public static final int OFS_HW_REVISION_NUMBER = 13;
     public static final int OFS_FW_VERSION_NUMBER = 14;
     public static final int OFS_FW_REVISION_NUMBER = 15;
+	public static final int OFS_MSERIAL = 16;
     
     public static final int LEN_MANUFACTURER = 4;
     public static final int LEN_ED_MODEL = 8;
@@ -44,8 +41,6 @@ public class ST001 implements java.io.Serializable {
     public static final int LEN_HW_REVISION_NUMBER = 1;
     public static final int LEN_FW_VERSION_NUMBER = 1;
     public static final int LEN_FW_REVISION_NUMBER = 1;
-	
-	public static final int OFS_MSERIAL = 16;
 	public static final int LEN_MSERIAL = 16;
 	
 	private byte[] data;
@@ -67,9 +62,7 @@ public class ST001 implements java.io.Serializable {
         String val = new String();
 
         try{
-            val = new String(
-                      DataFormat.select(data,OFS_MANUFACTURER,LEN_MANUFACTURER)).trim();
-
+            val = new String(DataFormat.select(data,OFS_MANUFACTURER,LEN_MANUFACTURER)).trim();
         }catch(Exception e){
             log.warn("invalid value->"+e.getMessage());
         }
@@ -92,7 +85,7 @@ public class ST001 implements java.io.Serializable {
     }
     
     public int getHW_VERSION_NUMBER(){
-       return DataFormat.hex2unsigned8(data[OFS_HW_VERSION_NUMBER]);
+    	return DataFormat.hex2unsigned8(data[OFS_HW_VERSION_NUMBER]);
     }
     
     public int getHW_REVISION_NUMBER(){
@@ -125,7 +118,6 @@ public class ST001 implements java.io.Serializable {
 
 		try{
 			mserial = new String(DataFormat.select(data,OFS_MSERIAL,LEN_MSERIAL)).trim();
-
 		}catch(Exception e){
 			log.warn("invalid meter id->"+e.getMessage());
 		}

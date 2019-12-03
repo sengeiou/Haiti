@@ -43,6 +43,7 @@ import com.aimir.fep.protocol.fmp.frame.service.entry.mobileEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.pluginEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.procEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.sensorInfoNewEntry;
+import com.aimir.fep.protocol.fmp.frame.service.entry.sensorPathEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.sysEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.timeEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.trInfoEntry;
@@ -3760,7 +3761,7 @@ public interface CommandWS {
     @RequestWrapper(localName = "cmdGetSensorPath", targetNamespace = "http://server.ws.command.fep.aimir.com/", className = "com.aimir.fep.command.ws.client.CmdGetSensorPath")
     @WebMethod
     @ResponseWrapper(localName = "cmdGetSensorPathResponse", targetNamespace = "http://server.ws.command.fep.aimir.com/", className = "com.aimir.fep.command.ws.client.CmdGetSensorPathResponse")
-    public sysEntry cmdGetSensorPath(
+    public java.util.List<sensorPathEntry> cmdGetSensorPath(
         @WebParam(name = "McuId", targetNamespace = "")
         java.lang.String mcuId,
         @WebParam(name = "ParserName", targetNamespace = "")

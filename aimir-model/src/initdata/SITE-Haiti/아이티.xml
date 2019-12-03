@@ -900,6 +900,11 @@
        role="customer"
        supplier="EDH"
     />
+
+    <!-- Display Channel -->
+    <mvm.DisplayChannel name="Total Del Only F+H"    localName="Total Del Only F+H"    serviceType="Electricity" unit="kWh"    chMethod="MAX"/>
+    <mvm.DisplayChannel name="Total Rcvd Only F+H"   localName="Total Rcvd Only F+H"   serviceType="Electricity" unit="kVarh"  chMethod="MAX"/>
+    <mvm.DisplayChannel name="Usage"                 localName="Usage"                 serviceType="Water"       unit="m3"     chMethod="MAX"/>
     	
     <!-- Device Vendor/Model -->   
     <system.DeviceVendor 
@@ -916,6 +921,14 @@
         address="http://www.ge.com"
         descr="General Electric Company"
     />
+    <system.DeviceVendor 
+        supplier="EDH"
+        name="Sensus"
+        code="33"
+        address="http://www.sensus.com/"
+        descr="Sensus"
+    />
+
     <!-- Dummy Device -->
     <system.DeviceModel 
         deviceVendor="NURITelecom"
@@ -957,13 +970,6 @@
         code="111"
         deviceType="1.1.1.3"
         name="NZC I211"
-        image="uploadImg/mcu/NZC-I212.jpg"
-    />
-    <system.DeviceModel 
-        deviceVendor="GE"
-        code="211"
-        deviceType="1.3.1.1"
-        name="I210+"
         image="uploadImg/mcu/NZC-I212.jpg"
     />
     
@@ -1044,15 +1050,7 @@
         name="NAPC-W202SR"
         deviceModel="NAPC-W202SR"
     /> 
-
-    <system.DeviceVendor 
-        supplier="EDH"
-        name="GE"
-        code="200"
-        address="http://www.ge.com"
-        descr="General Electric Company"
-    />
-    
+   
     <system.DeviceModel 
         deviceVendor="GE"
         code="210"
@@ -1069,8 +1067,21 @@
         deviceModel="I210+c"
         parserName="com.aimir.fep.meter.parser.I210PlusCSeries"
         saverName="com.aimir.fep.meter.saver.I210PlusCSeriesMDSaver"
+    />              
+    <mvm.ChannelConfig meterConfig="I210+c" channel="Total Del Only F+H"   channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <mvm.ChannelConfig meterConfig="I210+c" channel="Total Rcvd Only F+H"  channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="I210+c"   level="2"   desc="On Demand Metering" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="I210+c"   level="2"   desc="Meter Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="I210+c"   level="2"   desc="Relay Switch" />
+
+    <system.DeviceModel 
+        deviceVendor="GE"
+        code="211"
+        deviceType="1.3.1.1"
+        name="I210+"
+        image="uploadImg/mcu/NZC-I212.jpg"
     />
-    
+
     <system.MeterConfig 
         meterClass="1.0"
         phase="1p2w"
@@ -1080,19 +1091,34 @@
         parserName="com.aimir.fep.meter.parser.I210Plus"
         saverName="com.aimir.fep.meter.saver.I210PlusMDSaver"
     />
-        
-    <mvm.DisplayChannel name="Total Del Only F+H"       localName="Total Del Only F+H"      serviceType="Electricity" unit="kWh" chMethod="SUM"/>
-    <mvm.DisplayChannel name="Total Rcvd Only F+H"      localName="Total Rcvd Only F+H"     serviceType="Electricity" unit="kVarh" chMethod="SUM"/>
-    
-    <mvm.ChannelConfig meterConfig="I210+c" channel="Total Del Only F+H"   channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
-    <mvm.ChannelConfig meterConfig="I210+c" channel="Total Rcvd Only F+H"  channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay" />
     <mvm.ChannelConfig meterConfig="I210+" channel="Total Del Only F+H"   channelIndex="1"   dataType="LpEM" displayType="SaveAndDisplay" />
     <mvm.ChannelConfig meterConfig="I210+" channel="Total Rcvd Only F+H"  channelIndex="2"   dataType="LpEM" displayType="SaveAndDisplay" />
-    
-    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="I210+c"   level="2"   desc="On Demand Metering" />
-    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="I210+c"   level="2"   desc="Meter Time Synchronization" />
-    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="I210+c"   level="2"   desc="Relay Switch" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="I210+"   level="2"   desc="On Demand Metering" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="I210+"   level="2"   desc="Meter Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="I210+"   level="2"   desc="Relay Switch" />
 
+    <system.DeviceModel 
+        deviceVendor="Sensus"
+        code="0"
+        deviceType="1.3.1.2"
+        name="SM150P"
+        image="uploadImg/meter/sm110.jpg"
+    />
+
+    <system.MeterConfig         
+        phase="1p2w"
+        pulseConst="100"
+        name="SM150P"
+        deviceModel="SM150P"
+        parserName="com.aimir.fep.meter.parser.UMC2000W4R"
+        saverName="com.aimir.fep.meter.saver.UMC2000W4RMDSaver"
+    />   
+    <mvm.ChannelConfig meterConfig="SM150P" channel="Usage"  channelIndex="1"   dataType="LpWM" displayType="SaveAndDisplay" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="SM150P"   level="2"   desc="On Demand Metering" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="SM150P"   level="2"   desc="Meter Time Synchronization" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="SM150P"   level="2"   desc="Relay Status" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="SM150P"   level="2"   desc="Relay On" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="SM150P"   level="2"   desc="Relay Off" />
 
     <device.EventAlert eventAlertType='Event' 
                        severity='Information' 

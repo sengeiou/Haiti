@@ -1435,9 +1435,12 @@ public class CommonConstants {
             
         }
         
-        //마지막 ',' 지운다.
+        //마지막 ',' 지운다. 비어있으면 다른 메시지 리턴.
         if(alarmStbuf.length() > 0)
             alarmStbuf.deleteCharAt(alarmStbuf.length()-1);
+        else
+        	alarmStbuf.append("None");
+        
         
         return alarmStbuf.toString();
     }

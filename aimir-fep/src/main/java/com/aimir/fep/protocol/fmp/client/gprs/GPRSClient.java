@@ -34,6 +34,7 @@ import com.aimir.fep.protocol.fmp.frame.ServiceDataConstants;
 import com.aimir.fep.protocol.fmp.frame.ServiceDataFrame;
 import com.aimir.fep.protocol.fmp.frame.service.AlarmData;
 import com.aimir.fep.protocol.fmp.frame.service.CommandData;
+import com.aimir.fep.protocol.fmp.frame.service.DFData;
 import com.aimir.fep.protocol.fmp.frame.service.EventData;
 import com.aimir.fep.protocol.fmp.frame.service.MDData;
 import com.aimir.fep.protocol.fmp.frame.service.RMDData;
@@ -397,6 +398,40 @@ public class GPRSClient implements Client
 			send(frame);
 
 			log.info("sendMD : finished");
+		} catch (Exception ex) {
+			throw ex;
+		} finally {
+			close();
+		}
+    }
+    
+    /**
+     * send Measurement Data to Target 
+     *
+     * @param md <code>MDData</code> Measurement Data
+     * @throws Exception
+     */
+    public void sendDF(DFData df) throws Exception
+    {
+		try {
+			// ProtocolSession session = connect();
+			if (session == null || !session.isConnected())
+				connect();
+			ServiceDataFrame frame = new ServiceDataFrame();
+			frame.setAttrByte(GeneralDataConstants.ATTR_ACK);
+			frame.setAttrByte(GeneralDataConstants.ATTR_START);
+			frame.setAttrByte(GeneralDataConstants.ATTR_END);
+			long mcuId = Long.parseLong(target.getTargetId());
+			frame.setMcuId(new UINT(mcuId));
+			if (mcuId > MAX_MCUID)
+				throw new Exception("mcuId is too Big: max[" + MAX_MCUID + "]");
+			frame.setSvcBody(df.encode());
+			// frame.setAttrByte(GeneralDataConstants.ATTR_COMPRESS);
+			frame.setSvc(GeneralDataConstants.SVC_D);
+
+			send(frame);
+
+			log.info("sendDF : finished");
 		} catch (Exception ex) {
 			throw ex;
 		} finally {

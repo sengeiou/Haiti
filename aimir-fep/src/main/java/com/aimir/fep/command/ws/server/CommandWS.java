@@ -70,6 +70,7 @@ import com.aimir.fep.protocol.fmp.frame.service.entry.mobileEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.pluginEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.procEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.sensorInfoNewEntry;
+import com.aimir.fep.protocol.fmp.frame.service.entry.sensorPathEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.sysEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.timeEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.trInfoEntry;
@@ -82,6 +83,8 @@ import com.aimir.model.device.MMIU;
 import com.aimir.model.device.Meter;
 import com.aimir.model.device.Modem;
 import com.aimir.model.system.MeterProgram;
+
+import net.sf.json.JSONObject;
 
 /**
  * Command Gateway WebService
@@ -5248,18 +5251,15 @@ public class CommandWS
      * 
      * @param mcuId			DCU ID
      * @param parserName	Parser Name
-     * @return
+     * @return List<String>
      * @throws Exception
      */
     @WebMethod
-    public void cmdGetSensorPath(
+    public List<String> cmdGetSensorPath(
     		@WebParam(name="McuId") String mcuId,
     		@WebParam(name="ParserName") String parserName
     		) throws Exception{
-//        ResponseMap response = new ResponseMap();
-        command.cmdGetSensorPath(mcuId, parserName);
-//        response.setResponse(command.cmdGetSensorPath(mcuId, parserName));
-//    	return response;
+        return command.cmdGetSensorPath(mcuId, parserName);
     }
 }
 

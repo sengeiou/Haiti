@@ -150,13 +150,13 @@ public class MeterDataSaverMain
                     log.error(e, e);
                     result = new int[]{0, 1};
                 }
-                
+                 
                 if(result!=null && result.length>0) {
                     if(result[0]>=1) {
                         failModem.remove(mde[i].getModemId());
                         succModem.add(mde[i].getModemId());
                     }
-                }
+                } 
                 log.info("mde["+i+"]=[Success(" + result[0]+ ")][Fail(" + result[1]+")]");
             }
         }

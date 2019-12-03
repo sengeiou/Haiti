@@ -4180,7 +4180,7 @@ public class CommandGW implements CommandGWMBean {
 		Vector<SMIValue> datas = new Vector<SMIValue>();
 		byte[][] reqBit = KamstrupCIDMeta.getRequest(req);
 
-		String mcuRevision = FMPProperty.getProperty("mcu.revision.support.mbus");
+		String mcuRevision = FMPProperty.getProperty("mcu.revision.support.mbus", "0");
 		SMIValue smiValue = null;
 
 		try {
@@ -4237,6 +4237,7 @@ public class CommandGW implements CommandGWMBean {
 			}
 
 		} catch (Exception e) {
+			log.error(e,e);
 			throw e;
 		}
 
@@ -23886,7 +23887,7 @@ public class CommandGW implements CommandGWMBean {
 	}
 
 	@Override
-	public void cmdGetSensorPath(String mcuId, String parserName) throws FMPMcuException, Exception {
+	public List<String> cmdGetSensorPath(String mcuId, String parserName) throws FMPMcuException, Exception {
 		log.debug("cmdGetSeosrPath("+mcuId+", "+parserName+")");
 
 		Target target = CmdUtil.getTarget(mcuId);
@@ -23913,19 +23914,19 @@ public class CommandGW implements CommandGWMBean {
 			throw makeMcuException(((Integer) obj).intValue());
 		} else if (obj instanceof SMIValue[]) {
 			smiValues = (SMIValue[]) obj;
-			List<sensorPathEntry> list = new ArrayList<sensorPathEntry>();
+			List<String> list = new ArrayList<String>();
 			for (int i = 0; i < smiValues.length; i++) {
 				smiValue = smiValues[i];
 				OPAQUE mdv = (OPAQUE) smiValue.getVariable();
 				sensorPathEntry value = (sensorPathEntry) mdv.getValue();
-				log.debug(value);
-				list.add(value);
+				list.add(value.toJSONObject().toString());
 			}
 			log.debug(list);
+			return list;
 		} else {
 			log.error("Unknown Return Value");
 			throw new Exception("Unknown Return Value");
-		}		
+		}
 	}	
 
 }

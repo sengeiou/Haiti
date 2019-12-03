@@ -3409,7 +3409,7 @@
         	}
         }
 
-        p = $.getJSON(	'${ctx}/gadget/device/command/cmdOnDemand_pks.do',
+        p = $.getJSON(	'${ctx}/gadget/device/command/cmdOnDemand.do',
         	{
             	'target' : meterId,
                 'loginId' : loginId,

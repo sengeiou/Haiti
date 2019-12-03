@@ -275,6 +275,10 @@ class BalanceCheckThread implements Runnable {
             GroupMemberDao groupMemberDao = DataUtil.getBean(GroupMemberDao.class);
             ContractDao contractDao = DataUtil.getBean(ContractDao.class);
             SupplierDao supplierDao = DataUtil.getBean(SupplierDao.class);
+            CodeDao codeDao = DataUtil.getBean(CodeDao.class);
+            
+            Code emergencyType = codeDao.findByCondition("code", Code.EMERGENCY_CREDIT);
+            Code prepaymentType = codeDao.findByCondition("code", Code.PREPAYMENT);
             
             Contract contract = contractDao.get(contractId);
             Meter meter = contract.getMeter();
@@ -449,23 +453,22 @@ class BalanceCheckThread implements Runnable {
     
                 } else if (contract.getEmergencyCreditAutoChange() != null && contract.getEmergencyCreditAutoChange()) {
                     // 잔액이 0 이하 이고 emergency credit 이 자동인 경우 고객정보를 emergency credit 모드로 업데이트
-                    if(contract.getEmergencyCreditStartTime() == null  || "".equals(contract.getEmergencyCreditStartTime())) {
+                	if(contract.getEmergencyCreditStartTime() == null  || "".equals(contract.getEmergencyCreditStartTime())) {
                         //EmergencyCreditType으로 변경
-                        log.info("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] ContractId["+contract.getId()+"] is change EmergencyCreditType");
-                        CodeDao codeDao = DataUtil.getBean(CodeDao.class);
-                        Code newCreditType = codeDao.findByCondition("code", Code.EMERGENCY_CREDIT);
-                        changeCreditType(contract, "creditType", creditType, newCreditType);
+                        log.info("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] ContractId["+contract.getId()+"] is change EmergencyCreditType");                        
+                        
+                        changeCreditType(contract, "creditType", creditType, emergencyType);
                     } else {
                         //EmergencyDuration을 체크 후 기간이 지났을 경우 EmernencyCredit을 Manual로 변경
                         Boolean isEmergencyCreditContract = checkEmergencyDuration(contract);
                         if(!isEmergencyCreditContract) {
                             //Manual로 변경
                             log.info("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] ContractId["+contract.getId()+"] is change PrepayType");
-                            CodeDao codeDao = DataUtil.getBean(CodeDao.class);
-                            Code newCreditType = codeDao.findByCondition("code", Code.PREPAYMENT);
-                            changeCreditType(contract, "creditType", creditType, newCreditType);
+                                                        
+                            changeCreditType(contract, "creditType", creditType, prepaymentType);
                         }
                     }
+                	
                 }
             }
             // 잔액이 0보다 크고 미터 상태가 cut off 이거나 계약 상태가 임시중단 상태이면 relay on 시도한다.

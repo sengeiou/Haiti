@@ -32,6 +32,7 @@ import com.aimir.fep.protocol.fmp.frame.service.entry.mobileEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.pluginEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.procEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.sensorInfoNewEntry;
+import com.aimir.fep.protocol.fmp.frame.service.entry.sensorPathEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.sysEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.timeEntry;
 import com.aimir.fep.protocol.fmp.frame.service.entry.trInfoEntry;
@@ -92,7 +93,8 @@ import com.aimir.fep.protocol.fmp.frame.service.entry.varValueEntry;
     trInfoEntry.class,
     varEntry.class,
     varSubValueEntry.class,
-    varValueEntry.class
+    varValueEntry.class,
+    sensorPathEntry.class
 })
 public abstract class Entry implements java.io.Serializable
 {

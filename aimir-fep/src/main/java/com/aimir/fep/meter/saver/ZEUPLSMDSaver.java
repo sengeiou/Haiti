@@ -198,6 +198,7 @@ public class ZEUPLSMDSaver extends AbstractMDSaver {
                 newLP[va] = new LPData((lpdata.getLpDate()+strHH+strMM), lps[0], lps[0]);
                 newLP[va].setCh(lps);
                 newLP[va].setFlag(flaglist[va]);
+                newLP[va].setBaseValue(baseValue);
                 log.debug("newLPIdx[" + va + "], lpDateTime["+newLP[va].getDatetime()+"], ChVal["+lps[0]+"]");
 
             }

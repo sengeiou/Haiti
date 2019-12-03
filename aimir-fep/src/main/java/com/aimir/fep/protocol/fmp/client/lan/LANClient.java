@@ -24,6 +24,7 @@ import com.aimir.fep.protocol.fmp.frame.ServiceDataConstants;
 import com.aimir.fep.protocol.fmp.frame.ServiceDataFrame;
 import com.aimir.fep.protocol.fmp.frame.service.AlarmData;
 import com.aimir.fep.protocol.fmp.frame.service.CommandData;
+import com.aimir.fep.protocol.fmp.frame.service.DFData;
 import com.aimir.fep.protocol.fmp.frame.service.EventData;
 import com.aimir.fep.protocol.fmp.frame.service.MDData;
 import com.aimir.fep.protocol.fmp.frame.service.RMDData;
@@ -427,6 +428,34 @@ public class LANClient implements Client
 			frame.setSvcBody(md.encode());
 			frame.setAttrByte(GeneralDataConstants.ATTR_COMPRESS);
 			frame.setSvc(GeneralDataConstants.SVC_M);
+			sendWithCompress(frame);
+
+			log.info("sendMD : finished");
+		} catch (Exception ex) {
+			throw ex;
+		} finally {
+			close();
+		}
+    }
+    
+
+    
+    public void sendDFWithCompress(DFData df) throws Exception
+    {
+		try {
+			if (session == null || !session.isConnected())
+				connect();
+			ServiceDataFrame frame = new ServiceDataFrame();
+			frame.setAttrByte(GeneralDataConstants.ATTR_ACK);
+			frame.setAttrByte(GeneralDataConstants.ATTR_START);
+			frame.setAttrByte(GeneralDataConstants.ATTR_END);
+			long mcuId = Long.parseLong(target.getTargetId());
+			frame.setMcuId(new UINT(mcuId));
+			if (mcuId > MAX_MCUID)
+				throw new Exception("mcuId is too Big: max[" + MAX_MCUID + "]");
+			frame.setSvcBody(df.encode());
+			frame.setAttrByte(GeneralDataConstants.ATTR_COMPRESS);
+			frame.setSvc(GeneralDataConstants.SVC_D);
 			sendWithCompress(frame);
 
 			log.info("sendMD : finished");
