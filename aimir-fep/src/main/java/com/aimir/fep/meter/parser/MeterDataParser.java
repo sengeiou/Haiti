@@ -211,4 +211,14 @@ public abstract class MeterDataParser implements Serializable
     public void setMcuRevision(String mcuRevision) {
 
     }
+
+    /**
+     * raw data 분석기용 parse
+     * @param data
+     * @return String
+     */
+    public String getParsingResult(byte[] data) throws Exception {
+		return null;
+	}
+
 }

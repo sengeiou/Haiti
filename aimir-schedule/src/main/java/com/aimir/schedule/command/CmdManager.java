@@ -18,6 +18,7 @@ import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 import com.aimir.constants.CommonConstants.Protocol;
 import com.aimir.fep.command.ws.client.CommandWS;
 import com.aimir.fep.command.ws.client.CommandWS_Service;
+import com.aimir.schedule.interceptor.CmdInInterceptor;
 
 public class CmdManager {
     private static Log log = LogFactory.getLog(CmdManager.class);
@@ -100,6 +101,8 @@ public class CmdManager {
         finally {
             if (port != null) {
                 Client client = ClientProxy.getClient(port);
+                //client.getOutInterceptors().add(new CmdOutInterceptor()); //fep으로 보내는 Interceptor
+                client.getInInterceptors().add(new CmdInInterceptor());
                 HTTPConduit http = (HTTPConduit)client.getConduit();
                 HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
                 if(config.getProperty("fep.ws.timeout")!=null && !config.getProperty("fep.ws.timeout").equals("")) {
