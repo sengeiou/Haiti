@@ -752,4 +752,343 @@ public class ZEUPLS extends MeterDataParser implements java.io.Serializable
     {
         this.batteryLogs = batteryLogs;
     }
+    
+    public String getParsingResult(byte[] data) throws Exception
+    {
+        String systemTime = DateTimeUtil.getDateString(new Date());
+        StringBuffer result = new StringBuffer();
+        
+        int pos = 0;
+
+        System.arraycopy(data, pos, TIMEZONE, 0, TIMEZONE.length);//Word 2
+        pos += TIMEZONE.length;
+        int timeZone = DataUtil.getIntTo2Byte(TIMEZONE);
+        result.append("TIMEZONE[" + timeZone + "]"+System.getProperty("line.separator"));
+
+        System.arraycopy(data, pos, DST,0, DST.length);//Word 2
+        pos += DST.length;
+        int dst = DataUtil.getIntTo2Byte(DST);
+        result.append("DST[" + dst + "]"+System.getProperty("line.separator"));
+
+        System.arraycopy(data, pos, CURRENTYEAR, 0, CURRENTYEAR.length);//Word 2
+        pos += CURRENTYEAR.length;
+        int currentYear = DataUtil.getIntTo2Byte(CURRENTYEAR);
+        result.append("CURRENTYEAR[" + currentYear + "]"+System.getProperty("line.separator"));
+
+        System.arraycopy(data, pos, CURRENTMONTH, 0, CURRENTMONTH.length);//Byte 1
+        pos += CURRENTMONTH.length;
+        int currentMonth = DataUtil.getIntToBytes(CURRENTMONTH);
+        result.append("CURRENTMONTH[" + currentMonth + "]"+System.getProperty("line.separator"));
+
+        System.arraycopy(data, pos, CURRENTDAY, 0, CURRENTDAY.length);//Byte 1
+        pos += CURRENTDAY.length;
+        int currentDay = DataUtil.getIntToBytes(CURRENTDAY);
+        result.append("CURRENTDAY[" + currentDay + "]"+System.getProperty("line.separator"));
+
+        System.arraycopy(data, pos, CURRENTHOUR, 0, CURRENTHOUR.length);//Byte 1
+        pos += CURRENTHOUR.length;
+        int currentHour = DataUtil.getIntToBytes(CURRENTHOUR);
+        result.append("CURRENTHOUR[" + currentHour + "]"+System.getProperty("line.separator"));
+
+        System.arraycopy(data, pos, CURRENTMINUTE, 0, CURRENTMINUTE.length);//Byte 1
+        pos += CURRENTMINUTE.length;
+        int currentMinute = DataUtil.getIntToBytes(CURRENTMINUTE);
+        result.append("CURRENTMINUTE[" + currentMinute + "]"+System.getProperty("line.separator"));
+
+        System.arraycopy(data, pos, CURRENTSECOND, 0, CURRENTSECOND.length);//Byte 1
+        pos += CURRENTSECOND.length;
+        int currentSecond = DataUtil.getIntToBytes(CURRENTSECOND);
+        result.append("CURRENTSECOND[" + currentSecond + "]"+System.getProperty("line.separator"));
+
+        currentTime = Integer.toString(currentYear)
+        + (currentMonth < 10? "0"+currentMonth:""+currentMonth)
+        + (currentDay < 10? "0"+currentDay:""+currentDay)
+        + (currentHour < 10? "0"+currentHour:""+currentHour)
+        + (currentMinute < 10? "0"+currentMinute:""+currentMinute)
+        + (currentSecond < 10? "0"+currentSecond:""+currentSecond);
+
+        System.arraycopy(data, pos, OPERATINGDAY, 0, OPERATINGDAY.length);//Byte 2
+        pos += OPERATINGDAY.length;
+        operatingDay = DataUtil.getIntTo2Byte(OPERATINGDAY);
+        result.append("OPERATINGDAY[" + operatingDay + "]"+System.getProperty("line.separator"));
+
+        System.arraycopy(data, pos, ACTIVEMINUTE, 0, ACTIVEMINUTE.length);//Byte 2
+        pos += ACTIVEMINUTE.length;
+        activeMinute = DataUtil.getIntTo2Byte(ACTIVEMINUTE);
+        result.append("ACTIVEMINUTE[" + activeMinute + "]"+System.getProperty("line.separator"));
+
+        DecimalFormat df = new DecimalFormat("0.####");
+
+        System.arraycopy(data, pos, BATTERYVOLT, 0, BATTERYVOLT.length);//Byte 2
+        pos += BATTERYVOLT.length;
+        batteryVolt =  Double.parseDouble(df.format((double)DataUtil.getIntTo2Byte(BATTERYVOLT) * 0.0001));
+        result.append("BATTERYVOLT[" + batteryVolt + "]"+System.getProperty("line.separator"));
+
+        System.arraycopy(data, pos, CONSUMPTIONCURRENT, 0, CONSUMPTIONCURRENT.length);//Byte 2
+        pos += CONSUMPTIONCURRENT.length;
+        int _consumptionCurrent = DataUtil.getIntTo2Byte(CONSUMPTIONCURRENT);
+
+        System.arraycopy(data, pos, OFFSET, 0, OFFSET.length);//Byte 1
+        pos += OFFSET.length;
+        int _voltOffset = DataUtil.getIntToBytes(OFFSET);
+        voltOffset =  Double.parseDouble(df.format((double)_voltOffset * 0.0001));
+        result.append("OFFSET[" + voltOffset + "]"+System.getProperty("line.separator"));
+
+        System.arraycopy(data, pos, CURRENTPULSE, 0, CURRENTPULSE.length);//Byte 4
+        pos += CURRENTPULSE.length;
+        meteringValue = new Double(DataUtil.getLongToBytes(CURRENTPULSE));
+        
+        // 보정하고 펄스 상수로 나누어 실제 검침값으로 변환한다.
+        MeterType meterType = MeterType.EnergyMeter;
+//        MeterType meterType = MeterType.valueOf(meter.getMeterType().getName());
+        Double pulseConst = 1d;
+//        meter.getPulseConstant() = 5000;
+        Double getPulseConstant = (double) 5000;
+        if(getPulseConstant != null && getPulseConstant > 0){
+            pulseConst = getPulseConstant;
+        }
+        if (meterType == MeterType.WaterMeter) {
+            double correctPulse = 0.0;
+            if (((WaterMeter)meter).getCorrectPulse() != null)
+                correctPulse = ((WaterMeter)meter).getCorrectPulse();
+            meteringValue = (meteringValue + correctPulse) / pulseConst;
+        }
+        else if (meterType == MeterType.GasMeter) {
+            double correctPulse = 0.0;
+            if (((GasMeter)meter).getCorrectPulse() != null)
+                correctPulse = ((GasMeter)meter).getCorrectPulse();
+            meteringValue = (meteringValue + correctPulse) / pulseConst;
+        }
+        else {
+            meteringValue = meteringValue / getPulseConstant;
+        }
+        
+        result.append("CURRENTPULSE[" + meteringValue + "]"+System.getProperty("line.separator"));
+
+        System.arraycopy(data, pos, LPCHOICE, 0, LPCHOICE.length);//Byte 1
+        pos += LPCHOICE.length;
+        lpChoice = DataUtil.getIntToBytes(LPCHOICE);
+        result.append("LPCHOICE[" + lpChoice + "]"+System.getProperty("line.separator"));
+
+        System.arraycopy(data, pos, LPPERIOD, 0, LPPERIOD.length);//Byte 1
+        pos += LPPERIOD.length;
+        lpPeriod = DataUtil.getIntToBytes(LPPERIOD);
+        result.append("LPPERIOD[" + lpPeriod + "]"+System.getProperty("line.separator"));
+
+        // from here, lp
+        if (lpPeriod == 0) {
+            result.append("LP Log Data is not exist"+System.getProperty("line.separator"));
+        }
+        else {
+            //mcuRevision = meter.getModem().getMcu().getSysSwRevision();
+        	mcuRevision = "5549";
+            System.arraycopy(data, pos, LPYEAR, 0, LPYEAR.length);
+            pos += LPYEAR.length;
+            System.arraycopy(data, pos, LPMONTH, 0, LPMONTH.length);
+            pos += LPMONTH.length;
+            System.arraycopy(data, pos, LPDAY, 0, LPDAY.length);
+            pos += LPDAY.length;
+
+            lpDate=Integer.toString(DataUtil.getIntTo2Byte(LPYEAR))
+                    + (DataUtil.getIntToBytes(LPMONTH) < 10? "0"+DataUtil.getIntToBytes(LPMONTH):""+DataUtil.getIntToBytes(LPMONTH))
+                    + (DataUtil.getIntToBytes(LPDAY) < 10? "0"+DataUtil.getIntToBytes(LPDAY):""+DataUtil.getIntToBytes(LPDAY));
+            System.arraycopy(data, pos, BASEPULSE, 0, BASEPULSE.length);
+            pos += BASEPULSE.length;
+            int month = DataUtil.getIntToBytes(LPMONTH);
+            int day = DataUtil.getIntToBytes(LPDAY);
+            System.arraycopy(data, pos, FWVERSION, 0, FWVERSION.length);
+            pos += FWVERSION.length;
+            fwVersion = Hex.decode(FWVERSION);
+            fwVersion = Double.parseDouble(fwVersion) / 10.0 + "";
+
+            System.arraycopy(data, pos, FWBUILD, 0, FWBUILD.length);
+            pos += FWBUILD.length;
+            fwBuild = Hex.decode(FWBUILD);
+
+            System.arraycopy(data, pos, HWVERSION, 0, HWVERSION.length);
+            pos += HWVERSION.length;
+            hwVersion = Hex.decode(HWVERSION);
+            hwVersion = Double.parseDouble(hwVersion) / 10.0 + "";
+
+            System.arraycopy(data, pos, SWVERSION, 0, SWVERSION.length);
+            pos += SWVERSION.length;
+            swVersion = Hex.decode(SWVERSION);
+            swVersion = Double.parseDouble(swVersion) / 10.0 + "";
+
+            // add LQI, RSSI
+            // from 2008.04.23
+            // applied above FW 2.1 and Build 10
+            result.append("mcuRevision["+mcuRevision+"], fwVersion["+fwVersion+"], fwBuild["+fwBuild+"]"+System.getProperty("line.separator"));
+            if (mcuRevision.compareTo("2336") >= 0 || (fwVersion.compareTo("2.1") >= 0 && fwBuild.compareTo("10") >= 0)) {
+                System.arraycopy(data, pos, LQI, 0, LQI.length);
+                pos += LQI.length;
+                lqi = DataUtil.getIntToBytes(LQI);
+
+                if (lqi <= 80) {
+                }
+                else if (lqi < 240) {
+                    lqi = 80.0 + (lqi-80.0)*0.125;
+                }
+                else {
+                    lqi = 100.0;
+                }
+
+                System.arraycopy(data, pos, RSSI, 0, RSSI.length);
+                pos += RSSI.length;
+                rssi = DataUtil.getIntToBytes(RSSI);
+            }
+
+            // add Node kind
+            // from 2008.05.15
+            if (mcuRevision.compareTo("2336") >= 0 || (fwVersion.compareTo("2.1") >= 0 && fwBuild.compareTo("11") >= 0)) {
+                System.arraycopy(data, pos, NODEKIND, 0, NODEKIND.length);
+                pos += NODEKIND.length;
+                nodeKind = DataUtil.getIntToBytes(NODEKIND);
+            }
+
+            // add alarm flag
+            if (mcuRevision.compareTo("2336") >= 0 || (fwVersion.compareTo("2.2") >= 0 && fwBuild.compareTo("20") >= 0)) {
+                System.arraycopy(data, pos, ALARMFLAG, 0, ALARMFLAG.length);
+                pos += ALARMFLAG.length;
+                alarmFlag = DataUtil.getIntToBytes(ALARMFLAG);
+                consumptionCurrent =  Double.parseDouble(df.format((double)_consumptionCurrent / 1000.0));
+            }
+            else {
+                consumptionCurrent =  Double.parseDouble(df.format((double)_consumptionCurrent / 10000.0));
+            }
+
+            // add network type
+            // from 2009.03.26
+            if (mcuRevision.compareTo("2601") >= 0) {
+                System.arraycopy(data, pos, NETWORKTYPE, 0, NETWORKTYPE.length);
+                pos += NETWORKTYPE.length;
+                networkType = DataUtil.getIntToBytes(NETWORKTYPE);
+                result.append("NETWORKTYPE[" + networkType + "]"+System.getProperty("line.separator"));
+            }
+            
+            // add energy level
+            // from 2012.10.19
+            if (mcuRevision.compareTo("5184") >= 0) {
+                System.arraycopy(data, pos, ENERGYLEVEL, 0, ENERGYLEVEL.length);
+                pos += ENERGYLEVEL.length;
+                energyLevel = DataUtil.getIntToBytes(ENERGYLEVEL);
+                result.append("ENERGYLEVEL[" + energyLevel + "]"+System.getProperty("line.separator"));
+            }
+            
+            result.append("CONSUMPTIONCURRENT[" + consumptionCurrent + "]"+System.getProperty("line.separator"));
+
+            result.append("data.length ="+data.length+System.getProperty("line.separator"));
+            result.append("pos ="+pos+System.getProperty("line.separator"));
+
+            int lpdataCnt = 1;
+
+            if (mcuRevision.compareTo("2336") >= 0) { /////
+                lpdataCnt = (data.length - pos) / ((24*lpPeriod*LP.length) + 8); // lpdate(4) + basepulse(4)
+            }
+            else {
+                lpdataCnt = (data.length - pos) / (24*lpPeriod*LP.length);
+            }
+            lpData = new ModemLPData[lpdataCnt];
+
+            result.append("MCU REVISION[" + mcuRevision + "]"+System.getProperty("line.separator"));
+            for (int i=0; i < lpdataCnt; i++) {
+                lpData[i] = new ModemLPData();
+
+                if (mcuRevision.compareTo("2336") >= 0) {
+                    System.arraycopy(data, pos, LPYEAR, 0, LPYEAR.length);
+                    pos += LPYEAR.length;
+                    System.arraycopy(data, pos, LPMONTH, 0, LPMONTH.length);
+                    pos += LPMONTH.length;
+                    System.arraycopy(data, pos, LPDAY, 0, LPDAY.length);
+                    pos += LPDAY.length;
+                    //---------------------------
+                    //MCU BasePulse Issue#2319
+                    //---------------------------
+                    if (mcuRevision.compareTo("2750") < 0 || mcuRevision.compareTo("2989")>0) {
+                        System.arraycopy(data, pos, BASEPULSE, 0, BASEPULSE.length);
+                    }
+                    pos += BASEPULSE.length;
+                    month = DataUtil.getIntToBytes(LPMONTH);
+                    day = DataUtil.getIntToBytes(LPDAY);
+                }
+                lpData[i].setLpDate(String.format("%4d%02d%02d", DataUtil.getIntTo2Byte(LPYEAR), month, day));
+                if (lpData[i].getLpDate().equals("65535255255")) {
+                    lpData[i].setLpDate(TimeUtil.getPreDay(currentTime, lpChoice).substring(0, 8));
+                }
+
+                lpData[i].setBasePulse(new double[]{DataUtil.getLongToBytes(BASEPULSE)/pulseConst});
+                // 보정하고 펄스 상수로 나누어 실제 검침값으로 변환한다.
+//                if (meterType == MeterType.WaterMeter) {
+//                    if(((WaterMeter)meter).getCorrectPulse() != null && ((WaterMeter)meter).getCorrectPulse() > 0) {
+//                        lpData[i].setBasePulse(new double[]{(lpData[i].getBasePulse()[0] + 
+//                            ((WaterMeter)meter).getCorrectPulse()) / pulseConst});
+//                    }
+//                }
+//                else if (meterType == MeterType.GasMeter) {
+//                    if(((GasMeter)meter).getCorrectPulse() != null && ((GasMeter)meter).getCorrectPulse() > 0) {
+//                        lpData[i].setBasePulse(new double[]{(lpData[i].getBasePulse()[0] + 
+//                            ((GasMeter)meter).getCorrectPulse()) / pulseConst});
+//                    }
+//                }
+
+                
+                if (lpData[i].getBasePulse()[0] > meteringValue) {
+                    /*
+                    log.warn("BASEPULSE[" + lpData[i].getBasePulse() +
+                            "] greater than CURRENTPULSE[" + lp + "] so set INITPULSE[" + initPulse + "]");
+                    lpData[i].setBasePulse(initPulse);
+                    */
+                    throw new Exception("BASEPULSE[" + lpData[i].getBasePulse() +
+                            "] greater than CURRENTPULSE[" + meteringValue + "]");
+                }
+                
+                // 당일인 경우 현재시간의 한시간 전까지만 생성
+                if (systemTime.substring(0,8).equals(lpData[i].getLpDate())) {
+                    result.append("currentHour : "+currentHour+System.getProperty("line.separator"));
+                    result.append("currentMinute : "+currentMinute+System.getProperty("line.separator"));
+                    result.append("lpPeriod : "+lpPeriod+System.getProperty("line.separator"));                  
+                    lpData[i].setLp(new double[1][currentHour*lpPeriod + (currentMinute / (60 / lpPeriod))]);
+                }
+                else {
+                    lpData[i].setLp(new double[1][24*lpPeriod]);
+                }
+                result.append("LP COUNT[" + lpData[i].getLp().length + "]"+System.getProperty("line.separator"));
+                result.append("LPDATE["+lpData[i].getLpDate()+"]"+System.getProperty("line.separator"));
+                result.append("BASEPULSE["+lpData[i].getBasePulse()[0]+"]"+System.getProperty("line.separator"));
+
+                double usage = lpData[i].getBasePulse()[0];                
+                for (int j = 0; j < lpData[i].getLp()[0].length; j++) {
+                    System.arraycopy(data, pos, LP, 0, LP.length);
+                    pos += LP.length;
+                    Double pulseConstant = getPulseConstant==null ? 1 : getPulseConstant;
+                    lpData[i].getLp()[0][j] = (double)DataUtil.getIntTo2Byte(LP) / pulseConstant;
+                    
+                    BigDecimal bd_usage = new BigDecimal(String.valueOf(usage));
+                    BigDecimal bd_lp = new BigDecimal(String.valueOf(lpData[i].getLp()[0][j]));
+                    BigDecimal bd_mv = new BigDecimal(String.valueOf(meteringValue));                    
+                    if (bd_mv.compareTo(bd_usage.add(bd_lp)) == -1) {
+                        log.warn("USAGE["+usage+ "] and LPDATA[" + lpData[i].getLp()[0][j]+"] greater than CURRENTPULSE["+meteringValue+"] so set ZERO");                        
+                        lpData[i].getLp()[0][j] = 0.0;
+                        usage += lpData[i].getLp()[0][j];
+                    }
+                    result.append("LPDATA["+lpData[i].getLp()[0][j]+"]"+System.getProperty("line.separator"));
+                }
+            }
+            setLpData(lpData);
+            //////////////////
+        }
+
+        if (currentTime != null && currentTime.length() == 14) {
+            batteryLogs = new BatteryLog[1];
+            batteryLogs[0] = new BatteryLog();
+            batteryLogs[0].setYyyymmdd(currentTime.substring(0, 8));
+            Object[][] values = {{currentTime.substring(8, 12),
+                batteryVolt, consumptionCurrent, voltOffset, 0.0, 0.0, 0.0, 0}};
+            batteryLogs[0].setValues(values);
+        }
+        else {
+            log.error("CURRENT TIME[" + currentTime + "] IS WRONG");
+        }
+        return result.toString();
+    }
 }
