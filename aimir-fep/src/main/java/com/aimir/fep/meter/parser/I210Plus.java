@@ -801,5 +801,90 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 //        }
 	}
 	
+	public String getParsingResult(byte[] data) throws Exception {
+		StringBuffer result = new StringBuffer();
+		rawData = data;
+		int totlen = data.length;
+		result.append("TOTLEN[" + totlen + "]"+System.getProperty("line.separator"));
+
+		int offset = 0;
+		while (offset + 6 < totlen) {
+			result.append("OFFSET[" + offset + "]"+System.getProperty("line.separator"));
+
+			String tbName = new String(data, offset, 4);
+			offset += 4;
+			int len = 0;
+			len |= (data[offset++] & 0xff) << 8;
+			len |= (data[offset++] & 0xff);
+			byte[] b = new byte[len];
+
+			if (data.length - offset < len)
+				break;
+
+			System.arraycopy(data, offset, b, 0, len);
+			offset += len;
+
+			try {
+				if (tbName.equals("S001")) {
+					result.append("[S001] len=[" + len + "] data=>"+System.getProperty("line.separator") + Util.getHexString(b));
+					// Parse
+					st001 = new ST001(b);
+
+//					meter.setModel(DeviceModel.);
+					StringBuilder sb = new StringBuilder();
+					sb.append("ST001[ ")
+					        .append("  MANUFACTURER=" + st001.getMANUFACTURER() + ", "+System.getProperty("line.separator"))
+							.append("  ED_MODEL=" + st001.getED_MODEL() + ", "+System.getProperty("line.separator"))
+							.append("  HW_VERSION_NUMBER=" + st001.getHW_VERSION_NUMBER() + ", "+System.getProperty("line.separator"))
+							.append("  HW_REVISION_NUMBER=" + st001.getHW_REVISION_NUMBER() + ", "+System.getProperty("line.separator"))
+							.append("  FW_VERSION_NUMBER=" + st001.getFW_VERSION_NUMBER() + ", "+System.getProperty("line.separator"))
+							.append("  FW_REVISION_NUMBE=" + st001.getFW_REVISION_NUMBER() + ", "+System.getProperty("line.separator"))
+							.append("  MSerial=" + st001.getMSerial() + "] "+System.getProperty("line.separator"));
+					result.append(sb.toString()+System.getProperty("line.separator"));
+					
+					// Set Veriables
+					meterId = st001.getMSerial();
+					meterDeviceModelName = st001.getED_MODEL();
+					
+					
+				} else if (tbName.equals("M019")) {
+					result.append("[M019] len=[" + len + "] data=>"+System.getProperty("line.separator") + Util.getHexString(b)+System.getProperty("line.separator"));
+					mt019 = new MT019(b);
+					result.append(mt019.printAll()+System.getProperty("line.separator"));
+					
+					// Set Veriables
+					TOTAL_DEL_KWH = mt019.getTOTAL_DEL_KWH();
+					TOTAL_DEL_PLUS_RCVD_KWH = mt019.getTOTAL_DEL_PLUS_RCVD_KWH();
+					TOTAL_DEL_MINUS_RCVD_KWH = mt019.getTOTAL_DEL_MINUS_RCVD_KWH();
+					TOTAL_REC_KWH = mt019.getTOTAL_REC_KWH();
+				} else if (tbName.equals("M115")) {
+					result.append("[M115] len=[" + len + "] data=>"+System.getProperty("line.separator") + Util.getHexString(b)+System.getProperty("line.separator"));
+					mt115 = new MT115(b);
+					result.append(mt115.printAll()+System.getProperty("line.separator"));
+				} else if (tbName.equals("N509")) {
+					result.append("[N509] len=[" + len + "] data=>"+System.getProperty("line.separator") + Util.getHexString(b)+System.getProperty("line.separator"));
+					nt509 = new NT509(b);
+					result.append(nt509.printAll()+System.getProperty("line.separator"));
+
+					// Set Veriables
+					meteringTime = nt509.getFrameInfoDateFormat("yyyyMMddHHmmss");
+					dst = nt509.getDst();
+					lpDataList.addAll(nt509.getLpData());
+					if (meter != null)
+						meter.setLpInterval(nt509.getLpPeriodMin());
+					else
+						result.append("meter is null! Can not set LpInterval."+System.getProperty("line.separator"));
+				} else {
+					result.append("unknown table=[" + tbName + "] data=>"+System.getProperty("line.separator") + Util.getHexString(b)+System.getProperty("line.separator"));
+				}
+			} catch (Exception e) {
+				log.error(e, e);
+			}
+		}
+		result.append("I210+ Data Parse Finished :: DATA[" + toString() + "]"+System.getProperty("line.separator"));
+		
+		
+		return result.toString();
+	}
 	
 }
