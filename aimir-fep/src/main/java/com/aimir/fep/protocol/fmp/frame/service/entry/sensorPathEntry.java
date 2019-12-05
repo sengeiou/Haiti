@@ -161,7 +161,7 @@ public class sensorPathEntry extends Entry {
     	
     	json.put("sensorPathID", sensorPathID.getValue());
     	json.put("sensorPathSerial", sensorPathSerial.toHexString());
-    	json.put("sensorPathModel", sensorPathModel.toHexString());
+    	json.put("sensorPathModel", sensorPathModel.toString());
     	json.put("sensorPathShortID", Hex.decode(sensorPathShortID.encode()));
     	json.put("sensorPathHops", sensorPathHops.toString());
         StringBuffer sb = new StringBuffer();

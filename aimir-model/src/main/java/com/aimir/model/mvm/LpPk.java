@@ -16,6 +16,12 @@ public class LpPk extends MeteringPk{
 
 	private static final long serialVersionUID = -5852154185942553378L;
 	
+	@Column(name="MDEV_ID",length=20,nullable=false)
+	private String mdevId;
+	
+	@Column(name="MDEV_TYPE",length=20,nullable=false)
+	private String mdevType;
+	
 	@Column(name="channel", length=3, nullable=false)
     @ColumnInfo(name="채널")
     private Integer channel;
@@ -43,4 +49,17 @@ public class LpPk extends MeteringPk{
 	public String getYyyymmddhh() {
 		return yyyymmddhhmiss.substring(0, 10);
 	}
+	public String getMdevId() {
+		return mdevId;
+	}
+	public void setMdevId(String mdevId) {
+		this.mdevId = mdevId;
+	}
+	public String getMdevType() {
+		return mdevType;
+	}
+	public void setMdevType(String mdevType) {
+		this.mdevType = mdevType;
+	}
+	
 }
