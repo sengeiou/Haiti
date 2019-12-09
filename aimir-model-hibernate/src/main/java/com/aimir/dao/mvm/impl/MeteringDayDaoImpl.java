@@ -277,7 +277,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
             if (rankingType.equals(CommonConstants.RankingType.ZERO.getType())) {
                 sb.append("0 ");
             } else {
-                sb.append("SUM(da.total) ");
+                sb.append("SUM(da.value) ");
             }
             sb.append("AS totalUsage, ");
 

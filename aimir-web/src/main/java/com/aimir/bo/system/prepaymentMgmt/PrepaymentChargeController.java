@@ -182,7 +182,7 @@ public class PrepaymentChargeController {
         Role role = roleManager.getRole(user.getRoleData().getId());
         Map<String, Object> authMap = CommonUtils.getAllAuthorityByRole(role);
         String roleName = role.getName();
-        Boolean isVendor = roleName.equals("vendor");
+        Boolean isVendor = roleName.equals("vendor")||roleName.equals("edh_vendor");
         mav.addObject("role", roleName);
         mav.addObject("isVendor", isVendor);
         mav.addObject("editAuth", authMap.get("cud"));  // 수정권한(write/command = true)

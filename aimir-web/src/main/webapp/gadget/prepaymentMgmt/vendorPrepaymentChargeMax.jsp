@@ -1166,6 +1166,7 @@
           customerName: rec.json.customerName || "",
           supplierId : supplierId,
           partpayReset : false,
+          isVendor: isVendor,
           isPartpayment : isPartpayment
         };        
 
@@ -1317,6 +1318,8 @@
 	                      title: customerName,
 	                      amount: arrearsAmount,
 	                      msg: "<fmt:message key='aimir.retype.arrears'/>",  // Please retype paid arrears
+	                      amountLabel: "Paid Arrears",
+	                      payTypeLabel: "<fmt:message key='aimir.paymenttype'/>",
 	                      callback: function() {
 	                        cb(arrearsAmount, callback);
 	                      }

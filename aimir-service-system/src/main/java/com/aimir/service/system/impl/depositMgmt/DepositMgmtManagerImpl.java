@@ -53,7 +53,7 @@ public class DepositMgmtManagerImpl implements DepositMgmtManager {
 		List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
 
 		if (supplier !=null) {
-			df = new DecimalFormat(supplier.getCd().getPattern()); 
+//			df = new DecimalFormat(supplier.getCd().getPattern()); 
 		}
 		String lang = supplier.getLang().getCode_2letter();
 		String country = supplier.getCountry().getCode_2letter();
