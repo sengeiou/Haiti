@@ -13,3 +13,4 @@ penta
 *.log
 bin/
 aimir-fep/src/test/*
+.test_1
