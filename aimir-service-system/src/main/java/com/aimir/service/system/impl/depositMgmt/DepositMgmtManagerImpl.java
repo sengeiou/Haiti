@@ -150,7 +150,7 @@ public class DepositMgmtManagerImpl implements DepositMgmtManager {
 
 		DecimalFormat df = new DecimalFormat("###,###,##0.00");
 		if (supplier !=null) {
-			df = new DecimalFormat(supplier.getCd().getPattern()); 
+//			df = new DecimalFormat(supplier.getCd().getPattern()); 
 		}
 		
 		String country = supplier.getCountry().getCode_2letter();
@@ -223,7 +223,7 @@ public class DepositMgmtManagerImpl implements DepositMgmtManager {
 
         DecimalFormat df = new DecimalFormat("###,###,##0.00");
         if (supplier != null) {
-            df = new DecimalFormat(supplier.getCd().getPattern()); 
+//            df = new DecimalFormat(supplier.getCd().getPattern()); 
         }
 
         String country = supplier.getCountry().getCode_2letter();
