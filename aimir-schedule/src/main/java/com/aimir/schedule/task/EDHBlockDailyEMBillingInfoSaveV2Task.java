@@ -296,8 +296,8 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 			 * MonthEM monthEM = monthEMs.get(0);
 			 */
         	MonthEMView monthEM = monthEMs.get(0);
-            monthEM.setMDevType(DeviceType.Meter.name());
-            monthEM.setMDevId(meter.getMdsId());
+//            monthEM.setMDevType(DeviceType.Meter.name());
+//            monthEM.setMDevId(meter.getMdsId());
 
             double monthBill = 0.0;
             
@@ -425,16 +425,16 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         for (int i = 31; i > 0; i--) {
             lpValue = BeanUtils.getProperty(monthEM, String.format("value_%02d", i));
             if (lpValue != null && !lpValue.equals("")) {
-                yyyymmdd = String.format("%s%02d", monthEM.id.getYyyymm(), i);
+                yyyymmdd = String.format("%s%02d", monthEM.getYyyymm(), i);
                 log.info("5-1. MeterId [" + meterId + "] getLastLpTime: " + yyyymmdd);
                 break;
             }
         }
         if (yyyymmdd != null) {
             Set<Condition> condition = new HashSet<Condition>();
-            log.info("5-2. MeterId[" + meterId + "] MDevType[" + monthEM.getMDevType() + "] MDevId[" + monthEM.getMDevId() + "] YYYYMMDD[" + yyyymmdd + "]");
-            condition.add(new Condition("id.mdevType", new Object[]{monthEM.getMDevType()}, null, Restriction.EQ));
-            condition.add(new Condition("id.mdevId", new Object[]{monthEM.getMDevId()}, null, Restriction.EQ));
+            log.info("5-2. MeterId[" + meterId + "] MdevType[" + monthEM.getMdevType() + "] MdevId[" + monthEM.getMdevId() + "] YYYYMMDD[" + yyyymmdd + "]");
+            condition.add(new Condition("id.mdevType", new Object[]{monthEM.getMdevType()}, null, Restriction.EQ));
+            condition.add(new Condition("id.mdevId", new Object[]{monthEM.getMdevId()}, null, Restriction.EQ));
             condition.add(new Condition("id.channel", new Object[]{1}, null, Restriction.EQ));
             condition.add(new Condition("id.yyyymmddhhmiss", new Object[]{yyyymmdd+"000000", yyyymmdd+"235959"}, null, Restriction.BETWEEN));
             // condition.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));

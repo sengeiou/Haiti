@@ -156,17 +156,20 @@ public class UMC2000W4RMDSaver extends ZEUPLSMDSaver {
     @Override
     public String relayValveOn(String mcuId, String meterId) {
         String rtnStr = null;
-        
+        Map<String,Object> resultMap = new HashMap<String, Object>();
         try {
             Meter meter = meterDao.get(meterId);
             CommandGW commandGw = DataUtil.getBean(CommandGW.class);
             commandGw.cmdKDValveControl(meter.getModem().getDeviceSerial(), CommonConstants.ValveStatus.VALVE_ON.getValue());
+            rtnStr = "Success"; //ErrorCode가 없으면, NoError임.
             updateMeterStatusNormal(meter);
         }
         catch (Exception e) {
             rtnStr = "failReason : " + e.getMessage();
         }
         
-        return MapToJSON(new String[]{rtnStr});
+        resultMap.put("Result", rtnStr);
+        //return MapToJSON(new String[]{rtnStr});
+        return MapToJSON(resultMap);
     }
 }

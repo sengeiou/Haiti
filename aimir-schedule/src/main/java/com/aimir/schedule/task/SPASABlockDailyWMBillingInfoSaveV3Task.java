@@ -142,7 +142,7 @@ public class SPASABlockDailyWMBillingInfoSaveV3Task extends ScheduleTask {
         List<Integer> wm_contractIds = this.getContractInfos(SERVICE_TYPE_WM);
 
         for(Integer contract_id : wm_contractIds) {
-            // log.info("ContractId[" + contract_id + "]");
+            log.info("-------------------------------------------------------------");
             try {
                 this.saveWmBillingDailyWithTariffEMCumulationCost(contract_id);
             }
@@ -194,8 +194,15 @@ public class SPASABlockDailyWMBillingInfoSaveV3Task extends ScheduleTask {
                     // 검침된 적이 없으면 널값이 온다.
                     String maxYyyymmdd = getMaxYyyymmdd(contract.getMeter().getMdsId(), contract.getMeter().getInstallDate());
                     LpWM[] lastLp = getLastLp(contract.getMeter().getMdsId(), maxYyyymmdd+"00", maxYyyymmdd+"23");
+                    
+                    if(lastLp != null) 
+                    	log.info("Contract[" + contract.getContractNumber() + "], lastLP length[" + lastLp.length + "]");                    
+                    else 
+                    	log.info("Contract[" + contract.getContractNumber() + "], lastLP [null]");
+                                        
                     if (lastLp != null && lastLp.length == 1 && lastLp[0].getValue() > 0 && contract.getMeter().getModem() != null) {
-                        BillingBlockTariff prevBill = getLastBillingBlockTariff(contract.getMeter().getMdsId(), lastLp);
+                    	log.info("Contract[" + contract.getContractNumber() + "], lastLp>0 and modem is not null.");
+                        BillingBlockTariff prevBill = getLastBillingBlockTariff(contract.getMeter().getMdsId(), lastLp);                        
                         saveBill(contract, lastLp, prevBill);
                     }
                 }
@@ -232,9 +239,9 @@ public class SPASABlockDailyWMBillingInfoSaveV3Task extends ScheduleTask {
             projections.add(Projections.alias(Projections.max("id.yyyymmddhhmiss"), "maxYyyymmddhh"));
             
             List<Map<String, Object>> maxyyyymmddhh = ((LpWMDaoImpl)lpWMDao).findByConditionsAndProjections(conditions, projections);
-            
+            log.info("Meter[" + meterId  + "], List<map> maxyyyymmddhh: size[" + maxyyyymmddhh.size() + "]");
             if (maxyyyymmddhh != null && maxyyyymmddhh.size() == 1) {
-                log.info(maxyyyymmddhh.get(0));
+                log.info("Meter[" + meterId  + "], maxyyyymmddhh from LPtable[" + maxyyyymmddhh.get(0));
                 String _yyyymmddhh = (String)maxyyyymmddhh.get(0).get("maxYyyymmddhh");
                 if (_yyyymmddhh == null) {
                     txmanager.commit(txstatus);
@@ -281,7 +288,7 @@ public class SPASABlockDailyWMBillingInfoSaveV3Task extends ScheduleTask {
             
             List<Map<String, Object>> maxyyyymmdd = ((DayWMDaoImpl)dayWMDao).findByConditionsAndProjections(conditions, projections);
             
-            log.info(maxyyyymmdd.get(0));
+            log.info("Meter[" + meterId + "], MaxDay from DAYtable[" + maxyyyymmdd.get(0) + "]");
             String _yyyymmdd = (String)maxyyyymmdd.get(0).get("maxYyyymmdd");
             txmanager.commit(txstatus);
             
@@ -373,6 +380,7 @@ public class SPASABlockDailyWMBillingInfoSaveV3Task extends ScheduleTask {
 
         // 빌링정보가 있으면 미터의 고객과 상관없이 마지막 누적치를 이용하여 
         if (list != null && list.size() == 1) {
+        	log.info("Meter["+meterId+"], BillingBlockTariff [not null and size==1]");
             Map<String, Object> map = list.get(0);
             Object activeEnergy = null;
             BillingBlockTariff bbt = new BillingBlockTariff();
@@ -434,6 +442,7 @@ public class SPASABlockDailyWMBillingInfoSaveV3Task extends ScheduleTask {
         // 고객의 billingblocktariff가 없으면 미터에 대해서 선불계산한 적이 없는 최초 설치이기 때문에
         // 고객의 계약 기준으로 최초값을 가져온다.
         else {
+        	log.info("Meter["+meterId+"], meter has no BillingBlockTariff data.");
             Meter meter = meterDao.get(meterId);
             Contract contract = meter.getContract();
             
@@ -448,6 +457,7 @@ public class SPASABlockDailyWMBillingInfoSaveV3Task extends ScheduleTask {
             bbt.setAccumulateUsage(0.0);
             
             if (prepayStartTime != null && !"".equals(prepayStartTime)) {
+            	log.info("Meter["+meterId+"], PrepayStartTime[" + prepayStartTime +"]");
                 bbt.setYyyymmdd(prepayStartTime.substring(0, 8));
                 bbt.setHhmmss(prepayStartTime.substring(8, 10) + "0000");
                 
@@ -478,7 +488,7 @@ public class SPASABlockDailyWMBillingInfoSaveV3Task extends ScheduleTask {
                 }
                 // 고객의 계약일보다 작은 마지막 lp가 없으면 계약일 이후 LP 중 최초값을 가져온다.
                 // 미터정보가 먼저 생성되어 계약이 먼저 생성된 경우나 미터가 교체된 경우에 해당할 것 같다.
-                else {
+                else {                	
                     // LP는 있는데 고객이 다르면 미터와 고객이 매핑된 첫번재 값을 가져온다.
                     LpWM[] firstLps = getFirstLp(meterId, contract.getContractNumber(), contract.getPrepayStartTime());
                  
@@ -505,8 +515,9 @@ public class SPASABlockDailyWMBillingInfoSaveV3Task extends ScheduleTask {
             // 계약일이 없으면 미터 실치 기준일과 0부터 시작한다.
             if (meter.getInstallDate() == null || "".equals(meter.getInstallDate()) 
                     || meter.getInstallDate().length() != 14)
-                throw new Exception("check install date of METER[" + meterId + "]");
+                throw new Exception("Meter[" + meterId + "], Meter-InstallDate is invalid.");
             
+            log.info("Meter["+meterId+"], Start from Meter-InstallDate.");
             bbt.setYyyymmdd(meter.getInstallDate().substring(0, 8));
             bbt.setHhmmss(meter.getInstallDate().substring(8));
             bbt.setActiveEnergy(0.0);
@@ -547,6 +558,8 @@ public class SPASABlockDailyWMBillingInfoSaveV3Task extends ScheduleTask {
         // 날짜 비교
         String lptime = lastLp[0].getYyyymmddhh();
         String prevBillTime = prevBill.getYyyymmdd() + prevBill.getHhmmss().substring(0, 2);
+        
+        log.info("Contract["+contract.getContractNumber()+"], lptime[" + lptime + "], prevBillTime[" + prevBillTime + "]");
         
         // 마지막 LP시간이 이미 계산한 것이라면 종료한다.
         if (lptime.equals(prevBillTime))
@@ -815,7 +828,7 @@ public class SPASABlockDailyWMBillingInfoSaveV3Task extends ScheduleTask {
             List<TariffWM> tariffEMList, String lastTokenDate)
     throws Exception
     {
-        log.info("####savePrebill####");
+        log.info("####save PrepaymentLog and Bill####");
         log.info("MeterId[" + meter.getMdsId() + "] LAST_LPTIME[" + lastLpTime + "]");
         
         if (lastLpActiveEnergy - blockBillActiveEnergy <= 0)
@@ -826,7 +839,7 @@ public class SPASABlockDailyWMBillingInfoSaveV3Task extends ScheduleTask {
         
         // 사용량이 0보다 작거나 작으면 종료한다.
         if (usage < 0) {
-            log.warn("MONTH_USAGE[" + usage + "] < 0");
+            log.warn("MONTH_USAGE[" + usage + "] < 0, then return.");
             return;
         }
         

@@ -59,7 +59,7 @@ public class MonthEMViewDaoImpl extends AbstractHibernateGenericDao<MonthEMView,
         try {
             
             StringBuffer sb = new StringBuffer();
-            sb.append("\nSELECT     em.id.yyyymm as yyyymm, sum(em.total) as total, ");
+            sb.append("\nSELECT     em.id.yyyymm as yyyymm, ");
             sb.append("\n           sum(em.value_01) as value_01, sum(em.value_02) as value_02, sum(em.value_03) as value_03, sum(em.value_04) as value_04, ");
             sb.append("\n           sum(em.value_05) as value_05, sum(em.value_06) as value_06, sum(em.value_07) as value_07, sum(em.value_08) as value_08, ");
             sb.append("\n           sum(em.value_09) as value_09, sum(em.value_10) as value_10, sum(em.value_11) as value_11, sum(em.value_12) as value_12, ");
@@ -68,7 +68,10 @@ public class MonthEMViewDaoImpl extends AbstractHibernateGenericDao<MonthEMView,
             sb.append("\n           sum(em.value_21) as value_21, sum(em.value_22) as value_22, sum(em.value_23) as value_23, sum(em.value_24) as value_24, ");
             sb.append("\n           sum(em.value_25) as value_25, sum(em.value_26) as value_26, sum(em.value_27) as value_27, sum(em.value_28) as value_28, ");
             sb.append("\n           sum(em.value_29) as value_29, sum(em.value_30) as value_30, sum(em.value_31) as value_31, ");
-            sb.append("\n           sum(em.baseValue) as baseValue");
+            sb.append("\n           em.mdevId as mdevId,");
+            sb.append("\n           em.mdevType as mdevType,");
+            sb.append("\n           sum(em.baseValue) as baseValue,");
+            sb.append("\n           sum(em.total_value) as total_value");
             sb.append("\nFROM       MonthEMView em");
             sb.append("\nWHERE      em.id.mdevType = :mdevType ");
             sb.append("\nAND        em.id.mdevId = :mdevId ");
@@ -85,7 +88,7 @@ public class MonthEMViewDaoImpl extends AbstractHibernateGenericDao<MonthEMView,
             query.setParameterList("channelList", channelList);
             query.setParameter("dst", dst);
 
-            returnList = query.setResultTransformer(Transformers.aliasToBean(MonthEM.class)).list();
+            returnList = query.setResultTransformer(Transformers.aliasToBean(MonthEMView.class)).list();
         } catch (Exception e) {
             // TODO: handle exception
             logger.error(e,e);

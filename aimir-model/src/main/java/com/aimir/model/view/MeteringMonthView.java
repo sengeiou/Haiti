@@ -100,6 +100,12 @@ public class MeteringMonthView {
 	@Column(name="yyyymm", nullable=false, updatable=false, insertable=false)
 	private String yyyymm;
 	
+	@Column(name="MDEV_ID", nullable=false, updatable=false, insertable=false)
+	private String mdevId;
+	
+	@Column(name="MDEV_TYPE", nullable=false, updatable=false, insertable=false)
+	private String mdevType;
+	
 	@ColumnInfo(name="검침값", descr="01(d)")
 	private Double value_01;
 	private Double value_02;
@@ -445,7 +451,18 @@ public class MeteringMonthView {
 	public void setValue_31(Double value_31) {
 		this.value_31 = value_31;
 	}
-	
+	public String getMdevId() {
+		return mdevId;
+	}
+	public void setMdevId(String mdevId) {
+		this.mdevId = mdevId;
+	}
+	public String getMdevType() {
+		return mdevType;
+	}
+	public void setMdevType(String mdevType) {
+		this.mdevType = mdevType;
+	}
 	/////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////

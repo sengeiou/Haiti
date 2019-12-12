@@ -306,20 +306,9 @@ class BalanceCheckThread implements Runnable {
                 }
                 mcu.getSysID();
             }
-            
-            //IHD 그룹인지 판별할때 필요
-            Map<String, Object> conditionMap = new HashMap<String,Object>();
-            log.debug("contract.getMdsId():"+ meter.getMdsId());
-            log.debug("contract.getMeter().getId():"+ meter.getId());
-         
-            Integer groupId = groupMemberDao.getGroupIdbyMember(meter.getMdsId().toString());
-    
-            log.debug("groupId : [" + groupId + "]");
-            conditionMap.put("groupId", groupId.toString());
-            
+                        
             Double credit = (contract.getCurrentCredit() == null ? 0d : contract.getCurrentCredit());     // 잔액
             ResultStatus status = ResultStatus.FAIL;
-    //        String rtnStr = "";
             boolean isCutOff = false;     // 미터 차단 실행 여부
     
             txManager.commit(txStatus);
@@ -337,7 +326,7 @@ class BalanceCheckThread implements Runnable {
                         String groupType = groupDao.getGroupTypeByGroup(conditionMap);
                         //IHD 그룹인지 판별
                         if("IHD".equals(groupType)) {
-                            // 현재 잔액이 XXX Rand 입니다. 충전하지 않으면, 에너지 공급이 차단됩니다. 
+                            // 현재 잔액이 ### Rand 입니다. 충전하지 않으면, 에너지 공급이 차단됩니다. 
                             log.debug("GroupType : [" + groupType + "]");
                             IHDMessageUtil ihdMessage = DataUtil.getBean(IHDMessageUtil.class);
                             ihdMessage.getEventMessage(meter.getMdsId(), "Low Balance", "Your current balance is " + credit + " Rand. If you don't recharge your balance, the power will be blocked.");
@@ -406,7 +395,7 @@ class BalanceCheckThread implements Runnable {
                                 if (status == ResultStatus.SUCCESS) break;
                             }
                             
-                            log.debug("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] Relay Off Status [" + status + "]");
+                            log.debug("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] RelayValveOff Result [" + status + "]");
                             
                             // Operation Log에 기록
                             saveOperationLog(supplier, meterType, meter.getMdsId(), "balance-schedule", status.getCode(), status.name(), "relayValveOff");
@@ -414,7 +403,7 @@ class BalanceCheckThread implements Runnable {
                     }
                     catch (Exception e) {
                         status = ResultStatus.FAIL;
-                        log.error("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] Relay Off Status [" + status + "]", e);                        
+                        log.error("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] RelayValveOff Result [" + status + "]", e);                        
                     }
                     
                         
@@ -513,14 +502,14 @@ class BalanceCheckThread implements Runnable {
                             if (status == ResultStatus.SUCCESS) break;
                         }
                         
-                        log.debug("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] Relay On Status [" + status + "]");
+                        log.debug("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] RelayValveOn Result [" + status + "]");
                         
                         // Operation Log에 기록
                         saveOperationLog(supplier, meterType, meter.getMdsId(), "balance-schedule", status.getCode(), status.name(), "relayValveOn");
                     }
                     catch (Exception e) {
                         status = ResultStatus.FAIL;
-                        log.error("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] Relay On Status [" + status + "]", e);                        
+                        log.error("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] RelayValveOn Result [" + status + "]", e);                        
                     }
                 }
             }
@@ -561,6 +550,7 @@ class BalanceCheckThread implements Runnable {
         }
         return isEmergencyCredit;
     }
+    
 
     /**
      * method name : changeCreditType
