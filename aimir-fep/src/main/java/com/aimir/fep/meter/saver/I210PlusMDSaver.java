@@ -7,12 +7,14 @@ import org.springframework.stereotype.Service;
 import com.aimir.constants.CommonConstants;
 import com.aimir.constants.CommonConstants.DeviceType;
 import com.aimir.constants.CommonConstants.MeterStatus;
+import com.aimir.constants.CommonConstants.RelaySwitchStatus;
 import com.aimir.fep.command.conf.SM110Meta;
 import com.aimir.fep.command.mbean.CommandGW;
 import com.aimir.fep.command.mbean.CommandGW.OnDemandOption;
 import com.aimir.fep.meter.AbstractMDSaver;
 import com.aimir.fep.meter.entry.IMeasurementData;
 import com.aimir.fep.meter.parser.I210Plus;
+import com.aimir.fep.meter.parser.DLMSClouTable.DLMSVARIABLE.RELAY_STATUS_CLOU;
 import com.aimir.fep.util.CmdUtil;
 import com.aimir.fep.util.DataUtil;
 import com.aimir.model.device.Meter;
@@ -35,6 +37,7 @@ public class I210PlusMDSaver extends AbstractMDSaver {
 		
 		Meter meter = meterDao.get(parser.getMDevId());
 		
+		// Save LP Data(S)
 		saveLPUsingLpNormalization(
 				CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()),
 				md,
@@ -43,7 +46,9 @@ public class I210PlusMDSaver extends AbstractMDSaver {
 				parser.getDeviceId(),
 				parser.getMDevType(), 
 				parser.getMeteringTime());
+		// Save LP Data(E)
 		
+		// Save MeteringDataEM(S)
 		MeteringDataEM meteringDataEM = new MeteringDataEM();
 		meteringDataEM.setCh1(parser.getTOTAL_DEL_KWH());
 		meteringDataEM.setCh2(parser.getTOTAL_DEL_PLUS_RCVD_KWH());
@@ -65,6 +70,18 @@ public class I210PlusMDSaver extends AbstractMDSaver {
 		meteringDataEM.setModem(meter.getModem());
 		meteringDataEM.setSupplier(meter.getSupplier());
 		meteringDataDao.add(meteringDataEM);
+		// Save MeteringDataEM(E)
+		
+		// Save switch status(S)
+		boolean switchStatus = parser.getACTUAL_SWITCH_STATE(); // 0 – Open, 1 – Close 
+		if(switchStatus) {
+			String code = CommonConstants.getMeterStatusCode(MeterStatus.Normal);
+			meter.setMeterStatus(CommonConstants.getMeterStatus(code));
+		}else {
+			String code = CommonConstants.getMeterStatusCode(MeterStatus.CutOff);
+			meter.setMeterStatus(CommonConstants.getMeterStatus(code));
+		}
+		// Save switch status(E)
 
 		return true;
 	}

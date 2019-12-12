@@ -212,6 +212,14 @@ public class MT115 implements java.io.Serializable {
 		return "MT115[\n"+sb.toString()+"\n]\n";
 	}
 	
+	/**
+	 * 0 - Open, 1 - Close
+	 * @return boolean
+	 */
+	public boolean getACTUAL_SWITCH_STATE() {
+		return ACTUAL_SWITCH_STATE[0];
+	}
+	
     public LinkedHashMap getData(){
 //        if(data == null || data.length < 20){
 //            return null;

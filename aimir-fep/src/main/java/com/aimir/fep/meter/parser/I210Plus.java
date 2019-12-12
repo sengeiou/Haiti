@@ -55,6 +55,8 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 	private Double TOTAL_DEL_PLUS_RCVD_KWH = null;
 	private Double TOTAL_DEL_MINUS_RCVD_KWH = null;
 	private Double TOTAL_REC_KWH = null;
+	
+	private boolean ACTUAL_SWITCH_STATE;
 
 	public I210Plus() { }
 
@@ -148,6 +150,7 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 				} else if (tbName.equals("M115")) {
 					log.debug("[M115] len=[" + len + "] data=>\n" + Util.getHexString(b));
 					mt115 = new MT115(b);
+					ACTUAL_SWITCH_STATE = mt115.getACTUAL_SWITCH_STATE();
 					log.debug(mt115.printAll());
 				} else if (tbName.equals("N509")) {
 					log.debug("[N509] len=[" + len + "] data=>\n" + Util.getHexString(b));
@@ -188,7 +191,11 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 	public Double getTOTAL_REC_KWH() {
 		return TOTAL_REC_KWH;
 	}
-	
+		
+	public boolean getACTUAL_SWITCH_STATE() {
+		return ACTUAL_SWITCH_STATE;
+	}
+
 	public int getDst() {
 		return dst;
 	}
