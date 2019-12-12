@@ -430,6 +430,6 @@ public class NT509 implements java.io.Serializable {
 	}
 	
 	public int getDst() throws Exception {
-		return Integer.valueOf(DataFormat.hex2dec(DAY));
+		return Integer.valueOf(DataFormat.hex2dec(DST_VALUE));
 	}
 }
