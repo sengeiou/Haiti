@@ -69,18 +69,22 @@ public class I210PlusMDSaver extends AbstractMDSaver {
 		meteringDataEM.setMeter(meter);
 		meteringDataEM.setModem(meter.getModem());
 		meteringDataEM.setSupplier(meter.getSupplier());
-		meteringDataDao.add(meteringDataEM);
+		meteringDataDao.saveOrUpdate(meteringDataEM);
 		// Save MeteringDataEM(E)
 		
 		// Save switch status(S)
 		boolean switchStatus = parser.getACTUAL_SWITCH_STATE(); // 0 – Open, 1 – Close 
-		if(switchStatus) {
+		log.debug("meter.getMeterStatus() : " + meter.getMeterStatus());
+		log.debug("switchStatus : " + switchStatus);
+		if(switchStatus){
 			String code = CommonConstants.getMeterStatusCode(MeterStatus.Normal);
 			meter.setMeterStatus(CommonConstants.getMeterStatus(code));
-		}else {
+		}else{
 			String code = CommonConstants.getMeterStatusCode(MeterStatus.CutOff);
 			meter.setMeterStatus(CommonConstants.getMeterStatus(code));
 		}
+		log.debug("meter.getMeterStatus() : " + meter.getMeterStatus());
+		meterDao.saveOrUpdate(meter);
 		// Save switch status(E)
 
 		return true;
