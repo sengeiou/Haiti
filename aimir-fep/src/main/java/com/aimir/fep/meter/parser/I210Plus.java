@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -49,7 +50,7 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 	private ST001 st001 = null;
 	private MT019 mt019 = null;
 	private MT115 mt115 = null;
-	private NT509 nt509 = null;
+	private List<NT509> nt509List = null;
 	
 	private Double TOTAL_DEL_KWH = null;
 	private Double TOTAL_DEL_PLUS_RCVD_KWH = null;
@@ -92,6 +93,7 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 		return this.rawData.length;
 	}
 
+	
 	public void parse(byte[] data) throws Exception {
 		rawData = data;
 		int totlen = data.length;
@@ -135,8 +137,6 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 					// Set Veriables
 					meterId = st001.getMSerial();
 					meterDeviceModelName = st001.getED_MODEL();
-					
-					
 				} else if (tbName.equals("M019")) {
 					log.debug("[M019] len=[" + len + "] data=>\n" + Util.getHexString(b));
 					mt019 = new MT019(b);
@@ -154,7 +154,8 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 					log.debug(mt115.printAll());
 				} else if (tbName.equals("N509")) {
 					log.debug("[N509] len=[" + len + "] data=>\n" + Util.getHexString(b));
-					nt509 = new NT509(b);
+					NT509 nt509 = new NT509(b);
+					nt509List.add(nt509);
 					log.debug(nt509.printAll());
 
 					// Set Veriables
@@ -870,7 +871,8 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 					result.append(mt115.printAll()+System.getProperty("line.separator"));
 				} else if (tbName.equals("N509")) {
 					result.append("[N509] len=[" + len + "] data=>"+System.getProperty("line.separator") + Util.getHexString(b)+System.getProperty("line.separator"));
-					nt509 = new NT509(b);
+					NT509 nt509 = new NT509(b);
+					nt509List.add(nt509);
 					result.append(nt509.printAll()+System.getProperty("line.separator"));
 
 					// Set Veriables

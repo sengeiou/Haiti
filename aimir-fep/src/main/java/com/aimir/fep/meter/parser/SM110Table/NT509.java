@@ -228,17 +228,15 @@ public class NT509 implements java.io.Serializable {
 					.append("  CURRENT_PULSE=" + DataFormat.hex2dec(CURRENT_PULSE)).append(", \n")
 					.append("  LP_CHOICE=" + DataFormat.hex2dec(LP_CHOICE)).append(", \n")
 					.append("  LP_PERIOD=" + DataFormat.hex2dec(LP_PERIOD)).append(", \n")
-					.append("  LP_DATE=" + DataFormat.hex2dec(Arrays.copyOfRange(LP_DATE, 0, 2)) + ""
-							+ DataFormat.hex2dec(Arrays.copyOfRange(LP_DATE, 2, 3)) + ""
-							+ DataFormat.hex2dec(Arrays.copyOfRange(LP_DATE, 3, 4)))
+					.append("  LP_DATE=" + getFrameInfoDateFormat("yyyyMMdd"))
 					.append(", \n")
 
 					.append("  BASE_PULSE=" + DataFormat.hex2dec(BASE_PULSE)).append(", \n")
-					.append("  FW_VERSION=" + DataFormat.hex2dec(FW_VERSION)).append(", \n")
+					.append("  FW_VERSION=" + DataFormat.hex2dec(FW_VERSION)).append("("+getFwVersion()+")").append(", \n")
 
 					.append("  FW_BUILD=" + DataFormat.hex2dec(FW_BUILD)).append(", \n")
-					.append("  HW_VERSION=" + DataFormat.hex2dec(HW_VERSION)).append(", \n")
-					.append("  SW_VERSION=" + DataFormat.hex2dec(SW_VERSION)).append(", \n")
+					.append("  HW_VERSION=" + DataFormat.hex2dec(HW_VERSION)).append("("+getHwVersion()+")").append(", \n")
+					.append("  SW_VERSION=" + DataFormat.hex2dec(SW_VERSION)).append("("+getSwVersion()+")").append(", \n")
 					.append("  LQI=" + DataFormat.hex2dec(LQI)).append(", \n")
 					.append("  RSSI=" + DataFormat.hex2dec(RSSI)).append(", \n")
 					.append("  NODE_KIND_TYPE=" + DataFormat.hex2dec(NODE_KIND_TYPE)).append(", \n")
@@ -246,9 +244,7 @@ public class NT509 implements java.io.Serializable {
 					.append("  NETWORK_TYPE=" + DataFormat.hex2dec(NETWORK_TYPE)).append(", \n")
 					.append("  ENERGY_LEVEL=" + DataFormat.hex2dec(ENERGY_LEVEL)).append(", \n")
 
-					.append("  LP_DATE_2=" + DataFormat.hex2dec(Arrays.copyOfRange(LP_DATE_2, 0, 2)) + ""
-							+ DataFormat.hex2dec(Arrays.copyOfRange(LP_DATE_2, 2, 3)) + ""
-							+ DataFormat.hex2dec(Arrays.copyOfRange(LP_DATE_2, 3, 4)))
+					.append("  LP_DATE_2=" + getFrameInfoDateFormat("yyyyMMdd"))
 					.append(", \n").append("  LP_BASE_PULSE=" + DataFormat.hex2dec(LP_BASE_PULSE));
 			for (int i = 0; i < LP_ARR.length; i++) {
 				sb.append("\n").append("    LP_DATA[" + i + "]=" + ((LP_ARR[i] == null) ? "-" :DataFormat.hex2dec(LP_ARR[i])));
@@ -392,6 +388,7 @@ public class NT509 implements java.io.Serializable {
 				LPData lpData = new LPData();
 				lpData.setDatetime(sdf.format(cal.getTime()));
 				lpData.setBasePulse(basePulse);
+				lpData.setBaseValue(0);
 				lpData.setLPChannelCnt(1);
 				lpData.setCh(ch);
 				lpDataList.add(lpData);
@@ -431,5 +428,15 @@ public class NT509 implements java.io.Serializable {
 	
 	public int getDst() throws Exception {
 		return Integer.valueOf(DataFormat.hex2dec(DST_VALUE));
+	}
+	
+	public String getFwVersion() {
+		return ((FW_VERSION[0]) >> 4)+"."+((FW_VERSION[0])&0x0f);
+	}
+	public String getHwVersion() {
+		return ((HW_VERSION[0]) >> 4)+"."+((HW_VERSION[0])&0x0f);
+	}
+	public String getSwVersion() {
+		return ((SW_VERSION[0]) >> 4)+"."+((SW_VERSION[0])&0x0f);
 	}
 }

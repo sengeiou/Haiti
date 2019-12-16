@@ -7,18 +7,17 @@ import org.springframework.stereotype.Service;
 import com.aimir.constants.CommonConstants;
 import com.aimir.constants.CommonConstants.DeviceType;
 import com.aimir.constants.CommonConstants.MeterStatus;
-import com.aimir.constants.CommonConstants.RelaySwitchStatus;
 import com.aimir.fep.command.conf.SM110Meta;
 import com.aimir.fep.command.mbean.CommandGW;
 import com.aimir.fep.command.mbean.CommandGW.OnDemandOption;
 import com.aimir.fep.meter.AbstractMDSaver;
 import com.aimir.fep.meter.entry.IMeasurementData;
 import com.aimir.fep.meter.parser.I210Plus;
-import com.aimir.fep.meter.parser.DLMSClouTable.DLMSVARIABLE.RELAY_STATUS_CLOU;
 import com.aimir.fep.util.CmdUtil;
 import com.aimir.fep.util.DataUtil;
 import com.aimir.model.device.Meter;
 import com.aimir.model.mvm.MeteringDataEM;
+import com.aimir.model.mvm.MeteringDataPk;
 import com.aimir.util.DateTimeUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -48,43 +47,53 @@ public class I210PlusMDSaver extends AbstractMDSaver {
 				parser.getMeteringTime());
 		// Save LP Data(E)
 		
-		// Save MeteringDataEM(S)
-		MeteringDataEM meteringDataEM = new MeteringDataEM();
-		meteringDataEM.setCh1(parser.getTOTAL_DEL_KWH());
-		meteringDataEM.setCh2(parser.getTOTAL_DEL_PLUS_RCVD_KWH());
-		meteringDataEM.setCh3(parser.getTOTAL_DEL_MINUS_RCVD_KWH());
-		meteringDataEM.setCh4(parser.getTOTAL_REC_KWH());
-		meteringDataEM.setDeviceId(meter.getMcu().getSysID());
-		meteringDataEM.setDeviceType(DeviceType.MCU.toString());
-		meteringDataEM.setHhmmss(parser.getMeteringTime().substring(8));
-		meteringDataEM.setMeteringType(CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()).getType());
-		meteringDataEM.setValue(parser.getTOTAL_DEL_KWH());
-		meteringDataEM.setWriteDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
-		meteringDataEM.setYyyymmdd(parser.getMeteringTime().substring(0,8));
-		meteringDataEM.setMDevId(parser.getMDevId());
-		meteringDataEM.setYyyymmddhhmmss(parser.getMeteringTime());
-		meteringDataEM.setDst(parser.getDst());
-		meteringDataEM.setMDevType(parser.getMDevType().toString());
-		meteringDataEM.setLocation(meter.getLocation());
-		meteringDataEM.setMeter(meter);
-		meteringDataEM.setModem(meter.getModem());
-		meteringDataEM.setSupplier(meter.getSupplier());
-		meteringDataDao.saveOrUpdate(meteringDataEM);
+		// Save MeteringDataEM(S)		
+		try {
+			MeteringDataEM meteringDataEM = new MeteringDataEM();
+			meteringDataEM.setCh1(parser.getTOTAL_DEL_KWH());
+			meteringDataEM.setCh2(parser.getTOTAL_DEL_PLUS_RCVD_KWH());
+			meteringDataEM.setCh3(parser.getTOTAL_DEL_MINUS_RCVD_KWH());
+			meteringDataEM.setCh4(parser.getTOTAL_REC_KWH());
+			meteringDataEM.setDeviceId(meter.getMcu().getSysID());
+			meteringDataEM.setDeviceType(DeviceType.MCU.toString());
+			meteringDataEM.setHhmmss(parser.getMeteringTime().substring(8));
+			meteringDataEM.setMeteringType(CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()).getType());
+			meteringDataEM.setValue(parser.getTOTAL_DEL_KWH());
+			meteringDataEM.setWriteDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
+			meteringDataEM.setYyyymmdd(parser.getMeteringTime().substring(0,8));
+			// PK
+			meteringDataEM.setMDevId(parser.getMDevId());
+			meteringDataEM.setYyyymmddhhmmss(parser.getMeteringTime());
+			meteringDataEM.setDst(parser.getDst());
+			meteringDataEM.setMDevType(parser.getMDevType().toString());
+			
+			meteringDataEM.setLocation(meter.getLocation());	
+			meteringDataEM.setMeter(meter);
+			meteringDataEM.setModem(meter.getModem());
+			meteringDataEM.setSupplier(meter.getSupplier());
+			meteringDataDao.saveOrUpdate(meteringDataEM);
+		} catch (Exception e) {
+			log.error(e,e);
+		}
 		// Save MeteringDataEM(E)
 		
 		// Save switch status(S)
-		boolean switchStatus = parser.getACTUAL_SWITCH_STATE(); // 0 – Open, 1 – Close 
-		log.debug("meter.getMeterStatus() : " + meter.getMeterStatus());
-		log.debug("switchStatus : " + switchStatus);
-		if(switchStatus){
-			String code = CommonConstants.getMeterStatusCode(MeterStatus.Normal);
-			meter.setMeterStatus(CommonConstants.getMeterStatus(code));
-		}else{
-			String code = CommonConstants.getMeterStatusCode(MeterStatus.CutOff);
-			meter.setMeterStatus(CommonConstants.getMeterStatus(code));
+		try {
+			boolean switchStatus = parser.getACTUAL_SWITCH_STATE(); // 0 – Open, 1 – Close 
+			log.debug("meter.getMeterStatus() : " + meter.getMeterStatus());
+			log.debug("switchStatus : " + switchStatus);
+			if(switchStatus){
+				String code = CommonConstants.getMeterStatusCode(MeterStatus.Normal);
+				meter.setMeterStatus(CommonConstants.getMeterStatus(code));
+			}else{
+				String code = CommonConstants.getMeterStatusCode(MeterStatus.CutOff);
+				meter.setMeterStatus(CommonConstants.getMeterStatus(code));
+			}
+			log.debug("meter.getMeterStatus() : " + meter.getMeterStatus());
+			meterDao.saveOrUpdate(meter);
+		} catch (Exception e) {
+			log.error(e,e);
 		}
-		log.debug("meter.getMeterStatus() : " + meter.getMeterStatus());
-		meterDao.saveOrUpdate(meter);
 		// Save switch status(E)
 
 		return true;
