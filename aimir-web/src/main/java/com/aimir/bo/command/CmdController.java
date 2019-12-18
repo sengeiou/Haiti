@@ -2353,8 +2353,7 @@ public class CmdController<V> {
 						rtnStr = "FAIL : " + relayStatus;
 					}
 				//WaterMeter
-				}else if(MeterType.getByServiceType("3.2").name().equals(meterTypeName)){
-					
+				}else if(MeterType.getByServiceType("3.2").name().equals(meterTypeName)){					
 					String modemId= Integer.toString(modem.getId());
 	//				resultMap = cmdOperationUtil.relayValveOn(mcuId, meter.getMdsId());
 					resultMap = cmdOperationUtil.cmdKDValveControl(mcuId, Integer.toString(modem.getId()), 0);
