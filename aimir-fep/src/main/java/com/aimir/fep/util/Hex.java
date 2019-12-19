@@ -26,8 +26,8 @@ public class Hex {
     public static byte[] encode(String data)
     { 
         data = data.trim();
-//       	if(data.length()%2!=0)
-//            data=data+"0";
+       	if(data.length()%2!=0)
+            data=data+"0";
         char[] chars = data.toUpperCase().toCharArray();
         int len = chars.length; 
         if ((len & 0x01) != 0) { 
