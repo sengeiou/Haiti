@@ -5678,11 +5678,26 @@ public class CmdOperationUtil {
      * @return
      * @throws Exception
      */
-    public void cmdKDValveControl(String mcuId, String modemId, int valveStatus) throws Exception{
+    public Map<String, Object> cmdKDValveControl(String mcuId, String modemId, int valveStatus) throws Exception{
         log.info(String.format("cmdKDValveControl mcuid[%s], modemid[%s], valveStatus[%d]",mcuId,modemId,valveStatus));
         try {
             CommandWS gw = CmdManager.getCommandWS(getProtocolType(mcuId, null, modemId));
             gw.cmdKDValveControl(modemId, valveStatus);
+            
+            ResponseMap obj = gw.cmdKDGetMeterStatus(modemId);
+            
+            Map<String, Object> map = new HashMap<String, Object>();
+            for (ResponseMap.Response.Entry e : obj.getResponse().getEntry()) {
+                log.debug("key["+e.getKey()+"], value["+ e.getValue()+"]");
+                if("meterStatus".equals(e.getKey().toString())) {
+                    map.put(e.getKey().toString(), 2000+Integer.parseInt(e.getValue().toString()));
+                } else {
+                    map.put(e.getKey().toString(), e.getValue());
+                }
+            }
+
+            return map;
+            
         }catch (Exception e) {
             log.error(e, e);
             throw e;
