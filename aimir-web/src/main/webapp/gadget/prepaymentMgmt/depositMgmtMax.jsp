@@ -374,7 +374,7 @@ $.getJSON('${ctx}/common/getUserInfo.do', function(json) {
     }
 });
 
-var vendorListParams = $.extend(true, {}, storeParams, {limit:VENDOR_SIZE});
+var vendorListParams = $.extend(true, {}, storeParams, {limit:VENDOR_SIZE, loginId:loginId});
 var historyParams = $.extend(true, {}, storeParams, {limit:HISTORY_SIZE});
 var vendorHistoryParams = $.extend(true, {vendor: $("#depositHistory select[name=depositVendorList]").val(), 
     vendorRole: vendorRole,
