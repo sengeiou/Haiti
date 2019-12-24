@@ -5894,16 +5894,16 @@
 			<li><a href="#locationInfo" id="_locationInfo"><fmt:message
 						key="aimir.location.info" /></a></li>
 
-			<li><a href="#schedule" id="_schedule"><fmt:message
-						key="aimir.schedule" /></a></li>
+			<%-- <li><a href="#schedule" id="_schedule"><fmt:message
+						key="aimir.schedule" /></a></li>	 --%>
 
 			<!-- <li><a href="#history" id="_history"><fmt:message key="aimir.history"/></a></li>  -->
 			<li><a href="#measurement" id="_measurement"><fmt:message
 						key="aimir.measurement" /></a></li>
 			<li><a href="#asyncHistory" id="_asyncHistory">Async Command
 					History</a></li>
-			<li><a href="#collectMeterValues" id="_collectMeterValues">Collect
-					Meter Values by Real Time</a></li>
+			<!-- <li><a href="#collectMeterValues" id="_collectMeterValues">Collect
+					Meter Values by Real Time</a></li>	 -->
 			<li><a href="#netstationMonitoring" id="_netstationMonitoring"><fmt:message key="aimir.nm.netstationMonitoring"/></a></li>
 		</ul>
 
