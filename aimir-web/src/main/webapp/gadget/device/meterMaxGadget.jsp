@@ -6236,9 +6236,10 @@
 		<!-- Tab 2 : locationInfo (E) -->
 
 		<!-- Tab 3 : schedule (S) -->
+	<!-- NI Command hide - 2019.12.24
 		<div id="schedule" class="tabcontentsbox">
-			<!-- Sub page will be loaded (device/meterMaxGadgetScheduleTab.jsp) -->
-		</div>
+			Sub page will be loaded (device/meterMaxGadgetScheduleTab.jsp)
+		</div> 		-->
 		<!-- Tab 3 : schedule (E) -->
 
 		<!-- Tab 4 : measurement (S) -->
@@ -6312,6 +6313,7 @@
 		<!-- Tab 5 : Async Command History (E) -->
 
 		<!-- Tab 6 : Collect Meter Values (S) -->
+	<%-- 	NI Command hide - 2019.12.24
 		<div id="collectMeterValues" class="tabcontentsbox">
 			<ul>
 				<li>
@@ -6384,7 +6386,7 @@
 					</div>
 				</li>
 			</ul>
-		</div>
+		</div>			 --%>
 		<!-- Tab 6 : Collect Meter Values (E) -->
 		<!-- Tab 7 : Netstation Monitoring (N) -->
 		<div id="netstationMonitoring" class="tabcontentsbox">
