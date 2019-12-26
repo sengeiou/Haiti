@@ -1171,5 +1171,11 @@ public class MeterDaoImpl extends AbstractJpaDao<Meter, Integer> implements Mete
             resultList.add(resultMap);
         }
         return resultList;
+	}
+
+	@Override
+	public List<Map<String, Object>> getMissLpMeter(Map<String, Object> condition) {
+		// TODO Auto-generated method stub
+		return null;
 	}	
 }
