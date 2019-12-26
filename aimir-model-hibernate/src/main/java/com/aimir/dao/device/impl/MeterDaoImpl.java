@@ -5726,13 +5726,13 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
             startDate  = searchStartDate + searchStartHour;
             endDate    = searchEndDate + searchEndHour;
 
-            for (MeterType _meterType : MeterType.values())
+            /*for (MeterType _meterType : MeterType.values())
                 if (_meterType.name().equals(meterType))
-                    tableName = _meterType.getMonthTableName();
+                    tableName = _meterType.getMonthViewName();*/
 
             for (MeterType _meterType : MeterType.values())
                 if (_meterType.name().equals(meterType))
-                    tableName = _meterType.getDayTableName();
+                    tableName = _meterType.getDayViewName();
 
             sbQuery.append(" SELECT YYYYMMDDHH  as YYYYMMDDHH \n")
                    .append("      , SUM(USAGE) as USAGE \n")
@@ -5775,7 +5775,7 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
 
                 for (MeterType _meterType : MeterType.values())
                     if (_meterType.name().equals(meterType))
-                        tableName = _meterType.getDayTableName();
+                        tableName = _meterType.getDayViewName();
 
             }else if(searchDateType.equals(DateType.MONTHLY.getCode())){
                 columnDate = "YYYYMM";
@@ -5784,7 +5784,7 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
 
                 for (MeterType _meterType : MeterType.values())
                     if (_meterType.name().equals(meterType))
-                        tableName = _meterType.getMonthTableName();
+                        tableName = _meterType.getMonthViewName();
             }
 
             sbQuery.append(" SELECT "+ columnDate +"                    \n")
