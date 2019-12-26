@@ -427,4 +427,13 @@ public interface MeterDao extends GenericDao<Meter, Integer> {
 
     public List<Object> getMissingMetersForRecollectSLA(Map<String, Object> params); // SP-1075
     
+    /**
+     * method name : getMissLpMeter<b/>
+     * method Desc : LP 데이터가 누락된 Meter 조회
+     *
+     * @param condition
+     * @return
+     */
+    public List<Map<String, Object>> getMissLpMeter(Map<String, Object> condition);
+    
 }

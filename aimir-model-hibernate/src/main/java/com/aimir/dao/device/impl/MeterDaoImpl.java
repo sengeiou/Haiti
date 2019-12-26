@@ -9861,4 +9861,42 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
         }
         return resultList;
     } // method End	
+    
+    @Override
+	@Transactional(value = "transactionManager", readOnly=true, propagation=Propagation.REQUIRED)
+	public List<Map<String, Object>> getMissLpMeter(Map<String, Object> conditionMap) {
+        List<Map<String, Object>> result;
+
+        String startDate = (String)conditionMap.get("startDate");
+        Integer lpChannel = (Integer)conditionMap.get("lpChannel");
+        String lpType = (String)conditionMap.get("lpType");
+        String codeName = (String)conditionMap.get("codeName");
+        String code = (String)conditionMap.get("code");
+		
+        StringBuffer sb = new StringBuffer();
+        	
+        sb.append("\n SELECT * FROM ");
+        sb.append("\n ( ");
+        sb.append("\n   SELECT ");
+        sb.append("\n      me.ID, me.MDS_ID, me.LP_INTERVAL, (1440/me.LP_INTERVAL) as MAXLP, NVL(lp.CNT, 0) as SAVELP ");
+        sb.append("\n   FROM ");
+        sb.append("\n      METER me LEFT OUTER JOIN (SELECT MDEV_ID, count(MDEV_ID) as CNT FROM LP_EM WHERE YYYYMMDD = :startDate and CHANNEL = :lpChannel and MDEV_TYPE = :lpType GROUP BY MDEV_ID) lp ");
+        sb.append("\n   ON ");
+        sb.append("\n      me.mds_id = lp.mdev_id(+) ");
+        sb.append("\n   WHERE ");
+        sb.append("\n      me.METER_STATUS != (SELECT ID FROM CODE WHERE NAME = :codeName AND CODE = :code) ");
+        sb.append("\n      and me.LP_INTERVAL is not null ");
+        sb.append("\n ) WHERE MAXLP != SAVELP");
+        
+        //Query query = getSession().createQuery(sb.toString());
+        //Query query = getSession().createSQLQuery(new SQLWrapper().getQuery(sb.toString()));
+        SQLQuery query = getSession().createSQLQuery(sb.toString());
+        query.setString("startDate", startDate);
+        query.setInteger("lpChannel", lpChannel);
+        query.setString("lpType", lpType);
+        query.setString("codeName", codeName);
+        query.setString("code", code);
+        
+        return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();        
+	}
 }
