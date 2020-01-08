@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 
 import com.aimir.constants.CommonConstants.ModemType;
@@ -32,6 +33,7 @@ import com.aimir.model.device.Modem;
 import com.aimir.schedule.command.CmdOperationUtil;
 import com.aimir.util.DateTimeUtil;
 
+@Service
 public class AutoOndemandRecoveryTask extends ScheduleTask {
 
     private static Log log = LogFactory.getLog(AutoOndemandRecoveryTask.class);
@@ -63,7 +65,8 @@ public class AutoOndemandRecoveryTask extends ScheduleTask {
 	}
 	
 	public static void main(String[] args) {
-        ApplicationContext ctx = new ClassPathXmlApplicationContext((String)"/spring-AutoOndemandRecoveryTask.xml");
+//        ApplicationContext ctx = new ClassPathXmlApplicationContext((String)"/spring-AutoOndemandRecoveryTask.xml");
+        ApplicationContext ctx = new ClassPathXmlApplicationContext((String)"/spring-BlockDailyEMBillingTask.xml");
         DataUtil.setApplicationContext(ctx);
         AutoOndemandRecoveryTask task = ctx.getBean(AutoOndemandRecoveryTask.class);
         log.info("======================== AutoOndemandRecoveryTask start. ========================");
@@ -190,6 +193,6 @@ public class AutoOndemandRecoveryTask extends ScheduleTask {
         Calendar cal = Calendar.getInstance();            
         cal.add(Calendar.DAY_OF_MONTH, num);
         
-        return DateTimeUtil.getDateString(cal.getTime()).substring(0, 8);
+        return DateTimeUtil.getDateString(cal.getTime()).substring(0, 14);
 	}
 }

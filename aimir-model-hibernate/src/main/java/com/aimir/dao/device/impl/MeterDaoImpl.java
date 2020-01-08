@@ -9880,7 +9880,7 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
         sb.append("\n   SELECT ");
         sb.append("\n      me.ID, me.MDS_ID, me.LP_INTERVAL, (1440/me.LP_INTERVAL) as MAXLP, NVL(lp.CNT, 0) as SAVELP ");
         sb.append("\n   FROM ");
-        sb.append("\n      METER me LEFT OUTER JOIN (SELECT MDEV_ID, count(MDEV_ID) as CNT FROM LP_EM WHERE YYYYMMDD = :startDate and CHANNEL = :lpChannel and MDEV_TYPE = :lpType GROUP BY MDEV_ID) lp ");
+        sb.append("\n      METER me LEFT OUTER JOIN (SELECT MDEV_ID, count(MDEV_ID) as CNT FROM LP_EM WHERE YYYYMMDDHHMISS = :startDate and CHANNEL = :lpChannel and MDEV_TYPE = :lpType GROUP BY MDEV_ID) lp ");
         sb.append("\n   ON ");
         sb.append("\n      me.mds_id = lp.mdev_id(+) ");
         sb.append("\n   WHERE ");
