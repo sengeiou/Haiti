@@ -65,8 +65,7 @@ public class AutoOndemandRecoveryTask extends ScheduleTask {
 	}
 	
 	public static void main(String[] args) {
-//        ApplicationContext ctx = new ClassPathXmlApplicationContext((String)"/spring-AutoOndemandRecoveryTask.xml");
-        ApplicationContext ctx = new ClassPathXmlApplicationContext((String)"/spring-BlockDailyEMBillingTask.xml");
+		ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[]{"spring-forcrontab.xml"});
         DataUtil.setApplicationContext(ctx);
         AutoOndemandRecoveryTask task = ctx.getBean(AutoOndemandRecoveryTask.class);
         log.info("======================== AutoOndemandRecoveryTask start. ========================");
