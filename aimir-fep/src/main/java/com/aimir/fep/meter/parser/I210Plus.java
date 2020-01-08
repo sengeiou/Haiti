@@ -40,7 +40,7 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 
 	private byte[] rawData = null;
 
-	private ArrayList<LPData> lpDataList = new ArrayList<>();
+	private ArrayList<LPData> lpDataList = new ArrayList<LPData>();
 	private Double meteringValue = null;
 	private String meterId = null;
 	private String meterDeviceModelName = "";
@@ -50,7 +50,7 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 	private ST001 st001 = null;
 	private MT019 mt019 = null;
 	private MT115 mt115 = null;
-	private List<NT509> nt509List = null;
+	private ArrayList<NT509> nt509List = new ArrayList<NT509>();
 	
 	private Double TOTAL_DEL_KWH = null;
 	private Double TOTAL_DEL_PLUS_RCVD_KWH = null;
