@@ -81,12 +81,7 @@ public class MeterTimeController {
 		Map<String, Object> condition = new HashMap<String, Object>();
 		
 		condition.put("mcuSysId" 	    , mcuSysId);
-		try {
-			condition.put("customerName"    , URLDecoder.decode(customerName,"UTF-8"));
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		condition.put("customerName"    , customerName);
 		condition.put("meterMdsId" 		, meterMdsId);
 		condition.put("contractNumber"  , contractNumber);
 
