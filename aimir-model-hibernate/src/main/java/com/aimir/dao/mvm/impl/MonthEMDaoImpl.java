@@ -1486,19 +1486,16 @@ public class MonthEMDaoImpl extends
 
 		StringBuilder sb = new StringBuilder()
 				.append(
-						" SELECT m.id.yyyymm as DATE, m.total as TOTAL			       ")
-				.append(
-						"   FROM MonthEM m                       			           ")
-				.append(
-						"  WHERE m.id.channel = :channel                               ")
-				.append(
-						"    AND m.contract.serviceTypeCode.code = :serviceTypeCode    ")
-				.append(
-						"    AND m.contract.status.code = :status                      ")
+//						" SELECT m.id.yyyymm as DATE, m.total as TOTAL			       ")
+						" SELECT m.id.yyyymm as DATE, sum(m.value) as TOTAL			       ")
+				.append("   FROM MonthEM m                       			           ")
+				.append("  WHERE m.id.channel = :channel                               ")
+				.append("    AND m.contract.serviceTypeCode.code = :serviceTypeCode    ")
+				.append("    AND m.contract.status.code = :status                      ")
 				.append("    AND m.id.yyyymm >= :startDate   						   ")
 				.append("    AND m.id.yyyymm <= :endDate     						   ")
-				.append(
-						"    AND m.contract.id = :contractId                           ");
+				.append("    AND m.contract.id = :contractId                           ")
+				.append("  GROUP BY m.id.yyyymm				                           ");
 
 		Query query = getSession().createQuery(sb.toString());
 		query.setString("channel", DefaultChannel.Usage.getCode() + "");
