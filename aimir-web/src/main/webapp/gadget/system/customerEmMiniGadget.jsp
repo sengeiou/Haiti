@@ -19,7 +19,7 @@
         }
     </style>
     <%@ include file="/gadget/system/preLoading.jsp"%>
-    <script type="text/javascript" charset="utf-8" src="${ctx}/js/public.js"></script>
+    <script type="text/javascript" charset="utf-8" src="${ctx}/js/public2.js"></script>
     <script type="text/javascript" charset="utf-8" src="${ctx}/js/jquery.tablescroll.js"></script>
     <script type="text/javascript" src="${ctx}/js/tree/jquery.tree.min.js"></script>
     <script type="text/javascript" src="${ctx}/js/tree/location.tree.js"></script>
@@ -259,10 +259,19 @@
 
         function fcChartRender() {
         	if ($('#fcChartDiv').is(':visible')) {
-		    	fcChart = new FusionCharts("${ctx}/flexapp/swf/fcChart/Pie3D.swf", "myChartId", $('#fcChartParentDiv').width() - ($('#fcChartLegend').width() + 10)  , "170", "0", "0");
+		    	/* fcChart = new FusionCharts("${ctx}/flexapp/swf/fcChart/Pie3D.swf", "myChartId", $('#fcChartParentDiv').width() - ($('#fcChartLegend').width() + 10)  , "170", "0", "0");
 		    	fcChart.setDataXML(fcChartDataXml);
 	            fcChart.setTransparent("transparent");
-	            fcChart.render("fcChartDiv");
+	            fcChart.render("fcChartDiv"); */
+	            
+	            fcChart = new FusionCharts({
+            		id: 'myChartId',
+        			type: 'Pie3D',
+        			renderAt : 'fcChartDiv',
+        			width : '300',
+        			height : '170',
+        			dataSource : fcChartDataXml
+        		}).render();
         	}
         }
 
@@ -283,53 +292,51 @@
     </script>
 </head>
 <body>
-<div id="fcChartParentDiv" class="lgnd_detail_parent">
-	<div id="fcChartDiv" class="floatleft">
-	    The chart will appear within this DIV. This text will be replaced by the chart.
-	</div>	
-    <div id="fcChartLegend" class="lgnd_detail_div" style="height:auto; width:160px;" >
-	 <div>
-		<ul>
-		<li><label id="lb_today"><fmt:message key='aimir.standard2'/></label></li>
-		<li class="bluebold12pt"><label id="lb_total"><fmt:message key='aimir.registerAgree'/> : </label></li>
-		<li class="lgnd">
-		  <table cellpadding="0" cellspacing="0">
-			<colgroup>
-			<col width="20" />
-			<col width="" />
-			</colgroup>
-			<tr>
-			<td><span class="fChartColor_1">&nbsp;</span></td>
-			<td><label id="lb_normal"><fmt:message key='aimir.normal'/> : </label></td>
-			</tr>
-            <tr>
-            <td><span class="fChartColor_6"></span></td>
-            <td><label id="lb_suspended"><fmt:message key='aimir.suspended'/> : </label></td>
-            </tr>
-			<tr>
-			<td><span class="fChartColor_2"></span></td>
-            <td><label id="lb_stop"><fmt:message key='aimir.pause'/> : </label></td>
-			</tr>
-			<tr>
-			<td><span class="fChartColor_3"></span></td>
-			<td><label id="lb_cancel"><fmt:message key='aimir.cancel2'/> : </label></td>
-			</tr>
-			<tr>
-			<td><span class="fChartColor_4"></span></td>
-            <td><label id="lb_pause"><fmt:message key='aimir.temporaryPause'/> : </label></td>
-			</tr>
-            <tr>
-            <td><span class="fChartColor_5"></span></td>
-            <td><label id="lb_unknown"><fmt:message key='aimir.unknown'/> : </label></td>
-            </tr>
-		  </table>
-		</li>
-		<!-- <li class="blue11pt"><label id="lb_todayNormal"><fmt:message key='aimir.contractCustomer.today'/> : </label></li>
-		<li class="blue11pt"><label id="lb_todayCancel"><fmt:message key='aimir.cancelCustomer.today'/> : </label></li> -->
-		</ul>
-	 </div>	
-	</div>    
-</div>
+	<div id="fcChartParentDiv" style="margin:10px;">
+		<div id="fcChartDiv" class="float_left"></div>	
+	    <div id="fcChartLegend" class="lgnd_detail_div" style="height:auto; width:160px;" >
+		 <div>
+			<ul>
+			<li><label id="lb_today"><fmt:message key='aimir.standard2'/></label></li>
+			<li class="bluebold12pt"><label id="lb_total"><fmt:message key='aimir.registerAgree'/> : </label></li>
+			<li class="lgnd">
+			  <table cellpadding="0" cellspacing="0">
+				<colgroup>
+				<col width="20" />
+				<col width="" />
+				</colgroup>
+				<tr>
+				<td><span class="fChartColor_1">&nbsp;</span></td>
+				<td><label id="lb_normal"><fmt:message key='aimir.normal'/> : </label></td>
+				</tr>
+	            <tr>
+	            <td><span class="fChartColor_6"></span></td>
+	            <td><label id="lb_suspended"><fmt:message key='aimir.suspended'/> : </label></td>
+	            </tr>
+				<tr>
+				<td><span class="fChartColor_2"></span></td>
+	            <td><label id="lb_stop"><fmt:message key='aimir.pause'/> : </label></td>
+				</tr>
+				<tr>
+				<td><span class="fChartColor_3"></span></td>
+				<td><label id="lb_cancel"><fmt:message key='aimir.cancel2'/> : </label></td>
+				</tr>
+				<tr>
+				<td><span class="fChartColor_4"></span></td>
+	            <td><label id="lb_pause"><fmt:message key='aimir.temporaryPause'/> : </label></td>
+				</tr>
+	            <tr>
+	            <td><span class="fChartColor_5"></span></td>
+	            <td><label id="lb_unknown"><fmt:message key='aimir.unknown'/> : </label></td>
+	            </tr>
+			  </table>
+			</li>
+			<!-- <li class="blue11pt"><label id="lb_todayNormal"><fmt:message key='aimir.contractCustomer.today'/> : </label></li>
+			<li class="blue11pt"><label id="lb_todayCancel"><fmt:message key='aimir.cancelCustomer.today'/> : </label></li> -->
+			</ul>
+		 </div>	
+		</div>    
+	</div>
    
     <div id="gadget_body">
 	    <div id="customerMiniChartGridDiv"></div>

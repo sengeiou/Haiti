@@ -241,12 +241,21 @@
 
     function fwGuageChartRender(){ 
         if($('#chargeHistoryTabDiv').is(':visible')) {
-            guageDivWidth  = $('#guageChartDiv').width();
+           /*  guageDivWidth  = $('#guageChartDiv').width();
 
             var guageChart = new FusionCharts("${ctx}/flexapp/swf/fusionwidgets/AngularGauge.swf", "myChartId", guageDivWidth, "200", "0", "0");
             guageChart.setDataXML(guageChartDataXml);
             guageChart.setTransparent("transparent");
-            guageChart.render("guageChartDiv");
+            guageChart.render("guageChartDiv"); */
+            
+            guageChart = new FusionCharts({
+        		id: 'myChartId',
+    			type: 'AngularGauge',
+    			renderAt : 'guageChartDiv',
+    			width : $('#guageChartDiv').width(),
+    			height : '200',
+    			dataSource : guageChartDataXml
+    		}).render();
         }
     }  
 

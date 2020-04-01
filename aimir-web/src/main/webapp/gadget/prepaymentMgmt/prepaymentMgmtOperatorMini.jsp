@@ -21,11 +21,17 @@
             }
         }
     </style>
-    <script type="text/javascript" charset="utf-8" src="${ctx}/js/public-customer.js"></script>
+    <%-- <script type="text/javascript" charset="utf-8" src="${ctx}/js/public-customer.js"></script>
+    <script type="text/javascript" charset="utf-8" src="${ctx}/js/jquery.tablescroll.js"></script> --%>
+    
+    <script type="text/javascript" charset="utf-8" src="${ctx}/js/public2.js"></script>
     <script type="text/javascript" charset="utf-8" src="${ctx}/js/jquery.tablescroll.js"></script>
+    <script type="text/javascript" charset="utf-8"  src="${ctx}/js/extjs/adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" charset="utf-8"  src="${ctx}/js/extjs/ext-all.js"></script>
+    
     <script type="text/javascript" charset="utf-8">/*<![CDATA[*/
 
-        var guageChartDataXml;
+        var pieChart;
         var supplierId = "${supplierId}";
 
         $(document).ready(function(){
@@ -158,7 +164,6 @@
                              + "chartRightMargin = '0' "
                              + "chartTopMargin = '0' "
                              + "chartBottomMargin = '0' "
-                             + fChartStyle_Common
                              + fChartStyle_Font
                              + fChartStyle_Pie3D_nobg
                              + ">";
@@ -170,7 +175,6 @@
                                + "<set value='"+list.cancel+"' color='"+fChartColor_Step5[2]+"'/>"
                                + "<set value='"+list.pause+"' color='"+fChartColor_Step5[3]+"'/>"
                                + "<set value='"+list.unknown+"' color='"+fChartColor_Step5[4]+"'/>";
-                               
 
                         if (list.normal == 0 && list.pause == 0 && list.stop == 0 && list.cancel == 0 && list.suspended == 0) {
                             labels = "<set value='1' color='E9E9E9' toolText='' />";
@@ -200,11 +204,15 @@
 
         function pieChartRender() {
             //pieChart = new FusionCharts("${ctx}/flexapp/swf/fcChart/Pie3D.swf", "pieChartId", $('#pieChartDiv').width() , "204", "0", "0");
-            pieChart = new FusionCharts("${ctx}/flexapp/swf/fcChart/Pie3D.swf", "pieChartId",
-                    $('#fcChartParentDiv').width() - ($('#fcChartLegend').width() + 10), "185", "0", "0");
-            pieChart.setDataXML(pieChartDataXml);
-            pieChart.setTransparent("transparent");
-            pieChart.render("pieChartDiv");
+            
+            pieChart = new FusionCharts({
+        		id: 'pieChartId',
+    			type: 'Pie3D',
+    			renderAt : 'pieChartDiv',
+    			width : '300',
+    			height : '204',
+    			dataSource : pieChartDataXml
+    		}).render();
         }
 
         function notifyEmergencyCredit(mode) {
@@ -255,7 +263,7 @@
 <div id="wrapper">
     <!-- content -->
     <div class="balancebox">
-        <div id="fcChartParentDiv" class="lgnd_detail_parent">
+        <div id="fcChartParentDiv">
             <div id="pieChartDiv" class="float_left"></div>
             <div id="fcChartLegend" class="lgnd_detail_div" style="height:auto; width:160px;">
                 <div>
@@ -301,8 +309,7 @@
 
         <div class="operator_tit_space" style="clear: both;">
             <div class="customerlist_title"><span class="icon_title_blue"></span><fmt:message key="aimir.hems.prepayment.eccustomerlist"/><!-- Emergency Credit Mode 고객 리스트 --></div>
-
-         </div>
+        </div>
         <div id="contractDiv" class="balance_grid"></div>
     </div>
     <!--// content -->
