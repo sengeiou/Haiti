@@ -6,7 +6,7 @@
   <parent>
     <groupId>com.aimir</groupId>
     <artifactId>aimir-parent</artifactId>
-    <version>3.4</version>
+    <version>3.4-SNAPSHOT</version>
     <relativePath>../aimir-parent/pom.xml</relativePath>
   </parent>
   
