@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
-
 import com.aimir.constants.CommonConstants;
 import com.aimir.constants.CommonConstants.McuType;
 import com.aimir.constants.CommonConstants.Protocol;
@@ -32,7 +31,6 @@ import com.aimir.model.system.Code;
 import com.aimir.model.system.Location;
 import com.aimir.model.system.Supplier;
 import com.aimir.notification.FMPTrap;
-import com.aimir.util.StringUtil;
 import com.aimir.util.TimeUtil;
 
 /**
@@ -61,21 +59,23 @@ public class EV_200_1_0_Action implements EV_Action
     @Autowired
     CodeDao codeDao;
     
+    @Autowired
+    CommandGW gw;
+    
     /**
      * execute event action
      *
      * @param trap - FMP Trap(MCU Event)
      * @param event - Event Data
      */
-    public void execute(FMPTrap trap, EventAlertLog event) throws Exception
-    {
-        log.debug("EventCode[" + trap.getCode()
-                +"] MCU["+trap.getMcuId()+"]");
+    public void execute(FMPTrap trap, EventAlertLog event) throws Exception {
+        log.debug("EventCode[" + trap.getCode()+"] MCU["+trap.getMcuId()+"]");
 
         MCU mcu = null;
         TransactionStatus txstatus = null;
         try {
             // Initialize
+        	txstatus = txmanager.getTransaction(null);
             String mcuId = trap.getMcuId();
             String ipAddr = event.getEventAttrValue("ethIpAddr");
     
@@ -202,7 +202,8 @@ public class EV_200_1_0_Action implements EV_Action
                 if (status != null)
                     mcu.setMcuStatus(status);
                 
-                mcuDao.add(mcu);
+                log.debug("DCU ADD="+mcu);
+                mcuDao.add_requires_new(mcu);
             }else{          
                 log.info("mcu["+existMcu.getSysID()+"] is existed!! - Location Id:"+existMcu.getLocation().getId()+" Location Name:"+existMcu.getLocation().getName());         
                 existMcu.setIpAddr(mcu.getIpAddr());
@@ -227,8 +228,13 @@ public class EV_200_1_0_Action implements EV_Action
             event.setSupplier(mcu.getSupplier());
             event.setLocation(mcu.getLocation());
         }
+        catch(Exception e) {
+        	log.error(e,e);
+        }
         finally{
-            if (txstatus != null) txmanager.commit(txstatus);
+            if (txstatus != null) {
+            	txmanager.commit(txstatus);
+            }
         }
     
         String hwVersion = mcu.getSysHwVersion();
@@ -252,7 +258,7 @@ public class EV_200_1_0_Action implements EV_Action
                 } catch (Exception e) {
                 }
             }
-            CommandGW gw = new CommandGW();
+//            CommandGW gw = new CommandGW();
             gw.cmdMcuScanning(mcu.getSysID(), property.toArray(new String[0]));
         }
         catch (Exception e) {
