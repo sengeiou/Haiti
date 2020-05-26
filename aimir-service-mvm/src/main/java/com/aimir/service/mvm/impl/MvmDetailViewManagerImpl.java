@@ -3236,7 +3236,8 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 				Map<String, Object> tmpMap = mergeChannelMap.get(date);
 				// Set format to value
 				for(Integer chId : channelIdList) {
-					tmpMap.put("channel_"+chId, mdf.format(tmpMap.get("channel_"+chId)) );
+					String tmpKey = "channel_"+chId;
+					if(tmpMap.containsKey(tmpKey))	tmpMap.put("channel_"+chId, mdf.format(tmpMap.get(tmpKey)) );
 				}
 				result.add(mergeChannelMap.get(date));
 			}else{
