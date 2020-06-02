@@ -7,44 +7,14 @@
 <meta http-equiv="PRAGMA" content="NO-CACHE">
 <meta http-equiv="Expires" content="-1">
 <link href="${ctx}/css/style.css" rel="stylesheet" type="text/css">
-<style type="text/css">
-    span {
-        float:none;
-    }
-    div#receipt-form {
-        font-size: 12pt;
-        padding: 10px;
-        width: 280px;
-        height: 390px;
-    }
-    #receipt-form tr{
-        height: 20px;
-    }
-    #receipt-form td{
-        padding-left: 5px;
-    }
-    #receipt-form td.total-amount {
-        text-align: center;
-        font-weight: bold;
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
-    img.logo {
-        width: 100px;
-        height: 85px;
-        float: right;
-    }
-
-</style>
+<link href="${ctx}/themes/css/print-common.css" rel="stylesheet" type="text/css">
 <style type="text/css" media="print">
     @page {
-        margin: none;
+        margin:0;
     }
     #receipt-form {
         padding: 0px;
-        font-size: 12pt;
-        font-weight: normal;
-        height: 355px;
+        font-size: 10pt;
     }
     .contents-wrapper {
         margin-bottom: 20px;
@@ -59,7 +29,7 @@
 <script type="text/javascript" charset="utf-8" src="${ctx}/js/jZebra/jquery.plugin.html2canvas.js"></script>
 <script type="text/javascript" charset="utf-8" src="${ctx}/js/jZebra/PluginDetect.js"></script>
 </head>
-<body style="overflow: scroll">
+<body>
     <applet name="jzebra" code="jzebra.PrintApplet.class"
         archive="${ctx}/lib/jzebra.jar" width="0" height="0"></applet>
     <canvas id="screenshot" style="display:none;"></canvas>
@@ -274,7 +244,7 @@
             $("span.close").click(eventHandler.close);
         };
         var init = function () {
-            window.resizeTo(315, 530);
+            window.resizeTo(320, 600);
             bind();
         };
         window.onload = function() {

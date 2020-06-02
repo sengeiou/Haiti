@@ -7,49 +7,18 @@
 <meta http-equiv="PRAGMA" content="NO-CACHE">
 <meta http-equiv="Expires" content="-1">
 <link href="${ctx}/css/style.css" rel="stylesheet" type="text/css">
-<style type="text/css">
-    span {
-        float:none;
-    }
-    tr {
-        height: 20px;
-    }
-    #receipt-form td {
-        padding: 5px;
-    }
-    td.td-table {
-        padding: 5px;
-    }
-    div.logo-wrapper,
-    div.contents-wrapper {}
-
-    div#receipt-form {
-        padding: 10px;
-        width: 350px;
-    }
-    img.logo {
-        width: 100px;
-        height: 85px;
-        float: right;
-    }
-    table.inner-table {
-        table-layout: fixed;
-        word-break: break-all;
-        border: #000 1px solid;
-    }
-    table.inner-table td {
-        padding-left: 10px
-    }
-    table.inner-table td.table-header {
-        text-align: center;
-        padding:0px;
-    }
-    table.inner-table td.table-value {
-        text-align: right;
-        padding-right: 10px;
-    }
-</style>
+<link href="${ctx}/themes/css/print-common.css" rel="stylesheet" type="text/css">
 <style type="text/css" media="print">
+    @page {
+        margin:0;
+    }
+    #receipt-form {
+        padding: 0px;
+        font-size: 10pt;
+    }
+    .contents-wrapper {
+        margin-bottom: 20px;
+    }
     .hidden {
         display: none;
     }
@@ -60,7 +29,7 @@
 <script type="text/javascript" charset="utf-8" src="${ctx}/js/jZebra/jquery.plugin.html2canvas.js"></script>
 <script type="text/javascript" charset="utf-8" src="${ctx}/js/jZebra/PluginDetect.js"></script>
 </head>
-<body style="overflow: scroll">
+<body>
     <applet name="jzebra" code="jzebra.PrintApplet.class"
     archive="${ctx}/lib/jzebra.jar" width="0" height="0"></applet>
     <div id="receipt-form">
