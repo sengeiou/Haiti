@@ -12,8 +12,8 @@
 
     div#receipt-form {
         font-size: 12pt;
-        padding: 10px;
-        width: 280px;
+        padding: 5px;
+        width: 256px;
         height: 95%;
     }
 

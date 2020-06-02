@@ -16,7 +16,7 @@ td.td-table {  padding: 5px;  }
 
 div.contents-wrapper {  border:1px solid black;  width:calc(100% - 2px);  }
 
-div#receipt-form {  font-size: 12pt;  padding: 10px;  width: 280px;  }
+div#receipt-form {  font-size: 12pt;  padding: 5px;  width: 256px;  }
 
 img.logo {  width: 100px;  height: 85px;  }
 
