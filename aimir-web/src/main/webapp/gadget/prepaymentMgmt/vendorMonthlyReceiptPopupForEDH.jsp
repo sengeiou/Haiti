@@ -7,53 +7,24 @@
 <meta http-equiv="PRAGMA" content="NO-CACHE">
 <meta http-equiv="Expires" content="-1">
 <link href="${ctx}/css/style.css" rel="stylesheet" type="text/css">
+<link href="${ctx}/themes/css/print-common.css" rel="stylesheet" type="text/css">
 <style type="text/css">
-    span {
-        float:none;
-    }
+
     div#receipt-form {
         font-size: 12pt;
         padding: 10px;
         width: 280px;
-        /* height: 580px; */
-        <c:choose>
-            <c:when test="${hasArrears == 'true'}">
-            /* height: 740px; */
-            height: 760px;
-            </c:when>
-            <c:otherwise>
-            /* height: 620px; */
-            height: 640px;
-            </c:otherwise>
-        </c:choose>
+        height: 95%;
     }
-    #receipt-form tr{
-        height: 20px;
-    }
-    #receipt-form td{
-        padding-left: 5px;
-    }
-    #receipt-form td.total-amount {
-        text-align: center;
-        font-weight: bold;
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
-    img.logo {
-        width: 100px;
-        height: 85px;
-        float: right;
-    }
+
 </style>
 <style type="text/css" media="print">
     @page {
-        margin: none;
+        margin:0;
     }
     #receipt-form {
         padding: 0px;
-        font-size: 12pt;
-        font-weight: normal;
-        height: 450px;
+        font-size: 10pt;
     }
     .contents-wrapper {
         margin-bottom: 20px;
@@ -68,7 +39,7 @@
 <script type="text/javascript" charset="utf-8" src="${ctx}/js/jZebra/jquery.plugin.html2canvas.js"></script>
 <script type="text/javascript" charset="utf-8" src="${ctx}/js/jZebra/PluginDetect.js"></script>
 </head>
-<body style="overflow: scroll">
+<body>
     <applet name="jzebra" code="jzebra.PrintApplet.class"
         archive="${ctx}/lib/jzebra.jar" width="0" height="0"></applet>
     <canvas id="screenshot" style="display:none;"></canvas>
@@ -466,7 +437,7 @@
             <c:choose>
                 <c:when test="${hasArrears == 'true'}">
                 //window.resizeTo(320, 850);
-                window.resizeTo(320, 870);
+                window.resizeTo(320, 1100);
                 </c:when>
                 <c:otherwise>
                 //window.resizeTo(320, 730);
