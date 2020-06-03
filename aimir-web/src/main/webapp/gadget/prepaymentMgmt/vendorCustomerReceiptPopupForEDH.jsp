@@ -206,10 +206,10 @@
  <script type="text/javascript" charset="utf-8">/*<![CDATA[*/
         var eventHandler = {
             receiptPrint: function() {
-                document.jzebra.findPrinter();
-                /*document.jzebra.findPrinter("SEWOO Lite #1");*/
+            /*  document.jzebra.findPrinter();
+                document.jzebra.findPrinter("SEWOO Lite #1");
                 document.jzebra.setEncoding("UTF-8");
-                document.jzebra.setEndOfDocument("\r\n");
+                document.jzebra.setEndOfDocument("\r\n");   */
 
                 //var logo = "<img src=\"" + window.location.origin + "/aimir-web/images/space.gif\" width=\"22\" height=\"60\">";
                 var logo = "<img src=\"";
@@ -232,7 +232,7 @@
                         window.print();
                     }
                 }
-                print();
+                window.print();
             },
 
             close: function() {
