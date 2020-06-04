@@ -48,10 +48,10 @@
 <script type="text/javascript" charset="utf-8">/*<![CDATA[*/
 	var eventHandler = {
 		receiptPrint: function() {
-			document.jzebra.findPrinter();
-			/*document.jzebra.findPrinter("SEWOO Lite #1");*/
+		/*	document.jzebra.findPrinter();
+			document.jzebra.findPrinter("SEWOO Lite #1");
 			document.jzebra.setEncoding("UTF-8");
-			document.jzebra.setEndOfDocument("\r\n");
+			document.jzebra.setEndOfDocument("\r\n");	*/
 
 			var logo = "<img src=\"";
 			//logo += window.location.origin + "${ctx}/images/ECG_logo.gif\" width=\"60\" height=\"60\" />";
@@ -73,7 +73,7 @@
 					window.print();
 				}
 			}
-			print();
+			window.print();
 		},
 
 		close: function() {
