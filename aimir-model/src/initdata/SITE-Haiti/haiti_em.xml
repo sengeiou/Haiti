@@ -159,8 +159,9 @@
     <system.Dashboard descr="Event and History Management Dashboard" name="Alarm Event" orderNo="4" role="admin"/>
     <system.Dashboard descr="Prepayment Dashboard" name="Prepayment" orderNo="5" role="admin"/>
     <system.Dashboard descr="Usage of customer" name="Usage" orderNo="0" role="customer"/>
-    <system.Dashboard descr="User of EDH_Vendor" name="User" orderNo="0" role="edh_vendor"/>
+    <system.Dashboard descr="User of EDH_Vendor" name="EDH main" orderNo="0" role="edh_vendor"/>
     <system.Dashboard descr="Main of Manager" name="Manager main" orderNo="0" role="manager"/>
+    <system.Dashboard descr="Main of vs" name="Vending" orderNo="0" role="vendor"/>
     
     <system.Gadget
         descr="Code Management"
