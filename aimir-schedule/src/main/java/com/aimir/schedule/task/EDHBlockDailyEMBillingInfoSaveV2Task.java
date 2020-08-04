@@ -586,8 +586,8 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 //        log.debug("New Service Charge[" + serviceCharge + "]");
 
 //        return returnBill + tca + frais + serviceCharge;
-        
-        log.debug("4. BlockBill2 Meter[" + mdsId + "] Bill[" + returnBill + "] TCA[" + tca + "] Frais[" + frais + "] Total[" + returnBill + tca + frais + "]");
+        double temp = returnBill+tca+frais;
+        log.debug("4. BlockBill2 Meter[" + mdsId + "] Bill[" + returnBill + "] TCA[" + tca + "] Frais[" + frais + "] Total[" + temp + "]");
         
         return returnBill + tca + frais;
     }

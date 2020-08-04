@@ -785,6 +785,8 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
                     // SP-687
                     modemDao.update_requires_new(modem);
                 }
+
+                if(modem.getSupplier() == null) modem.setSupplier(mcu.getSupplier());
             }
             if(modem.getModel() == null || modem.getModel().getName().equals("")) {
             	List<DeviceModel> models = deviceModelDao.getDeviceModelByName(modem.getSupplier().getId(), "MODEM-DUMMY");  // SriLanka CEB Dummy Modem
