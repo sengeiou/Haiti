@@ -112,6 +112,22 @@ public class NT509 implements java.io.Serializable {
 		return tmpCal;
 	}
 
+	//LP Data:: LP Date
+	public Calendar getLpDate2() {
+		Calendar tmpCal = Calendar.getInstance();
+		try {
+			tmpCal.set(DataFormat.hex2dec(Arrays.copyOfRange(LP_DATE_2, 0, 2)),
+					DataFormat.hex2dec(Arrays.copyOfRange(LP_DATE_2, 2, 3)) - 1,
+					DataFormat.hex2dec(Arrays.copyOfRange(LP_DATE_2, 3, 4)), 0, 0, 0);
+		} catch (Exception e) {
+			log.error("LP_DATE_2=" + Hex.decode(LP_DATE_2));
+			e.printStackTrace();
+			tmpCal = null;
+		}
+		log.debug("NT509 LpDate=" + tmpCal);
+		return tmpCal;
+	}
+
 	public void parse(byte[] data) throws Exception {
 		int pos = 0;
 
@@ -244,7 +260,7 @@ public class NT509 implements java.io.Serializable {
 					.append("  NETWORK_TYPE=" + DataFormat.hex2dec(NETWORK_TYPE)).append(", \n")
 					.append("  ENERGY_LEVEL=" + DataFormat.hex2dec(ENERGY_LEVEL)).append(", \n")
 
-					.append("  LP_DATE_2=" + getFrameInfoDateFormat("yyyyMMdd"))
+					.append("  LP_DATE_2=" + getLpDate2())
 					.append(", \n").append("  LP_BASE_PULSE=" + DataFormat.hex2dec(LP_BASE_PULSE));
 			for (int i = 0; i < LP_ARR.length; i++) {
 				sb.append("\n").append("    LP_DATA[" + i + "]=" + ((LP_ARR[i] == null) ? "-" :DataFormat.hex2dec(LP_ARR[i])));
@@ -388,7 +404,8 @@ public class NT509 implements java.io.Serializable {
 				LPData lpData = new LPData();
 				lpData.setDatetime(sdf.format(cal.getTime()));
 				lpData.setBasePulse(basePulse);
-				lpData.setBaseValue(0);
+				//BaseValue:원래 0으로 세팅. 정규화 이후 저장 처리가 일부 변경되어 Pulse 값을 세팅.
+				lpData.setBaseValue(basePulse);
 				lpData.setLPChannelCnt(1);
 				lpData.setCh(ch);
 				lpDataList.add(lpData);
@@ -397,7 +414,7 @@ public class NT509 implements java.io.Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("lpDataList.size()="+lpDataList.size());
+		log.debug("lpDataList.size()="+lpDataList.size());
 		return lpDataList;
 	}
 	
