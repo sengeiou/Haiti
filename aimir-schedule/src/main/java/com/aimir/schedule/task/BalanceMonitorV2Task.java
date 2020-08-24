@@ -151,7 +151,7 @@ public class BalanceMonitorV2Task extends ScheduleTask {
             conditions.add(new Condition("currentCredit", new Object[] {0.0}, null, Restriction.GT));
             conditions.add(new Condition("s.name", new Object[] {"CutOff"}, null, Restriction.EQ));
             List<Contract> contracts = contractDao.findByConditions(conditions);
-    
+            log.debug("SJD## contract1: credit>0, cutoff [" + contracts.size() + "]");
             conditions = new HashSet<Condition>();
             conditions.add(new Condition("creditType", new Object[]{"c"}, null, Restriction.ALIAS));
             conditions.add(new Condition("c.name", new Object[]{"prepay", "emergency credit"}, null, Restriction.IN));
@@ -159,14 +159,14 @@ public class BalanceMonitorV2Task extends ScheduleTask {
             conditions.add(new Condition("s.name", new Object[] {"Temporary Pause"}, null, Restriction.EQ));
             conditions.add(new Condition("currentCredit", new Object[] {0.0}, null, Restriction.GT));
             contracts.addAll(contractDao.findByConditions(conditions));
-            
+            log.debug("SJD## contract2: credit>0, temporary pause [" + contracts.size() + "]");
             // 선불고객이고 잔액이 0이하인 고객인 전부 가져온다. 미터 상태랑 상관없다.
             conditions = new HashSet<Condition>();
             conditions.add(new Condition("creditType", new Object[]{"c"}, null, Restriction.ALIAS));
             conditions.add(new Condition("c.name", new Object[]{"prepay", "emergency credit"}, null, Restriction.IN));
             conditions.add(new Condition("currentCredit", new Object[] {0.0}, null, Restriction.LE));
             contracts.addAll(contractDao.findByConditions(conditions));
-            
+            log.debug("SJD## contract3: credit<=0 all [" + contracts.size() + "]");
             if (contracts == null || contracts.size() <= 0) {
                 log.info("Available Contract is not exist");
                 isNowRunning = false;
@@ -317,6 +317,7 @@ class BalanceCheckThread implements Runnable {
             
             // 잔액이 임계치보다 작은 경우 고객에게 통보
             if (credit > 0 && credit < (contract.getPrepaymentThreshold() == null ? 0 : contract.getPrepaymentThreshold())) {
+                log.debug("SJD<CASE01>" + contractId + ": " +contract.getPrepaymentThreshold());
                 // message event 시작 : 잔액이 임계치보다 작습니다. 충전해주십시오.
     
                 //선불고객인지 판별
@@ -347,6 +348,7 @@ class BalanceCheckThread implements Runnable {
                     if (meterStatus != null && meterStatus.getCode() != null && 
                         meterStatus.getName().equals(MeterStatus.CutOff.name())) {
                         isCutOff = true;
+                        log.debug("SJD<-1>" + contractId + ": isCutoff->true" );
                     }
     
                     // message event 시작 : 미터를 차단하겠습니다.
@@ -370,6 +372,7 @@ class BalanceCheckThread implements Runnable {
                         if (meter != null && modem != null && mcu != null) {
                             // txStatus = txManager.getTransaction(null);
                             CmdOperationUtil cmdOperationUtil = DataUtil.getBean(CmdOperationUtil.class);
+                            log.debug("SJD<CASE02>" + contractId + ": " + mcu.getSysID());
                             Map<String, Object> result = cmdOperationUtil.relayValveOff(mcu.getSysID(), meter.getMdsId());
                             // txManager.commit(txStatus);
                             
@@ -441,20 +444,25 @@ class BalanceCheckThread implements Runnable {
     //                }
     
                 } else if (contract.getEmergencyCreditAutoChange() != null && contract.getEmergencyCreditAutoChange()) {
+                    log.debug("SJD<CASE03,04,05>" + contractId + ": " + contract.getEmergencyCreditAutoChange());
                     // 잔액이 0 이하 이고 emergency credit 이 자동인 경우 고객정보를 emergency credit 모드로 업데이트
                 	if(contract.getEmergencyCreditStartTime() == null  || "".equals(contract.getEmergencyCreditStartTime())) {
-                        //EmergencyCreditType으로 변경
+                        log.debug("SJD<CASE03>" + contractId + ": startTime is Null or Empty");
+                	    //EmergencyCreditType으로 변경
                         log.info("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] ContractId["+contract.getId()+"] is change EmergencyCreditType");                        
                         
                         changeCreditType(contract, "creditType", creditType, emergencyType);
                     } else {
-                        //EmergencyDuration을 체크 후 기간이 지났을 경우 EmernencyCredit을 Manual로 변경
+                        //EmergencyDuration을 체크 후 기간이 지났을 경우 EmergencyCredit을 Manual로 변경
                         Boolean isEmergencyCreditContract = checkEmergencyDuration(contract);
                         if(!isEmergencyCreditContract) {
+                            log.debug("SJD<CASE05>" + contractId + ": " + isEmergencyCreditContract);
                             //Manual로 변경
                             log.info("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] ContractId["+contract.getId()+"] is change PrepayType");
                                                         
                             changeCreditType(contract, "creditType", creditType, prepaymentType);
+                        }else{
+                            log.debug("SJD<CASE04>" + contractId + ": " + isEmergencyCreditContract);
                         }
                     }
                 	
@@ -469,12 +477,14 @@ class BalanceCheckThread implements Runnable {
                 
                 if (cutoffnotsuspended || (contractStatus != null && contractStatus.getCode().equals(pauseCode))) {
                       isCutOff = true;
+                    log.debug("SJD<-2>" + contractId + ": cutofnotsuspended[" + cutoffnotsuspended + "]");
                 }
                 
                 log.debug("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] is 0 < credit and [isCutOff = " + isCutOff + "]");
                 
                 if (isCutOff) {
                     try {
+                        log.debug("SJD<CASE07>" + contractId + ": isCutOff[" + isCutOff  +"]");
                         //txStatus = txManager.getTransaction(null);
                         CmdOperationUtil cmdOperationUtil = DataUtil.getBean(CmdOperationUtil.class);
                         Map<String, Object> result = cmdOperationUtil.relayValveOn(mcu.getSysID(), meter.getMdsId());
@@ -511,6 +521,8 @@ class BalanceCheckThread implements Runnable {
                         status = ResultStatus.FAIL;
                         log.error("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] RelayValveOn Result [" + status + "]", e);                        
                     }
+                }else{
+                    log.debug("SJD<CASE06>" + contractId + ": contractStatus[" + contractStatus  +"]");
                 }
             }
             
