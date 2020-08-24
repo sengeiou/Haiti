@@ -266,13 +266,13 @@ class BalanceCheckThread implements Runnable {
      * method name : checkBalance
      * method Desc : 잔액을 체크해서 0일 경우 Emergency Credit Mode 로 변경, 혹은 차단한다.
      *
-     * @param contract
+     * @param contractId
      */
     private String checkBalance(int contractId) {
         TransactionStatus txStatus = null;
         try {
             txStatus = txManager.getTransaction(null);
-            GroupMemberDao groupMemberDao = DataUtil.getBean(GroupMemberDao.class);
+//            GroupMemberDao groupMemberDao = DataUtil.getBean(GroupMemberDao.class);
             ContractDao contractDao = DataUtil.getBean(ContractDao.class);
             SupplierDao supplierDao = DataUtil.getBean(SupplierDao.class);
             CodeDao codeDao = DataUtil.getBean(CodeDao.class);
@@ -375,10 +375,10 @@ class BalanceCheckThread implements Runnable {
                             
                             Object[] values = result.values().toArray(new Object[0]);
                             
-                            JsonParser jparser = new JsonParser();
+                            JsonParser jsonParser = new JsonParser();
                             JsonArray ja = null;
                             for (Object o : values) {
-                                ja = jparser.parse((String)o).getAsJsonArray();
+                                ja = jsonParser.parse((String)o).getAsJsonArray();
                                 for (int i = 0; i < ja.size(); i++) {
                                     if (ja.get(i).getAsJsonObject().get("name").getAsString().equals("Result")) {
                                         status = ResultStatus.SUCCESS;
@@ -558,8 +558,8 @@ class BalanceCheckThread implements Runnable {
      *
      * @param contract
      * @param field
-     * @param beforeValue
-     * @param afterValue
+     * @param oldCreditType
+     * @param newCreditType
      */
     private void changeCreditType(Contract contract, String field, Code oldCreditType, Code newCreditType) {
         TransactionStatus txStatus = null;
