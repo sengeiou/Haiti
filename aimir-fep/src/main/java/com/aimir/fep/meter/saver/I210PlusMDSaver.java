@@ -116,7 +116,7 @@ public class I210PlusMDSaver extends AbstractMDSaver {
                 jo = ja.get(i).getAsJsonObject();
                 if (jo.get("name").getAsString().equals("switchStatus") && jo.get("value").getAsString().equals("Off")) {
                     ja.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
-                }else if (jo.get("name").getAsString().equals("switchStatus") && jo.get("value").getAsString().equals("Close")) {
+                }else if (jo.get("name").getAsString().equals("switchStatus") && jo.get("value").getAsString().equals("Open")) {
                     ja.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
                 }
             }
@@ -146,7 +146,7 @@ public class I210PlusMDSaver extends AbstractMDSaver {
                 jo = ja.get(i).getAsJsonObject();
                 if (jo.get("name").getAsString().equals("switchStatus") && jo.get("value").getAsString().equals("On")) {
                     ja.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
-                }else if (jo.get("name").getAsString().equals("switchStatus") && jo.get("value").getAsString().equals("Open")) {
+                }else if (jo.get("name").getAsString().equals("switchStatus") && jo.get("value").getAsString().equals("Close")) {
                     ja.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
                 }
             }
@@ -229,7 +229,7 @@ public class I210PlusMDSaver extends AbstractMDSaver {
                     resultMap.put( "switchStatus", SM110Meta.getSwitchStatus((String)resultMap.get("relay status")) );
                     resultMap.put( "activateStatus", SM110Meta.getActivateStatus((String)resultMap.get("relay activate status")) );
                 }else{
-                    //I210기준 true=switch close, false=switch open.
+                    //I210기준 true=Valve close, false=Valve open.
                     boolean switchStatus = (boolean)resultMap.get("ACTUAL_SWITCH_STATE");
                     if(switchStatus) resultMap.put("switchStatus", "Close");
                     else resultMap.put("switchStatus", "Open");
@@ -238,10 +238,10 @@ public class I210PlusMDSaver extends AbstractMDSaver {
             }
         
             if (resultMap != null && resultMap.get("switchStatus") != null) {
-                if(resultMap.get("switchStatus").equals("Close")){
+                if(resultMap.get("switchStatus").equals("Open")){
                     updateMeterStatusNormal(meter);
                 }
-                else if(resultMap.get("switchStatus").equals("Open")){
+                else if(resultMap.get("switchStatus").equals("Close")){
                     updateMeterStatusCutOff(meter);
                 }
                 else if(resultMap.get("activateStatus").equals("Activation")) {
