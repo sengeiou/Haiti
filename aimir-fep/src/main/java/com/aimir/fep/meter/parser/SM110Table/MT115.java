@@ -202,7 +202,7 @@ public class MT115 implements java.io.Serializable {
 			  .append("  DURATION_COUNT_DOWN="+DataFormat.hex2dec(DURATION_COUNT_DOWN)).append(", \n")
 			  .append("  HOURS="+DataFormat.hex2dec(HOURS)).append(", \n")
 			  .append("  MINUTES="+DataFormat.hex2dec(MINUTES)).append(", \n")
-			  .append("  LAST_CMD_STATUS"+DataFormat.hex2dec(LAST_CMD_STATUS)).append(", \n")
+			  .append("  LAST_CMD_STATUS="+DataFormat.hex2dec(LAST_CMD_STATUS)).append(", \n")
 			  .append("  FILLER_6="+DataFormat.hex2dec(FILLER_6)).append(", \n")
 			  .append("  CRC="+DataFormat.hex2dec(CRC));
 		} catch (Exception e) {

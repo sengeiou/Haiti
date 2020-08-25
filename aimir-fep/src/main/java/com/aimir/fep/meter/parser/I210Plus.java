@@ -382,20 +382,20 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 	}
 
 	public LinkedHashMap getRelayStatus() {
-//        try{
-//            if(mt115 != null){
-//            	return mt115.getData();
-//            }else if(st112 != null){
-//        		return st112.getData();
-//        	}
+        try{
+            if(mt115 != null){
+				LinkedHashMap res = new LinkedHashMap(2);
+            	res.put("ACTUAL_SWITCH_STATE", mt115.getACTUAL_SWITCH_STATE());
+            	return res;
+            }
 
 		/*
 		 * if(mt115 == null){ if(mt117 != null){ return mt117.getData(); } }else{ return
 		 * mt115.getData(); }
 		 */
-//        } catch(Exception e){
-//            log.warn("I210PlusCSeries get RelayStatus Error:"+e.getMessage());
-//        }
+        } catch(Exception e){
+            log.warn("I210Plus get RelayStatus Error:"+e.getMessage());
+        }
 		return null;
 	}
 

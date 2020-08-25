@@ -1,6 +1,7 @@
 package com.aimir.fep.meter.saver;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -115,6 +116,8 @@ public class I210PlusMDSaver extends AbstractMDSaver {
                 jo = ja.get(i).getAsJsonObject();
                 if (jo.get("name").getAsString().equals("switchStatus") && jo.get("value").getAsString().equals("Off")) {
                     ja.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
+                }else if (jo.get("name").getAsString().equals("switchStatus") && jo.get("value").getAsString().equals("Close")) {
+                    ja.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
                 }
             }
             return ja.toString();
@@ -142,6 +145,8 @@ public class I210PlusMDSaver extends AbstractMDSaver {
             for (int i = 0; i < ja.size(); i++) {
                 jo = ja.get(i).getAsJsonObject();
                 if (jo.get("name").getAsString().equals("switchStatus") && jo.get("value").getAsString().equals("On")) {
+                    ja.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
+                }else if (jo.get("name").getAsString().equals("switchStatus") && jo.get("value").getAsString().equals("Open")) {
                     ja.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
                 }
             }
@@ -218,16 +223,25 @@ public class I210PlusMDSaver extends AbstractMDSaver {
             resultMap = commandGw.cmdOnDemandMeter( mcuId, meterId, OnDemandOption.READ_OPTION_RELAY.getCode());
 
             if(resultMap != null){
-                // SM110 or I210
-                resultMap.put( "switchStatus", SM110Meta.getSwitchStatus((String)resultMap.get("relay status")) );
-                resultMap.put( "activateStatus", SM110Meta.getActivateStatus((String)resultMap.get("relay activate status")) );
+
+                if(meter.getModel() != null && meter.getModel().getName().contains("SM110")){
+                    // SM110
+                    resultMap.put( "switchStatus", SM110Meta.getSwitchStatus((String)resultMap.get("relay status")) );
+                    resultMap.put( "activateStatus", SM110Meta.getActivateStatus((String)resultMap.get("relay activate status")) );
+                }else{
+                    //I210기준 true=switch close, false=switch open.
+                    boolean switchStatus = (boolean)resultMap.get("ACTUAL_SWITCH_STATE");
+                    if(switchStatus) resultMap.put("switchStatus", "Close");
+                    else resultMap.put("switchStatus", "Open");
+                }
+
             }
         
             if (resultMap != null && resultMap.get("switchStatus") != null) {
-                if(resultMap.get("switchStatus").equals("On")){
+                if(resultMap.get("switchStatus").equals("Close")){
                     updateMeterStatusNormal(meter);
                 }
-                else if(resultMap.get("switchStatus").equals("Off")){
+                else if(resultMap.get("switchStatus").equals("Open")){
                     updateMeterStatusCutOff(meter);
                 }
                 else if(resultMap.get("activateStatus").equals("Activation")) {

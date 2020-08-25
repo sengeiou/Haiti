@@ -1851,126 +1851,109 @@ public class CmdController<V> {
 		    // RF or Ethernet	
 			}else{
 				String meterTypeName = meter.getMeterType().getName();
-				//EnergyMeter
-				if(MeterType.getByServiceType("3.1").name().equals(meterTypeName)){
-					relayStatus = cmdOperationUtil.cmdGetEnergyLevel(mcuId, modem.getDeviceSerial());	//Relay 상태값 조회
-					
-					if (relayStatus != null && relayStatus != 0) {		//리턴값이 0라면 Energy Level값 얻는 것을 실패
-						status = ResultStatus.SUCCESS;
-						rtnStr = "Response = SUCCESS, value : "+ relayStatus;
-					}else{
-						log.debug("EnergyMeter Relay Status Fail");
-						status = ResultStatus.FAIL;
-						rtnStr = "Response = FAIL, value : " + relayStatus;
-					}
-				//WaterMeter
-				}else if(MeterType.getByServiceType("3.2").name().equals(meterTypeName)){
+				//Type을 구분하려면 코드 사용. EnergyMeter("3.1"), WaterMeter("3.2")
+				//if(MeterType.getByServiceType("3.1").name().equals(meterTypeName))
 
-					resultMap = cmdOperationUtil.relayValveStatus(mcuId, meter.getMdsId());
-		
-					// } // DELETE 2016/09/21 SP-117
-					
-					String loadControlStatusString = "";
-					String loadControlModeString = "";
-					String relayStatusString = "";
-					String failReasonString = "";
-					try {
-						String responseJson = (String)resultMap.get("Response");
-						log.debug("Reponse:" + responseJson);
-						JsonParser jsonParser = new JsonParser();
-					    JsonElement element =  jsonParser.parse(responseJson);
-					    if ( element.isJsonArray()){
-					    	for (JsonElement e : element.getAsJsonArray()) {
-					    		JsonObject jobj = e.getAsJsonObject();
-					    		if ( jobj.get("name") != null  ){
-						    		String name = jobj.get("name").getAsString();
-						    		if ( "failReason".equals(name)){
-						    			failReasonString = jobj.get("value").getAsString();
-						    		}
-						    		else if ( "Relay Status".equals(name)){
-										relayStatusString = jobj.get("value").getAsString();
-									}
-						    		else if ( "LoadControlStatus".equals(name)){
-										loadControlStatusString = jobj.get("value").getAsString();
-									}
-						    		else if ( "LoadControlMode".equals(name)){
-						    			loadControlModeString = jobj.get("value").getAsString();
-									}
-						    		
-					    		}
-					    	}
-					    }
-					    else {
-					    	log.debug(element.getClass());
-					    }
-					}catch (Exception e){
-						log.debug(e,e);
-					}
-					Object[] values = resultMap.values().toArray(new Object[0]);
-	
-					for (Object o : values) {
-						log.debug((String)o);
-						//rtnStr += (String) o + " \n";
-						rtnStr = loadControlStatusString;
-		
-						if (((String) o).contains("failReason")) {
-							status = ResultStatus.FAIL;
-							rtnStr = "FAIL : " + failReasonString;
-							break;
-						}
-		
-						if (isSMSModem) {
-							if (((String) o).contains("SUCCESS")) {
-								// 상태가 바뀌는 시간을 기다려주기 위해 60초 sleep
-								Thread.sleep(60000);
-								Integer lastStatus = asyncCommandLogManager.getCmdStatus(modem.getDeviceSerial(),
-										"cmdRelayStatus");
-								if (TR_STATE.Success.getCode() != lastStatus) {
-									status = ResultStatus.FAIL;
-									rtnStr = "FAIL : Communication Error(RelayStatus)\n";
-								} else {
-									status = ResultStatus.SUCCESS;
-		
-									/**
-									 * Transaction ID가 FEP에서 생성되는 방식이어서 정확한 Transaction
-									 * ID를 알수가 없다. 그래서 마지막 Transaction번호의 Parameter를
-									 * 가져오는 방식으로 구현되었으며 이는 다른 값을 가져올 확률이 있다.
-									 */
-									List<AsyncCommandParam> acplist = asyncCommandLogManager
-											.getCmdParamsByTrnxId(modem.getDeviceSerial(), null);
-									if (acplist == null || acplist.size() <= 0) {
-										rtnStr = "RESULT_STATUS=Empty~!!";
-									} else {
-										rtnStr += "Result = ";
-										for (AsyncCommandParam param : acplist) {
-											rtnStr += param.getParamType().equals("RESULT_STATUS") ? param.getParamValue()
-													: "" + "\n";
-										}
-									}
-									log.debug("cmdRelayStatus returnValue =>> " + rtnStr);
+				resultMap = cmdOperationUtil.relayValveStatus(mcuId, meter.getMdsId());
+
+				String loadControlStatusString = "";
+				String loadControlModeString = "";
+				String relayStatusString = "";
+				String failReasonString = "";
+				try {
+					String responseJson = (String)resultMap.get("Response");
+					log.debug("Reponse:" + responseJson);
+					JsonParser jsonParser = new JsonParser();
+					JsonElement element =  jsonParser.parse(responseJson);
+					if ( element.isJsonArray()){
+						for (JsonElement e : element.getAsJsonArray()) {
+							JsonObject jobj = e.getAsJsonObject();
+							if ( jobj.get("name") != null  ){
+								String name = jobj.get("name").getAsString();
+								if ( "failReason".equals(name)){
+									failReasonString = jobj.get("value").getAsString();
 								}
-								break;
-							} else {
-								status = ResultStatus.FAIL;
+								else if ( "Relay Status".equals(name)){
+									relayStatusString = jobj.get("value").getAsString();
+								}
+								else if ( "LoadControlStatus".equals(name)){
+									loadControlStatusString = jobj.get("value").getAsString();
+								}
+								else if ( "LoadControlMode".equals(name)){
+									loadControlModeString = jobj.get("value").getAsString();
+								}
+
 							}
 						}
 					}
-	
-					if (meter.getModel() != null && meter.getModel().getName().indexOf("LS") >= 0) {
-						String open = "[" + "{\"name\":\"" + "LoadControlStatus" + "\",\"value\":\"" + "OPEN" + "\"}" + "]";
-						String close = "[" + "{\"name\":\"" + "LoadControlStatus" + "\",\"value\":\"" + "CLOSE" + "\"}" + "]";
-						if (rtnStr.indexOf(open) >= 0) {
-							rtnStr = "Internal relay is OPEN.";
-						} else if (rtnStr.indexOf(close) >= 0) {
-							rtnStr = "Internal relay is CLOSED.";
-						}
-					}else if(status != ResultStatus.FAIL && relayStatusString.length() > 0 && loadControlModeString.length() > 0 && loadControlStatusString.length() > 0) {
-						rtnStr = "Relay Status = " + relayStatusString + ", Load Control Status = " + loadControlStatusString + ", Load Control Mode = " + loadControlModeString;
-					}else { // SP-792
+					else {
+						log.debug(element.getClass());
+					}
+				}catch (Exception e){
+					log.debug(e,e);
+				}
+
+				Object[] values = resultMap.values().toArray(new Object[0]);
+				for (Object o : values) {
+					log.debug((String)o);
+
+					rtnStr = loadControlStatusString;
+
+					if (((String) o).contains("failReason")) {
 						status = ResultStatus.FAIL;
-						rtnStr = resultMap.toString();
+						rtnStr = "FAIL : " + failReasonString;
+						break;
+					}
+
+					if (isSMSModem) {
+						if (((String) o).contains("SUCCESS")) {
+							// 상태가 바뀌는 시간을 기다려주기 위해 60초 sleep
+							Thread.sleep(60000);
+							Integer lastStatus = asyncCommandLogManager.getCmdStatus(modem.getDeviceSerial(),
+									"cmdRelayStatus");
+							if (TR_STATE.Success.getCode() != lastStatus) {
+								status = ResultStatus.FAIL;
+								rtnStr = "FAIL : Communication Error(RelayStatus)\n";
+							} else {
+								status = ResultStatus.SUCCESS;
+
+								/**
+								 * Transaction ID가 FEP에서 생성되는 방식이어서 정확한 Transaction
+								 * ID를 알수가 없다. 그래서 마지막 Transaction번호의 Parameter를
+								 * 가져오는 방식으로 구현되었으며 이는 다른 값을 가져올 확률이 있다.
+								 */
+								List<AsyncCommandParam> acplist = asyncCommandLogManager
+										.getCmdParamsByTrnxId(modem.getDeviceSerial(), null);
+								if (acplist == null || acplist.size() <= 0) {
+									rtnStr = "RESULT_STATUS=Empty~!!";
+								} else {
+									rtnStr += "Result = ";
+									for (AsyncCommandParam param : acplist) {
+										rtnStr += param.getParamType().equals("RESULT_STATUS") ? param.getParamValue()
+												: "" + "\n";
+									}
+								}
+								log.debug("cmdRelayStatus returnValue =>> " + rtnStr);
+							}
+							break;
+						} else {
+							status = ResultStatus.FAIL;
+						}
 					}
 				}
+
+				if (meter.getModel() != null && meter.getModel().getName().contains("LS")) {
+					String open = "[" + "{\"name\":\"" + "LoadControlStatus" + "\",\"value\":\"" + "OPEN" + "\"}" + "]";
+					String close = "[" + "{\"name\":\"" + "LoadControlStatus" + "\",\"value\":\"" + "CLOSE" + "\"}" + "]";
+					if (rtnStr.contains(open)) {
+						rtnStr = "Internal relay is OPEN.";
+					} else if (rtnStr.contains(close)) {
+						rtnStr = "Internal relay is CLOSED.";
+					}
+				}else if(status != ResultStatus.FAIL && relayStatusString.length() > 0 && loadControlModeString.length() > 0 && loadControlStatusString.length() > 0) {
+					rtnStr = "Relay Status = " + relayStatusString + ", Load Control Status = " + loadControlStatusString + ", Load Control Mode = " + loadControlModeString;
+				}
+
 			} // INSERT 2016/09/21 SP-117
 			
 		} catch (Exception e) {

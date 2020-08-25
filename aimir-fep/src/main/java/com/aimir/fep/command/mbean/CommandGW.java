@@ -42,6 +42,7 @@ import java.util.regex.Pattern;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
+import com.aimir.fep.meter.parser.*;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -108,14 +109,6 @@ import com.aimir.fep.meter.data.MDHistoryData;
 import com.aimir.fep.meter.data.MeterData;
 import com.aimir.fep.meter.data.Response;
 import com.aimir.fep.meter.data.Response.Type;
-import com.aimir.fep.meter.parser.DLMSClou;
-import com.aimir.fep.meter.parser.DLMSGtype;
-import com.aimir.fep.meter.parser.DLMSKaifa;
-import com.aimir.fep.meter.parser.DLMSNamjun;
-import com.aimir.fep.meter.parser.I210PlusCSeries;
-import com.aimir.fep.meter.parser.MeterDataParser;
-import com.aimir.fep.meter.parser.SM110;
-import com.aimir.fep.meter.parser.SX2;
 import com.aimir.fep.meter.parser.DLMSKaifaTable.DLMSVARIABLE.DLMS_CLASS;
 import com.aimir.fep.meter.parser.DLMSKaifaTable.DLMSVARIABLE.DLMS_CLASS_ATTR;
 import com.aimir.fep.meter.parser.DLMSKaifaTable.DLMSVARIABLE.OBIS;
@@ -3594,8 +3587,7 @@ public class CommandGW implements CommandGWMBean {
 					return map;
 				}
 				
-				if (smiValues[0].getVariable() instanceof BYTE && 
-						((edp instanceof DLMSNamjun)) ) {
+				if (smiValues[0].getVariable() instanceof BYTE && ((edp instanceof DLMSNamjun)) ) {
 
 					BYTE byteValue = (BYTE) smiValues[0].getVariable();
 					map = new LinkedHashMap<String, Object>();
@@ -3711,7 +3703,11 @@ public class CommandGW implements CommandGWMBean {
 						} else if (edp instanceof I210PlusCSeries) {
 							I210PlusCSeries i210 = (I210PlusCSeries) edp;
 							map = i210.getRelayStatus();
-						} else if (edp instanceof SX2) {
+						} else if (edp instanceof I210Plus) {
+							I210Plus i210Plus = (I210Plus) edp;
+							map = i210Plus.getRelayStatus();
+						}
+						else if (edp instanceof SX2) {
 							SX2 sx2 = (SX2) edp;
 							map = sx2.getRelayStatus();
 						} else if (edp instanceof DLMSGtype) {
