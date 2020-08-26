@@ -1,37 +1,8 @@
 package com.aimir.schedule.task;
 
-import java.io.InputStream;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.quartz.JobDataMap;
-import org.quartz.JobExecutionContext;
-import org.quartz.Trigger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.aimir.constants.CommonConstants.WeekDay;
 import com.aimir.dao.device.MeterDao;
-import com.aimir.dao.system.CodeDao;
-import com.aimir.dao.system.ContractDao;
-import com.aimir.dao.system.CustomerDao;
-import com.aimir.dao.system.LanguageDao;
-import com.aimir.dao.system.SupplierDao;
+import com.aimir.dao.system.*;
 import com.aimir.fep.util.DataUtil;
 import com.aimir.fep.util.sms.SendSMS;
 import com.aimir.model.system.Contract;
@@ -41,6 +12,26 @@ import com.aimir.model.system.Supplier;
 import com.aimir.util.CalendarUtil;
 import com.aimir.util.DecimalUtil;
 import com.aimir.util.TimeUtil;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.quartz.JobDataMap;
+import org.quartz.JobExecutionContext;
+import org.quartz.Trigger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
+
+import javax.annotation.Resource;
+import java.io.InputStream;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  *
@@ -48,20 +39,23 @@ import com.aimir.util.TimeUtil;
  * Prepayment Customer Management 가젯에서 [Your balance Alert]에 설정된 정보대로 고객에게 SMS를 전송하는 Task
  *
  * EDH
- * 메세질를 보내는 URL - 성공 시 message-id 가 return 됨 (OK: message-id)
- * sendURL : http://api.smsgh.com/v2/message/send?username=xxx&password=xxx&from=smsgh&to=0101111111&text=hello
+ * 메세지를 보내는 URL - 성공 시 message-id 가 return 됨 (OK: message-id)
+ *  -> sendURL : http://api.smsgh.com/v2/message/send?username=xxx&password=xxx&from=smsgh&to=0101111111&text=hello
  *
  * 전송성공 여부를 확인하는 URL - (OK: Delivered)
- * queryURL : http://api.smsgh.com/v2/messages/query?username=xxx&password=xxx&message-id=3361287
+ *  -> queryURL : http://api.smsgh.com/v2/messages/query?username=xxx&password=xxx&message-id=3361287
  *
- * delivery-Reports URL : http://api.smsgh.com/v2/account/delivery-reports?username=xxx&password=xxx
+ * delivery-Reports URL : http://api.smsgh.com/v2/account/delivery-reports?username=xxx&passwod=xxx
  *
+ * @2020-08 hibernate5에 맞도록 수정
  */
 @Service
-@Transactional
 public class PrepaySendSMSEDHTask extends ScheduleTask {
 
 	private static Log log = LogFactory.getLog(PrepaySendSMSEDHTask.class);
+
+	@Resource(name="transactionManager")
+	HibernateTransactionManager txManager;
 
 	@Autowired
 	SupplierDao supplierDao;
@@ -202,7 +196,11 @@ public class PrepaySendSMSEDHTask extends ScheduleTask {
 	}
 	
 	public void ContractInfo() {
+		TransactionStatus txstatus = null;
+
 		try {
+			txstatus = txManager.getTransaction(null);
+
 			Map<String, Object> condition = new HashMap<String, Object>();
 			condition.put("prepayCreditId", codeDao.getCodeIdByCode("2.2.1"));
 			condition.put("emergencyICreditId", codeDao.getCodeIdByCode("2.2.2"));
@@ -226,6 +224,8 @@ public class PrepaySendSMSEDHTask extends ScheduleTask {
 		} catch (Exception e) {
 		    // setFailResult();
 			log.error(e,e);
+		} finally {
+			if (txstatus != null) txManager.commit(txstatus);
 		}
 	}
 
@@ -550,7 +550,6 @@ public class PrepaySendSMSEDHTask extends ScheduleTask {
 	/**
 	 * 멀티 SMS 전송
 	 * @param contract
-	 * @param today
 	 * @return
 	 * @throws Exception
 	 */
