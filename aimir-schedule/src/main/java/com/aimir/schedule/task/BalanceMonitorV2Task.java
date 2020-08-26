@@ -1,24 +1,23 @@
 package com.aimir.schedule.task;
 
-import java.io.InputStream;
-import java.lang.reflect.Method;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
-import javax.annotation.Resource;
-
+import com.aimir.constants.CommonConstants;
+import com.aimir.constants.CommonConstants.MeterStatus;
+import com.aimir.constants.CommonConstants.ModemType;
+import com.aimir.constants.CommonConstants.ResultStatus;
+import com.aimir.dao.device.OperationLogDao;
+import com.aimir.dao.system.*;
+import com.aimir.fep.util.DataUtil;
+import com.aimir.fep.util.sms.SendSMS;
+import com.aimir.model.device.MCU;
+import com.aimir.model.device.Meter;
+import com.aimir.model.device.Modem;
+import com.aimir.model.device.OperationLog;
+import com.aimir.model.system.*;
+import com.aimir.schedule.command.CmdOperationUtil;
+import com.aimir.util.*;
+import com.aimir.util.Condition.Restriction;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.JobExecutionContext;
@@ -29,38 +28,15 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 
-import com.aimir.constants.CommonConstants;
-import com.aimir.constants.CommonConstants.MeterStatus;
-import com.aimir.constants.CommonConstants.ModemType;
-import com.aimir.constants.CommonConstants.ResultStatus;
-import com.aimir.dao.device.OperationLogDao;
-import com.aimir.dao.system.CodeDao;
-import com.aimir.dao.system.ContractChangeLogDao;
-import com.aimir.dao.system.ContractDao;
-import com.aimir.dao.system.GroupMemberDao;
-import com.aimir.dao.system.LanguageDao;
-import com.aimir.dao.system.SupplierDao;
-import com.aimir.fep.util.DataUtil;
-import com.aimir.fep.util.sms.SendSMS;
-import com.aimir.model.device.MCU;
-import com.aimir.model.device.Meter;
-import com.aimir.model.device.Modem;
-import com.aimir.model.device.OperationLog;
-import com.aimir.model.system.Code;
-import com.aimir.model.system.Contract;
-import com.aimir.model.system.ContractChangeLog;
-import com.aimir.model.system.DecimalPattern;
-import com.aimir.model.system.Language;
-import com.aimir.model.system.Supplier;
-import com.aimir.schedule.command.CmdOperationUtil;
-import com.aimir.util.Condition;
-import com.aimir.util.Condition.Restriction;
-import com.aimir.util.DateTimeUtil;
-import com.aimir.util.DecimalUtil;
-import com.aimir.util.StringUtil;
-import com.aimir.util.TimeUtil;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
+import javax.annotation.Resource;
+import java.io.InputStream;
+import java.lang.reflect.Method;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 잔액을 체크하여 0이하가 되면 cut off를 실시하고 SMS로 통보한다.
@@ -202,7 +178,8 @@ public class BalanceMonitorV2Task extends ScheduleTask {
                     }
                 }
             }
-            
+
+            log.debug("SJD## groupContracts size["+grpContracts.size()+"]");
             return grpContracts;
         }
         finally {
