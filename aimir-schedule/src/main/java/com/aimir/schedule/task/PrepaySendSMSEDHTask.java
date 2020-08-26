@@ -570,7 +570,9 @@ public class PrepaySendSMSEDHTask extends ScheduleTask {
 				Method m = obj.getClass().getDeclaredMethod("send", String.class, String.class, Properties.class);
 				String text = URLDecoder.decode(messageMap.get(String.valueOf(idx)), "UTF-8");
 
-				String messageId = (String) m.invoke(obj, mobileNo, text, prop);
+				//String messageId = (String) m.invoke(obj, mobileNo, text, prop);
+				String messageId = "";
+				log.debug("##SJD SMS TEST, smsClassPath["+smsClassPath+"], idx[" + idx + "]");
 				//String messageId = "MESSAGE_SEND_TEST_" + idx;
 
 				if(!messageId.equals("")) {
