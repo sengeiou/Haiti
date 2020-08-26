@@ -277,8 +277,9 @@ public class PrepaySendSMSEDHTask extends ScheduleTask {
                         //+ "\n Contract nr : " + contract.getContractNumber()
                         + "\n Courant Credit : " +  cdf.format(currentCredit);  */
 
+				String customerLoginId = customer.getLoginId() == null? "-" : customer.getLoginId();
 				String text =  "\n" + getMessageProp(supplier).getProperty("aimir.sms.customer.name") + " : " + contractInfo.get(i).get("CUSTOMERNAME")
-						+ "\n" + getMessageProp(supplier).getProperty("aimir.sms.client.id") + " : " + (customer.getLoginId().equals("") ? "-" : customer.getLoginId())  // 20141204 EDH 염부장 요청으로 변경함
+						+ "\n" + getMessageProp(supplier).getProperty("aimir.sms.client.id") + " : " + (customerLoginId.equals("") ? "-" : customerLoginId)  // 20141204 EDH 염부장 요청으로 변경함
 						+ "\n" + getMessageProp(supplier).getProperty("aimir.sms.credit.current") + " : " +  cdf.format(currentCredit);
 
 				
@@ -486,7 +487,7 @@ public class PrepaySendSMSEDHTask extends ScheduleTask {
 				}
 
 			} catch (Exception e) {
-				log.error(e);
+				log.error(e,e);
 			} finally {
 //				if(urlConnection != null && urlConnection.getURL() != null)
 //					urlConnection.disconnect();
