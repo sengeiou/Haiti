@@ -372,9 +372,9 @@ public class PrepaySendSMSEDHTask extends ScheduleTask {
 // 					  + "\n Type Client: " + contractInfo.get(i).get("SERVICETYPE")
 //				      + "\n Courant Credit : " +  cdf.format(currentCredit);
 
-				
+				String customerLoginId = customer.getLoginId() == null? "-" : customer.getLoginId();
 				String text =  "\n" + getMessageProp(supplier).getProperty("aimir.sms.customer.name") + " : " + contractInfo.get(i).get("CUSTOMERNAME")
-						+ "\n" + getMessageProp(supplier).getProperty("aimir.sms.client.id") + " : " + (customer.getLoginId().equals("") ? "-" : customer.getLoginId())  // 20141204 EDH 염부장 요청으로 변경함
+						+ "\n" + getMessageProp(supplier).getProperty("aimir.sms.client.id") + " : " + (customerLoginId.equals("") ? "-" : customerLoginId)  // 20141204 EDH 염부장 요청으로 변경함
 						+ "\n" + getMessageProp(supplier).getProperty("aimir.sms.supplier.type") + " : " + contractInfo.get(i).get("SERVICETYPE")
 				        + "\n" + getMessageProp(supplier).getProperty("aimir.sms.credit.current") + " : " +  cdf.format(currentCredit);
 				
