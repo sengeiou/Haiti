@@ -350,30 +350,43 @@ class BalanceCheckThread implements Runnable {
                             // txStatus = txManager.getTransaction(null);
                             CmdOperationUtil cmdOperationUtil = DataUtil.getBean(CmdOperationUtil.class);
                             log.debug("SJD<CASE02>" + contractId + ": " + mcu.getSysID());
-                            Map<String, Object> result = cmdOperationUtil.relayValveOff(mcu.getSysID(), meter.getMdsId());
+                            //Map<String, Object> result = cmdOperationUtil.relayValveOff(mcu.getSysID(), meter.getMdsId());
+                            cmdOperationUtil.cmdSetEnergyLevel(mcuId, modem.getDeviceSerial(), 15); //(mcuSysID, deviceSerial, option)
                             // txManager.commit(txStatus);
-                            
-                            Object[] values = result.values().toArray(new Object[0]);
-                            
-                            JsonParser jsonParser = new JsonParser();
-                            JsonArray ja = null;
-                            for (Object o : values) {
-                                ja = jsonParser.parse((String)o).getAsJsonArray();
-                                for (int i = 0; i < ja.size(); i++) {
-                                    if (ja.get(i).getAsJsonObject().get("name").getAsString().equals("Result")) {
-                                        status = ResultStatus.SUCCESS;
-                                        break;
-                                    }
-                                    else if (ja.get(i).getAsJsonObject().get("value").getAsString().equals("Can't connect to DCU")) {
-                                        mcuStatus = "Can't connect to DCU";
-                                        break;
-                                    }
-                                    else {
-                                        log.warn("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] RelayValveOff Fail - " + ja.get(i).getAsJsonObject().get("value").getAsString());
-                                    }
-                                }
-                                if (status == ResultStatus.SUCCESS) break;
+                            Thread.sleep(20000);	// Relay control 20초 대기
+                            log.debug("Wait for 20 sec for relayControl.");
+                            Integer relayStatus = cmdOperationUtil.cmdGetEnergyLevel(mcuId, modem.getDeviceSerial());	//Relay 상태값 조회
+
+                            if (relayStatus != null && relayStatus != 0) {		//리턴값이 0라면 Energy Level값 얻는 것을 실패
+                                log.debug("get relayStatus ["+relayStatus+"]");
+                                status = ResultStatus.SUCCESS;
+                            }else{
+                                log.debug("EnergyMeter Relay Off Fail ["+relayStatus+"]");
+                                status = ResultStatus.FAIL;
+                                mcuStatus = "Can't connect to DCU";
                             }
+
+//                            Object[] values = result.values().toArray(new Object[0]);
+//
+//                            JsonParser jsonParser = new JsonParser();
+//                            JsonArray ja = null;
+//                            for (Object o : values) {
+//                                ja = jsonParser.parse((String)o).getAsJsonArray();
+//                                for (int i = 0; i < ja.size(); i++) {
+//                                    if (ja.get(i).getAsJsonObject().get("name").getAsString().equals("Result")) {
+//                                        status = ResultStatus.SUCCESS;
+//                                        break;
+//                                    }
+//                                    else if (ja.get(i).getAsJsonObject().get("value").getAsString().equals("Can't connect to DCU")) {
+//                                        mcuStatus = "Can't connect to DCU";
+//                                        break;
+//                                    }
+//                                    else {
+//                                        log.warn("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] RelayValveOff Fail - " + ja.get(i).getAsJsonObject().get("value").getAsString());
+//                                    }
+//                                }
+//                                if (status == ResultStatus.SUCCESS) break;
+//                            }
                             
                             log.debug("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] RelayValveOff Result [" + status + "]");
                             
