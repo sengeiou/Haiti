@@ -12794,6 +12794,7 @@ public class CommandGW implements CommandGWMBean {
 			throw makeMcuException(((Integer) obj).intValue());
 		} else if (obj instanceof SMIValue[]) {
 			smiValues = (SMIValue[]) obj;
+			log.debug("cmdSetEnergyLevel Return: " + smiValues.toString());
 		} else {
 			log.error("Unknown Return Value");
 			throw new Exception("Unknown Return Value");

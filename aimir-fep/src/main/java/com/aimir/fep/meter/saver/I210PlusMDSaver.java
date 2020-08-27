@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.aimir.model.device.Modem;
 import org.springframework.stereotype.Service;
 import com.aimir.constants.CommonConstants;
 import com.aimir.constants.CommonConstants.DeviceType;
@@ -105,22 +106,35 @@ public class I210PlusMDSaver extends AbstractMDSaver {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         
         try {
-            CommandGW commandGw = DataUtil.getBean(CommandGW.class);
-            commandGw.cmdOnDemandMeter( mcuId, meterId, OnDemandOption.WRITE_OPTION_RELAYOFF.getCode());
-
-            String str = relayValveStatus(mcuId, meterId);
-            JsonArray ja = StringToJsonArray(str).getAsJsonArray();
-            
-            JsonObject jo = null;
-            for (int i = 0; i < ja.size(); i++) {
-                jo = ja.get(i).getAsJsonObject();
-                if (jo.get("name").getAsString().equals("switchStatus") && jo.get("value").getAsString().equals("Off")) {
-                    ja.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
-                }else if (jo.get("name").getAsString().equals("switchStatus") && jo.get("value").getAsString().equals("Open")) {
-                    ja.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
-                }
+            Meter meter = meterDao.get(meterId);
+            Modem modem = meter.getModem();
+            if(modem == null) {
+                resultMap.put("failReason", "Meter has no modem.");
+                return MapToJSON(resultMap);
             }
-            return ja.toString();
+            String deviceSerial = modem.getDeviceSerial();
+
+            CommandGW commandGw = DataUtil.getBean(CommandGW.class);
+            commandGw.cmdSetEnergyLevel(mcuId, deviceSerial, "15"); //1=open, 15=close.
+
+            Thread.sleep(10000);	// Relay control 10초 대기
+            log.debug("Wait for 10 sec for relayControl.");
+
+            byte energyLevel = commandGw.cmdGetEnergyLevel(mcuId, deviceSerial);
+            Integer relayStatus = (int)energyLevel;
+            log.debug("energyLevel of meter["+meterId+"]: " + energyLevel);
+            if(relayStatus.equals(15)){
+                //결과 값이 15(Close)이면, 미터 상태를 'CutOff'로 변경한다.
+                updateMeterStatusCutOff(meter);
+
+                JsonArray jsonArray = new JsonArray();
+                jsonArray.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
+                return jsonArray.toString();
+            }else{
+                resultMap.put("failReason", "RelayStatus not changed.");
+                return MapToJSON(resultMap);
+            }
+
         }
         catch (Exception e) {
             resultMap.put("failReason", e.getMessage());
@@ -158,7 +172,7 @@ public class I210PlusMDSaver extends AbstractMDSaver {
         
         return MapToJSON(resultMap);
     }
-    
+
     @Override
     public String relayValveActivate(String mcuId, String meterId)  {
         Map<String, Object> resultMap = new HashMap<String, Object>();
