@@ -1854,7 +1854,8 @@ public class CmdController<V> {
 				//EnergyMeter
 				if(MeterType.getByServiceType("3.1").name().equals(meterTypeName)){
 					relayStatus = cmdOperationUtil.cmdGetEnergyLevel(mcuId, modem.getDeviceSerial());	//Relay 상태값 조회
-					
+
+					//relayStatus= (1=open, 15=close)
 					if (relayStatus != null && relayStatus != 0) {		//리턴값이 0라면 Energy Level값 얻는 것을 실패
 						status = ResultStatus.SUCCESS;
 						rtnStr = "Response = SUCCESS, value : "+ relayStatus;
@@ -1867,8 +1868,6 @@ public class CmdController<V> {
 				}else if(MeterType.getByServiceType("3.2").name().equals(meterTypeName)){
 
 					resultMap = cmdOperationUtil.relayValveStatus(mcuId, meter.getMdsId());
-		
-					// } // DELETE 2016/09/21 SP-117
 					
 					String loadControlStatusString = "";
 					String loadControlModeString = "";
@@ -1956,19 +1955,16 @@ public class CmdController<V> {
 						}
 					}
 	
-					if (meter.getModel() != null && meter.getModel().getName().indexOf("LS") >= 0) {
+					if (meter.getModel() != null && meter.getModel().getName().contains("LS")) {
 						String open = "[" + "{\"name\":\"" + "LoadControlStatus" + "\",\"value\":\"" + "OPEN" + "\"}" + "]";
 						String close = "[" + "{\"name\":\"" + "LoadControlStatus" + "\",\"value\":\"" + "CLOSE" + "\"}" + "]";
-						if (rtnStr.indexOf(open) >= 0) {
+						if (rtnStr.contains(open)) {
 							rtnStr = "Internal relay is OPEN.";
-						} else if (rtnStr.indexOf(close) >= 0) {
+						} else if (rtnStr.contains(close)) {
 							rtnStr = "Internal relay is CLOSED.";
 						}
 					}else if(status != ResultStatus.FAIL && relayStatusString.length() > 0 && loadControlModeString.length() > 0 && loadControlStatusString.length() > 0) {
 						rtnStr = "Relay Status = " + relayStatusString + ", Load Control Status = " + loadControlStatusString + ", Load Control Mode = " + loadControlModeString;
-					}else { // SP-792
-						status = ResultStatus.FAIL;
-						rtnStr = resultMap.toString();
 					}
 				}
 			} // INSERT 2016/09/21 SP-117
