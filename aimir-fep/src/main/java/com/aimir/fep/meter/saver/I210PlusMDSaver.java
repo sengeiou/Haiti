@@ -118,7 +118,7 @@ public class I210PlusMDSaver extends AbstractMDSaver {
             commandGw.cmdSetEnergyLevel(mcuId, deviceSerial, "15"); //1=open, 15=close.
 
             Thread.sleep(10000);	// Relay control 10초 대기
-            log.debug("Wait for 10 sec for relayControl.");
+            log.debug("Wait for 10 sec for relayValveOff.");
 
             byte energyLevel = commandGw.cmdGetEnergyLevel(mcuId, deviceSerial);
             Integer relayStatus = (int)energyLevel;
@@ -148,23 +148,35 @@ public class I210PlusMDSaver extends AbstractMDSaver {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         
         try {
-            CommandGW commandGw = DataUtil.getBean(CommandGW.class);
-            commandGw.cmdOnDemandMeter( mcuId, meterId, OnDemandOption.WRITE_OPTION_ACTON.getCode());
-            commandGw.cmdOnDemandMeter( mcuId, meterId, OnDemandOption.WRITE_OPTION_RELAYON.getCode());
-            
-            String str = relayValveStatus(mcuId, meterId);
-            JsonArray ja = StringToJsonArray(str).getAsJsonArray();
-            
-            JsonObject jo = null;
-            for (int i = 0; i < ja.size(); i++) {
-                jo = ja.get(i).getAsJsonObject();
-                if (jo.get("name").getAsString().equals("switchStatus") && jo.get("value").getAsString().equals("On")) {
-                    ja.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
-                }else if (jo.get("name").getAsString().equals("switchStatus") && jo.get("value").getAsString().equals("Close")) {
-                    ja.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
-                }
+            Meter meter = meterDao.get(meterId);
+            Modem modem = meter.getModem();
+            if(modem == null) {
+                resultMap.put("failReason", "Meter has no modem.");
+                return MapToJSON(resultMap);
             }
-            return ja.toString();
+            String deviceSerial = modem.getDeviceSerial();
+
+            CommandGW commandGw = DataUtil.getBean(CommandGW.class);
+            commandGw.cmdSetEnergyLevel(mcuId, deviceSerial, "1"); //1=open, 15=close.
+
+            Thread.sleep(10000);	// Relay control 10초 대기
+            log.debug("Wait for 10 sec for relayValveOn.");
+
+            byte energyLevel = commandGw.cmdGetEnergyLevel(mcuId, deviceSerial);
+            Integer relayStatus = (int)energyLevel;
+            log.debug("energyLevel of meter["+meterId+"]: " + energyLevel);
+            if(relayStatus.equals(1)){
+                //결과 값이 1(Open)이면, 미터 상태를 'Normal'로 변경한다.
+                updateMeterStatusNormal(meter);
+
+                JsonArray jsonArray = new JsonArray();
+                jsonArray.add(StringToJsonArray("{\"name\":\"Result\", \"value\":\"Success\"}"));
+                return jsonArray.toString();
+            }else{
+                resultMap.put("failReason", "RelayStatus not changed.");
+                return MapToJSON(resultMap);
+            }
+
         }
         catch (Exception e) {
             resultMap.put("failReason", e.getMessage());
