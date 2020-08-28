@@ -331,7 +331,7 @@ class BalanceCheckThread implements Runnable {
                     if (meterStatus != null && meterStatus.getCode() != null && 
                         meterStatus.getName().equals(MeterStatus.CutOff.name())) {
                         isCutOff = true;
-                        log.debug("[contractNum:" + contractId + "] : isCutoff[true]" );
+                        log.debug("[contractNum:" + conNumber + "] : isCutoff[true]" );
                     }
     
                     // message event 시작 : 미터를 차단하겠습니다.
@@ -356,7 +356,7 @@ class BalanceCheckThread implements Runnable {
                             // txStatus = txManager.getTransaction(null);
 
                             CmdOperationUtil cmdOperationUtil = DataUtil.getBean(CmdOperationUtil.class);
-                            log.debug("[contractNum:" + contractId + "] : Call relayValveOff" );
+                            log.debug("[contractNum:" + conNumber + "] : Call relayValveOff" );
                             Map<String, Object> result = cmdOperationUtil.relayValveOff(mcu.getSysID(), meter.getMdsId());
 
                             // txManager.commit(txStatus);
@@ -466,7 +466,7 @@ class BalanceCheckThread implements Runnable {
                 
                 if (isCutOff) {
                     try {
-                        log.debug("[contractNum:" + contractId + "] : Call relayValveON" );
+                        log.debug("[contractNum:" + conNumber + "] : Call relayValveON" );
                         //txStatus = txManager.getTransaction(null);
                         CmdOperationUtil cmdOperationUtil = DataUtil.getBean(CmdOperationUtil.class);
                         Map<String, Object> result = cmdOperationUtil.relayValveOn(mcu.getSysID(), meter.getMdsId());
@@ -520,7 +520,7 @@ class BalanceCheckThread implements Runnable {
                 }
                 catch (Exception ee) {}
             }
-            log.error("[" + contractId + "] Balance Check Exception", e);
+            log.error("ContractID[" + contractId + "] Balance Check Exception", e);
         }
         return null;
     }
@@ -717,7 +717,7 @@ class BalanceCheckThread implements Runnable {
                 String messageId = (String) m.invoke(obj, mobileNo, text, prop);
                 
                 if(!"".equals(messageId)) {
-                	log.info("contractId [ "+ contract.getId() +"],	SMS messageId [" + messageId + "]");
+                	log.info("contractNum [ "+ contract.getContractNumber() +"],	SMS messageId [" + messageId + "]");
 //                    contract.setSmsNumber(messageId);
 //                    contractDao.updateSmsNumber(contract.getId(), messageId);
                 } 
