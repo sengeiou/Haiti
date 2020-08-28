@@ -12711,7 +12711,7 @@ public class CommandGW implements CommandGWMBean {
 	 */
 	@Override
 	public byte cmdGetEnergyLevel(String mcuId, String sensorId) throws Exception {
-		log.debug("SENSORID[" + sensorId + "]");
+		log.debug("cmdGetEnergyLevel SENSORID[" + sensorId + "]");
 
 		// Get MCU ID
 		Target target = CmdUtil.getTarget(mcuId);
@@ -12765,7 +12765,7 @@ public class CommandGW implements CommandGWMBean {
 	 */
 	@Override
 	public void cmdSetEnergyLevel(String mcuId, String sensorId, String level) throws Exception {
-		log.debug("SENSORID[" + sensorId + "]");
+		log.debug("cmdSetEnergyLevel SENSORID[" + sensorId + "], Param["+level+"].");
 
 		// Get MCU ID
 		Target target = CmdUtil.getTarget(mcuId);
@@ -12794,6 +12794,7 @@ public class CommandGW implements CommandGWMBean {
 			throw makeMcuException(((Integer) obj).intValue());
 		} else if (obj instanceof SMIValue[]) {
 			smiValues = (SMIValue[]) obj;
+			//해당 커맨드의 smiValues는 없지만, 응답 확인차원에서 로깅
 			log.debug("cmdSetEnergyLevel smiValues.length: " + smiValues.length);
 		} else {
 			log.error("Unknown Return Value");

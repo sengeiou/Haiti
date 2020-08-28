@@ -127,7 +127,7 @@ public class BalanceMonitorV2Task extends ScheduleTask {
             conditions.add(new Condition("currentCredit", new Object[] {0.0}, null, Restriction.GT));
             conditions.add(new Condition("s.name", new Object[] {"CutOff"}, null, Restriction.EQ));
             List<Contract> contracts = contractDao.findByConditions(conditions);
-            log.debug("SJD## contract1: credit>0, cutoff [" + contracts.size() + "]");
+            log.debug("## condition(credit>0 && cutoff),  target acc[" + contracts.size() + "]");
             conditions = new HashSet<Condition>();
             conditions.add(new Condition("creditType", new Object[]{"c"}, null, Restriction.ALIAS));
             conditions.add(new Condition("c.name", new Object[]{"prepay", "emergency credit"}, null, Restriction.IN));
@@ -135,25 +135,31 @@ public class BalanceMonitorV2Task extends ScheduleTask {
             conditions.add(new Condition("s.name", new Object[] {"Temporary Pause"}, null, Restriction.EQ));
             conditions.add(new Condition("currentCredit", new Object[] {0.0}, null, Restriction.GT));
             contracts.addAll(contractDao.findByConditions(conditions));
-            log.debug("SJD## contract2: credit>0, temporary pause [" + contracts.size() + "]");
+            log.debug("## condition(credit>0 && temporary pause), target acc[" + contracts.size() + "]");
             // 선불고객이고 잔액이 0이하인 고객인 전부 가져온다. 미터 상태랑 상관없다.
             conditions = new HashSet<Condition>();
             conditions.add(new Condition("creditType", new Object[]{"c"}, null, Restriction.ALIAS));
             conditions.add(new Condition("c.name", new Object[]{"prepay", "emergency credit"}, null, Restriction.IN));
             conditions.add(new Condition("currentCredit", new Object[] {0.0}, null, Restriction.LE));
             contracts.addAll(contractDao.findByConditions(conditions));
-            log.debug("SJD## contract3: credit<=0 all [" + contracts.size() + "]");
+            log.debug("## condition(credit<=0 all), target acc[" + contracts.size() + "]");
             if (contracts == null || contracts.size() <= 0) {
                 log.info("Available Contract is not exist");
                 isNowRunning = false;
                 log.info("############################# Balance Monitor Scheduler End ##################################");
                 return grpContracts;
             }
-            
+
+            List<Integer> idList = new ArrayList<>();
             MCU mcu = null;
             List<Contract> contractList = null;
             Modem modem = null;
             for (Contract contract : contracts) {
+                //동일한 계약이 중복되지 않도록 함.
+                Integer contractId = contract.getId();
+                if(idList.contains(contractId)) continue;
+                idList.add(contractId);
+
                 if (contract.getMeter() != null && contract.getMeter().getModem() != null) {
                     modem = contract.getMeter().getModem();
                     if (modem.getMcu() != null) {
@@ -179,7 +185,7 @@ public class BalanceMonitorV2Task extends ScheduleTask {
                 }
             }
 
-            log.debug("SJD## groupContracts size["+grpContracts.size()+"]");
+            log.debug("## Total groupContracts size["+grpContracts.size()+"]");
             return grpContracts;
         }
         finally {
@@ -204,7 +210,7 @@ class BalanceCheckThread implements Runnable {
 
     @Override
     public void run() {
-        log.info("########## start thread MCU[" + mcuId + "] Contract_size[" + contractList.size() + "] ##########");
+        log.info("########## start thread MCU-sysID[" + mcuId + "] Contract_size[" + contractList.size() + "] ##########");
         // TransactionStatus txStatus = txManager.getTransaction(null);
         String mcuStatus = null;
         for (Contract c : contractList) {
@@ -258,6 +264,7 @@ class BalanceCheckThread implements Runnable {
             Code prepaymentType = codeDao.findByCondition("code", Code.PREPAYMENT);
             
             Contract contract = contractDao.get(contractId);
+            String conNumber = contract.getContractNumber()==null?String.valueOf(contractId):contract.getContractNumber();
             Meter meter = contract.getMeter();
             Code meterStatus = meter.getMeterStatus();
             meterStatus.getCode();
@@ -290,11 +297,10 @@ class BalanceCheckThread implements Runnable {
     
             txManager.commit(txStatus);
             
-            log.debug("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] credit : [" + credit + "], PrepaymentThreshold : [" + contract.getPrepaymentThreshold() + "]" );
+            log.debug("[SysID:"+mcu.getSysID()+", METER:"+meter.getMdsId()+", contractNum:"+conNumber+"], credit:["+credit+"], PrepaymentThreshold:["+ contract.getPrepaymentThreshold()+"]" );
             
             // 잔액이 임계치보다 작은 경우 고객에게 통보
             if (credit > 0 && credit < (contract.getPrepaymentThreshold() == null ? 0 : contract.getPrepaymentThreshold())) {
-                log.debug("SJD<CASE01>" + contractId + ": " +contract.getPrepaymentThreshold());
                 // message event 시작 : 잔액이 임계치보다 작습니다. 충전해주십시오.
     
                 //선불고객인지 판별
@@ -316,7 +322,7 @@ class BalanceCheckThread implements Runnable {
     
             // 잔액이 0 일 경우
             if (credit <= 0) {
-                log.debug("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] is credit <= 0");
+                log.debug("[SysID:"+mcu.getSysID()+", METER:"+meter.getMdsId()+", contractNum:"+conNumber+ "] : credit <= 0");
                 if (Code.PREPAYMENT.equals(creditType.getCode()) && (contract.getEmergencyCreditAutoChange() == null || !contract.getEmergencyCreditAutoChange())) {
                     // 잔액이 0 이하 이고 emergency credit 이 수동인 경우 차단
     
@@ -325,7 +331,7 @@ class BalanceCheckThread implements Runnable {
                     if (meterStatus != null && meterStatus.getCode() != null && 
                         meterStatus.getName().equals(MeterStatus.CutOff.name())) {
                         isCutOff = true;
-                        log.debug("SJD<-1>" + contractId + ": isCutoff->true" );
+                        log.debug("[contractNum:" + contractId + "] : isCutoff[true]" );
                     }
     
                     // message event 시작 : 미터를 차단하겠습니다.
@@ -350,7 +356,7 @@ class BalanceCheckThread implements Runnable {
                             // txStatus = txManager.getTransaction(null);
 
                             CmdOperationUtil cmdOperationUtil = DataUtil.getBean(CmdOperationUtil.class);
-                            log.debug("SJD<CASE02>" + contractId + ": " + mcu.getSysID());
+                            log.debug("[contractNum:" + contractId + "] : Call relayValveOff" );
                             Map<String, Object> result = cmdOperationUtil.relayValveOff(mcu.getSysID(), meter.getMdsId());
 
                             // txManager.commit(txStatus);
@@ -360,7 +366,7 @@ class BalanceCheckThread implements Runnable {
                             JsonArray ja = null;
                             for (Object o : values) {
                                 ja = jsonParser.parse((String)o).getAsJsonArray();
-                                log.debug("SJD <jsonArray>: " + ja.toString());
+                                log.debug("Result of relayValveOff <jsonArray>: " + ja.toString());
                                 for (int i = 0; i < ja.size(); i++) {
                                     if (ja.get(i).getAsJsonObject().get("name").getAsString().equals("Result")) {
                                         status = ResultStatus.SUCCESS;
@@ -371,13 +377,13 @@ class BalanceCheckThread implements Runnable {
                                         break;
                                     }
                                     else {
-                                        log.warn("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] RelayValveOff Fail - " + ja.get(i).getAsJsonObject().get("value").getAsString());
+                                        log.warn("[SysID:"+mcu.getSysID()+", METER:"+meter.getMdsId()+", contractNum:"+conNumber+ "] RelayValveOff Fail - " + ja.get(i).getAsJsonObject().get("value").getAsString());
                                     }
                                 }
                                 if (status == ResultStatus.SUCCESS) break;
                             }
                             
-                            log.debug("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] RelayValveOff Result [" + status + "]");
+                            log.debug("[SysID:"+mcu.getSysID()+", METER:"+meter.getMdsId()+", contractNum:"+conNumber+ "] RelayValveOff Result [" + status + "]");
                             
                             // Operation Log에 기록
                             saveOperationLog(supplier, meterType, meter.getMdsId(), "balance-schedule", status.getCode(), status.name(), "relayValveOff");
@@ -385,7 +391,7 @@ class BalanceCheckThread implements Runnable {
                     }
                     catch (Exception e) {
                         status = ResultStatus.FAIL;
-                        log.error("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] RelayValveOff Result [" + status + "]", e);                        
+                        log.error("[SysID:"+mcu.getSysID()+", METER:"+meter.getMdsId()+", contractNum:"+conNumber+  "] RelayValveOff Exception [" + status + "]", e);
                     }
                     
                         
@@ -423,25 +429,23 @@ class BalanceCheckThread implements Runnable {
     //                }
     
                 } else if (contract.getEmergencyCreditAutoChange() != null && contract.getEmergencyCreditAutoChange()) {
-                    log.debug("SJD<CASE03,04,05>" + contractId + ": " + contract.getEmergencyCreditAutoChange());
+                    log.debug("[SysID:"+mcu.getSysID()+", METER:"+meter.getMdsId()+", contractNum:"+conNumber+ "] : EmergencyAuto["+contract.getEmergencyCreditAutoChange()+"]");
                     // 잔액이 0 이하 이고 emergency credit 이 자동인 경우 고객정보를 emergency credit 모드로 업데이트
                 	if(contract.getEmergencyCreditStartTime() == null  || "".equals(contract.getEmergencyCreditStartTime())) {
-                        log.debug("SJD<CASE03>" + contractId + ": startTime is Null or Empty");
                 	    //EmergencyCreditType으로 변경
-                        log.info("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] ContractId["+contract.getId()+"] is change EmergencyCreditType");                        
+                        log.info("[SysID:"+mcu.getSysID()+", METER:"+meter.getMdsId()+", contractNum:"+conNumber+"] : Change to EmergencyCreditType");
                         
                         changeCreditType(contract, "creditType", creditType, emergencyType);
                     } else {
                         //EmergencyDuration을 체크 후 기간이 지났을 경우 EmergencyCredit을 Manual로 변경
                         Boolean isEmergencyCreditContract = checkEmergencyDuration(contract);
                         if(!isEmergencyCreditContract) {
-                            log.debug("SJD<CASE05>" + contractId + ": " + isEmergencyCreditContract);
                             //Manual로 변경
-                            log.info("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] ContractId["+contract.getId()+"] is change PrepayType");
+                            log.info("[SysID:"+mcu.getSysID()+", METER:"+meter.getMdsId()+", contractNum:"+conNumber+"] : Change to PrepayType");
                                                         
                             changeCreditType(contract, "creditType", creditType, prepaymentType);
                         }else{
-                            log.debug("SJD<CASE04>" + contractId + ": " + isEmergencyCreditContract);
+                            log.debug("[SysID:"+mcu.getSysID()+", METER:"+meter.getMdsId()+", contractNum:"+conNumber+ "] : Valid EmergencyDuration" );
                         }
                     }
                 	
@@ -456,14 +460,13 @@ class BalanceCheckThread implements Runnable {
                 
                 if (cutoffnotsuspended || (contractStatus != null && contractStatus.getCode().equals(pauseCode))) {
                       isCutOff = true;
-                    log.debug("SJD<-2>" + contractId + ": cutofnotsuspended[" + cutoffnotsuspended + "]");
                 }
                 
-                log.debug("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] is 0 < credit and [isCutOff = " + isCutOff + "]");
+                log.debug("[SysID:"+mcu.getSysID()+", METER:"+meter.getMdsId()+", contractNum:"+conNumber+ "] : credit>0 and isCutOff["+ isCutOff +"]");
                 
                 if (isCutOff) {
                     try {
-                        log.debug("SJD<CASE07>" + contractId + ": isCutOff[" + isCutOff  +"]");
+                        log.debug("[contractNum:" + contractId + "] : Call relayValveON" );
                         //txStatus = txManager.getTransaction(null);
                         CmdOperationUtil cmdOperationUtil = DataUtil.getBean(CmdOperationUtil.class);
                         Map<String, Object> result = cmdOperationUtil.relayValveOn(mcu.getSysID(), meter.getMdsId());
@@ -475,7 +478,7 @@ class BalanceCheckThread implements Runnable {
                         JsonArray ja = null;
                         for (Object o : values) {
                             ja = jsonParser.parse((String)o).getAsJsonArray();
-                            log.debug("SJD <jsonArray>: " + ja.toString());
+                            log.debug("Result of relayValveON <jsonArray>: " + ja.toString());
                             for (int i = 0; i < ja.size(); i++) {
                                 if (ja.get(i).getAsJsonObject().get("name").getAsString().equals("Result")) {
                                     status = ResultStatus.SUCCESS;
@@ -486,27 +489,27 @@ class BalanceCheckThread implements Runnable {
                                     break;
                                 }
                                 else{
-                                    log.warn("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] RelayValveOn Fail - " + ja.get(i).getAsJsonObject().get("value").getAsString());
+                                    log.warn("[SysID:"+mcu.getSysID()+", METER:"+meter.getMdsId()+", contractNum:"+conNumber+"] RelayValveOn Fail - " + ja.get(i).getAsJsonObject().get("value").getAsString());
                                 }
                             }
                             if (status == ResultStatus.SUCCESS) break;
                         }
                         
-                        log.debug("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] RelayValveOn Result [" + status + "]");
+                        log.debug("[SysID:"+mcu.getSysID()+", METER:"+meter.getMdsId()+", contractNum:"+conNumber+"] RelayValveOn Result [" + status + "]");
                         
                         // Operation Log에 기록
                         saveOperationLog(supplier, meterType, meter.getMdsId(), "balance-schedule", status.getCode(), status.name(), "relayValveOn");
                     }
                     catch (Exception e) {
                         status = ResultStatus.FAIL;
-                        log.error("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] RelayValveOn Result [" + status + "]", e);                        
+                        log.error("[SysID:"+mcu.getSysID()+", METER:"+meter.getMdsId()+", contractNum:"+conNumber+"] RelayValveOn Exception [" + status + "]", e);
                     }
                 }else{
-                    log.debug("SJD<CASE06>" + contractId + ": contractStatus[" + contractStatus  +"]");
+                    log.debug("[SysID:"+mcu.getSysID()+", METER:"+meter.getMdsId()+", contractNum:"+conNumber+ "] : Neither Suspended nor Paused" );
                 }
             }
             
-            log.info("[DCU:" + mcu.getSysID() + " METER:" + meter.getMdsId() + "] End check balance for [Contract :" + contract.getContractNumber() + "]");
+            log.info("[SysID:"+mcu.getSysID()+", METER:"+meter.getMdsId()+", contractNum:"+conNumber+ "] : Balance Checking is done.");
             
             return mcuStatus;
         }
