@@ -471,10 +471,10 @@ class BalanceCheckThread implements Runnable {
                         
                         Object[] values = result.values().toArray(new Object[0]);
                         
-                        JsonParser jparser = new JsonParser();
+                        JsonParser jsonParser = new JsonParser();
                         JsonArray ja = null;
                         for (Object o : values) {
-                            ja = jparser.parse((String)o).getAsJsonArray();
+                            ja = jsonParser.parse((String)o).getAsJsonArray();
                             log.debug("SJD <jsonArray>: " + ja.toString());
                             for (int i = 0; i < ja.size(); i++) {
                                 if (ja.get(i).getAsJsonObject().get("name").getAsString().equals("Result")) {

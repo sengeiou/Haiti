@@ -117,8 +117,8 @@ public class I210PlusMDSaver extends AbstractMDSaver {
             CommandGW commandGw = DataUtil.getBean(CommandGW.class);
             commandGw.cmdSetEnergyLevel(mcuId, deviceSerial, "15"); //1=open, 15=close.
 
-            Thread.sleep(10000);	// Relay control 10초 대기
             log.debug("Wait for 10 sec for relayValveOff.");
+            Thread.sleep(10000);	// Relay control 10초 대기
 
             byte energyLevel = commandGw.cmdGetEnergyLevel(mcuId, deviceSerial);
             Integer relayStatus = (int)energyLevel;
@@ -159,8 +159,8 @@ public class I210PlusMDSaver extends AbstractMDSaver {
             CommandGW commandGw = DataUtil.getBean(CommandGW.class);
             commandGw.cmdSetEnergyLevel(mcuId, deviceSerial, "1"); //1=open, 15=close.
 
-            Thread.sleep(10000);	// Relay control 10초 대기
             log.debug("Wait for 10 sec for relayValveOn.");
+            Thread.sleep(10000);	// Relay control 10초 대기
 
             byte energyLevel = commandGw.cmdGetEnergyLevel(mcuId, deviceSerial);
             Integer relayStatus = (int)energyLevel;
