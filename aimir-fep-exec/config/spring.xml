@@ -46,12 +46,13 @@
   -->
   
   <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-        <property name="poolName" value="springHikariCP" />
+        <property name="poolName" value="springHikariCPF" />
         <property name="dataSourceClassName" value="${jdbc.driverClassName}" />
         <property name="maximumPoolSize" value="${jdbc.maximumSize}" />
         <property name="minimumIdle" value="${jdbc.minimumIdleSize}"/>
         <property name="autoCommit" value="false"/>
         <property name="idleTimeout" value="30000" />
+	<property name="registerMbeans" value="true" />
     
         <property name="dataSourceProperties">
             <props>
@@ -61,9 +62,9 @@
             </props>
         </property>
     </bean>
-
+    
     <!-- HikariCP configuration -->
-    <bean id="dataSource" class="com.zaxxer.hikari.HikariCPDataSource" destroy-method="close">
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
         <constructor-arg ref="hikariConfig" />
     </bean>
     
@@ -166,6 +167,6 @@
     <property name="timeToLive" value="0"/>
   </bean>
     
-  <!-- <bean id="meterEventLink" class="${meter.event.link}"></bean>-->
+  <bean id="meterEventLink" class="${meter.event.link}"></bean>
     
 </beans>
