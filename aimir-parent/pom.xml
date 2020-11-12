@@ -27,8 +27,8 @@
   
   <modules>
     <module>../aimir-model</module>
-    <module>../aimir-model-eclipselink</module>
     <module>../aimir-model-hibernate</module>
+    <module>../aimir-model-eclipselink</module>
     <module>../aimir-fep</module>
     <module>../aimir-schedule</module>
     <module>../aimir-service-device</module>
