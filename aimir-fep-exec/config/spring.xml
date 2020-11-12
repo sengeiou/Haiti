@@ -46,7 +46,7 @@
   -->
   
   <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-        <property name="poolName" value="springHikariCPF" />
+        <property name="poolName" value="springHikariCP" />
         <property name="dataSourceClassName" value="${jdbc.driverClassName}" />
         <property name="maximumPoolSize" value="${jdbc.maximumSize}" />
         <property name="minimumIdle" value="${jdbc.minimumIdleSize}"/>
@@ -64,7 +64,7 @@
     </bean>
     
     <!-- HikariCP configuration -->
-    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariCPDataSource" destroy-method="close">
         <constructor-arg ref="hikariConfig" />
     </bean>
     
