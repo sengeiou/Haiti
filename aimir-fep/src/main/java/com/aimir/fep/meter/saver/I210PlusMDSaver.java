@@ -83,7 +83,7 @@ public class I210PlusMDSaver extends AbstractMDSaver {
 		try {
 			boolean switchStatus = parser.getACTUAL_SWITCH_STATE(); // 0 – Open, 1 – Close 
 			log.debug("meter.getMeterStatus() : " + meter.getMeterStatus());
-			log.debug("switchStatus : " + switchStatus);
+			log.debug("switchStatus(true=normal,false=cutoff) : " + switchStatus);
 			if(switchStatus){
 				String code = CommonConstants.getMeterStatusCode(MeterStatus.Normal);
 				meter.setMeterStatus(CommonConstants.getMeterStatus(code));
@@ -93,6 +93,7 @@ public class I210PlusMDSaver extends AbstractMDSaver {
 			}
 			log.debug("meter.getMeterStatus() : " + meter.getMeterStatus());
 			//meter's last_read_date
+            log.debug("meter.LastReadDate Update: ["+meter.getLastReadDate()+"] --> ["+parser.getMeteringTime().substring(0,14)+"].");
             meter.setLastReadDate(parser.getMeteringTime().substring(0,14));
 			meterDao.update(meter);
 		} catch (Exception e) {
