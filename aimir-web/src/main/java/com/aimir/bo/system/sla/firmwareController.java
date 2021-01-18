@@ -62,7 +62,7 @@ public class firmwareController {
     }
     
     private String getSLAExcelSavePath() {
-    	String path = "/home/aimir/aimiramm/firmware-file/fw/dcu/NURITelecom";
+    	String path = "/home/aimir/aimiramm.dev/firmware-file/dcu/NURITelecom";
     	return path;
     }
     
@@ -130,7 +130,7 @@ public class firmwareController {
 	        String src = mtfRequest.getParameter("src");
 	        System.out.println("src value : " + src);
 
-	        String path = "/home/aimir/aimiramm/firmware-file/fw/dcu/NURITelecom";
+	        String path = "/home/aimir/aimiramm.dev/firmware-file/dcu/NURITelecom";
 
 	        for (MultipartFile mf : fileList) {
 	            String originFileName = mf.getOriginalFilename(); // 원본 파일 명
