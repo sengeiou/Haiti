@@ -99,7 +99,6 @@ var storeParams = {
 	limit: PAGE_SIZE	
 };
 
-var loginIntId="";
 var loginId = "";
 
 var vendorListParams = $.extend(true, {}, storeParams);
@@ -354,7 +353,6 @@ var getUserInfo = function() {
 	$.getJSON("${ctx}/common/getUserInfo.do", 
 		function(data) {
 			supplierId = data.supplierId;
-			loginIntId = data.operatorId;
 	        loginId = data.loginId;
 			$("#report-type").selectbox();
 			initCalendar(data);
