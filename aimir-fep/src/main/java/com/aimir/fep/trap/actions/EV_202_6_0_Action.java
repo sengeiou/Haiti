@@ -15,6 +15,7 @@ import com.aimir.constants.CommonConstants.McuType;
 import com.aimir.constants.CommonConstants.TargetClass;
 import com.aimir.dao.device.MCUCodiDao;
 import com.aimir.dao.device.MCUDao;
+import com.aimir.dao.system.DeviceModelDao;
 import com.aimir.dao.system.LocationDao;
 import com.aimir.dao.system.SupplierDao;
 import com.aimir.fep.trap.common.EV_Action;
@@ -23,6 +24,7 @@ import com.aimir.fep.util.FMPProperty;
 import com.aimir.model.device.EventAlertLog;
 import com.aimir.model.device.MCU;
 import com.aimir.model.device.MCUCodi;
+import com.aimir.model.system.DeviceModel;
 import com.aimir.model.system.Supplier;
 import com.aimir.notification.FMPTrap;
 import com.aimir.util.StringUtil;
@@ -53,6 +55,9 @@ public class EV_202_6_0_Action implements EV_Action
 
 	@Autowired
 	LocationDao locationDao;
+	
+	@Autowired
+    DeviceModelDao modelDao;
     
     /**
      * execute event action
@@ -105,6 +110,11 @@ public class EV_202_6_0_Action implements EV_Action
 					log.info("MCU[" + mcu.getSysID() + "] Default Supplier is Not Exist In Properties, Set First Supplier[" + supplierDao.getAll().get(0).getId() + "]");
 					mcu.setSupplier(supplierDao.getAll().get(0));
 				}
+				
+				DeviceModel model = modelDao.findByCondition("name", "DCU-DUMMY");
+                if (model != null) {
+                    mcu.setDeviceModel(model);
+                }
 
 				mcu.setInstallDate(currentTime);
 				mcu.setLastCommDate(currentTime);
@@ -113,8 +123,8 @@ public class EV_202_6_0_Action implements EV_Action
 				mcu.setSysLocalPort(new Integer(8000));
 //				mcu.setNameSpace(FMPProperty.getProperty("default.namespace.dcu", "EDH"));
 				mcu.setProtocolVersion("0102");
-				mcu.setSysHwVersion("0.0");
-				mcu.setSysSwVersion("0.0");
+				mcu.setSysHwVersion("1.0");
+				mcu.setSysSwVersion("1.0");
 				mcuDao.add(mcu);
 
 				/*
