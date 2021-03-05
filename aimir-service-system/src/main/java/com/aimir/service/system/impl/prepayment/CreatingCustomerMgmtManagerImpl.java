@@ -296,7 +296,6 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             }
             
             // Add
-
             String dateTime = null;
             try {
                 dateTime = TimeUtil.getCurrentTime();
@@ -315,7 +314,19 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             customer.setSupplier(supplier);
             Customer newCustomer = customerDao.add(customer);
             customerDao.flushAndClear();
-
+            
+            DeviceModel model = deviceModelDao.findByCondition("name", "I210+");
+            
+            Meter meter = new Meter();
+            meter.setMdsId(meterNumber);
+            meter.setSupplier(supplier);;
+            meter.setLocation(location);
+            meter.setModel(model);
+//            meter.setContract(newContract);
+            meter.setWriteDate(dateTime);
+            Meter newMeter = meterDao.add(meter);
+            meterDao.flushAndClear();
+            
             Contract contract = new Contract();
             contract.setContractNumber(contractNumber);
             contract.setLocation(location);
@@ -326,20 +337,9 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             contract.setCustomer(newCustomer);
             contract.setTariffIndex(tariffType);
             contract.setOldArrears(oldArrears);
-            Contract newContract =  contractDao.add(contract);
+            contract.setMeter(newMeter);
+            contractDao.add(contract);
             contractDao.flushAndClear();
-            
-            DeviceModel model = deviceModelDao.findByCondition("name", "I210+");
-            
-            Meter meter = new Meter();
-            meter.setMdsId(meterNumber);
-            meter.setSupplier(supplier);;
-            meter.setLocation(location);
-            meter.setModel(model);
-            meter.setContract(newContract);
-            meter.setWriteDate(dateTime);
-            meterDao.add(meter);
-            meterDao.flushAndClear();
             
         } // for end : Row
 
@@ -493,7 +493,6 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             }
             
             // Add
-
             String dateTime = null;
             try {
                 dateTime = TimeUtil.getCurrentTime();
@@ -513,6 +512,18 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             Customer newCustomer = customerDao.add(customer);
             customerDao.flushAndClear();
 
+            DeviceModel model = deviceModelDao.findByCondition("name", "I210+");
+            
+            Meter meter = new Meter();
+            meter.setMdsId(meterNumber);
+            meter.setSupplier(supplier);;
+            meter.setLocation(location);
+            meter.setModel(model);
+//            meter.setContract(newContract);
+            meter.setWriteDate(dateTime);
+            Meter newMeter = meterDao.add(meter);
+            meterDao.flushAndClear();
+            
             Contract contract = new Contract();
             contract.setContractNumber(contractNumber);
             contract.setLocation(location);
@@ -523,20 +534,9 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             contract.setCustomer(newCustomer);
             contract.setTariffIndex(tariffType);
             contract.setOldArrears(oldArrears);
-            Contract newContract =  contractDao.add(contract);
+            contract.setMeter(newMeter);
+            contractDao.add(contract);
             contractDao.flushAndClear();
-            
-            DeviceModel model = deviceModelDao.findByCondition("name", "I210+");
-            
-            Meter meter = new Meter();
-            meter.setMdsId(meterNumber);
-            meter.setSupplier(supplier);;
-            meter.setLocation(location);
-            meter.setModel(model);
-            meter.setContract(newContract);
-            meter.setWriteDate(dateTime);
-            meterDao.add(meter);
-            meterDao.flushAndClear();
             
         } // for end : Row
 
