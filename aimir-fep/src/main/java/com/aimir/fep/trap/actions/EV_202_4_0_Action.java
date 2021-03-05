@@ -9,11 +9,22 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionStatus;
 
+import com.aimir.constants.CommonConstants;
+import com.aimir.constants.CommonConstants.EventStatus;
+import com.aimir.constants.CommonConstants.McuType;
+import com.aimir.constants.CommonConstants.TargetClass;
 import com.aimir.dao.device.MCUDao;
+import com.aimir.dao.system.LocationDao;
+import com.aimir.dao.system.SupplierDao;
 import com.aimir.fep.trap.common.EV_Action;
+import com.aimir.fep.util.EventUtil;
+import com.aimir.fep.util.FMPProperty;
 import com.aimir.model.device.EventAlertLog;
 import com.aimir.model.device.MCU;
+import com.aimir.model.system.Supplier;
 import com.aimir.notification.FMPTrap;
+import com.aimir.util.StringUtil;
+import com.aimir.util.TimeUtil;
 
 /**
  * Event ID : 201.4.0 Processing Class
@@ -32,6 +43,12 @@ public class EV_202_4_0_Action implements EV_Action
     @Autowired
     MCUDao mcuDao;
     
+    @Autowired
+	SupplierDao supplierDao;
+
+	@Autowired
+	LocationDao locationDao;
+    
     /**
      * execute event action
      *
@@ -42,6 +59,7 @@ public class EV_202_4_0_Action implements EV_Action
     {
         log.debug("EV_202_4_0_Action : EventCode[" + trap.getCode()
                 +"] MCU["+trap.getMcuId()+"]");
+        String currentTime = TimeUtil.getCurrentTime();
         TransactionStatus txstatus = null;
         
         try {
@@ -51,9 +69,64 @@ public class EV_202_4_0_Action implements EV_Action
             
             if (mcu == null)
             {
-                log.debug("no mcu intance exist mcu["
-                        +trap.getMcuId()+"]");
-                return;
+            	log.info("mcu[" + mcu.getSysID() + "] is not existed!!");
+
+				/*
+				 * DCU  신규 등록
+				 */
+				//Set Default Location            
+				String defaultLocName = FMPProperty.getProperty("loc.default.name");
+				if (defaultLocName != null && !"".equals(defaultLocName)) {
+					if (locationDao.getLocationByName(StringUtil.toDB(defaultLocName)) != null && locationDao.getLocationByName(StringUtil.toDB(defaultLocName)).size() > 0) {
+						log.info("MCU[" + mcu.getSysID() + "] Set Default Location[" + locationDao.getLocationByName(StringUtil.toDB(defaultLocName)).get(0).getId() + "]");
+						mcu.setLocation(locationDao.getLocationByName(StringUtil.toDB(defaultLocName)).get(0));
+					} else {
+						log.info("MCU[" + mcu.getSysID() + "] Default Location[" + defaultLocName + "] is Not Exist In DB, Set First Location[" + locationDao.getAll().get(0).getId() + "]");
+						mcu.setLocation(locationDao.getAll().get(0));
+					}
+				} else {
+					log.info("MCU[" + mcu.getSysID() + "] Default Location is Not Exist In Properties, Set First Location[" + locationDao.getAll().get(0).getId() + "]");
+					mcu.setLocation(locationDao.getAll().get(0));
+				}
+
+				//Set Default Supplier
+				String supplierName = new String(FMPProperty.getProperty("default.supplier.name").getBytes("8859_1"), "UTF-8");
+				log.debug("Supplier Name[" + supplierName + "]");
+				Supplier supplier = supplierName != null ? supplierDao.getSupplierByName(supplierName) : null;
+
+				if (supplier != null && supplier.getId() != null && mcu.getSupplier() == null) {
+					mcu.setSupplier(supplier);
+				} else {
+					log.info("MCU[" + mcu.getSysID() + "] Default Supplier is Not Exist In Properties, Set First Supplier[" + supplierDao.getAll().get(0).getId() + "]");
+					mcu.setSupplier(supplierDao.getAll().get(0));
+				}
+
+				mcu.setInstallDate(currentTime);
+				mcu.setLastCommDate(currentTime);
+				mcu.setNetworkStatus(1);
+				mcu.setMcuType(CommonConstants.getMcuTypeByName(McuType.DCU.name()));
+				mcu.setSysLocalPort(new Integer(8000));
+				mcu.setNameSpace(FMPProperty.getProperty("default.namespace.dcu", "LK"));
+				mcu.setProtocolVersion("0102");
+				mcu.setSysHwVersion("0.0");
+				mcu.setSysSwVersion("0.0");
+				mcuDao.add(mcu);
+
+				/*
+				 * DCU Registration Event save
+				 */
+				try {
+					EventAlertLog eventAlertLog = new EventAlertLog();
+					eventAlertLog.setStatus(EventStatus.Open);
+					eventAlertLog.setOpenTime(event.getOpenTime());
+					eventAlertLog.setLocation(event.getLocation());
+					eventAlertLog.setSupplier(event.getSupplier());
+					log.debug("########## DCU[" + mcu.getSysID() + "] Equipment Registration start ##########");
+					EventUtil.sendEvent("Equipment Registration", TargetClass.DCU, mcu.getSysID(), currentTime, new String[][] {}, eventAlertLog);
+					log.debug("########## DCU[" + mcu.getSysID() + "] Equipment Registration stop  ##########");
+				} catch (Exception e) {
+					log.error("Equipment Registration save error - " + e.getMessage(), e);
+				}
             }
     
             log.debug("Event["+event+"]");
