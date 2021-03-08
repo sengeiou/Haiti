@@ -99,6 +99,8 @@ var storeParams = {
 	limit: PAGE_SIZE	
 };
 
+var loginId = "";
+
 var vendorListParams = $.extend(true, {}, storeParams);
 var historyParams = $.extend(true, {}, storeParams);
 
@@ -318,7 +320,8 @@ var eventHandler = {
     			supplierId: supplierId,
     			vendorId: rec.data.id,
     			amount: rec.data.charge,
-    			date: +new Date()
+    			date: +new Date(),
+    			loginId : loginId
     		},
     		function(data) {
     			var hParams = $.extend({}, historyParams, {vendor: rec.data.id});
@@ -350,6 +353,7 @@ var getUserInfo = function() {
 	$.getJSON("${ctx}/common/getUserInfo.do", 
 		function(data) {
 			supplierId = data.supplierId;
+	        loginId = data.loginId;
 			$("#report-type").selectbox();
 			initCalendar(data);
 			vendorListParams = $.extend(vendorListParams, {supplierId: supplierId});

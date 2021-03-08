@@ -631,7 +631,7 @@
                             </td>
                             <td colspan="2" id="templateSelectDiv" class="margin-t1px">
                                 <span class="am_button margin-t1px">
-                                    <a id="btnDown" href='${ctx}/template/BulkCreatingCustomerTemplate.xls'><fmt:message key="aimir.download"/></a>
+                                    <a id="btnDown" href='${ctx}/template/BulkCreatingCustomerTemplate.xlsx'><fmt:message key="aimir.download"/></a>
                                 </span>
                             </td>
                         </tr>
