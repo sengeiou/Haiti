@@ -24,6 +24,7 @@ import com.aimir.dao.device.ChangeLogDao;
 import com.aimir.dao.device.EndDeviceDao;
 import com.aimir.dao.device.MCUDao;
 import com.aimir.dao.device.MeterDao;
+import com.aimir.dao.device.MeterMapperDao;
 import com.aimir.dao.device.ModemDao;
 import com.aimir.dao.system.CodeDao;
 import com.aimir.dao.system.DeviceModelDao;
@@ -95,6 +96,10 @@ public class EV_203_105_0_Action implements EV_Action
     
     @Autowired
     SupplierDao supplierDao;
+    
+    @Autowired
+    MeterMapperDao meterMapperDao;
+
     
     /**
      * execute event action
@@ -316,6 +321,8 @@ public class EV_203_105_0_Action implements EV_Action
                     // TODO meter.setDeviceModel();
                     // TODO meter.setLpInterval();
                     meterDao.add(meter);
+                    
+                    meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), meterId);
                     
                     EventUtil.sendEvent("Equipment Registration",
                             TargetClass.valueOf(meterType.name()),

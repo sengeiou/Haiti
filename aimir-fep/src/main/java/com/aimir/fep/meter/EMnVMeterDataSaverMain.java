@@ -39,6 +39,7 @@ import com.aimir.constants.CommonConstants.Protocol;
 import com.aimir.constants.CommonConstants.TargetClass;
 import com.aimir.dao.device.MCUDao;
 import com.aimir.dao.device.MeterDao;
+import com.aimir.dao.device.MeterMapperDao;
 import com.aimir.dao.device.ModemDao;
 import com.aimir.dao.mvm.MeasurementHistoryDao;
 import com.aimir.dao.system.CodeDao;
@@ -112,6 +113,9 @@ public class EMnVMeterDataSaverMain {
 
 	@Autowired
 	private CodeDao codeDao;
+	
+	@Autowired
+    private MeterMapperDao meterMapperDao;
 	
 //	@Autowired
 //	private EMnVEventUtil eventUtil;
@@ -624,6 +628,8 @@ public class EMnVMeterDataSaverMain {
 				if (meter.getMdsId() != null && !"".equals(meter.getMdsId())) {
 					meterDao.add(meter);
 
+					meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), meter.getMdsId());
+					
 	                EventUtil.sendEvent("Equipment Registration",
 	                        TargetClass.valueOf(meter.getMeterType().getName()),
 	                        meter.getMdsId(),
@@ -660,8 +666,9 @@ public class EMnVMeterDataSaverMain {
 				log.debug("##### [SAVERMAIN] 임시 통신시간 저장 체크2 [미터={}][현재시간-{}]", meter.getMdsId(), DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss").trim());
 				log.debug("##### [SAVERMAIN] 임시 통신시간 저장 체크2 [미터={}][현재시간-{}]", meter.getMdsId(), DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss").trim());
 				
-				
 				meterDao.update(temp);
+
+				meterMapperDao.updateMappingMeterId(temp.getModem().getDeviceSerial(), temp.getMdsId());
 				
 				parser.setMeter(temp);
 				

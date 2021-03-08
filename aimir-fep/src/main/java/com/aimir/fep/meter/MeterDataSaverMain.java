@@ -27,6 +27,7 @@ import com.aimir.constants.CommonConstants.TargetClass;
 import com.aimir.constants.CommonConstants.ThresholdName;
 import com.aimir.dao.device.MCUDao;
 import com.aimir.dao.device.MeterDao;
+import com.aimir.dao.device.MeterMapperDao;
 import com.aimir.dao.device.ModemDao;
 import com.aimir.dao.device.SNRLogDao;
 import com.aimir.dao.mvm.MeasurementHistoryDao;
@@ -113,6 +114,9 @@ public class MeterDataSaverMain
     @Autowired
     private SNRLogDao snrLogDao;
     
+    @Autowired
+    private MeterMapperDao meterMapperDao;
+
     /**
      * 검침데이타 저장
      * @param mdHistoryData EMDataList 하나
@@ -721,6 +725,8 @@ public class MeterDataSaverMain
                     
                     meterDao.add(meter);
                     
+                    meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), data.getMeterId());
+                    
                     EventUtil.sendEvent("Equipment Registration",
                             TargetClass.valueOf(meter.getMeterType().getName()),
                             meter.getMdsId(),
@@ -733,6 +739,8 @@ public class MeterDataSaverMain
                 else {
                     meter.setShortId(data.getShortId());
                     meter.setModem(modem);
+                    
+                    meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), meter.getMdsId());
                 }
             }
             else {
@@ -798,6 +806,8 @@ public class MeterDataSaverMain
                     
                     meterDao.add(meter);
                     
+                    meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), data.getMeterId());
+                    
                     EventUtil.sendEvent("Equipment Registration",
                             TargetClass.valueOf(meter.getMeterType().getName()),
                             meter.getMdsId(),
@@ -811,6 +821,8 @@ public class MeterDataSaverMain
                     meter.setShortId(data.getShortId());
                     meter.setModem(modem);
                     meter.setModemPort(data.getPortNum());
+                    
+                    meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), meter.getMdsId());
                 }
             }
         }

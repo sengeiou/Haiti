@@ -1,8 +1,9 @@
 package com.aimir.dao.device.impl;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
@@ -20,29 +21,63 @@ public class MeterMapperDaoimpl extends AbstractJpaDao<MeterMapper, Integer> imp
 	}
 
 	@Override
-	public String getObisMeterIdByPrintedMeterId(String modemDeviceSerial, String printedMeterId) {
-		StringBuilder query = new StringBuilder();
+	public MeterMapper getObisMeterIdByPrintedMeterId(String modemDeviceSerial, String printedMeterId) {
+		StringBuilder sbQuery = new StringBuilder();
 		
-		query.append("select * from meter_mapper where 1=1");
+		sbQuery.append("select * from meter_mapper where 1=1");
 		
 		if(modemDeviceSerial != null && !modemDeviceSerial.isEmpty())
-			query.append("\n modem_device_serial = ?");
+			sbQuery.append("\n modem_device_serial = :modemDeviceSerial");
 		
 		if(printedMeterId != null && !printedMeterId.isEmpty())
-			query.append("\n printedMeterId = ?");
+			sbQuery.append("\n meter_printed_mdsId = :printedMeterId");
+				
+		Query query = em.createNativeQuery(sbQuery.toString(), MeterMapper.class);
+		if(modemDeviceSerial != null && !modemDeviceSerial.isEmpty())
+			query.setParameter("modemDeviceSerial", modemDeviceSerial);
 		
+		if(printedMeterId != null && !printedMeterId.isEmpty())
+			query.setParameter("modem_device_serial", printedMeterId);
 		
-		
-			
-			
-		
-		return null;
+		return (MeterMapper)query.getSingleResult();
 	}
 
 	@Override
-	public String getPrintedMeterIdByObisMeterId(String modemDeviceSerial, String obisMeterId) {
-		// TODO Auto-generated method stub
-		return null;
+	public MeterMapper getPrintedMeterIdByObisMeterId(String modemDeviceSerial, String obisMeterId) {
+		StringBuilder sbQuery = new StringBuilder();
+		
+		sbQuery.append("select * from meter_mapper where 1=1");
+		
+		if(modemDeviceSerial != null && !modemDeviceSerial.isEmpty())
+			sbQuery.append("\n modem_device_serial = :modemDeviceSerial");
+		
+		if(obisMeterId != null && !obisMeterId.isEmpty())
+			sbQuery.append("\n meter_obis_mdsId = :obisMeterId");
+		
+		Query query = em.createNativeQuery(sbQuery.toString(), MeterMapper.class);
+		if(modemDeviceSerial != null && !modemDeviceSerial.isEmpty())
+			query.setParameter("modemDeviceSerial", modemDeviceSerial);
+		
+		if(obisMeterId != null && !obisMeterId.isEmpty())
+			query.setParameter("obisMeterId", obisMeterId);
+		
+		return (MeterMapper)query.getSingleResult();
+	}
+	
+	@Override
+	public Integer updateMappingMeterId(String modemDeviceSerial, String obisMeterId) {
+		StringBuilder sbQuery = new StringBuilder();
+		
+		if(modemDeviceSerial == null || obisMeterId == null) 
+			return null;
+		
+		sbQuery.append("update meter_mapper set meter_obis_mdsId = :obisMeterId where modem_device_serial = :modemDeviceSerial");
+		
+		Query query = em.createNamedQuery(sbQuery.toString());
+		query.setParameter("modemDeviceSerial", modemDeviceSerial);
+		query.setParameter("obisMeterId", obisMeterId);
+		
+		return query.executeUpdate();
 	}
 	
 	@Override

@@ -16,6 +16,7 @@ import com.aimir.constants.CommonConstants.ModemType;
 import com.aimir.constants.CommonConstants.TargetClass;
 import com.aimir.dao.device.MCUDao;
 import com.aimir.dao.device.MeterDao;
+import com.aimir.dao.device.MeterMapperDao;
 import com.aimir.dao.device.ModemDao;
 import com.aimir.dao.system.SupplierDao;
 import com.aimir.fep.command.mbean.CommandGW;
@@ -65,6 +66,9 @@ public class EV_203_101_0_Action implements EV_Action
     
     @Autowired
     SupplierDao supplierDao;
+    
+    @Autowired
+    MeterMapperDao meterMapperDao;
 
     /**
      * execute event action
@@ -196,6 +200,8 @@ public class EV_203_101_0_Action implements EV_Action
                     // TODO meter.setLpInterval();
                     // TODO meter.setPulseConstants();
                     meterDao.add(meter);
+                    
+                    meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), meterId);
                     
                     EventUtil.sendEvent("Equipment Registration",
                             TargetClass.valueOf(meterType.name()),

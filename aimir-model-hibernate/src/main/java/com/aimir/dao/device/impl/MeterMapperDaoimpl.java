@@ -20,13 +20,19 @@ public class MeterMapperDaoimpl extends AbstractHibernateGenericDao<MeterMapper,
     }
 
 	@Override
-	public String getObisMeterIdByPrintedMeterId(String modemDeviceSerial, String printedMeterId) {
+	public MeterMapper getObisMeterIdByPrintedMeterId(String modemDeviceSerial, String printedMeterId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String getPrintedMeterIdByObisMeterId(String modemDeviceSerial, String obisMeterId) {
+	public MeterMapper getPrintedMeterIdByObisMeterId(String modemDeviceSerial, String obisMeterId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer updateMappingMeterId(String modemDeviceSerial, String obisMeterId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

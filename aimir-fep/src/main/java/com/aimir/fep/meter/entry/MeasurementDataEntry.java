@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aimir.constants.CommonConstants;
 import com.aimir.constants.CommonConstants.ChannelCalcMethod;
@@ -25,6 +26,7 @@ import com.aimir.constants.CommonConstants.TargetClass;
 import com.aimir.constants.CommonConstants.ThresholdName;
 import com.aimir.dao.device.MCUDao;
 import com.aimir.dao.device.MeterDao;
+import com.aimir.dao.device.MeterMapperDao;
 import com.aimir.dao.device.ModemDao;
 import com.aimir.dao.system.CodeDao;
 import com.aimir.dao.system.DeviceModelDao;
@@ -75,6 +77,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
     private static DeviceVendorDao deviceVendorDao;
     private static DeviceModelDao deviceModelDao;
     private Meter meter;
+    private static MeterMapperDao meterMapperDao;
 
     //ondemand 여부
     private boolean isOnDemand = false;
@@ -102,6 +105,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
         supplierDao = DataUtil.getBean(SupplierDao.class);
         deviceVendorDao = DataUtil.getBean(DeviceVendorDao.class);
         deviceModelDao = DataUtil.getBean(DeviceModelDao.class);
+        meterMapperDao = DataUtil.getBean(MeterMapperDao.class);
     }
 
     public byte[] dataCnt = new byte[2];
@@ -989,6 +993,9 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
 
                 meter.setMeterStatus(CommonConstants.getMeterStatusByName(MeterStatus.NewRegistered.name()));
                 meterDao.add_requires_new(meter);
+                
+                meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), meter.getMdsId());
+                
                 try {
 	                EventUtil.sendEvent("Equipment Registration",
 	                        TargetClass.valueOf(meter.getMeterType().getName()),
