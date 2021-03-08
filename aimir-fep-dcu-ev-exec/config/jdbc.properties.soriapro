@@ -1,0 +1,9 @@
+jdbc.databasePlatform=org.eclipse.persistence.platform.database.OraclePlatform
+jdbc.generateDdl=true
+jdbc.showSql=false
+jdbc.driverClassName=oracle.jdbc.pool.OracleDataSource
+jdbc.url=jdbc:oracle:thin:@10.40.125.6:1521/PROD.HES.VALIDER.NO
+jdbc.username=aimir
+jdbc.password=ecDrbtfAkpswufUAXsBz
+jdbc.minimumIdleSize=1
+jdbc.maximumSize=10
