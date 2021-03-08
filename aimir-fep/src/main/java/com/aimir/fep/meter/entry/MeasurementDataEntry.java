@@ -803,8 +803,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
 
     /**
      * 미터 등록 여부 검증. 없으면 자동등록을 시도한다.
-     * @param svcType
-     * @param meterId
+     * @param modem
      * @return
      * @throws Exception
      */
@@ -814,7 +813,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
     	
 		try {
 			Supplier supplier = modem.getSupplier();
-	 		int limitedCount = supplier.getLicenceMeterCount();
+	 		int limitedCount = supplier.getLicenceMeterCount() == null? 0: supplier.getLicenceMeterCount();
 			log.debug("Supplier = "+supplier.getDescr());
 			log.debug("LimitedCount = "+limitedCount);
 			log.debug("LicenceUse = "+supplier.getLicenceUse());
