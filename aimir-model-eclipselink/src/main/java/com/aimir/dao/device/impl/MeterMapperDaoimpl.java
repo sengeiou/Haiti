@@ -73,7 +73,7 @@ public class MeterMapperDaoimpl extends AbstractJpaDao<MeterMapper, Integer> imp
 		
 		sbQuery.append("update meter_mapper set meter_obis_mdsId = :obisMeterId where modem_device_serial = :modemDeviceSerial");
 		
-		Query query = em.createNamedQuery(sbQuery.toString());
+		Query query = em.createNativeQuery(sbQuery.toString());
 		query.setParameter("modemDeviceSerial", modemDeviceSerial);
 		query.setParameter("obisMeterId", obisMeterId);
 		
