@@ -1050,8 +1050,9 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
 		
 		String propStr = "install." + deviceType.toLowerCase() +"." + vendor.toLowerCase() + ".model.name";
 		String defaultModel = FMPProperty.getProperty(propStr);
+		log.debug("propStr : " +propStr+", defaultModel : " + defaultModel+", supplierId : "+supplier.getId());
 		
-		if(propertyVendor == null || vendor == null || vendor.isEmpty() || propertyVendor.contains(vendor)) {
+		if(vendor != null && !vendor.isEmpty() && propertyVendor.contains(vendor)) {
 			List<DeviceModel> models = deviceModelDao.getDeviceModelByName(supplier.getId(), defaultModel);
 			if (models.size() > 1) {
 				log.debug("METER["+meterId+"] SET MODEL["+models.get(0).getName()+"]");
