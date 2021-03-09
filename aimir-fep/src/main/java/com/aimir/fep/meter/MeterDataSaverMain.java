@@ -59,6 +59,7 @@ import com.aimir.model.device.HeatMeter;
 import com.aimir.model.device.MCU;
 import com.aimir.model.device.MeasurementHistory;
 import com.aimir.model.device.Meter;
+import com.aimir.model.device.MeterMapper;
 import com.aimir.model.device.Modem;
 import com.aimir.model.device.MMIU;
 import com.aimir.model.device.SNRLog;
@@ -723,9 +724,17 @@ public class MeterDataSaverMain
                             meter.setModel(list.get(0));
                     }
                     
+                    Integer updateCnt = meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), data.getMeterId());
+                    log.info("updateCnt : " + updateCnt +", meterId : " + meter.getMdsId() +", modem seiral : " + modem.getDeviceSerial());
+                	if(updateCnt != null && updateCnt > 0) {
+                    	MeterMapper mapper = meterMapperDao.getPrintedMeterIdByObisMeterId(modem.getDeviceSerial(), meter.getMdsId());
+                    	if(mapper != null) {                    	
+                    		log.info("mapper modem serial : " + modem.getDeviceSerial() +", obis meterId : " + meter.getMdsId() +", printed meterId : " + mapper.getMeterPrintedMdsId());
+                    		meter.setGs1(mapper.getMeterPrintedMdsId());
+                    	}
+                    }
+                	
                     meterDao.add(meter);
-                    
-                    meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), data.getMeterId());
                     
                     EventUtil.sendEvent("Equipment Registration",
                             TargetClass.valueOf(meter.getMeterType().getName()),
@@ -737,10 +746,18 @@ public class MeterDataSaverMain
                             );
                 }
                 else {
-                    meter.setShortId(data.getShortId());
+                    Integer updateCnt = meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), meter.getMdsId());
+                    log.info("updateCnt : " + updateCnt +", meterId : " + meter.getMdsId() +", modem seiral : " + modem.getDeviceSerial());
+                	if(updateCnt != null && updateCnt > 0) {
+                    	MeterMapper mapper = meterMapperDao.getPrintedMeterIdByObisMeterId(modem.getDeviceSerial(), meter.getMdsId());
+                    	if(mapper != null) {                    	
+                    		log.info("mapper modem serial : " + modem.getDeviceSerial() +", obis meterId : " + meter.getMdsId() +", printed meterId : " + mapper.getMeterPrintedMdsId());
+                    		meter.setGs1(mapper.getMeterPrintedMdsId());
+                    	}
+                    }
+                	
+                	meter.setShortId(data.getShortId());
                     meter.setModem(modem);
-                    
-                    meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), meter.getMdsId());
                 }
             }
             else {
@@ -804,9 +821,17 @@ public class MeterDataSaverMain
                     meter.setModemPort(data.getPortNum());
                     meter.setInstallDate(data.getInstallDateTime());
                     
-                    meterDao.add(meter);
+                    Integer updateCnt = meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), data.getMeterId());
+                    log.info("updateCnt : " + updateCnt +", meterId : " + meter.getMdsId() +", modem seiral : " + modem.getDeviceSerial());
+                	if(updateCnt != null && updateCnt > 0) {
+                    	MeterMapper mapper = meterMapperDao.getPrintedMeterIdByObisMeterId(modem.getDeviceSerial(), meter.getMdsId());
+                    	if(mapper != null) {                    	
+                    		log.info("mapper modem serial : " + modem.getDeviceSerial() +", obis meterId : " + meter.getMdsId() +", printed meterId : " + mapper.getMeterPrintedMdsId());
+                    		meter.setGs1(mapper.getMeterPrintedMdsId());
+                    	}
+                    }
                     
-                    meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), data.getMeterId());
+                    meterDao.add(meter);
                     
                     EventUtil.sendEvent("Equipment Registration",
                             TargetClass.valueOf(meter.getMeterType().getName()),
@@ -818,11 +843,19 @@ public class MeterDataSaverMain
                             );
                 }
                 else {
+                	Integer updateCnt = meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), meter.getMdsId());
+                	log.info("updateCnt : " + updateCnt +", meterId : " + meter.getMdsId() +", modem seiral : " + modem.getDeviceSerial());
+                	if(updateCnt != null && updateCnt > 0) {
+                    	MeterMapper mapper = meterMapperDao.getPrintedMeterIdByObisMeterId(modem.getDeviceSerial(), meter.getMdsId());
+                    	if(mapper != null) {                    	
+                    		log.info("mapper modem serial : " + modem.getDeviceSerial() +", obis meterId : " + meter.getMdsId() +", printed meterId : " + mapper.getMeterPrintedMdsId());
+                    		meter.setGs1(mapper.getMeterPrintedMdsId());
+                    	}
+                    }
+                	
                     meter.setShortId(data.getShortId());
                     meter.setModem(modem);
                     meter.setModemPort(data.getPortNum());
-                    
-                    meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), meter.getMdsId());
                 }
             }
         }

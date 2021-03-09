@@ -31,6 +31,7 @@ import com.aimir.model.device.IEIU;
 import com.aimir.model.device.MCU;
 import com.aimir.model.device.MMIU;
 import com.aimir.model.device.Meter;
+import com.aimir.model.device.MeterMapper;
 import com.aimir.model.device.Modem;
 import com.aimir.model.device.VolumeCorrector;
 import com.aimir.model.device.WaterMeter;
@@ -189,6 +190,17 @@ public class EV_203_101_0_Action implements EV_Action
                     case VolumeCorrector :
                         meter = new VolumeCorrector();
                     }
+                    
+                    Integer updateCnt = meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), meterId);
+                    log.info("updateCnt : " + updateCnt +", meterId : " + meterId +", modem seiral : " + modem.getDeviceSerial());
+                    if(updateCnt != null && updateCnt > 0) {
+                    	MeterMapper mapper = meterMapperDao.getPrintedMeterIdByObisMeterId(modem.getDeviceSerial(), meterId);
+                    	if(mapper != null) {                    	
+                    		log.info("mapper modem serial : " + modem.getDeviceSerial() +", obis meterId : " + meterId +", printed meterId : " + mapper.getMeterPrintedMdsId());
+                    		meter.setGs1(mapper.getMeterPrintedMdsId());
+                    	}
+                    }
+                    
                     meter.setMdsId(meterId);
                     meter.setInstallDate(DateTimeUtil.getDST(null, installedDate));
                     meter.setMeterType(CommonConstants.getMeterTypeByName(meterType.name()));
@@ -200,8 +212,6 @@ public class EV_203_101_0_Action implements EV_Action
                     // TODO meter.setLpInterval();
                     // TODO meter.setPulseConstants();
                     meterDao.add(meter);
-                    
-                    meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), meterId);
                     
                     EventUtil.sendEvent("Equipment Registration",
                             TargetClass.valueOf(meterType.name()),
