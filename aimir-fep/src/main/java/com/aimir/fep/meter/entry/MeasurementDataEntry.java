@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aimir.constants.CommonConstants;
 import com.aimir.constants.CommonConstants.ChannelCalcMethod;
@@ -25,6 +26,7 @@ import com.aimir.constants.CommonConstants.TargetClass;
 import com.aimir.constants.CommonConstants.ThresholdName;
 import com.aimir.dao.device.MCUDao;
 import com.aimir.dao.device.MeterDao;
+import com.aimir.dao.device.MeterMapperDao;
 import com.aimir.dao.device.ModemDao;
 import com.aimir.dao.system.CodeDao;
 import com.aimir.dao.system.DeviceModelDao;
@@ -40,6 +42,7 @@ import com.aimir.fep.util.Util;
 import com.aimir.fep.util.threshold.CheckThreshold;
 import com.aimir.model.device.MCU;
 import com.aimir.model.device.Meter;
+import com.aimir.model.device.MeterMapper;
 import com.aimir.model.device.Modem;
 import com.aimir.model.mvm.ChannelConfig;
 import com.aimir.model.mvm.DisplayChannel;
@@ -75,6 +78,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
     private static DeviceVendorDao deviceVendorDao;
     private static DeviceModelDao deviceModelDao;
     private Meter meter;
+    private static MeterMapperDao meterMapperDao;
 
     //ondemand 여부
     private boolean isOnDemand = false;
@@ -102,6 +106,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
         supplierDao = DataUtil.getBean(SupplierDao.class);
         deviceVendorDao = DataUtil.getBean(DeviceVendorDao.class);
         deviceModelDao = DataUtil.getBean(DeviceModelDao.class);
+        meterMapperDao = DataUtil.getBean(MeterMapperDao.class);
     }
 
     public byte[] dataCnt = new byte[2];
@@ -948,11 +953,10 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
                             }
                         }
                     } else {
-                    	List<DeviceModel> models = deviceModelDao.getDeviceModelByName(modem.getSupplier().getId(), "METER-DUMMY");  
-                    	if (models.size() == 1) {
-                    		meter.setModel(models.get(0));
+                    	DeviceModel defaultModel = getDefaultModel(modem.getSupplier(), meter.getMdsId(), "meter", getVendor().getName());
+                    	if(defaultModel != null) {
+                    		meter.setModel(defaultModel);
                     	}
-                        log.debug("METER["+meter.getMdsId()+"] SET MODEL["+models.get(0).getName()+"]");
                     }
                     
                     if (meter.getModel() != null 
@@ -964,7 +968,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
                         throw new Exception("Meter serial[" + meter.getMdsId() + "] is wrong");
                     }
                 }
-            }
+            } 
             
             /*meter.setModel(deviceModelDao.getDeviceModelByCode(
                     modem.getSupplier().getId(),
@@ -987,8 +991,19 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
                     && modem.getModemType() != ModemType.Repeater
                     && meter.getMdsId() != null && !"".equals(meter.getMdsId())) {
 
+            	Integer updateCnt = meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), meter.getMdsId());
+            	log.info("updateCnt : " + updateCnt +", meterId : " + meter.getMdsId() +", modem seiral : " + modem.getDeviceSerial());
+            	if(updateCnt != null && updateCnt > 0) {
+                	MeterMapper mapper = meterMapperDao.getPrintedMeterIdByObisMeterId(modem.getDeviceSerial(), meter.getMdsId());
+                	if(mapper != null) {                    	
+                		log.info("mapper modem serial : " + modem.getDeviceSerial() +", obis meterId : " + meter.getMdsId() +", printed meterId : " + mapper.getMeterPrintedMdsId());
+                		meter.setGs1(mapper.getMeterPrintedMdsId());
+                	}
+                }
+            	            	
                 meter.setMeterStatus(CommonConstants.getMeterStatusByName(MeterStatus.NewRegistered.name()));
                 meterDao.add_requires_new(meter);
+                
                 try {
 	                EventUtil.sendEvent("Equipment Registration",
 	                        TargetClass.valueOf(meter.getMeterType().getName()),
@@ -1006,17 +1021,54 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
                 // return null;
             }
         } else {
-        	if(meter.getModel() == null || meter.getModel().getName().equals("")){
-            	List<DeviceModel> models = deviceModelDao.getDeviceModelByName(modem.getSupplier().getId(), "METER-DUMMY");  
-            	if (models.size() == 1) {
-            		meter.setModel(models.get(0));
+        	Integer updateCnt = meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), meter.getMdsId());
+        	log.info("updateCnt : " + updateCnt +", meterId : " + meter.getMdsId() +", modem seiral : " + modem.getDeviceSerial());
+        	if(updateCnt != null && updateCnt > 0) {
+            	MeterMapper mapper = meterMapperDao.getPrintedMeterIdByObisMeterId(modem.getDeviceSerial(), meter.getMdsId());
+            	if(mapper != null) {                    	
+            		log.info("mapper modem serial : " + modem.getDeviceSerial() +", obis meterId : " + meter.getMdsId() +", printed meterId : " + mapper.getMeterPrintedMdsId());
+            		meter.setGs1(mapper.getMeterPrintedMdsId());
             	}
-                log.debug("METER["+meter.getMdsId()+"] SET MODEL["+models.get(0).getName()+"]");
+            }
+        	 
+        	if(meter.getModel() == null || meter.getModel().getName().equals("")) {
+        		DeviceModel defaultModel = getDefaultModel(modem.getSupplier(), meter.getMdsId(), "meter", getVendor().getName());
+            	if(defaultModel != null) {
+            		meter.setModel(defaultModel);
+            	}
         	}
         }
 
         return meter;
     }
+	
+	/*
+	 * deviceType value : dcu, modem, meter
+	 */
+	private DeviceModel getDefaultModel(Supplier supplier, String meterId, String deviceType, String vendor) {
+		String propertyVendor = FMPProperty.getProperty("vendor");
+		
+		String propStr = "install." + deviceType.toLowerCase() +"." + vendor.toLowerCase() + ".model.name";
+		String defaultModel = FMPProperty.getProperty(propStr);
+		log.debug("propStr : " +propStr+", defaultModel : " + defaultModel+", supplierId : "+supplier.getId());
+		
+		if(vendor != null && !vendor.isEmpty() && propertyVendor.contains(vendor)) {
+			List<DeviceModel> models = deviceModelDao.getDeviceModelByName(supplier.getId(), defaultModel);
+			if (models.size() > 0) {
+				log.debug("METER["+meterId+"] SET MODEL["+models.get(0).getName()+"]");
+				return models.get(0);
+			}
+		} else {
+			List<DeviceModel> dummyModels = deviceModelDao.getDeviceModelByName(supplier.getId(), "METER-DUMMY");
+        	if (dummyModels.size() > 0) { 
+        		log.debug("METER["+meterId+"] SET MODEL["+dummyModels.get(0).getName()+"]");
+        		return dummyModels.get(0);
+        	}
+		}
+		
+		log.debug("METER["+meterId+"] SET MODEL NULL");
+		return null;
+	}
     
     private DeviceModel makeDefaultModel() {
         DeviceModel dm = new DeviceModel();

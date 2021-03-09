@@ -39,6 +39,7 @@ import com.aimir.constants.CommonConstants.Protocol;
 import com.aimir.constants.CommonConstants.TargetClass;
 import com.aimir.dao.device.MCUDao;
 import com.aimir.dao.device.MeterDao;
+import com.aimir.dao.device.MeterMapperDao;
 import com.aimir.dao.device.ModemDao;
 import com.aimir.dao.mvm.MeasurementHistoryDao;
 import com.aimir.dao.system.CodeDao;
@@ -71,6 +72,7 @@ import com.aimir.model.device.LTE;
 import com.aimir.model.device.MCU;
 import com.aimir.model.device.MeasurementHistory;
 import com.aimir.model.device.Meter;
+import com.aimir.model.device.MeterMapper;
 import com.aimir.model.device.Modem;
 import com.aimir.model.system.DeviceConfig;
 import com.aimir.model.system.DeviceModel;
@@ -112,6 +114,9 @@ public class EMnVMeterDataSaverMain {
 
 	@Autowired
 	private CodeDao codeDao;
+	
+	@Autowired
+    private MeterMapperDao meterMapperDao;
 	
 //	@Autowired
 //	private EMnVEventUtil eventUtil;
@@ -622,8 +627,18 @@ public class EMnVMeterDataSaverMain {
 				log.debug("##### [SAVERMAIN] 임시 통신시간 저장 체크1 [미터={}][현재시간-{}]", meter.getMdsId(), DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss").trim());
 				
 				if (meter.getMdsId() != null && !"".equals(meter.getMdsId())) {
+					Integer updateCnt = meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), meter.getMdsId());
+					log.info("updateCnt : " + updateCnt +", meterId : " + meter.getMdsId() +", modem seiral : " + modem.getDeviceSerial());
+					if(updateCnt != null && updateCnt > 0) {
+                    	MeterMapper mapper = meterMapperDao.getPrintedMeterIdByObisMeterId(modem.getDeviceSerial(), meter.getMdsId());
+                    	if(mapper != null) {                    	
+                    		log.info("mapper modem serial : " + modem.getDeviceSerial() +", obis meterId : " + meter.getMdsId() +", printed meterId : " + mapper.getMeterPrintedMdsId());
+                    		meter.setGs1(mapper.getMeterPrintedMdsId());
+                    	}
+                    }
+					
 					meterDao.add(meter);
-
+					
 	                EventUtil.sendEvent("Equipment Registration",
 	                        TargetClass.valueOf(meter.getMeterType().getName()),
 	                        meter.getMdsId(),
@@ -660,6 +675,15 @@ public class EMnVMeterDataSaverMain {
 				log.debug("##### [SAVERMAIN] 임시 통신시간 저장 체크2 [미터={}][현재시간-{}]", meter.getMdsId(), DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss").trim());
 				log.debug("##### [SAVERMAIN] 임시 통신시간 저장 체크2 [미터={}][현재시간-{}]", meter.getMdsId(), DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss").trim());
 				
+				Integer updateCnt = meterMapperDao.updateMappingMeterId(temp.getModem().getDeviceSerial(), temp.getMdsId());
+				log.info("updateCnt : " + updateCnt +", meterId : " + temp.getMdsId() +", modem seiral : " + modem.getDeviceSerial());
+            	if(updateCnt != null && updateCnt > 0) {
+                	MeterMapper mapper = meterMapperDao.getPrintedMeterIdByObisMeterId(modem.getDeviceSerial(), temp.getMdsId());
+                	if(mapper != null) {                    	
+                		log.info("mapper modem serial : " + modem.getDeviceSerial() +", obis meterId : " + temp.getMdsId() +", printed meterId : " + mapper.getMeterPrintedMdsId());
+                		temp.setGs1(mapper.getMeterPrintedMdsId());
+                	}
+                }
 				
 				meterDao.update(temp);
 				

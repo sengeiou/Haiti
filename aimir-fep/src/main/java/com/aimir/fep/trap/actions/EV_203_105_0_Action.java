@@ -24,6 +24,7 @@ import com.aimir.dao.device.ChangeLogDao;
 import com.aimir.dao.device.EndDeviceDao;
 import com.aimir.dao.device.MCUDao;
 import com.aimir.dao.device.MeterDao;
+import com.aimir.dao.device.MeterMapperDao;
 import com.aimir.dao.device.ModemDao;
 import com.aimir.dao.system.CodeDao;
 import com.aimir.dao.system.DeviceModelDao;
@@ -43,6 +44,7 @@ import com.aimir.model.device.IEIU;
 import com.aimir.model.device.MCU;
 import com.aimir.model.device.MMIU;
 import com.aimir.model.device.Meter;
+import com.aimir.model.device.MeterMapper;
 import com.aimir.model.device.Modem;
 import com.aimir.model.device.VolumeCorrector;
 import com.aimir.model.device.WaterMeter;
@@ -95,6 +97,10 @@ public class EV_203_105_0_Action implements EV_Action
     
     @Autowired
     SupplierDao supplierDao;
+    
+    @Autowired
+    MeterMapperDao meterMapperDao;
+
     
     /**
      * execute event action
@@ -303,6 +309,16 @@ public class EV_203_105_0_Action implements EV_Action
                         break;
                     case VolumeCorrector :
                         meter = new VolumeCorrector();
+                    }
+                    
+                    Integer updateCnt = meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), meterId);
+                    log.info("updateCnt : " + updateCnt +", meterId : " + meterId +", modem seiral : " + modem.getDeviceSerial());
+                    if(updateCnt != null && updateCnt > 0) {
+                    	MeterMapper mapper = meterMapperDao.getPrintedMeterIdByObisMeterId(modem.getDeviceSerial(), meterId);
+                    	if(mapper != null) {                    	
+                    		log.info("mapper modem serial : " + modem.getDeviceSerial() +", obis meterId : " + meterId +", printed meterId : " + mapper.getMeterPrintedMdsId());
+                    		meter.setGs1(mapper.getMeterPrintedMdsId());
+                    	}
                     }
                     
                     meter.setMdsId(meterId);

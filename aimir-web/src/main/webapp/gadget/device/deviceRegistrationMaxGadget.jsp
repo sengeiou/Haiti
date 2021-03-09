@@ -909,6 +909,9 @@
             $('#templateSelectDiv').css('display', 'block');
             linkSrc = '${ctx}/temp/customer_template.xls';  //xlsx - xls
         }
+        else if( deviceType == "MeterMapper" ){
+        	linkSrc = '${ctx}/temp/ModemAndMeterMapper_template.xlsx';
+        }
         else {  //MCU
             setComboMCU('templateSelect');
             $('#templateSelectDiv').css('display', 'block');
@@ -977,8 +980,9 @@
             }else{
                 linkSrc = '${ctx}/temp/contract_template.xls';
             }
-        }
-        else{
+        }else if( type == "MeterMapper" ){
+        	linkSrc = '${ctx}/temp/ModemAndMeterMapper_template.xlsx';
+        }else{
             linkSrc = '${ctx}/temp/DCU_template.xls';   //xlsx - xls
         }                                                                       // jhkim end
 
@@ -2189,13 +2193,33 @@
             	var detailType = $('#detailSelect').val();
                 var option = ModemTypeMap[detailType];
                 $.getJSON('${ctx}/gadget/device/insertDeviceBulkFile.do',
+                		{filePath : $('#filepath').val(),
+	                    fileType : $('#batchRegSelect').val(),
+	                    supplierId : supplierId,
+	                    detailType : ($('#batchRegSelect').val() == 'MCU') ? "" : option.displayName}, // FileType을 선택후 상세 타입 콤보 선택필요
+	                    function(result, status) {
+	                        //deviceRenderGrid(result.resultList, result.headerList);
+	                        Ext.Msg.alert('<fmt:message key='aimir.message'/>',result.resultMsg);
+	                    }
+                    );//getJSON End
+            }else if ($('#batchRegSelect').val() == 'MeterMapper') {
+            	var detailType = $('#detailSelect').val();
+                var option = ModemTypeMap[detailType];
+                $.getJSON('${ctx}/gadget/device/insertDeviceBulkFile.do',
                            {filePath:$('#filepath').val(),
                             fileType:$('#batchRegSelect').val(),
                             supplierId:supplierId,
-                            detailType:($('#batchRegSelect').val() == 'MCU') ? "" : option.displayName}, // FileType을 선택후 상세 타입 콤보 선택필요
+                            detailType:$('#batchRegSelect').val()}, // FileType을 선택후 상세 타입 콤보 선택필요
                            function(result, status) {
-                                //deviceRenderGrid(result.resultList, result.headerList);
-                                Ext.Msg.alert('<fmt:message key='aimir.message'/>',result.resultMsg);
+                            	if (result.resultMsg == "success") {
+                                    Ext.Msg.alert("<fmt:message key="aimir.message"/>", "<fmt:message key="aimir.newcustomeradded"/>");
+                                } else if (result.resultMsg == "failure") {
+                                    errorListExl = result.errorList;
+                                    Ext.Msg.alert("<fmt:message key="aimir.message"/>", "<fmt:message key="aimir.save.error"/>",
+                                            function() {renderErrorListGrid(result.errorList);});
+                                } else {
+                                    Ext.Msg.alert("<fmt:message key="aimir.error"/>", "<fmt:message key="aimir.save.error"/>");
+                                }
                            }
                     );//getJSON End
             } else {
@@ -2212,6 +2236,71 @@
             }
         } // else end
     } // registExcelFile End
+    
+    /* Error 리스트 START */
+    var errorGrid;
+    var errorStore;
+    var errorColModel;
+    function renderErrorListGrid(errorList) {
+        var width = $("#gridDiv").width();
+        var pageSize = 20;
+
+        errorStore = new Ext.ux.data.PagingArrayStore({
+            lastOptions: {params: {start: 0, limit: pageSize}},
+            data : errorList,//arrayGrid,
+            fields: ["cell0", "cell1", "errMsg"]
+        });
+        
+        var colWidth = width/3 - chromeColAdd;
+
+        errorColModel = new Ext.grid.ColumnModel({
+            columns : [
+                {header: "Modem Serial number", dataIndex: 'cell0'}
+               ,{header: "Meter Printed Number", dataIndex: 'cell1'}
+               ,{header: "<fmt:message key="aimir.sap.errorReason"/>", dataIndex: 'errMsg', width: colWidth - 4, renderer: addTooltip}
+            ],
+            defaults : {
+                sortable: true
+               ,menuDisabled: true
+               ,width: colWidth
+            }
+        });
+
+        // ExtJS 그리드 생성
+            errorGrid = new Ext.grid.GridPanel({
+                width: width,
+                height: 520,
+                store: errorStore,
+                colModel : errorColModel,
+                stripeRows : true,
+                columnLines: true,
+                loadMask:{
+                    msg: 'loading...'
+                },
+                renderTo: 'gridDiv',
+                viewConfig: {
+                    enableRowBody:true,
+                    showPreview:true,
+                    emptyText: 'No data to display'
+                },
+                // paging bar on the bottom
+                bbar: new Ext.PagingToolbar({
+                    pageSize: pageSize,
+                    store: errorStore,
+                    displayInfo: true,
+                    displayMsg: ' {0} - {1} / {2}'
+                })
+            });
+            errorGridOn = true;
+    }//Fuction End
+
+    // grid column tooltip
+    function addTooltip(value, metadata) {
+        if (value != null && value != "" && metadata != null) {
+            metadata.attr = 'ext:qtip="' + value + '"';
+        }
+        return value;
+    }
     
     function importExcelFile() {
         var filePath = $('#shipmentImportFilepath').val();
@@ -2379,6 +2468,18 @@
                            fileType:$('#batchRegSelect').val(),
                            supplierId:supplierId,
                            detailType:($('#batchRegSelect').val() == 'MCU') ? "DCU" : option.displayName}, // FileType을 선택후 상세 타입 콤보 선택필요
+                        function (result){
+                                deviceRenderGrid(result.resultList, result.headerList);
+                        });
+            }else if ($('#batchRegSelect').val() == 'MeterMapper') {
+            	var detailType = $('#detailSelect').val();
+                var option = ModemTypeMap[detailType];
+    
+                $.getJSON('${ctx}/gadget/device/getDeviceBulkFile.do'
+                        ,{ filePath:$('#filepath').val(),
+                           fileType:$('#batchRegSelect').val(),
+                           supplierId:supplierId,
+                           detailType:$('#batchRegSelect').val()},
                         function (result){
                                 deviceRenderGrid(result.resultList, result.headerList);
                         });
@@ -3059,6 +3160,7 @@
                                         <option value="Modem"><fmt:message key="aimir.modem"/></option>
                                         <option value="Meter"><fmt:message key="aimir.meter"/></option>
                                         <option value="Customer"><fmt:message key="aimir.customer"/></option>
+                                        <option value="MeterMapper">MeterMapper</option>
                                     </select>
                                 </td>
                                 <td colspan="3" id="templateSelectDiv" class="margin-t1px" style="display:none">
@@ -3080,6 +3182,7 @@
                                         <option value="Modem"><fmt:message key="aimir.modem"/></option>
                                         <option value="Meter"><fmt:message key="aimir.meter"/></option>
                                         <option value="Customer"><fmt:message key="aimir.customer"/></option>
+                                        <option value="MeterMapper">MeterMapper</option>
                                     </select>
                                 </td>
                                 <td id="detailSelectDiv" class="margin-t1px" style="display:none">
