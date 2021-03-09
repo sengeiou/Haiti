@@ -2,6 +2,7 @@ package com.aimir.service.device.impl;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -10,6 +11,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +20,8 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.poi.hssf.extractor.ExcelExtractor;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
@@ -61,6 +65,7 @@ import com.aimir.dao.device.MCUDao;
 import com.aimir.dao.device.MCUVarDao;
 import com.aimir.dao.device.MMIUDao;
 import com.aimir.dao.device.MeterDao;
+import com.aimir.dao.device.MeterMapperDao;
 import com.aimir.dao.device.ModemDao;
 import com.aimir.dao.device.PLCIUDao;
 import com.aimir.dao.device.SimCardDao;
@@ -98,6 +103,7 @@ import com.aimir.model.device.MCUCodiNeighbor;
 import com.aimir.model.device.MCUVar;
 import com.aimir.model.device.MMIU;
 import com.aimir.model.device.Meter;
+import com.aimir.model.device.MeterMapper;
 import com.aimir.model.device.Modem;
 import com.aimir.model.device.PLCIU;
 import com.aimir.model.device.SimCard;
@@ -111,10 +117,13 @@ import com.aimir.model.device.ZEUPLS;
 import com.aimir.model.device.ZMU;
 import com.aimir.model.device.ZRU;
 import com.aimir.model.system.Code;
+import com.aimir.model.system.Contract;
+import com.aimir.model.system.Customer;
 import com.aimir.model.system.DeviceModel;
 import com.aimir.model.system.DeviceVendor;
 import com.aimir.model.system.Location;
 import com.aimir.model.system.Supplier;
+import com.aimir.model.system.TariffType;
 import com.aimir.service.device.DeviceRegistrationManager;
 import com.aimir.util.DateTimeUtil;
 import com.aimir.util.StringUtil;
@@ -223,6 +232,9 @@ public class DeviceRegistrationManagerImpl implements DeviceRegistrationManager 
 	
 	@Autowired
 	SimCardDao simCardDao;
+	
+	@Autowired
+	MeterMapperDao meterMapperDao;
 
 	// 포맷 파일 저장 위치
 	private String ctxRoot;
@@ -414,7 +426,8 @@ public class DeviceRegistrationManagerImpl implements DeviceRegistrationManager 
 
 		return result;
 	}
-
+	
+	@Transactional(readOnly=false)
 	public Map<String, Object> readExcelXLSX(String excel, String fileType, int supplierId, String detailType) {
 		Map<String, Object> result = new HashMap<String, Object>();
 
@@ -426,7 +439,8 @@ public class DeviceRegistrationManagerImpl implements DeviceRegistrationManager 
 			if (!file.exists() || !file.isFile() || !file.canRead()) {
 				throw new IOException(excel.trim()); // jhkim trim 추가
 			}
-
+			String fileName = file.getName();
+			
 			// Workbook
 			XSSFWorkbook wb = new XSSFWorkbook(excel.trim()); // jhkim trim 추가
 
@@ -435,8 +449,11 @@ public class DeviceRegistrationManagerImpl implements DeviceRegistrationManager 
 
 			extractor.setFormulasNotResults(true);
 			extractor.setIncludeSheetNames(false);
-
-			result = makeExcelToObject(wb.getSheetAt(0), fileType, supplierId, detailType, "xlsx");
+			if("ModemAndMeterMapper_template.xlsx".equals(fileName)) {
+				result = insertBulkModemMeterforHaiti(excel, supplierId);
+			}else {
+				result = makeExcelToObject(wb.getSheetAt(0), fileType, supplierId, detailType, "xlsx");
+			}
 		} catch (IOException ie) {
 			logger.error(ie,ie);
 		} catch (Exception e) {
@@ -445,6 +462,129 @@ public class DeviceRegistrationManagerImpl implements DeviceRegistrationManager 
 
 		return result;
 	}
+	
+	private Map<String, Object> insertBulkModemMeterforHaiti(String excel, int supplierId) {
+		Map<String, Object> result = new HashMap<String, Object>();
+        List<List<Object>> errorList = new ArrayList<List<Object>>();
+
+//        Supplier supplier = supplierDao.get(supplierId);
+
+        logger.debug("excel file:" + excel);
+
+        // Workbook
+        XSSFWorkbook wb = null;
+        OPCPackage pkg = null;
+
+        try {
+            pkg = OPCPackage.open(excel.trim());
+            wb = new XSSFWorkbook(pkg);
+        } catch (FileNotFoundException e1) {
+            logger.error(e1, e1);
+        } catch (IOException e1) {
+            logger.error(e1, e1);
+        } catch (InvalidFormatException e) {
+            logger.error(e, e);
+        }
+
+        XSSFSheet sheet = wb.getSheetAt(0);
+
+        // Getting cell contents
+        List<Object> errs = null;
+        String ModemSerial = null;
+        String MeterSerial = null;
+
+        for (Row row : sheet) {
+            // header row skip
+            if (row.getRowNum() == 0) {
+                continue;
+            }
+
+            ModemSerial = getCellValue(row.getCell(0)).trim();
+            MeterSerial = getCellValue(row.getCell(1)).trim();
+
+            // 비어있는 cell 이 있으면 에러처리
+            if (ModemSerial.isEmpty() || MeterSerial.isEmpty()) {
+                errorList.add(getErrorRecord(ModemSerial, MeterSerial, "Please input all cells"));
+                continue;
+            }
+            
+            // ModemSerial 중복체크
+            MeterMapper chkModem = meterMapperDao.findByCondition("modemDeviceSerial", ModemSerial);
+            meterMapperDao.clear();
+
+            if (chkModem != null && chkModem.getId() != null) {
+                errorList.add(getErrorRecord(ModemSerial, MeterSerial, "There is a duplicate Modem : " + ModemSerial));
+                continue;
+            }
+            
+            // MeterSerial 중복체크
+            MeterMapper chkMeter = meterMapperDao.findByCondition("meterPrintedMdsId", MeterSerial);
+            meterMapperDao.clear();
+
+            if (chkMeter != null && chkMeter.getId() != null) {
+                errorList.add(getErrorRecord(ModemSerial, MeterSerial, "There is a duplicate Meter : " + MeterSerial));
+                continue;
+            }
+
+            // Add
+            String dateTime = null;
+            try {
+                dateTime = TimeUtil.getCurrentTime();
+            } catch (ParseException e) {
+                logger.error(e.getMessage(), e);
+            }
+
+            MeterMapper newMeter = new MeterMapper();
+            newMeter.setModemDeviceSerial(ModemSerial);
+            newMeter.setMeterPrintedMdsId(MeterSerial);
+        	meterMapperDao.add(newMeter);
+        	meterMapperDao.flushAndClear();
+            
+        } // for end : Row
+
+        if (errorList.size() <= 0) {
+            result.put("status", "success");
+        } else {
+            result.put("status", "failure");
+        }
+
+        result.put("errorList", errorList);
+        result.put("errorListSize", errorList.size());
+
+        // close OPCPackage
+        try {
+            if (pkg != null) {
+                pkg.close();
+            }
+        } catch (IOException e) {
+            logger.error(e, e);
+        }
+
+        // delete uploaded file
+        File file = new File(excel.trim());
+        file.delete();
+
+        return result;
+	}
+	
+	/**
+     * method name : getErrorRecord<b/>
+     * method Desc :
+     *
+     * @param customerNo
+     * @param customerName
+     * @param contractNumber
+     * @param mobileNo
+     * @param errMsg
+     * @return
+     */
+    private List<Object> getErrorRecord(String customerNo, String customerName, String errMsg) {
+        List<Object> errs = new ArrayList<Object>();
+        errs.add(customerNo);
+        errs.add(customerName);
+        errs.add(errMsg);
+        return errs;
+    }
 
 	public Map<String, Object> readShipmentExcelXLS(String excel, String fileType, int supplierId, String detailType) {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -470,6 +610,53 @@ public class DeviceRegistrationManagerImpl implements DeviceRegistrationManager 
 
 		return result;
 	}
+	
+	/**
+     * method name : getCellValue<b/>
+     * method Desc :
+     *
+     * @param cell
+     * @return
+     */
+    private String getCellValue(Cell cell) {
+    	if (cell == null) {
+    		return "";
+    	}
+
+        String value = null;
+
+        switch(cell.getCellType()) {
+            case Cell.CELL_TYPE_BLANK:
+                value = "";
+                break;
+            case Cell.CELL_TYPE_BOOLEAN:
+                value = Boolean.toString(cell.getBooleanCellValue());
+                break;
+            case Cell.CELL_TYPE_ERROR:
+                value = "";
+                break;
+            case Cell.CELL_TYPE_FORMULA:
+                value = cell.getCellFormula();
+                break;
+            case Cell.CELL_TYPE_NUMERIC:
+                if (DateUtil.isCellDateFormatted(cell)) {
+                    value = cell.getDateCellValue().toString();
+                } else {
+                    Long roundVal = Math.round(cell.getNumericCellValue());
+                    Double doubleVal = cell.getNumericCellValue();
+                    if (doubleVal.equals(roundVal.doubleValue())) {
+                        value = String.valueOf(roundVal);
+                    } else {
+                        value = String.valueOf(doubleVal);
+                    }
+                }
+                break;
+            case Cell.CELL_TYPE_STRING:
+                value = cell.getRichStringCellValue().getString();
+                break;
+        }
+        return value;
+    }
 
 	public Map<String, Object> readShipmentExcelXLSX(String excel, String fileType, int supplierId, String detailType) {
 		Map<String, Object> result = new HashMap<String, Object>();

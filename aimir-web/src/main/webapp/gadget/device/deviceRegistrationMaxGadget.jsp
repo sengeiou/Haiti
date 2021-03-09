@@ -909,6 +909,9 @@
             $('#templateSelectDiv').css('display', 'block');
             linkSrc = '${ctx}/temp/customer_template.xls';  //xlsx - xls
         }
+        else if( deviceType == "MeterMapper" ){
+        	linkSrc = '${ctx}/temp/ModemAndMeterMapper_template.xlsx';
+        }
         else {  //MCU
             setComboMCU('templateSelect');
             $('#templateSelectDiv').css('display', 'block');
@@ -977,8 +980,9 @@
             }else{
                 linkSrc = '${ctx}/temp/contract_template.xls';
             }
-        }
-        else{
+        }else if( type == "MeterMapper" ){
+        	linkSrc = '${ctx}/temp/ModemAndMeterMapper_template.xlsx';
+        }else{
             linkSrc = '${ctx}/temp/DCU_template.xls';   //xlsx - xls
         }                                                                       // jhkim end
 
@@ -2382,6 +2386,18 @@
                         function (result){
                                 deviceRenderGrid(result.resultList, result.headerList);
                         });
+            }else if ($('#batchRegSelect').val() == 'MeterMapper') {
+            	var detailType = $('#detailSelect').val();
+                var option = ModemTypeMap[detailType];
+    
+                $.getJSON('${ctx}/gadget/device/getDeviceBulkFile.do'
+                        ,{ filePath:$('#filepath').val(),
+                           fileType:$('#batchRegSelect').val(),
+                           supplierId:supplierId,
+                           detailType:$('#batchRegSelect').val()},
+                        function (result){
+                                deviceRenderGrid(result.resultList, result.headerList);
+                        });
             } else {
                 $.getJSON('${ctx}/gadget/device/getDeviceBulkFile.do'
                         ,{ filePath:$('#filepath').val(),
@@ -3059,6 +3075,7 @@
                                         <option value="Modem"><fmt:message key="aimir.modem"/></option>
                                         <option value="Meter"><fmt:message key="aimir.meter"/></option>
                                         <option value="Customer"><fmt:message key="aimir.customer"/></option>
+                                        <option value="MeterMapper">MeterMapper</option>
                                     </select>
                                 </td>
                                 <td colspan="3" id="templateSelectDiv" class="margin-t1px" style="display:none">
@@ -3080,6 +3097,7 @@
                                         <option value="Modem"><fmt:message key="aimir.modem"/></option>
                                         <option value="Meter"><fmt:message key="aimir.meter"/></option>
                                         <option value="Customer"><fmt:message key="aimir.customer"/></option>
+                                        <option value="MeterMapper">MeterMapper</option>
                                     </select>
                                 </td>
                                 <td id="detailSelectDiv" class="margin-t1px" style="display:none">

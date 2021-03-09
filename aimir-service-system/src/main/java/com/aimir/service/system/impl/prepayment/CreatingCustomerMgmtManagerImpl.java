@@ -259,8 +259,8 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             }*/
 
             // 비어있는 cell 이 있으면 에러처리
-            if (contractNumber.isEmpty() || contractDate.isEmpty() || tariffIndexID.isEmpty() || customerNo.isEmpty() || customerName.isEmpty() || meterNumber.isEmpty() || mobileNo.isEmpty()) {
-                errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, meterNumber, "Please input all cells"));
+            if (contractNumber.isEmpty() || contractDate.isEmpty() || tariffIndexID.isEmpty() || customerNo.isEmpty() || customerName.isEmpty() || mobileNo.isEmpty()) {
+                errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "Please input all cells"));
                 continue;
             }
             
@@ -274,7 +274,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             customerDao.clear();
 
             if (chkCustomer != null && chkCustomer.getId() != null) {
-                errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, meterNumber, "There is a duplicate Customer No : " + customerNo));
+                errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "There is a duplicate Customer No : " + customerNo));
                 continue;
             }
 
@@ -283,7 +283,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             contractDao.clear();
 
             if (chkContract != null && chkContract.getId() != null) {
-                errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, meterNumber, "There is a duplicate Contract Number : " + contractNumber));
+                errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "There is a duplicate Contract Number : " + contractNumber));
                 continue;
             }
             
@@ -291,7 +291,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             meterDao.clear();
             
             if (chkMeter != null && chkMeter.getId() != null) {
-                errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, meterNumber, "There is a duplicate Meter Number : " + meterNumber));
+                errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "There is a duplicate Meter Number : " + meterNumber));
                 continue;
             }
             
@@ -317,15 +317,17 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             
             DeviceModel model = deviceModelDao.findByCondition("name", "I210+");
             
-            Meter meter = new Meter();
-            meter.setMdsId(meterNumber);
-            meter.setSupplier(supplier);;
-            meter.setLocation(location);
-            meter.setModel(model);
-//            meter.setContract(newContract);
-            meter.setWriteDate(dateTime);
-            Meter newMeter = meterDao.add(meter);
-            meterDao.flushAndClear();
+            Meter newMeter = new Meter();
+            if (meterNumber != null) {
+            	Meter meter = new Meter();
+            	meter.setMdsId(meterNumber);
+            	meter.setSupplier(supplier);;
+            	meter.setLocation(location);
+            	meter.setModel(model);
+            	meter.setWriteDate(dateTime);
+            	newMeter = meterDao.add(meter);
+            	meterDao.flushAndClear();
+            }
             
             Contract contract = new Contract();
             contract.setContractNumber(contractNumber);
@@ -456,8 +458,8 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             }*/
 
             // 비어있는 cell 이 있으면 에러처리
-            if (contractNumber.isEmpty() || contractDate.isEmpty() || tariffIndexID.isEmpty() || customerNo.isEmpty() || customerName.isEmpty() || meterNumber.isEmpty() || mobileNo.isEmpty()) {
-                errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, meterNumber, "Please input all cells"));
+            if (contractNumber.isEmpty() || contractDate.isEmpty() || tariffIndexID.isEmpty() || customerNo.isEmpty() || customerName.isEmpty() || mobileNo.isEmpty()) {
+                errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "Please input all cells"));
                 continue;
             }
             
@@ -471,7 +473,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             customerDao.clear();
 
             if (chkCustomer != null && chkCustomer.getId() != null) {
-                errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, meterNumber, "There is a duplicate Customer No : " + customerNo));
+                errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "There is a duplicate Customer No : " + customerNo));
                 continue;
             }
 
@@ -480,7 +482,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             contractDao.clear();
 
             if (chkContract != null && chkContract.getId() != null) {
-                errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, meterNumber, "There is a duplicate Contract Number : " + contractNumber));
+                errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "There is a duplicate Contract Number : " + contractNumber));
                 continue;
             }
             
@@ -488,7 +490,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             meterDao.clear();
             
             if (chkMeter != null && chkMeter.getId() != null) {
-                errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, meterNumber, "There is a duplicate Meter Number : " + meterNumber));
+                errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "There is a duplicate Meter Number : " + meterNumber));
                 continue;
             }
             
@@ -514,15 +516,17 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
 
             DeviceModel model = deviceModelDao.findByCondition("name", "I210+");
             
-            Meter meter = new Meter();
-            meter.setMdsId(meterNumber);
-            meter.setSupplier(supplier);;
-            meter.setLocation(location);
-            meter.setModel(model);
-//            meter.setContract(newContract);
-            meter.setWriteDate(dateTime);
-            Meter newMeter = meterDao.add(meter);
-            meterDao.flushAndClear();
+            Meter newMeter = new Meter();
+            if (meterNumber != null) {
+            	Meter meter = new Meter();
+            	meter.setMdsId(meterNumber);
+            	meter.setSupplier(supplier);;
+            	meter.setLocation(location);
+            	meter.setModel(model);
+            	meter.setWriteDate(dateTime);
+            	newMeter = meterDao.add(meter);
+            	meterDao.flushAndClear();
+            }
             
             Contract contract = new Contract();
             contract.setContractNumber(contractNumber);
@@ -653,7 +657,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
      * @param errMsg
      * @return
      */
-    private List<Object> getErrorRecord(String customerNo, String customerName, String contractNumber, String mobileNo, String meterNumber, String errMsg) {
+    private List<Object> getErrorRecord(String customerNo, String customerName, String contractNumber, String mobileNo, String errMsg) {
         List<Object> errs = new ArrayList<Object>();
         errs.add(customerNo);
         errs.add(customerName);
