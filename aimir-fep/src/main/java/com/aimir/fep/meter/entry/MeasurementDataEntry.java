@@ -1022,6 +1022,16 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
                 // return null;
             }
         } else {
+        	Integer updateCnt = meterMapperDao.updateMappingMeterId(modem.getDeviceSerial(), meter.getMdsId());
+        	log.info("updateCnt : " + updateCnt +", meterId : " + meter.getMdsId() +", modem seiral : " + modem.getDeviceSerial());
+        	if(updateCnt != null && updateCnt > 0) {
+            	MeterMapper mapper = meterMapperDao.getPrintedMeterIdByObisMeterId(modem.getDeviceSerial(), meter.getMdsId());
+            	if(mapper != null) {                    	
+            		log.info("mapper modem serial : " + modem.getDeviceSerial() +", obis meterId : " + meter.getMdsId() +", printed meterId : " + mapper.getMeterPrintedMdsId());
+            		meter.setGs1(mapper.getMeterPrintedMdsId());
+            	}
+            }
+        	        	
         	if(meter.getModel() == null || meter.getModel().getName().equals("")){
             	List<DeviceModel> models = deviceModelDao.getDeviceModelByName(modem.getSupplier().getId(), "METER-DUMMY");  
             	if (models.size() == 1) {
