@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.Query;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 
 import com.aimir.dao.AbstractJpaDao;
@@ -16,6 +18,8 @@ import com.aimir.util.Condition;
 @Repository(value = "meterMapperDao")
 public class MeterMapperDaoimpl extends AbstractJpaDao<MeterMapper, Integer> implements MeterMapperDao {
 
+	private static Log log = LogFactory.getLog(MeterMapperDaoimpl.class);
+	
 	public MeterMapperDaoimpl() {
 		super(MeterMapper.class);
 	}
@@ -67,6 +71,8 @@ public class MeterMapperDaoimpl extends AbstractJpaDao<MeterMapper, Integer> imp
 	@Override
 	public Integer updateMappingMeterId(String modemDeviceSerial, String obisMeterId) {
 		StringBuilder sbQuery = new StringBuilder();
+		
+		log.debug("modemDeviceSerial : " +  modemDeviceSerial+", obisMeterId : " + obisMeterId);
 		
 		if(modemDeviceSerial == null || obisMeterId == null) 
 			return null;
