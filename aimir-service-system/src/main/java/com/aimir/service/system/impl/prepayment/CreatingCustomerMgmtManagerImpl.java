@@ -5,8 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -370,7 +372,9 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
      */
     @Transactional(readOnly=false)
     public Map<String, Object> saveBulkCreatingCustomerByExcelXLSX(String excel, Integer supplierId) {
-
+    	Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+    	Date date = new Date();
+    	
         Map<String, Object> result = new HashMap<String, Object>();
         List<List<Object>> errorList = new ArrayList<List<Object>>();
 
@@ -383,6 +387,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
         }
 
         logger.debug("excel file:" + excel);
+        logger.debug("excel finished:" + new Timestamp(date.getTime()));
 
         // Workbook
         XSSFWorkbook wb = null;
@@ -400,6 +405,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
         }
 
         XSSFSheet sheet = wb.getSheetAt(0);
+        logger.debug("sheet finished : " + new Timestamp(date.getTime()) );
 
         // Getting cell contents
         List<Object> errs = null;
@@ -418,7 +424,8 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
         TariffType tariffType = null;
         Code serviceTypeCode = null;
         Code creditTypeCode = null;
-
+        
+        logger.debug("sheet insert for started : " + new Timestamp(date.getTime()) );
         for (Row row : sheet) {
             // header row skip
             if (row.getRowNum() == 0) {
@@ -450,7 +457,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             meterNumber = "".equals(getCellValue(row.getCell(9)).trim()) ? null : getCellValue(row.getCell(9)).trim();
             oldArrears = getCellValue(row.getCell(10)).trim() == "" ? null : Double.parseDouble(getCellValue(row.getCell(10)).trim());            
             serviceTypeCode = codeDao.getCodeIdByCodeObject(MeterType.EnergyMeter.getServiceType());
-            
+            logger.debug("serviceTypeCode finished : " + new Timestamp(date.getTime()) );
             /*if("PREPAYMENT".equals(getCellValue(row.getCell(6)).trim())) {
             	creditTypeCode = codeDao.getCodeIdByCodeObject(Code.PREPAYMENT);
             }else if("POSTPAY".equals(getCellValue(row.getCell(6)).trim())) {
@@ -471,7 +478,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             // customerNo 중복체크
             Customer chkCustomer = customerDao.findByCondition("customerNo", customerNo);
             customerDao.clear();
-
+            logger.debug("chkCustomer finished : " + new Timestamp(date.getTime()) );
             if (chkCustomer != null && chkCustomer.getId() != null) {
                 errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "There is a duplicate Customer No : " + customerNo));
                 continue;
@@ -480,7 +487,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             // contractNumber 중복체크
             Contract chkContract = contractDao.findByCondition("contractNumber", contractNumber);
             contractDao.clear();
-
+            logger.debug("chkContract finished : " + new Timestamp(date.getTime()) );
             if (chkContract != null && chkContract.getId() != null) {
                 errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "There is a duplicate Contract Number : " + contractNumber));
                 continue;
@@ -488,7 +495,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             
             Meter chkMeter = meterDao.findByCondition("mdsId", meterNumber);
             meterDao.clear();
-            
+            logger.debug("chkMeter finished : " + new Timestamp(date.getTime()) );
             if (chkMeter != null && chkMeter.getId() != null) {
                 errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "There is a duplicate Meter Number : " + meterNumber));
                 continue;
@@ -513,7 +520,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             customer.setSupplier(supplier);
             Customer newCustomer = customerDao.add(customer);
             customerDao.flushAndClear();
-
+            logger.debug("customerDao.add finished : " + new Timestamp(date.getTime()) );
             DeviceModel model = deviceModelDao.findByCondition("name", "I210+");
             
             Meter newMeter = new Meter();
@@ -543,7 +550,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             }
             contractDao.add(contract);
             contractDao.flushAndClear();
-            
+            logger.debug("contractDao.add finished : " + new Timestamp(date.getTime()) );
         } // for end : Row
 
         if (errorList.size() <= 0) {
