@@ -1054,7 +1054,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
 		
 		if(vendor != null && !vendor.isEmpty() && propertyVendor.contains(vendor)) {
 			List<DeviceModel> models = deviceModelDao.getDeviceModelByName(supplier.getId(), defaultModel);
-			if (models.size() > 1) {
+			if (models.size() > 0) {
 				log.debug("METER["+meterId+"] SET MODEL["+models.get(0).getName()+"]");
 				return models.get(0);
 			}

@@ -519,7 +519,9 @@ public class DeviceRegistrationController {
 			@RequestParam("fileType") String fileType, @RequestParam("detailType") String detailType,
 			@RequestParam("supplierId") int supplierId) {
 
+		Map<String, Object> result = null;
 		String resultMsg = null;
+		
 		try {
 			File file = new File(filePath.trim());
 
@@ -527,7 +529,6 @@ public class DeviceRegistrationController {
 				throw new IOException(filePath);
 			}
 
-			Map<String, Object> result = null;
 
 			if (!"".equals(StringUtils.defaultIfEmpty(filePath, ""))) {
 				String ext = filePath.substring(filePath.lastIndexOf(".") + 1).trim();
@@ -539,36 +540,20 @@ public class DeviceRegistrationController {
 			}
 
 			if (result != null) {
-				// int cnt = 0;
-				// resultList = (List<Object>)result.get("file");
-				// headerList = (List<Object>)result.get("header");
-				// index = (List<String>)result.get("index");
-				// resultMsg = result.get("resultMsg").toString();
-				// Map<String, Object> resultMap = null;
-				//
-				// for (Object obj : (List<Object>)result.get("device")) {
-				// if (obj != null)
-				// resultMap = (Map<String, Object>)resultList.get(cnt++);
-				// if (deviceRegistrationManager.insertDevice(obj, fileType,
-				// detailType) != null) {
-				// resultMap.put("Status", "Success");
-				// } else {
-				// resultMap.put("Status", "Failure");
-				// }
-				// }
-
+				
 				resultMsg = result.get("resultMsg").toString();
-				// Map<String, Object> resultMap = null;
-
-				// for (Object obj : (List<Object>)result.get("updateDevice")) {
-				// deviceRegistrationManager.updateDevice(obj, fileType,
-				// detailType);
-				//// deviceRegistrationManager.insertDevice(obj, fileType,
-				// detailType);
-				// }
-				deviceRegistrationManager.updateDevice((List<Object>) result.get("updateDevice"), fileType, detailType);
-
-				for (Object obj : (List<Object>) result.get("device")) {
+				
+				if(result.get("errorList") != null) {
+					
+				}else {
+					// int cnt = 0;
+					// resultList = (List<Object>)result.get("file");
+					// headerList = (List<Object>)result.get("header");
+					// index = (List<String>)result.get("index");
+					// resultMsg = result.get("resultMsg").toString();
+					// Map<String, Object> resultMap = null;
+					//
+					// for (Object obj : (List<Object>)result.get("device")) {
 					// if (obj != null)
 					// resultMap = (Map<String, Object>)resultList.get(cnt++);
 					// if (deviceRegistrationManager.insertDevice(obj, fileType,
@@ -577,11 +562,34 @@ public class DeviceRegistrationController {
 					// } else {
 					// resultMap.put("Status", "Failure");
 					// }
-					deviceRegistrationManager.insertDevice(obj, fileType, detailType);
+					// }
+					
+//					resultMsg = result.get("resultMsg").toString();
+					// Map<String, Object> resultMap = null;
+					
+					// for (Object obj : (List<Object>)result.get("updateDevice")) {
+					// deviceRegistrationManager.updateDevice(obj, fileType,
+					// detailType);
+					//// deviceRegistrationManager.insertDevice(obj, fileType,
+					// detailType);
+					// }
+					deviceRegistrationManager.updateDevice((List<Object>) result.get("updateDevice"), fileType, detailType);
+					
+					for (Object obj : (List<Object>) result.get("device")) {
+						// if (obj != null)
+						// resultMap = (Map<String, Object>)resultList.get(cnt++);
+						// if (deviceRegistrationManager.insertDevice(obj, fileType,
+						// detailType) != null) {
+						// resultMap.put("Status", "Success");
+						// } else {
+						// resultMap.put("Status", "Failure");
+						// }
+						deviceRegistrationManager.insertDevice(obj, fileType, detailType);
+					}
+					
+					// File Copy & Temp File Delete
+					FileUploadHelper.removeExistingFile(filePath);
 				}
-
-				// File Copy & Temp File Delete
-				FileUploadHelper.removeExistingFile(filePath);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -608,6 +616,8 @@ public class DeviceRegistrationController {
 		// mav.addObject("headerList", headerList);
 		// mav.addObject("index", index);
 		mav.addObject("resultMsg", resultMsg);
+		mav.addObject("errorList", result.get("errorList"));
+        mav.addObject("errorListSize", result.get("errorListSize"));
 		return mav;
 	}
 

@@ -509,7 +509,7 @@ public class DeviceRegistrationManagerImpl implements DeviceRegistrationManager 
             }
             
             // ModemSerial 중복체크
-            MeterMapper chkModem = meterMapperDao.findByCondition("modemDeviceSerial", ModemSerial);
+            /*MeterMapper chkModem = meterMapperDao.findByCondition("modemDeviceSerial", ModemSerial);
             meterMapperDao.clear();
 
             if (chkModem != null && chkModem.getId() != null) {
@@ -524,28 +524,28 @@ public class DeviceRegistrationManagerImpl implements DeviceRegistrationManager 
             if (chkMeter != null && chkMeter.getId() != null) {
                 errorList.add(getErrorRecord(ModemSerial, MeterSerial, "There is a duplicate Meter : " + MeterSerial));
                 continue;
-            }
+            }*/
 
             // Add
-            String dateTime = null;
-            try {
-                dateTime = TimeUtil.getCurrentTime();
-            } catch (ParseException e) {
-                logger.error(e.getMessage(), e);
-            }
-
-            MeterMapper newMeter = new MeterMapper();
-            newMeter.setModemDeviceSerial(ModemSerial);
-            newMeter.setMeterPrintedMdsId(MeterSerial);
-        	meterMapperDao.add(newMeter);
-        	meterMapperDao.flushAndClear();
+        	try {
+        		MeterMapper newMeter = new MeterMapper();
+        		newMeter.setModemDeviceSerial(ModemSerial);
+        		newMeter.setMeterPrintedMdsId(MeterSerial);
+        		meterMapperDao.merge(newMeter);
+        		meterMapperDao.flushAndClear();
+    			
+    		} catch (Exception e) {
+    			logger.error(e.getMessage(), e);
+//    			errorList.add(getErrorRecord(ModemSerial, MeterSerial, "There is a duplicate Modem : " + ModemSerial + " Meter : " + MeterSerial));
+    			continue;
+    		}
             
         } // for end : Row
 
         if (errorList.size() <= 0) {
-            result.put("status", "success");
+            result.put("resultMsg", "success");
         } else {
-            result.put("status", "failure");
+            result.put("resultMsg", "failure");
         }
 
         result.put("errorList", errorList);
@@ -578,10 +578,10 @@ public class DeviceRegistrationManagerImpl implements DeviceRegistrationManager 
      * @param errMsg
      * @return
      */
-    private List<Object> getErrorRecord(String customerNo, String customerName, String errMsg) {
+    private List<Object> getErrorRecord(String ModemSerial, String MeterSerial, String errMsg) {
         List<Object> errs = new ArrayList<Object>();
-        errs.add(customerNo);
-        errs.add(customerName);
+        errs.add(ModemSerial);
+        errs.add(MeterSerial);
         errs.add(errMsg);
         return errs;
     }

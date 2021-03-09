@@ -447,8 +447,8 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             userAddress2 = getCellValue(row.getCell(6)).trim();
             userAddress3 = getCellValue(row.getCell(7)).trim();
             mobileNo = getCellValue(row.getCell(8)).trim();
-            meterNumber = getCellValue(row.getCell(9)).trim();
-            oldArrears = Double.parseDouble(getCellValue(row.getCell(10)).trim());            
+            meterNumber = "".equals(getCellValue(row.getCell(9)).trim()) ? null : getCellValue(row.getCell(9)).trim();
+            oldArrears = getCellValue(row.getCell(10)).trim() == "" ? null : Double.parseDouble(getCellValue(row.getCell(10)).trim());            
             serviceTypeCode = codeDao.getCodeIdByCodeObject(MeterType.EnergyMeter.getServiceType());
             
             /*if("PREPAYMENT".equals(getCellValue(row.getCell(6)).trim())) {
@@ -517,7 +517,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             DeviceModel model = deviceModelDao.findByCondition("name", "I210+");
             
             Meter newMeter = new Meter();
-            if (meterNumber != null) {
+            if (meterNumber != null && !"".equals(meterNumber)) {
             	Meter meter = new Meter();
             	meter.setMdsId(meterNumber);
             	meter.setSupplier(supplier);;
@@ -538,7 +538,9 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             contract.setCustomer(newCustomer);
             contract.setTariffIndex(tariffType);
             contract.setOldArrears(oldArrears);
-            contract.setMeter(newMeter);
+            if (meterNumber != null && !"".equals(meterNumber)) {
+            	contract.setMeter(newMeter);
+            }
             contractDao.add(contract);
             contractDao.flushAndClear();
             
