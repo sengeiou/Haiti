@@ -953,11 +953,10 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
                             }
                         }
                     } else {
-                    	List<DeviceModel> models = deviceModelDao.getDeviceModelByName(modem.getSupplier().getId(), "METER-DUMMY");  
-                    	if (models.size() == 1) {
-                    		meter.setModel(models.get(0));
+                    	DeviceModel defaultModel = getDefaultModel(modem.getSupplier(), meter.getMdsId(), "meter", getVendor().getName());
+                    	if(defaultModel != null) {
+                    		meter.setModel(defaultModel);
                     	}
-                        log.debug("METER["+meter.getMdsId()+"] SET MODEL["+models.get(0).getName()+"]");
                     }
                     
                     if (meter.getModel() != null 
@@ -969,7 +968,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
                         throw new Exception("Meter serial[" + meter.getMdsId() + "] is wrong");
                     }
                 }
-            }
+            } 
             
             /*meter.setModel(deviceModelDao.getDeviceModelByCode(
                     modem.getSupplier().getId(),
@@ -1031,18 +1030,44 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
             		meter.setGs1(mapper.getMeterPrintedMdsId());
             	}
             }
-        	        	
-        	if(meter.getModel() == null || meter.getModel().getName().equals("")){
-            	List<DeviceModel> models = deviceModelDao.getDeviceModelByName(modem.getSupplier().getId(), "METER-DUMMY");  
-            	if (models.size() == 1) {
-            		meter.setModel(models.get(0));
+        	 
+        	if(meter.getModel() == null || meter.getModel().getName().equals("")) {
+        		DeviceModel defaultModel = getDefaultModel(modem.getSupplier(), meter.getMdsId(), "meter", getVendor().getName());
+            	if(defaultModel != null) {
+            		meter.setModel(defaultModel);
             	}
-                log.debug("METER["+meter.getMdsId()+"] SET MODEL["+models.get(0).getName()+"]");
         	}
         }
 
         return meter;
     }
+	
+	/*
+	 * deviceType value : dcu, modem, meter
+	 */
+	private DeviceModel getDefaultModel(Supplier supplier, String meterId, String deviceType, String vendor) {
+		String propertyVendor = FMPProperty.getProperty("vendor");
+		
+		String propStr = "install." + deviceType.toLowerCase() +"." + vendor.toLowerCase() + ".model.name";
+		String defaultModel = FMPProperty.getProperty(propStr);
+		
+		if(propertyVendor == null || vendor == null || vendor.isEmpty() || propertyVendor.contains(vendor)) {
+			List<DeviceModel> models = deviceModelDao.getDeviceModelByName(supplier.getId(), defaultModel);
+			if (models.size() > 1) {
+				log.debug("METER["+meterId+"] SET MODEL["+models.get(0).getName()+"]");
+				return models.get(0);
+			}
+		} else {
+			List<DeviceModel> dummyModels = deviceModelDao.getDeviceModelByName(supplier.getId(), "METER-DUMMY");
+        	if (dummyModels.size() > 0) { 
+        		log.debug("METER["+meterId+"] SET MODEL["+dummyModels.get(0).getName()+"]");
+        		return dummyModels.get(0);
+        	}
+		}
+		
+		log.debug("METER["+meterId+"] SET MODEL NULL");
+		return null;
+	}
     
     private DeviceModel makeDefaultModel() {
         DeviceModel dm = new DeviceModel();
