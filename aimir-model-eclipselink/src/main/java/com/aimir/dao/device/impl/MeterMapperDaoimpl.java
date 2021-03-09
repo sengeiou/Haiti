@@ -8,6 +8,8 @@ import javax.persistence.Query;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.aimir.dao.AbstractJpaDao;
 import com.aimir.dao.device.MeterMapperDao;
@@ -57,6 +59,7 @@ public class MeterMapperDaoimpl extends AbstractJpaDao<MeterMapper, Integer> imp
 	}
 	
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Integer updateMappingMeterId(String modemDeviceSerial, String obisMeterId) {
 		StringBuilder sbQuery = new StringBuilder();
 		
