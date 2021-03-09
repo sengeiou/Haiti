@@ -433,7 +433,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             }
 
             // cell 개수가 안맞을 경우
-            if (row.getLastCellNum() < 10) {
+            /*if (row.getLastCellNum() < 11) {
                 Iterator<Cell> itrCell = row.cellIterator();
                 errs = new ArrayList<Object>();
                 while(itrCell.hasNext()) {
@@ -442,7 +442,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 errs.add("Please input all cells");
                 errorList.add(errs);
                 continue;
-            }
+            }*/
 
             contractNumber = getCellValue(row.getCell(0)).trim();
             contractDate = getCellValue(row.getCell(1)).trim();
