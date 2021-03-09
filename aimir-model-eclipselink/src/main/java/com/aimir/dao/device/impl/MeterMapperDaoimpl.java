@@ -31,18 +31,12 @@ public class MeterMapperDaoimpl extends AbstractJpaDao<MeterMapper, Integer> imp
 		sbQuery.append("select * from meter_mapper where 1=1");
 		
 		if(modemDeviceSerial != null && !modemDeviceSerial.isEmpty())
-			sbQuery.append("\n modem_device_serial = :modemDeviceSerial");
+			sbQuery.append("\n modem_device_serial = '").append(modemDeviceSerial).append("'");
 		
 		if(printedMeterId != null && !printedMeterId.isEmpty())
-			sbQuery.append("\n meter_printed_mdsId = :printedMeterId");
+			sbQuery.append("\n meter_printed_mdsId = '").append(printedMeterId).append("'");
 				
 		Query query = em.createNativeQuery(sbQuery.toString(), MeterMapper.class);
-		if(modemDeviceSerial != null && !modemDeviceSerial.isEmpty())
-			query.setParameter("modemDeviceSerial", modemDeviceSerial);
-		
-		if(printedMeterId != null && !printedMeterId.isEmpty())
-			query.setParameter("modem_device_serial", printedMeterId);
-		
 		return (MeterMapper)query.getSingleResult();
 	}
 
@@ -53,18 +47,12 @@ public class MeterMapperDaoimpl extends AbstractJpaDao<MeterMapper, Integer> imp
 		sbQuery.append("select * from meter_mapper where 1=1");
 		
 		if(modemDeviceSerial != null && !modemDeviceSerial.isEmpty())
-			sbQuery.append("\n modem_device_serial = :modemDeviceSerial");
+			sbQuery.append("\n modem_device_serial = '").append(modemDeviceSerial).append("'");
 		
 		if(obisMeterId != null && !obisMeterId.isEmpty())
-			sbQuery.append("\n meter_obis_mdsId = :obisMeterId");
+			sbQuery.append("\n meter_obis_mdsId = '").append(obisMeterId).append("'");
 		
 		Query query = em.createNativeQuery(sbQuery.toString(), MeterMapper.class);
-		if(modemDeviceSerial != null && !modemDeviceSerial.isEmpty())
-			query.setParameter("modemDeviceSerial", modemDeviceSerial);
-		
-		if(obisMeterId != null && !obisMeterId.isEmpty())
-			query.setParameter("obisMeterId", obisMeterId);
-		
 		return (MeterMapper)query.getSingleResult();
 	}
 	
