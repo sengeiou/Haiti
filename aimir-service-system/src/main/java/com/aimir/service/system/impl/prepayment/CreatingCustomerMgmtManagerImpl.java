@@ -387,7 +387,6 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
         }
 
         logger.debug("excel file:" + excel);
-        logger.debug("excel finished:" + new Timestamp(date.getTime()));
 
         // Workbook
         XSSFWorkbook wb = null;
@@ -405,7 +404,6 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
         }
 
         XSSFSheet sheet = wb.getSheetAt(0);
-        logger.debug("sheet finished : " + new Timestamp(date.getTime()) );
 
         // Getting cell contents
         List<Object> errs = null;
@@ -425,133 +423,135 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
         Code serviceTypeCode = null;
         Code creditTypeCode = null;
         
-        logger.debug("sheet insert for started : " + new Timestamp(date.getTime()) );
-        for (Row row : sheet) {
-            // header row skip
-            if (row.getRowNum() == 0) {
-                continue;
-            }
-
-            // cell 개수가 안맞을 경우
-            /*if (row.getLastCellNum() < 11) {
-                Iterator<Cell> itrCell = row.cellIterator();
-                errs = new ArrayList<Object>();
-                while(itrCell.hasNext()) {
-                    errs.add(getCellValue(itrCell.next()));
+        try {
+        	for (Row row : sheet) {
+                // header row skip
+                if (row.getRowNum() == 0) {
+                    continue;
                 }
-                errs.add("Please input all cells");
-                errorList.add(errs);
-                continue;
-            }*/
 
-            contractNumber = getCellValue(row.getCell(0)).trim();
-            contractDate = getCellValue(row.getCell(1)).trim();
-            tariffIndexID = getCellValue(row.getCell(2)).trim();
-            tariffType = tariffTypeDao.findByCondition("name", getCellValue(row.getCell(2)).trim());
-            customerNo = getCellValue(row.getCell(3)).trim();
-            customerName = getCellValue(row.getCell(4)).trim();
-            userAddress1 = getCellValue(row.getCell(5)).trim();
-            userAddress2 = getCellValue(row.getCell(6)).trim();
-            userAddress3 = getCellValue(row.getCell(7)).trim();
-            mobileNo = getCellValue(row.getCell(8)).trim();
-            meterNumber = "".equals(getCellValue(row.getCell(9)).trim()) ? null : getCellValue(row.getCell(9)).trim();
-            oldArrears = getCellValue(row.getCell(10)).trim() == "" ? null : Double.parseDouble(getCellValue(row.getCell(10)).trim());            
-            serviceTypeCode = codeDao.getCodeIdByCodeObject(MeterType.EnergyMeter.getServiceType());
-            logger.debug("serviceTypeCode finished : " + new Timestamp(date.getTime()) );
-            /*if("PREPAYMENT".equals(getCellValue(row.getCell(6)).trim())) {
-            	creditTypeCode = codeDao.getCodeIdByCodeObject(Code.PREPAYMENT);
-            }else if("POSTPAY".equals(getCellValue(row.getCell(6)).trim())) {
-            	creditTypeCode = codeDao.getCodeIdByCodeObject(Code.POSTPAY);
-            }*/
+                // cell 개수가 안맞을 경우
+                /*if (row.getLastCellNum() < 11) {
+                    Iterator<Cell> itrCell = row.cellIterator();
+                    errs = new ArrayList<Object>();
+                    while(itrCell.hasNext()) {
+                        errs.add(getCellValue(itrCell.next()));
+                    }
+                    errs.add("Please input all cells");
+                    errorList.add(errs);
+                    continue;
+                }*/
 
-            // 비어있는 cell 이 있으면 에러처리
-            if (contractNumber.isEmpty() || contractDate.isEmpty() || tariffIndexID.isEmpty() || customerNo.isEmpty() || customerName.isEmpty() || mobileNo.isEmpty()) {
-                errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "Please input all cells"));
-                continue;
-            }
-            
-            // contractNumber 값이 sample이면 skip
-            if ("sample".equals(contractNumber)) {
-                continue;
-            }
+                contractNumber = getCellValue(row.getCell(0)).trim();
+                contractDate = getCellValue(row.getCell(1)).trim();
+                tariffIndexID = getCellValue(row.getCell(2)).trim();
+                tariffType = tariffTypeDao.findByCondition("name", getCellValue(row.getCell(2)).trim());
+                customerNo = getCellValue(row.getCell(3)).trim();
+                customerName = getCellValue(row.getCell(4)).trim();
+                userAddress1 = getCellValue(row.getCell(5)).trim();
+                userAddress2 = getCellValue(row.getCell(6)).trim();
+                userAddress3 = getCellValue(row.getCell(7)).trim();
+                mobileNo = getCellValue(row.getCell(8)).trim();
+                meterNumber = "".equals(getCellValue(row.getCell(9)).trim()) ? null : getCellValue(row.getCell(9)).trim();
+                oldArrears = getCellValue(row.getCell(10)).trim() == "" ? null : Double.parseDouble(getCellValue(row.getCell(10)).trim());            
+                serviceTypeCode = codeDao.getCodeIdByCodeObject(MeterType.EnergyMeter.getServiceType());
+                /*if("PREPAYMENT".equals(getCellValue(row.getCell(6)).trim())) {
+                	creditTypeCode = codeDao.getCodeIdByCodeObject(Code.PREPAYMENT);
+                }else if("POSTPAY".equals(getCellValue(row.getCell(6)).trim())) {
+                	creditTypeCode = codeDao.getCodeIdByCodeObject(Code.POSTPAY);
+                }*/
 
-            // customerNo 중복체크
-            Customer chkCustomer = customerDao.findByCondition("customerNo", customerNo);
-            customerDao.clear();
-            logger.debug("chkCustomer finished : " + new Timestamp(date.getTime()) );
-            if (chkCustomer != null && chkCustomer.getId() != null) {
-                errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "There is a duplicate Customer No : " + customerNo));
-                continue;
-            }
+                // 비어있는 cell 이 있으면 에러처리
+                if (contractNumber.isEmpty() || contractDate.isEmpty() || tariffIndexID.isEmpty() || customerNo.isEmpty() || customerName.isEmpty() || mobileNo.isEmpty()) {
+                	errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "Please input all cells"));
+                    continue;
+                }
+                
+                // contractNumber 값이 sample이면 skip
+                if ("sample".equals(contractNumber)) {
+                	continue;
+                }
 
-            // contractNumber 중복체크
-            Contract chkContract = contractDao.findByCondition("contractNumber", contractNumber);
-            contractDao.clear();
-            logger.debug("chkContract finished : " + new Timestamp(date.getTime()) );
-            if (chkContract != null && chkContract.getId() != null) {
-                errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "There is a duplicate Contract Number : " + contractNumber));
-                continue;
-            }
-            
-            Meter chkMeter = meterDao.findByCondition("mdsId", meterNumber);
-            meterDao.clear();
-            logger.debug("chkMeter finished : " + new Timestamp(date.getTime()) );
-            if (chkMeter != null && chkMeter.getId() != null) {
-                errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "There is a duplicate Meter Number : " + meterNumber));
-                continue;
-            }
-            
-            // Add
-            String dateTime = null;
-            try {
-                dateTime = TimeUtil.getCurrentTime();
-            } catch (ParseException e) {
-                logger.error(e.getMessage(), e);
-            }
+                // customerNo 중복체크
+                Customer chkCustomer = customerDao.findByCondition("customerNo", customerNo);
+                customerDao.clear();
+                if (chkCustomer != null && chkCustomer.getId() != null) {
+                    errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "There is a duplicate Customer No : " + customerNo));
+                    continue;
+                }
 
-            Customer customer = new Customer();
-            customer.setCustomerNo(customerNo);
-            customer.setName(customerName);
-            customer.setAddress1(userAddress1);
-            customer.setAddress2(userAddress2);
-            customer.setAddress3(userAddress3);
-            customer.setMobileNo(mobileNo);
-            customer.setSmsYn(1);
-            customer.setSupplier(supplier);
-            Customer newCustomer = customerDao.add(customer);
-            customerDao.flushAndClear();
-            logger.debug("customerDao.add finished : " + new Timestamp(date.getTime()) );
-            DeviceModel model = deviceModelDao.findByCondition("name", "I210+");
-            
-            Meter newMeter = new Meter();
-            if (meterNumber != null && !"".equals(meterNumber)) {
-            	Meter meter = new Meter();
-            	meter.setMdsId(meterNumber);
-            	meter.setSupplier(supplier);;
-            	meter.setLocation(location);
-            	meter.setModel(model);
-            	meter.setWriteDate(dateTime);
-            	newMeter = meterDao.add(meter);
-            	meterDao.flushAndClear();
-            }
-            
-            Contract contract = new Contract();
-            contract.setContractNumber(contractNumber);
-            contract.setLocation(location);
-            contract.setServiceTypeCode(serviceTypeCode);   // Energy
-            contract.setCreditType(creditTypeCode);         // prepay
-            contract.setContractDate(contractDate);
-            contract.setSupplier(supplier);
-            contract.setCustomer(newCustomer);
-            contract.setTariffIndex(tariffType);
-            contract.setOldArrears(oldArrears);
-            if (meterNumber != null && !"".equals(meterNumber)) {
-            	contract.setMeter(newMeter);
-            }
-            contractDao.add(contract);
-            contractDao.flushAndClear();
-            logger.debug("contractDao.add finished : " + new Timestamp(date.getTime()) );
-        } // for end : Row
+                // contractNumber 중복체크
+                Contract chkContract = contractDao.findByCondition("contractNumber", contractNumber);
+                contractDao.clear();
+                if (chkContract != null && chkContract.getId() != null) {
+                    errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "There is a duplicate Contract Number : " + contractNumber));
+                    continue;
+                }
+                
+                Meter chkMeter = meterDao.findByCondition("mdsId", meterNumber);
+                meterDao.clear();
+                if (chkMeter != null && chkMeter.getId() != null) {
+                    errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "There is a duplicate Meter Number : " + meterNumber));
+                    continue;
+                }
+                
+                // Add
+                String dateTime = null;
+                try {
+                    dateTime = TimeUtil.getCurrentTime();
+                } catch (ParseException e) {
+                    logger.error(e.getMessage(), e);
+                }
+
+                Customer customer = new Customer();
+                customer.setCustomerNo(customerNo);
+                customer.setName(customerName);
+                customer.setAddress1(userAddress1);
+                customer.setAddress2(userAddress2);
+                customer.setAddress3(userAddress3);
+                customer.setMobileNo(mobileNo);
+                customer.setSmsYn(1);
+                customer.setSupplier(supplier);
+                Customer newCustomer = customerDao.add(customer);
+                customerDao.flushAndClear();
+                logger.debug("customerDao.add finished : " + new Timestamp(date.getTime()) );
+                
+                DeviceModel model = deviceModelDao.findByCondition("name", "I210+");
+                
+                Meter newMeter = new Meter();
+                if (meterNumber != null && !"".equals(meterNumber)) {
+                	Meter meter = new Meter();
+                	meter.setMdsId(meterNumber);
+                	meter.setSupplier(supplier);;
+                	meter.setLocation(location);
+                	meter.setModel(model);
+                	meter.setWriteDate(dateTime);
+                	newMeter = meterDao.add(meter);
+                	meterDao.flushAndClear();
+                }
+                
+                Contract contract = new Contract();
+                contract.setContractNumber(contractNumber);
+                contract.setLocation(location);
+                contract.setServiceTypeCode(serviceTypeCode);   // Energy
+                contract.setCreditType(creditTypeCode);         // prepay
+                contract.setContractDate(contractDate);
+                contract.setSupplier(supplier);
+                contract.setCustomer(newCustomer);
+                contract.setTariffIndex(tariffType);
+                contract.setOldArrears(oldArrears);
+                if (meterNumber != null && !"".equals(meterNumber)) {
+                	contract.setMeter(newMeter);
+                }
+                contractDao.add(contract);
+                contractDao.flushAndClear();
+                logger.debug("contractDao.add finished : " + new Timestamp(date.getTime()) );
+            } // for end : Row
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("for try catch error : " + new Timestamp(date.getTime()) );
+		}
+        
 
         if (errorList.size() <= 0) {
             result.put("status", "success");
