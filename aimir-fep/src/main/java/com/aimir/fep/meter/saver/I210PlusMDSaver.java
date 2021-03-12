@@ -73,7 +73,7 @@ public class I210PlusMDSaver extends AbstractMDSaver {
 			meteringDataEM.setMeter(meter);
 			meteringDataEM.setModem(meter.getModem());
 			meteringDataEM.setSupplier(meter.getSupplier());
-			meteringDataDao.saveOrUpdate(meteringDataEM);
+			meteringDataDao.merge(meteringDataEM);
 		} catch (Exception e) {
 			log.error(e,e);
 		}
