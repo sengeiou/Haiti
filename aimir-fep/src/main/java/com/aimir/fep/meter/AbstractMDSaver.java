@@ -956,13 +956,10 @@ public abstract class AbstractMDSaver
 				String myKey = meter.getMdsId()+"_"+ch+"_"+lp.getDatetime();
 				if(!valSum.containsKey(sumKey)) {
 					valSum.put(sumKey, lp.getBaseValue());					
-					log.debug("sumKey : " + sumKey+", baseValue : "+lp.getBaseValue());
 				}
 				if(!valSum.containsKey(myKey)){
 					valSum.put(myKey, lp.getCh()[i]);
 					valSum.put(sumKey, valSum.get(sumKey)+lp.getCh()[i]);
-					log.debug("myKey : " + sumKey+", lp.getCh()[i] : "+lp.getCh()[i]);
-					log.debug("sumKey : " + sumKey+", valSum.get(sumKey) : " + valSum.get(sumKey)+", lp.getCh()[i] : "+lp.getCh()[i]);
 				}else {
 					continue;
 				}
@@ -999,8 +996,6 @@ public abstract class AbstractMDSaver
 		            break;            
 		        }
 				
-		        log.debug("setValue : "+valSum.get(sumKey));
-		        
 				meteringLP.setChannel(i + 1);
 				meteringLP.setDeviceId(meter.getMdsId());
 				meteringLP.setMDevId(meter.getMdsId());

@@ -318,10 +318,12 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 		
 		Double[] ch = new Double[1];
 		ch[0] = (this.getTOTAL_DEL_KWH() / 10000);
-		
+
 		String time = this.getMeteringTime().substring(0, 10) + "0000";
 		
 		LPData lpData = new LPData();
+		lpData.setBasePulse(0);
+		lpData.setBaseValue(0);
 		lpData.setDatetime(time);		
 		lpData.setLPChannelCnt(1);
 		lpData.setCh(ch);
