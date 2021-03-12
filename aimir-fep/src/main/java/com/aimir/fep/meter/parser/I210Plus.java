@@ -20,6 +20,7 @@ import com.aimir.fep.meter.parser.SM110Table.MT019;
 import com.aimir.fep.meter.parser.SM110Table.MT115;
 import com.aimir.fep.meter.parser.SM110Table.NT509;
 import com.aimir.fep.meter.parser.SM110Table.ST001;
+import com.aimir.fep.util.Hex;
 import com.aimir.fep.util.Util;
 import com.aimir.model.system.Supplier;
 import com.aimir.util.DateTimeUtil;
@@ -97,6 +98,7 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 	public void parse(byte[] data) throws Exception {
 		rawData = data;
 		int totlen = data.length;
+		log.info("meter : " + meter.getMdsId() +", data : "+Hex.decode(data));
 		log.debug("TOTLEN[" + totlen + "]");
 
 		int offset = 0;
