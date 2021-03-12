@@ -312,7 +312,19 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 	}
 
 	public LPData[] getLPData() {
-		return lpDataList.toArray(new LPData[0]);
+		//return lpDataList.toArray(new LPData[0]);
+		
+		Double[] ch = new Double[1];
+		ch[0] = (this.getTOTAL_DEL_KWH() / 10000);
+		
+		String time = this.getMeteringTime().substring(0, 10) + "0000";
+		
+		LPData lpData = new LPData();
+		lpData.setDatetime(time);		
+		lpData.setLPChannelCnt(1);
+		lpData.setCh(ch);
+		
+		return new LPData[] {lpData};
 	}
 
 	public TOU_BLOCK[] getPrevBilling() {
