@@ -1080,6 +1080,13 @@ public abstract class AbstractMDSaver
 		
 		try {
 			saveLPDataUsingLPTime(meteringType, lpMap, meter, mdevType);
+			
+			if(TimeLocaleUtil.isThisDateValid(meteringTime, "yyyyMMddHHmmss")){
+        		meter.getModem().setLastLinkTime(meteringTime);
+    		}else{
+        		meter.getModem().setLastLinkTime(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
+    		}
+			
 		}catch(Exception e) {
 			log.error(e,e);
 			log.error(e.getMessage());
