@@ -375,6 +375,15 @@ public class EventAlertLog extends BaseObject implements JSONString {
     		.key("closeTime").value(ct)
     		.key("writeTime").value(wt)
     		.endObject();
+    	
+    	if(eventAlertAttrs != null && eventAlertAttrs.size() > 0) {
+    		for(EventAlertAttr attr : eventAlertAttrs.toArray(new EventAlertAttr[0]))
+            {
+    			if(attr.getValue() != null) {
+    				jb.key(attr.getAttrName()).value(attr.getValue());
+    			}
+            }
+    	}
 
     	return js.toString();
     }
@@ -399,4 +408,7 @@ public class EventAlertLog extends BaseObject implements JSONString {
     public String toString() {
         return toJSONString();
     }
+    
+    
+    
 }

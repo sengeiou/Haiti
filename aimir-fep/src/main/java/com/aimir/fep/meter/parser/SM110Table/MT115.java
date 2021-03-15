@@ -19,6 +19,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.aimir.fep.util.DataFormat;
+import com.aimir.fep.util.Hex;
 
 /**
  * Load Control Status Table
@@ -46,6 +47,8 @@ public class MT115 implements java.io.Serializable {
 	private boolean[] SWITCH_CONTROLLER_ERROR = new boolean[1]; // 1
 	private boolean[] COMMUNICATION_ERROR = new boolean[1]; // 0
 	// HISTORY : 16 Bit -> 2 Byte
+	private byte[] HISTORY = new byte[2];
+	
 	// -> RCDC_STATUS : 8 Bit
 	private boolean[] FILLER_3 = new boolean[1]; // 7
 	private boolean[] WAITING_TO_ARM = new boolean[1]; // 6 
@@ -69,8 +72,8 @@ public class MT115 implements java.io.Serializable {
 	private byte[] ECP_ACCUMULATOR_OR_PPM_REMAINING_CREDIT = new byte[4];
 	private byte[] LC_DEMAND_CALCULATED = new byte[4];
 	private byte[] DURATION_COUNT_DOWN = new byte[2];
-	private byte[] HOURS = new byte[1];
-	private byte[] MINUTES = new byte[1];
+	private byte[] HOURS = new byte[0];
+	private byte[] MINUTES = new byte[0];
 	private byte[] LAST_CMD_STATUS = new byte[1];
 	private byte[] FILLER_6 = new byte[4];
 	private byte[] CRC = new byte[2];
@@ -106,49 +109,51 @@ public class MT115 implements java.io.Serializable {
 	
     public void parse(byte[] data) {
     	int pos = 0;
-		int boolPos = 0;
+		int boolPos = 0; 
     	boolean[] tmpBoolArr = new boolean[8];		
 		
 		System.arraycopy(data, pos, TMP_BYTE, 0, TMP_BYTE.length); pos += TMP_BYTE.length;
 		tmpBoolArr = booleanArrayFromByte(TMP_BYTE[0]);
-		System.arraycopy(tmpBoolArr, boolPos, FILLER_1, 0, FILLER_1.length);  boolPos += FILLER_1.length;
-		System.arraycopy(tmpBoolArr, boolPos, LOAD_SIDE_FREQ_ERROR, 0, LOAD_SIDE_FREQ_ERROR.length); boolPos += LOAD_SIDE_FREQ_ERROR.length;
-		System.arraycopy(tmpBoolArr, boolPos, LINE_SIDE_FREQ_ERROR, 0, LINE_SIDE_FREQ_ERROR.length); boolPos += LINE_SIDE_FREQ_ERROR.length;
-		System.arraycopy(tmpBoolArr, boolPos, MANUAL_ARMED_TIME_OUT, 0, MANUAL_ARMED_TIME_OUT.length);  boolPos = 0;
-
-		System.arraycopy(data, pos, TMP_BYTE, 0, TMP_BYTE.length); pos += TMP_BYTE.length;
-		tmpBoolArr = booleanArrayFromByte(TMP_BYTE[0]);
-		System.arraycopy(tmpBoolArr, boolPos, PPM_ALERT, 0, PPM_ALERT.length); boolPos += PPM_ALERT.length;
-		System.arraycopy(tmpBoolArr, boolPos, SWITCH_FAILED_TO_OPEN, 0, SWITCH_FAILED_TO_OPEN.length); boolPos += SWITCH_FAILED_TO_OPEN.length;
-		System.arraycopy(tmpBoolArr, boolPos, BYPASSED, 0, BYPASSED.length); boolPos += BYPASSED.length;
-		System.arraycopy(tmpBoolArr, boolPos, FILLER_2, 0, FILLER_2.length); boolPos += FILLER_2.length;
-		System.arraycopy(tmpBoolArr, boolPos, ALTERNATE_SOURCE, 0, ALTERNATE_SOURCE.length); boolPos += ALTERNATE_SOURCE.length;
-		System.arraycopy(tmpBoolArr, boolPos, SWITCH_FAILED_TO_CLOSE, 0, SWITCH_FAILED_TO_CLOSE.length); boolPos += SWITCH_FAILED_TO_CLOSE.length;
+		System.arraycopy(tmpBoolArr, boolPos, COMMUNICATION_ERROR, 0, COMMUNICATION_ERROR.length); boolPos += COMMUNICATION_ERROR.length;
 		System.arraycopy(tmpBoolArr, boolPos, SWITCH_CONTROLLER_ERROR, 0, SWITCH_CONTROLLER_ERROR.length); boolPos += SWITCH_CONTROLLER_ERROR.length;
-		System.arraycopy(tmpBoolArr, boolPos, COMMUNICATION_ERROR, 0, COMMUNICATION_ERROR.length); boolPos = 0;
-
+		System.arraycopy(tmpBoolArr, boolPos, SWITCH_FAILED_TO_CLOSE, 0, SWITCH_FAILED_TO_CLOSE.length); boolPos += SWITCH_FAILED_TO_CLOSE.length;
+		System.arraycopy(tmpBoolArr, boolPos, ALTERNATE_SOURCE, 0, ALTERNATE_SOURCE.length); boolPos += ALTERNATE_SOURCE.length;
+		System.arraycopy(tmpBoolArr, boolPos, FILLER_2, 0, FILLER_2.length); boolPos += FILLER_2.length;
+		System.arraycopy(tmpBoolArr, boolPos, BYPASSED, 0, BYPASSED.length); boolPos += BYPASSED.length;
+		System.arraycopy(tmpBoolArr, boolPos, SWITCH_FAILED_TO_OPEN, 0, SWITCH_FAILED_TO_OPEN.length); boolPos += SWITCH_FAILED_TO_OPEN.length;
+		System.arraycopy(tmpBoolArr, boolPos, PPM_ALERT, 0, PPM_ALERT.length); boolPos = 0;
+		
 		System.arraycopy(data, pos, TMP_BYTE, 0, TMP_BYTE.length); pos += TMP_BYTE.length;
+		tmpBoolArr = booleanArrayFromByte(TMP_BYTE[0]);		
+		System.arraycopy(tmpBoolArr, boolPos, MANUAL_ARMED_TIME_OUT, 0, MANUAL_ARMED_TIME_OUT.length);  boolPos += MANUAL_ARMED_TIME_OUT.length;
+		System.arraycopy(tmpBoolArr, boolPos, LINE_SIDE_FREQ_ERROR, 0, LINE_SIDE_FREQ_ERROR.length); boolPos += LINE_SIDE_FREQ_ERROR.length;
+		System.arraycopy(tmpBoolArr, boolPos, LOAD_SIDE_FREQ_ERROR, 0, LOAD_SIDE_FREQ_ERROR.length); boolPos += LOAD_SIDE_FREQ_ERROR.length;
+		System.arraycopy(tmpBoolArr, boolPos, FILLER_1, 0, FILLER_1.length); boolPos = 0;
+		
+		System.arraycopy(data, pos, HISTORY, 0, HISTORY.length); pos += HISTORY.length;
+		
+		System.arraycopy(data, pos, TMP_BYTE, 0, TMP_BYTE.length); pos += TMP_BYTE.length;		
 		tmpBoolArr = booleanArrayFromByte(TMP_BYTE[0]);
-		System.arraycopy(tmpBoolArr, boolPos, FILLER_3, 0, FILLER_3.length); boolPos += FILLER_3.length;
-		System.arraycopy(tmpBoolArr, boolPos, WAITING_TO_ARM, 0, WAITING_TO_ARM.length); boolPos += WAITING_TO_ARM.length;
-		System.arraycopy(tmpBoolArr, boolPos, LOCKOUT_IN_EFFECT, 0, LOCKOUT_IN_EFFECT.length); boolPos += LOCKOUT_IN_EFFECT.length;
-		System.arraycopy(tmpBoolArr, boolPos, OUTAGE_OPEN_IN_EFFECT, 0, OUTAGE_OPEN_IN_EFFECT.length); boolPos += OUTAGE_OPEN_IN_EFFECT.length;
-		System.arraycopy(tmpBoolArr, boolPos, ARMED_WAITING_TO_CLOSE, 0, ARMED_WAITING_TO_CLOSE.length); boolPos += ARMED_WAITING_TO_CLOSE.length;
-		System.arraycopy(tmpBoolArr, boolPos, OPEN_HOLD_FOR_COMMAND, 0, OPEN_HOLD_FOR_COMMAND.length); boolPos += OPEN_HOLD_FOR_COMMAND.length;
+		System.arraycopy(tmpBoolArr, boolPos, ACTUAL_SWITCH_STATE, 0, ACTUAL_SWITCH_STATE.length); boolPos += ACTUAL_SWITCH_STATE.length;
 		System.arraycopy(tmpBoolArr, boolPos, DESIRED_SWITCH_STATE, 0, DESIRED_SWITCH_STATE.length); boolPos += DESIRED_SWITCH_STATE.length;
-		System.arraycopy(tmpBoolArr, boolPos, ACTUAL_SWITCH_STATE, 0, ACTUAL_SWITCH_STATE.length); boolPos = 0;
+		System.arraycopy(tmpBoolArr, boolPos, OPEN_HOLD_FOR_COMMAND, 0, OPEN_HOLD_FOR_COMMAND.length); boolPos += OPEN_HOLD_FOR_COMMAND.length;
+		System.arraycopy(tmpBoolArr, boolPos, ARMED_WAITING_TO_CLOSE, 0, ARMED_WAITING_TO_CLOSE.length); boolPos += ARMED_WAITING_TO_CLOSE.length;
+		System.arraycopy(tmpBoolArr, boolPos, OUTAGE_OPEN_IN_EFFECT, 0, OUTAGE_OPEN_IN_EFFECT.length); boolPos += OUTAGE_OPEN_IN_EFFECT.length;
+		System.arraycopy(tmpBoolArr, boolPos, LOCKOUT_IN_EFFECT, 0, LOCKOUT_IN_EFFECT.length); boolPos += LOCKOUT_IN_EFFECT.length;
+		System.arraycopy(tmpBoolArr, boolPos, WAITING_TO_ARM, 0, WAITING_TO_ARM.length); boolPos += WAITING_TO_ARM.length;
+		System.arraycopy(tmpBoolArr, boolPos, FILLER_3, 0, FILLER_3.length); boolPos = 0;		
 		
 		System.arraycopy(data, pos, TMP_BYTE, 0, TMP_BYTE.length); pos += TMP_BYTE.length;
 		tmpBoolArr = booleanArrayFromByte(TMP_BYTE[0]);
-		System.arraycopy(tmpBoolArr, boolPos, PPM_DISCONNECT, 0, PPM_DISCONNECT.length); boolPos += PPM_DISCONNECT.length;
-		System.arraycopy(tmpBoolArr, boolPos, DLP_DISCONNECT, 0, DLP_DISCONNECT.length); boolPos += DLP_DISCONNECT.length;
-		System.arraycopy(tmpBoolArr, boolPos, ECP_DISCONNECT, 0, ECP_DISCONNECT.length); boolPos += ECP_DISCONNECT.length;
-		System.arraycopy(tmpBoolArr, boolPos, FILLER_4, 0, FILLER_4.length);  boolPos += FILLER_4.length;
-		System.arraycopy(tmpBoolArr, boolPos, PPM_ENABLED, 0, PPM_ENABLED.length); boolPos += PPM_ENABLED.length;
-		System.arraycopy(tmpBoolArr, boolPos, DLP_ENABLED, 0, DLP_ENABLED.length); boolPos += DLP_ENABLED.length;
-		System.arraycopy(tmpBoolArr, boolPos, ECP_ENABLED, 0, ECP_ENABLED.length); boolPos += ECP_ENABLED.length;
 		System.arraycopy(tmpBoolArr, boolPos, FILLER_5, 0, FILLER_5.length);  boolPos = 0;
-		
+		System.arraycopy(tmpBoolArr, boolPos, ECP_ENABLED, 0, ECP_ENABLED.length); boolPos += ECP_ENABLED.length;
+		System.arraycopy(tmpBoolArr, boolPos, DLP_ENABLED, 0, DLP_ENABLED.length); boolPos += DLP_ENABLED.length;
+		System.arraycopy(tmpBoolArr, boolPos, PPM_ENABLED, 0, PPM_ENABLED.length); boolPos += PPM_ENABLED.length;
+		System.arraycopy(tmpBoolArr, boolPos, FILLER_4, 0, FILLER_4.length);  boolPos += FILLER_4.length;
+		System.arraycopy(tmpBoolArr, boolPos, ECP_DISCONNECT, 0, ECP_DISCONNECT.length); boolPos += ECP_DISCONNECT.length;
+		System.arraycopy(tmpBoolArr, boolPos, DLP_DISCONNECT, 0, DLP_DISCONNECT.length); boolPos += DLP_DISCONNECT.length;
+		System.arraycopy(tmpBoolArr, boolPos, PPM_DISCONNECT, 0, PPM_DISCONNECT.length); boolPos += PPM_DISCONNECT.length;
+				
 		System.arraycopy(data, pos, LC_RECONNECT_ATTEMPT_COUNT, 0, LC_RECONNECT_ATTEMPT_COUNT.length); pos += LC_RECONNECT_ATTEMPT_COUNT.length;
 		System.arraycopy(data, pos, ECP_ACCUMULATOR_OR_PPM_REMAINING_CREDIT, 0, ECP_ACCUMULATOR_OR_PPM_REMAINING_CREDIT.length); pos += ECP_ACCUMULATOR_OR_PPM_REMAINING_CREDIT.length;
 		System.arraycopy(data, pos, LC_DEMAND_CALCULATED, 0, LC_DEMAND_CALCULATED.length); pos += LC_DEMAND_CALCULATED.length;
@@ -200,8 +205,8 @@ public class MT115 implements java.io.Serializable {
 			  .append("  ECP_ACCUMULATOR_OR_PPM_REMAINING_CREDIT="+DataFormat.hex2dec(ECP_ACCUMULATOR_OR_PPM_REMAINING_CREDIT)).append(", \n")
 			  .append("  LC_DEMAND_CALCULATED="+DataFormat.hex2dec(LC_DEMAND_CALCULATED)).append(", \n")
 			  .append("  DURATION_COUNT_DOWN="+DataFormat.hex2dec(DURATION_COUNT_DOWN)).append(", \n")
-			  .append("  HOURS="+DataFormat.hex2dec(HOURS)).append(", \n")
-			  .append("  MINUTES="+DataFormat.hex2dec(MINUTES)).append(", \n")
+			  //.append("  HOURS="+DataFormat.hex2dec(HOURS)).append(", \n")
+			  //.append("  MINUTES="+DataFormat.hex2dec(MINUTES)).append(", \n")
 			  .append("  LAST_CMD_STATUS="+DataFormat.hex2dec(LAST_CMD_STATUS)).append(", \n")
 			  .append("  FILLER_6="+DataFormat.hex2dec(FILLER_6)).append(", \n")
 			  .append("  CRC="+DataFormat.hex2dec(CRC));
