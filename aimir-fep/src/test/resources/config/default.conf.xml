@@ -2,13 +2,6 @@
 <!--
     MCU and MCUVar Default Configuration Data (MCU, etc.)
 -->
-<!DOCTYPE DefaultConfiguration[    
-    <!ELEMENT configuration (property*)>
-        <!ATTLIST configuration class CDATA "">
-    <!ELEMENT property (#PCDATA)> 
-        <!ATTLIST property name CDATA "">
-        <!ATTLIST property type CDATA "">
-]>
 <DefaultConfiguration>
     <configuration class="MCU">
         <property name="sysName" type="string"></property>
@@ -19,7 +12,7 @@
         <property name="sysMobileType" type="int"></property>
         <property name="sysMobileMode" type="int"></property>
     </configuration>
-    
+
     <configuration class="MCUVar">
         <property name="varMemoryCriticalRate" type="int"></property>
         <property name="varFlashCriticalRate" type="int"></property>

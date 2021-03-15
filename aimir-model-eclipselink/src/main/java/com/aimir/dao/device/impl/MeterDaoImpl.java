@@ -71,7 +71,7 @@ public class MeterDaoImpl extends AbstractJpaDao<Meter, Integer> implements Mete
 
     @Transactional(readOnly=true, propagation=Propagation.REQUIRED)
     public Meter getMeterByModemDeviceSerial(String deviceSerial, int modemPort) {
-        String sql = "select m from Meter m where modemPort = :modemPort and modem.deviceSerial = :deviceSerial";
+        String sql = "select m from Meter m where m.modemPort = :modemPort and m.modem.deviceSerial = :deviceSerial";
         Query query = em.createQuery(sql, Meter.class);
         query.setParameter("modemPort", modemPort);
         query.setParameter("deviceSerial", deviceSerial);

@@ -74,6 +74,8 @@ public class EV_202_4_0_Action implements EV_Action
             
             if (mcu == null)
             {
+            	mcu = new MCU();
+            	mcu.setSysID(trap.getMcuId());
             	log.info("mcu[" + mcu.getSysID() + "] is not existed!!");
 
 				/*
@@ -111,6 +113,16 @@ public class EV_202_4_0_Action implements EV_Action
                     mcu.setDeviceModel(model);
                 }
 
+                log.debug("Event["+event+"]");
+   	            String ipaddr = event.getEventAttrValue("ethIpAddr");
+   	            log.debug("ipaddr ["+ipaddr+"]");
+   	            
+   	            if (ipaddr != null && !ipaddr.equals("") && !ipaddr.equals("0.0.0.0"))
+   	            {
+   	                if (mcu.getIpAddr() != null && !mcu.getIpAddr().equals(ipaddr))
+   	                    mcu.setIpAddr(ipaddr);
+   	            }
+   	            
 				mcu.setInstallDate(currentTime);
 				mcu.setLastCommDate(currentTime);
 				mcu.setNetworkStatus(1);
@@ -139,6 +151,7 @@ public class EV_202_4_0_Action implements EV_Action
 				}
             }
     
+            /*
             log.debug("Event["+event+"]");
             String ipaddr = event.getEventAttrValue("ethIpAddr");
             if (ipaddr != null && !ipaddr.equals("") && !ipaddr.equals("0.0.0.0"))
@@ -148,6 +161,7 @@ public class EV_202_4_0_Action implements EV_Action
                 
                 // mcuDao.update(mcu);
             }
+            */
     
             log.debug("EV_202_4_0_Action Compelte");
         }
