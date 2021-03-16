@@ -173,10 +173,6 @@ public class EV_200_1_0_Action implements EV_Action
                     mcu.setLocation(locationDao.getAll().get(0));  
                 }
                 
-                if(mcu.getMcuType() == null) {
-                	mcu.setMcuType(CommonConstants.getMcuTypeByName(mcuTypeEnum.name()));
-                }
-                
                 //Set Default Supplier
                 String supplierName = new String(FMPProperty.getProperty("default.supplier.name").getBytes("8859_1"), "UTF-8");
                 log.debug("Supplier Name[" + supplierName + "]");
@@ -226,6 +222,10 @@ public class EV_200_1_0_Action implements EV_Action
                         log.info("MCU["+mcu.getSysID()+"] Default Location is Not Exist In Properties, Set First Location["+locationDao.getAll().get(0).getId()+"]");
                         mcu.setLocation(locationDao.getAll().get(0));  
                     }
+                }
+                
+                if(mcu.getMcuType() == null) {
+                	mcu.setMcuType(CommonConstants.getMcuTypeByName(mcuTypeEnum.name()));
                 }
                 
                 existMcu.setIpAddr(mcu.getIpAddr());
