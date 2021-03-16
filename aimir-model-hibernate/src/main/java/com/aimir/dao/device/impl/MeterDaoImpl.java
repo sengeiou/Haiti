@@ -226,8 +226,8 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
         query.append("\n                  AND   dt.mdev_id = m.mds_id ");
         query.append("\n                  AND   dt.yyyymmdd BETWEEN :searchStartDate AND :searchEndDate ");
         query.append("\n                  AND   dt.channel = :channel ");
-        if(locations != null)
-        	query.append("\n                  AND   dt.location_id IN (:locationId) ");
+//        if(locations != null)
+//        	query.append("\n                  AND   dt.location_id IN (:locationId) ");
         query.append("\n                 ) ");
         query.append("\nAND   m.meter = :meterType ");
         if(locations != null)

@@ -4303,7 +4303,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         sb.append("\n    AND   dt.mdev_id = m.mds_id ");
         sb.append("\n    AND   dt.yyyymmdd BETWEEN :searchStartDate AND :searchEndDate ");
         sb.append("\n    AND   dt.channel = :channel ");
-        sb.append("\n    AND   dt.location_id = m.location_id ");
+//        sb.append("\n    AND   dt.location_id = m.location_id ");
         sb.append("\n    GROUP BY m.id ");
         sb.append("\n) x ");
 
@@ -4378,7 +4378,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         sb.append("\n                  AND   dt.mdev_id = m.mds_id ");
         sb.append("\n                  AND   dt.yyyymmdd BETWEEN :searchStartDate AND :searchEndDate ");
         sb.append("\n                  AND   dt.channel = :channel ");
-        sb.append("\n                  AND   dt.location_id = :locationId ");
+//        sb.append("\n                  AND   dt.location_id = :locationId ");
         sb.append("\n                 ) ");
         sb.append("\nAND   m.meter = :meterType ");
         sb.append("\nAND   m.location_id = :locationId ");
