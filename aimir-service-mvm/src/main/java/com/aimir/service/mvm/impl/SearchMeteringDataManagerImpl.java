@@ -3688,8 +3688,10 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("meterNo", (String)obj.get("METER_NO"));
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));
-            map.put("value", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
-            map.put("prevValue", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE"))));
+            if(obj.get("VALUE") != null && !"".equals(obj.get("VALUE")))
+            	map.put("value", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
+            if(obj.get("PRE_VALUE") != null && !"".equals(obj.get("PRE_VALUE")))
+            	map.put("prevValue", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE"))));
 
             result.add(map);
         }
