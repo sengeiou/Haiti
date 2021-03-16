@@ -249,14 +249,12 @@ public class EV_200_1_0_Action implements EV_Action
             event.setActivatorIp(mcu.getIpAddr());
             event.setSupplier(mcu.getSupplier());
             event.setLocation(mcu.getLocation());
+            
+            txmanager.commit(txstatus);
         }
         catch(Exception e) {
         	log.error(e,e);
-        }
-        finally{
-            if (txstatus != null) {
-            	txmanager.commit(txstatus);
-            }
+        	txmanager.rollback(txstatus);
         }
     
         String hwVersion = mcu.getSysHwVersion();
