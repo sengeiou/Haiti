@@ -1284,6 +1284,9 @@
   <system.Code code="8.2.10" name="TOUCalendar" descr="" order="10" parent="8.2"/>
   <system.Code code="8.2.11" name="DemandReset" descr="" order="11" parent="8.2"/>
   <system.Code code="8.2.12" name="Summer Time Setting" descr="" order="12" parent="8.2"/>
+
+  <system.Code code="8.2.14" name="Ping" descr="" order="13" parent="8.2"/>
+  <system.Code code="8.2.15" name="Trace Route" descr="" order="14" parent="8.2"/>
   
 
   <!-- MCU Command -->
@@ -1308,6 +1311,8 @@
   <system.Code code="8.3.18" name="Req. Meter Comm. State" descr="" order="18" parent="8.3"/>
   <system.Code code="8.3.19" name="Req. Meter Status" descr="" order="19" parent="8.3"/>
   <system.Code code="8.3.20" name="Self Test" descr="" order="20" parent="8.3"/>
+  <system.Code code="8.3.22" name="Ping" descr="" order="21" parent="8.3"/>
+  <system.Code code="8.3.23" name="Trace Route" descr="" order="22" parent="8.3"/>
 
   <system.Code code="9" name="FM" descr="" order="9" parent=""/>
   <system.Code code="9.1" name="FM Category" descr="" order="1" parent="9"/>

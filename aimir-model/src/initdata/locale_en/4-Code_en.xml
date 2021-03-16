@@ -1192,11 +1192,14 @@
   <system.Code code="8.2.10" name="TOUCalendar" descr="TOUCalendar" order="10" parent="8.2"/>
   <system.Code code="8.2.11" name="DemandReset" descr="DemandReset" order="11" parent="8.2"/>
   <system.Code code="8.2.12" name="Summer Time Setting" descr="Summer Time Setting" order="12" parent="8.2"/>
-   
+
+  <system.Code code="8.2.14" name="Ping" descr="" order="13" parent="8.2"/>
+  <system.Code code="8.2.15" name="Trace Route" descr="" order="14" parent="8.2"/> 
+  
   <!-- Add for KEMCO -->
   <system.Code code="8.2.13" name="OTA" descr="OTA" order="13" parent="8.2"/>
-  <system.Code code="8.2.14" name="Server IP Read" descr="Server IP Read" order="14" parent="8.2"/>
-  <system.Code code="8.2.15" name="Server IP Change" descr="Server IP Change" order="15" parent="8.2"/>
+  <!-- <system.Code code="8.2.14" name="Server IP Read" descr="Server IP Read" order="14" parent="8.2"/>
+  <system.Code code="8.2.15" name="Server IP Change" descr="Server IP Change" order="15" parent="8.2"/> -->
   <system.Code code="8.2.16" name="Server Port Read" descr="Server Port Read" order="16" parent="8.2"/>
   <system.Code code="8.2.17" name="Server Port Change" descr="Server Port Change" order="17" parent="8.2"/>
   <system.Code code="8.2.18" name="LP Interval Read" descr="LP Interval Read" order="18" parent="8.2"/>
@@ -1243,6 +1246,8 @@
   <system.Code code="8.3.19" name="Req. Meter Status" descr="Req. Meter Status" order="19" parent="8.3"/>
   <system.Code code="8.3.20" name="Self Test" descr="Self Test" order="20" parent="8.3"/>
   <system.Code code="8.3.21" name="Firmware Update" descr="Firmware Update" order="21" parent="8.3"/>
+  <system.Code code="8.3.22" name="Ping" descr="" order="21" parent="8.3"/>
+  <system.Code code="8.3.23" name="Trace Route" descr="" order="22" parent="8.3"/>
 
   <system.Code code="9" name="FM" descr="FM" order="9" parent=""/>
   <system.Code code="9.1" name="FM Category" descr="FM Category" order="1" parent="9"/>

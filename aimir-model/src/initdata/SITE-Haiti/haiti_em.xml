@@ -979,6 +979,8 @@
     <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.3"   model="NZC I211"    level="2"   desc="Self Dignosis" />
     <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.8"   model="NZC I211"    level="2"   desc="Time Synchronization" />
     <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.10"  model="NZC I211"    level="2"   desc="Reset" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.22"  model="NZC I211"    level="2"   desc="Ping" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.23"  model="NZC I211"    level="2"   desc="Trace Route" />
     
     <system.DeviceModel 
         deviceVendor="NURITelecom"
@@ -1039,6 +1041,9 @@
         name="NAMR-P109SR"
         deviceModel="NAMR-P109SR"
     /> 
+        
+    <device.OperationList  deviceTypeCode="1.2.1.1" operationCode="8.2.14"  model="NAMR-P109SR"    level="2"   desc="Ping" />
+    <device.OperationList  deviceTypeCode="1.2.1.1" operationCode="8.2.15"  model="NAMR-P109SR"    level="2"   desc="Trace Route" />    
 
     <system.DeviceModel 
         deviceVendor="NURITelecom"
