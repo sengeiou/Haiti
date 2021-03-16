@@ -1228,8 +1228,8 @@
 
   <!-- Add for MDIS Start -->
   <system.Code code="8.1.8" name="Relay Status" descr="" order="8" parent="8.1"/>
-  <system.Code code="8.1.9" name="Relay on" descr="" order="9" parent="8.1"/>
-  <system.Code code="8.1.10" name="Relay off" descr="" order="10" parent="8.1"/>
+  <system.Code code="8.1.9" name="Relay On" descr="" order="9" parent="8.1"/>
+  <system.Code code="8.1.10" name="Relay Off" descr="" order="10" parent="8.1"/>
   <system.Code code="8.1.11" name="Tampering Clear" descr="" order="11" parent="8.1"/>
   <system.Code code="8.1.12" name="Get Tampering" descr="" order="12" parent="8.1"/>
   <system.Code code="8.1.13" name="Get SW Ver" descr="" order="13" parent="8.1"/>

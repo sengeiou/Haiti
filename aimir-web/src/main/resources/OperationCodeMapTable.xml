@@ -59,8 +59,8 @@
 		</savers>
 	</operation>
 	
-	<operation code="8.1.10" name="Relay off">
-		<btext>Relay off</btext>
+	<operation code="8.1.10" name="Relay Off">
+		<btext>Relay Off</btext>
 		<savers>
 			<saver name="Aidon5530_2MDSaver">cmdAidonMCCB</saver>
 			<saver name="Aidon5530MDSaver">cmdAidonMCCB</saver>
@@ -77,8 +77,8 @@
 		</savers>
 	</operation>		
 	
-	<operation code="8.1.9" name="Relay on">
-		<btext>Relay on</btext>
+	<operation code="8.1.9" name="Relay On">
+		<btext>Relay On</btext>
 		<savers>
 			<saver name="Aidon5530_2MDSaver">cmdAidonMCCB</saver>
 			<saver name="Aidon5530MDSaver">cmdAidonMCCB</saver>

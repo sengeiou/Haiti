@@ -1097,6 +1097,9 @@
     <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="I210+"   level="2"   desc="On Demand Metering" />
     <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="I210+"   level="2"   desc="Meter Time Synchronization" />
     <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="I210+"   level="2"   desc="Relay Switch" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="I210+"   level="2"   desc="Relay Status" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="I210+"   level="2"   desc="Relay On" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="I210+"   level="2"   desc="Relay Off" />
 
     <system.DeviceModel 
         deviceVendor="Sensus"
