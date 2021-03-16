@@ -636,7 +636,7 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 
 			if (lplist != null && lplist.length > 0) {
 				res.put("[Load Profile Data(kWh)]", "");
-				int nbr_chn = 2;// ch1,ch2
+				int nbr_chn = 1;// ch
 //                if(st061 != null){
 //                    nbr_chn = st061.getNBR_CHNS_SET1();
 //                }
