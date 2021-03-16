@@ -205,7 +205,25 @@ public class EV_200_1_0_Action implements EV_Action
                 log.debug("DCU ADD="+mcu);
                 mcuDao.add_requires_new(mcu);
             }else{          
-                log.info("mcu["+existMcu.getSysID()+"] is existed!! - Location Id:"+existMcu.getLocation().getId()+" Location Name:"+existMcu.getLocation().getName());         
+                log.info("mcu["+existMcu.getSysID()+"] is existed!!");
+                
+                if(mcu.getLocation() == null) {
+                	String defaultLocGeocoe = FMPProperty.getProperty("default.location.geocode");
+                    if(defaultLocGeocoe != null && !"".equals(defaultLocGeocoe)){
+                        Location defaultLocation = locationDao.findByCondition("geocode", defaultLocGeocoe);
+                        if(defaultLocation!=null) {
+                            log.info("MCU["+mcu.getSysID()+"] Set Default Location["+defaultLocation.getId()+"]");
+                            mcu.setLocation(defaultLocation);
+                        }else {
+                            log.info("MCU["+mcu.getSysID()+"] Default Location["+defaultLocGeocoe+"] is Not Exist In DB, Set First Location["+locationDao.getAll().get(0).getId()+"]");
+                            mcu.setLocation(locationDao.getAll().get(0));   
+                        }
+                    }else{
+                        log.info("MCU["+mcu.getSysID()+"] Default Location is Not Exist In Properties, Set First Location["+locationDao.getAll().get(0).getId()+"]");
+                        mcu.setLocation(locationDao.getAll().get(0));  
+                    }
+                }
+                
                 existMcu.setIpAddr(mcu.getIpAddr());
                 existMcu.setSysLocalPort(mcu.getSysLocalPort());
                 existMcu.setSysPhoneNumber(mcu.getSysPhoneNumber());
