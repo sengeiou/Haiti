@@ -340,7 +340,9 @@ public abstract class ServiceData implements java.io.Serializable
                     ed.append(smiValue);
                 }
                 
-                if(ns != null && !"".equals(ns)){
+                /*2021.03.15 Haiti는 namespace가 지정되어 있다. 해당 SERVICE_EVENT 보낼경우 EventProcessor class에서 NoSuchBeanDefinitionException 에러가 발생하기 때문에 SERVICE_EVENT_1_2로 수정*/
+                //if(ns != null && !"".equals(ns)){
+                if(true){
                 	EventData_1_2 ed2 = new EventData_1_2();
                 	ed2.setNameSpace(new OCTET(ns));
                 	ed2.setSvc(ed.getSvc());
