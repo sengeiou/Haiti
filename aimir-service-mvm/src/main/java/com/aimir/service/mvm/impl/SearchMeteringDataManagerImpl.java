@@ -3219,7 +3219,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             try {
             	String prevKey = TimeUtil.getPreDay(YYYYMMDDHH).substring(0, 10) + "_" + METER_NO;
             	Double prevValue = DecimalUtil.ConvertNumberToDouble(prevValueMap.get(prevKey));
-                map.put("prevValue", (prevValue == null) ? "" : mdf.format(prevValue));
+                map.put("prevValue", (prevValue == null) ? mdf.format(0.0) : mdf.format(prevValue));
             } catch (ParseException e) {
                 logger.error(e, e);
             }
