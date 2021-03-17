@@ -493,7 +493,7 @@ public class FMPProtocolHandler extends IoHandlerAdapter {
 				commLog.setReceiverTypeCode(CommonConstants.getSenderReceiver(targetType + ""));
 				commLog.setReceiverId(DataUtil.getFepIdString());
 				commLog.setOperationCode(sd.getType());
-				log.debug("svcType" + sd.getSvc());
+				log.debug("svcType : " + sd.getSvc());
 				commLog.setSvcTypeCode(CommonConstants.getHeaderSvc(String.valueOf((char) sd.getSvc())));
 				//commLog.setSendBytes(new Long(GeneralDataConstants.HEADER_LEN
 				//            +GeneralDataConstants.TAIL_LEN+4));
