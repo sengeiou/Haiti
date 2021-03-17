@@ -3081,8 +3081,8 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
             sb.append("\n       cu.name AS CUSTOMER_NAME, ");
             sb.append("\n       mo.device_serial AS MODEM_ID, ");
             sb.append("\n       dv.basevalue AS BASEVALUE, ");
-            sb.append("\n       dv.total_value AS VALUE, ");
-            sb.append("\n       pre.total_value AS PRE_VALUE ");
+            sb.append("\n       NVL(dv.total_value,0) AS VALUE, ");
+            sb.append("\n       NVL(pre.total_value,0) AS PRE_VALUE ");
         }
         sb.append("\nFROM ").append(dayView).append(" dv ");
         sb.append("\nLEFT OUTER JOIN meter mt ON mt.mds_id = dv.mdev_id		");

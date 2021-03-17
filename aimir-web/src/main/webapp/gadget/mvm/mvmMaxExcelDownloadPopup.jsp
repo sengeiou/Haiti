@@ -32,8 +32,8 @@
         	var arr = getFmtMessage();
 
         	if(obj.mvmMiniType == "EM"){
-        		arr[4] = arr[4]+" [kwh]";
-        		arr[5] = arr[5]+" [kwh]";
+        		arr[4] = arr[4]+" [kWh]";
+        		arr[5] = arr[5]+" [kWh]";
             }
             else if(obj.mvmMiniType=="GM" || obj.mvmMiniType=="WM" || obj.mvmMiniType=="HM"){
             	arr[4] = arr[4]+" [㎥]";
