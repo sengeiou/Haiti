@@ -829,8 +829,8 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
             sb.append("\n       mo.device_serial AS MODEM_ID, ");
             sb.append("\n       code.name AS SIC_NAME, ");
             sb.append("\n       NVL(me.last_metering_value,0) AS LAST_METERING_VALUE, ");
-            sb.append("\n       NVL(mv.total_value,0) AS VALUE,");
-            sb.append("\n       NVL(pre.total_value,0) AS PRE_VALUE ");
+            sb.append("\n       mv.total_value AS VALUE,");
+            sb.append("\n       pre.total_value AS PRE_VALUE ");
         }
         sb.append("\nFROM ").append(monthView).append(" mv ");
         sb.append("\nLEFT OUTER JOIN meter me ON mv.mdev_id = me.mds_id ");
@@ -1278,8 +1278,8 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
             sb.append("\n       cu.name AS CUSTOMER_NAME, 				");
             sb.append("\n       mv.mdev_id AS METER_NO, 				");
             sb.append("\n       code.name AS SIC_NAME, 					");
-            sb.append("\n       SUM(NVL(mv.total_value,0)) AS VALUE, 	");
-            sb.append("\n       NVL(pre.total_value,0) AS PRE_VALUE 	");
+            sb.append("\n       SUM(mv.total_value) AS VALUE, 	");
+            sb.append("\n       pre.total_value AS PRE_VALUE 	");
         }
         sb.append("\nFROM ").append(monthView).append(" mv 					");
         sb.append("\nLEFT OUTER JOIN meter mt ON mt.mds_id = mv.mdev_id 	");
@@ -1359,7 +1359,7 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         if (!contractGroup.isEmpty()) {
             sb.append("\nAND   gm.group_id = :contractGroup ");
         }
-        sb.append("\nGROUP BY co.contract_number, cu.name, mv.mdev_id, code.name, NVL(pre.total_value,0) ");
+        sb.append("\nGROUP BY co.contract_number, cu.name, mv.mdev_id, code.name, pre.total_value ");
         sb.append("\nORDER BY mv.mdev_id ");
 
         SQLQuery query = getSession().createSQLQuery(new SQLWrapper().getQuery(sb.toString()));
