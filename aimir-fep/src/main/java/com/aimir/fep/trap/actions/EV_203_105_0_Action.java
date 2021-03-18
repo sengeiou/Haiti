@@ -434,13 +434,13 @@ public class EV_203_105_0_Action implements EV_Action
                                                  "Modem is connected with a Meter[" + vendor + "," + meterId + "]"));
             
             // setModemConfig(modem, meter);
+            txmanager.commit(txstatus);
         }
         catch (Exception e) {
-            throw e;
-        }
-        finally {
-            if (txstatus != null) txmanager.commit(txstatus);
-        }
+        	log.error(e,e);
+        	if (txstatus != null) 
+        		txmanager.rollback(txstatus);
+        }        
     }
 
     private void setModemConfig(Modem modem, Meter meter)
