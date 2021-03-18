@@ -2118,16 +2118,31 @@ public class CmdController<V> {
 				//EnergyMeter
 				if(MeterType.getByServiceType("3.1").name().equals(meterTypeName)){
 					cmdOperationUtil.cmdSetEnergyLevel(mcuId, modem.getDeviceSerial(), 1);		//Relay off : 1
-					Thread.sleep(60000);	// Relay control 1분 대기 
+					Thread.sleep(60000);	// Relay control 1분 대기
+					
+					String relayStr = null;
 					relayStatus = cmdOperationUtil.cmdGetEnergyLevel(mcuId, modem.getDeviceSerial());	//Relay 상태값 조회
+					
+					if(meter.getModel() != null && ("I210+").equals(meter.getModel().getName())) {
+						StringBuffer buffer = new StringBuffer();
+						
+						if(relayStatus == 1) 
+							buffer.append("Relay off (" + relayStatus + ")");
+						else if(relayStatus == 15)
+							buffer.append("Relay on (" + relayStatus + ")");
+						else
+							buffer.append("Unknow (" + relayStatus + ")");
+						
+						relayStr = buffer.toString();
+					}
 					
 					if (relayStatus != null && relayStatus != 0) {		//리턴값이 0라면 Energy Level값 얻는 것을 실패
 						status = ResultStatus.SUCCESS;
-						rtnStr = "Response = SUCCESS, value : "+ relayStatus;
+						rtnStr = "Response = SUCCESS, value : "+ relayStr;
 					}else{
 						log.debug("EnergyMeter Relay Off Fail");
 						status = ResultStatus.FAIL;
-						rtnStr = "Response = FAIL, value : " + relayStatus;
+						rtnStr = "Response = FAIL, value : " + relayStr;
 					}
 				//WaterMeter
 				}else if(MeterType.getByServiceType("3.2").name().equals(meterTypeName)){
@@ -2385,16 +2400,31 @@ public class CmdController<V> {
 				//EnergyMeter
 				if(MeterType.getByServiceType("3.1").name().equals(meterTypeName)){
 					cmdOperationUtil.cmdSetEnergyLevel(mcuId, modem.getDeviceSerial(), 15);		//Relay on : 5
-					Thread.sleep(60000);	// Relay control 1분 대기 
+					Thread.sleep(60000);	// Relay control 1분 대기
+					
+					String relayStr = null;
 					relayStatus = cmdOperationUtil.cmdGetEnergyLevel(mcuId, modem.getDeviceSerial());	//Relay 상태값 조회
+					
+					if(meter.getModel() != null && ("I210+").equals(meter.getModel().getName())) {
+						StringBuffer buffer = new StringBuffer();
+						
+						if(relayStatus == 1) 
+							buffer.append("Relay off (" + relayStatus + ")");
+						else if(relayStatus == 15)
+							buffer.append("Relay on (" + relayStatus + ")");
+						else
+							buffer.append("Unknow (" + relayStatus + ")");
+						
+						relayStr = buffer.toString();
+					}
 					
 					if (relayStatus != null && relayStatus != 0) {		//리턴값이 0라면 Energy Level값 얻는 것을 실패
 						status = ResultStatus.SUCCESS;
-						rtnStr = "Response = SUCCESS, value : "+ relayStatus;
+						rtnStr = "Response = SUCCESS, value : "+ relayStr;
 					}else{
 						log.debug("EnergyMeter Relay On Fail");
 						status = ResultStatus.FAIL;
-						rtnStr = "Response = FAIL, value : " + relayStatus;
+						rtnStr = "Response = FAIL, value : " + relayStr;
 					}
 				//WaterMeter
 				}else if(MeterType.getByServiceType("3.2").name().equals(meterTypeName)){					
