@@ -595,7 +595,7 @@ public class TariffEMDaoImpl extends AbstractHibernateGenericDao<TariffEM, Integ
 		}
 		// query.setParameterList("CHANNELS", sysChannels);
 
-		searchDate = (String)query.uniqueResult();
+//		searchDate = (String)query.uniqueResult();
 		
 		StringBuffer sb = new StringBuffer();
 		sb.append("\n FROM  TariffEM ");

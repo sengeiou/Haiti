@@ -493,7 +493,7 @@ public class FMPProtocolHandler extends IoHandlerAdapter {
 				commLog.setReceiverTypeCode(CommonConstants.getSenderReceiver(targetType + ""));
 				commLog.setReceiverId(DataUtil.getFepIdString());
 				commLog.setOperationCode(sd.getType());
-				log.debug("svcType" + sd.getSvc());
+				log.debug("svcType : " + sd.getSvc());
 				commLog.setSvcTypeCode(CommonConstants.getHeaderSvc(String.valueOf((char) sd.getSvc())));
 				//commLog.setSendBytes(new Long(GeneralDataConstants.HEADER_LEN
 				//            +GeneralDataConstants.TAIL_LEN+4));
@@ -1169,7 +1169,9 @@ public class FMPProtocolHandler extends IoHandlerAdapter {
 //			}
 		} else if (sdf.getSvc() == GeneralDataConstants.SVC_E) {
 			String ns = (String) session.getAttribute("nameSpace");
-			serviceType = ProcessorHandler.SERVICE_EVENT;
+			//serviceType = ProcessorHandler.SERVICE_EVENT;
+			/*2021.03.15 Haiti는 namespace가 지정되어 있다. 해당 SERVICE_EVENT 보낼경우 EventProcessor class에서 NoSuchBeanDefinitionException 에러가 발생하기 때문에 SERVICE_EVENT_1_2로 수정*/
+			serviceType = ProcessorHandler.SERVICE_EVENT_1_2;			
 			if (ns != null && !"".equals(ns)) {
 				serviceType = ProcessorHandler.SERVICE_EVENT_1_2;
 			}

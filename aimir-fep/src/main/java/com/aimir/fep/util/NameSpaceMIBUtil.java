@@ -37,9 +37,15 @@ public class NameSpaceMIBUtil
      */
     public NameSpaceMIBUtil(String nameSpace)
     {
-        dfname = dir+nameSpace+"/data.mib";
-        cfname = dir+nameSpace+"/command.mib";
-        efname = dir+nameSpace+"/event.mib";
+    	if(nameSpace == null || nameSpace.isEmpty()) {
+    		dfname = dir+"data.mib";
+	        cfname = dir+"command.mib";
+	        efname = dir+"event.mib";
+    	} else {
+	        dfname = dir+nameSpace+"/data.mib";
+	        cfname = dir+nameSpace+"/command.mib";
+	        efname = dir+nameSpace+"/event.mib";
+    	}
         init();
     }
 

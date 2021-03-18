@@ -718,6 +718,8 @@ public interface ContractDao extends GenericDao<Contract, Integer>{
      *      { c.id as id }
      */
     public List<Integer> getPrepaymentContract(String serviceType);
+    
+    public List<Contract> getContract(String payType, String serviceType);
 
     /**
      * method name : idOverlapCheck

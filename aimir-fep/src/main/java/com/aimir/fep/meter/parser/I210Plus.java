@@ -20,6 +20,7 @@ import com.aimir.fep.meter.parser.SM110Table.MT019;
 import com.aimir.fep.meter.parser.SM110Table.MT115;
 import com.aimir.fep.meter.parser.SM110Table.NT509;
 import com.aimir.fep.meter.parser.SM110Table.ST001;
+import com.aimir.fep.util.Hex;
 import com.aimir.fep.util.Util;
 import com.aimir.model.system.Supplier;
 import com.aimir.util.DateTimeUtil;
@@ -97,6 +98,7 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 	public void parse(byte[] data) throws Exception {
 		rawData = data;
 		int totlen = data.length;
+		log.info("meter : " + meter.getMdsId() +", data : "+Hex.decode(data));
 		log.debug("TOTLEN[" + totlen + "]");
 
 		int offset = 0;
@@ -312,7 +314,21 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 	}
 
 	public LPData[] getLPData() {
-		return lpDataList.toArray(new LPData[0]);
+		//return lpDataList.toArray(new LPData[0]);
+		
+		Double[] ch = new Double[1];
+		ch[0] = (this.getTOTAL_DEL_KWH() / 10000);
+
+		String time = this.getMeteringTime().substring(0, 10) + "0000";
+		
+		LPData lpData = new LPData();
+		lpData.setBasePulse(0);
+		lpData.setBaseValue(0);
+		lpData.setDatetime(time);		
+		lpData.setLPChannelCnt(1);
+		lpData.setCh(ch);
+		
+		return new LPData[] {lpData};
 	}
 
 	public TOU_BLOCK[] getPrevBilling() {
@@ -620,7 +636,7 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 
 			if (lplist != null && lplist.length > 0) {
 				res.put("[Load Profile Data(kWh)]", "");
-				int nbr_chn = 2;// ch1,ch2
+				int nbr_chn = 1;// ch
 //                if(st061 != null){
 //                    nbr_chn = st061.getNBR_CHNS_SET1();
 //                }

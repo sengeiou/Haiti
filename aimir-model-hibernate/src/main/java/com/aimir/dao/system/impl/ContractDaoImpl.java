@@ -2580,7 +2580,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 
         sb.append(" SELECT   c.id as id ");
         sb.append(" FROM     Contract c ");
-        sb.append(" WHERE    (c.creditType.code = :perpay or c.creditType.code = :emergencyCredit)  ");
+        sb.append(" WHERE    (c.creditType.code = :perpay or c.creditType.code = :emergencyCredit)");
         sb.append(" and c.meter is not null and c.serviceTypeCode.name = :serviceType ");
         sb.append(" and c.customer is not null ");
 
@@ -2591,6 +2591,23 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 
         return query.list();
     }
+    
+    @Override
+	public List<Contract> getContract(String payType, String serviceType) {
+    	StringBuffer sb = new StringBuffer();
+
+        sb.append(" FROM     Contract c ");
+        sb.append(" WHERE    (c.creditType.code = :perpay or c.creditType.code = :emergencyCredit)");
+        sb.append(" and c.meter is not null and c.serviceTypeCode.name = :serviceType ");
+        sb.append(" and c.customer is not null ");
+
+        Query query = getSession().createQuery(sb.toString());
+        query.setString("perpay", payType);
+        query.setString("emergencyCredit", Code.EMERGENCY_CREDIT);
+        query.setString("serviceType", serviceType);
+
+        return query.list();
+	}
 
     @Override
     public int idOverlapCheck(String contractNo) {

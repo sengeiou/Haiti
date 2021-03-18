@@ -11238,7 +11238,7 @@ public class CommandGW implements CommandGWMBean {
 					BeanUtils.copyProperty(mcu, key, res.get(key));
 			}
 
-			log.info("doMCUScanning MCU[" + mcu.getSysID() + "] MCUTYPE[" + mcu.getMcuType().getName() + "] hwVersion["
+			log.info("doMCUScanning MCU[" + mcu.getSysID() + "] MCUTYPE[" + mcu.getMcuType() + "] hwVersion["
 					+ mcu.getSysHwVersion() + "] swVersion[" + mcu.getSysSwVersion() + "] swRevision["
 					+ mcu.getSysSwRevision() + "] ipAddr[" + mcu.getIpAddr() + "]");
 			String mcuTypeCode = mcu.getMcuType().getCode();

@@ -74,6 +74,8 @@ public class EV_202_4_0_Action implements EV_Action
             
             if (mcu == null)
             {
+            	mcu = new MCU();
+            	mcu.setSysID(trap.getMcuId());
             	log.info("mcu[" + mcu.getSysID() + "] is not existed!!");
 
 				/*
@@ -111,6 +113,15 @@ public class EV_202_4_0_Action implements EV_Action
                     mcu.setDeviceModel(model);
                 }
 
+                log.debug("Event["+event+"]");
+   	            String ipaddr = event.getEventAttrValue("ethIpAddr");
+   	            log.debug("ipaddr ["+ipaddr+"]");
+   	            
+   	            if (ipaddr != null && !ipaddr.equals("") && !ipaddr.equals("0.0.0.0"))
+   	            {
+   	            	mcu.setIpAddr(ipaddr);
+   	            }
+   	            
 				mcu.setInstallDate(currentTime);
 				mcu.setLastCommDate(currentTime);
 				mcu.setNetworkStatus(1);
@@ -137,8 +148,21 @@ public class EV_202_4_0_Action implements EV_Action
 				} catch (Exception e) {
 					log.error("Equipment Registration save error - " + e.getMessage(), e);
 				}
+            } else {
+            	String ipaddr = event.getEventAttrValue("ethIpAddr");
+   	            log.debug("ipaddr ["+ipaddr+"]");
+   	            
+   	            mcu.setLastCommDate(currentTime);
+   	            if (ipaddr != null && !ipaddr.equals("") && !ipaddr.equals("0.0.0.0"))
+	            {
+   	            	if (mcu.getIpAddr() == null || !mcu.getIpAddr().equals(ipaddr))
+   	            		mcu.setIpAddr(ipaddr);
+	            }
+   	            
+   	            mcuDao.update(mcu);
             }
-    
+            
+            /*
             log.debug("Event["+event+"]");
             String ipaddr = event.getEventAttrValue("ethIpAddr");
             if (ipaddr != null && !ipaddr.equals("") && !ipaddr.equals("0.0.0.0"))
@@ -148,11 +172,13 @@ public class EV_202_4_0_Action implements EV_Action
                 
                 // mcuDao.update(mcu);
             }
+            */
     
+            txmanager.commit(txstatus);
             log.debug("EV_202_4_0_Action Compelte");
-        }
-        finally {
-            if (txstatus != null) txmanager.commit(txstatus);
+        }catch(Exception e) {
+        	log.error(e,e);
+        	txmanager.rollback(txstatus);
         }
     }
 }

@@ -3515,8 +3515,8 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
             sb.append("\n       cu.name AS CUSTOMER_NAME,		");
             sb.append("\n       mo.device_serial AS MODEM_ID,	");
             sb.append("\n       code.name AS SIC_NAME,			");
-            sb.append("\n       NVL(SUM(dv.total_value),0) AS VALUE,	");
-            sb.append("\n       NVL(pre.total_value,0) AS PRE_VALUE	");
+            sb.append("\n       SUM(dv.total_value) AS VALUE,	");
+            sb.append("\n       pre.total_value AS PRE_VALUE	");
         }
         sb.append("\nFROM ").append(dayView).append(" dv ");
         sb.append("\nLEFT OUTER JOIN meter mt ON mt.mds_id = dv.mdev_id		");
@@ -3598,7 +3598,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
             sb.append("\n    AND   gm.group_id = :contractGroup ");
         }
 
-        sb.append("\nGROUP BY dv.mdev_id, co.contract_number, cu.name, mo.device_serial, NVL(pre.total_value,0), code.name  ");
+        sb.append("\nGROUP BY dv.mdev_id, co.contract_number, cu.name, mo.device_serial, pre.total_value, code.name  ");
         if (!isTotal) {
             sb.append("\nORDER BY dv.mdev_id ");
         }
@@ -4303,7 +4303,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         sb.append("\n    AND   dt.mdev_id = m.mds_id ");
         sb.append("\n    AND   dt.yyyymmdd BETWEEN :searchStartDate AND :searchEndDate ");
         sb.append("\n    AND   dt.channel = :channel ");
-        sb.append("\n    AND   dt.location_id = m.location_id ");
+//        sb.append("\n    AND   dt.location_id = m.location_id ");
         sb.append("\n    GROUP BY m.id ");
         sb.append("\n) x ");
 
@@ -4378,7 +4378,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         sb.append("\n                  AND   dt.mdev_id = m.mds_id ");
         sb.append("\n                  AND   dt.yyyymmdd BETWEEN :searchStartDate AND :searchEndDate ");
         sb.append("\n                  AND   dt.channel = :channel ");
-        sb.append("\n                  AND   dt.location_id = :locationId ");
+//        sb.append("\n                  AND   dt.location_id = :locationId ");
         sb.append("\n                 ) ");
         sb.append("\nAND   m.meter = :meterType ");
         sb.append("\nAND   m.location_id = :locationId ");

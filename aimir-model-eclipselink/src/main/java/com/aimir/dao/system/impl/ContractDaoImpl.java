@@ -532,5 +532,11 @@ public class ContractDaoImpl extends AbstractJpaDao<Contract, Integer> implement
         return null;
     }
 
+	@Override
+	public List<Contract> getContract(String payType, String serviceType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
     
 }
