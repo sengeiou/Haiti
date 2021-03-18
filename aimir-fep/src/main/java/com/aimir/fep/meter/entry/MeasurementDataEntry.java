@@ -545,7 +545,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
     				mcu.setDeviceModel(model);
     			}
     			mcu.setSysModel("DCU-DUMMY");
-                log.debug("DCU["+meter.getMdsId()+"] SET MODEL["+model.getName()+"]");
+                log.debug("DCU["+mcu.getSysID()+"] SET MODEL["+model.getName()+"]");
         	}
         	
             if(mcu.getSysHwVersion() == null || mcu.getSysHwVersion().equals("")){
