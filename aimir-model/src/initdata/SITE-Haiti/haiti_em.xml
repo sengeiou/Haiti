@@ -1042,8 +1042,23 @@
         deviceModel="NAMR-P109SR"
     /> 
         
-    <device.OperationList  deviceTypeCode="1.2.1.1" operationCode="8.2.14"  model="NAMR-P109SR"    level="2"   desc="Ping" />
-    <device.OperationList  deviceTypeCode="1.2.1.1" operationCode="8.2.15"  model="NAMR-P109SR"    level="2"   desc="Trace Route" />    
+<!--     <device.OperationList  deviceTypeCode="1.2.1.1" operationCode="8.2.14"  model="NAMR-P109SR"    level="2"   desc="Ping" />
+    <device.OperationList  deviceTypeCode="1.2.1.1" operationCode="8.2.15"  model="NAMR-P109SR"    level="2"   desc="Trace Route" /> -->   
+
+	<system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="125"
+        deviceType="1.2.1.26"
+        name="NAMR-P226SR"
+    />
+
+    <system.ModemConfig 
+        name="NAMR-P109SR"
+        deviceModel="NAMR-P226SR"
+    /> 
+        
+    <!-- <device.OperationList  deviceTypeCode="1.2.1.26" operationCode="8.2.14"  model="NAMR-P226SR"    level="2"   desc="Ping" />
+    <device.OperationList  deviceTypeCode="1.2.1.26" operationCode="8.2.15"  model="NAMR-P226SR"    level="2"   desc="Trace Route" /> -->
 
     <system.DeviceModel 
         deviceVendor="NURITelecom"
