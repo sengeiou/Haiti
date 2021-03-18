@@ -119,8 +119,7 @@ public class EV_202_4_0_Action implements EV_Action
    	            
    	            if (ipaddr != null && !ipaddr.equals("") && !ipaddr.equals("0.0.0.0"))
    	            {
-   	                if (mcu.getIpAddr() != null && !mcu.getIpAddr().equals(ipaddr))
-   	                    mcu.setIpAddr(ipaddr);
+   	            	mcu.setIpAddr(ipaddr);
    	            }
    	            
 				mcu.setInstallDate(currentTime);
@@ -149,8 +148,20 @@ public class EV_202_4_0_Action implements EV_Action
 				} catch (Exception e) {
 					log.error("Equipment Registration save error - " + e.getMessage(), e);
 				}
+            } else {
+            	String ipaddr = event.getEventAttrValue("ethIpAddr");
+   	            log.debug("ipaddr ["+ipaddr+"]");
+   	            
+   	            mcu.setLastCommDate(currentTime);
+   	            if (ipaddr != null && !ipaddr.equals("") && !ipaddr.equals("0.0.0.0"))
+	            {
+   	            	if (mcu.getIpAddr() == null || !mcu.getIpAddr().equals(ipaddr))
+   	            		mcu.setIpAddr(ipaddr);
+	            }
+   	            
+   	            mcuDao.update(mcu);
             }
-    
+            
             /*
             log.debug("Event["+event+"]");
             String ipaddr = event.getEventAttrValue("ethIpAddr");
@@ -163,10 +174,11 @@ public class EV_202_4_0_Action implements EV_Action
             }
             */
     
+            txmanager.commit(txstatus);
             log.debug("EV_202_4_0_Action Compelte");
-        }
-        finally {
-            if (txstatus != null) txmanager.commit(txstatus);
+        }catch(Exception e) {
+        	log.error(e,e);
+        	txmanager.rollback(txstatus);
         }
     }
 }
