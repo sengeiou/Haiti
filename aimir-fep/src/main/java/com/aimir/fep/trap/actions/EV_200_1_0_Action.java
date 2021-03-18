@@ -89,11 +89,9 @@ public class EV_200_1_0_Action implements EV_Action
             String mobileType = event.getEventAttrValue("sysMobileType");
             String mobileMode = event.getEventAttrValue("sysMobileMode");
             String sysEtherType = event.getEventAttrValue("sysEtherType");
-            String sysHwVersion = event.getEventAttrValue("sysHwVersion");
-            String sysSwVersion = event.getEventAttrValue("sysSwVersion");
             
-            /*String sysHwVersion = "2.0";
-            String sysSwVersion = "3.1";*/
+            String sysHwVersion = "2.0";
+            String sysSwVersion = "3.1";
             String sysSwRevision = FMPProperty.getProperty("mcu.revision.install");
             
             log.debug("sysEtherType[" + sysEtherType + "]");
