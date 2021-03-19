@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.aimir.dao.device.impl;
 
 import java.io.Serializable;
@@ -2360,5 +2359,4 @@ public class MeterDaoImpl extends AbstractJpaDao<Meter, Integer> implements Mete
 		// TODO Auto-generated method stub
 		return null;
 	}	
->>>>>>> branch 'release/3.4.0.a' of https://git-n.nuritelecom.com/scm/aimirpf/haiti-aimir-3.4.git
 }
