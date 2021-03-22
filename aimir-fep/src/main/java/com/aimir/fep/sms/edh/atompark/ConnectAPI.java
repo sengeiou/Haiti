@@ -1,14 +1,11 @@
 package com.aimir.fep.sms.edh.atompark;
 
-import java.util.Calendar;
 import java.util.UUID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aimir.fep.sms.edh.SMSInterface;
-import com.aimir.util.DateTimeUtil;
 
 public class ConnectAPI implements SMSInterface {
 	private static Log log = LogFactory.getLog(ConnectAPI.class);
@@ -41,7 +38,7 @@ public class ConnectAPI implements SMSInterface {
 	
 	@Override
 	public String send(String mobileNumber, String message) {
-		String messageID = UUID.randomUUID().toString().replace("-", "").substring(0, 5);
+		String messageID = "id" + UUID.randomUUID().toString().replace("-", "").substring(0, 5);
 		String variables = "";
 		String sender = "Haiti";
 		
