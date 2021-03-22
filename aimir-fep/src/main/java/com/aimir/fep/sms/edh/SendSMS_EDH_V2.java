@@ -50,14 +50,14 @@ public class SendSMS_EDH_V2 {
 	private void init() {
 		if(apiInterface == null) {
 			if(url != null) {
-				if(url.contains("atompark") {
+				if(url.contains("atompark")) {
 					apiInterface = new ConnectAPI(url, login, password);		
 				}
 			}
 		}
 		
 		log.debug("url : " +  url + ", login : " +  login + ", password : " +  password + ", countryCode : " +  countryCode +", instance : " +apiInterface);
-	}
+	} 
 	
 	public void send(String mobileNumber, String message) {
 		init();
