@@ -49,7 +49,11 @@ public class SendSMS_EDH_V2 {
 	
 	private void init() {
 		if(apiInterface == null) {
-			apiInterface = new ConnectAPI(url, login, password);
+			if(url != null) {
+				if(url.contains("atompark") {
+					apiInterface = new ConnectAPI(url, login, password);		
+				}
+			}
 		}
 		
 		log.debug("url : " +  url + ", login : " +  login + ", password : " +  password + ", countryCode : " +  countryCode +", instance : " +apiInterface);
