@@ -3688,7 +3688,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("meterNo", (String)obj.get("METER_NO"));
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));
-            map.put("value", obj.get("PRE_VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
+            map.put("value", obj.get("VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
             map.put("prevValue", obj.get("PRE_VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE"))));
 
             result.add(map);
@@ -3828,7 +3828,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("meterNo", (String)obj.get("METER_NO"));
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));
-            map.put("value", obj.get("PRE_VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
+            map.put("value", obj.get("VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
             map.put("prevValue", obj.get("PRE_VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE"))));
             result.add(map);
         }
@@ -3939,7 +3939,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("meterNo", (String)obj.get("METER_NO"));
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));       
-            map.put("value", obj.get("PRE_VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
+            map.put("value", obj.get("VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
             map.put("prevValue", obj.get("PRE_VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE"))));
             
             result.add(map);
@@ -4209,7 +4209,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("meterNo", (String)obj.get("METER_NO"));
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));
-            map.put("value", obj.get("PRE_VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
+            map.put("value", obj.get("VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
             map.put("prevValue", obj.get("PRE_VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE"))));
             map.put("meterValue", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("LAST_METERING_VALUE"))));
             //Monthly로 겁색할때 표시하는 값이며 해당월의 baseValue + total 값으로 이루어져 있다.
@@ -4328,7 +4328,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("meterNo", (String)obj.get("METER_NO"));
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));       
-            map.put("value", obj.get("PRE_VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
+            map.put("value", obj.get("VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
             map.put("prevValue", obj.get("PRE_VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE"))));
             result.add(map);
         }
@@ -4442,7 +4442,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("meterNo", (String)obj.get("METER_NO"));
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));       
-            map.put("value", obj.get("PRE_VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
+            map.put("value", obj.get("VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
             map.put("prevValue", obj.get("PRE_VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE"))));
             result.add(map);
         }
