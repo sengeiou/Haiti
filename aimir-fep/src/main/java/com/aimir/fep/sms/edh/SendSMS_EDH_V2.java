@@ -58,6 +58,8 @@ public class SendSMS_EDH_V2 {
 	public void send(String mobileNumber, String message) {
 		init();
 		
+		mobileNumber = getMobileNumber(mobileNumber);
+		
 		String sendId = UUID.randomUUID().toString().replaceAll("-", "").substring(0,8);
 		if(apiInterface != null) {
 			String result = apiInterface.send(sendId, mobileNumber, message);
@@ -100,8 +102,12 @@ public class SendSMS_EDH_V2 {
 			return null;
 		
 		StringBuffer buffer = new StringBuffer();
-		buffer.append(countryCode)
-			.append(m.replaceAll("-", ""));
+		
+		if(!m.startsWith("+")) {
+			buffer.append("+").append(countryCode);	
+		}
+		
+		buffer.append(m.replaceAll("-", ""));
 		
 		return buffer.toString();
 	}
