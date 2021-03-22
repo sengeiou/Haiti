@@ -38,7 +38,7 @@ public class ConnectAPI implements SMSInterface {
 	
 	@Override
 	public String send(String mobileNumber, String message) {
-		String messageID = "id" + UUID.randomUUID().toString().replace("-", "").substring(0, 5);
+		String messageID = "id1";
 		String variables = "";
 		String sender = "Haiti";
 		
@@ -64,6 +64,8 @@ public class ConnectAPI implements SMSInterface {
 	        request=request.concat("</number>");
         request=request.concat("</numbers>");
         request=request.concat("</SMS>");
+        
+        log.debug("request : " + request);        
         
         return requestBuilder.doXMLQuery(request);
 	}
