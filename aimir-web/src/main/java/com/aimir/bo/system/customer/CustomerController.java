@@ -1836,6 +1836,7 @@ public class CustomerController {
              @RequestParam(value="isPartpayment", required=false) Boolean isPartpayment,
              @RequestParam(value="initArrears", required=false) String initArrears,
              @RequestParam(value="debtSaveInfo", required=false) String debtSaveInfo,
+             @RequestParam(value="gs1", required=false) String gs1,
              String barcode,
              HttpServletResponse response,
              HttpServletRequest request,
@@ -2090,6 +2091,7 @@ public class CustomerController {
             @RequestParam("startDate") String startDate,
             @RequestParam("endDate") String endDate,
             @RequestParam("address") String address,
+            @RequestParam("gs1") String gs1,
             @RequestParam("serviceType") String serviceType,
             @RequestParam("serviceTypeTab") String serviceTypeTab) {
         ModelAndView mav = new ModelAndView("jsonView");
@@ -2119,10 +2121,11 @@ public class CustomerController {
         conditionMap.put("startDate", startDate);
         conditionMap.put("endDate", endDate);
         conditionMap.put("address", address);
+        conditionMap.put("gs1", gs1);
         conditionMap.put("serviceType", serviceType);
         conditionMap.put("serviceTypeTab", serviceTypeTab);
         conditionMap.put("supplierId", user.getSupplier().getId());
-
+        
         List<Map<String, Object>> result = contractManager.getCustomerListByType(conditionMap);
         mav.addObject("result", result);
         mav.addObject("totalCount", contractManager.getCustomerListByTypeTotalCount(conditionMap));
@@ -2205,6 +2208,7 @@ public class CustomerController {
             @RequestParam("address") String address,
             @RequestParam("serviceType") String serviceType,
             @RequestParam("serviceTypeTab") String serviceTypeTab,
+            @RequestParam("gs1") String gs1,
             @RequestParam(value="operatorId", required=false) String operatorId) {
 
         ModelAndView mav = new ModelAndView("jsonView");
@@ -2247,6 +2251,7 @@ public class CustomerController {
         conditionMap.put("address", address);
         conditionMap.put("serviceType", serviceType);
         conditionMap.put("serviceTypeTab", serviceTypeTab);
+        conditionMap.put("gs1", gs1);
         conditionMap.put("supplierId", supplier.getId().toString());
         conditionMap.put("operatorId", operatorId);
         log.info("startDate["+startDate+"], endDate["+endDate+"]");
@@ -2308,6 +2313,7 @@ public class CustomerController {
             conditionMap.put("serviceType", condition[14]);
             conditionMap.put("serviceTypeTab", condition[15]);
             conditionMap.put("supplierId", condition[16]);
+            conditionMap.put("gs1", condition[17]);
 
             result = contractManager.getContractsTree(conditionMap);
             total = new Integer(result.size()).longValue();
@@ -2327,6 +2333,7 @@ public class CustomerController {
             msgMap.put("customerNo",       fmtMessage[1]);
             msgMap.put("customerName",     fmtMessage[2]);
             msgMap.put("address",          fmtMessage[3]);
+//            msgMap.put("gs1",         	   fmtMessage[4]);
 
             // check download dir
             File downDir = new File(filePath);
@@ -2439,6 +2446,7 @@ public class CustomerController {
             @RequestParam("mdsId") String mdsId,
             @RequestParam("status") String status,
             @RequestParam("dr") String dr,
+            @RequestParam("gs1") String gs1,
             @RequestParam("customerType") String customerType,
             @RequestParam("startDate") String startDate,
             @RequestParam("endDate") String endDate,
@@ -2470,6 +2478,7 @@ public class CustomerController {
         conditionMap.put("mdsId", mdsId);
         conditionMap.put("status", status);
         conditionMap.put("dr", dr);
+        conditionMap.put("gs1", gs1);
         conditionMap.put("customerType", customerType);
         conditionMap.put("startDate", startDate);
         conditionMap.put("endDate", endDate);

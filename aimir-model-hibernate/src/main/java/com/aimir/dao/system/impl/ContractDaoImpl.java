@@ -674,7 +674,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
                 sicIdList.add(Integer.valueOf(obj));
             }
         }
-
+        String gs1 = (String)conditionMap.get("gs1");
         String address = (String)conditionMap.get("address");
         String serviceType = (String)conditionMap.get("serviceType");
         String supplierId = (String)conditionMap.get("supplierId");
@@ -686,6 +686,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("SELECT COUNT(DISTINCT cust.id) AS cnt ");
         } else {
             sb.append("SELECT DISTINCT cust.id AS CUSTOMER_ID, ");
+            sb.append("       me.gs1 AS GS1, ");
             sb.append("       cust.name AS CUSTOMER_NAME, ");
             sb.append("       cust.address AS CUSTOMER_ADDRESS, ");
             sb.append("       cust.address1 AS CUSTOMER_ADDRESS1, ");
@@ -696,6 +697,8 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         sb.append("FROM Contract cont ");
         sb.append("     RIGHT OUTER JOIN ");
         sb.append("     cont.customer cust ");
+        sb.append("     LEFT OUTER JOIN ");
+        sb.append("     cont.meter me ");
         sb.append("WHERE cust.supplier.id = :supplierId ");
         if (!contractNumber.isEmpty()) {
             sb.append("AND   cont.contractNumber LIKE :contractNumber ");
@@ -729,6 +732,9 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         }
         if (!"".equals(mdsId)) {
             sb.append("AND   cont.meter.mdsId LIKE :mdsId ");
+        }
+        if (!"".equals(gs1)) {
+            sb.append("AND   me.gs1 = :gs1 ");
         }
         if (sicIdList.size() > 0) {
             sb.append("AND   cont.sic.id IN (:sicIdList) ");
@@ -772,6 +778,9 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         }
         if (!"".equals(mdsId)) {
             query.setString("mdsId", mdsId+"%");
+        }
+        if (!"".equals(gs1)) {
+            query.setString("gs1", gs1);
         }
         if (sicIdList.size() > 0) {
             query.setParameterList("sicIdList", sicIdList);
@@ -830,6 +839,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         sb.append("       loc.name AS LOCATION_NAME, ");
         sb.append("       cd1.descr AS SERVICETYPE_NAME, ");
         sb.append("       meter.mdsId AS MDS_ID, ");
+        sb.append("       meter.gs1 AS GS1, ");
         sb.append("       cd2.descr AS SIC_NAME, ");
         sb.append("       cd1.id AS SERVICETYPE_ID, ");
         sb.append("       cont.customer.customerNo AS CUSTOMER_NO ");
@@ -989,6 +999,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         sb.append("\n       i.descr AS sicName ,");
         sb.append("\n       i.id AS sicId ,");
         sb.append("\n       m.id AS meterId, ");
+        sb.append("\n       m.gs1 AS gs1, ");
         sb.append("\n       c.contractNumber AS contractNumber, ");
         sb.append("\n       c.barcode AS barcode, ");
         sb.append("\n       c.receiptNumber AS receiptNumber, ");
@@ -1038,6 +1049,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         String status = (String)conditionMap.get("status");
         String demandResponse = (String)conditionMap.get("dr");
         String sicId = (String)conditionMap.get("customerType");
+        String gs1 = (String)conditionMap.get("gs1");
         String operatorId = StringUtil.nullToBlank(conditionMap.get("operatorId"));
         String[] sicIds = sicId.split(",");
         List<Integer> sicIdList = new ArrayList<Integer>();
@@ -1062,7 +1074,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 
         StringBuilder sb = new StringBuilder()
         .append(" SELECT cont.CONTRACT_NUMBER, cust.NAME as CUSTNAME, loc.NAME as LOCNAME, tariff.NAME as TARIFFNAME, ")
-        .append("        cont.CONTRACTDEMAND, cd1.NAME as CREDITTYPENAME, mt.MDS_ID, cd2.NAME as STATUSNAME,   ")
+        .append("        cont.CONTRACTDEMAND, cd1.NAME as CREDITTYPENAME, mt.MDS_ID, cd2.NAME as STATUSNAME, mt.gs1,  ")
         .append(" case when cust.DEMANDRESPONSE = 0 then 'Y' when cust.DEMANDRESPONSE = 1 then 'N' end as DEMANDRESPONSE,   ")
 //        .append("        cd4.NAME as CUSTOMTYPENAME, cust.EMAIL, cust.TELEPHONENO, cust.MOBILENO,  ")
         .append("        cd4.NAME as SICNAME, cust.EMAIL, cust.TELEPHONENO, cust.MOBILENO,  ")
@@ -1097,6 +1109,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         if(!"".equals(startDate)) sb.append(" AND cont.CONTRACT_DATE >= :startDate ");
         if(!"".equals(endDate)) sb.append(" AND cont.CONTRACT_DATE <= :endDate ");
         if(!"".equals(operatorId)) sb.append(" AND cont.operator_id = :operatorId");
+        if(!"".equals(gs1)) sb.append(" AND mt.gs1 = :gs1");
         int firstResult = page * pageSize;
 
         String serviceTypeCode = "";
@@ -1127,6 +1140,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         if(!"".equals(startDate)) query.setString("startDate", startDate);
         if(!"".equals(endDate)) query.setString("endDate", endDate);
         if(!"".equals(operatorId)) query.setInteger("operatorId", Integer.parseInt(operatorId));
+        if(!"".equals(gs1)) query.setString("gs1", gs1);
         query.setFirstResult(firstResult);
         query.setMaxResults(pageSize);
 
@@ -1151,6 +1165,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         String customerName = StringUtil.nullToBlank(conditionMap.get("customerName"));
         String contractDemand = StringUtil.nullToBlank(conditionMap.get("contractDemand"));
         String mdsId = StringUtil.nullToBlank(conditionMap.get("mdsId"));
+        String gs1 = StringUtil.nullToBlank(conditionMap.get("gs1"));
         String demandResponse = StringUtil.nullToBlank(conditionMap.get("dr"));
         String startDate = StringUtil.nullToBlank(conditionMap.get("startDate"));
         String endDate = StringUtil.nullToBlank(conditionMap.get("endDate"));
@@ -1186,6 +1201,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         sb.append("\n       cont.contractdemand AS CONTRACTDEMAND, ");
         sb.append("\n       cd1.descr AS CREDITTYPENAME, ");
         sb.append("\n       mt.mds_id AS MDS_ID, ");
+        sb.append("\n       mt.gs1 AS GS1, ");
         sb.append("\n       cd2.descr AS STATUSNAME, ");
         sb.append("\n       CASE WHEN cust.demandresponse = 0 THEN 'Y' ");
         sb.append("\n            WHEN cust.demandresponse = 1 THEN 'N' END AS DEMANDRESPONSE, ");
@@ -1241,6 +1257,9 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         }
         if (!mdsId.isEmpty()) {
             sb.append("\nAND   mt.mds_Id LIKE :mdsId ");
+        }
+        if (!gs1.isEmpty()) {
+            sb.append("\nAND   mt.gs1 LIKE :gs1 ");
         }
         if (status != null) {
             sb.append("\nAND   cont.status_id = :status");
@@ -1298,6 +1317,9 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         }
         if (!mdsId.isEmpty()) {
             query.setString("mdsId", mdsId+"%");
+        }
+        if (!gs1.isEmpty()) {
+            query.setString("gs1", gs1);
         }
         if (status != null) {
             query.setInteger("status", status);
@@ -1396,6 +1418,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("\nSELECT COUNT(*) AS cnt ");
         } else {
             sb.append("\nSELECT mt.id AS id, ");
+            sb.append("\n       mt.gs1 AS gs1, ");
             sb.append("\n       mt.mdsId AS mdsId ");
         }
         sb.append("\nFROM Meter mt left outer join mt.meterStatus ms ");
@@ -2580,7 +2603,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 
         sb.append(" SELECT   c.id as id ");
         sb.append(" FROM     Contract c ");
-        sb.append(" WHERE    (c.creditType.code = :perpay or c.creditType.code = :emergencyCredit)");
+        sb.append(" WHERE    (c.creditType.code = :perpay or c.creditType.code = :emergencyCredit)  ");
         sb.append(" and c.meter is not null and c.serviceTypeCode.name = :serviceType ");
         sb.append(" and c.customer is not null ");
 
