@@ -1,7 +1,5 @@
 package com.aimir.fep.sms.edh.atompark;
 
-import java.util.UUID;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -24,6 +22,7 @@ public class ConnectAPI implements SMSInterface {
 		requestBuilder = new RequestBuilder(url);
 	}
 	
+	/*
 	public static ConnectAPI getInstance(String url, String login, String password) {
 		if(instance == null) {
 			synchronized (ConnectAPI.class) {
@@ -35,6 +34,7 @@ public class ConnectAPI implements SMSInterface {
 		
 		return instance;
 	}
+	*/
 	
 	@Override
 	public String send(String mobileNumber, String message) {

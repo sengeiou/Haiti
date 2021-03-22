@@ -21,6 +21,6 @@ public class RequestBuilder {
             ex.printStackTrace();
         }
         Connector.disconnect();
-        return responseString.toString();        
+        return responseString.toString();  
     }  
 }

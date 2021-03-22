@@ -29,7 +29,7 @@ public class SendSMS_EDH_V2 {
     @Autowired
     private SmsServiceLogDao smsServiceLogDao; 
     
-	private SMSInterface instance;
+	private SMSInterface apiInterface;
 	
 	private String url;
 	private String login;
@@ -46,18 +46,18 @@ public class SendSMS_EDH_V2 {
 	}
 	
 	private void init() {
-		if(instance == null) {
-			instance = ConnectAPI.getInstance(url, login, password);
+		if(apiInterface == null) {
+			apiInterface = new ConnectAPI(url, login, password);
 		}
 		
-		log.debug("url : " +  url + ", login : " +  login + ", password : " +  password + ", countryCode : " +  countryCode +", instance : " +instance);
+		log.debug("url : " +  url + ", login : " +  login + ", password : " +  password + ", countryCode : " +  countryCode +", instance : " +apiInterface);
 	}
 	
 	public void send(String mobileNumber, String message) {
 		init();
 		
-		if(instance != null) {
-			String result = instance.send(mobileNumber, message);
+		if(apiInterface != null) {
+			String result = apiInterface.send(mobileNumber, message);
 			if(result != null) {
 				log.debug("mobileNumber : " + mobileNumber +",sms result : " + result);
 				saveSMSLog(mobileNumber, message, result);
