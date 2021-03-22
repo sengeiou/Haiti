@@ -132,7 +132,8 @@
             autoLoad: {params:{start: 0, limit: rowSize}},
             url: "${ctx}/gadget/contract/getMeterGridList.do",
             baseParams: {
-                mdsId : updContractSearchMdsId
+                mdsId : updContractSearchMdsId,
+                gs1 : updContractSearchGs1
             },
             // total count value
             totalProperty: 'totalCount',
@@ -236,6 +237,7 @@
         $("#meterSearchButton2").click(function() {
             //검색 조건을 만들어준다.
             updContractSearchMdsId = $("#meterMdsIdU").val();
+            updContractSearchGs1 = $("#meterGs1U").val();
 
             //미터 리스트 가져오기.
             getUpdContractMeterGridList();
@@ -2313,11 +2315,11 @@
                     viewToolTip: addTreeTooltip
                 })
             }
-            ,{header: "<fmt:message key='aimir.shipment.gs1'/>", dataIndex: 'gs1_', width: tgWidth/10,
+            /* ,{header: "<fmt:message key='aimir.shipment.gs1'/>", dataIndex: 'gs1_', width: tgWidth/10,
                 tpl: new Ext.XTemplate('{gs1:this.viewToolTip}', {
                     viewToolTip: addTreeTooltip
                 })
-            }
+            } */
             ,{header: "<fmt:message key='aimir.sic'/>", dataIndex: 'sicName', width: (tgWidth/10 *2),
                 tpl: new Ext.XTemplate('{sicName:this.viewToolTip}', {
                     viewToolTip: addTreeTooltip
@@ -3747,12 +3749,6 @@
                                         <td class="padding-r20px2">
                                             <input type="text" id="preMdsId" readonly class="border-trans bg-trans" style="width: 120px;"/>
                                         </td>
-                                                                                
-                                        <!-- gs1 -->
-                                        <td class="bold withinput"><fmt:message key="aimir.shipment.gs1" /></td>
-                                        <td class="padding-r20px2">
-                                            <input type="text" id="meterGs1" readonly class="border-trans bg-trans" style="width: 120px; text-align: left;"/>
-                                        </td>  
                                         
                                     </tr>
 <!--                          
@@ -3795,6 +3791,12 @@
                                         <td class="padding-r20px2">
                                             <input type="text" id="meterMdsId" readonly class="border-trans bg-trans" style="width: 120px; text-align: left;"/>
                                         </td>   
+                                                                                                                        
+                                        <!-- gs1 -->
+                                        <td class="bold withinput"><fmt:message key="aimir.shipment.gs1" /></td>
+                                        <td class="padding-r20px2">
+                                            <input type="text" id="meterGs1" readonly class="border-trans bg-trans" style="width: 120px; text-align: left;"/>
+                                        </td>  
                                     </tr>     
                                     <tr>
                                         <!-- 지불타입 -->
@@ -4026,9 +4028,7 @@
                                         <!-- 예전미터 시리얼 -->
                                         <td class="bold withinput"><fmt:message key="aimir.preMeterid"/></td>
                                         <td><input name="preMdsIdU" style="width:150px" id="preMdsIdU" type="text"/></td>
-                                                                                
-                                        <td class="bold withinput"><fmt:message key="aimir.shipment.gs1"/></td>
-                                        <td><input name="meterGs1U" style="width:180px" id="meterGs1U" type="text"/></td>
+
                                     </tr>
 <!--
                                     <tr>
@@ -4059,6 +4059,12 @@
                                             <input type="text" id="meterMdsIdU" style="width: 150px;"/>
                                             <input type="hidden" id="meterMdsIdU_id" style="width: 150px;"/>
  
+                                        </td>
+                                        
+                                        <td class="bold withinput"><fmt:message key="aimir.shipment.gs1"/></td>
+                                        <td><input name="meterGs1U" style="width:150px" id="meterGs1U" type="text"/></td>
+                                        
+                                        <td>
                                             <!-- search button2 -->
                                             <span class="am_button margin-l10 margin-t1px">
                                                 <a id="meterSearchButton2" href="#" class="on"><fmt:message key="aimir.button.search" /></a>

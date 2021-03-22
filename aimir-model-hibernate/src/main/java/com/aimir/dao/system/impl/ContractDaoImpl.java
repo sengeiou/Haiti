@@ -1409,6 +1409,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
     public List<Map<String, Object>> getMeterGridList(Map<String, Object> conditionMap, boolean isCount) {
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
         String mdsId = StringUtil.nullToBlank(conditionMap.get("mdsId"));
+        String gs1 = StringUtil.nullToBlank(conditionMap.get("gs1"));
         Integer page = (Integer)conditionMap.get("page");
         Integer limit = (Integer)conditionMap.get("limit");
 
@@ -1429,6 +1430,11 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         } else {
             sb.append("\nWHERE (mt.meterStatus is null OR ms.name <> :deleteName) ");
         }
+        
+        if (!gs1.isEmpty()) {
+        	sb.append("\nOR mt.gs1 LIKE :gs1 ");
+        }
+        
         if (!isCount) {
             sb.append("\nORDER BY mt.mdsId ");
         }
@@ -1436,6 +1442,9 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         Query query = getSession().createQuery(new SQLWrapper().getQuery(sb.toString()));
         if (!mdsId.isEmpty()) {
             query.setString("mdsId", "%" + mdsId + "%");
+        }
+        if (!gs1.isEmpty()) {
+            query.setString("gs1", "%" + gs1 + "%");
         }
         query.setString("deleteName", MeterStatus.Delete.name());
         if (isCount) {

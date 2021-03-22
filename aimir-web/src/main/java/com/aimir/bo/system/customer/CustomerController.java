@@ -2930,7 +2930,7 @@ public class CustomerController {
      * @return
      */
     @RequestMapping(value = "/gadget/contract/getMeterGridList")
-    public ModelAndView getMeterGridList (@RequestParam("mdsId") String mdsId) {
+    public ModelAndView getMeterGridList (@RequestParam("mdsId") String mdsId, @RequestParam("gs1") String gs1) {
         ModelAndView mav = new ModelAndView("jsonView");
         HttpServletRequest request = ESAPI.httpUtilities().getCurrentRequest();
 
@@ -2941,6 +2941,7 @@ public class CustomerController {
         conditionMap.put("page", page);
         conditionMap.put("limit", limit);
         conditionMap.put("mdsId", mdsId);
+        conditionMap.put("gs1", gs1);
 
         List<Map<String, Object>> result = contractManager.getMeterGridList(conditionMap);
 
