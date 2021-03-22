@@ -40,7 +40,6 @@ public class ConnectAPI implements SMSInterface {
 	public String send(String sendId, String mobileNumber, String message) {
 		String messageID = "id1";
 		String variables = "";
-		String sender = "Haiti";
 		
         String request="<?xml version=\"1.0\" encoding=\"UTF-8\"?>"; 
         request=request.concat("<SMS>");     
@@ -52,7 +51,7 @@ public class ConnectAPI implements SMSInterface {
 	        request=request.concat("<password>"+this.password+"</password>");
         request=request.concat("</authentification>");
         request=request.concat("<message>");
-        	request=request.concat("<sender>"+sender+"</sender>");
+        	request=request.concat("<sender>"+sendId+"</sender>");
         	request=request.concat("<text>"+message+"</text>");
         request=request.concat("</message>");
         request=request.concat("<numbers>");
