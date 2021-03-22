@@ -712,6 +712,7 @@ function makeDetailDataList(params) {
 			</a>
 		</div>
 		<br>
+		<br>
 		<div class="mvm-custinfo radius6">
 			<table class="wfree table_detail" style="width: 99%;">
 				<tr>

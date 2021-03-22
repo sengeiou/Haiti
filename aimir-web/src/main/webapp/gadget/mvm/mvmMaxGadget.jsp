@@ -309,7 +309,7 @@
             fmtMessage[5] = "<fmt:message key="aimir.previous"/>";
             fmtMessage[6] = "<fmt:message key="aimir.co2formula"/>";
             fmtMessage[7] = "<fmt:message key="aimir.mcuid2"/>";
-            fmtMessage[8] = "<fmt:message key="aimir.meterid2"/>";
+            fmtMessage[8] = "<fmt:message key="aimir.meterid"/>";
             fmtMessage[9] = "<fmt:message key="aimir.location"/>";
             fmtMessage[10] = "<fmt:message key="aimir.view.detail"/>";
             fmtMessage[11] = "<fmt:message key="aimir.alert"/>";
@@ -468,7 +468,7 @@
                                  ,{header: "<fmt:message key='aimir.meteringtime'/>", dataIndex: 'meteringTime'}
                                  ,{header: "<fmt:message key='aimir.usage.kwh'/>", dataIndex: 'value', align: 'right'}
                                  ,{header: "<fmt:message key='aimir.previous'/> [<fmt:message key='aimir.unit.kwh'/>]", dataIndex: 'prevValue', align: 'right'}
-                                 ,{header: "<fmt:message key='aimir.meterid2'/>", dataIndex: 'meterNo'}
+                                 ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'meterNo'}
                                  ,{header: "<fmt:message key='aimir.modemid'/>", dataIndex: 'modemId'}
                                  ,{header: "<fmt:message key='aimir.view.detail'/>",
                                      renderer: function(value, metaData, record, index) {
@@ -495,7 +495,7 @@
                                  ,{header: "<fmt:message key='aimir.meteringtime'/>", dataIndex: 'meteringTime'}
                                  ,{header: "<fmt:message key='aimir.usage.kwh'/>", dataIndex: 'value', align: 'right'}
                                  ,{header: "<fmt:message key='aimir.previous'/> [<fmt:message key='aimir.unit.kwh'/>]", dataIndex: 'prevValue', align: 'right'}
-                                 ,{header: "<fmt:message key='aimir.meterid2'/>", dataIndex: 'meterNo'}
+                                 ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'meterNo'}
                                  ,{header: "<fmt:message key='aimir.modemid'/>", dataIndex: 'modemId'}
                                  ,{header: "<fmt:message key='aimir.view.detail'/>",
                                      renderer: function(value, metaData, record, index) {
@@ -525,7 +525,7 @@
                          ,{header: "<fmt:message key='aimir.meteringtime'/>", dataIndex: 'meteringTime'}
                          ,{header: "<fmt:message key='aimir.usage.m3'/>", dataIndex: 'value', align: 'right'}
                          ,{header: "<fmt:message key='aimir.previous'/> [<fmt:message key='aimir.unit.m3'/>]", dataIndex: 'prevValue', align: 'right'}
-                         ,{header: "<fmt:message key='aimir.meterid2'/>", dataIndex: 'meterNo'}
+                         ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'meterNo'}
                          ,{header: "<fmt:message key='aimir.modemid'/>", dataIndex: 'modemId'}
                          ,{header: "<fmt:message key='aimir.view.detail'/>",
                              renderer: function(value, metaData, record, index) {
@@ -553,7 +553,7 @@
                          ,{header: "<fmt:message key='aimir.meteringtime'/>", dataIndex: 'meteringTime'}
                          ,{header: "<fmt:message key='aimir.usage'/>[<fmt:message key='aimir.unit.Gcal'/>]", dataIndex: 'value', align: 'right'}
                          ,{header: "<fmt:message key='aimir.previous'/> [<fmt:message key='aimir.unit.Gcal'/>]", dataIndex: 'prevValue', align: 'right'}
-                         ,{header: "<fmt:message key='aimir.meterid2'/>", dataIndex: 'meterNo'}
+                         ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'meterNo'}
                          ,{header: "<fmt:message key='aimir.modemid'/>", dataIndex: 'modemId'}
                          ,{header: "<fmt:message key='aimir.view.detail'/>",
                              renderer: function(value, metaData, record, index) {
@@ -582,7 +582,7 @@
                          ,{header: "<fmt:message key='aimir.meteringtime'/>", dataIndex: 'meteringTime'}
                          ,{header: "<fmt:message key='aimir.usage'/>", dataIndex: 'value', align: 'right'}
                          ,{header: "<fmt:message key='aimir.previous'/>", dataIndex: 'prevValue', align: 'right'}
-                         ,{header: "<fmt:message key='aimir.meterid2'/>", dataIndex: 'meterNo'}
+                         ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'meterNo'}
                          ,{header: "<fmt:message key='aimir.modemid'/>", dataIndex: 'modemId'}
                          ,{header: "<fmt:message key='aimir.view.detail'/>",
                              renderer: function(value, metaData, record, index) {
@@ -762,7 +762,7 @@
                 <td class="gray11pt withinput" style="width: 85px"><fmt:message key="aimir.deviceType"/></td>
                 <td><form:select id="device_type"  path="deviceType" items="${deviceType}" style="width:110px;"/></td>
                 <td class="space20"></td>
-                <td class="gray11pt withinput" style="width: 110px"><fmt:message key="aimir.meterid2"/></td>
+                <td class="gray11pt withinput" style="width: 110px"><fmt:message key="aimir.meterid"/></td>
                 <input id="meter_id" type="text" style="width:120px;display: none">
                 <td><input id="mdev_id" type="text" style="width:120px;"></td>
                 <td class="space20"></td>
