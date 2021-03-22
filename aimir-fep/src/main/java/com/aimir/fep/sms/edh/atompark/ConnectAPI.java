@@ -37,7 +37,7 @@ public class ConnectAPI implements SMSInterface {
 	*/
 	
 	@Override
-	public String send(String mobileNumber, String message) {
+	public String send(String sendId, String mobileNumber, String message) {
 		String messageID = "id1";
 		String variables = "";
 		String sender = "Haiti";
@@ -52,7 +52,7 @@ public class ConnectAPI implements SMSInterface {
 	        request=request.concat("<password>"+this.password+"</password>");
         request=request.concat("</authentification>");
         request=request.concat("<message>");
-        	request=request.concat("<sender>"+sender+"</sender>"); //"15771212"아닌 15771212전송할 경우 도착하지 않았다.
+        	request=request.concat("<sender>"+sender+"</sender>");
         	request=request.concat("<text>"+message+"</text>");
         request=request.concat("</message>");
         request=request.concat("<numbers>");

@@ -1,5 +1,7 @@
 package com.aimir.fep.sms.edh;
 
+import java.util.UUID;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
@@ -56,18 +58,19 @@ public class SendSMS_EDH_V2 {
 	public void send(String mobileNumber, String message) {
 		init();
 		
+		String sendId = UUID.randomUUID().toString().replaceAll("-", "").substring(0,8);
 		if(apiInterface != null) {
-			String result = apiInterface.send(mobileNumber, message);
+			String result = apiInterface.send(sendId, mobileNumber, message);
 			if(result != null) {
 				log.debug("mobileNumber : " + mobileNumber +",sms result : " + result);
-				saveSMSLog(mobileNumber, message, result);
+				saveSMSLog(sendId, mobileNumber, message, result);
 			}
 		}
 		
 		log.info("send smsLog complete");
 	}
 
-	private void saveSMSLog(String mobileNumber, String message, String result) {
+	private void saveSMSLog(String sendId, String mobileNumber, String message, String result) {
 		TransactionStatus txStatus = null;
 		
 		try {
@@ -75,6 +78,7 @@ public class SendSMS_EDH_V2 {
 			
 			SmsServiceLog smsLog = new SmsServiceLog();
 			smsLog.setMsg(message);
+			smsLog.setSendNo(sendId);
 			smsLog.setReceiveNo(mobileNumber);
 			smsLog.setSendTime(TimeUtil.getCurrentTime());
 			smsLog.setResult(result);
