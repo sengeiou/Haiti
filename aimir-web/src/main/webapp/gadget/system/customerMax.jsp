@@ -116,6 +116,7 @@
 
     //추가 프로퍼티
     var updContractSearchMdsId = "";
+    var updContractSearchGs1 = "";
 
     // Meter 그리드 관련 프로퍼티
     var updContractMeterGridOn = false;
@@ -671,6 +672,7 @@
 
         function setSearchCondition() {
             updContractSearchMdsId = "";
+            updContractSearchGs1 = "";
         }
 
         $("#contractInfoUpdateCancel").click(function() {
