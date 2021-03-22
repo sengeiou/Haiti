@@ -1,6 +1,7 @@
 package com.aimir.fep.sms.edh.atompark;
 
 import java.util.Calendar;
+import java.util.UUID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -40,7 +41,7 @@ public class ConnectAPI implements SMSInterface {
 	
 	@Override
 	public String send(String mobileNumber, String message) {
-		String messageID = DateTimeUtil.getDateString(Calendar.getInstance().getTime()) + mobileNumber;
+		String messageID = UUID.randomUUID().toString().replace("-", "").substring(0, 5);
 		String variables = "";
 		String sender = "Haiti";
 		
@@ -60,7 +61,7 @@ public class ConnectAPI implements SMSInterface {
         request=request.concat("<numbers>");
 	        request=request.concat("<number");
 		        request=request.concat(" messageID=\""+messageID+"\""); 	//phone.getIdMessage()
-		        request=request.concat(" variables=\""+variables+"\""); 	//phone.getVariable()
+		        //request=request.concat(" variables=\""+variables+"\""); 	//phone.getVariable()
 		        request=request.concat(">");
 		        request=request.concat(mobileNumber);						//phone.getPhone()
 	        request=request.concat("</number>");
