@@ -281,7 +281,7 @@ class SMSTaskSubClz implements Runnable {
 				maxSC = sc;
 		}
 		
-		return String.format("%.2f", maxSC);
+		return String.valueOf((int)maxSC);
 	}
 	
 	
