@@ -3381,4 +3381,23 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         }
         return result;
     }
+    
+	@Override
+	public List<Contract> getReqSendSMSList() {
+		StringBuffer sbQuery = new StringBuffer();
+		
+		sbQuery.append(" SELECT ");
+		sbQuery.append("\n 	co.* ");
+		sbQuery.append("\n FROM ");
+		sbQuery.append("\n 	contract co, meter me, customer cu");
+		sbQuery.append("\n WHERE");
+		sbQuery.append("\n 	co.METER_ID = me.id");
+		sbQuery.append("\n 	AND co.CUSTOMER_ID = cu.id");
+		sbQuery.append("\n 	AND me.meter_status != (select id from code where code = '1.3.3.9')");
+		sbQuery.append("\n 	AND co.status_id != (select id from code where code = '2.1.3')");
+		sbQuery.append("\n 	AND me.LAST_READ_DATE >= (SELECT TO_CHAR(SYSDATE -15 ,'yyyymmddhh24miss') FROM dual)");
+		
+		List<Contract> result = getSession().createNativeQuery(sbQuery.toString(), Contract.class).getResultList();
+		return result;
+	}
 }

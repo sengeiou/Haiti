@@ -938,4 +938,9 @@ public interface ContractDao extends GenericDao<Contract, Integer>{
      * @return
      */
     public Map<String, Object> getRequestDataForUSSDPOS(Map<String, Object> conditionMap);
+    
+    /*
+     * SMS 전송할 대상 리스트
+     */
+    public List<Contract> getReqSendSMSList();
 }

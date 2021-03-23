@@ -538,5 +538,12 @@ public class ContractDaoImpl extends AbstractJpaDao<Contract, Integer> implement
 		return null;
 	}
 
+	@Override
+	public List<Contract> getReqSendSMSList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
     
 }
