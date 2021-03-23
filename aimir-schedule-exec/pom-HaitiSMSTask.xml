@@ -105,6 +105,18 @@
       <groupId>com.aimir</groupId>
       <artifactId>aimir-model</artifactId>
       <version>${aimir.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>eclipselink</artifactId>
+          <groupId>org.eclipse.persistence</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.aimir</groupId>
+      <artifactId>aimir-model-hibernate</artifactId>
+      <version>${aimir.version}</version>
+    </dependency>
     </dependency>
     <dependency>
       <groupId>com.aimir</groupId>
