@@ -223,7 +223,7 @@ class SMSTaskSubClz implements Runnable {
 				.append("NIC Number : ").append(contract.getContractNumber()).append(",\n")
 				.append("Courant Credit : ").append(contract.getCurrentCredit()).append("");
 			
-			if(sendType ==SEND_SMS_TYPE.WHOLESALE) {
+			if(sendType == SEND_SMS_TYPE.DIRECT) {
 				buffer.append(" \n");
 				buffer.append("* La charge mensuelle pour ").append(getFixedPrice()).append("HTG");
 			}
@@ -232,7 +232,7 @@ class SMSTaskSubClz implements Runnable {
 						
 			if(mobileNumber != null && !mobileNumber.isEmpty()) {
 				log.info("mobileNumber : " + mobileNumber +", message : " + buffer.toString());
-				//sender.send(mobileNumber, buffer.toString());
+				sender.send(mobileNumber, buffer.toString());
 			} else {
 				log.error("contract id :" + contractId+" | mobileNumber is null");
 			}
