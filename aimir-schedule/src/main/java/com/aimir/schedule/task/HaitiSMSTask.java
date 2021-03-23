@@ -1,5 +1,6 @@
 package com.aimir.schedule.task;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -115,7 +116,20 @@ public class HaitiSMSTask extends ScheduleTask {
 	}
 	
 	private List<Contract> getTargetContract() {
-		return contractDao.getReqSendSMSList();
+		TransactionStatus txstatus = null;
+		List<Contract> targetList = new ArrayList<Contract>();
+		
+		try {
+			txstatus = txmanager.getTransaction(null);
+			
+			targetList = contractDao.getReqSendSMSList();
+			
+			txmanager.commit(txstatus);
+		}catch(Exception e) {
+			log.error(e, e);
+            if (txstatus != null) txmanager.rollback(txstatus);
+		}
+		return targetList;
 	}
 	
 	@Override
