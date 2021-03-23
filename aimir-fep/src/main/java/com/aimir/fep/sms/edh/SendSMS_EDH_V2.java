@@ -112,8 +112,6 @@ public class SendSMS_EDH_V2 {
 			buffer.append("+").append(m);
 		}
 		
-		buffer.append(m.replaceAll("-", ""));
-		
-		return buffer.toString();
+		return buffer.toString().replaceAll("-", "");
 	}
 }
