@@ -686,7 +686,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("SELECT COUNT(DISTINCT cust.id) AS cnt ");
         } else {
             sb.append("SELECT DISTINCT cust.id AS CUSTOMER_ID, ");
-            sb.append("       me.gs1 AS GS1, ");
+//            sb.append("       me.gs1 AS GS1, ");
             sb.append("       cust.name AS CUSTOMER_NAME, ");
             sb.append("       cust.address AS CUSTOMER_ADDRESS, ");
             sb.append("       cust.address1 AS CUSTOMER_ADDRESS1, ");

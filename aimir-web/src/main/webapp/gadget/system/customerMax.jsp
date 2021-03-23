@@ -2317,11 +2317,11 @@
                     viewToolTip: addTreeTooltip
                 })
             }
-            /* ,{header: "<fmt:message key='aimir.shipment.gs1'/>", dataIndex: 'gs1_', width: tgWidth/10,
+            ,{header: "<fmt:message key='aimir.shipment.gs1'/>", dataIndex: 'gs1', width: tgWidth/10,
                 tpl: new Ext.XTemplate('{gs1:this.viewToolTip}', {
                     viewToolTip: addTreeTooltip
                 })
-            } */
+            }
             ,{header: "<fmt:message key='aimir.sic'/>", dataIndex: 'sicName', width: (tgWidth/10 *2),
                 tpl: new Ext.XTemplate('{sicName:this.viewToolTip}', {
                     viewToolTip: addTreeTooltip
