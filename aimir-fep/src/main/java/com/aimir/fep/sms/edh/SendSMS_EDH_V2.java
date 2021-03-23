@@ -106,9 +106,10 @@ public class SendSMS_EDH_V2 {
 			return null;
 		
 		StringBuffer buffer = new StringBuffer();
-		
-		if(!m.startsWith("+")) {
-			buffer.append("+").append(countryCode);	
+		if(m.startsWith("010")) {
+			buffer.append("+").append(countryCode).append(m.substring(1, m.length()));
+		}else if(m.startsWith(countryCode)) {
+			buffer.append("+").append(m);
 		}
 		
 		buffer.append(m.replaceAll("-", ""));
