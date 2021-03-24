@@ -112,17 +112,17 @@ public class HaitiRelayoffTask extends ScheduleTask {
 		
 		if(checkFreedays()) {
 			log.info("Can't relay off because it's the weekend.");
-			//return;
+			return;
 		}
 		
 		if(checkBreakRelayTime()) {
 			log.info("Can't relay off because it's the after " + BREAK_RELAY_OFF_HOUR +" o'clock " );
-			//return;
+			return;
 		}
 		
 		if(checkHoliday()) {
 			log.info("Can't relay off because it's the holiday. " );
-			//return;
+			return;
 		}
 		
         isNowRunning = true;
@@ -190,11 +190,10 @@ public class HaitiRelayoffTask extends ScheduleTask {
 		
 		try {
 			txstatus = txmanager.getTransaction(null);
-			/*
-			List<Map<String, Object>> queryResult = meterDao.getRelayOnOffMeters("relayoff", dcuSysId, mdevId);
+			
+			List<Map<String, Object>> queryResult = meterDao.getRelayOnOffMeters(I210PLUS_RELAY_ACTION.RELAY_OFF.name(), dcuSysId, mdevId);
 			if(queryResult == null || queryResult.size() == 0)
 				return null;
-
 			totalExecuteCount = queryResult.size();
 			
 			targets = new HashMap<String, List<String>>();			
@@ -221,15 +220,15 @@ public class HaitiRelayoffTask extends ScheduleTask {
 				meterList.add(mdsId);
 				targets.put(mcuId, meterList);
 			}
-			*/
 			
+			/* TEST Code ..
 			targets = new HashMap<String, List<String>>();
 			
 			List<String> l = new ArrayList<String>();
 			l.add("810312254");
 			
 			targets.put("0", l);
-			
+			*/
 			txmanager.commit(txstatus);
 		}catch(Exception e) {
 			log.error(e, e);
@@ -365,9 +364,10 @@ class HaitiRelayoffTaskSubClz implements Runnable {
 		try {
 			cmdOperationUtil.cmdSetEnergyLevel(mcu.getSysID(), modem.getDeviceSerial(), I210PLUS_RELAY_ACTION.RELAY_OFF.getCode());
 			
-			Thread.sleep(15 * 1000);
+			Thread.sleep(10 * 1000);
 			
 			int relayStatus = cmdOperationUtil.cmdGetEnergyLevel(mcu.getSysID(), modem.getDeviceSerial());
+			
 			if(relayStatus == I210PLUS_RELAY_ACTION.RELAY_OFF.getCode()) {
 				status = ResultStatus.SUCCESS;
 				Code code = codeDao.getCodeIdByCodeObject(MeterStatus.CutOff.getCode());

@@ -5,7 +5,7 @@
     <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
         <!-- 패턴 레이아웃 설정.. -->
         <layout class="com.aimir.fep.logger.log.AimirPatternLayout">
-            <param name="ConversionPattern" value="%d %-5p [%l] %x - %m%n"/>
+            <param name="ConversionPattern" value="%s %d %-5p [%l] %x - %m%n"/>
         </layout>
     </appender>
 
@@ -16,7 +16,7 @@
         <param name="maxFileSize" value="200MB"/>
         <param name="maxBackupIndex" value="20"/>
         <layout class="com.aimir.fep.logger.log.AimirPatternLayout">
-            <param name="ConversionPattern" value="%d %-5p [%l] %x - %m%n"/>
+            <param name="ConversionPattern" value="%s %d %-5p [%l] %x - %m%n"/>
         </layout>
     </appender>
 
