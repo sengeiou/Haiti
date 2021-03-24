@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 
 import com.aimir.constants.CommonConstants.MeterStatus;
@@ -44,7 +43,6 @@ import com.aimir.schedule.command.CmdOperationUtil;
 import com.aimir.schedule.task.HaitiRelayoffTask.I210PLUS_RELAY_ACTION;
 import com.aimir.util.DateTimeUtil;
 
-@Service
 public class HaitiRelayoffTask extends ScheduleTask {
 	protected static Log log = LogFactory.getLog(HaitiRelayoffTask.class);
 	
@@ -80,15 +78,31 @@ public class HaitiRelayoffTask extends ScheduleTask {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[]{"spring-public.xml"}); 
         DataUtil.setApplicationContext(ctx);
         
+        String mdevId = null;
+        String dcuSysId = null;
+        if(args.length >= 2 ) {
+	        for(int i=0; i < args.length; i +=2 ) {
+	        	String nextArg = args[i];
+	        	
+	        	if (nextArg.startsWith("-mdevId")) {
+	        		mdevId = new String(args[i+1]);
+	            }else if (nextArg.startsWith("-dcuSysId")) {
+	            	dcuSysId = new String(args[i+1]);
+	            }  
+	        }
+	        
+	        log.info("mdevId : " + mdevId+", dcuSysId : " +dcuSysId);
+        }
+        
         HaitiRelayoffTask task = ctx.getBean(HaitiRelayoffTask.class);
-        task.execute(ctx);
+        task.execute(ctx, mdevId, dcuSysId);
         System.exit(0);
 	}
 
 	@Override
 	public void execute(JobExecutionContext context) { }
 	
-	private void execute(ApplicationContext ctx) {
+	private void execute(ApplicationContext ctx, String mdevId, String dcuSysId) {
 		if(isNowRunning){
             log.info("########### EDH Realy off already running...");
             return;
@@ -112,7 +126,7 @@ public class HaitiRelayoffTask extends ScheduleTask {
         isNowRunning = true;
         log.info("########### START Realy off Task ###############");
         
-        Map<String, List<String>> targets = getTargetMeters();
+        Map<String, List<String>> targets = getTargetMeters(mdevId, dcuSysId);
         if(targets == null || targets.size() == 0) {
         	log.info("target contract empty!! sms task finish!!!");
         	return;
@@ -168,14 +182,14 @@ public class HaitiRelayoffTask extends ScheduleTask {
 		return false;
 	}
 	
-	private Map<String, List<String>> getTargetMeters() {
+	private Map<String, List<String>> getTargetMeters(String mdevId, String dcuSysId) {
 		TransactionStatus txstatus = null;
 		Map<String, List<String>> targets = null;
 		
 		try {
 			txstatus = txmanager.getTransaction(null);
 			/*
-			List<Map<String, Object>> queryResult = meterDao.getRelayOnOffMeters("relayoff", null, null);
+			List<Map<String, Object>> queryResult = meterDao.getRelayOnOffMeters("relayoff", dcuSysId, mdevId);
 			if(queryResult == null || queryResult.size() == 0)
 				return null;
 
