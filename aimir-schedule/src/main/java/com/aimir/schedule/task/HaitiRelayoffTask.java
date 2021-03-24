@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 
 import com.aimir.constants.CommonConstants.MeterStatus;
@@ -43,6 +44,7 @@ import com.aimir.schedule.command.CmdOperationUtil;
 import com.aimir.schedule.task.HaitiRelayoffTask.I210PLUS_RELAY_ACTION;
 import com.aimir.util.DateTimeUtil;
 
+@Service
 public class HaitiRelayoffTask extends ScheduleTask {
 	protected static Log log = LogFactory.getLog(HaitiRelayoffTask.class);
 	
