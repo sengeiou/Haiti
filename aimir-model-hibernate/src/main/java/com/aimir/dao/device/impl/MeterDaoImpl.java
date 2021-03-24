@@ -9916,4 +9916,52 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
         
         return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();        
 	}
+    
+    @Override
+	public List<Map<String, Object>> getRelayOnOffMeters(String action, String dcuSysId, String meterId) {
+    	if(action == null) {
+    		return null;
+    	}
+    	
+    	StringBuffer sbQuery = new StringBuffer();
+    	
+    	sbQuery.append("\n SELECT ");
+    	sbQuery.append("\n 	mo.protocol_type, me.mds_id, mo.MCU_ID, co.ID");
+    	sbQuery.append("\n FROM ");
+    	sbQuery.append("\n 	meter me, modem mo, mcu mcu, contract co");
+    	sbQuery.append("\n WHERE	");
+    	sbQuery.append("\n	 me.MODEM_ID = mo.ID ");
+    	sbQuery.append("\n	 AND co.METER_ID = me.id");
+    	sbQuery.append("\n	 AND mo.MCU_ID = mcu.id(+)");
+    	sbQuery.append("\n	 AND co.status_id != (select id from code where code = '2.1.3')");
+    	
+    	if(dcuSysId != null) 
+    		sbQuery.append("\n	 AND mo.MCU_ID = '").append(dcuSysId).append("'");
+    
+    	if(meterId != null)
+    		sbQuery.append("\n	 AND me.mds_id = '").append(meterId).append("'");
+    	
+    	if("relayoff".equalsIgnoreCase(action)) {
+    		sbQuery.append("\n	 AND me.meter_status != (select id from code where code = '1.3.3.4')"); //relay off
+    		sbQuery.append("\n	 AND co.CURRENTCREDIT < 0 ");
+    	} else if("relayon".equalsIgnoreCase(action)) {
+    		sbQuery.append("\n	 AND me.meter_status = (select id from code where code = '1.3.3.4')"); //relay off
+    		sbQuery.append("\n	 AND co.CURRENTCREDIT >= 0 ");
+    	}
+    	
+    	List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
+    	
+    	List<Object[]> queryList = getSession().createNativeQuery(sbQuery.toString()).list();
+    	for (Object[] objects : queryList) {
+    		Map<String, Object> map = new HashMap<String, Object>();
+    		map.put("protocol_type", objects[0]);
+    		map.put("mds_id", objects[1]);
+    		map.put("mcu_id", objects[2]);
+    		map.put("contract_id", objects[3]);
+    		
+    		result.add(map);
+    	}
+    	
+		return result;
+	}
 }

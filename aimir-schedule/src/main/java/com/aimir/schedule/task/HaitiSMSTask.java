@@ -196,6 +196,10 @@ class SMSTaskSubClz implements Runnable {
 		long start = System.currentTimeMillis();
 		SnowflakeGeneration.getId();
 		
+		synchronized (this) {
+			HaitiSMSTask.currentCount++;
+		}
+		
 		TransactionStatus txstatus = null;
 		try {
 			txstatus = txmanager.getTransaction(null);
@@ -246,7 +250,6 @@ class SMSTaskSubClz implements Runnable {
 		}
 		
 		synchronized (this) {
-			HaitiSMSTask.currentCount++;
     		double rate = ((double) HaitiSMSTask.currentCount / (double) HaitiSMSTask.totalExecuteCount) * 100;
 
 			long end = System.currentTimeMillis();

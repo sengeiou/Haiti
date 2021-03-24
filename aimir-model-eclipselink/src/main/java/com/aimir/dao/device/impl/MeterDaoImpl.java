@@ -1178,4 +1178,11 @@ public class MeterDaoImpl extends AbstractJpaDao<Meter, Integer> implements Mete
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public List<Map<String, Object>> getRelayOnOffMeters(String action, String dcuSysId, String meterId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }	
