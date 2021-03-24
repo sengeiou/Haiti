@@ -758,12 +758,16 @@ function makeDetailDataList(params) {
 					<td style="width: 19% !important;">
 						<input type="text" readonly value="${customerInfo.meterNo}" class="border-trans bg-trans" style="width: 100%;">
 					</td>
+					<th style="width: 14% !important;"><fmt:message key="aimir.shipment.gs1" /></th>
+					<td style="width: 19% !important;">
+						<input type="text" readonly value="${gs1}" class="border-trans bg-trans" style="width: 100%;">
+					</td>
+				</tr>
+				<tr>
 					<th style="width: 13% !important;"><fmt:message key="aimir.mcuid2" /></th>
 					<td style="width: 20% !important;">
 						<input type="text" readonly value="${customerInfo.mcuNo}" class="border-trans bg-trans" style="width: 100%;">
 					</td>
-				</tr>
-				<tr>
 					<th style="width: 13%;"><fmt:message key="aimir.meteringtime" /></th>
 					<td style="width: 20%;">
 						<input type="text" readonly value="${customerInfo.lastTime}" class="border-trans bg-trans" style="width: 100%;">

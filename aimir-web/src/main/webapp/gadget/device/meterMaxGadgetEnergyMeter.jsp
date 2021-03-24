@@ -75,7 +75,7 @@
         }
 
 	 	$('#esolution').val("${meter.lpInterval}");  
-	 	$('#esolution').selectbox();   
+	 	//$('#esolution').selectbox();   
 
 	 	$.getJSON('${ctx}/gadget/device/meterStatus.do'
 			, function (returnData){
@@ -375,7 +375,8 @@
 		                        </tr>
 				                 <tr>
 				                 	<th><b><fmt:message key="aimir.resolution"/></b></th>
-			                        <td  class="padding-r20px">
+				                 	<td class="padding-r20px"><input type="text" id="esolution" readonly="readonly" class="border-trans" name="lpInterval" value="${meter.lpInterval}" />
+<!-- 			                        <td  class="padding-r20px">
 			                        	<select name="lpInterval" id="esolution" class="width-140px">
 			                        	<option value="1">1</option>
 			                        	<option value="5">5</option>
@@ -385,15 +386,13 @@
 			                        	<option value="45">45</option>
 			                        	<option value="60">60</option>
 			                        	</select>
-			  
-			                        </td>
+			                        </td> -->
+			                        
 			                   </tr>
 			                    <tr>
 			                        <th width="80px"><b><fmt:message key="aimir.ke"/></b></th>
-			                        <td>
-			                        	<input class="textBox-width-140" type="text" id="ke" name = "pulseConstant" value="${meter.pulseConstant}" onblur="javaScript:getNumberValidCheck(value);"/> 
+			                        <td class="padding-r20px"><input type="text" id="ke" readonly="readonly" class="border-trans" name="pulseConstant" value="${meter.pulseConstant}" />
 			                            <input type="hidden" id="keHidden" value="${meter.pulseConstant}"  />
-			                        </td>
 			                    </tr>
                                 <tr>
                                     <th width="80px"><b><fmt:message key="aimir.meter.transformerRatio"/></b></th>

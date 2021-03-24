@@ -141,6 +141,7 @@ public class MeterEventLogDaoImpl extends AbstractHibernateGenericDao<MeterEvent
         String eventName         = StringUtil.nullToBlank(conditionMap.get("eventName"));
         String meterType         = StringUtil.nullToBlank(conditionMap.get("meterType"));
         String meterId           = StringUtil.nullToBlank(conditionMap.get("meterId"));
+        String gs1               = StringUtil.nullToBlank(conditionMap.get("gs1"));
         String userEvents        = StringUtil.nullToBlank(conditionMap.get("userEvents"));
         String supplierId        = StringUtil.nullToBlank(conditionMap.get("supplierId"));
         String userId			 = StringUtil.nullToBlank(conditionMap.get("userId"));	
@@ -202,6 +203,14 @@ public class MeterEventLogDaoImpl extends AbstractHibernateGenericDao<MeterEvent
         	}
         }
         
+        if (!"".equals(gs1)) {
+        	if(gs1.indexOf('%') == 0 || gs1.indexOf('%') == (gs1.length()-1)) { // %문자가 양 끝에 있을경우
+                sb.append("\nAND   mtr.gs1 LIKE :gs1 ");
+        	}else {
+                sb.append("\nAND   mtr.gs1 = :gs1 ");
+        	}
+        }
+        
         sb.append("\n    GROUP BY evn.name ");
         
 //        if (occurFreq > 0) {
@@ -231,6 +240,9 @@ public class MeterEventLogDaoImpl extends AbstractHibernateGenericDao<MeterEvent
         if (!"".equals(meterId)) {
         	 query.setString("meterId", meterId);
         }
+        if (!"".equals(gs1)) {
+       	 query.setString("gs1", gs1);
+       }
 
 //        if (occurFreq > 0) {
 //            query.setInteger("occurFreq", occurFreq);
@@ -263,6 +275,7 @@ public class MeterEventLogDaoImpl extends AbstractHibernateGenericDao<MeterEvent
         String eventName         = StringUtil.nullToBlank(conditionMap.get("eventName"));
         String meterType         = StringUtil.nullToBlank(conditionMap.get("meterType"));
         String meterId           = StringUtil.nullToBlank(conditionMap.get("meterId"));
+        String gs1               = StringUtil.nullToBlank(conditionMap.get("gs1"));
         String eventCondition    = StringUtil.nullToBlank(conditionMap.get("eventCondition"));
         String userEvents   	 = StringUtil.nullToBlank(conditionMap.get("userEvents"));
         int occurFreq            = Integer.parseInt(StringUtil.nullToZero(conditionMap.get("occurFreq")));
@@ -282,6 +295,7 @@ public class MeterEventLogDaoImpl extends AbstractHibernateGenericDao<MeterEvent
         sb.append("\n	lo.name  AS locationName, ");
         sb.append("\n	COUNT(*)           AS meterCount, ");
         sb.append("\n	log.activator_id AS meterId, ");
+        sb.append("\n	mtr.gs1 AS gs1, ");
         sb.append("\n	log.activator_type  AS meterType ");
 		sb.append("\n FROM METEREVENT_LOG log ");
 		sb.append("\n INNER JOIN METEREVENT evn ON (log.METEREVENT_ID = evn.id) ");
@@ -324,6 +338,10 @@ public class MeterEventLogDaoImpl extends AbstractHibernateGenericDao<MeterEvent
             sb.append("\nAND   evn.name IN (").append(eventCondition).append(") ");
         }
         
+        if (!"".equals(gs1)) {
+            sb.append("\nAND   mtr.gs1 = :gs1 ");
+        }
+        
 //        if (!"".equals(meterType)) {
 //            sb.append("\nAND   log.activatorType = :meterType ");
 //        }
@@ -347,7 +365,7 @@ public class MeterEventLogDaoImpl extends AbstractHibernateGenericDao<MeterEvent
 //            sb.append("\nAND   p.OPERATOR_ID = :userId ");
 //        }
 //        
-        sb.append("\nGROUP BY evn.name, lo.name, log.activator_Id, log.activator_Type ");
+        sb.append("\nGROUP BY evn.name, lo.name, log.activator_Id, log.activator_Type, mtr.gs1 ");
         
         if (occurFreq > 0) {
             sb.append("\nHAVING COUNT(*) >= :occurFreq ");
@@ -428,6 +446,7 @@ public class MeterEventLogDaoImpl extends AbstractHibernateGenericDao<MeterEvent
         String eventName         = StringUtil.nullToBlank(conditionMap.get("eventName"));
         String meterType         = StringUtil.nullToBlank(conditionMap.get("meterType"));
         String meterId           = StringUtil.nullToBlank(conditionMap.get("meterId"));
+        String gs1               = StringUtil.nullToBlank(conditionMap.get("gs1"));
         String activatorId           = StringUtil.nullToBlank(conditionMap.get("activatorId"));
         String eventCondition    = StringUtil.nullToBlank(conditionMap.get("eventCondition"));
         String userEvents   	 = StringUtil.nullToBlank(conditionMap.get("userEvents"));
@@ -454,6 +473,7 @@ public class MeterEventLogDaoImpl extends AbstractHibernateGenericDao<MeterEvent
         sb.append("\n	evn.name AS eventValue, ");
         sb.append("\n	lo.name AS locationName, ");
         sb.append("\n	log.activator_id AS meterId, ");
+        sb.append("\n	mtr.gs1 AS gs1, ");
         sb.append("\n	log.ACTIVATOR_TYPE AS meterType, ");
         sb.append("\n	log.message AS message, ");
         sb.append("\n	evn.TROUBLE_ADVICE AS troubleAdvice ");
@@ -516,6 +536,14 @@ public class MeterEventLogDaoImpl extends AbstractHibernateGenericDao<MeterEvent
                 sb.append("\nAND   log.activator_Id = :meterId ");
         	}
         }
+        
+        if (!"".equals(gs1)) {
+        	if(gs1.indexOf('%') == 0 || gs1.indexOf('%') == (gs1.length()-1)) { // %문자가 양 끝에 있을경우
+        		sb.append("\nAND   mtr.gs1 LIKE :gs1 ");
+        	}else {
+        		sb.append("\nAND   mtr.gs1 = :gs1 ");
+        	}
+        }
 
 //        if (!"".equals(userId)) {
 //            sb.append("\nAND   p.OPERATOR_ID = :userId ");
@@ -553,6 +581,10 @@ public class MeterEventLogDaoImpl extends AbstractHibernateGenericDao<MeterEvent
             query.setString("activatorId", activatorId);
         } else if (!"".equals(meterId)) {
             query.setString("meterId", meterId);
+        }
+        
+        if (!"".equals(gs1)) {
+            query.setString("gs1", gs1);
         }
 //        
 //        if (!"".equals(userId)) {

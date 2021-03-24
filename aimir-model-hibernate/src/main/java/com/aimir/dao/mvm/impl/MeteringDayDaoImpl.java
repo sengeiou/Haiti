@@ -2772,6 +2772,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         String mcuId = StringUtil.nullToBlank(conditionMap.get("mcuId"));
         String deviceType = StringUtil.nullToBlank(conditionMap.get("deviceType"));
         String mdevId = StringUtil.nullToBlank(conditionMap.get("mdevId"));
+        String gs1 = StringUtil.nullToBlank(conditionMap.get("gs1"));
         String modemId = StringUtil.nullToBlank(conditionMap.get("modemId"));
         String contractGroup = StringUtil.nullToBlank(conditionMap.get("contractGroup"));
         String meterType = StringUtil.nullToBlank(conditionMap.get("meterType"));
@@ -2798,6 +2799,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
             sb.append("\n       customer_name AS CUSTOMER_NAME, ");
             sb.append("\n       yyyymmdd AS YYYYMMDD, ");
             sb.append("\n       mds_id AS METER_NO, ");
+            sb.append("\n       gs1 AS GS1, ");
             sb.append("\n       friendly_name AS FRIENDLY_NAME, ");
     
             if (!isPrev) {
@@ -2815,6 +2817,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         sb.append("\nFROM ( ");
         sb.append("\n    SELECT dy.yyyymmdd, ");
         sb.append("\n           mt.mds_id, ");
+        sb.append("\n           mt.gs1, ");
         sb.append("\n           mt.friendly_name, ");
         sb.append("\n           co.contract_number, ");
         sb.append("\n           cu.name AS customer_name, ");
@@ -2873,6 +2876,14 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
                 sb.append("\n    AND   mt.mds_id LIKE :mdevId ");
         	}else {
                 sb.append("\n    AND   mt.mds_id = :mdevId ");
+        	}
+        }
+        
+        if (!gs1.isEmpty()) {
+        	if(gs1.indexOf('%') == 0 || gs1.indexOf('%') == (gs1.length()-1)) { // %문자가 양 끝에 있을경우
+                sb.append("\n    AND   mt.gs1 LIKE :gs1 ");
+        	}else {
+                sb.append("\n    AND   mt.gs1 = :gs1 ");
         	}
         }
 
@@ -2942,6 +2953,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
 
         sb.append("\n    GROUP BY dy.yyyymmdd, ");
         sb.append("\n             mt.mds_id, ");
+        sb.append("\n             mt.gs1, ");
         sb.append("\n             mt.friendly_name, ");
         sb.append("\n             co.contract_number, ");
         sb.append("\n             cu.name, ");
@@ -2974,6 +2986,10 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
 
         if (!mdevId.isEmpty()) {
             query.setString("mdevId", mdevId);
+        }
+        
+        if (!gs1.isEmpty()) {
+            query.setString("gs1", gs1);
         }
         
         // XXX: 수검침 조건
@@ -3055,6 +3071,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         String friendlyName = StringUtil.nullToBlank(conditionMap.get("friendlyName"));
         Integer isManualMeter = (Integer) conditionMap.get("isManualMeter");
         String mdevId = StringUtil.nullToBlank(conditionMap.get("mdevId"));
+        String gs1 = StringUtil.nullToBlank(conditionMap.get("gs1"));
         String modemId = StringUtil.nullToBlank(conditionMap.get("modemId"));
         String mcuId = StringUtil.nullToBlank(conditionMap.get("mcuId"));
         String deviceType = StringUtil.nullToBlank(conditionMap.get("deviceType"));
@@ -3077,6 +3094,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
             sb.append("\nSELECT dv.yyyymmdd AS YYYYMMDD,");
             sb.append("\n       dv.mdev_id AS METER_NO, ");
             sb.append("\n       mt.friendly_name AS FRIENDLY_NAME, ");
+            sb.append("\n       mt.gs1 AS GS1, ");
             sb.append("\n       co.contract_number AS CONTRACT_NUMBER, ");
             sb.append("\n       cu.name AS CUSTOMER_NAME, ");
             sb.append("\n       mo.device_serial AS MODEM_ID, ");
@@ -3119,6 +3137,13 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
                 sb.append("\nAND   mt.mds_id LIKE :mdevId ");
         	}else {
                 sb.append("\nAND   mt.mds_id = :mdevId ");
+        	}
+        }
+        if (!gs1.isEmpty()) {
+        	if(gs1.indexOf('%') == 0 || gs1.indexOf('%') == (gs1.length()-1)) { // %문자가 양 끝에 있을경우
+                sb.append("\nAND   mt.gs1 LIKE :gs1 ");
+        	}else {
+                sb.append("\nAND   mt.gs1 = :gs1 ");
         	}
         }
         if (!contractNumber.isEmpty()) {
@@ -3185,6 +3210,9 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         }
         if (!mdevId.isEmpty()) {
             query.setString("mdevId", mdevId);
+        }
+        if (!gs1.isEmpty()) {
+            query.setString("gs1", gs1);
         }
         if (!friendlyName.isEmpty()) {
             query.setString("friendlyName", friendlyName);
@@ -3495,6 +3523,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         String prevStartDate = StringUtil.nullToBlank(conditionMap.get("prevStartDate"));
         String prevEndDate = StringUtil.nullToBlank(conditionMap.get("prevEndDate"));
         String mdevId = StringUtil.nullToBlank(conditionMap.get("mdevId"));
+        String gs1 = StringUtil.nullToBlank(conditionMap.get("gs1"));
         String modemId = StringUtil.nullToBlank(conditionMap.get("modemId"));
         String mcuId = StringUtil.nullToBlank(conditionMap.get("mcuId"));
         String deviceType = StringUtil.nullToBlank(conditionMap.get("deviceType"));
@@ -3516,6 +3545,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
             sb.append("\n       mo.device_serial AS MODEM_ID,	");
             sb.append("\n       code.name AS SIC_NAME,			");
             sb.append("\n       SUM(dv.total_value) AS VALUE,	");
+            sb.append("\n       mt.gs1 AS GS1,	");
             sb.append("\n       pre.total_value AS PRE_VALUE	");
         }
         sb.append("\nFROM ").append(dayView).append(" dv ");
@@ -3552,6 +3582,13 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
                 sb.append("\n    AND   mt.mds_id LIKE :mdevId ");
         	}else {
                 sb.append("\n    AND   mt.mds_id = :mdevId ");
+        	}
+        }
+        if (!gs1.isEmpty()) {
+        	if(gs1.indexOf('%') == 0 || gs1.indexOf('%') == (gs1.length()-1)) { // %문자가 양 끝에 있을경우
+                sb.append("\n    AND   mt.gs1 LIKE :gs1 ");
+        	}else {
+                sb.append("\n    AND   mt.gs1 = :gs1 ");
         	}
         }
         if (!contractNumber.isEmpty()) {
@@ -3598,7 +3635,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
             sb.append("\n    AND   gm.group_id = :contractGroup ");
         }
 
-        sb.append("\nGROUP BY dv.mdev_id, co.contract_number, cu.name, mo.device_serial, pre.total_value, code.name  ");
+        sb.append("\nGROUP BY dv.mdev_id, co.contract_number, cu.name, mo.device_serial, pre.total_value, code.name, mt.gs1  ");
         if (!isTotal) {
             sb.append("\nORDER BY dv.mdev_id ");
         }
@@ -3619,6 +3656,10 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
             query.setString("mdevId", mdevId);
         }
 
+        if (!gs1.isEmpty()) {
+            query.setString("gs1", gs1);
+        }
+        
         if (!contractNumber.isEmpty()) {
             query.setString("contractNumber", contractNumber);
         }
@@ -4925,6 +4966,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         String modemId = StringUtil.nullToBlank(conditionMap.get("modemId"));
         String deviceType = StringUtil.nullToBlank(conditionMap.get("deviceType"));
         String mdevId = StringUtil.nullToBlank(conditionMap.get("mdevId"));
+        String gs1 = StringUtil.nullToBlank(conditionMap.get("gs1"));
         String contractGroup = StringUtil.nullToBlank(conditionMap.get("contractGroup"));
         String meterType = StringUtil.nullToBlank(conditionMap.get("meterType"));
         List<Integer> sicIdList = (List<Integer>)conditionMap.get("sicIdList");
@@ -4950,6 +4992,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         	sb.append("\n		de.dst AS DST,				");
         	sb.append("\n		de.mdev_id AS METER_NO,		");
         	sb.append("\n		mt.friendly_name AS FRIENDLY_NAME,");
+        	sb.append("\n		mt.gs1 AS GS1,");
         	sb.append("\n		co.contract_number,			");
         	sb.append("\n		code.name AS SIC_NAME,		");
         	sb.append("\n		mo.device_serial AS MODEM_ID,");
@@ -4976,6 +5019,14 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
                 sb.append("\nAND   de.mdev_id LIKE :mdevId ");
         	}else {
                 sb.append("\nAND   de.mdev_id = :mdevId ");
+        	}
+        }
+        
+        if (!gs1.isEmpty()) {
+        	if(gs1.indexOf('%') == 0 || gs1.indexOf('%') == (gs1.length()-1)) { // %문자가 양 끝에 있을경우
+                sb.append("\nAND   de.gs1 LIKE :gs1 ");
+        	}else {
+                sb.append("\nAND   de.gs1 = :gs1 ");
         	}
         }
 
@@ -5065,6 +5116,10 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
             query.setString("mdevId", mdevId);
         }
 
+        if (!gs1.isEmpty()) {
+            query.setString("gs1", gs1);
+        }
+        
         if (!contractNumber.isEmpty()) {
             query.setString("contractNumber", contractNumber);
         }

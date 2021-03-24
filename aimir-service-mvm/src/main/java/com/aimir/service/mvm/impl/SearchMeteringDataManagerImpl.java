@@ -3212,6 +3212,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("customerName", (String)obj.get("CUSTOMER_NAME"));
             map.put("meteringTime", TimeLocaleUtil.getLocaleDateHour(YYYYMMDDHH, lang, country));
             map.put("meterNo", (String)obj.get("METER_NO"));
+            map.put("gs1", (String)obj.get("GS1"));
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));
             map.put("value", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
@@ -3425,6 +3426,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
 
             map.put("meterNo", (String)obj.get("METER_NO"));
             map.put("modemId", (String)obj.get("MODEM_ID"));
+            map.put("gs1", (String)obj.get("GS1"));
             map.put("sicName", (String)obj.get("SIC_NAME"));
             String value = obj.get("BASEVALUE") == null ? null : mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("BASEVALUE")));
             map.put("value", value);
@@ -3686,6 +3688,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("friendlyName", (String)obj.get("FRIENDLY_NAME"));
             map.put("meteringTime", TimeLocaleUtil.getLocaleDate((String)obj.get("YYYYMMDD"), lang, country));
             map.put("meterNo", (String)obj.get("METER_NO"));
+            map.put("gs1", (String)obj.get("GS1"));
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));
             map.put("value", obj.get("VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
@@ -3827,6 +3830,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("meteringTime", searchWeek + " Week");
             map.put("meterNo", (String)obj.get("METER_NO"));
             map.put("modemId", (String)obj.get("MODEM_ID"));
+            map.put("gs1", (String)obj.get("GS1"));
             map.put("sicName", (String)obj.get("SIC_NAME"));
             map.put("value", obj.get("VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
             map.put("prevValue", obj.get("PRE_VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE"))));
@@ -3937,6 +3941,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("customerName", (String)obj.get("CUSTOMER_NAME"));
             map.put("meteringTime", TimeLocaleUtil.getLocaleWeekDay((String)obj.get("YYYYMMDD"), lang, country));
             map.put("meterNo", (String)obj.get("METER_NO"));
+            map.put("gs1", (String)obj.get("GS1"));
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));       
             map.put("value", obj.get("VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
@@ -4207,6 +4212,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("meteringTime", TimeLocaleUtil.getLocaleYearMonth((String)obj.get("YYYYMM"), lang, country));
 
             map.put("meterNo", (String)obj.get("METER_NO"));
+            map.put("gs1", (String)obj.get("GS1"));
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));
             map.put("value", obj.get("VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
@@ -4326,6 +4332,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("customerName", (String)obj.get("CUSTOMER_NAME"));
             map.put("meteringTime", searchSeason);
             map.put("meterNo", (String)obj.get("METER_NO"));
+            map.put("gs1", (String)obj.get("GS1"));
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));       
             map.put("value", obj.get("VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
@@ -4440,6 +4447,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("customerName", (String)obj.get("CUSTOMER_NAME"));
             map.put("meteringTime", searchYear);
             map.put("meterNo", (String)obj.get("METER_NO"));
+            map.put("gs1", (String)obj.get("GS1"));
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));       
             map.put("value", obj.get("VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));

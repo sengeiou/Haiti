@@ -91,6 +91,7 @@ public class MeteringDataMakeExcel {
             sheet.setColumnWidth(colIdx++, 256 * 19);
             sheet.setColumnWidth(colIdx++, 256 * 19);
             sheet.setColumnWidth(colIdx++, 256 * 19);
+            sheet.setColumnWidth(colIdx++, 256 * 19);
             
             if(("대성에너지".equals(supplierName)) && (dateType == DateType.HOURLY || dateType == DateType.DAILY || dateType == DateType.WEEKLY || dateType == DateType.MONTHLY)) 
             	sheet.setColumnWidth(colIdx++, 256 * 19);
@@ -136,6 +137,10 @@ public class MeteringDataMakeExcel {
             cell.setCellStyle(titleCellStyle);
             
             cell = row.createCell(7);
+            cell.setCellValue(msgMap.get("gs1"));
+            cell.setCellStyle(titleCellStyle);
+            
+            cell = row.createCell(8);
             cell.setCellValue(msgMap.get("modemId"));
             cell.setCellStyle(titleCellStyle);
 
@@ -181,6 +186,10 @@ public class MeteringDataMakeExcel {
                 cell.setCellStyle(dataCellStyle);
 
                 cell = row.createCell(7);
+                cell.setCellValue((String)resultMap.get("gs1"));
+                cell.setCellStyle(dataCellStyle);
+
+                cell = row.createCell(8);
                 cell.setCellValue((String)resultMap.get("modemId"));
                 cell.setCellStyle(dataCellStyle);
                 
@@ -262,6 +271,8 @@ public class MeteringDataMakeExcel {
             sheet.setColumnWidth(colIdx++, 256 * 19);
             sheet.setColumnWidth(colIdx++, 256 * 19);
             sheet.setColumnWidth(colIdx++, 256 * 19);
+            sheet.setColumnWidth(colIdx++, 256 * 19);
+            sheet.setColumnWidth(colIdx++, 256 * 19);
             
             if(dateType == DateType.MONTHLY) {
                	sheet.setColumnWidth(colIdx++, 256 * 19);
@@ -313,8 +324,12 @@ public class MeteringDataMakeExcel {
                 cell = row.createCell(8);
                 cell.setCellValue(msgMap.get("meterId"));
                 cell.setCellStyle(titleCellStyle);
-                
+
                 cell = row.createCell(9);
+                cell.setCellValue(msgMap.get("gs1"));
+                cell.setCellStyle(titleCellStyle);
+                
+                cell = row.createCell(10);
                 cell.setCellValue(msgMap.get("modemId"));
                 cell.setCellStyle(titleCellStyle);
             } else {
@@ -331,6 +346,10 @@ public class MeteringDataMakeExcel {
                 cell.setCellStyle(titleCellStyle);
                 
                 cell = row.createCell(7);
+                cell.setCellValue(msgMap.get("gs1"));
+                cell.setCellStyle(titleCellStyle);
+                
+                cell = row.createCell(8);
                 cell.setCellValue(msgMap.get("modemId"));
                 cell.setCellStyle(titleCellStyle);
                 
@@ -382,6 +401,10 @@ public class MeteringDataMakeExcel {
                     cell.setCellStyle(dataCellStyle);
 
                     cell = row.createCell(9);
+                    cell.setCellValue((String)resultMap.get("gs1"));
+                    cell.setCellStyle(dataCellStyle);
+
+                    cell = row.createCell(10);
                     cell.setCellValue((String)resultMap.get("modemId"));
                     cell.setCellStyle(dataCellStyle);
                 }else {
@@ -398,6 +421,10 @@ public class MeteringDataMakeExcel {
                     cell.setCellStyle(dataCellStyle);
 
                     cell = row.createCell(7);
+                    cell.setCellValue((String)resultMap.get("gs1"));
+                    cell.setCellStyle(dataCellStyle);
+                    
+                    cell = row.createCell(8);
                     cell.setCellValue((String)resultMap.get("modemId"));
                     cell.setCellStyle(dataCellStyle);
                 }

@@ -195,9 +195,11 @@ public class MvmDetailController {
         String endYear    = changDateToYear(endDate);
 
         Integer meterId = 0;
+        String gs1 = "";
         if(meterNo != null && !meterNo.isEmpty()){
             Meter meter = meterDao.get(meterNo);
             meterId = meter != null ? meter.getId() : 0;
+            gs1 = meter != null ? meter.getGs1() : "";
         }
 
         Supplier supplier = supplierManager.getSupplier((Integer.parseInt(supplierId)));
@@ -226,6 +228,7 @@ public class MvmDetailController {
         mav.addObject("endYear", endYear);
         mav.addObject("contractId", contractId);
         mav.addObject("meterId",meterId);
+        mav.addObject("gs1",gs1);
 
         mav.addObject("customerInfo", mvmDetailViewManager.getCustomerInfo(meterNo, supplierId));
         //mav.addObject("channelList", mvmDetailViewManager.getChannelInfo(meterNo, mvmMiniType));

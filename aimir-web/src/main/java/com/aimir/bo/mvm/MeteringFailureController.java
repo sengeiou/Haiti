@@ -200,6 +200,7 @@ public class MeteringFailureController {
 										     , @RequestParam("locationId") String locationId
 										     , @RequestParam("customerId") String customerId
 										     , @RequestParam("meterId") String meterId
+										     , @RequestParam("gs1") String gs1
 										     , @RequestParam("mcuId") String mcuId
 										     , @RequestParam("supplierId") String supplierId
 										     , @RequestParam("curPage") String curPage) {
@@ -219,6 +220,7 @@ public class MeteringFailureController {
 		conditionMap.put("locationId", 		locationId);
 		conditionMap.put("customerId", 		customerId);
 		conditionMap.put("meterId", 		meterId);
+		conditionMap.put("gs1", 			gs1);
 		conditionMap.put("mcuId", 			mcuId);
 		conditionMap.put("supplierId", 		supplierId);      
 		conditionMap.put("currPage",		curPage);

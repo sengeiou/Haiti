@@ -812,6 +812,7 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         String modemId = StringUtil.nullToBlank(conditionMap.get("modemId"));
         String deviceType = StringUtil.nullToBlank(conditionMap.get("deviceType"));
         String mdevId = StringUtil.nullToBlank(conditionMap.get("mdevId"));
+        String gs1 = StringUtil.nullToBlank(conditionMap.get("gs1"));
         String contractGroup = StringUtil.nullToBlank(conditionMap.get("contractGroup"));
         String meterType = StringUtil.nullToBlank(conditionMap.get("meterType"));
         List<Integer> sicIdList = (List<Integer>)conditionMap.get("sicIdList");
@@ -830,6 +831,7 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
             sb.append("\n       code.name AS SIC_NAME, ");
             sb.append("\n       NVL(me.last_metering_value,0) AS LAST_METERING_VALUE, ");
             sb.append("\n       mv.total_value AS VALUE,");
+            sb.append("\n       me.gs1 AS GS1,");
             sb.append("\n       pre.total_value AS PRE_VALUE ");
         }
         sb.append("\nFROM ").append(monthView).append(" mv ");
@@ -887,6 +889,13 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
                 sb.append("\nAND   mv.mdev_id = :mdevId ");
         	}
         }
+        if (!gs1.isEmpty()) {
+        	if(gs1.indexOf('%') == 0 || gs1.indexOf('%') == (gs1.length()-1)) { // %문자가 양 끝에 있을경우
+                sb.append("\nAND   mv.gs1 LIKE :gs1 ");
+        	}else {
+                sb.append("\nAND   mv.gs1 = :gs1 ");
+        	}
+        }
         if (!contractNumber.isEmpty()) {
         	if(contractNumber.indexOf('%') == 0 || contractNumber.indexOf('%') == (contractNumber.length()-1)) { // %문자가 양 끝에 있을경우
                 sb.append("\nAND   co.contract_number LIKE :contractNumber ");
@@ -934,6 +943,9 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
             query.setString("mdevId", mdevId);
         }
 
+        if (!gs1.isEmpty()) {
+            query.setString("gs1", gs1);
+        }
         // XXX: 수검침 조건
         if (!friendlyName.isEmpty()) {
             query.setString("friendlyName", friendlyName);
@@ -1262,6 +1274,7 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         String modemId = StringUtil.nullToBlank(conditionMap.get("modemId"));
         String deviceType = StringUtil.nullToBlank(conditionMap.get("deviceType"));
         String mdevId = StringUtil.nullToBlank(conditionMap.get("mdevId"));
+        String gs1 = StringUtil.nullToBlank(conditionMap.get("gs1"));
         String contractGroup = StringUtil.nullToBlank(conditionMap.get("contractGroup"));
         String meterType = StringUtil.nullToBlank(conditionMap.get("meterType"));
         List<Integer> sicIdList = (List<Integer>)conditionMap.get("sicIdList");
@@ -1278,6 +1291,7 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
             sb.append("\n       cu.name AS CUSTOMER_NAME, 				");
             sb.append("\n       mv.mdev_id AS METER_NO, 				");
             sb.append("\n       code.name AS SIC_NAME, 					");
+            sb.append("\n       mt.gs1 AS gs1, 					");
             sb.append("\n       SUM(mv.total_value) AS VALUE, 	");
             sb.append("\n       pre.total_value AS PRE_VALUE 	");
         }
@@ -1314,6 +1328,13 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
                 sb.append("\nAND   mt.mds_id LIKE :mdevId ");
         	}else {
                 sb.append("\nAND   mt.mds_id = :mdevId ");
+        	}
+        }
+        if (!gs1.isEmpty()) {
+        	if(gs1.indexOf('%') == 0 || gs1.indexOf('%') == (gs1.length()-1)) { // %문자가 양 끝에 있을경우
+                sb.append("\nAND   mt.gs1 LIKE :gs1 ");
+        	}else {
+                sb.append("\nAND   mt.gs1 = :gs1 ");
         	}
         }
         if (!contractNumber.isEmpty()) {
@@ -1359,7 +1380,7 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         if (!contractGroup.isEmpty()) {
             sb.append("\nAND   gm.group_id = :contractGroup ");
         }
-        sb.append("\nGROUP BY co.contract_number, cu.name, mv.mdev_id, code.name, pre.total_value ");
+        sb.append("\nGROUP BY co.contract_number, cu.name, mv.mdev_id, code.name, pre.total_value, mt.gs1 ");
         sb.append("\nORDER BY mv.mdev_id ");
 
         SQLQuery query = getSession().createSQLQuery(new SQLWrapper().getQuery(sb.toString()));
@@ -1375,6 +1396,9 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         }
         if (!mdevId.isEmpty()) {
             query.setString("mdevId", mdevId);
+        }
+        if (!gs1.isEmpty()) {
+            query.setString("gs1", gs1);
         }
         if (!contractNumber.isEmpty()) {
             query.setString("contractNumber", contractNumber);

@@ -294,6 +294,7 @@
         fmtMessage[idx++] = "<fmt:message key="aimir.env.error"/>";             // 사용할 수 없는 환경입니다.
         fmtMessage[idx++] = "<fmt:message key="aimir.firmware.msg09"/>";        // 데이터를 찾을수 없습니다.
         fmtMessage[idx++] = "<fmt:message key="aimir.excel.metereventlog"/>";        // 데이터를 찾을수 없습니다.
+        fmtMessage[idx++] = "<fmt:message key="aimir.shipment.gs1"/>";          // GS1
 
         return fmtMessage;
     }
@@ -313,6 +314,7 @@
         arrayObj[idx++] = $('#occurFreq').val();
         arrayObj[idx++] = supplierId;
         arrayObj[idx++] = activatorId;
+        arrayObj[idx++] = $('#gs1').val();
         return arrayObj;
     };
     
@@ -331,6 +333,7 @@
                     eventName : seleventName,
                     meterType : $('#meterType').val(),
                     meterId : $('#meterId').val(),
+                    gs1: $('#gs1').val(),                    
                     occurFreq : $('#occurFreq').val(),
                     supplierId : supplierId}
                 ,function(json) {
@@ -439,6 +442,7 @@
                 meterId         : arrayObj[6],
                 occurFreq       : arrayObj[7],
                 supplierId      : arrayObj[8],
+                gs1             : arrayObj[10],
                 pageSize        : 10
             },
             totalProperty : 'total',
@@ -449,6 +453,7 @@
                 {name : 'LOCATIONNAME', type : 'String'},
                 {name : 'METERCOUNT'  , type : 'String'},
                 {name : 'METERID'     , type : 'String'},
+                {name : 'GS1'         , type : 'String'},
                 {name : 'METERTYPE'   , type : 'String'}
             ],
             listeners : {
@@ -486,25 +491,26 @@
                 }
                 ,{header: fmtMessage[5],
                     tooltip: fmtMessage[5],
-                    width: 185,
                     dataIndex: 'METERID',
+                    align: 'center'
+                }
+                ,{header: fmtMessage[20],
+                    tooltip: fmtMessage[20],
+                    dataIndex: 'GS1',
                     align: 'center'
                 }
                 ,{header: fmtMessage[10],
                     tooltip: fmtMessage[10],
-                    width: 185,
                     dataIndex: 'METERCOUNT',
                     align: 'right'
                 }
                 ,{header: fmtMessage[4],
                     tooltip: fmtMessage[4],
-                    width: 185,
                     dataIndex: 'LOCATIONNAME',
                     align: 'center'
                 }
                 ,{header: fmtMessage[6],
                     tooltip: fmtMessage[6],
-                    width: 185,
                     dataIndex: 'METERTYPE',
                     align: 'center'
                 }
@@ -512,7 +518,7 @@
             defaults : {
                 sortable : true
                 ,menuDisabled : true
-                ,width : ((width-30)/8)-chromeColAdd
+                ,width : ((width-60-chromeColAdd)/6) 
                 ,renderer : addTooltip
             }
         });
@@ -590,6 +596,7 @@
                 occurFreq       : arrayObj[7],
                 supplierId      : arrayObj[8],
                 activatorId     : arrayObj[9],
+                gs1             : arrayObj[10],
                 pageSize        : 10
             },
             totalProperty : 'total',
@@ -601,6 +608,7 @@
                 { name: 'EVENTNAME'     , type: 'String' },
                 { name: 'LOCATIONNAME'  , type: 'String' },
                 { name: 'METERID'       , type: 'String' },
+                { name: 'GS1'       , type: 'String' },
                 { name: 'METERTYPE'     , type: 'String' },
                 { name: 'OBISCODE'      , type: 'String' },
                 { name: 'MESSAGE'       , type: 'String' },
@@ -641,47 +649,53 @@
                     tooltip: fmtMessage[1],
                     dataIndex: 'OPENTIME',
                     align:'center',
-                    width: width/9-20
+                    width: width/10-20
                 }
                 ,{header: "OBIS Code",
                     tooltip: "OBIS Code",
-                    width: width/9+10,
+                    width: width/10+10,
                     dataIndex: 'OBISCODE',
                     align: 'center'
                 }
                 ,{header: fmtMessage[2],
                     tooltip: fmtMessage[2],
-                    width: width/9+10,
+                    width: width/10+10,
                     dataIndex: 'WRITETIME',
                     align: 'center'
                 }
                 ,{header: fmtMessage[3],
                     tooltip: fmtMessage[3],
-                    width: width/9+10,
+                    width: width/10+10,
                     dataIndex: 'EVENTNAME',
                     align: 'center'
                 }
                 ,{header: fmtMessage[4],
                     tooltip: fmtMessage[4],
-                    width: width/9,
+                    width: width/10,
                     dataIndex: 'LOCATIONNAME',
                     align: 'center'
                 }
                 ,{header: fmtMessage[5],
                     tooltip: fmtMessage[5],
-                    width: width/9,
+                    width: width/10,
                     dataIndex: 'METERID',
+                    align: 'center'
+                }
+                ,{header: fmtMessage[20],
+                    tooltip: fmtMessage[20],
+                    width: width/10,
+                    dataIndex: 'GS1',
                     align: 'center'
                 }
                 ,{header: fmtMessage[6],
                     tooltip: fmtMessage[6],
-                    width: width/9,
+                    width: width/10,
                     dataIndex: 'METERTYPE',
                     align: 'center'
                 }
                 ,{header: fmtMessage[7],
                     tooltip: fmtMessage[7],
-                    width: width/9,
+                    width: width/10,
                     dataIndex: 'MESSAGE',
                     align: 'center'
                 }
@@ -701,7 +715,7 @@
             defaults : {
                 sortable : true
                 ,menuDisabled : true
-                ,width : ((width-30)/8)-chromeColAdd
+                ,width : ((width-30)/10)-chromeColAdd
                 ,renderer : addTooltip
             }
         });
@@ -750,13 +764,16 @@
         var obj = new Object();
         var event;
         var meter;
+        var gs1;
 
         if (type == "event") {
             event = ($('#eventName').val()=="")?"":$('#eventName').val();
             meter = (activatorId=="")?"":activatorId;
+            gs1   = ($('#gs1').val()=="")?"":$('#gs1').val();
         } else {
             event = "";
             meter = "";
+            gs1   = "";
         }
 
         obj.condition  = getConditionArray();
@@ -764,6 +781,7 @@
         obj.type       = type;
         obj.eventName  = event;
         obj.meterId    = meter;
+        obj.gs1        = meter;
         if(win)
             win.close();
         win = window.open("${ctx}/gadget/device/meterEventLogExcelDownloadPopup.do", "MeterEventLogExcel", opts);
@@ -992,6 +1010,8 @@
                     <td><select name="meterType" id="meterType" style="width:150px;"><option value=""></option></select></td>
                     <th><fmt:message key="aimir.meterid"/></th>
                     <td><input type="text" name="meterId" id="meterId" style="width:120px;"/></td>
+                    <th><fmt:message key="aimir.shipment.gs1"/></th>
+                    <td><input type="text" name="gs1" id="gs1" style="width:120px;"/></td>
                     <th><fmt:message key="aimir.device.occurFreq"/></th>
                     <td><input type="text" name="occurFreq" id="occurFreq" style="width:50px;" onchange="validateNumber(this);"/></td>
                     <th><fmt:message key="aimir.device.occurMore"/></th>
