@@ -112,17 +112,17 @@ public class HaitiRelayoffTask extends ScheduleTask {
 		
 		if(checkFreedays()) {
 			log.info("Can't relay off because it's the weekend.");
-			return;
+			//return;
 		}
 		
 		if(checkBreakRelayTime()) {
 			log.info("Can't relay off because it's the after " + BREAK_RELAY_OFF_HOUR +" o'clock " );
-			return;
+			//return;
 		}
 		
 		if(checkHoliday()) {
 			log.info("Can't relay off because it's the holiday. " );
-			return;
+			//return;
 		}
 		
         isNowRunning = true;
