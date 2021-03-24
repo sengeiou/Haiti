@@ -74,7 +74,7 @@
             $("#installUpdBtn").hide();
         }
 
-	 	$('#esolution').val("${meter.lpInterval}");  
+	 	//$('#esolution').val("${meter.lpInterval}");  
 	 	//$('#esolution').selectbox();   
 
 	 	$.getJSON('${ctx}/gadget/device/meterStatus.do'
@@ -207,7 +207,8 @@
 					</tr>
 					<tr>
 						<th><b><fmt:message key="aimir.resolution" /></b></th>
-						<c:choose>
+						<td class="padding-r20px"><span class="input-fake">1440<fmt:message key="aimir.minute" /></span></td>
+<%-- 						<c:choose>
 							<c:when test="${not empty meter.lpInterval}">
 								<td class="padding-r20px"><span class="input-fake">${meter.lpInterval}<fmt:message key="aimir.minute" /></span></td>
 							</c:when>
@@ -215,11 +216,12 @@
 								<td class="padding-r20px"><input type="text"
 									class="input-fake" value="-" readonly="readonly">
 							</c:otherwise>
-						</c:choose>
+						</c:choose> --%>
 					</tr>
 					<tr>
 						<th><b><fmt:message key="aimir.ke" /></b></th>
-						<c:choose>
+						<td><span class="input-fake">10000</span></td>
+<%-- 						<c:choose>
 							<c:when test="${not empty meter.pulseConstant}">
 								<td><span class="input-fake">${KE}</span></td>
 							</c:when>
@@ -227,7 +229,7 @@
 								<td class="padding-r20px"><input type="text"
 									class="input-fake" value="-" readonly="readonly">
 							</c:otherwise>
-						</c:choose>
+						</c:choose> --%>
 					</tr>
                     <tr>
                         <th><b><fmt:message key="aimir.meter.transformerRatio" /></b></th>
@@ -375,7 +377,8 @@
 		                        </tr>
 				                 <tr>
 				                 	<th><b><fmt:message key="aimir.resolution"/></b></th>
-				                 	<td class="padding-r20px"><input type="text" id="esolution" readonly="readonly" class="border-trans" name="lpInterval" value="${meter.lpInterval}" />
+				                 	<td class="padding-r20px"><input type="text" id="esolution" readonly="readonly" class="border-trans" name="lpInterval" value="1440" />
+				                 	<%-- <td class="padding-r20px"><input type="text" id="esolution" readonly="readonly" class="border-trans" name="lpInterval" value="${meter.lpInterval}" /> --%>
 <!-- 			                        <td  class="padding-r20px">
 			                        	<select name="lpInterval" id="esolution" class="width-140px">
 			                        	<option value="1">1</option>
@@ -392,7 +395,8 @@
 			                    <tr>
 			                        <th width="80px"><b><fmt:message key="aimir.ke"/></b></th>
 			                        <td class="padding-r20px"><input type="text" id="ke" readonly="readonly" class="border-trans" name="pulseConstant" value="${meter.pulseConstant}" />
-			                            <input type="hidden" id="keHidden" value="${meter.pulseConstant}"  />
+			                            <%-- <input type="hidden" id="keHidden" value="${meter.pulseConstant}"  /> --%>
+			                            <input type="hidden" id="keHidden" value="10000"  />
 			                    </tr>
                                 <tr>
                                     <th width="80px"><b><fmt:message key="aimir.meter.transformerRatio"/></b></th>
