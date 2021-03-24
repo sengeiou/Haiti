@@ -280,6 +280,7 @@ public class MeteringFailureController {
             conditionMap.put("meterId",         condition[6]);
             conditionMap.put("mcuId",           condition[7]);
             conditionMap.put("supplierId",      condition[8]);
+            conditionMap.put("gs1",      		condition[9]);
             conditionMap.put("currPage",        "");
 
             result = (List<FailureMeterData>) meteringFailureManager.getMeteringFailureMeter(conditionMap).get("list");
@@ -303,6 +304,7 @@ public class MeteringFailureController {
             msgMap.put("lastlastReadDate",  fmtMessage[17]);
             msgMap.put("failureCause",      fmtMessage[5]);
             msgMap.put("modemId",           fmtMessage[23]);
+            msgMap.put("gs1",           	fmtMessage[36]);
 
             msgMap.put("NotComm",               fmtMessage[25]);    //통신 이력 없음
             msgMap.put("CommstateYellow",       fmtMessage[26]);    //장기간 통신 장애

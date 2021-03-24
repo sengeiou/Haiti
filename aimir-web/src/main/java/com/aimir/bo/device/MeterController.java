@@ -1633,6 +1633,7 @@ public class MeterController {
             
             conditionMap.put("sPermitLocationId", condition[20]);
             conditionMap.put("sMeterAddress", condition[21]);
+            conditionMap.put("sGs1", condition[22]);
             
             conditionMap.put("curPage", "1");
 			result = (List<Object>) meterManager.getMeterListExcel(conditionMap);
@@ -1681,6 +1682,7 @@ public class MeterController {
             msgMap.put("ver",              fmtMessage[26]);
             // 모뎀 (미터터미널) 아이디
             msgMap.put("modemid",          fmtMessage[27]);
+            msgMap.put("gs1",          	   fmtMessage[28]);
             
 			// check download dir
 			File downDir = new File(filePath);

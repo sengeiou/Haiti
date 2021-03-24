@@ -1276,6 +1276,7 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
 
         String sMeterType         = StringUtil.nullToBlank(condition.get("sMeterType"));
         String sMdsId             = StringUtil.nullToBlank(condition.get("sMdsId"));
+        String sGs1               = StringUtil.nullToBlank(condition.get("sGs1"));
         String sDeviceSerial      = StringUtil.nullToBlank(condition.get("sDeviceSerial"));
         String sStatus            = StringUtil.nullToBlank(condition.get("sStatus"));
         String sMeterGroup        = StringUtil.nullToBlank(condition.get("sMeterGroup"));
@@ -1346,6 +1347,10 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
             sbQuery.append("AND me.mds_ID LIKE '"+ sMdsId +"%' \n");
         }
 
+        if (!sGs1.equals("")) {
+            sbQuery.append("AND me.gs1 LIKE '"+ sGs1 +"%' \n");
+        }
+        
         // meter address -> customer address로 변경한다. 스파사 요청
         if (!sMeterAddress.equals("")) {
             //sbQuery.append("     AND me.address LIKE '%"+ sMeterAddress +"%'");

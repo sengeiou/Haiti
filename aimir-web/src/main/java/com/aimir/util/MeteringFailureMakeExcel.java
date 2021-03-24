@@ -70,6 +70,7 @@ public class MeteringFailureMakeExcel {
             sheet.setColumnWidth(colIdx++, 256 * 19);
             sheet.setColumnWidth(colIdx++, 256 * 19);
             sheet.setColumnWidth(colIdx++, 256 * 25);
+            sheet.setColumnWidth(colIdx++, 256 * 25);
 
             int totalColumnCnt = colIdx;
             row = sheet.createRow(0);
@@ -94,22 +95,26 @@ public class MeteringFailureMakeExcel {
             cell.setCellStyle(titleCellStyle);
 
             cell = row.createCell(3);
+            cell.setCellValue(msgMap.get("gs1"));
+            cell.setCellStyle(titleCellStyle);
+            
+            cell = row.createCell(4);
             cell.setCellValue(msgMap.get("modemId"));
             cell.setCellStyle(titleCellStyle);
 
-            cell = row.createCell(4);
+            cell = row.createCell(5);
             cell.setCellValue(msgMap.get("customerName"));
             cell.setCellStyle(titleCellStyle);
 
-            cell = row.createCell(5);
+            cell = row.createCell(6);
             cell.setCellValue(msgMap.get("address"));
             cell.setCellStyle(titleCellStyle);
 
-            cell = row.createCell(6);
+            cell = row.createCell(7);
             cell.setCellValue(msgMap.get("lastlastReadDate"));
             cell.setCellStyle(titleCellStyle);
 
-            cell = row.createCell(7);
+            cell = row.createCell(8);
             cell.setCellValue(msgMap.get("failureCause"));
             cell.setCellStyle(titleCellStyle);
             // Title End
@@ -134,22 +139,26 @@ public class MeteringFailureMakeExcel {
                 cell.setCellStyle(dataCellStyle);
 
                 cell = row.createCell(3);
+                cell.setCellValue(resultMap.getGs1()==null?"":resultMap.getGs1().toString());
+                cell.setCellStyle(dataCellStyle);
+                
+                cell = row.createCell(4);
                 cell.setCellValue(resultMap.getModemId()==null?"":resultMap.getModemId().toString());
                 cell.setCellStyle(dataCellStyle);
 
-                cell = row.createCell(4);
+                cell = row.createCell(5);
                 cell.setCellValue(resultMap.getCustomerName()==null?"":resultMap.getCustomerName().toString());
                 cell.setCellStyle(dataCellStyle);
 
-                cell = row.createCell(5);
+                cell = row.createCell(6);
                 cell.setCellValue(resultMap.getAddress()==null?"":resultMap.getAddress().toString());
                 cell.setCellStyle(dataCellStyle);
 
-                cell = row.createCell(6);
+                cell = row.createCell(7);
                 cell.setCellValue(resultMap.getLastlastReadDate()==null?"":resultMap.getLastlastReadDate().toString());
                 cell.setCellStyle(dataCellStyle);
 
-                cell = row.createCell(7);
+                cell = row.createCell(8);
                 cell.setCellValue(failureCauseMessageFunction(resultMap.getFailureCause()==null?"":resultMap.getFailureCause().toString(),msgMap));
                 cell.setCellStyle(dataCellStyle);
             }

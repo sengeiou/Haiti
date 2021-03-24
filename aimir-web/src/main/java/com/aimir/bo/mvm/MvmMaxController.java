@@ -884,7 +884,7 @@ public class MvmMaxController {
         msgMap.put("meterValue2",msgMeterValue2);
         msgMap.put("prevMeterValue",msaPrevMeterValue);
         msgMap.put("prevUsage",msaPrevUsage);
-        msgMap.put("gs1",msaPrevUsage);
+        msgMap.put("gs1",msgGs1);
         
         // check download dir
         File downDir = new File(filePath);
