@@ -5024,9 +5024,9 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         
         if (!gs1.isEmpty()) {
         	if(gs1.indexOf('%') == 0 || gs1.indexOf('%') == (gs1.length()-1)) { // %문자가 양 끝에 있을경우
-                sb.append("\nAND   de.gs1 LIKE :gs1 ");
+                sb.append("\nAND   mt.gs1 LIKE :gs1 ");
         	}else {
-                sb.append("\nAND   de.gs1 = :gs1 ");
+                sb.append("\nAND   mt.gs1 = :gs1 ");
         	}
         }
 
