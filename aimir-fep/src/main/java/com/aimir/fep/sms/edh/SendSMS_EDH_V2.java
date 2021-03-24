@@ -21,7 +21,6 @@ import com.aimir.util.TimeUtil;
  * @author Han seung woo
  * 
  */
-@Service
 public class SendSMS_EDH_V2 {
 	private static Log log = LogFactory.getLog(SendSMS_EDH_V2.class);
 
@@ -37,7 +36,7 @@ public class SendSMS_EDH_V2 {
 	private String login;
 	private String password;
 	private String countryCode = null;
-	
+		
 	public SendSMS_EDH_V2(String url, String login, String password, String countryCode) {
 		this.url = url;
 		this.login = login;
