@@ -9933,10 +9933,10 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
     	sbQuery.append("\n	 AND mo.MCU_ID = mcu.id(+)");
     	sbQuery.append("\n	 AND co.status_id != (select id from code where code = '2.1.3')");
     	
-    	if(dcuSysId != null) 
+    	if(dcuSysId != null && !dcuSysId.isEmpty()) 
     		sbQuery.append("\n	 AND mo.MCU_ID = '").append(dcuSysId).append("'");
     
-    	if(meterId != null)
+    	if(meterId != null & !meterId.isEmpty())
     		sbQuery.append("\n	 AND me.mds_id = '").append(meterId).append("'");
     	
     	if("RELAY_OFF".equalsIgnoreCase(action)) {
