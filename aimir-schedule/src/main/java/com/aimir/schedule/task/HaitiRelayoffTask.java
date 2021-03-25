@@ -187,13 +187,19 @@ public class HaitiRelayoffTask extends ScheduleTask {
 	}
 	
 	private Holidays checkHoliday() {
-		Date d = DateTimeUtil.getDateFromYYYYMMDD("20210302");
-		
-		Integer mm = Integer.parseInt(DateTimeUtil.getDateString(new Date(), "MM"));
-		Integer dd = Integer.parseInt(DateTimeUtil.getDateString(new Date(), "dd"));
-		
-		Holidays holidays = holidaysDao.getHoliday(mm, dd);
-		return holidays;
+		try {
+			Date d = DateTimeUtil.getDateFromYYYYMMDD("20210302");
+			
+			Integer mm = Integer.parseInt(DateTimeUtil.getDateString(new Date(), "MM"));
+			Integer dd = Integer.parseInt(DateTimeUtil.getDateString(new Date(), "dd"));
+			
+			Holidays holidays = holidaysDao.getHoliday(mm, dd);
+			return holidays;
+		}catch(Exception e) {
+			log.error(e,e);
+		}
+
+		return null;
 	}
 	
 	private Map<String, List<String>> getTargetMeters(String mdevId, String dcuSysId) {
