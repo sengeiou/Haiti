@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -24,6 +25,7 @@ import com.aimir.annotation.ColumnInfo;
 })
 
 @Entity
+@Table(name="HOLIDAYS")
 public class Holidays {
 
 	@Id

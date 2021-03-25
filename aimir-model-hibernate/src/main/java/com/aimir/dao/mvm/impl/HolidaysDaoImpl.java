@@ -23,8 +23,7 @@ public class HolidaysDaoImpl extends AbstractHibernateGenericDao<Holidays, Integ
 	public Holidays getHoliday(int mm, int dd) {
 		StringBuffer sbQuery = new StringBuffer();
 		
-		sbQuery.append("SELECT * FROM holidays h WHERE h.MONTH = :mm")
-			.append(" AND h.DAY = :dd");
+		sbQuery.append("SELECT h.* FROM holidays h WHERE h.MONTH = :mm").append(" AND h.DAY = :dd");
 		
 		Query query = getSession().createNativeQuery(sbQuery.toString(), Holidays.class);
 		query.setParameter("mm", mm);
