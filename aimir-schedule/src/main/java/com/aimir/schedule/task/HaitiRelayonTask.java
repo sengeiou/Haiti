@@ -361,6 +361,7 @@ class HaitiRelayonTaskSubClz implements Runnable {
 		opLog.setTargetTypeCode(targetTypeCode);
 		opLog.setUserId(userId);
 		opLog.setSupplier(supplier);
+		opLog.setContractNumber(meter.getContract().getContractNumber());
 		
 		operationLogDao.add(opLog);
 	}

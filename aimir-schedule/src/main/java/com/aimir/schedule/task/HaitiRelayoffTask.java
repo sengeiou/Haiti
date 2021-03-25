@@ -411,7 +411,7 @@ class HaitiRelayoffTaskSubClz implements Runnable {
 		opLog.setYyyymmdd(currDateTime.substring(0,8));
 		opLog.setHhmmss(currDateTime.substring(8,14));
 		opLog.setYyyymmddhhmmss(currDateTime);
-		opLog.setDescription("");
+		opLog.setDescription(operationCode.getName());
 		opLog.setErrorReason(errorReason);
 		opLog.setResultSrc(status.name());
 		opLog.setStatus(status.getCode());
@@ -419,6 +419,7 @@ class HaitiRelayoffTaskSubClz implements Runnable {
 		opLog.setTargetTypeCode(targetTypeCode);
 		opLog.setUserId(userId);
 		opLog.setSupplier(supplier);
+		opLog.setContractNumber(meter.getContract().getContractNumber());
 		
 		operationLogDao.add(opLog);
 	}
