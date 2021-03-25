@@ -191,16 +191,23 @@ public class HaitiRelayoffTask extends ScheduleTask {
 		
 		try {
 			txstatus = txmanager.getTransaction(null);
-			Date d = DateTimeUtil.getDateFromYYYYMMDD("20210316");
+			Date d = DateTimeUtil.getDateFromYYYYMMDD("2021 03 16");
 			
-			Integer mm = Integer.parseInt(DateTimeUtil.getDateString(new Date(), "MM"));
-			Integer dd = Integer.parseInt(DateTimeUtil.getDateString(new Date(), "dd"));
+			Integer mm = Integer.parseInt(DateTimeUtil.getDateString(d, "MM"));
+			Integer dd = Integer.parseInt(DateTimeUtil.getDateString(d, "dd"));
+			
+			//Integer mm = Integer.parseInt(DateTimeUtil.getDateString(new Date(), "MM"));
+			//Integer dd = Integer.parseInt(DateTimeUtil.getDateString(new Date(), "dd"));
 			
 			Holidays holidays = holidaysDao.getHoliday(mm, dd);
 			txmanager.commit(txstatus);
 			
 			return holidays;
-		}catch(Exception e) {
+		} catch(javax.persistence.NoResultException re) {
+			if (txstatus != null) 
+				txmanager.rollback(txstatus);
+				
+		} catch(Exception e) {
 			log.error(e, e);
             if (txstatus != null) txmanager.rollback(txstatus);
 		}
