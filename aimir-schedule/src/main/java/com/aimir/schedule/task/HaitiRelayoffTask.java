@@ -127,7 +127,7 @@ public class HaitiRelayoffTask extends ScheduleTask {
 		
 		Holidays holidays = checkHoliday();
 		if(holidays != null) {
-			log.info("Can't relay off because it's the " + holidays.getHoliday_name() +"");
+			log.info("Can't relay off because it's the " + holidays.getHolidayName() +"");
 			return;
 		}
 		
