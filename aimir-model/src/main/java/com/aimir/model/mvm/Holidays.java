@@ -7,49 +7,39 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlType;
 
 import com.aimir.annotation.ColumnInfo;
+import com.aimir.model.BaseObject;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "holidays", propOrder = {
-    "id",
-    "month",
-    "day",
-    "holiday_name",
-    "type",
-    "comments",
-    "writedate"
-})
 
 @Entity
 @Table(name="HOLIDAYS")
-public class Holidays {
+public class Holidays extends BaseObject {
+	private static final long serialVersionUID = -4080624901220266580L;
 
 	@Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_HOLIDAYS")
-    @SequenceGenerator(name="SEQ_HOLIDAYS", sequenceName="SEQ_HOLIDAYS", allocationSize=1)
+    @SequenceGenerator(name="SEQ_HOLIDAYS", sequenceName="SEQ_HOLIDAYS", allocationSize=1)	
+	@Column(name = "id")
     @ColumnInfo(name="PK", descr="PK")
     private Integer id;
 	
-	@Column(name="month", nullable=true, updatable=false, insertable=false)
+	@Column(name="month")
     private Integer month;
 	
-	@Column(name="day", nullable=true, updatable=false, insertable=false)
+	@Column(name="day")
     private Integer day;
 	
-    @Column(nullable=false,length=100)    
-    private String holiday_name;
+    @Column(name="holiday_name", length=100)    
+    private String holidayName;
     
-    @Column(nullable=false,length=30)    
+    @Column(name="type", length=30)    
     private String type;
     
-    @Column(nullable=false,length=40)    
+    @Column(name="comments", length=40)    
     private String comments;
     
-    @Column(nullable=false,length=14)    
+    @Column(name="writedate", length=14)    
     private String writedate;
 
 	public Integer getId() {
@@ -76,12 +66,12 @@ public class Holidays {
 		this.day = day;
 	}
 
-	public String getHoliday_name() {
-		return holiday_name;
+	public String getHolidayName() {
+		return holidayName;
 	}
 
-	public void setHoliday_name(String holiday_name) {
-		this.holiday_name = holiday_name;
+	public void setHolidayName(String holidayName) {
+		this.holidayName = holidayName;
 	}
 
 	public String getType() {
@@ -106,6 +96,24 @@ public class Holidays {
 
 	public void setWritedate(String writedate) {
 		this.writedate = writedate;
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
     
     
