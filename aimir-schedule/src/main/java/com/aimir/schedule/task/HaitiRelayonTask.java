@@ -165,14 +165,14 @@ public class HaitiRelayonTask extends ScheduleTask {
 				targets.put(mcuId, meterList);
 			}
 			
-			// TEST Code ..
+			/* // TEST Code ..
 			targets = new HashMap<String, List<String>>();
 			
 			List<String> l = new ArrayList<String>();
 			l.add("810312254");
 			
 			targets.put("0", l);
-			//*/
+			*/
 			
 			txmanager.commit(txstatus);
 		}catch(Exception e) {
@@ -353,7 +353,7 @@ class HaitiRelayonTaskSubClz implements Runnable {
 		opLog.setYyyymmdd(currDateTime.substring(0,8));
 		opLog.setHhmmss(currDateTime.substring(8,14));
 		opLog.setYyyymmddhhmmss(currDateTime);
-		opLog.setDescription("");
+		opLog.setDescription(operationCode.getName());
 		opLog.setErrorReason(errorReason);
 		opLog.setResultSrc(status.name());
 		opLog.setStatus(status.getCode());
