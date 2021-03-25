@@ -31,6 +31,7 @@ import com.aimir.dao.device.MeterDao;
 import com.aimir.dao.device.ModemDao;
 import com.aimir.dao.device.OperationLogDao;
 import com.aimir.dao.system.CodeDao;
+import com.aimir.dao.system.HolidaysDao;
 import com.aimir.fep.logger.snowflake.SnowflakeGeneration;
 import com.aimir.fep.util.DataUtil;
 import com.aimir.fep.util.FMPProperty;
@@ -38,6 +39,7 @@ import com.aimir.model.device.MCU;
 import com.aimir.model.device.Meter;
 import com.aimir.model.device.Modem;
 import com.aimir.model.device.OperationLog;
+import com.aimir.model.mvm.Holidays;
 import com.aimir.model.system.Code;
 import com.aimir.model.system.Supplier;
 import com.aimir.schedule.command.CmdOperationUtil;
@@ -56,6 +58,9 @@ public class HaitiRelayoffTask extends ScheduleTask {
 	
 	@Autowired
 	private MeterDao meterDao;
+	
+	@Autowired
+	private HolidaysDao holidaysDao;
 	
     public static int totalExecuteCount = 0;
     public static int currentCount = 0;
@@ -120,8 +125,9 @@ public class HaitiRelayoffTask extends ScheduleTask {
 			return;
 		}
 		
-		if(checkHoliday()) {
-			log.info("Can't relay off because it's the holiday. " );
+		Holidays holidays = checkHoliday();
+		if(holidays != null) {
+			log.info("Can't relay off because it's the " + holidays.getHoliday_name() +"");
 			return;
 		}
 		
@@ -180,8 +186,14 @@ public class HaitiRelayoffTask extends ScheduleTask {
 		return false;
 	}
 	
-	private boolean checkHoliday() {
-		return false;
+	private Holidays checkHoliday() {
+		Date d = DateTimeUtil.getDateFromYYYYMMDD("20210302");
+		
+		Integer mm = Integer.parseInt(DateTimeUtil.getDateString(new Date(), "MM"));
+		Integer dd = Integer.parseInt(DateTimeUtil.getDateString(new Date(), "dd"));
+		
+		Holidays holidays = holidaysDao.getHoliday(mm, dd);
+		return holidays;
 	}
 	
 	private Map<String, List<String>> getTargetMeters(String mdevId, String dcuSysId) {
