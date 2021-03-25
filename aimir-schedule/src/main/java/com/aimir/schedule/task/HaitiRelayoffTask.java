@@ -112,22 +112,22 @@ public class HaitiRelayoffTask extends ScheduleTask {
 	private void execute(ApplicationContext ctx, String mdevId, String dcuSysId) {
 		if(isNowRunning){
             log.info("########### EDH Realy off already running...");
-           // return;
+            return;
         }
 		
 		if(checkFreedays()) {
 			log.info("Can't relay off because it's the weekend.");
-			//return;
+			return;
 		}
 		
 		if(checkBreakRelayTime()) {
 			log.info("Can't relay off because it's the after " + BREAK_RELAY_OFF_HOUR +" o'clock " );
-			//return;
+			return;
 		}
 		
 		Holidays holidays = checkHoliday();
 		if(holidays != null) {
-			log.info("Can't relay off because it's the " + holidays.getHolidayName() +"");
+			log.info("Can't relay off because it's the " + holidays.getHolidayName() +" (" + holidays.getMonth()+"/"+holidays.getDay()+") | mm/dd");
 			return;
 		}
 		
@@ -191,13 +191,9 @@ public class HaitiRelayoffTask extends ScheduleTask {
 		
 		try {
 			txstatus = txmanager.getTransaction(null);
-			Date d = DateTimeUtil.getDateFromYYYYMMDD("20210216");
 			
-			Integer mm = Integer.parseInt(DateTimeUtil.getDateString(d, "MM"));
-			Integer dd = Integer.parseInt(DateTimeUtil.getDateString(d, "dd"));
-			
-			//Integer mm = Integer.parseInt(DateTimeUtil.getDateString(new Date(), "MM"));
-			//Integer dd = Integer.parseInt(DateTimeUtil.getDateString(new Date(), "dd"));
+			Integer mm = Integer.parseInt(DateTimeUtil.getDateString(new Date(), "MM"));
+			Integer dd = Integer.parseInt(DateTimeUtil.getDateString(new Date(), "dd"));
 			
 			Holidays holidays = holidaysDao.getHoliday(mm, dd);
 			txmanager.commit(txstatus);
