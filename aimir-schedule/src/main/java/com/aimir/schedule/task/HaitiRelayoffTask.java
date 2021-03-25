@@ -203,7 +203,11 @@ public class HaitiRelayoffTask extends ScheduleTask {
 			txmanager.commit(txstatus);
 			
 			return holidays;
-		}catch(Exception e) {
+		} catch(javax.persistence.NoResultException re) {
+			if (txstatus != null) 
+				txmanager.rollback(txstatus);
+				
+		} catch(Exception e) {
 			log.error(e, e);
             if (txstatus != null) txmanager.rollback(txstatus);
 		}
