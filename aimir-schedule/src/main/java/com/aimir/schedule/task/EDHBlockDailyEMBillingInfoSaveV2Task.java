@@ -200,8 +200,6 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
             DayEM lastDayEM = null;
 
             //마지막 누적요금이 저장된 데이터를 가지고 온다.
-//            List<Map<String, Object>> lastBilling = billingBlockTariffDao.getLastAccumulateBill(mdsId);
-            
             BillingBlockTariff lastBilling = getLastAccumulateBill(mdsId);
             
             if(lastBilling == null) {
@@ -230,7 +228,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         		
         		// DAY_EM 마지막 날짜와 lastAccumulateDate간의 시간차이를 비교하여 일수로 반환
         		long diffDays = Long.parseLong(calculateDiffDays(lastDayEM.getYyyymmdd(), lastBilling.getYyyymmdd()));
-        		log.info("#### diffDays : "+ diffDays);
+        		log.info("#### diffDays : "+ diffDays+ " ####");
         		//해당 TariffEM 정보를 가져온다.
         		List<TariffEM> tariffEMList = getTariffEMList(contract, lastBilling.getYyyymmdd());
         		LinkedList<BillingBlockTariff> sequenceBillings = new LinkedList<BillingBlockTariff>();
@@ -244,13 +242,11 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         		for (int i = 1; i < sequenceBillings.size(); i++) {
         			BigDecimal bill = convertBigDecimal(sequenceBillings.get(i).getBill());
         			saveBillingBlockTariff(meter, sequenceBillings.get(i));
-//        			currentCredit = currentCredit.subtract(bill);
         			contract.setCurrentCredit(currentCredit.subtract(bill).doubleValue());
         			log.info("[Update CurrentCredit Contract:"+ contract.getContractNumber() + " ] MeterId[" + meter.getMdsId() + "] yyyymmdd[" + lastDayEM.getYyyymmdd() + "] "
         					+ "==> BlockBill[" + sequenceBillings.get(i).getBill() + "] lastAccumulateBill[" + sequenceBillings.get(i-1).getBill()+ "]");
     			}
         		contractDao.update(contract);
-//        		txManager.commit(txStatus);
         	}
 		} catch (Exception e) {
 			log.error("saveEmBillingDaily Exception ==> Contract number = " + contract.getContractNumber(), e);
@@ -264,7 +260,6 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
  		log.info("####  compareCnt : "+ compareCnt);
  		BigDecimal avgDayUsage = new BigDecimal(0);
  		if(compareCnt > 0) {
-// 			avgDayUsage = convertBigDecimal((lastDayEM.getValue() - sequenceBillings.get(0).getActiveEnergy()) / diffDays);
  			avgDayUsage = convertBigDecimal(lastDayEM.getValue()).subtract(convertBigDecimal(sequenceBillings.get(0).getActiveEnergy())).divide(convertBigDecimal(diffDays), 4, BigDecimal.ROUND_HALF_UP) ; // 소수점 4자리까지
  			log.info("####  avgDayUsage : "+ avgDayUsage);
  		}
@@ -281,12 +276,12 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
  				String maxDay = maxDayOfMonth(lastIndex.getYyyymmdd());						//해당 월의 말일
  				remainBillingDay = calculateDiffDays(lastIndex.getYyyymmdd(), maxDay);		//이전 BillingBlockTariff 날짜와 해당 월의 말일 차이를 계산
  				if(!remainBillingDay.equals("0")) {											//이전 BillingBlockTariff 날짜와 해당 월의 말일 차이가 있다면
- 					usage = avgDayUsage.multiply(convertBigDecimal(remainBillingDay));		// 일평균
+ 					usage = avgDayUsage.multiply(convertBigDecimal(remainBillingDay));		//일평균
  					sequenceBillings.add(makeBillings(lastIndex, usage, maxDay, meter, contract.getTariffIndex().getName(), tariffEMList));
  				}
  				
  				lastIndex = sequenceBillings.getLast();
- 				remainBillingDay = Integer.toString(BILLING_STANDARDS_DATE - Integer.parseInt(remainBillingDay));	//기준일 10일에서 말일차이를 뺀다
+ 				remainBillingDay = Integer.toString(BILLING_STANDARDS_DATE - Integer.parseInt(remainBillingDay));	//기준일 10일에서 말일 차이를 뺀다
  				nextBillingDay = calculateNextDays(lastIndex.getYyyymmdd(), Integer.parseInt(remainBillingDay));	//이전 BillingBlockTariff 날짜에서 다음 정산일을 구한다
  				BillingBlockTariff firstIndex = makeNewtMonthBillingBlockTariff(lastIndex, nextBillingDay);			//달이 바뀌면서 BillingBlockTariff 초기화
  				usage = avgDayUsage.multiply(convertBigDecimal(remainBillingDay));									//남은 일수만큼의 일평균	
@@ -302,23 +297,22 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
  		}
  	    // 일반 정산
  		BillingBlockTariff lastIndex = sequenceBillings.getLast();
- 		String nextBillingDay = calculateNextDays(lastIndex.getYyyymmdd(), BILLING_STANDARDS_DATE);
  		String remainBillingDay = null;
  		
- 		if(!lastIndex.getYyyymmdd().subSequence(0, 6).equals(nextBillingDay.substring(0, 6))) {
+ 		if(!lastIndex.getYyyymmdd().subSequence(0, 6).equals(lastDayEM.getYyyymmdd().substring(0, 6))) {
  			BigDecimal usage = new BigDecimal(0);
  			String maxDay = maxDayOfMonth(lastIndex.getYyyymmdd());						//해당 월의 말일
  			remainBillingDay = calculateDiffDays(lastIndex.getYyyymmdd(), maxDay);		//이전 BillingBlockTariff 날짜와 해당 월의 말일 차이를 계산
  			if(!remainBillingDay.equals("0")) {											//이전 BillingBlockTariff 날짜와 해당 월의 말일 차이가 있다면
- 				usage = avgDayUsage.multiply(convertBigDecimal(remainBillingDay));		// 일평균
+ 				usage = avgDayUsage.multiply(convertBigDecimal(remainBillingDay));		//일평균
  				sequenceBillings.add(makeBillings(lastIndex, usage, maxDay, meter, contract.getTariffIndex().getName(), tariffEMList));
  			}
  			
  			lastIndex = sequenceBillings.getLast();
- 			remainBillingDay = calculateDiffDays(nextBillingDay, lastIndex.getYyyymmdd());
+ 			remainBillingDay = calculateDiffDays(lastDayEM.getYyyymmdd(), lastIndex.getYyyymmdd());
  			BillingBlockTariff firstIndex = makeNewtMonthBillingBlockTariff(lastIndex, remainBillingDay);					//달이 바뀌면서 BillingBlockTariff 초기화
  			usage = convertBigDecimal(lastDayEM.getValue()).subtract(convertBigDecimal(firstIndex.getActiveEnergy()));		//Day_EM의 마지막 값에서 이전 BillingBlockTariff ActiveEnergy를 뺀 값으로 저장
- 			sequenceBillings.add(makeBillings(firstIndex, usage, remainBillingDay, meter, contract.getTariffIndex().getName(), tariffEMList));
+ 			sequenceBillings.add(makeBillings(firstIndex, usage, lastDayEM.getYyyymmdd(), meter, contract.getTariffIndex().getName(), tariffEMList));
  		}else {
  			lastIndex = sequenceBillings.getLast();
  			BigDecimal usage = convertBigDecimal(lastDayEM.getValue()).subtract(convertBigDecimal(lastIndex.getActiveEnergy()));
@@ -340,7 +334,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     	BigDecimal accumulateBill = blockBill(meter.getMdsId(), tariffName, tariffEMList, convertBigDecimal(bill.getAccumulateUsage()));
     	bill.setAccumulateBill(accumulateBill.doubleValue());
     	BigDecimal billingBill = accumulateBill.subtract(convertBigDecimal(lastIndex.getAccumulateBill()));
-    	bill.setBill(accumulateBill.subtract(convertBigDecimal(lastIndex.getAccumulateBill())).doubleValue());		// monthBill - Previous ACCUMULATEBILL
+    	bill.setBill(accumulateBill.subtract(convertBigDecimal(lastIndex.getAccumulateBill())).doubleValue());	// monthBill - Previous ACCUMULATEBILL
     	bill.setBalance(convertBigDecimal(lastIndex.getBalance()).subtract(billingBill).doubleValue());
     	bill.setContractId(lastIndex.getContractId());
     	// to do 
@@ -367,12 +361,12 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     	BigDecimal activeEnergyCharge_T3 = convertBigDecimal(tariffEMList.get(3).getActiveEnergyCharge());
     	
     	BigDecimal supplySizeMin_T0 = convertBigDecimal(tariffEMList.get(0).getSupplySizeMin());
-    	BigDecimal supplySizeMin_T1 = convertBigDecimal(tariffEMList.get(1).getSupplySizeMin()).subtract(supplySizeMin_T0);
-    	BigDecimal supplySizeMin_T2 = convertBigDecimal(tariffEMList.get(2).getSupplySizeMin()).subtract(supplySizeMin_T1);
-    	BigDecimal supplySizeMin_T3 = convertBigDecimal(tariffEMList.get(3).getSupplySizeMin()).subtract(supplySizeMin_T2);
+    	BigDecimal supplySizeMin_T1 = convertBigDecimal(tariffEMList.get(1).getSupplySizeMin());
+    	BigDecimal supplySizeMin_T2 = convertBigDecimal(tariffEMList.get(2).getSupplySizeMin());
+    	BigDecimal supplySizeMin_T3 = convertBigDecimal(tariffEMList.get(3).getSupplySizeMin());
     	
     	BigDecimal supplySizeMax_T0 = convertBigDecimal(tariffEMList.get(0).getSupplySizeMax());
-    	BigDecimal supplySizeMax_T1 = convertBigDecimal(tariffEMList.get(1).getSupplySizeMax());
+    	BigDecimal supplySizeMax_T1 = convertBigDecimal(tariffEMList.get(1).getSupplySizeMax()).subtract(supplySizeMax_T0);
     	BigDecimal supplySizeMax_T2 = convertBigDecimal(tariffEMList.get(2).getSupplySizeMax());
 
         if ("Public Organization".equals(tariffName) || "Autonomous Organization".equals(tariffName)) {
@@ -399,10 +393,8 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
                 else {
                 	returnBill = supplySizeMax_T1.multiply(activeEnergyCharge_T1).add(returnBill);
 //                	log.info("30이하 returnBill : "+returnBill + " supplySizeMax_T1 : " + supplySizeMax_T1 + " activeEnergyCharge_T1 : " + activeEnergyCharge_T1);
-                	
                     returnBill = (supplySizeMax_T2.subtract(supplySizeMin_T2)).multiply(activeEnergyCharge_T2).add(returnBill);
 //                    log.info("200이하 returnBill : "+returnBill + " supplySizeMin_T2 : " + supplySizeMin_T2 + " activeEnergyCharge_T2 : " + activeEnergyCharge_T2);
-                    
                     returnBill = (totalUsage.subtract(supplySizeMin_T3)).multiply(activeEnergyCharge_T3).add(returnBill);
 //                    log.info("200 이상 returnBill : "+returnBill + " supplySizeMin_T3 : " + supplySizeMin_T3 + " activeEnergyCharge_T3 : " + activeEnergyCharge_T3);
                 }
@@ -416,7 +408,6 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         log.debug("4. BlockBill Meter[" + mdsId + "] ACCUMULATEUSAGE[" + totalUsage + "] Bill[" + returnBill + "] Total Bill[" + returnBill + "]");
         
 //        return returnBill.add(tca).add(frais);
-//        return convertBigDecimal(String.format("%.02f", returnBill));
         return returnBill.setScale(2, BigDecimal.ROUND_HALF_UP);
     }
     
@@ -518,7 +509,6 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
             return lastBillingBlockTariff;
         }catch (ArrayIndexOutOfBoundsException e) {
             log.info("BillingBlockTariff does not exist : "+ e);
-//            if (txstatus != null) txManager.rollback(txstatus);
         }
         return null;
     }
@@ -647,7 +637,6 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
    private String maxDayOfMonth(String yyyymmdd) {
 	   LocalDate localDate = LocalDate.of(Integer.parseInt(yyyymmdd.substring(0,4)), Integer.parseInt(yyyymmdd.substring(4,6)), Integer.parseInt(yyyymmdd.substring(6,8)));
        Calendar cal = Calendar.getInstance();
-//       cal.setTime(new Date());
        cal.set(localDate.getYear(), localDate.getMonthValue()-1, localDate.getDayOfMonth()); //월은 -1해줘야 해당월로 인식
        String maxDate = Integer.toString(localDate.getYear()) + String.format("%02d", localDate.getMonthValue()) + String.format("%02d", cal.getActualMaximum(Calendar.DAY_OF_MONTH));
        return maxDate;
