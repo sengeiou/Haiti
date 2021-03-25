@@ -20,8 +20,6 @@ public class Holidays extends BaseObject {
 	@Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_HOLIDAYS")
     @SequenceGenerator(name="SEQ_HOLIDAYS", sequenceName="SEQ_HOLIDAYS", allocationSize=1)	
-	@Column(name = "id")
-    @ColumnInfo(name="PK", descr="PK")
     private Integer id;
 	
 	@Column(name="month")
