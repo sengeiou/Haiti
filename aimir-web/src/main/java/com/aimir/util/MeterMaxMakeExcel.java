@@ -117,6 +117,10 @@ public class MeterMaxMakeExcel {
             cell.setCellStyle(titleCellStyle);
 
             cell = row.createCell(cellCnt++);
+            cell.setCellValue(msgMap.get("gs1"));
+            cell.setCellStyle(titleCellStyle);
+
+            cell = row.createCell(cellCnt++);
             cell.setCellValue(msgMap.get("metertype"));
             cell.setCellStyle(titleCellStyle);
 
@@ -210,6 +214,10 @@ public class MeterMaxMakeExcel {
                 cell.setCellValue(resultMap.get("meterMds")==null?"":resultMap.get("meterMds").toString());
                 cell.setCellStyle(dataCellStyle);
 
+                cell = row.createCell(cellCnt2++);
+                cell.setCellValue(resultMap.get("gs1")==null?"":resultMap.get("gs1").toString());
+                cell.setCellStyle(dataCellStyle);
+                
                 cell = row.createCell(cellCnt2++);
                 cell.setCellValue(resultMap.get("meterType")==null?"":resultMap.get("meterType").toString());
                 cell.setCellStyle(dataCellStyle);

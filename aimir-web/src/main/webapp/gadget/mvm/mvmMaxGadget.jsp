@@ -157,6 +157,8 @@
             document.getElementById("mcu_id").value = "";
             document.getElementById("meter_id").value = "";
             document.getElementById("mdev_id").value = "";
+            document.getElementById("gs1").value = "";
+            document.getElementById("meter_gs1").value = "";
         }
 
         function showChartOpen(contractNos, meterListObj, meterList) {
@@ -309,7 +311,7 @@
             fmtMessage[5] = "<fmt:message key="aimir.previous"/>";
             fmtMessage[6] = "<fmt:message key="aimir.co2formula"/>";
             fmtMessage[7] = "<fmt:message key="aimir.mcuid2"/>";
-            fmtMessage[8] = "<fmt:message key="aimir.meterid2"/>";
+            fmtMessage[8] = "<fmt:message key="aimir.meterid"/>";
             fmtMessage[9] = "<fmt:message key="aimir.location"/>";
             fmtMessage[10] = "<fmt:message key="aimir.view.detail"/>";
             fmtMessage[11] = "<fmt:message key="aimir.alert"/>";
@@ -366,6 +368,8 @@
             obj.customType      = $("#customType").val();
             obj.mvmMiniType     = "${mvmMiniType}";
             obj.supplierId      = supplierId;
+            obj.meter_gs1       = document.getElementById("meter_gs1").value;
+            obj.gs1      		= document.getElementById("gs1").value;
             obj.title               = "<fmt:message key='aimir.excel.meteringData'/>";
 
             if(winObj)
@@ -425,6 +429,7 @@
                     mcuId : $("#mcu_id").val(),
                     deviceType : $("#device_type").val(),
                     mdevId : $("#mdev_id").val(),
+                    gs1 : $("#gs1").val(),
                     contractGroup : $("#contractGroup").val(),
                     sicId : $("#customType").val(),
                     sicIds : $("#sicIds").val(),
@@ -432,7 +437,7 @@
                 },
                 totalProperty : 'totalCount',
                 root : 'result',
-                fields : ["num", "contractNumber", "customerName", "meteringTime", "value", "prevValue", "meterNo", "modemId"],
+                fields : ["num", "contractNumber", "customerName", "meteringTime", "value", "prevValue", "meterNo", "modemId", "gs1"],
                 listeners : {
                     beforeload : function(store, options) {
                         options.params || (options.params = {});
@@ -450,7 +455,7 @@
                 });
             }
             
-            var colWidth = (width-70)/8;
+            var colWidth = (width-70)/9;
 
             	if (mvmMiniType.toString() == "EM") {
                     if(supplierName == 'MOE'){    // 추후 이라크 선불 도입시 코드 원래대로 수정할것.
@@ -468,7 +473,8 @@
                                  ,{header: "<fmt:message key='aimir.meteringtime'/>", dataIndex: 'meteringTime'}
                                  ,{header: "<fmt:message key='aimir.usage.kwh'/>", dataIndex: 'value', align: 'right'}
                                  ,{header: "<fmt:message key='aimir.previous'/> [<fmt:message key='aimir.unit.kwh'/>]", dataIndex: 'prevValue', align: 'right'}
-                                 ,{header: "<fmt:message key='aimir.meterid2'/>", dataIndex: 'meterNo'}
+                                 ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'meterNo'}
+                                 ,{header: "<fmt:message key='aimir.shipment.gs1'/>", dataIndex: 'gs1'}
                                  ,{header: "<fmt:message key='aimir.modemid'/>", dataIndex: 'modemId'}
                                  ,{header: "<fmt:message key='aimir.view.detail'/>",
                                      renderer: function(value, metaData, record, index) {
@@ -495,7 +501,8 @@
                                  ,{header: "<fmt:message key='aimir.meteringtime'/>", dataIndex: 'meteringTime'}
                                  ,{header: "<fmt:message key='aimir.usage.kwh'/>", dataIndex: 'value', align: 'right'}
                                  ,{header: "<fmt:message key='aimir.previous'/> [<fmt:message key='aimir.unit.kwh'/>]", dataIndex: 'prevValue', align: 'right'}
-                                 ,{header: "<fmt:message key='aimir.meterid2'/>", dataIndex: 'meterNo'}
+                                 ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'meterNo'}
+                                 ,{header: "<fmt:message key='aimir.shipment.gs1'/>", dataIndex: 'gs1'}
                                  ,{header: "<fmt:message key='aimir.modemid'/>", dataIndex: 'modemId'}
                                  ,{header: "<fmt:message key='aimir.view.detail'/>",
                                      renderer: function(value, metaData, record, index) {
@@ -525,7 +532,7 @@
                          ,{header: "<fmt:message key='aimir.meteringtime'/>", dataIndex: 'meteringTime'}
                          ,{header: "<fmt:message key='aimir.usage.m3'/>", dataIndex: 'value', align: 'right'}
                          ,{header: "<fmt:message key='aimir.previous'/> [<fmt:message key='aimir.unit.m3'/>]", dataIndex: 'prevValue', align: 'right'}
-                         ,{header: "<fmt:message key='aimir.meterid2'/>", dataIndex: 'meterNo'}
+                         ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'meterNo'}
                          ,{header: "<fmt:message key='aimir.modemid'/>", dataIndex: 'modemId'}
                          ,{header: "<fmt:message key='aimir.view.detail'/>",
                              renderer: function(value, metaData, record, index) {
@@ -553,7 +560,7 @@
                          ,{header: "<fmt:message key='aimir.meteringtime'/>", dataIndex: 'meteringTime'}
                          ,{header: "<fmt:message key='aimir.usage'/>[<fmt:message key='aimir.unit.Gcal'/>]", dataIndex: 'value', align: 'right'}
                          ,{header: "<fmt:message key='aimir.previous'/> [<fmt:message key='aimir.unit.Gcal'/>]", dataIndex: 'prevValue', align: 'right'}
-                         ,{header: "<fmt:message key='aimir.meterid2'/>", dataIndex: 'meterNo'}
+                         ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'meterNo'}
                          ,{header: "<fmt:message key='aimir.modemid'/>", dataIndex: 'modemId'}
                          ,{header: "<fmt:message key='aimir.view.detail'/>",
                              renderer: function(value, metaData, record, index) {
@@ -582,7 +589,7 @@
                          ,{header: "<fmt:message key='aimir.meteringtime'/>", dataIndex: 'meteringTime'}
                          ,{header: "<fmt:message key='aimir.usage'/>", dataIndex: 'value', align: 'right'}
                          ,{header: "<fmt:message key='aimir.previous'/>", dataIndex: 'prevValue', align: 'right'}
-                         ,{header: "<fmt:message key='aimir.meterid2'/>", dataIndex: 'meterNo'}
+                         ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'meterNo'}
                          ,{header: "<fmt:message key='aimir.modemid'/>", dataIndex: 'modemId'}
                          ,{header: "<fmt:message key='aimir.view.detail'/>",
                              renderer: function(value, metaData, record, index) {
@@ -762,9 +769,13 @@
                 <td class="gray11pt withinput" style="width: 85px"><fmt:message key="aimir.deviceType"/></td>
                 <td><form:select id="device_type"  path="deviceType" items="${deviceType}" style="width:110px;"/></td>
                 <td class="space20"></td>
-                <td class="gray11pt withinput" style="width: 110px"><fmt:message key="aimir.meterid2"/></td>
+                <td class="gray11pt withinput" style="width: 110px"><fmt:message key="aimir.meterid"/></td>
                 <input id="meter_id" type="text" style="width:120px;display: none">
                 <td><input id="mdev_id" type="text" style="width:120px;"></td>
+                <td class="space20"></td>
+                <td class="gray11pt withinput" style="width: 110px"><fmt:message key="aimir.shipment.gs1"/></td>
+                <input id="meter_gs1" type="text" style="width:120px;display: none">
+                <td><input id="gs1" type="text" style="width:120px;"></td>
                 <td class="space20"></td>
                 <td class="gray11pt withinput" style="width:90px"><fmt:message key="aimir.mcuid"/></td>
                 <td><input id="mcu_id" type="text" style="width:120px;"></td>

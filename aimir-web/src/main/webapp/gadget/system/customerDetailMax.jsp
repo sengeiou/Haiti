@@ -114,19 +114,7 @@
 
                     customerNo_ = json.customer.customerNo;
 
-                    var _InfoCustomerNo = json.customer.customerNo;
-
-                    if(_InfoCustomerNo.length > 6){
-                    	var _star = "";
-
-                        for(var i=6; i<_InfoCustomerNo.length; i++){
-                            _star += "*";
-                        }
-
-                    	_InfoCustomerNo = _InfoCustomerNo.substring(0,6) + _star;
-                    }
-
-                    $("#InfoCustomerNo").html(_InfoCustomerNo) ;
+                    $("#InfoCustomerNo").html(customerNo_) ;
                     $("#InfoName1").html(json.customer.name);
                     $("#InfoName").html(json.customer.name);
 
@@ -136,24 +124,33 @@
                     var addr3 = json.customer.address3;
                     
                     if (addr1 != null && addr1 != "" && addr1 != "null" && addr1 != '"null"') {
-                        $("#InfoAddress1").html(addr1.replaceAll("_","'"));
+                    	$("#InfoAddress1").show();
+                    	$("#InfoAddress1").html(addr1.replaceAll("_","'"));
                     } else {
                         $("#InfoAddress1").html("");
+                        $("#InfoAddress1").hide();
                     }
                     if (addr2 != null && addr2 != "" && addr2 != "null" && addr2 != '"null"') {
-                        $("#InfoAddress2").html(addr2.replaceAll("_","'"));
+                    	$("#InfoAddress2").show();
+                    	$("#InfoAddress2").html(addr2.replaceAll("_","'"));
                     } else {
                         $("#InfoAddress2").html("");
+                        $("#InfoAddress2").hide();
                     }
                     if (addr3 != null && addr3 != "" && addr3 != "null" && addr3 != '"null"') {
-                        $("#InfoAddress3").html(addr3.replaceAll("_","'"));
+                    	$("#InfoAddress3").show();
+                    	$("#InfoAddress3").html(addr3.replaceAll("_","'"));
+                    	$("#InfoAddress3").height('auto');
                     } else {
                         $("#InfoAddress3").html("");
+                        $("#InfoAddress3").hide();
                     }
                     if (addr != null && addr != "" && addr != "null" && addr != '"null"') {
-                        $("#InfoAddress").html(addr.replaceAll("_","'"));
+                    	$("#InfoAddress").show();
+                    	$("#InfoAddress").html(addr.replaceAll("_","'"));
                     } else {
                         $("#InfoAddress").html("");
+                        $("#InfoAddress").hide();
                     }
 
                     $("#InfoEmail").html(json.customer.email);

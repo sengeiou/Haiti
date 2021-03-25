@@ -1124,10 +1124,7 @@
                 modemId:modemId
             },
             root:'gridData2',
-            fields: [
-                      "no"
-                     , "mdsId"
-                     ]
+            fields: [ "no", "mdsId", "gs1"]
         });//Store End
 
         var fmtMessage = new Array();
@@ -1141,7 +1138,8 @@
             columns: [
                 //myCboxSelModel,
                {header: "no", dataIndex: 'no', width:50, align: 'center'}
-               ,{header: "Meter", dataIndex: 'mdsId', width:(gridWidth-50), align: 'center', editor:new Ext.form.TextField({allowBlank:false,width:400})}
+               ,{header: "Meter", dataIndex: 'mdsId', width:(gridWidth-50)/2, align: 'center', editor:new Ext.form.TextField({allowBlank:false,width:200})}
+               ,{header: "Meter SN", dataIndex: 'gs1', width:(gridWidth-50)/2, align: 'center', editor:new Ext.form.TextField({allowBlank:false,width:200})}
             ],
             defaults: {
                 sortable: true
@@ -1227,6 +1225,7 @@
                 ,gridType :"extjs"
                	,sMeterSerial:condArray[18]
            		,sModuleBuild:condArray[19]
+                ,sGs1:condArray[20]
             
             },
             root:'gridData',
@@ -1388,6 +1387,7 @@
                 ,supplierId:condArray[16]
             	,sMeterSerial:condArray[18] 
         		,sModuleBuild:condArray[19] 
+                ,sGs1:condArray[20] 
                 ,pageSize :"10"
                 ,gridType :"extjs"
                 ,modelId : "" // firmware management에서 사용
@@ -1689,6 +1689,7 @@
         arrayObj[17] = $('#sModemStatus').val();
 		arrayObj[18] = $('#sMeterSerial').val();
 		arrayObj[19] = $('#sModuleBuild').val();
+		arrayObj[20] = $('#sGs1').val();
 		
         return arrayObj;
     }
@@ -3306,6 +3307,7 @@
                 sModemStatus:$('#sModemStatus').val(),
                 sMeterSerial:$('#sMeterSerial').val(),
                 sModuleBuild:$('#sModuleBuild').val(),
+                sGs1:$('#sGs1').val(),
                 supplierId:supplierId}
         ,function(json) {
                 var list = json.chartData;
@@ -5770,6 +5772,11 @@
                     <td class="withinput" style="width: 90px;">Meter ID</td>
                     <td class="padding-r20px">
                         <input type="text" id="sMeterSerial" style="width:189px;"/>
+                    </td>
+                    
+                    <td class="withinput" style="width: 90px;"><fmt:message key="aimir.shipment.gs1"/></td>
+                    <td class="padding-r20px">
+                        <input type="text" id="sGs1" style="width:189px;"/>
                     </td>
                     
                     <td class="withinput" width="130px"><fmt:message key="aimir.mcucode.fmversion"/></td>

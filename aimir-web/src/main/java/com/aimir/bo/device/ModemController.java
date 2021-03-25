@@ -343,6 +343,7 @@ public class ModemController {
             @RequestParam("gridType") String gridType,
             @RequestParam("modelId") String modelId,
             @RequestParam("sMeterSerial") String sMeterSerial,
+            @RequestParam("sGs1") String sGs1,
             @RequestParam("sModuleBuild") String sModuleBuild,
             @RequestParam("fwGadget") String fwGadget,
             String sState,
@@ -380,6 +381,7 @@ public class ModemController {
         condition.put("sLastcommStartDate", sLastcommStartDate);
         condition.put("sLastcommEndDate", sLastcommEndDate);
         condition.put("sLocationId", sLocationId);
+        condition.put("sGs1", sGs1);
         condition.put("page", page);
         condition.put("pageSize", pageSize);
         condition.put("sOrder", sOrder);
@@ -456,6 +458,7 @@ public class ModemController {
             @RequestParam(value="page", required=false) Integer page,
             @RequestParam(value="limit", required=false) Integer limit,
             @RequestParam(value="sMeterSerial", required=false) String sMeterSerial,
+            @RequestParam(value="sGs1", required=false) String sGs1,
             @RequestParam(value="sModuleBuild", required=false) String sModuleBuild
     		) {
 
@@ -1762,6 +1765,7 @@ public class ModemController {
             conditionMap.put("sOrder", condition[14]);
             conditionMap.put("sCommState", condition[15]);
             conditionMap.put("supplierId", condition[16]);
+            conditionMap.put("sGs1", condition[20]);
             conditionMap.put("curPage", "1");
             
             Code deleteCode = codeManager.getCodeByCode(ModemSleepMode.Delete.getCode());

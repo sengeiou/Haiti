@@ -116,6 +116,7 @@
 
     //추가 프로퍼티
     var updContractSearchMdsId = "";
+    var updContractSearchGs1 = "";
 
     // Meter 그리드 관련 프로퍼티
     var updContractMeterGridOn = false;
@@ -132,12 +133,13 @@
             autoLoad: {params:{start: 0, limit: rowSize}},
             url: "${ctx}/gadget/contract/getMeterGridList.do",
             baseParams: {
-                mdsId : updContractSearchMdsId
+                mdsId : updContractSearchMdsId,
+                gs1 : updContractSearchGs1
             },
             // total count value
             totalProperty: 'totalCount',
             root: 'result',
-            fields: ["mdsId", "id"],
+            fields: ["mdsId", "id", "gs1"],
             listeners: {
                 beforeload: function(store, options) {
                     options.params || (options.params = {});
@@ -151,12 +153,13 @@
         //Meter model column setting
         updContractMeterColModel = new Ext.grid.ColumnModel({
             columns: [
-                {id: "mdsId", header: '<fmt:message key='aimir.meterid'/>', dataIndex: 'mdsId', width: 296}
+                {id: "mdsId", header: '<fmt:message key='aimir.meterid'/>', dataIndex: 'mdsId'},
+                {id: "gs1", header: '<fmt:message key='aimir.shipment.gs1'/>', dataIndex: 'gs1'}
             ],
             defaults: {
                 sortable: true
                ,menuDisabled: true
-               ,width: 250
+               ,width: 195
            }
         });
 
@@ -168,7 +171,7 @@
                 autoScroll:false,
                 //autoScroll:true,
                 //autoExpandColumn: "mdsId",
-                width: 300,
+                width: 400,
                 style: 'align:center; ',
                 height: 125,
                 stripeRows : true,
@@ -210,9 +213,11 @@
         var row = s.getSelected();
 
         var mdsId = row.get('mdsId');
+        var gs1 = row.get('gs1');
 
         //$("#mdsId").val(mdsId);
         $("#meterMdsIdU").val(mdsId);
+        $("#meterGs1U").val(gs1);
 
         //ContractMeterId =row.get('id');
         //$("#ConMeterId").val(ContractMeterId);
@@ -233,6 +238,7 @@
         $("#meterSearchButton2").click(function() {
             //검색 조건을 만들어준다.
             updContractSearchMdsId = $("#meterMdsIdU").val();
+            updContractSearchGs1 = $("#meterGs1U").val();
 
             //미터 리스트 가져오기.
             getUpdContractMeterGridList();
@@ -603,6 +609,13 @@
                             $('#preMdsIdU').val($('#preMdsId').val());
                         }
                         
+                        // meterGs1
+                        if ($('#meterGs1').val() == "-"){
+                            $('#meterGs1U').val('');
+                        } else {
+                            $('#meterGs1U').val($('#meterGs1').val());
+                        }
+                        
                         // sic
                         var sicName = $("#sicName").val();
                         var sicId = $("#sicId").val();
@@ -659,6 +672,7 @@
 
         function setSearchCondition() {
             updContractSearchMdsId = "";
+            updContractSearchGs1 = "";
         }
 
         $("#contractInfoUpdateCancel").click(function() {
@@ -694,6 +708,7 @@
             var meterId = $("#meterMdsIdU").val();
 
             var preMdsId = $.trim($("#preMdsIdU").val());
+            var meterGs1 = $.trim($("#meterGs1U").val());
             /*if ($("#meterMdsIdU").val() != "" && $("#ConMeterId").val() != "") {     // Meter list 에서 선택한 Meter
                 meterId = $("#ConMeterId").val();
             } else {
@@ -852,6 +867,7 @@
                         'arrearsContractCount' : $('#arrearsContractCountU').val(),
                         'chargeAvailable' : (chargeAvailable == null) ? "" : chargeAvailable,
                         'preMdsId' : preMdsId,
+                        'meterGs1' : $("#meterGs1U").val(),
                         "isPartpayment" : isPartpayment,
                         "debtSaveInfo" : JSON.stringify(debtSaveArrU)
                     },
@@ -1382,6 +1398,7 @@
             conditionArray[12] = '';                 // 주소
             conditionArray[13] = '';                 // 공급타입
             conditionArray[15] = $('#contractNumberB').val();
+            conditionArray[16] = $('#gs1B').val();
         } else if (serviceTypeTab == 'GM') {
             conditionArray[0] = $('#customerNoC').val();
             conditionArray[1] = $('#customerNameC').val();
@@ -1414,6 +1431,7 @@
             conditionArray[12] = '';                 // 주소
             conditionArray[13] = '';                 // 공급타입
             conditionArray[15] = $('#contractNumberD').val();
+            conditionArray[16] = $('#gs1D').val();
         } else if (serviceTypeTab == 'HM') {
             conditionArray[0] = $('#customerNoE').val();
             conditionArray[1] = $('#customerNameE').val();
@@ -1582,6 +1600,7 @@
                     $('#creditTypeName').val(data.contract.creditTypeName);
                     $('#meterMdsId').val(data.contract.mdsId);
                     $('#preMdsId').val(data.contract.preMdsId);
+                    $('#meterGs1').val(data.contract.gs1);
                     $('#sicName').val(data.contract.sicName);
                     $('#contractNumber').val(data.contract.contractNumber);
 //                    $('#receiptNoD').val(data.contract.receiptNumber);
@@ -1813,6 +1832,8 @@
         fmtMessage[26] = "<fmt:message key="aimir.chargeAmount"/>[<fmt:message key="aimir.price.unit"/>]";//충전금액[원]
         fmtMessage[27] = "<fmt:message key="aimir.hems.prepayment.balanceaftercharged"/>[<fmt:message key="aimir.price.unit"/>]";//충전 후 잔액[원]
         fmtMessage[28] = "<fmt:message key="aimir.hems.prepayment.transactionNum"/>";//거래번호
+        
+        fmtMessage[29] = "<fmt:message key="aimir.shipment.gs1"/>";//gs1 = Meter SN
 
         return fmtMessage;
     }
@@ -2224,6 +2245,7 @@
                 contractNumber: $('#contractNumberA').val(),
                 customerNo: $('#customerNoA').val(),
                 customerName: $('#customerNameA').val(),
+                gs1: $('#gs1').val(),
                 location: $('#locationA').val(),
                 tariffIndex: '',
                 contractDemand: '',
@@ -2241,12 +2263,12 @@
             },
             reader: new Ext.data.JsonReader({
                 root: 'root',
-                fields: ["customerName", "location", "customerNo", "serviceType", "chargedCreditView", "expanded",
+                fields: ["customerName", "location", "customerNo", "serviceType", "chargedCreditView", "expanded", "gs1",
                          "iconCls", "serviceTypeName", "meterId", "customerId", "address", "contractId", "contractNumber", "sicName"]
             }),
             totalProperty: 'total',
             root:'root',
-            fields: ["customerName", "location", "customerNo", "serviceType", "chargedCreditView", "expanded",
+            fields: ["customerName", "location", "customerNo", "serviceType", "chargedCreditView", "expanded", "gs1",
                      "iconCls", "serviceTypeName", "meterId", "customerId", "address", "contractId", "contractNumber", "sicName"],
 
             listeners: {
@@ -2274,28 +2296,33 @@
         var scrollWidth = 22;
         var tgWidth = width - scrollWidth;
         var customerTreeColModel = [
-             {header: "<fmt:message key='aimir.customerid'/>", dataIndex: 'customerNo', width: tgWidth/8,
+             {header: "<fmt:message key='aimir.customerid'/>", dataIndex: 'customerNo', width: tgWidth/10,
                  tpl: new Ext.XTemplate('{customerNo:this.viewToolTip}', {
                      viewToolTip: addTreeTooltip
                  })
              }
-             ,{header: "<fmt:message key='aimir.customername'/>", dataIndex: 'customerName', width: tgWidth/9 *2,
+             ,{header: "<fmt:message key='aimir.customername'/>", dataIndex: 'customerName', width: tgWidth/10,
                  tpl: new Ext.XTemplate('{customerName:this.viewToolTip}', {
                      viewToolTip: addTreeTooltip
                  })
              }             
-            ,{header: "<fmt:message key='aimir.address'/>", dataIndex: 'address', width: tgWidth/9 * 3,
+            ,{header: "<fmt:message key='aimir.address'/>", dataIndex: 'address', width: tgWidth/10 * 3,
                 tpl: new Ext.XTemplate('{address:this.viewToolTip}', {
                     viewToolTip: addTreeTooltip
                 })
             }
-            ,{header: "<fmt:message key='aimir.supply.type'/>", dataIndex: 'serviceTypeName', width: tgWidth/9}
-            ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'meterId', width: tgWidth/9,
+            ,{header: "<fmt:message key='aimir.supply.type'/>", dataIndex: 'serviceTypeName', width: tgWidth/10}
+            ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'meterId', width: tgWidth/10,
                 tpl: new Ext.XTemplate('{meterId:this.viewToolTip}', {
                     viewToolTip: addTreeTooltip
                 })
             }
-            ,{header: "<fmt:message key='aimir.sic'/>", dataIndex: 'sicName', width: (tgWidth/9 *2),
+            ,{header: "<fmt:message key='aimir.shipment.gs1'/>", dataIndex: 'gs1', width: tgWidth/10,
+                tpl: new Ext.XTemplate('{gs1:this.viewToolTip}', {
+                    viewToolTip: addTreeTooltip
+                })
+            }
+            ,{header: "<fmt:message key='aimir.sic'/>", dataIndex: 'sicName', width: (tgWidth/10 *2),
                 tpl: new Ext.XTemplate('{sicName:this.viewToolTip}', {
                     viewToolTip: addTreeTooltip
                 })
@@ -2331,6 +2358,7 @@
                     mdsId : $('#mdsIdA').val(),
                     status : '',
                     dr : '',
+                    gs1 :  $('#gs1').val(),
                     customerType : $('#sicIdsA').val(),
                     startDate : $('#startDateA').val(),
                     endDate : $('#endDateA').val(),
@@ -2344,6 +2372,7 @@
                 treeLoader.baseParams.contractNumber = $("#contractNumberA").val();
                 treeLoader.baseParams.location = $("#locationA").val();
                 treeLoader.baseParams.mdsId = $("#mdsIdA").val();
+                treeLoader.baseParams.gs1 = $("#gs1").val();
                 treeLoader.baseParams.customerType = $("#sicIdsA").val();
                 treeLoader.baseParams.serviceType = $("#serviceTypeA").val();
                 treeLoader.baseParams.serviceTypeTab = serviceTypeTab;
@@ -2691,7 +2720,8 @@
             endDate : conditionArray[11],
             address : conditionArray[12],
             serviceType : conditionArray[13],
-            serviceTypeTab : conditionArray[14]
+            serviceTypeTab : conditionArray[14],
+            gs1 : conditionArray[16]
         };
 
         elCustomerStore = new Ext.data.JsonStore({
@@ -2701,7 +2731,7 @@
             totalProperty: 'totalCount',
             root:'result',
             fields: ["CONTRACT_NUMBER", "CUSTNAME", "LOCNAME", "TARIFFNAME", "CONTRACTDEMAND", "CREDITTYPENAME",
-                     "MDS_ID", "STATUSNAME", "DEMANDRESPONSE", "SICNAME", "EMAIL", "TELEPHONENO", "MOBILENO",
+                     "MDS_ID", "STATUSNAME", "DEMANDRESPONSE", "SICNAME", "EMAIL", "TELEPHONENO", "MOBILENO", "GS1",
                      "CUSTOMERID", "CONTRACTID", "SERVICETYPE", "SERVICETYPE_NAME", "CUSTOMERNO"],
             listeners: {
                 beforeload: function(store, options){
@@ -2726,6 +2756,7 @@
                ,{header: fmtMessage[2],  dataIndex: 'LOCNAME',         tooltip: fmtMessage[2]}
                ,{header: fmtMessage[3],  dataIndex: 'TARIFFNAME',      tooltip: fmtMessage[3]}
                ,{header: fmtMessage[12], dataIndex: 'CONTRACTDEMAND',  tooltip: fmtMessage[12]}
+               ,{header: fmtMessage[29],  dataIndex: 'GS1',            tooltip: fmtMessage[29]}
                ,{header: fmtMessage[4],  dataIndex: 'CREDITTYPENAME',  tooltip: fmtMessage[4]}
                ,{header: fmtMessage[5],  dataIndex: 'MDS_ID',          tooltip: fmtMessage[5]}
                ,{header: fmtMessage[6],  dataIndex: 'STATUSNAME',      tooltip: fmtMessage[6]}
@@ -2733,12 +2764,12 @@
                ,{header: fmtMessage[7],  dataIndex: 'SICNAME',         tooltip: fmtMessage[7]}
                ,{header: fmtMessage[8],  dataIndex: 'EMAIL',           tooltip: fmtMessage[8]}
                ,{header: fmtMessage[9],  dataIndex: 'TELEPHONENO',     tooltip: fmtMessage[9]}
-               ,{header: fmtMessage[10], dataIndex: 'MOBILENO',        tooltip: fmtMessage[10], width: (width/13)-4}
+               ,{header: fmtMessage[10], dataIndex: 'MOBILENO',        tooltip: fmtMessage[10], width: (width/43)-4}
             ],
             defaults: {
                 sortable: true
                ,menuDisabled: true
-               ,width: (width/13)
+               ,width: (width/14)
                ,renderer: addTooltip
             }
         });
@@ -2889,7 +2920,8 @@
             endDate : conditionArray[11],
             address : conditionArray[12],
             serviceType : conditionArray[13],
-            serviceTypeTab : conditionArray[14]
+            serviceTypeTab : conditionArray[14],
+            gs1 : conditionArray[16],
         };
 
         store = new Ext.data.JsonStore({
@@ -2899,7 +2931,7 @@
             totalProperty: 'totalCount',
             root:'result',
             fields: ["CONTRACT_NUMBER", "CUSTNAME", "LOCNAME", "TARIFFNAME", "CONTRACTDEMAND", "CREDITTYPENAME",
-                     "MDS_ID", "STATUSNAME", "DEMANDRESPONSE", "SICNAME", "EMAIL", "TELEPHONENO", "MOBILENO",
+                     "MDS_ID", "STATUSNAME", "DEMANDRESPONSE", "SICNAME", "EMAIL", "TELEPHONENO", "MOBILENO", "GS1",
                      "CUSTOMERID", "CONTRACTID", "SERVICETYPE", "SERVICETYPE_NAME", "CUSTOMERNO"],
             listeners: {
                 beforeload: function(store, options){
@@ -2925,6 +2957,7 @@
                ,{header: fmtMessage[3],  dataIndex: 'TARIFFNAME',      tooltip: fmtMessage[3]}
                ,{header: fmtMessage[4],  dataIndex: 'CREDITTYPENAME',  tooltip: fmtMessage[4]}
                ,{header: fmtMessage[5],  dataIndex: 'MDS_ID',          tooltip: fmtMessage[5]}
+               ,{header: fmtMessage[29],  dataIndex: 'GS1',             tooltip: fmtMessage[29]}
                ,{header: fmtMessage[6],  dataIndex: 'STATUSNAME',      tooltip: fmtMessage[6]}
                ,{header: fmtMessage[7],  dataIndex: 'SICNAME',         tooltip: fmtMessage[7]}
                ,{header: fmtMessage[8],  dataIndex: 'EMAIL',           tooltip: fmtMessage[8]}
@@ -2934,7 +2967,7 @@
             defaults: {
                 sortable: true
                ,menuDisabled: true
-               ,width: (width/11)
+               ,width: (width/12)
                ,renderer: addTooltip
            }
         });
@@ -3063,6 +3096,7 @@
         conditions[14] = $('#serviceTypeA').val();
         conditions[15] = serviceTypeTab;
         conditions[16] = supplierId;
+        conditions[17] = $('#gs1').val();
 
         obj.condition = conditions;
         obj.fmtMessage = fmtMessage;
@@ -3241,6 +3275,8 @@
                         <td><input id="contractNumberA"></td>
                         <td class="withinput"><fmt:message key="aimir.customername"/></td>
                         <td class="padding-r20px2"><input id="customerNameA" type="text"></td>
+                        <td class="withinput"><fmt:message key="aimir.shipment.gs1"/></td>
+                        <td class="padding-r20px2"><input id="gs1" type="text"></td>
                         <td class="withinput"><fmt:message key="aimir.location.supplier" /></td>
                         <td class="padding-r20px2">
                             <input type="text" id="locationAText" name="location.name" style="width:142px">
@@ -3328,6 +3364,8 @@
                     <tr>
                         <td class="withinput"><fmt:message key="aimir.meterid" /></td>
                         <td class="padding-r20px2"><input id="mdsIdB" type="text"></td>
+                        <td class="withinput"><fmt:message key="aimir.shipment.gs1" /></td>
+                        <td class="padding-r20px2"><input id="gs1B" type="text"></td>
                         <td class="withinput"><fmt:message key="aimir.supplystatus" /></td>
                         <td class="padding-r20px2"><select id="statusB" style="width: 125px"></select></td>
                         <td class="withinput"><fmt:message key="aimir.customer.dr" /></td>
@@ -3460,6 +3498,8 @@
                     <tr>
                         <td class="withinput"><fmt:message key="aimir.meterid" /></td>
                         <td class="padding-r20px2"><input id="mdsIdD"></td>
+                        <td class="withinput"><fmt:message key="aimir.shipment.gs1" /></td>
+                        <td class="padding-r20px2"><input id="gs1D"></td>
                         <td class="withinput"><fmt:message key="aimir.supplystatus" /></td>
                         <td class="padding-r20px2"><select id="statusD" style="width:125px;"></select></td>
                         
@@ -3711,7 +3751,7 @@
                                         <td class="padding-r20px2">
                                             <input type="text" id="preMdsId" readonly class="border-trans bg-trans" style="width: 120px;"/>
                                         </td>
-
+                                        
                                     </tr>
 <!--                          
                                     <tr>
@@ -3753,6 +3793,12 @@
                                         <td class="padding-r20px2">
                                             <input type="text" id="meterMdsId" readonly class="border-trans bg-trans" style="width: 120px; text-align: left;"/>
                                         </td>   
+                                                                                                                        
+                                        <!-- gs1 -->
+                                        <td class="bold withinput"><fmt:message key="aimir.shipment.gs1" /></td>
+                                        <td class="padding-r20px2">
+                                            <input type="text" id="meterGs1" readonly class="border-trans bg-trans" style="width: 120px; text-align: left;"/>
+                                        </td>  
                                     </tr>     
                                     <tr>
                                         <!-- 지불타입 -->
@@ -3984,6 +4030,7 @@
                                         <!-- 예전미터 시리얼 -->
                                         <td class="bold withinput"><fmt:message key="aimir.preMeterid"/></td>
                                         <td><input name="preMdsIdU" style="width:150px" id="preMdsIdU" type="text"/></td>
+
                                     </tr>
 <!--
                                     <tr>
@@ -4007,12 +4054,19 @@
 
                                         <td class="bold withinput"><fmt:message key="aimir.threshold3"/></td>
                                         <td><input name="threshold3U" style="width:180px" id="threshold3U" type="text"/></td>
+                                        
                                          <!-- 미터id U-->
                                         <td class="bold withinput" ><fmt:message key="aimir.meterid" /></td>
                                         <td class="padding-r20px2">
                                             <input type="text" id="meterMdsIdU" style="width: 150px;"/>
                                             <input type="hidden" id="meterMdsIdU_id" style="width: 150px;"/>
  
+                                        </td>
+                                        
+                                        <td class="bold withinput"><fmt:message key="aimir.shipment.gs1"/></td>
+                                        <td><input name="meterGs1U" style="width:150px" id="meterGs1U" type="text"/></td>
+                                        
+                                        <td>
                                             <!-- search button2 -->
                                             <span class="am_button margin-l10 margin-t1px">
                                                 <a id="meterSearchButton2" href="#" class="on"><fmt:message key="aimir.button.search" /></a>

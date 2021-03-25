@@ -589,6 +589,7 @@ public class ContractManagerImpl implements ContractManager {
             customerMap.put("id", map.get("CUSTOMER_ID").toString());
             customerMap.put("customerId", map.get("CUSTOMER_ID"));
             customerMap.put("customerName", map.get("CUSTOMER_NAME"));
+            customerMap.put("gs1", map.get("GS1"));
 
             if (map.get("CUSTOMER_ADDRESS") != null) {
                 addr.append(map.get("CUSTOMER_ADDRESS"));
@@ -668,6 +669,7 @@ public class ContractManagerImpl implements ContractManager {
             contractMap.put("customerNo", map.get("CUSTOMER_NO"));
             contractMap.put("iconCls", "task");
             contractMap.put("leaf", true);
+            contractMap.put("gs1", map.get("GS1"));
             contractList.add(contractMap);
         }
 

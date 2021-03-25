@@ -1311,6 +1311,8 @@ public class ModemDaoImpl extends AbstractHibernateGenericDao<Modem, Integer> im
         String securityErrorCodeId  = StringUtil.nullToBlank(condition.get("securityErrorCodeId"));
         String commErrorCodeId      = StringUtil.nullToBlank(condition.get("commErrorCodeId"));
         
+        String sGs1 = StringUtil.nullToBlank(condition.get("sGs1"));
+        
         String supplierId = StringUtil.nullToBlank(condition.get("supplierId"));
         Integer page = (Integer)condition.get("page");
         Integer limit = (Integer)condition.get("limit");
@@ -1332,6 +1334,11 @@ public class ModemDaoImpl extends AbstractHibernateGenericDao<Modem, Integer> im
         sbQuery.append("              ON (model.devicevendor_id = vendor.id) \n");
         sbQuery.append("     ) device \n");
         sbQuery.append("     ON (mo.devicemodel_id = device.modelId) \n");
+        
+        if (!sGs1.equals("")) {
+        	sbQuery.append("     LEFT OUTER JOIN meter me \n");
+        	sbQuery.append("     ON (me.MODEM_ID = mo.ID) \n");
+        }
         sbQuery.append("WHERE mo.supplier_id = :supplierId \n");
         
         if(!"".equals(deleteCodeId)) {  
@@ -1400,6 +1407,9 @@ public class ModemDaoImpl extends AbstractHibernateGenericDao<Modem, Integer> im
 
         if (!sLastcommEndDate.equals(""))
             sbQuery.append("AND   mo.last_link_time <= '" + sLastcommEndDate + "235900'");
+        
+        if (!sGs1.equals(""))
+            sbQuery.append("AND   me.gs1 like '" + sGs1 + "'");
 
         SQLQuery query = null;
         List<Object> dataList = null;
@@ -1628,6 +1638,7 @@ public class ModemDaoImpl extends AbstractHibernateGenericDao<Modem, Integer> im
         String purchaseOrder 		= StringUtil.nullToBlank(condition.get("purchaseOrder"));
         String protocolType 		= StringUtil.nullToBlank(condition.get("protocolType"));
         String fwGadget 			= StringUtil.nullToBlank(condition.get("fwGadget"));
+        String sGs1                 = StringUtil.nullToBlank(condition.get("sGs1"));
         
         sbQuery.append("\nSELECT mo.device_serial  		 AS modemDeviceSerial, ");
         sbQuery.append("\n       mo.modem         		 AS modemType, ");
@@ -1666,6 +1677,10 @@ public class ModemDaoImpl extends AbstractHibernateGenericDao<Modem, Integer> im
         sbQuery.append("\n     ON model.devicevendor_id = vendor.id ");
         sbQuery.append("\n     LEFT OUTER JOIN CODE co              "); 
         sbQuery.append("\n     ON ( mo.modem_status = co.ID)        ");
+        if (!sGs1.equals("")) {
+        	sbQuery.append("     LEFT OUTER JOIN meter me \n");
+        	sbQuery.append("     ON (me.MODEM_ID = mo.ID) \n");
+        }
         sbQuery.append("\nWHERE mo.supplier_id = :supplierId ");
     
         if(!"".equals(deleteCodeId)) {  
@@ -1767,6 +1782,9 @@ public class ModemDaoImpl extends AbstractHibernateGenericDao<Modem, Integer> im
             sbQuery.append("\nAND   mo.LAST_LINK_TIME < :datePre24H AND mo.LAST_LINK_TIME >= :datePre48H ");
         else if(sCommState.equals("2"))
             sbQuery.append("\nAND   mo.LAST_LINK_TIME < :datePre48H ");
+        
+        if (!sGs1.equals(""))
+            sbQuery.append("AND   me.gs1 like '" + sGs1 + "'");
                   
         StringBuffer sbQueryData = new StringBuffer();
         sbQueryData.append(sbQuery);

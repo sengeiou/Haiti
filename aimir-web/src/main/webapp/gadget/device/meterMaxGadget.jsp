@@ -378,7 +378,7 @@
                 sCustomerName      : condition[19],
                 sPermitLocationId  : condition[20],
                 sMeterAddress      : condition[21],
-                sGs1					 : condition[22],
+                sGs1			   : condition[22],
                 sMbusSMYN          : condition[23],
                 sDeviceSerial	   : condition[24]
                 
@@ -4651,6 +4651,7 @@
 		fmtMessage[25] = "<fmt:message key="aimir.meter.address"/>";
 		fmtMessage[26] = "<fmt:message key="aimir.sw.hw.ver"/>";
         fmtMessage[27] = "<fmt:message key="aimir.modemid"/>";
+        fmtMessage[28] = "<fmt:message key="aimir.shipment.gs1"/>";
 
 
 		obj.condition = getCondition();

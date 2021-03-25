@@ -436,4 +436,7 @@ public interface MeterDao extends GenericDao<Meter, Integer> {
      */
     public List<Map<String, Object>> getMissLpMeter(Map<String, Object> condition);
     
+    
+    public List<Map<String, Object>> getRelayOnOffMeters(String action, String dcuSysId, String meterId);
+    
 }

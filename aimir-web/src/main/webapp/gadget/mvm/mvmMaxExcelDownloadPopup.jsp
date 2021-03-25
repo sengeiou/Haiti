@@ -74,6 +74,7 @@
                         'contractGroup'     : obj.contractGroup,
                         'sicId'             : obj.customType,
                         'mvmMiniType'       : obj.mvmMiniType,
+                        'gs1'				: obj.gs1,
                         'msgNumber'         : arr[0],
                         'msgContractNumber' : arr[1],
                         'msgCustomerName'   : arr[2], 
@@ -87,7 +88,7 @@
                         'msgMeterValue2'     : arr[11],
                         'msaPrevMeterValue'  : arr[12],
                         'msaPrevUsage'       : arr[13],
-                        
+                        'msgGs1'			 : arr[14],
                         'filePath'       : arr[8],
                         'title'			:obj.title,
                         'meterValue'	:obj.meterValue
@@ -138,6 +139,7 @@
             fmtMessage[11] = "<fmt:message key="aimir.meter.value"/>";
             fmtMessage[12] = "<fmt:message key="aimir.prev.meter.value"/>";
             fmtMessage[13] = "<fmt:message key="aimir.prev.consumption"/>";
+            fmtMessage[14] = "<fmt:message key="aimir.shipment.gs1"/>";
 
             return fmtMessage;
         }
