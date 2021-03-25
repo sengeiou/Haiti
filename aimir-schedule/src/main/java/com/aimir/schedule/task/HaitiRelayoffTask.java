@@ -380,6 +380,7 @@ class HaitiRelayoffTaskSubClz implements Runnable {
 					
 					meterDao.update(meter);
 					modemDao.update(modem);
+					log.debug("meter and modem update!");
 				}
 			} 
 		}catch(Exception e) {
