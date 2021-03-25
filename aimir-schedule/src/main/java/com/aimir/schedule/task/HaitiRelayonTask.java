@@ -136,6 +136,7 @@ public class HaitiRelayonTask extends ScheduleTask {
 			List<Map<String, Object>> queryResult = meterDao.getRelayOnOffMeters(I210PLUS_RELAY_ACTION.RELAY_ON.name(), dcuSysId, mdevId);
 			if(queryResult == null || queryResult.size() == 0)
 				return null;
+			
 			totalExecuteCount = queryResult.size();
 			log.info("relay on meter cnt : " + totalExecuteCount);
 			

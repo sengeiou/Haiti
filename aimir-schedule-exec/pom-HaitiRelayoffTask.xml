@@ -36,7 +36,7 @@
                   maxmemory="1024M"
                   >
               <jvmarg value="-server"/>
-              <sysproperty key="name" value="HaitiSMSTask"/>
+              <sysproperty key="name" value="HaitiRelayoffTask"/>
               <sysproperty key="file.encoding" value="UTF-8"/>
               <sysproperty key="jmx.remote.x.server.connection.timeout" value="20000"/>
               <sysproperty key="jmx.remote.x.client.connection.check.period" value="0"/>              

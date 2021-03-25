@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -29,8 +28,6 @@ import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.transform.AliasToEntityMapResultTransformer;
-import org.hibernate.transform.AliasedTupleSubsetResultTransformer;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.IntegerType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +69,7 @@ import com.aimir.util.TimeUtil;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 @Repository(value = "meterDao")
 public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> implements MeterDao {
+	protected static Log log = LogFactory.getLog(MeterDaoImpl.class);
 
 	@Autowired
     CodeDao codeDao;
@@ -9945,13 +9943,14 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
     		sbQuery.append("\n	 AND me.meter_status != (select id from code where code = '1.3.3.4')"); //relay off
     		sbQuery.append("\n	 AND co.CURRENTCREDIT < 0 ");
     	} else if("RELAY_ON".equalsIgnoreCase(action)) {
-    		sbQuery.append("\n	 AND me.meter_status = (select id from code where code = '1.3.3.4')"); //relay off
+    		sbQuery.append("\n	 AND me.meter_status = (select id from code where code = '1.3.3.4')"); //relay on
     		sbQuery.append("\n	 AND co.CURRENTCREDIT >= 0 ");
     	}
-    	
     	List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
     	
     	List<Object[]> queryList = getSession().createNativeQuery(sbQuery.toString()).list();
+    	log.debug("sbQuery : " + sbQuery.toString()+", queryList : " + queryList.size());
+    	
     	for (Object[] objects : queryList) {
     		Map<String, Object> map = new HashMap<String, Object>();
     		map.put("protocol_type", objects[0]);
