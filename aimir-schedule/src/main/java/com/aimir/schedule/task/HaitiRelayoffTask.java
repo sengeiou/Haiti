@@ -191,7 +191,7 @@ public class HaitiRelayoffTask extends ScheduleTask {
 		
 		try {
 			txstatus = txmanager.getTransaction(null);
-			Date d = DateTimeUtil.getDateFromYYYYMMDD("2021 03 16");
+			Date d = DateTimeUtil.getDateFromYYYYMMDD("20210216");
 			
 			Integer mm = Integer.parseInt(DateTimeUtil.getDateString(d, "MM"));
 			Integer dd = Integer.parseInt(DateTimeUtil.getDateString(d, "dd"));
