@@ -1010,8 +1010,11 @@ public abstract class AbstractMDSaver
 				meteringLP.setContract(meter.getContract());
 				meteringLP.setLpStatus(lp.getStatus());
 				meteringLP.setModemTime(meteringTime);
+
+				if(meter.getContract() != null)
+					meteringLP.setContractId(meter.getContract().getId());
 				
-				log.info("[checking] meter["+meter.getMdsId()+"] modem["+modem.getDeviceSerial()+"] contract["+meter.getContract()+"]");
+				log.info("[checking] meter["+meter.getMdsId()+"] modem["+modem.getDeviceSerial()+"] contract["+meteringLP.getContract()+"]");
 				
 				if(modem != null) {
 					if(modem.getModemType() == ModemType.MMIU ||
