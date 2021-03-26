@@ -31,6 +31,8 @@ import com.aimir.dao.device.MeterDao;
 import com.aimir.dao.device.ModemDao;
 import com.aimir.dao.device.OperationLogDao;
 import com.aimir.dao.system.CodeDao;
+import com.aimir.dao.system.ContractChangeLogDao;
+import com.aimir.dao.system.ContractDao;
 import com.aimir.dao.system.HolidaysDao;
 import com.aimir.fep.logger.snowflake.SnowflakeGeneration;
 import com.aimir.fep.util.DataUtil;
@@ -41,10 +43,15 @@ import com.aimir.model.device.Modem;
 import com.aimir.model.device.OperationLog;
 import com.aimir.model.mvm.Holidays;
 import com.aimir.model.system.Code;
+import com.aimir.model.system.Contract;
+import com.aimir.model.system.ContractChangeLog;
 import com.aimir.model.system.Supplier;
 import com.aimir.schedule.command.CmdOperationUtil;
 import com.aimir.schedule.task.HaitiRelayoffTask.I210PLUS_RELAY_ACTION;
 import com.aimir.util.DateTimeUtil;
+import com.aimir.util.IntegerUtil;
+import com.aimir.util.StringUtil;
+import com.aimir.util.TimeUtil;
 
 @Service
 public class HaitiRelayoffTask extends ScheduleTask {
@@ -279,8 +286,10 @@ class HaitiRelayoffTaskSubClz implements Runnable {
 	private ModemDao modemDao;
 	private MeterDao meterDao;
 	private CodeDao codeDao;
-	private OperationLogDao operationLogDao;
+	private ContractDao contractDao;
+	private OperationLogDao operationLogDao;	
 	private CmdOperationUtil cmdOperationUtil;
+	private ContractChangeLogDao contractChangeLogDao;
 	
 	private Modem modem;
 	private Meter meter;
@@ -293,8 +302,10 @@ class HaitiRelayoffTaskSubClz implements Runnable {
 		meterDao = DataUtil.getBean(MeterDao.class);
 		modemDao = DataUtil.getBean(ModemDao.class);
 		codeDao = DataUtil.getBean(CodeDao.class);
+		contractDao = DataUtil.getBean(ContractDao.class);
 		operationLogDao = DataUtil.getBean(OperationLogDao.class);
 		cmdOperationUtil = DataUtil.getBean(CmdOperationUtil.class);
+		contractChangeLogDao = DataUtil.getBean(ContractChangeLogDao.class);
 		
 		this.meterList = meterList;
 	}
@@ -342,11 +353,16 @@ class HaitiRelayoffTaskSubClz implements Runnable {
 				return true;
 			}
 			
-			if("I210+".equals(meter.getModel().getName())) {
-				if(!actionOffByI210Plus()) {
-					return false;
-				}
-			} 
+			if(!isEmergency()) {
+				if("I210+".equals(meter.getModel().getName())) {
+					/*
+					if(!actionOffByI210Plus()) {
+						return false;
+					}
+					*/
+					log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!! relay off!!!!!!!!!);
+				}	
+			}
 		}catch(Exception e) {
 			throw e;
 		}
@@ -451,5 +467,129 @@ class HaitiRelayoffTaskSubClz implements Runnable {
 		
 		operationLogDao.add(opLog);
 	}
+
+	/*
+	 * emergency mode 라면 true 리턴
+	 * */
+	private boolean isEmergency() {
+		Contract contract = meter.getContract();
+		Code creditType = contract.getCreditType();
+		
+		boolean emergencyAutoChange = StringUtil.nullToBoolean(contract.getEmergencyCreditAutoChange(), false);
+        String emergencyStringTime = contract.getEmergencyCreditStartTime();
+        Integer emergencyCreditMaxDuration = IntegerUtil.nullToZero(contract.getEmergencyCreditMaxDuration());
+		
+        log.info("meterId : " + meter.getMdsId()+", creditType : " +creditType.getName()+", emergencyAutoChange : " + emergencyAutoChange
+        		+", emergencyStringTime : " + emergencyStringTime+", emergencyCreditMaxDuration : "+emergencyCreditMaxDuration);
+        
+		if(Code.PREPAYMENT.equals(creditType.getCode())) {
+			if(emergencyAutoChange == true) { 
+				updateCreditType(contract, Code.EMERGENCY_CREDIT);
+				return true;
+			} else if(emergencyCreditMaxDuration == null) {
+				updateCreditType(contract, Code.PREPAYMENT);
+				return false;
+			} else if(emergencyStringTime != null) {
+				updateCreditType(contract, Code.PREPAYMENT);
+				return false;
+			}
+			
+			return false;
+		}  else if(Code.EMERGENCY_CREDIT.equals(creditType.getCode())) {
+			if(emergencyStringTime == null || emergencyStringTime.isEmpty()) {
+				updateCreditType(contract, Code.PREPAYMENT);
+				return false;
+			} else if(isFinishEmergencyDuration(emergencyStringTime, emergencyCreditMaxDuration)) {
+				updateCreditType(contract, Code.PREPAYMENT);
+				return false;
+			} 
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/* emergency 기간이 종료되었다면 true 리턴
+	 * 아직 emergency 기간이라면 false 리턴 */
+	private boolean isFinishEmergencyDuration(String startDate, Integer Duration) {
+		boolean retVal = false;
+		
+		if(startDate == null || Duration == null)
+        	return false;
+		
+		try {
+			long now = Long.parseLong(TimeUtil.getCurrentTime());
+			long endDate = Long.parseLong(TimeUtil.getAddedDay(startDate, Duration));
+			
+			if(endDate < now) 
+				retVal = true;
+            else 
+            	retVal = false;
+			
+			log.info("startDate : " + startDate+", Duration : " + Duration+", now : " + now +", endDate : " + endDate +", retVal : " +retVal);
+			
+		}catch(Exception e) {
+			log.error(e,e);
+			return false;
+		}
+		
+		return retVal;
+	}
+	
+	private void updateCreditType(Contract contract, String emergencyCode) {
+		Code creditType = contract.getCreditType();
+		Code eType = codeDao.getCodeIdByCodeObject(emergencyCode);
+		
+		try {
+			if(eType != null) {
+				 if (Code.PREPAYMENT.equals(eType.getCode())) {
+					 contract.setCreditType(eType);
+	              	 contract.setEmergencyCreditAutoChange(null);
+	                 contract.setEmergencyCreditMaxDuration(null);
+	                 contract.setEmergencyCreditStartTime(null);
+	                  
+	                 contractDao.update(contract);
+				 } else if (Code.EMERGENCY_CREDIT.equals(eType.getCode())) {
+					 contract.setCreditType(eType);
+					 if(contract.getEmergencyCreditStartTime() == null)
+	            		 contract.setEmergencyCreditStartTime(TimeUtil.getCurrentTime());
+				 }
+				 
+				 log.info("meterId : " + meter.getMdsId()+", creditType change!! " + creditType.getName() +" --> " + eType.getName());
+				 
+				 contractDao.update(contract);
+				 insertContractChangeLogDao(contract, "creditType", creditType, eType);
+			}
+		}catch(Exception e) {
+			log.error(e,e);
+		}
+	}
+	
+    private void insertContractChangeLogDao(Contract contract, String field, Code creditType, Code nextCreditType) throws Exception {
+        ContractChangeLog contractChangeLog = new ContractChangeLog();
+
+        contractChangeLog.setContract(contract);
+        contractChangeLog.setCustomer(contract.getCustomer());
+        contractChangeLog.setStartDatetime(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));        
+        contractChangeLog.setChangeField(field);
+        
+        if (creditType == null) {
+            contractChangeLog.setBeforeValue(null);
+        } else {
+            contractChangeLog.setBeforeValue(StringUtil.nullToBlank(creditType));
+        }
+
+        if (nextCreditType == null) {
+            contractChangeLog.setAfterValue(null);
+        } else {
+            contractChangeLog.setAfterValue(StringUtil.nullToBlank(nextCreditType));
+        }
+        contractChangeLog.setWriteDatetime(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
+
+        contractChangeLogDao.add(contractChangeLog);
+    }
+    
+	
 	
 }
