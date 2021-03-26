@@ -360,7 +360,7 @@ class HaitiRelayoffTaskSubClz implements Runnable {
 						return false;
 					}
 					*/
-					log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!! relay off!!!!!!!!!);
+					log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!! relay off!!!!!!!!!");
 				}	
 			}
 		}catch(Exception e) {
