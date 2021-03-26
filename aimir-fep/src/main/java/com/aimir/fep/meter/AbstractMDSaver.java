@@ -1011,6 +1011,8 @@ public abstract class AbstractMDSaver
 				meteringLP.setLpStatus(lp.getStatus());
 				meteringLP.setModemTime(meteringTime);
 				
+				log.info("[checking] meter["+meter.getMdsId()+"] modem["+modem.getDeviceSerial()+"] contract["+meter.getContract()+"]");
+				
 				if(modem != null) {
 					if(modem.getModemType() == ModemType.MMIU ||
 							modem.getModemType() == ModemType.SINK ||
@@ -1504,7 +1506,7 @@ public abstract class AbstractMDSaver
         			log.error(e,e);
         		}
         	}
-        	//logger.deleteFile(filename);
+        	logger.deleteFile(filename);
         	AimirThreadMapper.getInstance().deleteMapperId(Thread.currentThread().getId());
         }
     }    
