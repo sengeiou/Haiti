@@ -65,6 +65,9 @@ public class HaitiRelayoffTask extends ScheduleTask {
 	
 	@Autowired
 	private MeterDao meterDao;
+
+	@Autowired
+	private ContractDao contractDao;
 	
 	@Autowired
 	private HolidaysDao holidaysDao;
@@ -224,6 +227,9 @@ public class HaitiRelayoffTask extends ScheduleTask {
 		
 		try {
 			txstatus = txmanager.getTransaction(null);
+			
+			/* Emergency 기간이 지난 미터에 대상으로 prepay로 변경 및 관련 컬럼 내용을 지윈다.*/
+			contractDao.updateExpiredEmergencyCredit();
 			
 			List<Map<String, Object>> queryResult = meterDao.getRelayOnOffMeters(I210PLUS_RELAY_ACTION.RELAY_OFF.name(), dcuSysId, mdevId);
 			if(queryResult == null || queryResult.size() == 0)
