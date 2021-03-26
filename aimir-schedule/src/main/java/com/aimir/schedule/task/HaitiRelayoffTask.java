@@ -361,12 +361,9 @@ class HaitiRelayoffTaskSubClz implements Runnable {
 			
 			if(!isEmergency()) {
 				if("I210+".equals(meter.getModel().getName())) {
-					/*
 					if(!actionOffByI210Plus()) {
 						return false;
 					}
-					*/
-					log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!! relay off!!!!!!!!!");
 				}	
 			}
 		}catch(Exception e) {
