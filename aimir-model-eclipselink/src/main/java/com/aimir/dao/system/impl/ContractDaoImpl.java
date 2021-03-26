@@ -544,6 +544,10 @@ public class ContractDaoImpl extends AbstractJpaDao<Contract, Integer> implement
 		return null;
 	}
 
-	
-    
+	@Override
+	public void updateExpiredEmergencyCredit() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

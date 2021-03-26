@@ -943,4 +943,9 @@ public interface ContractDao extends GenericDao<Contract, Integer>{
      * SMS 전송할 대상 리스트
      */
     public List<Contract> getReqSendSMSList();
+    
+    /*
+     * Emergency 기간이 지난 계약을 선불로 되돌린다.
+     */
+    public void updateExpiredEmergencyCredit();
 }

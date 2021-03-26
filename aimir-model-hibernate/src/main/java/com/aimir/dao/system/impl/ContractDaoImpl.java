@@ -3400,4 +3400,45 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 		List<Contract> result = getSession().createNativeQuery(sbQuery.toString(), Contract.class).getResultList();
 		return result;
 	}
+	
+	@Override
+	public void updateExpiredEmergencyCredit() {
+		StringBuffer sbQuery = new StringBuffer();
+		
+		sbQuery.append("MERGE INTO contract co");
+		sbQuery.append("\n	USING (");
+		sbQuery.append("\n		SELECT"); 
+		sbQuery.append("\n			*");
+		sbQuery.append("\n		FROM ");
+		sbQuery.append("\n		(");
+		sbQuery.append("\n			SELECT ");
+		sbQuery.append("\n				co.id, me.MDS_ID, ");
+		sbQuery.append("\n				(SELECT name FROM code WHERE id = co.CREDITTYPE_ID) AS creditType,");
+		sbQuery.append("\n				co.EMERGENCYCREDITAUTOCHANGE,");
+		sbQuery.append("\n				co.EMERGENCYCREDITMAXDURATION,");
+		sbQuery.append("\n				co.EMERGENCYCREDITSTARTTIME,");
+		sbQuery.append("\n				TO_date(co.EMERGENCYCREDITSTARTTIME, 'YYYYMMDDHH24MISS') + co.EMERGENCYCREDITMAXDURATION as EMERGENCYCREDITENDTIME");
+		sbQuery.append("\n			FROM ");
+		sbQuery.append("\n				contract co, meter me");
+		sbQuery.append("\n			WHERE ");
+		sbQuery.append("\n				co.METER_ID = me.ID ");
+		sbQuery.append("\n				AND co.EMERGENCYCREDITSTARTTIME IS NOT NULL");
+		sbQuery.append("\n				AND co.EMERGENCYCREDITMAXDURATION IS NOT NULL");
+		sbQuery.append("\n				AND co.EMERGENCYCREDITMAXDURATION > 0");
+		sbQuery.append("\n		)a");
+		sbQuery.append("\n		WHERE ");
+		sbQuery.append("\n			a.EMERGENCYCREDITENDTIME <= SYSDATE	");
+		sbQuery.append("\n	)t");
+		sbQuery.append("\n	ON (");
+		sbQuery.append("\n		co.id = t.id");
+		sbQuery.append("\n	)when matched THEN");
+		sbQuery.append("\n		UPDATE SET");
+		sbQuery.append("\n			co.EMERGENCYCREDITAUTOCHANGE = NULL,");
+		sbQuery.append("\n			co.EMERGENCYCREDITMAXDURATION = NULL,");
+		sbQuery.append("\n			co.EMERGENCYCREDITSTARTTIME = NULL,");
+		sbQuery.append("\n			co.CREDITTYPE_ID = (SELECT id FROM code WHERE name = 'prepay')");
+		
+		int updateCnt = getSession().createNamedQuery(sbQuery.toString()).executeUpdate();
+		logger.debug("query : "+sbQuery.toString() +", updateCnt : " + updateCnt);
+	}
 }
