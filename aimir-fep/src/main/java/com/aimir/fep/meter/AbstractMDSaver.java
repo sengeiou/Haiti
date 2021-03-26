@@ -1504,7 +1504,7 @@ public abstract class AbstractMDSaver
         			log.error(e,e);
         		}
         	}
-        	logger.deleteFile(filename);
+        	//logger.deleteFile(filename);
         	AimirThreadMapper.getInstance().deleteMapperId(Thread.currentThread().getId());
         }
     }    
