@@ -3438,7 +3438,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 		sbQuery.append("\n			co.EMERGENCYCREDITSTARTTIME = NULL,");
 		sbQuery.append("\n			co.CREDITTYPE_ID = (SELECT id FROM code WHERE name = 'prepay')");
 		
-		int updateCnt = getSession().createNamedQuery(sbQuery.toString()).executeUpdate();
+		int updateCnt = getSession().createNativeQuery(sbQuery.toString()).executeUpdate();
 		logger.debug("query : "+sbQuery.toString() +", updateCnt : " + updateCnt);
 	}
 }
