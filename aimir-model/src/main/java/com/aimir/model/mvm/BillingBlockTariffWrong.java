@@ -16,6 +16,7 @@ import com.aimir.annotation.ReferencedBy;
 import com.aimir.model.device.Meter;
 import com.aimir.model.device.Modem;
 import com.aimir.model.system.Contract;
+import com.aimir.model.system.Location;
 
 @Entity
 @Table(name = "BILLING_BLOCK_TARIFF_WRONG")
@@ -49,6 +50,15 @@ public class BillingBlockTariffWrong {
     
     @Column(name="modem_id", nullable=true, updatable=false, insertable=false)
     private Integer modemId;
+    
+    @ColumnInfo(name="지역아이디", descr="지역 테이블의 ID나  NULL")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="location_id")
+    @ReferencedBy(name="name")
+    private Location location;
+    
+    @Column(name="location_id", nullable=true, updatable=false, insertable=false)
+    private Integer locationId;
 	
     @ColumnInfo(descr="일일정산을 계산하는 LP의 시간, LP_EM의 시간일수도 있으나 장시간 미통신 미터의 LP가 올라온다면 중간 LP의 연산 날짜 일 수 도 있음")
     private String yyyymmddhh;
@@ -104,6 +114,10 @@ public class BillingBlockTariffWrong {
 		this.id = id;
 	}
 	
+	public String getCode() {
+        return id.getCode();
+    }
+	
 	public void setCode(String code) {
 		if(id == null)
 			id = new BillingWrongPk();
@@ -111,13 +125,21 @@ public class BillingBlockTariffWrong {
 		this.id.setCode(code);
 	}
 	
+	public String getMDevId() {
+        return id.getMDevId();
+    }
+	
 	public void setMDevId(String mdevId) {
 		if(id == null)
 			id = new BillingWrongPk();
 		
 		this.id.setMDevId(mdevId);
 	}
-		
+	
+	public String getYyyymmdd() {
+        return id.getYyyymmdd();
+    }
+	
 	public void setYyyymmdd(String yyyymmdd) {
 		if(id == null)
 			id = new BillingWrongPk();
@@ -172,6 +194,22 @@ public class BillingBlockTariffWrong {
 	public void setModemId(Integer modemId) {
 		this.modemId = modemId;
 	}
+	
+	public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public Integer getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(Integer locationId) {
+        this.locationId = locationId;
+    }
 
 	public String getYyyymmddhh() {
 		return yyyymmddhh;

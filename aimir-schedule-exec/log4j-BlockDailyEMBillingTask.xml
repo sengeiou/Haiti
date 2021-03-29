@@ -45,7 +45,7 @@
  
     <!-- root 로거 기본 설정 -->
     <root>  
-        <level value="DEBUG"/>  
+        <level value="INFO"/>  
         <appender-ref ref="fephout"/>  
     </root>  
 </log4j:configuration>  

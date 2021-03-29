@@ -38,13 +38,13 @@
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
                 <prop key="hibernate.format_sql">true</prop>
                 <prop key="hibernate.show_sql">false</prop>
-                <prop key="hibernate.bytecode.use_reflection_optimizer">true</prop>
+                <prop key="hibernate.bytecode.use_reflection_optimizer">false</prop>
                 <prop key="hibernate.use_sql_comments">false</prop>
                 <prop key="hibernate.hbm2ddl.auto">none</prop>
                 <prop key="hibernate.connection.autocommit">false</prop>
                 <!--<prop key="hibernate.query.substitutions">Y</prop>-->
-                <prop key="hibernate.cache.use_second_level_cache">true</prop>
-                <prop key="hibernate.cache.use_second_level_cache">org.hibernate.cache.EhCacheProvider</prop>
+                <!-- <prop key="hibernate.cache.use_second_level_cache">true</prop> -->
+                <!-- <prop key="hibernate.cache.use_second_level_cache">org.hibernate.cache.EhCacheProvider</prop> -->
                 <!-- Turn batching off for better error messages under PostgreSQL>-->
                 <!--prop key="hibernate.jdbc.batch_size">0</prop-->
                 <!-- 0:none, 1:read_uncommitted, 2:read_committed, 4:repeatable_read, 8:serializable -->
