@@ -187,7 +187,7 @@ public class MonthEMViewDaoImpl extends AbstractHibernateGenericDao<MonthEMView,
             sb.append("AND   m.contract.tariffIndex = :tariffIndex ");
         }
         if (!"".equals(customerName)) {
-            sb.append("AND   m.contract.customer.name LIKE :customerName ");
+            sb.append("AND   UPPER(m.contract.customer.name) LIKE UPPER(:customerName) ");
         }
         if (!"".equals(contractNo)) {
             sb.append("AND   m.contract.contractNumber LIKE :contractNo ");

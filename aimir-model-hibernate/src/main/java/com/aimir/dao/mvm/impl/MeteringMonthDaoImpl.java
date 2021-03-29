@@ -863,9 +863,9 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         }
         if (!customerName.isEmpty()) {
         	if(customerName.indexOf('%') == 0 || customerName.indexOf('%') == (customerName.length()-1)) { // %문자가 양 끝에 있을경우
-                sb.append("\nAND   cu.name LIKE :customerName ");
+                sb.append("\nAND   UPPER(cu.name) LIKE UPPER(:customerName) ");
         	}else {
-                sb.append("\nAND   cu.name = :customerName ");
+                sb.append("\nAND   UPPER(cu.name) = UPPER(:customerName) ");
         	}
         }
         if (!mcuId.isEmpty()) {
@@ -1157,7 +1157,7 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         }
 
         if (!customerName.isEmpty()) {
-            sb.append("\n    AND   cu.name LIKE :customerName ");
+            sb.append("\n    AND   UPPER(cu.name) LIKE UPPER(:customerName) ");
         }
 
         if (!mcuId.isEmpty()) {
@@ -1346,9 +1346,9 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         }
         if (!customerName.isEmpty()) {
         	if(customerName.indexOf('%') == 0 || customerName.indexOf('%') == (customerName.length()-1)) { // %문자가 양 끝에 있을경우
-                sb.append("\nAND   cu.name LIKE :customerName ");
+                sb.append("\nAND   UPPER(cu.name) LIKE UPPER(:customerName) ");
         	}else {
-                sb.append("\nAND   cu.name = :customerName ");
+                sb.append("\nAND   UPPER(cu.name) = UPPER(:customerName) ");
         	}
         }
         if (!mcuId.isEmpty()) {

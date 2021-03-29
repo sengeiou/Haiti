@@ -422,7 +422,7 @@ public class DayEMDaoImpl extends AbstractHibernateGenericDao<DayEM, Integer>
             sb.append("\n AND     c.supplier.id = c.tariffIndex.supplier.id ");
         }
         if (!"".equals(customerName)) {
-            sb.append("\n AND     c.customer.name like :customerName ");
+            sb.append("\n AND     UPPER(c.customer.name) like UPPER(:customerName) ");
         }
         if (!"".equals(contractNo)) {
             sb.append("\n AND     c.contractNumber = :contractNo ");
@@ -505,7 +505,7 @@ public class DayEMDaoImpl extends AbstractHibernateGenericDao<DayEM, Integer>
             sb.append("\n AND     c.supplier.id = c.tariffIndex.supplier.id ");
         }
         if (!"".equals(customerName)) {
-            sb.append("\n AND     c.customer.name like :customerName ");
+            sb.append("\n AND     UPPER(c.customer.name) like UPPER(:customerName) ");
         }
         if (!"".equals(contractNo)) {
             sb.append("\n AND     c.contractNumber = :contractNo ");
@@ -966,7 +966,7 @@ public class DayEMDaoImpl extends AbstractHibernateGenericDao<DayEM, Integer>
             sb.append("   AND d.contract.tariffIndex = :tariffIndex ");
         }
         if (!"".equals(customerName)) {
-            sb.append("   AND d.contract.customer.name = :customerName ");
+            sb.append("   AND UPPER(d.contract.customer.name) = UPPER(:customerName) ");
         }
         if (!"".equals(contractNo)) {
             sb.append("   AND d.contract.contractNumber = :contractNo ");
@@ -1043,7 +1043,7 @@ public class DayEMDaoImpl extends AbstractHibernateGenericDao<DayEM, Integer>
             sb.append("AND   d.contract.tariffIndex = :tariffIndex ");
         }
         if (!"".equals(customerName)) {
-            sb.append("AND   d.contract.customer.name LIKE :customerName ");
+            sb.append("AND   UPPER(d.contract.customer.name) LIKE UPPER(:customerName) ");
         }
         if (!"".equals(contractNo)) {
             sb.append("AND   d.contract.contractNumber LIKE :contractNo ");
@@ -1135,7 +1135,7 @@ public class DayEMDaoImpl extends AbstractHibernateGenericDao<DayEM, Integer>
             sb.append("AND   d.contract.tariffIndex = :tariffIndex ");
         }
         if (!"".equals(customerName)) {
-            sb.append("AND   d.contract.customer.name LIKE :customerName ");
+            sb.append("AND   UPPER(d.contract.customer.name) LIKE UPPER(:customerName) ");
         }
         if (!"".equals(contractNo)) {
             sb.append("AND   d.contract.contractNumber LIKE :contractNo ");

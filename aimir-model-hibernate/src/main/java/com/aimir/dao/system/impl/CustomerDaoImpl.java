@@ -109,7 +109,7 @@ public class CustomerDaoImpl extends AbstractHibernateGenericDao<Customer, Integ
 	}
 
 	public int customerSearchListCount(String customerNo, String name) {
-		Query query = getSession().createQuery("SELECT COUNT(id) FROM Customer WHERE name like " + "%" + name + "%" + " and customerNo like " + "%" + customerNo + "%" + " ");
+		Query query = getSession().createQuery("SELECT COUNT(id) FROM Customer WHERE UPPER(name) like UPPER(" + "%" + name + "%" + ") and customerNo like " + "%" + customerNo + "%" + " ");
 		return DataAccessUtils.intResult(query.list());		
 	}
 
@@ -150,7 +150,7 @@ public class CustomerDaoImpl extends AbstractHibernateGenericDao<Customer, Integ
 		
 		if(!contractNumber.isEmpty()) sb.append("AND cont.contract_number =:contractNumber");
 		if(!"".equals(customerNo)) sb.append("AND cust.customerNo like :customerNo ");
-		if(!"".equals(customerName)) sb.append("AND cust.NAME LIKE :customerName ");
+		if(!"".equals(customerName)) sb.append("AND UPPER(cust.NAME) LIKE UPPER(:customerName) ");
         if(locationIdList != null) sb.append("AND cont.LOCATION_ID IN (:locationIdList) ");
 		if(!"".equals(address)) sb.append("AND cust.ADDRESS like :address ");
 		if(!"".equals(serviceType) && !serviceType.equals("null")) sb.append("AND cont.SERVICETYPE_ID = :serviceType ");

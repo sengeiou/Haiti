@@ -179,7 +179,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 
         queryBuffer.append(" SELECT   c.id ");
         queryBuffer.append(" FROM     Contract c INNER JOIN c.customer m  ");
-        queryBuffer.append(" WHERE m.name LIKE " + new StringBuilder().append('%').append(name).append('%').toString() + " ");
+        queryBuffer.append(" WHERE UPPER(m.name) LIKE UPPER(" + new StringBuilder().append('%').append(name).append('%').toString() + ") ");
         
         Query query = getSession().createQuery(queryBuffer.toString());
         return query.list();
@@ -472,7 +472,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("AND cust.customerNo like :customerNo ");
         }
         if(!"".equals(customerName)){
-            sb.append("AND cust.NAME like :customerName ");
+            sb.append("AND UPPER(cust.NAME) like UPPER(:customerName) ");
         }
         if(locationIdList != null) sb.append("AND loc.id IN (:locationIdList) ");
         if(!"".equals(address)) sb.append("AND cust.ADDRESS like :address ");
@@ -551,7 +551,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         }
 
         if (!"".equals(customerName)) {
-            sb.append("AND   cust.name LIKE :customerName ");
+            sb.append("AND   UPPER(cust.name) LIKE UPPER(:customerName) ");
         }
 
         if (locationIdList != null) {
@@ -707,7 +707,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("AND   cust.customerNo LIKE :customerNo ");
         }
         if (!"".equals(customerName)) {
-            sb.append("AND   cust.name LIKE :customerName ");
+            sb.append("AND   UPPER(cust.name) LIKE UPPER(:customerName) ");
         }
         if (locationIdList != null) {
             sb.append("AND   cont.location.id IN (:locationIdList) ");
@@ -954,7 +954,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 
         if(!contractNumber.isEmpty()) sb.append("AND cont.contract_number like :contractNumber");
         if(!"".equals(customerNo)) sb.append("AND cust.customerNo like :customerNo ");
-        if(!"".equals(customerName)) sb.append("AND cust.name LIKE :customerName ");
+        if(!"".equals(customerName)) sb.append("AND UPPER(cust.name) LIKE UPPER(:customerName) ");
         if(locationIdList != null) sb.append("AND loc.id IN (:locationIdList) ");
         if(!"".equals(address)) sb.append("AND cust.address LIKE :address ");
         if(!"".equals(serviceType) && !serviceType.equals("null")) sb.append("AND cd1.id = :serviceType  ");
@@ -1094,7 +1094,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 
         if(!"".equals(contractNumber)) sb.append(" AND cont.CONTRACT_NUMBER like :contractNumber ");
         if(!"".equals(customerNo)) sb.append(" AND cust.customerno like :customerNo ");
-        if(!"".equals(customerName)) sb.append(" AND cust.NAME like :customerName ");
+        if(!"".equals(customerName)) sb.append(" AND UPPER(cust.NAME) like UPPER(:customerName) ");
 //        if(!"".equals(locationId)) sb.append(" AND cont.LOCATION_ID = :locationId ");
         if(locationIdList != null) sb.append(" AND cont.LOCATION_ID IN (:locationIdList) ");
         if(!"".equals(tariffIndex)) sb.append(" AND cont.TARIFFINDEX_ID = :tariffIndex ");
@@ -1241,7 +1241,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("\nAND   cust.customerno LIKE :customerNo ");
         }
         if (!customerName.isEmpty()) {
-            sb.append("\nAND   cust.name LIKE :customerName ");
+            sb.append("\nAND   UPPER(cust.name) LIKE UPPER(:customerName) ");
         }
         if (locationIdList != null && locationIdList.size() > 0) {
             sb.append("\nAND   cont.location_id IN (:locationIdList) ");
@@ -1551,7 +1551,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 
         if(!"".equals(contractNumber)) sb.append(" AND cont.CONTRACT_NUMBER like :contractNumber ");
         if(!"".equals(customerNumber)) sb.append(" AND cust.customerno like :customerNumber ");
-        if(!"".equals(customerName)) sb.append(" AND cust.NAME like :customerName ");
+        if(!"".equals(customerName)) sb.append(" AND UPPER(cust.NAME) like UPPER(:customerName) ");
 //        if(!"".equals(locationId)) sb.append(" AND cont.LOCATION_ID = :locationId ");
         if(locationIdList != null) sb.append(" AND cont.LOCATION_ID IN (:locationIdList) ");
         if(!"".equals(tariffIndex)) sb.append(" AND cont.TARIFFINDEX_ID = :tariffIndex ");
@@ -1750,7 +1750,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("\nAND   cust.customerNo LIKE '"+ customerNo +"%' ");
         }
         if (!customerName.isEmpty()) {
-            sb.append("\nAND   cust.name LIKE '"+ customerName +"%' ");
+            sb.append("\nAND   UPPER(cust.name) LIKE UPPER('"+ customerName +"%') ");
         }
         if (locationIdList != null && locationIdList.size() > 0) {
             sb.append("\nAND   co.locationId  IN (" + locationIdList + ") ");
@@ -1877,7 +1877,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         .append("  WHERE 1 = 1 ");
 
         if(!"".equals(customerNo))   sb.append("    AND cust.customerNo = :customerNo ");
-        if(!"".equals(customerName)) sb.append("    AND cust.NAME = :customerName ");
+        if(!"".equals(customerName)) sb.append("    AND UPPER(cust.NAME) = UPPER(:customerName) ");
         if(!"".equals(locationId))   sb.append("    AND c.LOCATION_ID = :locationId ");
         if(!"".equals(address))      sb.append("    AND cust.ADDRESS like :address ");
         if(!"".equals(serviceType))  sb.append("    AND c.SERVICETYPE_ID = :serviceType ");
@@ -2341,7 +2341,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         }
 
         if (customerName != null && !customerName.isEmpty()) {
-            sb.append("\nAND   c.customer.name LIKE '%'||:customerName||'%' ");
+            sb.append("\nAND   UPPER(c.customer.name) LIKE UPPER('%'||:customerName||'%') ");
         }
 
         if (statusCode != null && !statusCode.isEmpty()) {
@@ -2824,7 +2824,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("\nAND   cont.customer.customerNo LIKE :customerNo ");
         }
         if (!customerName.isEmpty()) {
-            sb.append("\nAND   cont.customer.name LIKE :customerName ");
+            sb.append("\nAND   UPPER(cont.customer.name) LIKE UPPER(:customerName) ");
         }
         if (!mdsId.isEmpty()) {
             sb.append("\nAND   meter.mdsId LIKE :mdsId ");
@@ -3400,7 +3400,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 		List<Contract> result = getSession().createNativeQuery(sbQuery.toString(), Contract.class).getResultList();
 		return result;
 	}
-	
+    
 	@Override
 	public void updateExpiredEmergencyCredit() {
 		StringBuffer sbQuery = new StringBuffer();

@@ -83,7 +83,7 @@ public class PowerAlarmLogDaoImpl extends AbstractHibernateGenericDao<PowerAlarm
         strbf.append("\nAND   pl.opentime BETWEEN :startDate AND :endDate ");
 
         if (!customerName.trim().isEmpty()) {
-            strbf.append("\nAND   cs.name LIKE :customerName ");
+            strbf.append("\nAND   UPPER(cs.name) LIKE UPPER(:customerName) ");
         }
 
         if (!mdsId.trim().isEmpty()) {
@@ -185,7 +185,7 @@ public class PowerAlarmLogDaoImpl extends AbstractHibernateGenericDao<PowerAlarm
 
         if (!customerName.trim().isEmpty()) {
 //            strbf.append("\nAND   cs.name LIKE '%" + customerName + "%' ");
-            strbf.append("\nAND   cs.name LIKE :customerName ");
+            strbf.append("\nAND   UPPER(cs.name) LIKE UPPER(:customerName) ");
         }
         if (!mdsId.trim().isEmpty()) {
             strbf.append("\nAND   mt.mds_id = :mdsId ");
@@ -317,7 +317,7 @@ public class PowerAlarmLogDaoImpl extends AbstractHibernateGenericDao<PowerAlarm
         sb.append("\nAND   pl.supplier_id = :supplier ");
 
         if (!customerName.trim().isEmpty()) {
-            sb.append("\nAND   cs.name LIKE :customerName ");
+            sb.append("\nAND   UPPER(cs.name) LIKE UPPER(:customerName) ");
         }
 
         if (!mdsId.trim().isEmpty()) {

@@ -304,7 +304,7 @@ public class MeterTimeDaoImpl extends AbstractHibernateGenericDao<Meter, Integer
 			sbQuery.append("    AND mcu.SYS_ID = '" + mcuSysId +"'");
 		
 		if(!customerName.equals(""))
-			sbQuery.append("    AND customer.NAME LIKE '%" + customerName + "%'");
+			sbQuery.append("    AND UPPER(customer.NAME) LIKE UPPER('%" + customerName + "%')");
 		
 		if(!meterMdsId.equals(""))
 			sbQuery.append("    AND me.MDS_ID LIKE '%" + meterMdsId + "%'");

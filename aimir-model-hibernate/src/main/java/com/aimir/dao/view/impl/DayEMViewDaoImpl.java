@@ -117,7 +117,7 @@ public class DayEMViewDaoImpl extends AbstractHibernateGenericDao<DayEMView, Int
             sb.append("AND   d.contract.tariffIndex = :tariffIndex ");
         }
         if (!"".equals(customerName)) {
-            sb.append("AND   d.contract.customer.name LIKE :customerName ");
+            sb.append("AND   UPPER(d.contract.customer.name) LIKE UPPER(:customerName) ");
         }
         if (!"".equals(contractNo)) {
             sb.append("AND   d.contract.contractNumber LIKE :contractNo ");

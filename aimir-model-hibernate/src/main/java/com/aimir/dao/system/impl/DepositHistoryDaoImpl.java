@@ -82,7 +82,7 @@ public class DepositHistoryDaoImpl extends AbstractHibernateGenericDao<DepositHi
             }
 
             if (!customerName.equals("")) {
-                sb.append("\nAND dh.customer.name LIKE :customerName ");
+                sb.append("\nAND UPPER(dh.customer.name) LIKE UPPER(:customerName) ");
             }           
         }
 
@@ -528,7 +528,7 @@ public class DepositHistoryDaoImpl extends AbstractHibernateGenericDao<DepositHi
         }
 
         if (!"".equals(customerName)) {
-            sb.append("\nAND du.name LIKE :customerName ");
+            sb.append("\nAND UPPER(du.name) LIKE UPPER(:customerName) ");
         }
 
         if (!"".equals(meterId)) {

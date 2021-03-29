@@ -1422,7 +1422,7 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
             sbQuery.append("AND customer.CUSTOMERNO like '" + sCustomerId +"%' \n");
         }
         if (!"".equals(sCustomerName)) {
-            sbQuery.append("AND customer.NAME like '" + sCustomerName + "%' \n");
+        	sbQuery.append("AND UPPER(customer.NAME) like UPPER('" + sCustomerName + "%') \n");
         }
 
         int dataListLen = 0;
@@ -1892,7 +1892,7 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
             sbQuery.append("    AND customer.CUSTOMERNO like '" + sCustomerId +"%'");
         }
         if (!"".equals(sCustomerName)) {
-            sbQuery.append("    AND customer.NAME like '" + sCustomerName + "%'");
+            sbQuery.append("    AND UPPER(customer.NAME) like UPPER('" + sCustomerName + "%')");
         }
         if (!"".equals(sGs1)) {
             sbQuery.append("    AND me.gs1 like '%" + sGs1 + "%'");
@@ -2329,7 +2329,7 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
             sbQuery.append("    AND customer.CUSTOMERNO like '" + sCustomerId +"%'");
         }
         if (!"".equals(sCustomerName)) {
-            sbQuery.append("    AND customer.NAME like '" + sCustomerName + "%'");
+            sbQuery.append("    AND UPPER(customer.NAME) like UPPER('" + sCustomerName + "%')");
         }
 
         StringBuffer sbQueryData = new StringBuffer();
@@ -6067,7 +6067,7 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
       	 sb.append("    AND customer.CUSTOMERNO like '" + sCustomerId +"%'");
        }
        if (!"".equals(sCustomerName)) {
-      	 sb.append("    AND customer.NAME like '" + sCustomerName + "%'");
+      	 sb.append("    AND UPPER(customer.NAME) like UPPER('" + sCustomerName + "%)'");
        }
        if (!"".equals(sGs1)) {
       	 sb.append("    AND me.gs1 like '%" + sGs1 + "%'");
@@ -6821,7 +6821,7 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
         }
 
         if (!customerName.isEmpty()) {
-            sb.append("\nAND   cu.name LIKE :customerName ");
+            sb.append("\nAND   UPPER(cu.name) LIKE UPPER(:customerName) ");
         }
 
         if (!contractNumber.isEmpty()) {
