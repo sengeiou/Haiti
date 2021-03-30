@@ -84,7 +84,10 @@ public class EDHMonthlyBillingTask extends ScheduleTask {
         }
 		
 		List<Contract> targets = getTargets(mdevId);
-		
+		if(targets == null || targets.size() == 0) {
+			log.info("target is empty!");
+			return;
+		}
 		
 		isNowRunning = true;
 	    log.info("########### START Realy off Task ###############");

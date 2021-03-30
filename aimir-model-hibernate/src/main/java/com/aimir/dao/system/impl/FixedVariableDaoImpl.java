@@ -53,6 +53,15 @@ public class FixedVariableDaoImpl extends AbstractHibernateGenericDao<FixedVaria
 			
 			
 			Query query = getSession().createNativeQuery(sb.toString(), FixedVariable.class);
+			if(name != null)		
+				query.setParameter("name", name);
+			
+			if(tariffId != null)		
+				query.setParameter("tariffId", tariffId);
+			
+			if(applydate != null)		
+				query.setParameter("applydate", applydate);
+			
 			return (FixedVariable) query.getSingleResult();
 		}catch(NoResultException e) {
 			return null;
