@@ -188,6 +188,7 @@ public class PrepaymentMgmtOperatorController {
             @RequestParam("statusCode") String statusCode,
             @RequestParam("amountStatus") String amountStatus,
             @RequestParam("mdsId") String mdsId,
+            @RequestParam("gs1") String gs1,
             //@RequestParam("address") String address,
             @RequestParam("locationId") Integer locationId,
             @RequestParam("serviceTypeCode") String serviceTypeCode,
@@ -210,6 +211,7 @@ public class PrepaymentMgmtOperatorController {
         conditionMap.put("statusCode", StringUtil.nullToBlank(statusCode));
         conditionMap.put("amountStatus", StringUtil.nullToBlank(amountStatus));
         conditionMap.put("mdsId", mdsId);
+        conditionMap.put("gs1", gs1);
 //        conditionMap.put("address", StringUtil.nullToBlank(address));
         conditionMap.put("locationId", locationId);
         conditionMap.put("serviceTypeCode", StringUtil.nullToBlank(serviceTypeCode));

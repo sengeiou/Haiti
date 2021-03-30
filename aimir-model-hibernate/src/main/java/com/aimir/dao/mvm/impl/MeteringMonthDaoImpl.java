@@ -819,20 +819,25 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         List<Integer> locationIdList = (List<Integer>)conditionMap.get("locationIdList");
         
         String monthView = MeterType.valueOf(meterType).getMonthViewName();
+        String monthTable = MeterType.valueOf(meterType).getMonthTableName();
 
         StringBuilder sb = new StringBuilder();
 
         if (isTotal) {
-            sb.append("\nSELECT COUNT(*) ");
+            sb.append("\nSELECT COUNT(SUM(mv.total_value)) ");
         } else {
             sb.append("\nSELECT mv.yyyymm AS YYYYMM, ");
             sb.append("\n       mv.mdev_id AS METER_NO, ");
-            sb.append("\n       mo.device_serial AS MODEM_ID, ");
-            sb.append("\n       code.name AS SIC_NAME, ");
-            sb.append("\n       NVL(me.last_metering_value,0) AS LAST_METERING_VALUE, ");
-            sb.append("\n       mv.total_value AS VALUE,");
-            sb.append("\n       me.gs1 AS GS1,");
-            sb.append("\n       pre.total_value AS PRE_VALUE ");
+            sb.append("\n       MAX(co.contract_number) AS CONTRACT_NUMBER, ");
+            sb.append("\n       MAX(cu.NAME) AS CUSTOMER_NAME, ");
+            sb.append("\n       MAX(mo.device_serial) AS MODEM_ID, ");
+            sb.append("\n       MAX(code.name) AS SIC_NAME, ");
+            sb.append("\n       MAX(me.last_metering_value) AS LAST_METERING_VALUE, ");
+            sb.append("\n       MAX(mv.total_value) AS VALUE_MAX,");
+            sb.append("\n       SUM(mv.total_value) AS VALUE_SUM,");
+            sb.append("\n       MAX(me.gs1) AS GS1,");
+            sb.append("\n       MAX(x.ch_method) AS CH_METHOD ");	
+//            sb.append("\n       MAX(pre.total_value) AS PRE_VALUE ");
         }
         sb.append("\nFROM ").append(monthView).append(" mv ");
         sb.append("\nLEFT OUTER JOIN meter me ON mv.mdev_id = me.mds_id ");
@@ -842,13 +847,22 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         sb.append("\nLEFT OUTER JOIN customer cu ON co.customer_id = cu.id ");
         sb.append("\nLEFT OUTER JOIN code code ON co.sic_id = code.id ");
         sb.append("\nLEFT OUTER JOIN group_member gm ON gm.member = co.contract_number ");
-        sb.append("\nLEFT OUTER JOIN ( ");
-        sb.append("\n    SELECT mv.total_value AS TOTAL_VALUE,");
-        sb.append("\n           mv.mdev_id");
-        sb.append("\n    FROM MONTH_EM_VIEW mv");
-        sb.append("\n    WHERE mv.yyyymm BETWEEN :prevStartDate AND :prevEndDate");
-        sb.append("\n    and mv.channel = 1 ");
-        sb.append("\n) pre ON mv.mdev_id = pre.mdev_id ");
+		 /* SUM/MAX값에 따라 분기 (OPF-2583) */
+        sb.append("\nLEFT OUTER JOIN ( 							");
+        sb.append("\n    SELECT DISTINCT mo.mdev_id, 			");
+        sb.append("\n           mo.ch_method 					");
+        sb.append("\n    FROM ").append(monthTable).append(" mo	");
+        sb.append("\n    WHERE mo.yyyymm BETWEEN :startDate AND :endDate ");
+        sb.append("\n) x ON mv.mdev_id = x.mdev_id 				");
+        
+//        sb.append("\nLEFT OUTER JOIN ( ");
+//        sb.append("\n    SELECT mv.total_value AS TOTAL_VALUE,");
+//        sb.append("\n           mv.mdev_id");
+//        sb.append("\n    FROM MONTH_EM_VIEW mv");
+//        sb.append("\n    WHERE mv.yyyymm BETWEEN :prevStartDate AND :prevEndDate");
+//        sb.append("\n    and mv.channel = 1 ");
+//        sb.append("\n) pre ON mv.mdev_id = pre.mdev_id ");
+        
         sb.append("\nWHERE mv.yyyymm BETWEEN :startDate AND :endDate ");
         sb.append("\nAND   mv.channel = 1 ");
         sb.append("\nAND   me.supplier_id = :supplierId ");
@@ -925,14 +939,16 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         if (!contractGroup.isEmpty()) {
             sb.append("\nAND   gm.group_id = :contractGroup ");
         }
-        sb.append("\nORDER BY   mv.yyyymm, mv.mdev_id ");
+        
+        sb.append("\nGROUP BY mv.YYYYMM, mv.mdev_id ");
+        sb.append("\nORDER BY mv.yyyymm, mv.mdev_id ");
         
         SQLQuery query = getSession().createSQLQuery(new SQLWrapper().getQuery(sb.toString()));
 
         query.setString("startDate", startDate);
         query.setString("endDate", endDate);
-        query.setString("prevStartDate", prevStartDate);
-        query.setString("prevEndDate", prevEndDate);
+//        query.setString("prevStartDate", prevStartDate);
+//        query.setString("prevEndDate", prevEndDate);
         query.setInteger("supplierId", supplierId);
 
         if (!deviceType.isEmpty()) {
@@ -1281,6 +1297,7 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         List<Integer> locationIdList = (List<Integer>)conditionMap.get("locationIdList");
 //        Set<String> meterNoList = (Set<String>)conditionMap.get("meterNoList");
         String monthView = MeterType.valueOf(meterType).getMonthViewName();
+        String monthTable = MeterType.valueOf(meterType).getMonthTableName();
 
         StringBuilder sb = new StringBuilder();
         
@@ -1288,12 +1305,15 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
             sb.append("\nSELECT COUNT(SUM(NVL(mv.total_value,0))) ");
         } else {
             sb.append("\nSELECT co.contract_number AS CONTRACT_NUMBER,	");
-            sb.append("\n       cu.name AS CUSTOMER_NAME, 				");
+            sb.append("\n       MAX(cu.name) AS CUSTOMER_NAME, 				");
             sb.append("\n       mv.mdev_id AS METER_NO, 				");
-            sb.append("\n       code.name AS SIC_NAME, 					");
+            sb.append("\n       MAX(mo.device_serial) AS MODEM_ID, 	");
+            sb.append("\n       MAX(code.name) AS SIC_NAME, 					");
             sb.append("\n       mt.gs1 AS gs1, 					");
-            sb.append("\n       SUM(mv.total_value) AS VALUE, 	");
-            sb.append("\n       pre.total_value AS PRE_VALUE 	");
+            sb.append("\n       MAX(mv.total_value) AS VALUE_MAX, 	");
+            sb.append("\n       SUM(mv.total_value) AS VALUE_SUM, 	");
+            sb.append("\n       MAX(x.ch_method) AS CH_METHOD ");	
+//            sb.append("\n       pre.total_value AS PRE_VALUE 	");
         }
         sb.append("\nFROM ").append(monthView).append(" mv 					");
         sb.append("\nLEFT OUTER JOIN meter mt ON mt.mds_id = mv.mdev_id 	");
@@ -1303,14 +1323,23 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         sb.append("\nLEFT OUTER JOIN customer cu ON cu.id = co.customer_id 	");
         sb.append("\nLEFT OUTER JOIN code code ON co.sic_id = code.id 		");
         sb.append("\nLEFT OUTER JOIN group_member gm ON gm.member = co.contract_number ");
-        sb.append("\nLEFT OUTER JOIN ( 										");
-        sb.append("\n    SELECT SUM(NVL(mv.total_value,0)) AS TOTAL_VALUE, 	");
-        sb.append("\n           mv.mdev_id 									");
-        sb.append("\n    FROM ").append(monthView).append(" mv 				");
-        sb.append("\n    WHERE mv.yyyymm between :prevStartDate and :prevEndDate ");
-        sb.append("\n    AND mv.channel = 1 			"); 
-        sb.append("\n    GROUP BY mv.mdev_id 			"); 
-        sb.append("\n) pre ON mv.mdev_id = pre.mdev_id 	");
+		 /* SUM/MAX값에 따라 분기 (OPF-2583) */
+		sb.append("\nLEFT OUTER JOIN ( 							");
+        sb.append("\n    SELECT DISTINCT mo.mdev_id, 			");
+        sb.append("\n           mo.ch_method 					");
+        sb.append("\n    FROM ").append(monthTable).append(" mo	");
+        sb.append("\n    WHERE mo.yyyymm BETWEEN :startDate AND :endDate ");
+        sb.append("\n) x ON mv.mdev_id = x.mdev_id 				");
+        
+//        sb.append("\nLEFT OUTER JOIN ( 										");
+//        sb.append("\n    SELECT SUM(NVL(mv.total_value,0)) AS TOTAL_VALUE, 	");
+//        sb.append("\n           mv.mdev_id 									");
+//        sb.append("\n    FROM ").append(monthView).append(" mv 				");
+//        sb.append("\n    WHERE mv.yyyymm between :prevStartDate and :prevEndDate ");
+//        sb.append("\n    AND mv.channel = 1 			"); 
+//        sb.append("\n    GROUP BY mv.mdev_id 			"); 
+//        sb.append("\n) pre ON mv.mdev_id = pre.mdev_id 	");
+        
         sb.append("\nWHERE mv.yyyymm BETWEEN :startDate AND :endDate ");
         sb.append("\nAND   mv.channel = 1 				");
         sb.append("\nAND   mt.supplier_id = :supplierId ");
@@ -1380,15 +1409,16 @@ public class MeteringMonthDaoImpl extends AbstractHibernateGenericDao<MeteringMo
         if (!contractGroup.isEmpty()) {
             sb.append("\nAND   gm.group_id = :contractGroup ");
         }
-        sb.append("\nGROUP BY co.contract_number, cu.name, mv.mdev_id, code.name, pre.total_value, mt.gs1 ");
+        sb.append("\nGROUP BY co.contract_number, mv.mdev_id, mt.gs1 ");
+//        sb.append("\nGROUP BY co.contract_number, cu.name, mv.mdev_id, code.name, mt.gs1 ");
         sb.append("\nORDER BY mv.mdev_id ");
 
         SQLQuery query = getSession().createSQLQuery(new SQLWrapper().getQuery(sb.toString()));
 
         query.setString("startDate", startDate);
         query.setString("endDate", endDate);
-        query.setString("prevStartDate", prevStartDate);
-        query.setString("prevEndDate", prevEndDate);
+//        query.setString("prevStartDate", prevStartDate);
+//        query.setString("prevEndDate", prevEndDate);
         query.setInteger("supplierId", supplierId);
         
         if (!deviceType.isEmpty()) {

@@ -292,4 +292,28 @@ public interface PrepaymentLogDao extends GenericDao<PrepaymentLog, Long> {
      * method Desc : Vendor 충전 가젯에서 고객의 잔액을 충전했는데 같은 금액으로 두번 로그가 남는 리스트를 삭제하기 위해 두번이상 충전한 고객목록 검색.
      */
     public List<Map<String,Object>> getDoubleSalesList(String yyyymmdd);
+    
+
+    public List<Map<String, Object>> getSTSChargeHistory(Map<String, Object> conditionMap, boolean isCount);
+
+    /**
+     * method name : getChargeAndBalanceHistory
+     * method Desc : 고객 선불관리 화면의 충전,정산 이력 리스트를 조회한다.
+     *
+     * @param conditionMap
+	 * <ul>
+	 * <li> contractNumber : Contract.contractNumber
+	 * <li> searchType : type for search (charge, billing day, billing month)
+	 * <li> searchStartMonth : start month yyyymm
+	 * <li> searchEndMonth : end month yyyymm
+	 * <li> page : page number
+	 * <li> limit : page max count
+	 * </ul> 
+     * @param isTotal total count 여부
+     */
+    public List<Map<String, Object>> getChargeAndBalanceHistory(Map<String, Object> conditionMap, boolean isCount);
+    
+    public List<Map<String, Object>> getRecentStsHistory(Map<String, Object> conditionMap);
+    
+    public List<Map<String, Object>> getDebtBySPN(Map<String, Object> conditionMap);
 }

@@ -307,7 +307,7 @@
             fmtMessage[1] = "<fmt:message key="aimir.contractNumber"/>";
             fmtMessage[2] = "<fmt:message key="aimir.customername"/>";
             fmtMessage[3] = "<fmt:message key="aimir.meteringtime"/>";
-            fmtMessage[4] = "<fmt:message key="aimir.usage"/>";
+            fmtMessage[4] = "<fmt:message key="aimir.accu.usage"/> (<fmt:message key="aimir.unit.kwh"/>)";
             fmtMessage[5] = "<fmt:message key="aimir.previous"/>";
             fmtMessage[6] = "<fmt:message key="aimir.co2formula"/>";
             fmtMessage[7] = "<fmt:message key="aimir.mcuid2"/>";
@@ -471,8 +471,8 @@
                                  ,{header: "<fmt:message key='aimir.contractNumber'/>", dataIndex: 'contractNumber', hidden:true}
                                  ,{header: "<fmt:message key='aimir.customername'/>", dataIndex: 'customerName', hidden:true}
                                  ,{header: "<fmt:message key='aimir.meteringtime'/>", dataIndex: 'meteringTime'}
-                                 ,{header: "<fmt:message key='aimir.usage.kwh'/>", dataIndex: 'value', align: 'right'}
-                                 ,{header: "<fmt:message key='aimir.previous'/> [<fmt:message key='aimir.unit.kwh'/>]", dataIndex: 'prevValue', align: 'right'}
+                                 ,{header: "<fmt:message key='aimir.accu.usage'/> (<fmt:message key='aimir.unit.kwh'/>)", dataIndex: 'value', align: 'right'}
+                                 //,{header: "<fmt:message key='aimir.previous'/> [<fmt:message key='aimir.unit.kwh'/>]", dataIndex: 'prevValue', align: 'right'}
                                  ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'meterNo'}
                                  ,{header: "<fmt:message key='aimir.shipment.gs1'/>", dataIndex: 'gs1'}
                                  ,{header: "<fmt:message key='aimir.modemid'/>", dataIndex: 'modemId'}
@@ -499,8 +499,8 @@
                                  ,{header: "<fmt:message key='aimir.contractNumber'/>", dataIndex: 'contractNumber'}
                                  ,{header: "<fmt:message key='aimir.customername'/>", dataIndex: 'customerName' }
                                  ,{header: "<fmt:message key='aimir.meteringtime'/>", dataIndex: 'meteringTime'}
-                                 ,{header: "<fmt:message key='aimir.usage.kwh'/>", dataIndex: 'value', align: 'right'}
-                                 ,{header: "<fmt:message key='aimir.previous'/> [<fmt:message key='aimir.unit.kwh'/>]", dataIndex: 'prevValue', align: 'right'}
+                                 ,{header: "<fmt:message key='aimir.accu.usage'/> (<fmt:message key='aimir.unit.kwh'/>)", dataIndex: 'value', align: 'right'}
+                                 //,{header: "<fmt:message key='aimir.previous'/> [<fmt:message key='aimir.unit.kwh'/>]", dataIndex: 'prevValue', align: 'right'}
                                  ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'meterNo'}
                                  ,{header: "<fmt:message key='aimir.shipment.gs1'/>", dataIndex: 'gs1'}
                                  ,{header: "<fmt:message key='aimir.modemid'/>", dataIndex: 'modemId'}
@@ -531,7 +531,7 @@
                          ,{header: "<fmt:message key='aimir.customername'/>", dataIndex: 'customerName'}
                          ,{header: "<fmt:message key='aimir.meteringtime'/>", dataIndex: 'meteringTime'}
                          ,{header: "<fmt:message key='aimir.usage.m3'/>", dataIndex: 'value', align: 'right'}
-                         ,{header: "<fmt:message key='aimir.previous'/> [<fmt:message key='aimir.unit.m3'/>]", dataIndex: 'prevValue', align: 'right'}
+                         //,{header: "<fmt:message key='aimir.previous'/> [<fmt:message key='aimir.unit.m3'/>]", dataIndex: 'prevValue', align: 'right'}
                          ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'meterNo'}
                          ,{header: "<fmt:message key='aimir.modemid'/>", dataIndex: 'modemId'}
                          ,{header: "<fmt:message key='aimir.view.detail'/>",
@@ -558,8 +558,8 @@
                          ,{header: "<fmt:message key='aimir.contractNumber'/>", dataIndex: 'contractNumber'}
                          ,{header: "<fmt:message key='aimir.customername'/>", dataIndex: 'customerName'}
                          ,{header: "<fmt:message key='aimir.meteringtime'/>", dataIndex: 'meteringTime'}
-                         ,{header: "<fmt:message key='aimir.usage'/>[<fmt:message key='aimir.unit.Gcal'/>]", dataIndex: 'value', align: 'right'}
-                         ,{header: "<fmt:message key='aimir.previous'/> [<fmt:message key='aimir.unit.Gcal'/>]", dataIndex: 'prevValue', align: 'right'}
+                         ,{header: "<fmt:message key='aimir.accu.usage'/>[<fmt:message key='aimir.unit.Gcal'/>]", dataIndex: 'value', align: 'right'}
+                         //,{header: "<fmt:message key='aimir.previous'/> [<fmt:message key='aimir.unit.Gcal'/>]", dataIndex: 'prevValue', align: 'right'}
                          ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'meterNo'}
                          ,{header: "<fmt:message key='aimir.modemid'/>", dataIndex: 'modemId'}
                          ,{header: "<fmt:message key='aimir.view.detail'/>",
@@ -587,8 +587,8 @@
                          ,{header: "<fmt:message key='aimir.contractNumber'/>", dataIndex: 'contractNumber'}
                          ,{header: "<fmt:message key='aimir.customername'/>", dataIndex: 'customerName'}
                          ,{header: "<fmt:message key='aimir.meteringtime'/>", dataIndex: 'meteringTime'}
-                         ,{header: "<fmt:message key='aimir.usage'/>", dataIndex: 'value', align: 'right'}
-                         ,{header: "<fmt:message key='aimir.previous'/>", dataIndex: 'prevValue', align: 'right'}
+                         ,{header: "<fmt:message key='aimir.accu.usage'/>  (<fmt:message key='aimir.unit.kwh'/>)", dataIndex: 'value', align: 'right'}
+                         //,{header: "<fmt:message key='aimir.previous'/>", dataIndex: 'prevValue', align: 'right'}
                          ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'meterNo'}
                          ,{header: "<fmt:message key='aimir.modemid'/>", dataIndex: 'modemId'}
                          ,{header: "<fmt:message key='aimir.view.detail'/>",
