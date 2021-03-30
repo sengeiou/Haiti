@@ -196,6 +196,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 			init();
 			checkMontylyBilling();
 			
+			txmanager.commit(txstatus);
 		} catch(Exception e) {			
     		log.error(e, e);
     		
