@@ -66,7 +66,7 @@ public class MonthlyBillingLogDaoImpl extends AbstractHibernateGenericDao<Monthl
 		if(mdevId == null || yyyymmdd == null)
 			return -1;
 		
-		String yyyymm = yyyymmdd.substring(0, 8);
+		String yyyymm = yyyymmdd.substring(0, 6);
 		
 		StringBuffer sbQuery = new StringBuffer();
 		sbQuery.append("\n MERGE INTO MONTHLY_BILLING_LOG mb  ");
