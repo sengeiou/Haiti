@@ -3099,8 +3099,8 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
             sb.append("\n       cu.name AS CUSTOMER_NAME, ");
             sb.append("\n       mo.device_serial AS MODEM_ID, ");
             sb.append("\n       dv.basevalue AS BASEVALUE, ");
-            sb.append("\n       dv.total_value AS VALUE, ");
-            sb.append("\n       pre.total_value AS PRE_VALUE ");
+            sb.append("\n       dv.total_value AS VALUE ");
+//            sb.append("\n       pre.total_value AS PRE_VALUE ");
         }
         sb.append("\nFROM ").append(dayView).append(" dv ");
         sb.append("\nLEFT OUTER JOIN meter mt ON mt.mds_id = dv.mdev_id		");
@@ -3110,13 +3110,13 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         sb.append("\nLEFT OUTER JOIN customer cu ON cu.id = co.customer_id  ");
         sb.append("\nLEFT OUTER JOIN code code ON co.sic_id = code.id 		");
         sb.append("\nLEFT OUTER JOIN group_member gm ON gm.member = co.contract_number ");
-        sb.append("\nLEFT OUTER JOIN ( ");
-        sb.append("\n    SELECT dv.total_value, ");
-        sb.append("\n           dv.mdev_id ");
-        sb.append("\n    FROM ").append(dayView).append(" dv ");
-        sb.append("\n    WHERE dv.yyyymmdd BETWEEN :prevStartDate AND :prevEndDate ");
-        sb.append("\n    AND dv.channel     = 1             "); 
-        sb.append("\n) pre ON dv.mdev_id = pre.mdev_id ");
+//        sb.append("\nLEFT OUTER JOIN ( ");
+//        sb.append("\n    SELECT dv.total_value, ");
+//        sb.append("\n           dv.mdev_id ");
+//        sb.append("\n    FROM ").append(dayView).append(" dv ");
+//        sb.append("\n    WHERE dv.yyyymmdd BETWEEN :prevStartDate AND :prevEndDate ");
+//        sb.append("\n    AND dv.channel     = 1             "); 
+//        sb.append("\n) pre ON dv.mdev_id = pre.mdev_id ");
         
         sb.append("\nWHERE dv.yyyymmdd BETWEEN :startDate AND :endDate ");
         sb.append("\nAND dv.channel     = 1             "); 
@@ -3203,8 +3203,8 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         query.setString("startDate", startDate);
         query.setString("endDate", endDate);
         query.setInteger("supplierId", supplierId);
-        query.setString("prevStartDate", prevStartDate);
-        query.setString("prevEndDate", prevEndDate);
+//        query.setString("prevStartDate", prevStartDate);
+//        query.setString("prevEndDate", prevEndDate);
         if (!deviceType.isEmpty()) {
             query.setString("deviceType", deviceType);
         }
@@ -3531,22 +3531,24 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         String contractGroup = StringUtil.nullToBlank(conditionMap.get("contractGroup"));
         List<Integer> sicIdList = (List<Integer>)conditionMap.get("sicIdList");
         List<Integer> locationIdList = (List<Integer>)conditionMap.get("locationIdList");
-        
+        String dayTable = MeterType.valueOf(meterType).getDayTableName();
         String dayView = MeterType.valueOf(meterType).getDayViewName();
 
         StringBuilder sb = new StringBuilder();
 
         if (isTotal) {
-            sb.append("\nSELECT COUNT(NVL(SUM(dv.total_value),0))		");
+            sb.append("\nSELECT COUNT(NVL(max(dv.total_value),0))		");
         } else {
             sb.append("\nSELECT dv.mdev_id AS METER_NO,			");
             sb.append("\n       co.contract_number AS CONTRACT_NUMBER,	");
-            sb.append("\n       cu.name AS CUSTOMER_NAME,		");
-            sb.append("\n       mo.device_serial AS MODEM_ID,	");
-            sb.append("\n       code.name AS SIC_NAME,			");
-            sb.append("\n       SUM(dv.total_value) AS VALUE,	");
+            sb.append("\n       MAX(cu.name) AS CUSTOMER_NAME,		");
+            sb.append("\n       MAX(mo.device_serial) AS MODEM_ID,	");
+            sb.append("\n       MAX(code.name) AS SIC_NAME,			");
+            sb.append("\n       MAX(dv.total_value) AS VALUE_MAX,	");
+            sb.append("\n       SUM(dv.total_value) AS VALUE_SUM,	");
             sb.append("\n       mt.gs1 AS GS1,	");
-            sb.append("\n       pre.total_value AS PRE_VALUE	");
+            sb.append("\n       MAX(x.ch_method) AS CH_METHOD ");
+//            sb.append("\n       max(pre.total_value) AS PRE_VALUE	");
         }
         sb.append("\nFROM ").append(dayView).append(" dv ");
         sb.append("\nLEFT OUTER JOIN meter mt ON mt.mds_id = dv.mdev_id		");
@@ -3556,14 +3558,24 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         sb.append("\nLEFT OUTER JOIN customer cu ON cu.id = co.customer_id	");
         sb.append("\nLEFT OUTER JOIN code code ON co.sic_id = code.id		");
         sb.append("\nLEFT OUTER JOIN group_member gm ON gm.member = co.contract_number ");
-        sb.append("\nLEFT OUTER JOIN ( 					"); // Prev Week join
-        sb.append("\n    SELECT SUM(dv.total_value) AS TOTAL_VALUE,	");
-        sb.append("\n           dv.mdev_id 				");
-        sb.append("\n    FROM ").append(dayView).append(" dv ");
-        sb.append("\n    WHERE dv.yyyymmdd BETWEEN :prevStartDate AND :prevEndDate ");
-        sb.append("\n    AND dv.channel     = 1			"); 
-        sb.append("\n    GROUP BY dv.mdev_id			"); 
-        sb.append("\n) pre ON dv.mdev_id = pre.mdev_id	");
+        
+        // Prev Week join
+//        sb.append("\nLEFT OUTER JOIN ( 					"); 
+//        sb.append("\n    SELECT max(dv.total_value) AS TOTAL_VALUE,	");
+//        sb.append("\n           dv.mdev_id 				");
+//        sb.append("\n    FROM ").append(dayView).append(" dv ");
+//        sb.append("\n    WHERE dv.yyyymmdd BETWEEN :prevStartDate AND :prevEndDate ");
+//        sb.append("\n    AND dv.channel     = 1			"); 
+//        sb.append("\n    GROUP BY dv.mdev_id			"); 
+//        sb.append("\n) pre ON dv.mdev_id = pre.mdev_id	");
+        
+        /* SUM/MAX값에 따라 분기 (OPF-2583) */
+        sb.append("\nLEFT OUTER JOIN ( 							");
+        sb.append("\n    SELECT DISTINCT de.mdev_id, 			");
+        sb.append("\n           de.ch_method 					");
+        sb.append("\n    FROM ").append(dayTable).append(" de	");
+        sb.append("\n    WHERE de.yyyymmdd BETWEEN :startDate AND :endDate ");
+        sb.append("\n) x ON dv.mdev_id = x.mdev_id 				");
         
         sb.append("\nWHERE dv.yyyymmdd BETWEEN :startDate AND :endDate ");
         sb.append("\nAND dv.channel     = 1             "); 
@@ -3635,7 +3647,8 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
             sb.append("\n    AND   gm.group_id = :contractGroup ");
         }
 
-        sb.append("\nGROUP BY dv.mdev_id, co.contract_number, cu.name, mo.device_serial, pre.total_value, code.name, mt.gs1  ");
+        sb.append("\nGROUP BY dv.mdev_id, co.contract_number, mt.gs1  ");
+//        sb.append("\nGROUP BY dv.mdev_id, co.contract_number, cu.name, mo.device_serial, pre.total_value, code.name, mt.gs1  ");
         if (!isTotal) {
             sb.append("\nORDER BY dv.mdev_id ");
         }
@@ -3645,8 +3658,8 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         query.setString("startDate", startDate);
         query.setString("endDate", endDate);
         query.setInteger("supplierId", supplierId);
-        query.setString("prevStartDate", prevStartDate);
-        query.setString("prevEndDate", prevEndDate);
+//        query.setString("prevStartDate", prevStartDate);
+//        query.setString("prevEndDate", prevEndDate);
 
         if (!deviceType.isEmpty()) {
             query.setString("deviceType", deviceType);

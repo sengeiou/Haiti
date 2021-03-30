@@ -98,6 +98,7 @@ public class MeteringDataMakeExcel {
 //            sheet.setColumnWidth(colIdx++, 256 * 19);
 //            sheet.setColumnWidth(colIdx++, 256 * 19);
 
+            
             row = sheet.createRow(0);
             cell = row.createCell(0);
             cell.setCellValue(reportTitle);
@@ -105,42 +106,43 @@ public class MeteringDataMakeExcel {
             sheet.addMergedRegion(new CellRangeAddress(0, (short) 0, 0, (short) (totalColumnCnt-1)));
 
             // Title
+            Integer cellCnt = 0;
             row = sheet.createRow(meteringDataStartRow);
    
             //font.setFontHeightInPoints((short)10);
-            cell = row.createCell(0);
+            cell = row.createCell(cellCnt++);
             cell.setCellValue(msgMap.get("number"));
             cell.setCellStyle(titleCellStyle);
 
-            cell = row.createCell(1);
+            cell = row.createCell(cellCnt++);
             cell.setCellValue(msgMap.get("contractNumber"));
             cell.setCellStyle(titleCellStyle);
             
-            cell = row.createCell(2);
+            cell = row.createCell(cellCnt++);
             cell.setCellValue(msgMap.get("customerName"));
             cell.setCellStyle(titleCellStyle);
 			
-            cell = row.createCell(3);
+            cell = row.createCell(cellCnt++);
             cell.setCellValue(msgMap.get("meteringTime"));
             cell.setCellStyle(titleCellStyle);
             
-            cell = row.createCell(4);
+            cell = row.createCell(cellCnt++);
             cell.setCellValue(msgMap.get("usage"));
             cell.setCellStyle(titleCellStyle);
             
-            cell = row.createCell(5);
-            cell.setCellValue(msgMap.get("previous"));
-            cell.setCellStyle(titleCellStyle);
+//            cell = row.createCell(5);
+//            cell.setCellValue(msgMap.get("previous"));
+//            cell.setCellStyle(titleCellStyle);
             
-            cell = row.createCell(6);
+            cell = row.createCell(cellCnt++);
             cell.setCellValue(msgMap.get("meterId"));
             cell.setCellStyle(titleCellStyle);
             
-            cell = row.createCell(7);
+            cell = row.createCell(cellCnt++);
             cell.setCellValue(msgMap.get("gs1"));
             cell.setCellStyle(titleCellStyle);
             
-            cell = row.createCell(8);
+            cell = row.createCell(cellCnt++);
             cell.setCellValue(msgMap.get("modemId"));
             cell.setCellStyle(titleCellStyle);
 
@@ -156,40 +158,41 @@ public class MeteringDataMakeExcel {
             for(int i = 0 ; i < dataCount ; i++) {
                 resultMap = result.get(i);
                 row = sheet.createRow(i+ (meteringDataStartRow + 1));      
-
-                cell = row.createCell(0);
+                cellCnt = 0;
+                
+                cell = row.createCell(cellCnt++);
                 cell.setCellValue(resultMap.get("num").toString());
                 cell.setCellStyle(noCellStyle);
 
-                cell = row.createCell(1);
+                cell = row.createCell(cellCnt++);
                 cell.setCellValue((String)resultMap.get("contractNumber"));
                 cell.setCellStyle(dataCellStyle);
 
-                cell = row.createCell(2);
+                cell = row.createCell(cellCnt++);
                 cell.setCellValue((String)resultMap.get("customerName"));
                 cell.setCellStyle(dataCellStyle);
 
-                cell = row.createCell(3);
+                cell = row.createCell(cellCnt++);
                 cell.setCellValue((String)resultMap.get("meteringTime"));
                 cell.setCellStyle(dataCellStyle);
 
-                cell = row.createCell(4);
+                cell = row.createCell(cellCnt++);
                 cell.setCellValue((String)resultMap.get("value"));
                 cell.setCellStyle(data2CellStyle);
 
-                cell = row.createCell(5);
-                cell.setCellValue((String)resultMap.get("prevValue"));
-                cell.setCellStyle(data2CellStyle);
+//                cell = row.createCell(5);
+//                cell.setCellValue((String)resultMap.get("prevValue"));
+//                cell.setCellStyle(data2CellStyle);
 
-                cell = row.createCell(6);
+                cell = row.createCell(cellCnt++);
                 cell.setCellValue((String)resultMap.get("meterNo"));
                 cell.setCellStyle(dataCellStyle);
 
-                cell = row.createCell(7);
+                cell = row.createCell(cellCnt++);
                 cell.setCellValue((String)resultMap.get("gs1"));
                 cell.setCellStyle(dataCellStyle);
 
-                cell = row.createCell(8);
+                cell = row.createCell(cellCnt++);
                 cell.setCellValue((String)resultMap.get("modemId"));
                 cell.setCellStyle(dataCellStyle);
                 
