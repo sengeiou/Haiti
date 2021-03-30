@@ -66,6 +66,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     private static final String SERVICE_TYPE_EM = "Electricity";
     private static final int BILLING_STANDARDS_DATE = 10;
     private static final int METERING_MULTIPLE_NUMBER = 3;
+    private static final int MINIMUM_BILLING_USAGE = 100;
 
     @Resource(name="transactionManager")
     HibernateTransactionManager txManager;
@@ -223,8 +224,8 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
             
             lastDayEM = getDayEM(mdsId, lastBilling.getYyyymmdd());	//최근 DAY_EM 조회
             
-            // Day_EM value가 BillingBlcok activeEnergy 보다 클떄 진행하고 작으면 Wrong 테이블 저장
-            if(!validateBillingValues(contract, lastDayEM, lastBilling)) {
+            //데이터 검증 하여 BILLING_BLOCK_TARIFF_WRONG 이력 남기고 리턴하여 for문으로 다시 돌아감
+            if(validateBillingValues(contract, lastDayEM, lastBilling)) {
             	return;
             }
             	
@@ -526,17 +527,17 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     }
     
     private boolean validateBillingValues(Contract contract, DayEM lastDayEM, BillingBlockTariff lastBilling) {
-    	boolean result = true;
+    	boolean result = false;
     	
-    	//BILLING_BLOCK_TARIFF_WRONG 이력 남기고 리턴하여 for문으로 다시 돌아감
-    	 if(lastDayEM.getValue() < lastBilling.getActiveEnergy()) {
-    		 addWrongBillingBlockTariff(contract, contract.getMeter(), lastDayEM, lastBilling, BILLING_BLOCK_ERROR_CODE.AEPS);
-    		 result = false;
-    		 
-    	 }else if(lastDayEM.getValue() > lastBilling.getActiveEnergy() * METERING_MULTIPLE_NUMBER) {
-    		 addWrongBillingBlockTariff(contract, contract.getMeter(), lastDayEM, lastBilling, BILLING_BLOCK_ERROR_CODE.AEAE);
-    		 result = false;
-    	 }
+    	// Day_EM value가 이전 activeEnergy 보다 클떄 진행하고 작으면 Wrong 테이블 저장
+    	if(lastDayEM.getValue() < lastBilling.getActiveEnergy()) {
+    		addWrongBillingBlockTariff(contract, contract.getMeter(), lastDayEM, lastBilling, BILLING_BLOCK_ERROR_CODE.AEPS);
+    		result = true;
+   		// activeEnergy 사용량 최소 100이상은 되고 Day_EM value가 activeEnergy 사용량 3배 보다 크면 Wrong 테이블 저장	 
+    	}else if(lastDayEM.getValue() > lastBilling.getActiveEnergy() * METERING_MULTIPLE_NUMBER && lastBilling.getActiveEnergy() > MINIMUM_BILLING_USAGE) {
+    		addWrongBillingBlockTariff(contract, contract.getMeter(), lastDayEM, lastBilling, BILLING_BLOCK_ERROR_CODE.AEAE);
+    		result = true;
+    	}
        	return result;
 	}
     
@@ -559,6 +560,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 	        billWrong.setActiveEnergyImport(lastDayEM.getValue());
 	        billWrong.setPrevActiveEnergy(lastBilling.getActiveEnergy());
 	        billWrong.setPrevActiveEnergyImport(lastBilling.getActiveEnergyImport());
+	        billWrong.setPrevyyyymmddhh(lastBilling.getYyyymmdd()+"00");
 	        billWrong.setLastBillingDate(DateTimeUtil.getDateString(new Date()));
 	        billWrong.setIntervalDay(Integer.parseInt(calculateDiffDays(lastDayEM.getYyyymmdd(), lastBilling.getYyyymmdd())));
 	        billWrong.setDescr(code.getDesc());
