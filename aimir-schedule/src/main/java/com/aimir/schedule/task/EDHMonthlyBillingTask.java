@@ -292,13 +292,13 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 				mb.setCurrentCredit(afterBalance.doubleValue());
 
 				balance = afterBalance;
-				//monthlyBillingLogDao.add(mb);
+				monthlyBillingLogDao.add(mb);
 				log.debug(mb.toString());
 			}
 			
 			contract.setCurrentCredit(balance.doubleValue());
 			log.debug("after balance : " + balance);
-			//contractDao.update(contract);
+			contractDao.update(contract);
 		}
 	}
 	
