@@ -83,8 +83,8 @@ public class MonthlyBillingLogDaoImpl extends AbstractHibernateGenericDao<Monthl
 		sbQuery.append("\n 			mb.MONTHLY_COST = t.SERVICE_CHARGE + :monthlyBill ");
 		
 		Query query = getSession().createNativeQuery(sbQuery.toString());
-		query.setParameter("yyyymm", mdevId);
-		query.setParameter("mdevId", yyyymm);
+		query.setParameter("yyyymm", yyyymm);
+		query.setParameter("mdevId", mdevId);
 		query.setParameter("monthlyConsumption", monthlyConsumption);
 		query.setParameter("monthlyBill", monthlyUsageBill);
 		
