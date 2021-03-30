@@ -61,4 +61,34 @@ public class MonthlyBillingLogDaoImpl extends AbstractHibernateGenericDao<Monthl
 		
 	}
 
+	@Override
+	public int updateMonthlyUsageInfo(String mdevId, String yyyymmdd, double monthlyConsumption, double monthlyUsageBill) {
+		if(mdevId == null || yyyymmdd == null)
+			return -1;
+		
+		String yyyymm = yyyymmdd.substring(0, 8);
+		
+		StringBuffer sbQuery = new StringBuffer();
+		sbQuery.append("\n MERGE INTO MONTHLY_BILLING_LOG mb  ");
+		sbQuery.append("\n 	USING ( ");
+		sbQuery.append("\n 		SELECT * FROM MONTHLY_BILLING_LOG bl ");
+		sbQuery.append("\n 		WHERE bl.MDS_ID = :mdevId AND bl.YYYYMM = :yyyymm	 ");
+		sbQuery.append("\n 	)t ");
+		sbQuery.append("\n 	ON  ");
+		sbQuery.append("\n 		(mb.MDS_ID = t.MDS_ID AND mb.YYYYMM = t.YYYYMM) ");
+		sbQuery.append("\n 	WHEN MATCHED THEN ");
+		sbQuery.append("\n 		UPDATE SET ");
+		sbQuery.append("\n 			mb.USED_CONSUMPTION = :monthlyConsumption, ");
+		sbQuery.append("\n 			mb.PAID_COST = :monthlyBill, ");
+		sbQuery.append("\n 			mb.MONTHLY_COST = t.SERVICE_CHARGE + :monthlyBill ");
+		
+		Query query = getSession().createNativeQuery(sbQuery.toString());
+		query.setParameter("yyyymm", mdevId);
+		query.setParameter("mdevId", yyyymm);
+		query.setParameter("monthlyConsumption", monthlyConsumption);
+		query.setParameter("monthlyBill", monthlyUsageBill);
+		
+		return query.executeUpdate();
+	}
+
 }

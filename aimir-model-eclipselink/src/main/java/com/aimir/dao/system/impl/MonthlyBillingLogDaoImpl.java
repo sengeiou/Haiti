@@ -35,5 +35,11 @@ public class MonthlyBillingLogDaoImpl extends AbstractJpaDao<MonthlyBillingLog, 
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public int updateMonthlyUsageInfo(String mdevId, String yyyymmdd, double monthlyConsumption, double monthlyUsageBill) {
+		// TODO Auto-generated method stub
+		return -1;
+	}
 	
 }
