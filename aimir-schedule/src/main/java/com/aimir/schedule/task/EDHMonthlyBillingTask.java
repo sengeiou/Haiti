@@ -2,8 +2,6 @@ package com.aimir.schedule.task;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -38,6 +36,7 @@ import com.aimir.model.system.Contract;
 import com.aimir.model.system.FixedVariable;
 import com.aimir.model.system.MonthlyBillingLog;
 import com.aimir.util.DateTimeUtil;
+import com.aimir.util.StringUtil;
 
 @Service
 public class EDHMonthlyBillingTask extends ScheduleTask {
@@ -250,7 +249,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 			int usingDay = 	monthMaxDay - installDay;
 			
 			BigDecimal avgDaySC = getBigDecimal(String.valueOf(avgDay * usingDay), RoundingMode.FLOOR, 2);
-			log.info("installDay : " + installDay +", monthMaxDay : " + monthMaxDay+", avgDay : " + avgDay+", usingDay : " + usingDay+", avgDaySC : " +avgDaySC);
+			log.info("serviceCharge : " + serviceCharge + ", installDay : " + installDay +", monthMaxDay : " + monthMaxDay+", avgDay : " + avgDay+", usingDay : " + usingDay+", avgDaySC : " +avgDaySC);
 			
 			String yyyymm = fDate.substring(0, 6);
 			monthlyBillingLog = setMonthlyBillingLog(yyyymm, avgDaySC);
@@ -273,7 +272,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 			opar.add(Calendar.MONTH, 1);
 		}
 	
-		double balance = contract.getCurrentCredit();
+		double balance = StringUtil.nullToDoubleZero(contract.getCurrentCredit());
 		log.debug("before balance : " + balance);
 		
 		log.debug("saveMonthlyBillingLog : " + saveMonthlyBillingList.size());
@@ -300,9 +299,6 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 	}
 	
 	private MonthlyBillingLog setMonthlyBillingLog(String yyyymm, BigDecimal sc) {
-		String remainCredit = String.valueOf(contract.getCurrentCredit() - sc.doubleValue());
-		BigDecimal currentCredit = getBigDecimal(remainCredit, RoundingMode.FLOOR, 4);
-		
 		MonthlyBillingLog m = new MonthlyBillingLog();
 		
 		m.setContractId(contract.getId());
