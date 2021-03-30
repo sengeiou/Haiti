@@ -254,7 +254,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 			double avgDay = serviceCharge / monthMaxDay;
 			int usingDay = 	monthMaxDay - installDay;
 			
-			BigDecimal avgDaySC = getBigDecimal(String.valueOf(avgDay * usingDay), RoundingMode.FLOOR, 2);
+			BigDecimal avgDaySC = getBigDecimal(avgDay * usingDay);
 			log.info("serviceCharge : " + serviceCharge + ", installDay : " + installDay +", monthMaxDay : " + monthMaxDay+", avgDay : " + avgDay+", usingDay : " + usingDay+", avgDaySC : " +avgDaySC);
 			
 			String yyyymm = fDate.substring(0, 6);
@@ -278,7 +278,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 			opar.add(Calendar.MONTH, 1);
 		}
 	
-		BigDecimal balance = getBigDecimal(String.valueOf(contract.getCurrentCredit()), RoundingMode.FLOOR, 2);
+		BigDecimal balance = getBigDecimal(contract.getCurrentCredit());
 		log.debug("before balance : " + balance);
 		
 		log.debug("saveMonthlyBillingLog : " + saveMonthlyBillingList.size());
