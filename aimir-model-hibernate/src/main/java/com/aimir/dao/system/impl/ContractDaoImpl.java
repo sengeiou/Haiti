@@ -3441,4 +3441,24 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 		int updateCnt = getSession().createNativeQuery(sbQuery.toString()).executeUpdate();
 		logger.debug("query : "+sbQuery.toString() +", updateCnt : " + updateCnt);
 	}
+
+	@Override
+	public List<Contract> getValidContractList(String mdevId) {
+		StringBuffer sbQuery = new StringBuffer();
+		
+		sbQuery.append(" SELECT ");
+		sbQuery.append("\n 	co.* ");
+		sbQuery.append("\n FROM ");
+		sbQuery.append("\n 	contract co, meter me");
+		sbQuery.append("\n WHERE");
+		sbQuery.append("\n 	co.METER_ID = me.id");		
+		sbQuery.append("\n 	AND me.meter_status != (select id from code where code = '1.3.3.9')");
+		sbQuery.append("\n 	AND co.status_id != (select id from code where code = '2.1.3')");
+		
+		if(mdevId != null  && !mdevId.isEmpty())
+			sbQuery.append("\n 	AND me.mds_id = " + mdevId);
+		
+		List<Contract> result = getSession().createNativeQuery(sbQuery.toString(), Contract.class).getResultList();
+		return result;
+	}
 }

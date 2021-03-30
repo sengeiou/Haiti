@@ -939,13 +939,22 @@ public interface ContractDao extends GenericDao<Contract, Integer>{
      */
     public Map<String, Object> getRequestDataForUSSDPOS(Map<String, Object> conditionMap);
     
-    /*
-     * SMS 전송할 대상 리스트
+    /**
+     * @return List<Contract>
+     * @@Description SMS 전송할 대상 리스트 
      */
     public List<Contract> getReqSendSMSList();
     
-    /*
-     * Emergency 기간이 지난 계약을 선불로 되돌린다.
+    /**
+     * @return
+     * @Description Emergency 기간이 지난 계약을 선불로 되돌린다.
      */
     public void updateExpiredEmergencyCredit();
+    
+    /**
+     * @param  mdevId(Option)
+     * @return List<Contract>
+     * @현재 미터와 연결이 유효한 계약 리스트
+     */
+    public List<Contract> getValidContractList(String mdevId);
 }

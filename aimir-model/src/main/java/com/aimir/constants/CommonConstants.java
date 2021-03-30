@@ -4368,4 +4368,9 @@ public enum SenderReceiverType {
         MBB,
         Ethernet;
     }
+    
+    public enum FIXED_VAR {
+    	CHARGE_TAX,
+    	SERVICE_CHARGE
+    }
 }

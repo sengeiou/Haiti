@@ -550,4 +550,10 @@ public class ContractDaoImpl extends AbstractJpaDao<Contract, Integer> implement
 		
 	}
 
+	@Override
+	public List<Contract> getValidContractList(String mdevId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
