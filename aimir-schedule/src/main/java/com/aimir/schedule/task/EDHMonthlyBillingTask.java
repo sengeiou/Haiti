@@ -196,8 +196,6 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 			init();
 			checkMontylyBilling();
 			
-			monthlyBillingLogDao.updateMonthlyUsageInfo(meter.getMdsId(), "20210305", 153.21d, 30.56d);
-			
 			txmanager.commit(txstatus);
 		} catch(Exception e) {			
     		log.error(e, e);

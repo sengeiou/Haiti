@@ -68,8 +68,6 @@ public class MonthlyBillingLogDaoImpl extends AbstractHibernateGenericDao<Monthl
 		
 		String yyyymm = yyyymmdd.substring(0, 6);
 		
-		log.debug("mdevId : " + mdevId+", yyyymm : " + yyyymm+", monthlyConsumption : " + monthlyConsumption +", monthlyUsageBill : " + monthlyUsageBill);
-		
 		StringBuffer sbQuery = new StringBuffer();
 		sbQuery.append("\n MERGE INTO MONTHLY_BILLING_LOG mb  ");
 		sbQuery.append("\n 	USING ( ");
@@ -83,8 +81,6 @@ public class MonthlyBillingLogDaoImpl extends AbstractHibernateGenericDao<Monthl
 		sbQuery.append("\n 			mb.USED_CONSUMPTION = :monthlyConsumption, ");
 		sbQuery.append("\n 			mb.PAID_COST = :monthlyBill, ");
 		sbQuery.append("\n 			mb.MONTHLY_COST = t.SERVICE_CHARGE + :monthlyBill ");
-		
-		log.debug("sbQuery : " + sbQuery.toString());
 		
 		Query query = getSession().createNativeQuery(sbQuery.toString());
 		query.setParameter("yyyymm", yyyymm);
