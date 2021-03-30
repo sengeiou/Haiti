@@ -245,7 +245,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 			Calendar cal = DateTimeUtil.getCalendar(fDate);
 			int monthMaxDay = cal.getMaximum(Calendar.DAY_OF_MONTH);
 			
-			double avgDay = monthMaxDay / serviceCharge;
+			double avgDay = serviceCharge / monthMaxDay;
 			int usingDay = 	monthMaxDay - installDay;
 			
 			BigDecimal avgDaySC = getBigDecimal(String.valueOf(avgDay * usingDay), RoundingMode.FLOOR, 2);
@@ -264,7 +264,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 		while(true) {
 			if(now.before(opar)) {
 				break;
-			}
+			} 
 			
 			String yyyymm = DateTimeUtil.getDateString(opar.getTime(), "yyyyMM");
 			MonthlyBillingLog monthlyLog = setMonthlyBillingLog(yyyymm, new BigDecimal(String.valueOf(serviceCharge)));
