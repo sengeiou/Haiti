@@ -171,6 +171,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 		fixedVariableDao = DataUtil.getBean(FixedVariableDao.class);
 		
 		this.contractId = contractId;
+		SnowflakeGeneration.getInstance();
 	}
 	
 	private void init() {

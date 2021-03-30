@@ -314,6 +314,7 @@ class HaitiRelayoffTaskSubClz implements Runnable {
 		contractChangeLogDao = DataUtil.getBean(ContractChangeLogDao.class);
 		
 		this.meterList = meterList;
+		SnowflakeGeneration.getInstance();
 	}
 	
 	@Override

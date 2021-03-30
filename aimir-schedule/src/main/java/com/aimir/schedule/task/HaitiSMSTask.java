@@ -189,6 +189,7 @@ class SMSTaskSubClz implements Runnable {
 		}
 		
 		this.contractId = contractId;
+		SnowflakeGeneration.getInstance();
 	}
 		
 	@Override

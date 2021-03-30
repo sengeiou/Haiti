@@ -212,6 +212,7 @@ class HaitiRelayonTaskSubClz implements Runnable {
 		cmdOperationUtil = DataUtil.getBean(CmdOperationUtil.class);
 		
 		this.meterList = meterList;
+		SnowflakeGeneration.getInstance();
 	}
 	
 	@Override
