@@ -35,8 +35,8 @@ import com.aimir.model.device.Meter;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.FixedVariable;
 import com.aimir.model.system.MonthlyBillingLog;
+import com.aimir.schedule.task.EDHMonthlyBillingTask.OPERATION;
 import com.aimir.util.DateTimeUtil;
-import com.aimir.util.StringUtil;
 
 @Service
 public class EDHMonthlyBillingTask extends ScheduleTask {
@@ -53,6 +53,12 @@ public class EDHMonthlyBillingTask extends ScheduleTask {
     
 	private boolean isNowRunning = false;
 	
+	enum OPERATION {
+		ADD,
+		SUBTRACT,
+		MULTIPLY,
+		DIVIDE
+	}
 	
 	public static void main(String[] args) {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[]{"spring-public.xml"}); 
@@ -272,30 +278,67 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 			opar.add(Calendar.MONTH, 1);
 		}
 	
-		double balance = StringUtil.nullToDoubleZero(contract.getCurrentCredit());
+		BigDecimal balance = getBigDecimal(String.valueOf(contract.getCurrentCredit()), RoundingMode.FLOOR, 2);
 		log.debug("before balance : " + balance);
 		
 		log.debug("saveMonthlyBillingLog : " + saveMonthlyBillingList.size());
 		if(saveMonthlyBillingList.size() > 0) {
 			for(MonthlyBillingLog mb : saveMonthlyBillingList) {
-				double afterBalance = balance - mb.getServiceCharge();
 				
-				mb.setBeforeCredit(balance);
-				mb.setCurrentCredit(afterBalance);
+				BigDecimal sCharge = getBigDecimal(mb.getServiceCharge());				
+				BigDecimal afterBalance = getBigDecialCalculation(balance, sCharge, OPERATION.SUBTRACT);
+				
+				mb.setBeforeCredit(balance.doubleValue());
+				mb.setCurrentCredit(afterBalance.doubleValue());
 
 				balance = afterBalance;
 				//monthlyBillingLogDao.add(mb);
 				log.debug(mb.toString());
 			}
 			
-			contract.setCurrentCredit(balance);
+			contract.setCurrentCredit(balance.doubleValue());
 			log.debug("after balance : " + balance);
 			//contractDao.update(contract);
 		}
 	}
 	
-	private BigDecimal getBigDecimal(String val, RoundingMode roundingMode, int digit) {
-		return new BigDecimal(val).setScale(digit, roundingMode);
+	private BigDecimal getBigDecimal(Object val) {
+		return getBigDecimal(val, RoundingMode.FLOOR, 2);
+	}
+	
+	private BigDecimal getBigDecimal(Object val, RoundingMode roundingMode, int digit) {
+		if(val == null)
+			val = "0";
+		
+		String decimalVal = null;
+		
+		if(val instanceof Double)
+			decimalVal = String.valueOf(val);
+		else if (val instanceof Integer)
+			decimalVal = String.valueOf(val);
+		
+		return new BigDecimal(decimalVal).setScale(digit, roundingMode);
+	}
+	
+	private BigDecimal getBigDecialCalculation(BigDecimal left, BigDecimal right, OPERATION op) {
+		BigDecimal retVal = null;
+		
+		switch(op) {
+		case ADD:
+			retVal = left.add(right);
+			break;
+		case SUBTRACT:
+			retVal = left.subtract(right);
+			break;
+		case DIVIDE:
+			retVal = left.divide(right);
+			break;
+		case MULTIPLY:
+			retVal = left.multiply(right);
+			break;
+		}
+		
+		return retVal;
 	}
 	
 	private MonthlyBillingLog setMonthlyBillingLog(String yyyymm, BigDecimal sc) {
