@@ -797,11 +797,11 @@
 
             prepayContractColModel = new Ext.grid.ColumnModel({
                 columns: [
-                     {header: "<fmt:message key="aimir.contractNumber"/>", dataIndex: 'contractNumber', renderer: addTooltip, width: width/13+10}
-                    ,{header: "<fmt:message key="aimir.accountNo"/>", dataIndex: 'SPN'}
+                     {header: "<fmt:message key="aimir.contractNumber"/>", dataIndex: 'contractNumber', renderer: addTooltip, width: width/9-10}
+                    //,{header: "<fmt:message key="aimir.accountNo"/>", dataIndex: 'SPN'}
                     ,{header: "<fmt:message key="aimir.customername"/>", dataIndex: 'customerName', renderer: addTooltip}
                     ,{header: "<fmt:message key="aimir.celluarphone"/>", dataIndex: 'mobileNo', renderer: addTooltip}
-                    ,{header: "<fmt:message key="aimir.hems.prepayment.lastchargedate"/>", dataIndex: 'lastTokenDate'}
+                    //,{header: "<fmt:message key="aimir.hems.prepayment.lastchargedate"/>", dataIndex: 'lastTokenDate'}
                     ,{header: "<fmt:message key="aimir.hems.prepayment.currentbalance"/>(<fmt:message key='aimir.price.unit'/>)", dataIndex: 'currentCredit',  align:'right'}
                     ,{header: "<fmt:message key="aimir.meterid"/>", dataIndex: 'mdsId',  renderer: addTooltip}
                     ,{header: "<fmt:message key="aimir.shipment.gs1"/>", dataIndex: 'gs1',  renderer: addTooltip}
@@ -809,14 +809,14 @@
                     ,{header: "<fmt:message key="aimir.supply.type"/>", dataIndex: 'serviceTypeName' }
                     ,{header: "<fmt:message key="aimir.contract.tariff.type"/>", dataIndex: 'tariffTypeName', renderer: addTooltip}
                     ,{header: "<fmt:message key="aimir.meterstatus"/>", dataIndex: 'statusName'}
-                    ,{header: "<fmt:message key="aimir.lastreaddate"/>", dataIndex: 'lastReadDate'}
-                    ,{header: "<fmt:message key="aimir.address"/>", dataIndex: 'address', renderer: addTooltip}
+                    //,{header: "<fmt:message key="aimir.lastreaddate"/>", dataIndex: 'lastReadDate'}
+                    //,{header: "<fmt:message key="aimir.address"/>", dataIndex: 'address', renderer: addTooltip}
                     //,{header: "<fmt:message key="aimir.hems.prepayment.validperiod"/>", dataIndex: 'emergencyCreditMaxDate', width: width/13-30}
                 ],
                 defaults: {
                      sortable: true
                     ,menuDisabled: true
-                    ,width: width/13 -1
+                    ,width: width/9
                 }
             });
 

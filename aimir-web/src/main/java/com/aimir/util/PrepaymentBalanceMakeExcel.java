@@ -100,9 +100,9 @@ public class PrepaymentBalanceMakeExcel {
 			cell.setCellValue(msgMap.get("contractNo"));
 			cell.setCellStyle(titleCellStyle);
 			
-			cell = row.createCell(cellCnt++);
-			cell.setCellValue(msgMap.get("accountNo"));
-			cell.setCellStyle(titleCellStyle);
+//			cell = row.createCell(cellCnt++);
+//			cell.setCellValue(msgMap.get("accountNo"));
+//			cell.setCellStyle(titleCellStyle);
 
 			cell = row.createCell(cellCnt++);
 			cell.setCellValue(msgMap.get("customername"));
@@ -112,9 +112,9 @@ public class PrepaymentBalanceMakeExcel {
 			cell.setCellValue(msgMap.get("celluarphone"));
 			cell.setCellStyle(titleCellStyle);
 
-			cell = row.createCell(cellCnt++);
-			cell.setCellValue(msgMap.get("lastchargedate"));
-			cell.setCellStyle(titleCellStyle);
+//			cell = row.createCell(cellCnt++);
+//			cell.setCellValue(msgMap.get("lastchargedate"));
+//			cell.setCellStyle(titleCellStyle);
 
 			cell = row.createCell(cellCnt++);
 			cell.setCellValue(msgMap.get("currentbalance"));
@@ -144,17 +144,17 @@ public class PrepaymentBalanceMakeExcel {
 			cell.setCellValue(msgMap.get("meterstatus"));
 			cell.setCellStyle(titleCellStyle);
 			
-			cell = row.createCell(cellCnt++);
-			cell.setCellValue(msgMap.get("lastreaddate"));
-			cell.setCellStyle(titleCellStyle);	
+//			cell = row.createCell(cellCnt++);
+//			cell.setCellValue(msgMap.get("lastreaddate"));
+//			cell.setCellStyle(titleCellStyle);	
 			
 //			cell = row.createCell(12);
 //			cell.setCellValue(msgMap.get("validperiod"));
 //			cell.setCellStyle(titleCellStyle);	
 			
-			cell = row.createCell(cellCnt++);
-			cell.setCellValue(msgMap.get("address"));
-			cell.setCellStyle(titleCellStyle);
+//			cell = row.createCell(cellCnt++);
+//			cell.setCellValue(msgMap.get("address"));
+//			cell.setCellStyle(titleCellStyle);
 			// Title End
 
 			// Data
@@ -170,9 +170,9 @@ public class PrepaymentBalanceMakeExcel {
 				cell.setCellValue(resultMap.get("contractNumber") == null ? "" : resultMap.get("contractNumber").toString());
 				cell.setCellStyle(dataCellStyle);
 				
-				cell = row.createCell(cellCnt++);
-				cell.setCellValue(resultMap.get("SPN") == null ? "" : resultMap.get("SPN").toString());
-				cell.setCellStyle(dataCellStyle);
+//				cell = row.createCell(cellCnt++);
+//				cell.setCellValue(resultMap.get("SPN") == null ? "" : resultMap.get("SPN").toString());
+//				cell.setCellStyle(dataCellStyle);
 				
 				cell = row.createCell(cellCnt++);
 				cell.setCellValue(resultMap.get("customerName") == null ? "" : resultMap.get("customerName").toString());
@@ -182,9 +182,9 @@ public class PrepaymentBalanceMakeExcel {
 				cell.setCellValue(resultMap.get("mobileNo") == null ? "" : resultMap.get("mobileNo").toString());
 				cell.setCellStyle(dataCellStyle);
 				
-				cell = row.createCell(cellCnt++);								
-				cell.setCellValue(resultMap.get("lastTokenDate") == null ? "" : resultMap.get("lastTokenDate").toString());
-				cell.setCellStyle(dataCellStyle);
+//				cell = row.createCell(cellCnt++);								
+//				cell.setCellValue(resultMap.get("lastTokenDate") == null ? "" : resultMap.get("lastTokenDate").toString());
+//				cell.setCellStyle(dataCellStyle);
 				
 				cell = row.createCell(cellCnt++);
 				cell.setCellValue(resultMap.get("currentCredit") == null ? "" : resultMap.get("currentCredit").toString());
@@ -214,17 +214,17 @@ public class PrepaymentBalanceMakeExcel {
 				cell.setCellValue(resultMap.get("statusName") == null ? "" : resultMap.get("statusName").toString());
 				cell.setCellStyle(dataCellStyle);
 				
-				cell = row.createCell(cellCnt++);
-				cell.setCellValue(resultMap.get("lastReadDate") == null ? "" : resultMap.get("lastReadDate").toString());
-				cell.setCellStyle(dataCellStyle);
+//				cell = row.createCell(cellCnt++);
+//				cell.setCellValue(resultMap.get("lastReadDate") == null ? "" : resultMap.get("lastReadDate").toString());
+//				cell.setCellStyle(dataCellStyle);
 				
 //				cell = row.createCell(12);
 //				cell.setCellValue(resultMap.get("emergencyCreditMaxDate") == null ? "" : resultMap.get("emergencyCreditMaxDate").toString());
 //				cell.setCellStyle(dataCellStyle);
 				
-				cell = row.createCell(cellCnt++);
-				cell.setCellValue(resultMap.get("address") == null ? "" : resultMap.get("address").toString());
-				cell.setCellStyle(dataCellStyle);
+//				cell = row.createCell(cellCnt++);
+//				cell.setCellValue(resultMap.get("address") == null ? "" : resultMap.get("address").toString());
+//				cell.setCellStyle(dataCellStyle);
 			}
 			// End Data
 

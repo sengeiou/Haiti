@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,6 +15,8 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
@@ -67,6 +70,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     private static final int BILLING_STANDARDS_DATE = 10;
     private static final int METERING_MULTIPLE_NUMBER = 3;
     private static final int MINIMUM_BILLING_USAGE = 100;
+    private static final int MAX_THREAD_WORKER = 30;
 
     @Resource(name="transactionManager")
     HibernateTransactionManager txManager;
@@ -179,28 +183,48 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     	TransactionStatus txStatus = txManager.getTransaction(null);
 
     	// Electricity 계약 목록 조회
-    	List<Contract> EM_ContractList = contractDao.getContract(Code.PREPAYMENT, SERVICE_TYPE_EM);
+    	List<Contract> emContractList = new ArrayList<Contract>();
+    	emContractList = contractDao.getContract(Code.PREPAYMENT, SERVICE_TYPE_EM);
+    	
+    	int threadPoolSize = MAX_THREAD_WORKER < emContractList.size() ? emContractList.size() : MAX_THREAD_WORKER;
+    	ExecutorService executorService = Executors.newFixedThreadPool(threadPoolSize);
     	
     	try {
-	    	for (int i = 0; i < EM_ContractList.size(); i++) {
-	    		Contract contract = EM_ContractList.get(i);
+	    	for (int i = 0; i < emContractList.size(); i++) {
+	    		Contract contract = emContractList.get(i);
+                if (contract.getTariffIndexId() == null || contract.getCustomerId() == null || contract.getMeterId() == null) continue;
+                
+	    		Runnable runnable = new Runnable() {
+	    			@Override
+	                public void run() {
+	    				log.info("Contract[" + contract.getContractNumber() + "] Meter[" + contract.getMeter().getMdsId() + "]");
+		                try {
+							saveEmBillingDailyWithTariffEMCumulationCost(contract);
+						} catch (Exception e) {
+							log.info("runnable Exception : Contract[" + contract.getContractNumber() + "] Meter[" + contract.getMeter().getMdsId() + "]");
+						}
+	    			}
+	    		};
 	    		
-	                if (contract.getTariffIndexId() == null || contract.getCustomerId() == null || contract.getMeterId() == null)
-	                	break;                	
-	                log.info("Contract[" + contract.getContractNumber() + "] Meter[" + contract.getMeter().getMdsId() + "]");
-	                this.saveEmBillingDailyWithTariffEMCumulationCost(contract);
-	    	}
+	    		//스레드풀에게 작업 처리 요청
+	            executorService.execute(runnable);
+//	            executorService.submit(runnable);
+                }
+	    	
+    		//스레드풀 종료
+    		try {
+    			executorService.shutdown();
+                while (!executorService.isTerminated()) {
+                }
+                
+            }
+            catch (Exception e) {}
+    		
         }catch (Exception e) {
             log.error("saveEmBillingDayInfo Exception ==> " + e);
-            txManager.rollback(txStatus);
-        }finally {
-//            	if(i < EM_ContractList.size())
-//            		continue;
-		}
-    		
-    	if (txStatus != null) {
-    		txManager.commit(txStatus);
-		}
+//            txManager.rollback(txStatus);
+        }
+        txManager.commit(txStatus);
     }
 
     private void saveEmBillingDailyWithTariffEMCumulationCost(Contract contract) throws Exception {
@@ -254,11 +278,12 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         			log.info("[Update CurrentCredit Contract:"+ contract.getContractNumber() + " ] MeterId[" + meter.getMdsId() + "] yyyymmdd[" + lastDayEM.getYyyymmdd() + "] "
         					+ "==> BlockBill[" + sequenceBillings.get(i).getBill() + "] lastAccumulateBill[" + sequenceBillings.get(i-1).getBill()+ "]");
     			}
-        		contractDao.update(contract);
+        		contractDao.merge(contract);
+        		txManager.commit(txStatus);
         	}
 		} catch (Exception e) {
 			log.error("saveEmBillingDaily Exception ==> Contract number = " + contract.getContractNumber(), e);
-			txManager.rollback(txStatus);
+//			txManager.rollback(txStatus);
 		}
         
     }
@@ -273,7 +298,6 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
  		}
  		// 구간 정산
  	    for (int i = 0; i < compareCnt; i++) {
- 	    	log.info("#### 구간 정산  for loop [ i : "+ i + ", compareCnt : " + compareCnt + "] ####");
  			BillingBlockTariff lastIndex = sequenceBillings.getLast();
  			String nextBillingDay = calculateNextDays(lastIndex.getYyyymmdd(), BILLING_STANDARDS_DATE);
  			String remainBillingDay = null;
@@ -647,7 +671,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 	   billingBlockTariff.setActiveEnergyExport(0.0);;
 	   billingBlockTariff.setUsage(0.0);;
 	   billingBlockTariff.setBill(0.0);;
-	   billingBlockTariff.setBalance(contract.getCurrentCredit());
+	   billingBlockTariff.setBalance(contract.getCurrentCredit() != null ? contract.getCurrentCredit() : 0);
 	   billingBlockTariff.setYyyymmdd(contract.getContractDate() != null ? contract.getContractDate().substring(0, 8) : contract.getMeter().getInstallDate().substring(0, 8));
 	   billingBlockTariff.setHhmmss(contract.getContractDate() != null ? contract.getContractDate().substring(8, 14) : contract.getMeter().getInstallDate().substring(8, 14));
 	   return billingBlockTariff;
