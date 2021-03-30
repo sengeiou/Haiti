@@ -578,4 +578,147 @@ public class PrepaymentMgmtCustomerManagerImpl implements PrepaymentMgmtCustomer
 
         contractChangeLogDao.add(contractChangeLog);
     }
+    
+
+    /**
+     * method name : getChargeAndBalanceHistory
+     * method Desc : 고객 선불관리 맥스가젯의 충전,정산 이력 리스트를 조회한다.
+     *
+     * @param conditionMap
+     * @return
+     */
+    public List<Map<String, Object>> getChargeAndBalanceHistory(Map<String, Object> conditionMap) {
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+
+        List<Map<String, Object>> list = prepaymentLogDao.getChargeAndBalanceHistory(conditionMap, false);
+        
+        int dataCount = list.size();
+        Boolean isExcel = (Boolean) (conditionMap.get("isExcel") == null ? false : conditionMap.get("isExcel"));
+        String contractNumber = (String)conditionMap.get("contractNumber");
+        String SPN = (String)conditionMap.get("SPN");
+        
+        //Excel출력의 경우 아래 소스를 타지 않는다.
+        if(!isExcel) {
+	        try {
+	            if (dataCount > 0) {
+	                Supplier supplier = supplierDao.get((Integer)conditionMap.get("supplierId"));
+	                String lang = supplier.getLang().getCode_2letter();
+	                String country = supplier.getCountry().getCode_2letter();
+	                DecimalFormat cdf = DecimalUtil.getDecimalFormat(supplier.getCd());
+	                DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
+	
+	                Map<String, Object> map = new HashMap<String, Object>();
+	                
+	                for (int i = 0 ; i < dataCount ; i++) {
+	                	map = list.get(i);
+	                	
+	                	map.put("CONTRACTID", contractNumber);
+	                	map.put("SPN", SPN);
+	                    
+	                    map.put("BALANCE", cdf.format(Double.parseDouble(map.get("BALANCE") == null ? "0" : map.get("BALANCE").toString())));
+	                    map.put("BEFOREBALANCE", cdf.format(Double.parseDouble(map.get("BEFOREBALANCE") == null ? "0" : map.get("BEFOREBALANCE").toString())));
+	                    
+	                    map.put("DATETIME", TimeLocaleUtil.getLocaleDateByMediumFormat(((String)map.get("DATETIME")), lang, country));
+                        
+	                    //충전된 정보일 경우는 차감된 요금과 사용량을 0으로 보여준다.
+	                    if(map.get("TYPE").equals("Recharge") ) {
+	                    	map.put("CHARGEDAMOUNT", cdf.format(Double.parseDouble(map.get("CHARGEDAMOUNT") == null ? "0" : map.get("CHARGEDAMOUNT").toString())));
+	                    	map.put("CANCELDATE", TimeLocaleUtil.getLocaleDateByMediumFormat(((String)map.get("CANCELDATE")), lang, country));
+	                    }else if(map.get("TYPE").equals("Billing(day)") ) {
+	                    	map.put("USAGECOST", cdf.format(Double.parseDouble(map.get("USAGECOST") == null ? "0" : map.get("USAGECOST").toString())));
+	                    	map.put("USAGETOTAL", mdf.format( Double.parseDouble(map.get("USAGETOTAL") == null ? "0" : map.get("USAGETOTAL").toString())));
+	                    }else if(map.get("TYPE").equals("Billing(month)") ) {
+	                    	map.put("MONTHLYCOST", cdf.format(Double.parseDouble(map.get("MONTHLYCOST") == null ? "0" : map.get("MONTHLYCOST").toString())));
+	                    	map.put("MONTHLYUSAGE", mdf.format( Double.parseDouble(map.get("MONTHLYUSAGE") == null ? "0" : map.get("MONTHLYUSAGE").toString())));
+	                    	map.put("VAT", cdf.format(Double.parseDouble(map.get("VAT") == null ? "0" : map.get("VAT").toString())));
+	                    	map.put("TOTALLEVY", cdf.format(Double.parseDouble(map.get("TOTALLEVY") == null ? "0" : map.get("TOTALLEVY").toString())));
+	                    	map.put("TOTALSUBSIDY", cdf.format(Double.parseDouble(map.get("TOTALSUBSIDY") == null ? "0" : map.get("TOTALSUBSIDY").toString())));
+	                    	map.put("SERVICECHARGE", cdf.format(Double.parseDouble(map.get("SERVICECHARGE") == null ? "0" : map.get("SERVICECHARGE").toString())));
+	                    }
+	                    result.add(map);
+	                }
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+        } else {
+        	result = list;
+        }
+        return result;
+    }
+
+    /**
+     * method name : getChargeAndBalanceHistoryTotalCount
+     * method Desc : 고객 선불관리 화면의 충전 이력 리스트의 total count 를 조회한다.
+     *
+     * @param conditionMap
+     * @return
+     */
+    public Integer getChargeAndBalanceHistoryTotalCount(Map<String, Object> conditionMap) {
+        List<Map<String, Object>> result = prepaymentLogDao.getChargeAndBalanceHistory(conditionMap, true);
+        
+        return Integer.parseInt(result.get(0).get("total").toString());
+    }
+    
+    /**
+     * method name : getRecentStsHistory
+     * method Desc : 가장 최근의 owe 이력 리스트를 조회한다.
+     *
+     * @param conditionMap
+     * @return
+     */
+    public List<Map<String, Object>> getRecentStsHistory(Map<String, Object> conditionMap) {
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+
+        List<Map<String, Object>> list = prepaymentLogDao.getRecentStsHistory(conditionMap);
+        
+        int dataCount = list.size();
+        
+        if (dataCount > 0) {
+        	Supplier supplier = supplierDao.get((Integer)conditionMap.get("supplierId"));
+        	String lang = supplier.getLang().getCode_2letter();
+        	String country = supplier.getCountry().getCode_2letter();
+        	DecimalFormat cdf = DecimalUtil.getDecimalFormat(supplier.getCd());
+        	DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
+        	
+        	Map<String, Object> map = new HashMap<String, Object>();
+        	for (int i = 0 ; i < dataCount ; i++) {
+        		map = list.get(i);
+        		map.put("BALANCE", cdf.format(Double.parseDouble(map.get("BALANCE") == null ? "0" : map.get("BALANCE").toString())));
+        		map.put("OWE", cdf.format(Double.parseDouble(map.get("OWE") == null ? "0" : map.get("OWE").toString())));
+        		map.put("USAGE", mdf.format( Double.parseDouble(map.get("USAGE") == null ? "0" : map.get("USAGE").toString())));
+        				
+        		if(map.get("YYYYMMDDHHMM")!=null){
+        			map.put("YYYYMMDDHHMM", TimeLocaleUtil.getLocaleDateByMediumFormat(((String)map.get("YYYYMMDDHHMM")+"00"), lang, country));
+        		}
+        		if(map.get("WRITEDATE")!=null){
+        			map.put("WRITEDATE", TimeLocaleUtil.getLocaleDateByMediumFormat(((String)map.get("WRITEDATE")), lang, country));
+        		}
+        		
+        		result.add(map);
+        	}
+        }
+        return list;
+    }
+
+    /**
+     * method name : getDebtBySPN
+     * method Desc : SPN(account no)으로 계정의 debt amount, count를 조회한다.
+     *
+     * @param conditionMap
+     * @return
+     */
+    public List<Map<String, Object>> getDebtBySPN(Map<String, Object> conditionMap){
+    	 Supplier supplier = supplierDao.get((Integer)conditionMap.get("supplierId"));
+    	 DecimalFormat cdf = DecimalUtil.getDecimalFormat(supplier.getCd());
+    	 Map<String, Object> map = new HashMap<String, Object>();
+
+         List<Map<String, Object>> list = prepaymentLogDao.getDebtBySPN(conditionMap);
+         if(list.size() > 0) {
+        	 map = list.get(0);
+        	 map.put("AMOUNT_DEBT", cdf.format(Double.parseDouble(map.get("AMOUNT_DEBT") == null ? "0" : map.get("AMOUNT_DEBT").toString())));
+         }
+    	
+         return list;
+    }
 }

@@ -36,6 +36,7 @@ import com.aimir.service.system.membership.OperatorContractManager;
 import com.aimir.service.system.prepayment.PrepaymentMgmtCustomerManager;
 import com.aimir.service.system.prepayment.PrepaymentMgmtOperatorManager;
 import com.aimir.util.CalendarUtil;
+import com.aimir.util.ChargeAndBalanceHistoryMakeExcel;
 import com.aimir.util.PrepaymentBalanceHistoryMakeExcel;
 import com.aimir.util.PrepaymentBalanceMakeExcel;
 import com.aimir.util.StringUtil;
@@ -594,6 +595,57 @@ public class PrepaymentMgmtCustomerController {
 
         return mav;
     }
+    
+
+    /**
+     * method name : getChargeHistory
+     * method Desc : 고객 선불관리 맥스가젯의 충전,일정산,월정산 이력 리스트를 한번에 조회한다.
+     *
+     * @param contractNumber
+     * @param serviceType
+     * @param searchStartMonth
+     * @param searchEndMonth
+     * @return
+     */
+    @RequestMapping(value = "/gadget/prepaymentMgmt/getChargeAndBalanceHistory")
+    public ModelAndView getChargeAndBalanceHistory(
+    		@RequestParam("contractNumber") String contractNumber,
+    		@RequestParam("SPN") String SPN,
+            @RequestParam("searchType") String searchType,
+            @RequestParam("searchStartDate") String searchStartDate,
+            @RequestParam("searchEndDate") String searchEndDate,
+            @RequestParam("mdsId") String mdsId) {
+        ModelAndView mav = new ModelAndView("jsonView");
+        HttpServletRequest request = ESAPI.httpUtilities().getCurrentRequest();
+
+        Map<String, Object> conditionMap = new HashMap<String, Object>();
+        conditionMap.put("contractNumber", contractNumber);
+        conditionMap.put("SPN", SPN);
+        conditionMap.put("searchType", searchType);
+        conditionMap.put("searchStartDate", searchStartDate);
+        conditionMap.put("searchEndDate", searchEndDate);
+
+        int page = Integer.parseInt(request.getParameter("page"));
+        int limit = Integer.parseInt(request.getParameter("limit"));
+
+        conditionMap.put("page", page);
+        conditionMap.put("limit", limit);
+
+        Contract contract = contractManager.getContractByContractNumber(contractNumber);
+        Integer supplierId = contract.getSupplier().getId();
+        Integer contractId = contract.getId();
+        conditionMap.put("supplierId", supplierId);
+        conditionMap.put("contractId", contractId);
+        conditionMap.put("mdsId", mdsId);
+
+        	
+        List<Map<String, Object>> result = prepaymentMgmtCustomerManager.getChargeAndBalanceHistory(conditionMap);
+        mav.addObject("result", result);
+        mav.addObject("totalCount", prepaymentMgmtCustomerManager.getChargeAndBalanceHistoryTotalCount(conditionMap));
+
+
+        return mav;
+    }
 
     /**
      * method name : getChargeHistoryDetailChartData
@@ -708,6 +760,7 @@ public class PrepaymentMgmtCustomerController {
 	        conditionMap.put("page", 1);
 	        conditionMap.put("limit", 10000000);
 	        conditionMap.put("supplierId", supplierId);
+	        conditionMap.put("gs1", condition[12]);
 
 	        List<Map<String, Object>> result = prepaymentMgmtOperatorManager.getPrepaymentContractList(conditionMap);
 			total = new Integer(result.size()).longValue();
@@ -720,20 +773,25 @@ public class PrepaymentMgmtCustomerController {
 	         *  Excel Title 생성
 	         */
 	        msgMap.put("contractNo", fmtMessage[0]);
-	        msgMap.put("customerName", fmtMessage[1]);
-	        msgMap.put("lastChargeDate", fmtMessage[2]);
-	        msgMap.put("remainingCredit", fmtMessage[3]);
-	        msgMap.put("meterId", fmtMessage[4]);
-	        msgMap.put("supplyType", fmtMessage[5]);
-	        msgMap.put("tariffType", fmtMessage[6]);
-	        msgMap.put("supplyStatus", fmtMessage[7]);
-	        msgMap.put("validDate", fmtMessage[8]);
-	        msgMap.put("mobileNo", fmtMessage[9]);
-	        msgMap.put("title", fmtMessage[10]);
+	        msgMap.put("accountNo", fmtMessage[1]);
+	        msgMap.put("customername", fmtMessage[2]);
+	        msgMap.put("celluarphone", fmtMessage[3]);
+	        msgMap.put("lastchargedate", fmtMessage[4]);
+	        msgMap.put("currentbalance", fmtMessage[5]);
+	        msgMap.put("meterid", fmtMessage[6]);
+	        msgMap.put("stsnumber", fmtMessage[7]);
+	        msgMap.put("supplyType", fmtMessage[8]);
+	        msgMap.put("tariffType", fmtMessage[9]);
+	        msgMap.put("meterstatus", fmtMessage[10]);
+	        msgMap.put("lastreaddate", fmtMessage[11]);
+	        msgMap.put("validperiod", fmtMessage[12]);
+	        msgMap.put("address", fmtMessage[13]);
+	        msgMap.put("title", fmtMessage[14]);
+	        msgMap.put("gs1", fmtMessage[15]);
 	        
-			Supplier supplier = supplierManager.getSupplier(supplierId);
-			sbFileName.append(fmtMessage[10]+"_");
+			sbFileName.append(fmtMessage[14]+"_");
 			sbFileName.append(TimeUtil.getCurrentTimeMilli());
+			Supplier supplier = supplierManager.getSupplier(supplierId);
 
 			/**
 			 * 파일 삭제
@@ -993,4 +1051,179 @@ public class PrepaymentMgmtCustomerController {
 		
 		return mav;
 	}
+
+    
+    @RequestMapping(value = "gadget/prepaymentMgmt/chargeAndBalanceHistoryExcelMake")
+    public ModelAndView chargeAndBalanceHistoryExcelMake(
+    		@RequestParam("condition[]") String[] condition,
+			@RequestParam("fmtMessage[]") String[] fmtMessage,
+			@RequestParam("filePath") String filePath) {
+    	
+        ModelAndView mav = new ModelAndView("jsonView");
+
+        Map<String, Object> conditionMap = new HashMap<String, Object>();
+        Map<String, String> msgMap = new HashMap<String, String>();
+
+
+		List<String> fileNameList = new ArrayList<String>();
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+
+		StringBuilder sbFileName = new StringBuilder();
+		StringBuilder sbSplFileName = new StringBuilder();
+
+		boolean isLast = false;
+		Long total = 0L; // 데이터 조회건수
+		Long maxRows = 5000L; // excel sheet 하나에 보여줄 수 있는 최대 데이터 row 수
+		
+		try {
+			Integer supplierId = Integer.parseInt(condition[4]);
+			
+			Contract contract = contractManager.getContractByContractNumber(condition[0]);
+	        Integer contractId = contract.getId();
+		        
+	        conditionMap.put("contractNumber", StringUtil.nullToBlank(condition[0]));
+	        conditionMap.put("searchType", StringUtil.nullToBlank(condition[1]));
+	        conditionMap.put("searchStartDate", StringUtil.nullToBlank(condition[2]));
+	        conditionMap.put("searchEndDate", StringUtil.nullToBlank(condition[3]));
+	        conditionMap.put("mdsId", StringUtil.nullToBlank(condition[5]));
+	        conditionMap.put("contractId", contractId);
+	        conditionMap.put("page", 1);
+	        conditionMap.put("limit", 1000000);
+	        conditionMap.put("start", 0);
+	        conditionMap.put("supplierId", supplierId);
+	        conditionMap.put("SPN", StringUtil.nullToBlank(condition[6]));
+
+	        
+	        List<Map<String, Object>> result = prepaymentMgmtCustomerManager.getChargeAndBalanceHistory(conditionMap);
+			total = new Integer(result.size()).longValue();
+			mav.addObject("total", total);
+			if (total <= 0) {
+				return mav; 
+			}
+			
+	        /**
+	         *  Excel Title 생성
+	         */
+	        msgMap.put("type", fmtMessage[0]);
+	        msgMap.put("contractNumber", fmtMessage[1]);
+	        msgMap.put("accountNo", fmtMessage[2]);
+	        msgMap.put("date", fmtMessage[3]);
+	        msgMap.put("beforebalance", fmtMessage[4]);
+	        msgMap.put("balance", fmtMessage[5]);
+	        msgMap.put("cost", fmtMessage[6]);
+	        msgMap.put("usage", fmtMessage[7]);
+	        msgMap.put("chargeAmount", fmtMessage[8]);
+	        msgMap.put("token", fmtMessage[9]);
+	        msgMap.put("canceledDate", fmtMessage[10]);
+	        msgMap.put("canceledToken", fmtMessage[11]);
+	        msgMap.put("paymenttype", fmtMessage[12]);
+	        msgMap.put("monthlyUsage", fmtMessage[13]);
+	        msgMap.put("monthlyCost", fmtMessage[14]);
+	        msgMap.put("vat", fmtMessage[15]);
+	        msgMap.put("levy", fmtMessage[16]);
+	        msgMap.put("subsidy", fmtMessage[17]);
+	        msgMap.put("serviceCharge", fmtMessage[18]);
+	        msgMap.put("description", fmtMessage[19]);
+	        msgMap.put("title", fmtMessage[20]);
+	        
+			Supplier supplier = supplierManager.getSupplier(supplierId);
+			sbFileName.append(fmtMessage[20]+"_");
+			sbFileName.append(TimeUtil.getCurrentTimeMilli());
+			
+			
+			List<Map<String, Object>> listForDebt =  prepaymentMgmtCustomerManager.getDebtBySPN(conditionMap);
+			msgMap.put("amountDebt", (String) listForDebt.get(0).get("AMOUNT_DEBT"));
+			msgMap.put("countDebt", listForDebt.get(0).get("COUNT_DEBT").toString());
+
+			/**
+			 * 파일 삭제
+			 */
+			File downDir = new File(filePath);
+			if (downDir.exists()) {
+				File[] files = downDir.listFiles();
+
+				if (files != null) {
+					String filename = null;
+					String deleteDate;
+
+					deleteDate = CalendarUtil.getDate(TimeUtil.getCurrentDay(),	Calendar.DAY_OF_MONTH, -10); // 10일 이전 일자
+					boolean isDel = false;
+
+					for (File file : files) {
+						filename = file.getName();
+						isDel = false;
+
+						// 파일길이 : 30이상, 확장자 : xls|zip
+						if (filename.length() > 30 && (filename.endsWith("xls") || filename.endsWith("zip"))) {
+							// 10일 지난 파일들 삭제
+							if (filename.startsWith(fmtMessage[20]+"_") && filename.substring(17, 25).compareTo(deleteDate) < 0) {
+								isDel = true;
+							}
+
+							if (isDel) {
+								file.delete();
+							}
+						}
+						filename = null;
+					}
+				}
+			} else {
+				// directory 가 없으면 생성
+				downDir.mkdir();
+			}
+
+			/**
+			 * 파일 생성
+			 */
+			ChargeAndBalanceHistoryMakeExcel wExcel = new ChargeAndBalanceHistoryMakeExcel();
+			int cnt = 1;
+			int idx = 0;
+			int fnum = 0;
+			int splCnt = 0;
+
+			if (total <= maxRows) {
+				sbSplFileName = new StringBuilder();
+				sbSplFileName.append(sbFileName);
+				sbSplFileName.append(".xls");
+				wExcel.writeReportExcel(result, msgMap, isLast, filePath, sbSplFileName.toString(), supplier);
+				fileNameList.add(sbSplFileName.toString());
+			} else {
+				for (int i = 0; i < total; i++) {
+					if ((splCnt * fnum + cnt) == total || cnt == maxRows) {
+						sbSplFileName = new StringBuilder();
+						sbSplFileName.append(sbFileName);
+						sbSplFileName.append('(').append(++fnum).append(").xls");
+						list = result.subList(idx, (i + 1));
+						wExcel.writeReportExcel(list, msgMap, isLast, filePath,	sbSplFileName.toString(), supplier);
+						fileNameList.add(sbSplFileName.toString());
+						list = null;
+						splCnt = cnt;
+						cnt = 0;
+						idx = (i + 1);
+					}
+					cnt++;
+				}
+			}
+
+			// create zip file
+			StringBuilder sbZipFile = new StringBuilder();
+			sbZipFile.append(sbFileName).append(".zip");
+
+			ZipUtils zutils = new ZipUtils();
+			zutils.zipEntry(fileNameList, sbZipFile.toString(), filePath);
+
+			// return object
+			mav.addObject("filePath", filePath);
+			mav.addObject("fileName", fileNameList.get(0));
+			mav.addObject("zipFileName", sbZipFile.toString());
+			mav.addObject("fileNames", fileNameList);
+		} catch (ParseException pe) {
+			logger.debug(pe,pe);
+		} catch (Exception e) {
+			logger.debug(e,e);
+		}
+
+		return mav;
+    }
+    
 }

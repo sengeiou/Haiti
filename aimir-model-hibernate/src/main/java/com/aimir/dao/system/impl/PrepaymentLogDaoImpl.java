@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
@@ -987,4 +988,312 @@ public class PrepaymentLogDaoImpl  extends AbstractHibernateGenericDao< Prepayme
         return result;
     }
 
+
+
+    /**
+     * method name : getChargeHistory
+     * method Desc : 고객 선불관리 화면의 충전 이력 리스트를 조회한다.
+     *
+     * @param conditionMap
+     * @param isTotal total count 여부
+     * @return
+     */
+    @Override
+	@SuppressWarnings("unchecked")
+    public List<Map<String, Object>> getSTSChargeHistory(Map<String, Object> conditionMap, boolean isCount) {
+
+        List<Map<String, Object>> result;
+        Map<String, Object> map;
+        String meterId = (String)conditionMap.get("meterId");
+
+        String searchStartDate = (String)conditionMap.get("startDate");
+        String searchEndDate = (String)conditionMap.get("endDate");
+
+        if(searchStartDate.length() <= 6){  //Prepayment Customer Management 에서 사용.
+        	searchStartDate += "01000000";
+        	searchEndDate += "31235959";
+        }
+
+        Integer page = (Integer)conditionMap.get("page");
+        Integer limit = (Integer)conditionMap.get("limit");
+        Boolean isExcel = (Boolean) (conditionMap.get("isExcel") == null ? false : conditionMap.get("isExcel"));
+
+        StringBuilder sb = new StringBuilder();
+
+        if (isCount) {
+            sb.append("\nSELECT COUNT(*) AS cnt ");
+        } else {
+            sb.append("\nSELECT c.CONTRACT_NUMBER AS contractNumber, ");
+            sb.append("\n       YYYYMMDDHHMM AS yyyymmddhhmm, ");
+            sb.append("\n       BALANCE AS balance, ");
+            sb.append("\n       USAGE AS usage, ");
+            sb.append("\n       WRITEDATE AS writedate, ");
+            sb.append("\n       RESERVATION_01 AS reservation01, ");
+            sb.append("\n       RESERVATION_02 AS reservation02, ");
+            sb.append("\n       RESERVATION_03 AS reservation03, ");
+            sb.append("\n       RESERVATION_04 AS reservation04, ");
+            sb.append("\n       RESERVATION_05 AS reservation05 ");
+        }
+
+        sb.append("\nFROM sts_balancehistory ");
+        sb.append("\n      INNER JOIN CONTRACT c ON c.ID = CONTRACT_ID ");
+        sb.append("\nWHERE YYYYMMDDHHMM BETWEEN :searchStartDate AND :searchEndDate ");
+        sb.append("\n	   AND   MDEV_ID = :meterId ");
+
+        if (!isCount) {
+            sb.append("\nORDER BY YYYYMMDDHHMM DESC ");
+        }
+
+        SQLQuery query = getSession().createSQLQuery(new SQLWrapper().getQuery(sb.toString()));
+
+        query.setString("meterId", meterId);
+        query.setString("searchStartDate", searchStartDate);
+        query.setString("searchEndDate", searchEndDate);
+
+        if (isCount) {
+            map = new HashMap<String, Object>();
+            map.put("total", query.uniqueResult());
+            result = new ArrayList<Map<String, Object>>();
+            result.add(map);
+        } else if (isExcel) {
+        	result = query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+        } else {
+            query.setFirstResult((page - 1) * limit);
+            query.setMaxResults(limit + 1);     // 사용량 계산위해 한 row 더 가져옴
+            result = query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+        }
+        return result;
+    }
+    
+    /**
+     * method name : getChargeHistory
+     * method Desc : 고객 선불관리 화면의 충전 이력 리스트를 조회한다.
+     *
+     * @param conditionMap
+     * @param isTotal total count 여부
+     * @return
+     */
+    @Override
+	@SuppressWarnings("unchecked")
+    public List<Map<String, Object>> getChargeAndBalanceHistory(Map<String, Object> conditionMap, boolean isCount) {
+
+        List<Map<String, Object>> result;
+        Map<String, Object> map;
+        Integer contractId = (Integer)conditionMap.get("contractId");
+        String mdsId = conditionMap.get("mdsId").toString();
+        String searchType = (String)conditionMap.get("searchType");
+        String searchStartDate = (String)conditionMap.get("searchStartDate");
+        String searchEndDate = (String)conditionMap.get("searchEndDate");
+
+        Integer page = (Integer)conditionMap.get("page");
+        Integer limit = (Integer)conditionMap.get("limit");
+        Boolean isExcel = (Boolean) (conditionMap.get("isExcel") == null ? false : conditionMap.get("isExcel"));
+
+        StringBuilder sb = new StringBuilder();
+
+        if (isCount) {
+            sb.append("\nSELECT COUNT(*) AS total FROM( ");
+        }else {
+        	sb.append("\nSELECT * FROM( ");
+        }
+        
+    	if(searchType.equals("all") || searchType.equals("charge")) {
+    		sb.append("\n   SELECT 'Recharge' AS TYPE,  ");
+    		sb.append("\n	   p.LASTTOKENDATE AS DATETIME,  ");
+    		sb.append("\n      p.PRE_BALANCE AS BEFOREBALANCE,  ");
+    		sb.append("\n	   p.BALANCE AS BALANCE,  ");
+    		sb.append("\n	   p.CHARGEDCREDIT AS CHARGEDAMOUNT,  ");
+//    		sb.append("\n	   p.TOKEN AS CHARGEDTOKEN,  ");
+    		sb.append("\n	   p.CANCEL_DATE AS CANCELDATE,  ");
+//    		sb.append("\n	   p.CANCEL_TOKEN AS CANCELTOKEN,  ");
+    		sb.append("\n	   CODE.NAME AS PAYTYPE,  ");
+    		sb.append("\n	   null AS USAGETOTAL, ");
+    		sb.append("\n	   null AS USAGECOST, ");
+    		sb.append("\n	   null AS MONTHLYUSAGE,  ");
+    		sb.append("\n	   null AS MONTHLYCOST,  ");
+    		sb.append("\n	   null AS VAT,  ");
+    		sb.append("\n	   null AS TOTALLEVY,  ");
+    		sb.append("\n	   null AS TOTALSUBSIDY,  ");
+    		sb.append("\n	   null AS SERVICECHARGE,  ");
+    		sb.append("\n	   p.DESCR AS DESCR  ");
+    		sb.append("\n   FROM PREPAYMENTLOG p ");
+    		sb.append("\n      INNER JOIN CODE ON p.PAY_TYPE_CODE = CODE.ID ");
+    		sb.append("\n   WHERE p.CONTRACT_ID = :contractId ");
+    		sb.append("\n      AND p.LASTTOKENDATE BETWEEN :searchStartDateTime AND :searchEndDateTime ");
+    	}
+    	
+    	if(searchType.equals("all") || searchType.equals("day")) {
+    		if(searchType.equals("all"))
+    			sb.append("\n   UNION ALL  ");
+    		sb.append("\n   SELECT 'Billing(day)' AS TYPE,  ");
+    		sb.append("\n	   YYYYMMDD AS DATETIME,  ");
+    		sb.append("\n      BALANCE+BILL AS BEFOREBALANCE,  ");
+    		sb.append("\n	   BALANCE AS BALANCE,  ");
+    		sb.append("\n      null AS CHARGEDAMOUNT,  ");
+//    		sb.append("\n      null AS CHARGEDTOKEN,  ");
+    		sb.append("\n      null AS CANCELDATE,  ");
+//    		sb.append("\n      null AS CANCELTOKEN,  ");
+    		sb.append("\n      null AS PAYTYPE,  ");
+    		sb.append("\n      \"USAGE\" AS USAGETOTAL,  ");
+    		sb.append("\n      BILL  AS USAGECOST,  ");
+    		sb.append("\n      null AS MONTHLYUSAGE,  ");
+    		sb.append("\n      null AS MONTHLYCOST,  ");
+    		sb.append("\n      null AS VAT,  ");
+    		sb.append("\n      null AS TOTALLEVY,  ");
+    		sb.append("\n      null AS TOTALSUBSIDY,  ");
+    		sb.append("\n      null AS SERVICECHARGE,  ");
+//    		sb.append("\n      DESCRIPTION AS DESCR  ");
+    		sb.append("\n      null AS DESCR  ");
+    		sb.append("\n   FROM BILLING_BLOCK_TARIFF ");
+    		sb.append("\n   WHERE MDEV_ID = :mdsId ");
+    		sb.append("\n      AND YYYYMMDD BETWEEN :searchStartDate AND :searchEndDate ");
+    		sb.append("\n      AND VALIDITY != 0 ");
+    	}
+
+    	if(searchType.equals("all") || searchType.equals("month")) {
+    		if(searchType.equals("all"))
+    			sb.append("\n   UNION ALL  ");
+    		sb.append("\n   SELECT 'Billing(month)' AS TYPE,  ");
+    		sb.append("\n      YYYYMM AS DATETIME,  ");
+    		sb.append("\n      BEFORE_CREDIT AS BEFOREBALANCE,  ");
+    		sb.append("\n      CURRENT_CREDIT AS BALANCE,  ");
+    		sb.append("\n      null AS CHARGEDAMOUNT,  ");
+//    		sb.append("\n      null AS CHARGEDTOKEN,  ");
+    		sb.append("\n      null AS CANCELDATE,  ");
+//    		sb.append("\n      null AS CANCELTOKEN,  ");
+    		sb.append("\n      null AS PAYTYPE,  ");
+    		sb.append("\n      null AS USAGETOTAL,  ");
+    		sb.append("\n      null  AS USAGECOST,  ");
+    		sb.append("\n      USED_CONSUMPTION AS MONTHLYUSAGE,  ");
+    		sb.append("\n      MONTHLY_COST AS MONTHLYCOST,  ");
+    		sb.append("\n      VAT AS VAT,  ");
+    		sb.append("\n      LEVY1+LEVY2+LEVY3+LEVY4+LEVY5 AS TOTALLEVY,  ");
+    		sb.append("\n      SUBSIDY1+SUBSIDY2+SUBSIDY3+SUBSIDY4+SUBSIDY5 AS TOTALSUBSIDY,  ");
+    		sb.append("\n	   SERVICE_CHARGE AS SERVICECHARGE,  ");
+    		sb.append("\n	   DESCR AS DESCR  ");
+    		sb.append("\n   FROM MONTHLY_BILLING_LOG ");
+    		sb.append("\n   WHERE YYYYMM BETWEEN :searchStartMonth AND :searchEndMonth ");
+    		sb.append("\n      AND CONTRACT_ID = :contractId ");
+    	}
+
+        if (!isCount) {
+            sb.append("\n) ORDER BY DATETIME DESC ");
+        }else {
+        	sb.append("\n) ");
+        }
+
+        SQLQuery query =  getSession().createSQLQuery(new SQLWrapper().getQuery(sb.toString()));
+
+        if(searchType.equals("all") || searchType.equals("charge")) {
+        	query.setInteger("contractId", contractId);
+        	query.setString("searchStartDateTime", searchStartDate+"000000");
+        	query.setString("searchEndDateTime", searchEndDate+"235959");
+        }
+        if(searchType.equals("all") || searchType.equals("day")) {
+        	query.setString("mdsId", mdsId);
+        	query.setString("searchStartDate", searchStartDate);
+        	query.setString("searchEndDate", searchEndDate);
+        }
+        if(searchType.equals("all") || searchType.equals("month")) {
+//			이번 달 month billing 반드시 포함 조건        	
+//        	query.setString("searchStartMonth", searchStartDate.substring(0, 6));
+//        	query.setString("searchEndMonth", searchEndDate.substring(0, 6));
+        	query.setInteger("contractId", contractId);
+        	query.setString("searchStartMonth", searchStartDate);
+        	query.setString("searchEndMonth", searchEndDate);
+        }
+
+        if (isCount) {
+            map = new HashMap<String, Object>();
+            map.put("total", query.uniqueResult());
+            result = new ArrayList<Map<String, Object>>();
+            result.add(map);
+        } else if (isExcel) {
+        	result = query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+        } else {
+            query.setFirstResult((page - 1) * limit);
+            query.setMaxResults(limit);     // 사용량 계산위해 한 row 더 가져옴
+            result = query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+        }
+        return result;
+    }
+    
+    /**
+     * method name : getRecentStsHistory
+     * method Desc : 가장 최근의 owe 이력 리스트를 조회한다.
+     *
+     * @param conditionMap
+     * @param isTotal total count 여부
+     * @return
+     */
+    @Override
+	@SuppressWarnings("unchecked")
+    public List<Map<String, Object>> getRecentStsHistory(Map<String, Object> conditionMap) {
+
+        List<Map<String, Object>> result;
+        Map<String, Object> map;
+        String mdsId = (String)conditionMap.get("mdsId");
+        String defaultDate = "202006250000"; //해당 시간부터 sts_balance에 저장하기 시작했으모로, 값이 없으면 처음값부터 출력
+
+        Integer page = (Integer)conditionMap.get("page");
+        Integer limit = (Integer)conditionMap.get("limit");
+
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append("\n	SELECT YYYYMMDDHHMM ");
+        sb.append("\n	FROM ( ");
+        sb.append("\n		SELECT YYYYMMDDHHMM ");
+        sb.append("\n		FROM STS_BALANCEHISTORY ");
+        sb.append("\n		WHERE MDEV_ID = :mdsId ");
+        sb.append("\n			AND BALANCE > 0  ");
+        sb.append("\n		ORDER BY YYYYMMDDHHMM DESC  ");
+        sb.append("\n	) ");
+        
+        SQLQuery query = getSession().createSQLQuery(new SQLWrapper().getQuery(sb.toString()));
+        query.setString("mdsId", mdsId);
+        query.setFirstResult(0);
+        query.setMaxResults(1);     // 사용량 계산위해 한 row 더 가져옴
+        result = query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+        
+        if(result.size() > 0 && result.get(0).get("YYYYMMDDHHMM") != "") {
+        	defaultDate = result.get(0).get("YYYYMMDDHHMM").toString();
+        }
+        
+        
+        StringBuilder sb2 = new StringBuilder();
+        sb2.append("\nSELECT  YYYYMMDDHHMM, BALANCE , RESERVATION_01 OWE, USAGE , WRITEDATE  ");
+        sb2.append("\nFROM STS_BALANCEHISTORY ");
+        sb2.append("\nWHERE MDEV_ID = :mdsId ");
+        sb2.append("\n	AND YYYYMMDDHHMM >= :date  ");
+        sb2.append("\nORDER BY YYYYMMDDHHMM ASC ");
+        
+        query = getSession().createSQLQuery(new SQLWrapper().getQuery(sb2.toString()));
+        query.setString("mdsId", mdsId);
+        query.setString("date", defaultDate);
+        query.setFirstResult((page - 1) * limit);
+        query.setMaxResults(limit);     // 사용량 계산위해 한 row 더 가져옴
+        result = query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+        
+        return result;
+    }
+
+	@Override
+	public List<Map<String, Object>> getDebtBySPN(Map<String, Object> conditionMap) {
+		
+	    List<Map<String, Object>> result;
+        String SPN = (String)conditionMap.get("SPN");
+
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append("\n	SELECT SUM(DEBT_AMOUNT) AS AMOUNT_DEBT , count(DEBT_AMOUNT) AS COUNT_DEBT ");
+        sb.append("\n	FROM WS_CMS_DEBTENT ");
+        sb.append("\n	WHERE CUSTOMER_ID = :SPN AND DEBT_STATUS = 'ACTIVE' ");
+        
+        SQLQuery query = getSession().createSQLQuery(new SQLWrapper().getQuery(sb.toString()));
+        query.setString("SPN", SPN);
+        result = query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+        
+        return result;
+        
+	}
 }

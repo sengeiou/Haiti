@@ -2278,9 +2278,10 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 
         String contractNumber = (String) conditionMap.get("contractNumber");
         String customerName = (String) conditionMap.get("customerName");
-        String statusCode = (String) conditionMap.get("statusCode");
+        String statusCode 	= (String) conditionMap.get("statusCode");
         String amountStatus = StringUtil.nullToBlank(conditionMap.get("amountStatus"));
-        String mdsId = (String) conditionMap.get("mdsId");
+        String mdsId 		= (String) conditionMap.get("mdsId");
+        String gs1 			= (String) conditionMap.get("gs1");
         Integer[] locationCondition = (Integer[]) conditionMap.get("locationCondition");
         // String address = (String)conditionMap.get("address");
         String serviceTypeCode = (String) conditionMap.get("serviceTypeCode");
@@ -2300,7 +2301,8 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("\n       c.customer.name AS customerName, ");                           // Customer Name
             sb.append("\n       c.customer.mobileNo AS mobileNo, ");                           // mobile No.
             sb.append("\n       m.mdsId AS mdsId, ");                                          // Meter ID
-            sb.append("\n       m.id AS meterId, ");   
+            sb.append("\n       m.id AS meterId, ");
+            sb.append("\n       m.gs1 AS gs1, ");  
             sb.append("\n       model.name AS modelName, ");
             sb.append("\n       mcu.sysID AS mcuId, ");
             sb.append("\n       c.serviceTypeCode.code AS serviceTypeCode, ");
@@ -2336,6 +2338,10 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("\nAND   c.meter.mdsId LIKE :mdsId||'%' ");
         }
 
+        if (gs1 != null && !gs1.isEmpty()) {
+            sb.append("\nAND   c.meter.gs1 LIKE :gs1 ");
+        }
+        
         if (locationCondition != null && locationCondition.length > 0) {
             sb.append("\nAND   c.location.id IN (:locationCondition) ");
         }
@@ -2382,6 +2388,10 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             query.setString("mdsId", mdsId);
         }
 
+        if (gs1 != null && !gs1.isEmpty()) {
+            query.setString("gs1", '%'+gs1+'%');
+        }
+        
         if (locationCondition != null && locationCondition.length > 0) {
             query.setParameterList("locationCondition", locationCondition);
         }

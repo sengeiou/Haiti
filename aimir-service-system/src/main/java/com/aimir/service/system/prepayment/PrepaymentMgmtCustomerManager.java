@@ -92,5 +92,40 @@ public interface PrepaymentMgmtCustomerManager {
      * @return
      */
     public List<Map<String, Object>> getChargeHistoryForCustomer(Map<String, Object> conditionMap);
+
+    /**
+     * method name : getChargeAndBalanceHistory
+     * method Desc : 고객 선불관리 화면의 충전,정산 이력 리스트를 조회한다.
+     *
+     * @param conditionMap
+     * @return
+     */
+    public List<Map<String, Object>> getChargeAndBalanceHistory(Map<String, Object> conditionMap);
+
+    /**
+     * method name : getChargeAndBalanceHistoryTotalCount
+     * method Desc : 고객 선불관리 화면의 충전,정산 이력 리스트의 total count 를 조회한다.
+     *
+     * @param conditionMap
+     * @return
+     */
+    public Integer getChargeAndBalanceHistoryTotalCount(Map<String, Object> conditionMap);
     
+    /**
+     * method name : getRecentStsHistory
+     * method Desc : 가장 최근의 owe 이력 리스트를 조회한다.
+     *
+     * @param conditionMap
+     * @return
+     */
+    public List<Map<String, Object>> getRecentStsHistory(Map<String, Object> conditionMap);
+    
+    /**
+     * method name : getDebtBySPN
+     * method Desc : SPN(account no)으로 계정의 debt amount, count를 조회한다.
+     *
+     * @param conditionMap
+     * @return
+     */
+    public List<Map<String, Object>> getDebtBySPN(Map<String, Object> conditionMap);
 }

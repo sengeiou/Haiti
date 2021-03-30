@@ -55,6 +55,7 @@ public class PrepaymentBalanceMakeExcel {
 			HSSFCell cell = null;
 			HSSFCellStyle titleCellStyle = ExcelUtil.getStyle(workbook, fontHeader, 1, 1, 1, 1, 0, 1, 0, 1, 0);
 			HSSFCellStyle dataCellStyle = ExcelUtil.getStyle(workbook, fontBody, 1, 1, 1, 1, 0, 0, 0, 0, 0);
+			HSSFCellStyle dataCellStyle2 = ExcelUtil.getStyle(workbook, fontBody, 1, 1, 1, 1, 0, 0, 0, 2, 0);
 
 			Map<String, Object> resultMap = new HashMap<String, Object>();
 			String fileFullPath = new StringBuilder().append(filePath).append(File.separator).append(fileName).toString();
@@ -70,15 +71,19 @@ public class PrepaymentBalanceMakeExcel {
 
 			HSSFSheet sheet = workbook.createSheet(reportTitle);
 			int colIdx = 0;
-			sheet.setColumnWidth(colIdx++, 256 * 19);
 			sheet.setColumnWidth(colIdx++, 256 * 25);
-			sheet.setColumnWidth(colIdx++, 256 * 35);
+			sheet.setColumnWidth(colIdx++, 256 * 20);
+			sheet.setColumnWidth(colIdx++, 256 * 30);
 			sheet.setColumnWidth(colIdx++, 256 * 25);
 			sheet.setColumnWidth(colIdx++, 256 * 23);
 			sheet.setColumnWidth(colIdx++, 256 * 20);
 			sheet.setColumnWidth(colIdx++, 256 * 20);
 			sheet.setColumnWidth(colIdx++, 256 * 20);
 			sheet.setColumnWidth(colIdx++, 256 * 20);
+			sheet.setColumnWidth(colIdx++, 256 * 20);
+			sheet.setColumnWidth(colIdx++, 256 * 20);
+			sheet.setColumnWidth(colIdx++, 256 * 20);
+			sheet.setColumnWidth(colIdx++, 256 * 100);
 
 			row = sheet.createRow(0);
 			cell = row.createCell(0);
@@ -89,46 +94,67 @@ public class PrepaymentBalanceMakeExcel {
 			// Title
 			row = sheet.createRow(dataGapsStartRow);
 
-			cell = row.createCell(0);
+			Integer cellCnt = 0;
+			
+			cell = row.createCell(cellCnt++);
 			cell.setCellValue(msgMap.get("contractNo"));
 			cell.setCellStyle(titleCellStyle);
+			
+			cell = row.createCell(cellCnt++);
+			cell.setCellValue(msgMap.get("accountNo"));
+			cell.setCellStyle(titleCellStyle);
 
-			cell = row.createCell(1);
-			cell.setCellValue(msgMap.get("customerName"));
+			cell = row.createCell(cellCnt++);
+			cell.setCellValue(msgMap.get("customername"));
+			cell.setCellStyle(titleCellStyle);
+
+			cell = row.createCell(cellCnt++);
+			cell.setCellValue(msgMap.get("celluarphone"));
+			cell.setCellStyle(titleCellStyle);
+
+			cell = row.createCell(cellCnt++);
+			cell.setCellValue(msgMap.get("lastchargedate"));
+			cell.setCellStyle(titleCellStyle);
+
+			cell = row.createCell(cellCnt++);
+			cell.setCellValue(msgMap.get("currentbalance"));
+			cell.setCellStyle(titleCellStyle);
+
+			cell = row.createCell(cellCnt++);
+			cell.setCellValue(msgMap.get("meterid"));
+			cell.setCellStyle(titleCellStyle);
+
+			cell = row.createCell(cellCnt++);
+			cell.setCellValue(msgMap.get("gs1"));
 			cell.setCellStyle(titleCellStyle);
 			
-			cell = row.createCell(2);
-			cell.setCellValue(msgMap.get("mobileNo"));
-			cell.setCellStyle(titleCellStyle);
+//			cell = row.createCell(7);
+//			cell.setCellValue(msgMap.get("stsnumber"));
+//			cell.setCellStyle(titleCellStyle);
 
-			cell = row.createCell(3);
-			cell.setCellValue(msgMap.get("lastChargeDate"));
-			cell.setCellStyle(titleCellStyle);
-
-			cell = row.createCell(4);
-			cell.setCellValue(msgMap.get("remainingCredit"));
-			cell.setCellStyle(titleCellStyle);
-
-			cell = row.createCell(5);
-			cell.setCellValue(msgMap.get("meterId"));
-			cell.setCellStyle(titleCellStyle);
-
-			cell = row.createCell(6);
+			cell = row.createCell(cellCnt++);
 			cell.setCellValue(msgMap.get("supplyType"));
 			cell.setCellStyle(titleCellStyle);
-
-			cell = row.createCell(7);
+			
+			cell = row.createCell(cellCnt++);
 			cell.setCellValue(msgMap.get("tariffType"));
 			cell.setCellStyle(titleCellStyle);
-
-			cell = row.createCell(8);
-			cell.setCellValue(msgMap.get("supplyStatus"));
+			
+			cell = row.createCell(cellCnt++);
+			cell.setCellValue(msgMap.get("meterstatus"));
 			cell.setCellStyle(titleCellStyle);
 			
-			cell = row.createCell(9);
-			cell.setCellValue(msgMap.get("validDate"));
+			cell = row.createCell(cellCnt++);
+			cell.setCellValue(msgMap.get("lastreaddate"));
+			cell.setCellStyle(titleCellStyle);	
+			
+//			cell = row.createCell(12);
+//			cell.setCellValue(msgMap.get("validperiod"));
+//			cell.setCellStyle(titleCellStyle);	
+			
+			cell = row.createCell(cellCnt++);
+			cell.setCellValue(msgMap.get("address"));
 			cell.setCellStyle(titleCellStyle);
-
 			// Title End
 
 			// Data
@@ -138,44 +164,66 @@ public class PrepaymentBalanceMakeExcel {
 				resultMap = result.get(i);
 				row = sheet.createRow(i + (dataGapsStartRow + 1));
 				
-				cell = row.createCell(0);
+				cellCnt = 0;
+				
+				cell = row.createCell(cellCnt++);
 				cell.setCellValue(resultMap.get("contractNumber") == null ? "" : resultMap.get("contractNumber").toString());
 				cell.setCellStyle(dataCellStyle);
 				
-				cell = row.createCell(1);
+				cell = row.createCell(cellCnt++);
+				cell.setCellValue(resultMap.get("SPN") == null ? "" : resultMap.get("SPN").toString());
+				cell.setCellStyle(dataCellStyle);
+				
+				cell = row.createCell(cellCnt++);
 				cell.setCellValue(resultMap.get("customerName") == null ? "" : resultMap.get("customerName").toString());
 				cell.setCellStyle(dataCellStyle);
 				
-				cell = row.createCell(2);
+				cell = row.createCell(cellCnt++);
 				cell.setCellValue(resultMap.get("mobileNo") == null ? "" : resultMap.get("mobileNo").toString());
 				cell.setCellStyle(dataCellStyle);
 				
-				cell = row.createCell(3);
+				cell = row.createCell(cellCnt++);								
 				cell.setCellValue(resultMap.get("lastTokenDate") == null ? "" : resultMap.get("lastTokenDate").toString());
 				cell.setCellStyle(dataCellStyle);
 				
-				cell = row.createCell(4);								
+				cell = row.createCell(cellCnt++);
 				cell.setCellValue(resultMap.get("currentCredit") == null ? "" : resultMap.get("currentCredit").toString());
-				cell.setCellStyle(dataCellStyle);
+				cell.setCellStyle(dataCellStyle2);
 				
-				cell = row.createCell(5);
+				cell = row.createCell(cellCnt++);
 				cell.setCellValue(resultMap.get("mdsId") == null ? "" : resultMap.get("mdsId").toString());
 				cell.setCellStyle(dataCellStyle);
 				
-				cell = row.createCell(6);
+				cell = row.createCell(cellCnt++);
+				cell.setCellValue(resultMap.get("gs1") == null ? "" : resultMap.get("gs1").toString());
+				cell.setCellStyle(dataCellStyle);
+				
+//				cell = row.createCell(7);
+//				cell.setCellValue(resultMap.get("ihdId") == null ? "" : resultMap.get("ihdId").toString());
+//				cell.setCellStyle(dataCellStyle);
+				
+				cell = row.createCell(cellCnt++);
 				cell.setCellValue(resultMap.get("serviceTypeName") == null ? "" : resultMap.get("serviceTypeName").toString());
 				cell.setCellStyle(dataCellStyle);
 				
-				cell = row.createCell(7);
+				cell = row.createCell(cellCnt++);
 				cell.setCellValue(resultMap.get("tariffTypeName") == null ? "" : resultMap.get("tariffTypeName").toString());
 				cell.setCellStyle(dataCellStyle);
 				
-				cell = row.createCell(8);
+				cell = row.createCell(cellCnt++);
 				cell.setCellValue(resultMap.get("statusName") == null ? "" : resultMap.get("statusName").toString());
 				cell.setCellStyle(dataCellStyle);
 				
-				cell = row.createCell(9);
-				cell.setCellValue(resultMap.get("emergencyCreditMaxDate") == null ? "" : TimeLocaleUtil.getLocaleDateByMediumFormat(((String) resultMap.get("emergencyCreditMaxDate")), lang, country));
+				cell = row.createCell(cellCnt++);
+				cell.setCellValue(resultMap.get("lastReadDate") == null ? "" : resultMap.get("lastReadDate").toString());
+				cell.setCellStyle(dataCellStyle);
+				
+//				cell = row.createCell(12);
+//				cell.setCellValue(resultMap.get("emergencyCreditMaxDate") == null ? "" : resultMap.get("emergencyCreditMaxDate").toString());
+//				cell.setCellStyle(dataCellStyle);
+				
+				cell = row.createCell(cellCnt++);
+				cell.setCellValue(resultMap.get("address") == null ? "" : resultMap.get("address").toString());
 				cell.setCellStyle(dataCellStyle);
 			}
 			// End Data
