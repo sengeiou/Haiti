@@ -310,14 +310,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 		if(val == null)
 			val = "0";
 		
-		String decimalVal = null;
-		
-		if(val instanceof Double)
-			decimalVal = String.valueOf(val);
-		else if (val instanceof Integer)
-			decimalVal = String.valueOf(val);
-		
-		return new BigDecimal(decimalVal).setScale(digit, roundingMode);
+		return new BigDecimal(String.valueOf(val)).setScale(digit, roundingMode);
 	}
 	
 	private BigDecimal getBigDecialCalculation(BigDecimal left, BigDecimal right, OPERATION op) {
