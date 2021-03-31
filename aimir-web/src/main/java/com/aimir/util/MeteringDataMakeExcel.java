@@ -490,7 +490,7 @@ public class MeteringDataMakeExcel {
     		
     		HSSFSheet sheet = workbook.createSheet(reportTitle);
     		sheet.setColumnWidth(colIdx++, 256 * 25);
-    		sheet.setColumnWidth(colIdx++, 256 * 25);
+    		sheet.setColumnWidth(colIdx++, 256 * 28);
     		sheet.setColumnWidth(colIdx++, 256 * 25);
     		sheet.setColumnWidth(colIdx++, 256 * 25);
     		sheet.setColumnWidth(colIdx++, 256 * 25);
@@ -530,17 +530,17 @@ public class MeteringDataMakeExcel {
         		cell.setCellValue(msg_activeImp);
         		cell.setCellStyle(titleCellStyle);
         		
-        		cell = row.createCell(2);
-        		cell.setCellValue(msg_activeExp);
-        		cell.setCellStyle(titleCellStyle);
-        		
-        		cell = row.createCell(3);
-        		cell.setCellValue(msg_reactiveImp);
-        		cell.setCellStyle(titleCellStyle);
-        		
-        		cell = row.createCell(4);
-        		cell.setCellValue(msg_activeExp);
-        		cell.setCellStyle(titleCellStyle);
+//        		cell = row.createCell(2);
+//        		cell.setCellValue(msg_activeExp);
+//        		cell.setCellStyle(titleCellStyle);
+//        		
+//        		cell = row.createCell(3);
+//        		cell.setCellValue(msg_reactiveImp);
+//        		cell.setCellStyle(titleCellStyle);
+//        		
+//        		cell = row.createCell(4);
+//        		cell.setCellValue(msg_activeExp);
+//        		cell.setCellStyle(titleCellStyle);
     		}
     		// Title Section (E)
     		
