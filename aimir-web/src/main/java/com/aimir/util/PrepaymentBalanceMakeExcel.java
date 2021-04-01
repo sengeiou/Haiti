@@ -75,6 +75,7 @@ public class PrepaymentBalanceMakeExcel {
 			sheet.setColumnWidth(colIdx++, 256 * 20);
 			sheet.setColumnWidth(colIdx++, 256 * 30);
 			sheet.setColumnWidth(colIdx++, 256 * 25);
+			sheet.setColumnWidth(colIdx++, 256 * 25);
 			sheet.setColumnWidth(colIdx++, 256 * 23);
 			sheet.setColumnWidth(colIdx++, 256 * 20);
 			sheet.setColumnWidth(colIdx++, 256 * 20);
@@ -112,9 +113,9 @@ public class PrepaymentBalanceMakeExcel {
 			cell.setCellValue(msgMap.get("celluarphone"));
 			cell.setCellStyle(titleCellStyle);
 
-//			cell = row.createCell(cellCnt++);
-//			cell.setCellValue(msgMap.get("lastchargedate"));
-//			cell.setCellStyle(titleCellStyle);
+			cell = row.createCell(cellCnt++);
+			cell.setCellValue(msgMap.get("lastchargedate"));
+			cell.setCellStyle(titleCellStyle);
 
 			cell = row.createCell(cellCnt++);
 			cell.setCellValue(msgMap.get("currentbalance"));
@@ -182,9 +183,9 @@ public class PrepaymentBalanceMakeExcel {
 				cell.setCellValue(resultMap.get("mobileNo") == null ? "" : resultMap.get("mobileNo").toString());
 				cell.setCellStyle(dataCellStyle);
 				
-//				cell = row.createCell(cellCnt++);								
-//				cell.setCellValue(resultMap.get("lastTokenDate") == null ? "" : resultMap.get("lastTokenDate").toString());
-//				cell.setCellStyle(dataCellStyle);
+				cell = row.createCell(cellCnt++);								
+				cell.setCellValue(resultMap.get("lastTokenDate") == null ? "" : resultMap.get("lastTokenDate").toString());
+				cell.setCellStyle(dataCellStyle);
 				
 				cell = row.createCell(cellCnt++);
 				cell.setCellValue(resultMap.get("currentCredit") == null ? "" : resultMap.get("currentCredit").toString());

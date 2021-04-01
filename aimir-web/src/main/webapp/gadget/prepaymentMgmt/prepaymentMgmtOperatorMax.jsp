@@ -797,11 +797,11 @@
 
             prepayContractColModel = new Ext.grid.ColumnModel({
                 columns: [
-                     {header: "<fmt:message key="aimir.contractNumber"/>", dataIndex: 'contractNumber', renderer: addTooltip, width: width/9-10}
+                     {header: "<fmt:message key="aimir.contractNumber"/>", dataIndex: 'contractNumber', renderer: addTooltip, width: width/10-10}
                     //,{header: "<fmt:message key="aimir.accountNo"/>", dataIndex: 'SPN'}
                     ,{header: "<fmt:message key="aimir.customername"/>", dataIndex: 'customerName', renderer: addTooltip}
                     ,{header: "<fmt:message key="aimir.celluarphone"/>", dataIndex: 'mobileNo', renderer: addTooltip}
-                    //,{header: "<fmt:message key="aimir.hems.prepayment.lastchargedate"/>", dataIndex: 'lastTokenDate'}
+                    ,{header: "<fmt:message key="aimir.hems.prepayment.lastchargedate"/>", dataIndex: 'lastTokenDate'}
                     ,{header: "<fmt:message key="aimir.hems.prepayment.currentbalance"/>(<fmt:message key='aimir.price.unit'/>)", dataIndex: 'currentCredit',  align:'right'}
                     ,{header: "<fmt:message key="aimir.meterid"/>", dataIndex: 'mdsId',  renderer: addTooltip}
                     ,{header: "<fmt:message key="aimir.shipment.gs1"/>", dataIndex: 'gs1',  renderer: addTooltip}
@@ -816,7 +816,7 @@
                 defaults: {
                      sortable: true
                     ,menuDisabled: true
-                    ,width: width/9
+                    ,width: width/10
                 }
             });
 
