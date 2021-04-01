@@ -162,7 +162,7 @@
         	$('#stsControl_SUNI').hide();
         	$('#stsControl_WASION').hide();
             $('#relayControlButton').hide();
-            $('#commandResultDiv').hide();
+            //$('#commandResultDiv').hide();
 
             Ext.QuickTips.init();
             hide();
@@ -847,6 +847,7 @@
                                 	  $("#stsLog").hide();
                                   }
                                   
+								  //$('#alertBalanceButtonDiv').show();
                                   //enableSts(selectedModelName);
                                   enableRelay(selectedModelName);
                                   getAllHours();
@@ -1696,7 +1697,7 @@
         //선택한 계약의 미터모델이 Relay 기능이 가능한 모델인지 검색 후 가능한 모델일 경우 화면에 Relay On/Off 버튼을 보여준다.
         function enableRelay(selectedModelName) {
         	$('#relayControlButton').hide();
-        	$('#commandResultDiv').hide();
+        	//$('#commandResultDiv').hide();
             $.getJSON("${ctx}/gadget/prepaymentMgmt/getRelayEnableModel.do",
                     {devicemodelName : selectedModelName},
                     function(result) {
@@ -1706,7 +1707,7 @@
                             	switch (namesOfContain[i]) {
                                     case 'relayControl':
                                         $('#relayControlButton').show();
-                                        $('#commandResultDiv').show();
+                                        //$('#commandResultDiv').show();
                                         break;
                                 }
                             }
@@ -1719,7 +1720,7 @@
         	$("#stsLog").hide();
         	$('#stsControl_SUNI').hide();
         	$('#stsControl_WASION').hide();
-        	$('#commandResultDiv').hide();
+        	//$('#commandResultDiv').hide();
         	
             $.getJSON("${ctx}/gadget/prepaymentMgmt/getRelayEnableModel.do",
                     {devicemodelName : selectedModelName},
@@ -1731,12 +1732,14 @@
                                     case 'stsControl_SUNI':
                                     	$("#stsLog").show();
                                     	$('#stsControl_SUNI').show();
-                                    	$('#commandResultDiv').show();
+                                    	$('#alertBalanceButtonDiv').hide();
+                                    	//$('#commandResultDiv').show();
                                     	break;
                                     case 'stsControl_WASION':
                                     	$("#stsLog").show();
                                     	$('#stsControl_WASION').show();
-                                    	$('#commandResultDiv').show();
+                                    	$('#alertBalanceButtonDiv').hide();
+                                    	//$('#commandResultDiv').show();
                                     	break;    
                                 }
                             }
@@ -4263,9 +4266,6 @@
 				</div>
 				<!-- STS토큰 전송 -->
 				<a href="#" id="sts" class="btn_blue" style="display: none" onClick="cmdSTSHandler.setSTSToken();"><span><fmt:message key='aimir.setSTSToken'/></span></a>
-				 <a href="#" id="sts" class="btn_blue" style="display: none" onClick="cmdSTSHandler.getEmergencyCredit();"><span><fmt:message key='aimir.getEmergency'/></span></a>
-	       		<a href="#" id="sts" class="btn_blue" style="display: none" onClick="setEmergencyCredit();"><span><fmt:message key='aimir.setEmergency'/></span></a>
-	            <%-- <a href="#" id="sts" class="btn_blue" style="display: none" onClick="saveNotifySettingConfirm();"><span><fmt:message key="aimir.hems.prepayment.balancenotify"/></span></a> --%>
 	       		<a href="#" id="sts" class="btn_blue" style="display: none" onClick="cmdSTSHandler.setFriendlyCreditSchedule();"><span><fmt:message key='aimir.setFriendly'/><!-- For STS --></span></a>
 	       		<a href="#" id="sts" class="btn_blue" style="display: none" onClick="showFcMode();"><span><fmt:message key='aimir.getFriendly'/><!-- For STS --></span></a>
 	       		
@@ -4309,7 +4309,16 @@
 	       			</span>
 				</div> --%>
 	       	</div>
+	       	
+	       	<div id="emergencyButtonDiv">
+	       		<a href="#" class="btn_blue" onClick="cmdSTSHandler.getEmergencyCredit();"><span><fmt:message key='aimir.getEmergency'/></span></a>
+	       		<a href="#" class="btn_blue" onClick="setEmergencyCredit();"><span><fmt:message key='aimir.setEmergency'/></span></a>
+	       	</div>
 	    	
+<!-- 	    	<div id="alertBalanceButtonDiv">
+	            <a href="#" class="btn_blue" onClick="saveNotifySettingConfirm();"><span>Alert balance</span></a>
+	       	</div> -->
+	       	
 	    	<div id="stsControl_WASION">
 	    	<a href="#" id="sts" class="btn_blue" style="display: none" onClick="cmdSTSHandler.getPreviousMonthNetCharge();"><span><fmt:message key='aimir.getPrevious'/></span></a>
 	        <a href="#" id="sts" class="btn_blue" style="display: none" onClick="cmdSTSHandler.getSpecifiedNetCharge_WASION();"><span>Get Specified</span></a>
