@@ -70,7 +70,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     private static final int BILLING_STANDARDS_DATE = 10;
     private static final int METERING_MULTIPLE_NUMBER = 3;
     private static final int MINIMUM_BILLING_USAGE = 100;
-    private static final int MAX_THREAD_WORKER = 30;
+    private static final int MAX_THREAD_WORKER = 10;
 
     @Resource(name="transactionManager")
     HibernateTransactionManager txManager;
@@ -180,12 +180,10 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     }//execute end
 
     public void saveEMBillingDayInfo() {
-    	TransactionStatus txStatus = txManager.getTransaction(null);
-
     	// Electricity 계약 목록 조회
-    	List<Contract> emContractList = contractDao.getContract(Code.PREPAYMENT, SERVICE_TYPE_EM);
+    	List<Contract> emContractList = getEMContractList(); 
     	
-    	int threadPoolSize = MAX_THREAD_WORKER < emContractList.size() ? emContractList.size() : MAX_THREAD_WORKER;
+    	int threadPoolSize = MAX_THREAD_WORKER < emContractList.size() ? MAX_THREAD_WORKER : emContractList.size();
     	ExecutorService executorService = Executors.newFixedThreadPool(threadPoolSize);
     	
     	try {
@@ -198,7 +196,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 	                public void run() {
 	    				log.info("Contract[" + contract.getContractNumber() + "] Meter[" + contract.getMeter().getMdsId() + "]");
 		                try {
-							saveEmBillingDailyWithTariffEMCumulationCost(contract);
+							saveEmBillingDailyWithTariffEM(Integer.toString(contract.getId()));
 						} catch (Exception e) {
 							log.info("Thread runnable Exception : Contract[" + contract.getContractNumber() + "] Meter[" + contract.getMeter().getMdsId() + "]");
 						}
@@ -207,7 +205,6 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 	    		
 	    		//스레드풀에게 작업 처리 요청
 	            executorService.execute(runnable);
-//	            executorService.submit(runnable);
                 }
 	    	
     		//스레드풀 종료
@@ -215,20 +212,20 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     			executorService.shutdown();
                 while (!executorService.isTerminated()) {
                 }
-                
             }
             catch (Exception e) {}
     		
         }catch (Exception e) {
             log.error("saveEmBillingDayInfo Exception ==> " + e);
-//            txManager.rollback(txStatus);
         }
-        txManager.commit(txStatus);
     }
 
-    private void saveEmBillingDailyWithTariffEMCumulationCost(Contract contract) throws Exception {
-    	TransactionStatus txStatus = txManager.getTransaction(null);
+	private void saveEmBillingDailyWithTariffEM(String contractId) throws Exception {
+    	TransactionStatus txStatus = null;
     	try {
+    		txStatus = txManager.getTransaction(null);
+    		
+    		Contract contract =  contractDao.findByCondition("contractNumber", contractId);
     		String mdsId = meterDao.get(contract.getMeterId()).getMdsId();
             DayEM lastDayEM = null;
 
@@ -249,6 +246,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
             
             //데이터 검증 하여 BILLING_BLOCK_TARIFF_WRONG 이력 남기고 리턴하여 for문으로 다시 돌아감
             if(validateBillingValues(contract, lastDayEM, lastBilling)) {
+            	txManager.commit(txStatus);
             	return;
             }
             	
@@ -278,11 +276,11 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         					+ "==> BlockBill[" + sequenceBillings.get(i).getBill() + "] lastAccumulateBill[" + sequenceBillings.get(i-1).getBill()+ "]");
     			}
         		contractDao.merge(contract);
-        		txManager.commit(txStatus);
         	}
+        	txManager.commit(txStatus);
 		} catch (Exception e) {
-			log.error("saveEmBillingDaily Exception ==> Contract number = " + contract.getContractNumber(), e);
-//			txManager.rollback(txStatus);
+			log.error("saveEmBillingDaily Exception ==> Contract number = " + contractId, e);
+			if(txStatus != null) txManager.rollback(txStatus);
 		}
         
     }
@@ -314,7 +312,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
  				lastIndex = sequenceBillings.getLast();
  				remainBillingDay = Integer.toString(BILLING_STANDARDS_DATE - Integer.parseInt(remainBillingDay));	//기준일 10일에서 말일 차이를 뺀다
  				nextBillingDay = calculateNextDays(lastIndex.getYyyymmdd(), Integer.parseInt(remainBillingDay));	//이전 BillingBlockTariff 날짜에서 다음 정산일을 구한다
- 				BillingBlockTariff firstIndex = makeNewtMonthBillingBlockTariff(lastIndex, nextBillingDay);			//달이 바뀌면서 BillingBlockTariff 초기화
+ 				BillingBlockTariff firstIndex = makeNewMonthBillingBlockTariff(lastIndex, nextBillingDay);			//달이 바뀌면서 BillingBlockTariff 초기화
  				usage = avgDayUsage.multiply(convertBigDecimal(remainBillingDay));									//남은 일수만큼의 일평균	
  				sequenceBillings.add(makeBillings(firstIndex, usage, nextBillingDay, meter, contract.getTariffIndex().getName(), tariffEMList, true));
  			}
@@ -342,7 +340,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
  			
  			lastIndex = sequenceBillings.getLast();
  			remainBillingDay = calculateDiffDays(lastDayEM.getYyyymmdd(), lastIndex.getYyyymmdd());
- 			BillingBlockTariff firstIndex = makeNewtMonthBillingBlockTariff(lastIndex, remainBillingDay);					//달이 바뀌면서 BillingBlockTariff 초기화
+ 			BillingBlockTariff firstIndex = makeNewMonthBillingBlockTariff(lastIndex, remainBillingDay);					//달이 바뀌면서 BillingBlockTariff 초기화
  			usage = convertBigDecimal(lastDayEM.getValue()).subtract(convertBigDecimal(firstIndex.getActiveEnergy()));		//Day_EM의 마지막 값에서 이전 BillingBlockTariff ActiveEnergy를 뺀 값으로 저장
  			sequenceBillings.add(makeBillings(firstIndex, usage, lastDayEM.getYyyymmdd(), meter, contract.getTariffIndex().getName(), tariffEMList, false));
  		}
@@ -445,43 +443,50 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         return returnBill.setScale(2, BigDecimal.ROUND_HALF_UP);	//소수점 2자리 까지
     }
     
-    private void saveBillingBlockTariff(Contract contract, Meter meter, BillingBlockTariff billingBlockTariff) {
-    	TransactionStatus txstatus = null;
+    private List<Contract> getEMContractList() {
+    	TransactionStatus txStatus = null;
+    	List<Contract> emContractList = new ArrayList<Contract>();
     	try {
-            txstatus = txManager.getTransaction(null);
-	        BillingBlockTariff bill = new BillingBlockTariff();
-	
-	        bill.setMDevId(meter.getMdsId());
-	        bill.setYyyymmdd(billingBlockTariff.getYyyymmdd());
-	        bill.setHhmmss("000000");
-	        bill.setMDevType(DeviceType.Meter.name());
-	        bill.setTariffIndex(contract.getTariffIndex());
-	        bill.setSupplier(meter.getSupplier());
-	        bill.setLocation(meter.getLocation());
-	        bill.setContract(contract);
-	        bill.setMeter(meter);
-	        bill.setModem((meter == null) ? null : meter.getModem());
-	        bill.setAvg(billingBlockTariff.isAvg());
-	        bill.setValidity(true);
-	        bill.setWriteDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
-	        bill.setActiveEnergy(billingBlockTariff.getActiveEnergy());
-	        bill.setActiveEnergyImport(billingBlockTariff.getActiveEnergyImport());
-	        bill.setUsage(billingBlockTariff.getUsage());
-	        bill.setAccumulateUsage(billingBlockTariff.getAccumulateUsage());
-	        bill.setBalance(billingBlockTariff.getBalance());
-	        bill.setBill(billingBlockTariff.getBill());
-	        bill.setAccumulateBill(billingBlockTariff.getAccumulateBill());
-	
-	//        billingBlockTariffDao.saveOrUpdate(bill);
-	        billingBlockTariffDao.add(bill);
-        
-	        log.info("[SaveBillingBlockTariff] MeterId[" + bill.getMDevId() + "] BillDay[" + bill.getYyyymmdd() +
-                "] BillTime[" + bill.getHhmmss() + "] AccumulateUsage[" + bill.getAccumulateUsage() +
-                "] AccumulateBill[" + bill.getAccumulateBill() + "] CurrentBill[" + bill.getBill() + "]");
-    	}catch (Exception e) {
-    		log.error(e, e);
-            if (txstatus != null) txManager.rollback(txstatus);
+    		txStatus = txManager.getTransaction(null);
+    		emContractList = contractDao.getContract(Code.PREPAYMENT, SERVICE_TYPE_EM);
+    		txManager.commit(txStatus);
+		} catch (Exception e) {
+			log.error("getEMContractList Exception ==> ", e);
+			if(txStatus != null) txManager.rollback(txStatus);
 		}
+		return emContractList;
+	}
+    
+    private void saveBillingBlockTariff(Contract contract, Meter meter, BillingBlockTariff billingBlockTariff) {
+        BillingBlockTariff bill = new BillingBlockTariff();
+
+        bill.setMDevId(meter.getMdsId());
+        bill.setYyyymmdd(billingBlockTariff.getYyyymmdd());
+        bill.setHhmmss("000000");
+        bill.setMDevType(DeviceType.Meter.name());
+        bill.setTariffIndex(contract.getTariffIndex());
+        bill.setSupplier(meter.getSupplier());
+        bill.setLocation(meter.getLocation());
+        bill.setContract(contract);
+        bill.setMeter(meter);
+        bill.setModem((meter == null) ? null : meter.getModem());
+        bill.setAvg(billingBlockTariff.isAvg());
+        bill.setValidity(true);
+        bill.setWriteDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
+        bill.setActiveEnergy(billingBlockTariff.getActiveEnergy());
+        bill.setActiveEnergyImport(billingBlockTariff.getActiveEnergyImport());
+        bill.setUsage(billingBlockTariff.getUsage());
+        bill.setAccumulateUsage(billingBlockTariff.getAccumulateUsage());
+        bill.setBalance(billingBlockTariff.getBalance());
+        bill.setBill(billingBlockTariff.getBill());
+        bill.setAccumulateBill(billingBlockTariff.getAccumulateBill());
+
+//        billingBlockTariffDao.saveOrUpdate(bill);
+        billingBlockTariffDao.add(bill);
+    
+        log.info("[SaveBillingBlockTariff] MeterId[" + bill.getMDevId() + "] BillDay[" + bill.getYyyymmdd() +
+            "] BillTime[" + bill.getHhmmss() + "] AccumulateUsage[" + bill.getAccumulateUsage() +
+            "] AccumulateBill[" + bill.getAccumulateBill() + "] CurrentBill[" + bill.getBill() + "]");
     }
     
     /**
@@ -490,9 +495,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
      * @return
      */
     public DayEM getDayEM(String meterId, String yyyymmdd) {
-    	TransactionStatus txstatus = null;
         try {
-            txstatus = txManager.getTransaction(null);
             LinkedHashSet<Condition> condition = new LinkedHashSet<Condition>();
             condition.add(new Condition("id.mdevId", new Object[]{meterId}, null, Restriction.EQ));
             condition.add(new Condition("id.mdevType", new Object[]{DeviceType.Meter}, null, Restriction.EQ));
@@ -511,20 +514,16 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
                 }
              }
             
-            txManager.commit(txstatus);
             return lastDayEM;
         }
         catch (Exception e) {
             log.error(e, e);
-            if (txstatus != null) txManager.rollback(txstatus);
         }
         return null;
     }
     
     public BillingBlockTariff getLastAccumulateBill(String meterId) {
-    	TransactionStatus txstatus = null;
         try {
-            txstatus = txManager.getTransaction(null);
             LinkedHashSet<Condition> condition = new LinkedHashSet<Condition>();
             condition.add(new Condition("id.mdevId", new Object[]{meterId}, null, Restriction.EQ));
             condition.add(new Condition("id.mdevType", new Object[]{DeviceType.Meter}, null, Restriction.EQ));
@@ -541,7 +540,6 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
                 }
              }
             
-            txManager.commit(txstatus);
             return lastBillingBlockTariff;
         }catch (ArrayIndexOutOfBoundsException e) {
             log.info("BillingBlockTariff does not exist : "+ e);
@@ -573,7 +571,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 	        billWrong.setCode(code.name());
 	        billWrong.setMDevId(meter.getMdsId());
 	        billWrong.setYyyymmdd(lastDayEM.getYyyymmdd());
-	        billWrong.setYyyymmddhh(lastDayEM.getYyyymmdd()+"00");;
+	        billWrong.setYyyymmddhh(lastDayEM.getYyyymmdd()+"00");
 	        billWrong.setLocation(meter.getLocation());
 	        billWrong.setContract(contract);
 	        billWrong.setMeter(meter);
@@ -663,28 +661,28 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 	   billingBlockTariff.setMDevId(contract.getPreMdsId());
 	   billingBlockTariff.setMDevType(DeviceType.Meter.name());
 	   billingBlockTariff.setContract(contract);
-	   billingBlockTariff.setAccumulateBill(0.0);;
-	   billingBlockTariff.setAccumulateUsage(0.0);;
-	   billingBlockTariff.setActiveEnergy(0.0);;
-	   billingBlockTariff.setActiveEnergyImport(0.0);;
-	   billingBlockTariff.setActiveEnergyExport(0.0);;
-	   billingBlockTariff.setUsage(0.0);;
-	   billingBlockTariff.setBill(0.0);;
+	   billingBlockTariff.setAccumulateBill(0.0);
+	   billingBlockTariff.setAccumulateUsage(0.0);
+	   billingBlockTariff.setActiveEnergy(0.0);
+	   billingBlockTariff.setActiveEnergyImport(0.0);
+	   billingBlockTariff.setActiveEnergyExport(0.0);
+	   billingBlockTariff.setUsage(0.0);
+	   billingBlockTariff.setBill(0.0);
 	   billingBlockTariff.setBalance(contract.getCurrentCredit() != null ? contract.getCurrentCredit() : 0);
 	   billingBlockTariff.setYyyymmdd(contract.getContractDate() != null ? contract.getContractDate().substring(0, 8) : contract.getMeter().getInstallDate().substring(0, 8));
 	   billingBlockTariff.setHhmmss(contract.getContractDate() != null ? contract.getContractDate().substring(8, 14) : contract.getMeter().getInstallDate().substring(8, 14));
 	   return billingBlockTariff;
    }
    
-   private BillingBlockTariff makeNewtMonthBillingBlockTariff(BillingBlockTariff lastIndex, String yyyymmdd) {
+   private BillingBlockTariff makeNewMonthBillingBlockTariff(BillingBlockTariff lastIndex, String yyyymmdd) {
 	   BillingBlockTariff billingBlockTariff = new BillingBlockTariff();
-	   billingBlockTariff.setAccumulateBill(0.0);;
-	   billingBlockTariff.setAccumulateUsage(0.0);;
-	   billingBlockTariff.setActiveEnergy(lastIndex.getActiveEnergy());;
-	   billingBlockTariff.setActiveEnergyImport(lastIndex.getActiveEnergyImport());;
-	   billingBlockTariff.setUsage(0.0);;
-	   billingBlockTariff.setBill(0.0);;
-	   billingBlockTariff.setBalance(lastIndex.getBalance());;;
+	   billingBlockTariff.setAccumulateBill(0.0);
+	   billingBlockTariff.setAccumulateUsage(0.0);
+	   billingBlockTariff.setActiveEnergy(lastIndex.getActiveEnergy());
+	   billingBlockTariff.setActiveEnergyImport(lastIndex.getActiveEnergyImport());
+	   billingBlockTariff.setUsage(0.0);
+	   billingBlockTariff.setBill(0.0);
+	   billingBlockTariff.setBalance(lastIndex.getBalance());
 	   billingBlockTariff.setYyyymmdd(yyyymmdd);
 	   return billingBlockTariff;
 	}
