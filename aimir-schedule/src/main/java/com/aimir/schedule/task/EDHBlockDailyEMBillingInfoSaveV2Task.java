@@ -42,6 +42,7 @@ import com.aimir.dao.system.ContractDao;
 import com.aimir.dao.system.PrepaymentLogDao;
 import com.aimir.dao.system.TariffEMDao;
 import com.aimir.dao.system.TariffTypeDao;
+import com.aimir.fep.logger.snowflake.SnowflakeGeneration;
 import com.aimir.fep.util.DataUtil;
 import com.aimir.model.device.Meter;
 import com.aimir.model.mvm.BillingBlockTariff;
@@ -150,7 +151,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
             DataUtil.setApplicationContext(ctx);
             
             log.info("########### START EDHBlockDailyEMBillingInfoSaveV2Task ###############");
-            
+            SnowflakeGeneration.getInstance();
             EDHBlockDailyEMBillingInfoSaveV2Task task = ctx.getBean(EDHBlockDailyEMBillingInfoSaveV2Task.class);
             task.execute(null);
 			
@@ -194,6 +195,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 	    		Runnable runnable = new Runnable() {
 	    			@Override
 	                public void run() {
+	    				SnowflakeGeneration.getId();
 	    				log.info("Contract[" + contract.getContractNumber() + "] Meter[" + contract.getMeter().getMdsId() + "]");
 		                try {
 							saveEmBillingDailyWithTariffEM(Integer.toString(contract.getId()));
@@ -282,7 +284,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 			log.error("saveEmBillingDaily Exception ==> Contract number = " + contractId, e);
 			if(txStatus != null) txManager.rollback(txStatus);
 		}
-        
+    	SnowflakeGeneration.deleteId();
     }
     
 	private LinkedList<BillingBlockTariff> gatherBillingBlock(LinkedList<BillingBlockTariff> sequenceBillings, long diffDays, List<TariffEM> tariffEMList, Contract contract, Meter meter, DayEM lastDayEM) throws ParseException{
