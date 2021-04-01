@@ -183,8 +183,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     	TransactionStatus txStatus = txManager.getTransaction(null);
 
     	// Electricity 계약 목록 조회
-    	List<Contract> emContractList = new ArrayList<Contract>();
-    	emContractList = contractDao.getContract(Code.PREPAYMENT, SERVICE_TYPE_EM);
+    	List<Contract> emContractList = contractDao.getContract(Code.PREPAYMENT, SERVICE_TYPE_EM);
     	
     	int threadPoolSize = MAX_THREAD_WORKER < emContractList.size() ? emContractList.size() : MAX_THREAD_WORKER;
     	ExecutorService executorService = Executors.newFixedThreadPool(threadPoolSize);
@@ -201,7 +200,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 		                try {
 							saveEmBillingDailyWithTariffEMCumulationCost(contract);
 						} catch (Exception e) {
-							log.info("runnable Exception : Contract[" + contract.getContractNumber() + "] Meter[" + contract.getMeter().getMdsId() + "]");
+							log.info("Thread runnable Exception : Contract[" + contract.getContractNumber() + "] Meter[" + contract.getMeter().getMdsId() + "]");
 						}
 	    			}
 	    		};
@@ -240,7 +239,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
             	// 마지막 누적 요금이 저장된 billingDayEM이 없을 경우 한번도 선불스케줄을 돌리지 않은것으로 간주
             	lastBilling = makeNewBillingBlockTariff(contract);
             }
-            log.info("1. Contract[" + contract.getContractNumber() + "] "
+            log.info("Contract[" + contract.getContractNumber() + "] "
         			+ " lastAccumulateBill[" + convertBigDecimal(lastBilling.getAccumulateBill()) + "] "
         			+ " lastAccumulateUsage[" + convertBigDecimal(lastBilling.getAccumulateUsage()) + "] "
         			+ " lastAccumulateDate[" + lastBilling.getYyyymmdd().toString() + "] "
@@ -273,7 +272,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         		BigDecimal currentCredit = convertBigDecimal(contract.getCurrentCredit());
         		for (int i = 1; i < sequenceBillings.size(); i++) {
         			BigDecimal bill = convertBigDecimal(sequenceBillings.get(i).getBill());
-        			saveBillingBlockTariff(contract, meter, sequenceBillings.get(i));
+        			saveBillingBlockTariff(contract, meter, sequenceBillings.get(i));		// BillingBlockTariff 저장
         			contract.setCurrentCredit(currentCredit.subtract(bill).doubleValue());
         			log.info("[Update CurrentCredit Contract:"+ contract.getContractNumber() + " ] MeterId[" + meter.getMdsId() + "] yyyymmdd[" + lastDayEM.getYyyymmdd() + "] "
         					+ "==> BlockBill[" + sequenceBillings.get(i).getBill() + "] lastAccumulateBill[" + sequenceBillings.get(i-1).getBill()+ "]");
@@ -361,7 +360,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     	BillingBlockTariff bill = new BillingBlockTariff();
     	bill.setYyyymmdd(date);
     	bill.setHhmmss("000000");
-    	bill.setUsage(usage.doubleValue());
+    	bill.setUsage(usage.doubleValue());																		// 
     	bill.setActiveEnergy(convertBigDecimal(lastIndex.getActiveEnergy()).add(usage).doubleValue());			// Previous ACTIVEENERGY + USAGE
     	bill.setActiveEnergyImport(convertBigDecimal(lastIndex.getActiveEnergy()).add(usage).doubleValue());	// Previous ACTIVEENERGY + USAGE
     	bill.setAccumulateUsage(convertBigDecimal(lastIndex.getAccumulateUsage()).add(usage).doubleValue());	// Previous ACCUMULATEUSAGE + USAGE
@@ -379,7 +378,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     
     public BigDecimal blockBill(String mdsId, String tariffName, List<TariffEM> tariffEMList, BigDecimal totalUsage) {
     	BigDecimal returnBill = new BigDecimal(0);
-    	// 매월 기본요금 부과
+    	// 매월 기본요금 부과 - 월정산으로 대체
     	BigDecimal serviceCharge = convertBigDecimal(tariffEMList.get(0).getServiceCharge());
     	
     	Collections.sort(tariffEMList, new Comparator<TariffEM>() {
@@ -440,7 +439,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 //        BigDecimal frais = returnBill.multiply(new BigDecimal("0.01"));		//Fraise Special은 billing의 1%
         
 //        log.debug("4. BlockBill1 Meter[" + mdsId + "] Usage[" + totalUsage + "] Bill[" + returnBill + "] TCA[" + tca + "] Frais[" + frais + "] Total Bill[" + returnBill.add(tca).add(frais) + "]");
-        log.debug("4. BlockBill Meter[" + mdsId + "] ACCUMULATEUSAGE[" + totalUsage + "] Bill[" + returnBill + "] Total Bill[" + returnBill + "]");
+        log.debug("BlockBill Meter[" + mdsId + "] ACCUMULATEUSAGE[" + totalUsage + "] Bill[" + returnBill + "]");
         
 //        return returnBill.add(tca).add(frais);
         return returnBill.setScale(2, BigDecimal.ROUND_HALF_UP);	//소수점 2자리 까지
@@ -476,7 +475,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 	//        billingBlockTariffDao.saveOrUpdate(bill);
 	        billingBlockTariffDao.add(bill);
         
-	        log.info("6. [SaveBillingBlockTariff] MeterId[" + bill.getMDevId() + "] BillDay[" + bill.getYyyymmdd() +
+	        log.info("[SaveBillingBlockTariff] MeterId[" + bill.getMDevId() + "] BillDay[" + bill.getYyyymmdd() +
                 "] BillTime[" + bill.getHhmmss() + "] AccumulateUsage[" + bill.getAccumulateUsage() +
                 "] AccumulateBill[" + bill.getAccumulateBill() + "] CurrentBill[" + bill.getBill() + "]");
     	}catch (Exception e) {

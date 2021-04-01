@@ -40,6 +40,7 @@ public class Code extends BaseObject implements JSONString{
 	
 	//공급상태	
 	public final static String STATUS = "2.1";
+	public final static String Normal = "2.1.0";
 	//지불타입
 	public final static String PAYMENT = "2.2";
 	//지불상태
