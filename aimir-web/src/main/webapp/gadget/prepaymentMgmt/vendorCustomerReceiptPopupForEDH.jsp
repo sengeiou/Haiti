@@ -99,6 +99,14 @@
                                 ${customerNumber}
                             </td>
                         </tr>
+						<tr>
+							<td>
+								<fmt:message key='aimir.contractNumber'/>
+							</td>
+							<td>
+								${contractNumber}
+							</td>
+						</tr>
                         <tr>
                             <td>
                                 <fmt:message key='aimir.meterid'/>
@@ -107,14 +115,14 @@
                                 ${meter}
                             </td>
                         </tr>
-<!--                        <tr>
-                            <td>
-                                <fmt:message key='aimir.code.g'/>
-                            </td>
-                            <td>
-                                ${gCode}
-                            </td>
-                        </tr>   -->
+						<tr>
+							<td>
+								<fmt:message key='aimir.shipment.gs1'/>
+							</td>
+							<td>
+								${gs1}
+							</td>
+						</tr>
                         <tr>
                             <td>
                                 <fmt:message key='aimir.residental.activity'/>
@@ -161,6 +169,14 @@
                             </td>
                             <td>
                                 ${amount}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <fmt:message key='aimir.prepayment.vat'/>
+                            </td>
+                            <td>
+                                ${vat}
                             </td>
                         </tr>
                         <tr>

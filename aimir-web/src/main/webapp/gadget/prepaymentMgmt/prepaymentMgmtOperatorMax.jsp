@@ -4311,8 +4311,8 @@
 	       	</div>
 	       	
 	       	<div id="emergencyButtonDiv">
-	       		<a href="#" class="btn_blue" onClick="cmdSTSHandler.getEmergencyCredit();"><span><fmt:message key='aimir.getEmergency'/></span></a>
-	       		<a href="#" class="btn_blue" onClick="setEmergencyCredit();"><span><fmt:message key='aimir.setEmergency'/></span></a>
+	       		<a href="#" class="btn_blue" onClick="cmdSTSHandler.getEmergencyCredit();"><span>Get Emergency</span></a>
+	       		<a href="#" class="btn_blue" onClick="setEmergencyCredit();"><span>Set Emergency</span></a>
 	       	</div>
 	    	
 <!-- 	    	<div id="alertBalanceButtonDiv">
