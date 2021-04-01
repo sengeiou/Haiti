@@ -90,8 +90,8 @@ public class EV_200_1_0_Action implements EV_Action
             String mobileMode = event.getEventAttrValue("sysMobileMode");
             String sysEtherType = event.getEventAttrValue("sysEtherType");
             
-            String sysHwVersion = "2.0";
-            String sysSwVersion = "3.1";
+            String defaultSysHwVersion = "2.0";
+            String defaultSysSwVersion = "3.1";
             String sysSwRevision = FMPProperty.getProperty("mcu.revision.install");
             
             log.debug("sysEtherType[" + sysEtherType + "]");
@@ -147,11 +147,9 @@ public class EV_200_1_0_Action implements EV_Action
             mcu.setSysPhoneNumber(sysPhoneNumber);
             mcu.setSysLocalPort(new Integer(listenPort));
             mcu.setProtocolType(CommonConstants.getProtocolByName(protocolType+""));
-            mcu.setSysHwVersion(sysHwVersion);
-            mcu.setSysSwVersion(sysSwVersion);
+            mcu.setSysHwVersion(defaultSysHwVersion);
+            mcu.setSysSwVersion(defaultSysSwVersion);
             mcu.setSysSwRevision(sysSwRevision);
-            
-            
             
             // if not mcu, it's is created and installed.
             MCU existMcu = mcuDao.get(mcu.getSysID());        
@@ -232,8 +230,13 @@ public class EV_200_1_0_Action implements EV_Action
                 existMcu.setSysLocalPort(mcu.getSysLocalPort());
                 existMcu.setSysPhoneNumber(mcu.getSysPhoneNumber());
                 existMcu.setProtocolType(CommonConstants.getProtocolByName(protocolType+""));
-                existMcu.setSysHwVersion(sysHwVersion);
-                existMcu.setSysSwVersion(sysSwVersion);
+                
+                if(existMcu.getSysHwVersion() == null || existMcu.getSysHwVersion().isEmpty())
+                	existMcu.setSysHwVersion(defaultSysHwVersion);
+                
+                if(existMcu.getSysSwVersion() == null || existMcu.getSysSwVersion().isEmpty())                	
+                	existMcu.setSysSwVersion(defaultSysSwVersion);
+                
                 // existMcu.setSysSwRevision(sysSwRevision);
                 existMcu.setLastCommDate(TimeUtil.getCurrentTime());
                 
