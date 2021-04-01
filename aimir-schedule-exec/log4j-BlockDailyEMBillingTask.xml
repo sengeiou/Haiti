@@ -46,6 +46,10 @@
     <!-- root 로거 기본 설정 -->
     <root>
         <level value="INFO"/>
+<<<<<<< HEAD
 		<appender-ref ref="fephout"/>
+=======
+<appender-ref ref="fephout"/>
+>>>>>>> branch 'release/3.4.0.a' of https://git-n.nuritelecom.com/scm/aimirpf/haiti-aimir-3.4.git
     </root>
 </log4j:configuration>
