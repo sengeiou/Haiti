@@ -357,7 +357,7 @@ function updateFChart() {
 			+ "labelStep='" + labelStep + "' "
 // 			+ "decimals='3' "
 			+ "forceDecimals='1' "
-			+ "toolTipSepChar='{br}' "
+			+ "toolTipSepChar=' / ' "
 			+ fChartStyle_Common
 			+ fChartStyle_Font; 
 		if (detailChartType == "column") {

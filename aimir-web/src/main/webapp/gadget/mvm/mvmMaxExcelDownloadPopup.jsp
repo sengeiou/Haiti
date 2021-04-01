@@ -129,9 +129,9 @@
             fmtMessage[1] = "<fmt:message key="aimir.contractNumber"/>";
             fmtMessage[2] = "<fmt:message key="aimir.customername"/>";
             fmtMessage[3] = "<fmt:message key="aimir.meteringtime"/>";
-            fmtMessage[4] = "<fmt:message key="aimir.usage"/>";
+            fmtMessage[4] = "<fmt:message key="aimir.accu.usage"/>";
             fmtMessage[5] = "<fmt:message key="aimir.previous"/>";
-            fmtMessage[6] = "<fmt:message key="aimir.meterid2"/>";
+            fmtMessage[6] = "<fmt:message key="aimir.meterid"/>";
             fmtMessage[7] = "<fmt:message key="aimir.modemid"/>";
             fmtMessage[8] = "<fmt:message key="aimir.report.fileDownloadDir"/>";        // File Path
             fmtMessage[9] = "<fmt:message key="aimir.cumm.importActiveEnergy"/>";
