@@ -34,6 +34,7 @@ import com.aimir.util.TimeUtil;
 @Controller
 public class firmwareController {
     protected static Log log = LogFactory.getLog(firmwareController.class);
+    public static Properties prop = null;
     
     @RequestMapping(value = "/list/firmwareListView")
     public ModelAndView SLAReportList() {
@@ -62,7 +63,12 @@ public class firmwareController {
     }
     
     private String getSLAExcelSavePath() {
-    	String path = "/home/aimir/aimiramm.dev/firmware-file/dcu/NURITelecom";
+    	try {
+			prop.load(getClass().getClassLoader().getResourceAsStream("jdbc.properties"));
+		} catch (IOException e) {
+			log.error("jdbc.properties path reading failed");
+		}
+    	String path = prop.getProperty("firmware.path", "/home/aimir/aimiramm/firmware-file/fw/dcu/NURITelecom");
     	return path;
     }
     
@@ -126,11 +132,18 @@ public class firmwareController {
 	 @RequestMapping(value = "/requestupload")
 	    public String requestupload2(MultipartHttpServletRequest mtfRequest) {
 		 	String referer = mtfRequest.getHeader("Referer");
+		 	
+		 	try {
+				prop.load(getClass().getClassLoader().getResourceAsStream("jdbc.properties"));
+			} catch (IOException e) {
+				log.error("jdbc.properties path reading failed");
+			}
+		 	
 	        List<MultipartFile> fileList = mtfRequest.getFiles("file");
 	        String src = mtfRequest.getParameter("src");
 	        System.out.println("src value : " + src);
 
-	        String path = "/home/aimir/aimiramm.dev/firmware-file/dcu/NURITelecom";
+	        String path = prop.getProperty("firmware.path", "/home/aimir/aimiramm/firmware-file/fw/dcu/NURITelecom");
 
 	        for (MultipartFile mf : fileList) {
 	            String originFileName = mf.getOriginalFilename(); // 원본 파일 명
