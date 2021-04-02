@@ -115,6 +115,13 @@ public class MonthlyBillingLog extends BaseObject {
     @Column(name="DESCR")
     private String descr;
 	
+	@ColumnInfo(descr = "해당 월에 대한 미터 채널 1의 검침걊")
+	@Column(name="ACTIVEENERGYIMPORT")
+	private double activeEnergyImport;
+	
+	@ColumnInfo(descr = "해당 월에 대한 미터 채널 2의 검침걊")
+	@Column(name="ACTIVEENERGYEXPORT")
+	private double activeEnergyExport;
 	
     public MonthlyBillingLog() {
         id = new MonthlyBillingLogPk();
@@ -320,6 +327,22 @@ public class MonthlyBillingLog extends BaseObject {
 		this.descr = descr;
 	}
 
+	public double getActiveEnergyImport() {
+		return activeEnergyImport;
+	}
+
+	public void setActiveEnergyImport(double activeEnergyImport) {
+		this.activeEnergyImport = activeEnergyImport;
+	}
+
+	public double getActiveEnergyExport() {
+		return activeEnergyExport;
+	}
+
+	public void setActiveEnergyExport(double activeEnergyExport) {
+		this.activeEnergyExport = activeEnergyExport;
+	}
+
 	@Override
 	public String toString() {
 		return "MonthlyBillingLog " + toJSONString();
@@ -353,6 +376,8 @@ public class MonthlyBillingLog extends BaseObject {
                 + "', subsidy5:'" + this.subsidy5
                 + "', tariffType:'" + this.tariffType
                 + "', descr:'" + this.descr
+                + "', activeEnergyImport:'" + this.activeEnergyImport
+                + "', activeEnergyExport:'" + this.activeEnergyExport                
                 + "'}");
 
 		return str.toString();

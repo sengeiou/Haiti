@@ -28,6 +28,7 @@ import com.aimir.dao.system.CodeDao;
 import com.aimir.dao.system.ContractDao;
 import com.aimir.dao.system.FixedVariableDao;
 import com.aimir.dao.system.MonthlyBillingLogDao;
+import com.aimir.dao.system.TariffTypeDao;
 import com.aimir.fep.logger.snowflake.SnowflakeGeneration;
 import com.aimir.fep.util.DataUtil;
 import com.aimir.fep.util.FMPProperty;
@@ -35,6 +36,7 @@ import com.aimir.model.device.Meter;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.FixedVariable;
 import com.aimir.model.system.MonthlyBillingLog;
+import com.aimir.model.system.TariffType;
 import com.aimir.schedule.task.EDHMonthlyBillingTask.OPERATION;
 import com.aimir.util.DateTimeUtil;
 
@@ -156,7 +158,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 	private ContractDao contractDao;
 	private MonthlyBillingLogDao monthlyBillingLogDao;
 	private FixedVariableDao fixedVariableDao;
-	
+	private TariffTypeDao tariffTypeDao;
 	private Contract contract;
 	private Meter meter;
 	
@@ -169,6 +171,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 		contractDao = DataUtil.getBean(ContractDao.class);
 		monthlyBillingLogDao = DataUtil.getBean(MonthlyBillingLogDao.class);
 		fixedVariableDao = DataUtil.getBean(FixedVariableDao.class);
+		tariffTypeDao = DataUtil.getBean(TariffTypeDao.class);
 		
 		this.contractId = contractId;
 		SnowflakeGeneration.getInstance();
@@ -339,11 +342,18 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 	private MonthlyBillingLog setMonthlyBillingLog(String yyyymm, BigDecimal sc) {
 		MonthlyBillingLog m = new MonthlyBillingLog();
 		
+		TariffType tariffType = null;
+		if(contract.getTariffIndexId() != null) {
+			tariffType = tariffTypeDao.get(contract.getTariffIndexId());
+			m.setTariffType(tariffType.getName());
+		}
+		
 		m.setContractId(contract.getId());
 		m.setYyyymm(yyyymm);
 		m.setMdsId(meter.getMdsId());
 		m.setServiceCharge(sc.doubleValue());
 		m.setWriteDate(DateTimeUtil.getDateString(new Date()));
+		m.setTariffType(yyyymm);
 		
 		return m;
 	}

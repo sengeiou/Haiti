@@ -62,7 +62,7 @@ public class MonthlyBillingLogDaoImpl extends AbstractHibernateGenericDao<Monthl
 	}
 
 	@Override
-	public int updateMonthlyUsageInfo(String mdevId, String yyyymmdd, double monthlyConsumption, double monthlyUsageBill) {
+	public int updateMonthlyUsageInfo(String mdevId, String yyyymmdd, double monthlyConsumption, double monthlyUsageBill, double activeEnergyImport, double activeEnergyExport) {
 		if(mdevId == null || yyyymmdd == null)
 			return -1;
 		
@@ -80,13 +80,17 @@ public class MonthlyBillingLogDaoImpl extends AbstractHibernateGenericDao<Monthl
 		sbQuery.append("\n 		UPDATE SET ");
 		sbQuery.append("\n 			mb.USED_CONSUMPTION = :monthlyConsumption, ");
 		sbQuery.append("\n 			mb.PAID_COST = :monthlyBill, ");
-		sbQuery.append("\n 			mb.MONTHLY_COST = t.SERVICE_CHARGE + :monthlyBill ");
+		sbQuery.append("\n 			mb.MONTHLY_COST = t.SERVICE_CHARGE + :monthlyBill, ");		
+		sbQuery.append("\n 			mb.ACTIVEENERGYIMPORT = :activeEnergyImport, ");		
+		sbQuery.append("\n 			mb.ACTIVEENERGYEXPORT = :activeEnergyExport ");
 		
 		Query query = getSession().createNativeQuery(sbQuery.toString());
 		query.setParameter("yyyymm", yyyymm);
 		query.setParameter("mdevId", mdevId);
 		query.setParameter("monthlyConsumption", monthlyConsumption);
 		query.setParameter("monthlyBill", monthlyUsageBill);
+		query.setParameter("activeEnergyImport", activeEnergyImport);
+		query.setParameter("activeEnergyExport", activeEnergyExport);
 		
 		return query.executeUpdate();
 	}
