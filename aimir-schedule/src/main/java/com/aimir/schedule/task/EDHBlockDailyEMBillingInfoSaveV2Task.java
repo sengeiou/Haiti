@@ -208,8 +208,6 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 	    		
 	    		//스레드풀에게 작업 처리 요청
 	            executorService.execute(runnable);
-	            
-//	            saveEmBillingDailyWithTariffEM(contract.getId());
                 }
 	    	
     		//스레드풀 종료
@@ -519,7 +517,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
             if(ret.size() != 0) {
                 lastDayEM = ret.get(0);
                 for (int i = 0; i < ret.size(); i++) {
-                    if (lastDayEM.getYyyymmdd().compareTo(ret.get(i).getYyyymmdd()) < 0) {
+                    if (lastDayEM.getYyyymmdd().compareTo(ret.get(i).getYyyymmdd()) <= 0) {
                     	lastDayEM = ret.get(i);
                     }
                 }
@@ -545,7 +543,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
             if(ret.size() != 0) {
             	lastBillingBlockTariff = ret.get(0);
                 for (int i = 0; i < ret.size(); i++) {
-                    if (lastBillingBlockTariff.getYyyymmdd().compareTo(ret.get(i).getYyyymmdd()) < 0) {
+                    if (lastBillingBlockTariff.getYyyymmdd().compareTo(ret.get(i).getYyyymmdd()) <= 0) {
                     	lastBillingBlockTariff = ret.get(i);
                     }
                 }
