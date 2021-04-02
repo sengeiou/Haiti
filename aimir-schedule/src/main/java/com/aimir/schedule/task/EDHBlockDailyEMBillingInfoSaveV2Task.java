@@ -190,17 +190,17 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     	try {
 	    	for (int i = 0; i < emContractList.size(); i++) {
 	    		Contract contract = emContractList.get(i);
+				log.info("contractNumber[" + contract.getContractNumber() + "] meterId[" + contract.getMeterId() + "]");
                 if (contract.getTariffIndexId() == null || contract.getCustomerId() == null || contract.getMeterId() == null) continue;
                 
 	    		Runnable runnable = new Runnable() {
 	    			@Override
 	                public void run() {
 	    				SnowflakeGeneration.getId();
-	    				log.info("Contract[" + contract.getContractNumber() + "] Meter[" + contract.getMeter().getMdsId() + "]");
 		                try {
 							saveEmBillingDailyWithTariffEM(contract.getId());
 						} catch (Exception e) {
-							log.info("Thread runnable Exception : Contract[" + contract.getContractNumber() + "] Meter[" + contract.getMeter().getMdsId() + "]");
+							log.info("Thread runnable Exception : contractNumber[" + contract.getContractNumber() + "] meterId[" + contract.getMeterId() + "]");
 						}
 		                SnowflakeGeneration.deleteId();
 	    			}
@@ -208,6 +208,8 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 	    		
 	    		//스레드풀에게 작업 처리 요청
 	            executorService.execute(runnable);
+	            
+//	            saveEmBillingDailyWithTariffEM(contract.getId());
                 }
 	    	
     		//스레드풀 종료
@@ -229,11 +231,12 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     		txStatus = txManager.getTransaction(null);
     		
     		Contract contract =  contractDao.findByCondition("id", contractId);
-    		String mdsId = meterDao.get(contract.getMeterId()).getMdsId();
+    		Meter meter = meterDao.findByCondition("id", contract.getMeterId());
+//    		String mdsId = meterDao.get(contract.getMeterId()).getMdsId();
             DayEM lastDayEM = null;
 
             //마지막 누적요금이 저장된 데이터를 가지고 온다.
-            BillingBlockTariff lastBilling = getLastAccumulateBill(mdsId);
+            BillingBlockTariff lastBilling = getLastAccumulateBill(meter.getMdsId());
             
             if(lastBilling == null) {
             	// 마지막 누적 요금이 저장된 billingDayEM이 없을 경우 한번도 선불스케줄을 돌리지 않은것으로 간주
@@ -243,9 +246,9 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         			+ " lastAccumulateBill[" + convertBigDecimal(lastBilling.getAccumulateBill()) + "] "
         			+ " lastAccumulateUsage[" + convertBigDecimal(lastBilling.getAccumulateUsage()) + "] "
         			+ " lastAccumulateDate[" + lastBilling.getYyyymmdd().toString() + "] "
-        			+ " mdsId[" + mdsId + "] ");
+        			+ " mdsId[" + meter.getMdsId() + "] ");
             
-            lastDayEM = getDayEM(mdsId, lastBilling.getYyyymmdd());	//최근 DAY_EM 조회
+            lastDayEM = getDayEM(meter.getMdsId(), lastBilling.getYyyymmdd());	//최근 DAY_EM 조회
             
             //데이터 검증 하여 BILLING_BLOCK_TARIFF_WRONG 이력 남기고 리턴하여 for문으로 다시 돌아감
             if(validateBillingValues(contract, lastDayEM, lastBilling)) {
@@ -256,13 +259,19 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         	// 마지막 시간이 현재 시간보다 작으면 월 기준으로 선불 계산한다.
         	// compareTo - lastAccumulateDate가 lastDayEM 날짜 보다 작으면 음수 반환, 크면 양수 반환, 같으면 0 리턴
         	if (lastBilling.getYyyymmdd().compareTo(lastDayEM.getYyyymmdd()) < 0) {
-        		Meter meter = meterDao.findByCondition("id", contract.getMeterId());
+//        		Meter meter = contract.getMeter();
+//        		Meter meter = meterDao.findByCondition("id", contract.getMeterId());
         		
         		// DAY_EM 마지막 날짜와 lastAccumulateDate간의 시간차이를 비교하여 일수로 반환
         		long diffDays = Long.parseLong(calculateDiffDays(lastDayEM.getYyyymmdd(), lastBilling.getYyyymmdd()));
         		log.info("#### diffDays : "+ diffDays+ " ####");
+        		
         		//해당 TariffEM 정보를 가져온다.
         		List<TariffEM> tariffEMList = getTariffEMList(contract, lastBilling.getYyyymmdd());
+        		if(tariffEMList.size() < 0) {
+        			addWrongBillingBlockTariff(contract, contract.getMeter(), lastDayEM, lastBilling, BILLING_BLOCK_ERROR_CODE.INVT);
+        		}
+        		
         		LinkedList<BillingBlockTariff> sequenceBillings = new LinkedList<BillingBlockTariff>();
         		sequenceBillings.add(lastBilling);	// 마지막 BillingBlockTariff 추가
         		

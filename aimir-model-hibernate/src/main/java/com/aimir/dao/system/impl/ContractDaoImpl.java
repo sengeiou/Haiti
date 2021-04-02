@@ -2640,14 +2640,14 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 
         sb.append(" FROM     Contract c ");
         sb.append(" WHERE    (c.creditType.code = :perpay or c.creditType.code = :emergencyCredit)");
-        sb.append(" and c.status.code = :status ");
+        sb.append(" and c.status.code != :status ");
         sb.append(" and c.meter is not null and c.serviceTypeCode.name = :serviceType ");
         sb.append(" and c.customer is not null ");
 
         Query query = getSession().createQuery(sb.toString());
         query.setString("perpay", payType);
         query.setString("emergencyCredit", Code.EMERGENCY_CREDIT);
-        query.setString("status", Code.Normal);
+        query.setString("status", Code.TERMINATION);
         query.setString("serviceType", serviceType);
 
         return query.list();
