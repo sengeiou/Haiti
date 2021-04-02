@@ -479,6 +479,14 @@ class HaitiRelayoffTaskSubClz implements Runnable {
 		Contract contract = meter.getContract();
 		Code creditType = contract.getCreditType();
 		
+		if(creditType == null) {
+			Code prepayCreditType = codeDao.getCodeIdByCodeObject(Code.PREPAYMENT);
+			
+			contract.setCreditType(prepayCreditType);
+			updateCreditType(contract, Code.PREPAYMENT);
+			return false;
+		}
+		
 		boolean emergencyAutoChange = StringUtil.nullToBoolean(contract.getEmergencyCreditAutoChange(), false);
         String emergencyStringTime = contract.getEmergencyCreditStartTime();
         Integer emergencyCreditMaxDuration = IntegerUtil.nullToZero(contract.getEmergencyCreditMaxDuration());
@@ -541,9 +549,9 @@ class HaitiRelayoffTaskSubClz implements Runnable {
 		return retVal;
 	}
 	
-	private void updateCreditType(Contract contract, String emergencyCode) {
+	private void updateCreditType(Contract contract, String nextPayTypecode) {
 		Code creditType = contract.getCreditType();
-		Code eType = codeDao.getCodeIdByCodeObject(emergencyCode);
+		Code eType = codeDao.getCodeIdByCodeObject(nextPayTypecode);
 		
 		try {
 			if(eType != null) {

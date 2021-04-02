@@ -198,10 +198,11 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 	    				SnowflakeGeneration.getId();
 	    				log.info("Contract[" + contract.getContractNumber() + "] Meter[" + contract.getMeter().getMdsId() + "]");
 		                try {
-							saveEmBillingDailyWithTariffEM(Integer.toString(contract.getId()));
+							saveEmBillingDailyWithTariffEM(contract.getId());
 						} catch (Exception e) {
 							log.info("Thread runnable Exception : Contract[" + contract.getContractNumber() + "] Meter[" + contract.getMeter().getMdsId() + "]");
 						}
+		                SnowflakeGeneration.deleteId();
 	    			}
 	    		};
 	    		
@@ -222,12 +223,12 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         }
     }
 
-	private void saveEmBillingDailyWithTariffEM(String contractId) throws Exception {
+	private void saveEmBillingDailyWithTariffEM(Integer contractId) throws Exception {
     	TransactionStatus txStatus = null;
     	try {
     		txStatus = txManager.getTransaction(null);
     		
-    		Contract contract =  contractDao.findByCondition("contractNumber", contractId);
+    		Contract contract =  contractDao.findByCondition("id", contractId);
     		String mdsId = meterDao.get(contract.getMeterId()).getMdsId();
             DayEM lastDayEM = null;
 
@@ -283,8 +284,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 		} catch (Exception e) {
 			log.error("saveEmBillingDaily Exception ==> Contract number = " + contractId, e);
 			if(txStatus != null) txManager.rollback(txStatus);
-		}
-    	SnowflakeGeneration.deleteId();
+		}    	
     }
     
 	private LinkedList<BillingBlockTariff> gatherBillingBlock(LinkedList<BillingBlockTariff> sequenceBillings, long diffDays, List<TariffEM> tariffEMList, Contract contract, Meter meter, DayEM lastDayEM) throws ParseException{
