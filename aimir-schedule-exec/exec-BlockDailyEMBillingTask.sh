@@ -1,5 +1,4 @@
 #!/bin/bash
-# ~/.bashrc
 
 PID=`/bin/ps -eaf | /bin/grep java | /bin/grep BlockDailyEMBillingTask | /bin/awk '{print $2}'`
 for pid in $PID
