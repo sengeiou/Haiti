@@ -59,6 +59,7 @@ public class HaitiRelayoffTask extends ScheduleTask {
 	
 	private final int[] BREAK_REALY_OFF_FREEDAYS = new int[] {1, 7};
 	private final int BREAK_RELAY_OFF_HOUR = 18;
+	private final int BREAK_REALY_ON_HOUR = 9;
 	
 	@Resource(name = "transactionManager")
 	private HibernateTransactionManager txmanager;
@@ -189,7 +190,7 @@ public class HaitiRelayoffTask extends ScheduleTask {
 		String strHH = DateTimeUtil.getDateString(new Date(), "HH");
 		int hh = Integer.parseInt(strHH);
 		
-		if(hh >= BREAK_RELAY_OFF_HOUR) {
+		if(hh >= BREAK_RELAY_OFF_HOUR || hh <= BREAK_REALY_ON_HOUR) {
 			return true;
 		}
 		
