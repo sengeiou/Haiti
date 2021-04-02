@@ -95,7 +95,13 @@ public class I210PlusMDSaver extends AbstractMDSaver {
 			//meter's last_read_date
             log.debug("meter.LastReadDate Update: ["+meter.getLastReadDate()+"] --> ["+parser.getMeteringTime().substring(0,10) + "0000" +"].");
             //meter.setLastReadDate(parser.getMeteringTime().substring(0,14));
-            meter.setLastReadDate(parser.getMeteringTime().substring(0,10) + "0000");
+            meter.setLastReadDate(parser.getMeteringTime().substring(0,10) + "0000");                   
+            if(parser.getLPData() != null && parser.getLPData().length > 0) {
+            	if(parser.getLPData()[0].getCh()[0] != null) {
+            		//I210+일 때는 채널이 1개밖에 없다. 만약 모델이 추가되면 수정해야 한다.
+            		meter.setLastMeteringValue(parser.getLPData()[0].getCh()[0]);	
+            	}
+            }
             
 			meterDao.update(meter);
 		} catch (Exception e) {
