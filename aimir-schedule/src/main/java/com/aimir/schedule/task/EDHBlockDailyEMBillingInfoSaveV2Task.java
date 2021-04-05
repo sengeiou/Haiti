@@ -191,7 +191,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 	    	for (int i = 0; i < emContractList.size(); i++) {
 	    		Contract contract = emContractList.get(i);
 				log.info("contractNumber[" + contract.getContractNumber() + "] meterId[" + contract.getMeterId() + "]");
-                if (contract.getTariffIndexId() == null || contract.getCustomerId() == null || contract.getMeterId() == null) continue;
+                if (contract.getCustomerId() == null || contract.getMeterId() == null) continue;
                 
 	    		Runnable runnable = new Runnable() {
 	    			@Override
@@ -263,9 +263,6 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         		
         		//해당 TariffEM 정보를 가져온다.
         		List<TariffEM> tariffEMList = getTariffEMList(contract, lastBilling.getYyyymmdd());
-        		if(tariffEMList.size() < 0) {
-        			addWrongBillingBlockTariff(contract, contract.getMeter(), lastDayEM, lastBilling, BILLING_BLOCK_ERROR_CODE.INVT);
-        		}
         		
         		LinkedList<BillingBlockTariff> sequenceBillings = new LinkedList<BillingBlockTariff>();
         		sequenceBillings.add(lastBilling);	// 마지막 BillingBlockTariff 추가
@@ -535,7 +532,11 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     	}else if(lastDayEM.getValue() > lastBilling.getActiveEnergy() * METERING_MULTIPLE_NUMBER && lastBilling.getActiveEnergy() > MINIMUM_BILLING_USAGE) {
     		addWrongBillingBlockTariff(contract, contract.getMeter(), lastDayEM, lastBilling, BILLING_BLOCK_ERROR_CODE.AEAE);
     		result = true;
-    	}
+    	// tariffIndexId가 null이면 Wrong 테이블 저장	
+    	}else if(contract.getTariffIndexId() == null) {
+			addWrongBillingBlockTariff(contract, contract.getMeter(), lastDayEM, lastBilling, BILLING_BLOCK_ERROR_CODE.INVT);
+			result = true;
+		}
        	return result;
 	}
     
