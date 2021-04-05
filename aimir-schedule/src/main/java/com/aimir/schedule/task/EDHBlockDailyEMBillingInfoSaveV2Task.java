@@ -405,7 +405,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 	        }else {
 	        	// 구간 SupplySizeMax 값보다 크면 (Max - Min) * ActiveEnergyCharge
 	        	if(tariffEM.getSupplySizeMax() != null && totalUsage.compareTo(convertBigDecimal(tariffEM.getSupplySizeMax())) >= 0) {
-            		returnBill = (convertBigDecimal(tariffEM.getSupplySizeMax()).subtract(convertBigDecimal(tariffEM.getSupplySizeMin()))).multiply(convertBigDecimal(tariffEM.getActiveEnergyCharge())).add(returnBill);
+            		returnBill = convertBigDecimal(tariffEM.getSupplySizeMax()).subtract(convertBigDecimal(tariffEM.getSupplySizeMin())).multiply(convertBigDecimal(tariffEM.getActiveEnergyCharge())).add(returnBill);
             		log.info("Interval Bill : "+returnBill + " supplySize_Min : " + tariffEM.getSupplySizeMin() + " supplySize_Max : " + tariffEM.getSupplySizeMax() + " ActiveEnergyCharge : " + tariffEM.getActiveEnergyCharge());
 	        	}
 	        	// 구간 SupplySizeMax 값보다 작으면 (Usage - Min) * ActiveEnergyCharge
@@ -505,7 +505,6 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
             LinkedHashSet<Condition> condition = new LinkedHashSet<Condition>();
             condition.add(new Condition("id.mdevId", new Object[]{meterId}, null, Restriction.EQ));
             condition.add(new Condition("id.mdevType", new Object[]{DeviceType.Meter}, null, Restriction.EQ));
-//            condition.add(new Condition("id.yyyymmdd", new Object[]{}, null, Restriction.MAX));
             
             List<BillingBlockTariff> ret = billingBlockTariffDao.findByConditions(condition);
             BillingBlockTariff lastBillingBlockTariff = null;
@@ -628,7 +627,6 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 	   Map<String, Object> tariffParam = new HashMap<>();
 	   tariffParam.put("tariffTypeCode", tariffTypeCode);
 	   tariffParam.put("tariffIndex", tariffType);
-//	   tariffParam.put("searchDate", YYYYMMDD.substring(0 ,6)+"31");
 	   List<TariffEM> tariffEMList = tariffEMDao.getApplyedTariff(tariffParam);
 	   
 	   return tariffEMList;
