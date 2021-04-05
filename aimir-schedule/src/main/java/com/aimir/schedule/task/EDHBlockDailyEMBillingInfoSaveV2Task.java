@@ -399,31 +399,22 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
             }
         });
     	
-    	try {
-    		int index = 1;
-    		for (TariffEM tariffEM : tariffEMList) {
-        		if ("Public Organization".equals(tariffName) || "Autonomous Organization".equals(tariffName)) {
-        			returnBill = totalUsage.multiply(convertBigDecimal(tariffEM.getActiveEnergyCharge()));
-    	        }else {
-    	        	// 마지막 구간 SupplySizeMax 값이 null이라 NumberFormatException 발생 방지
-    	        	if(index == tariffEMList.size()){
-                		returnBill = totalUsage.subtract(convertBigDecimal(tariffEM.getSupplySizeMin())).multiply(convertBigDecimal(tariffEM.getActiveEnergyCharge())).add(returnBill);
-                		log.info("Interval Bill : "+returnBill + " supplySize_Min : " + tariffEM.getSupplySizeMin() + " supplySize_Max : " + tariffEM.getSupplySizeMax() + " ActiveEnergyCharge : " + tariffEM.getActiveEnergyCharge());
-                	// 구간 SupplySizeMax 값보다 크면 (Max - Min) * ActiveEnergyCharge
-    	        	}else if(totalUsage.compareTo(convertBigDecimal(tariffEM.getSupplySizeMax())) >= 0) {
-                		returnBill = (convertBigDecimal(tariffEM.getSupplySizeMax()).subtract(convertBigDecimal(tariffEM.getSupplySizeMin()))).multiply(convertBigDecimal(tariffEM.getActiveEnergyCharge())).add(returnBill);
-                		log.info("Interval Bill : "+returnBill + " supplySize_Min : " + tariffEM.getSupplySizeMin() + " supplySize_Max : " + tariffEM.getSupplySizeMax() + " ActiveEnergyCharge : " + tariffEM.getActiveEnergyCharge());
-                	// 구간 SupplySizeMax 값보다 작으면 (Usage - Min) * ActiveEnergyCharge
-    	        	}else {
-                		returnBill = totalUsage.subtract(convertBigDecimal(tariffEM.getSupplySizeMin())).multiply(convertBigDecimal(tariffEM.getActiveEnergyCharge())).add(returnBill);
-                		log.info("Interval Bill : "+returnBill + " supplySize_Min : " + tariffEM.getSupplySizeMin() + " supplySize_Max : " + tariffEM.getSupplySizeMax() + " ActiveEnergyCharge : " + tariffEM.getActiveEnergyCharge());
-                		break;
-                	}
-    	        }
-        		index++;
-    		}
-		} catch (NumberFormatException e) {
-			log.info("tariffEM is over");
+		for (TariffEM tariffEM : tariffEMList) {
+    		if ("Public Organization".equals(tariffName) || "Autonomous Organization".equals(tariffName)) {
+    			returnBill = totalUsage.multiply(convertBigDecimal(tariffEM.getActiveEnergyCharge()));
+	        }else {
+	        	// 구간 SupplySizeMax 값보다 크면 (Max - Min) * ActiveEnergyCharge
+	        	if(tariffEM.getSupplySizeMax() != null && totalUsage.compareTo(convertBigDecimal(tariffEM.getSupplySizeMax())) >= 0) {
+            		returnBill = (convertBigDecimal(tariffEM.getSupplySizeMax()).subtract(convertBigDecimal(tariffEM.getSupplySizeMin()))).multiply(convertBigDecimal(tariffEM.getActiveEnergyCharge())).add(returnBill);
+            		log.info("Interval Bill : "+returnBill + " supplySize_Min : " + tariffEM.getSupplySizeMin() + " supplySize_Max : " + tariffEM.getSupplySizeMax() + " ActiveEnergyCharge : " + tariffEM.getActiveEnergyCharge());
+	        	}
+	        	// 구간 SupplySizeMax 값보다 작으면 (Usage - Min) * ActiveEnergyCharge
+	        	else {
+            		returnBill = totalUsage.subtract(convertBigDecimal(tariffEM.getSupplySizeMin())).multiply(convertBigDecimal(tariffEM.getActiveEnergyCharge())).add(returnBill);
+            		log.info("Interval Bill : "+returnBill + " supplySize_Min : " + tariffEM.getSupplySizeMin() + " supplySize_Max : " + tariffEM.getSupplySizeMax() + " ActiveEnergyCharge : " + tariffEM.getActiveEnergyCharge());
+            		break;	// 사용량이 현재 구간 SupplySizeMax보다 작으면 다음 구간 계산 불필요
+            	}
+	        }
 		}
 
     	log.info("Total BlockBill is Meter[" + mdsId + "] ACCUMULATEUSAGE[" + totalUsage + "] Bill[" + returnBill + "]");
