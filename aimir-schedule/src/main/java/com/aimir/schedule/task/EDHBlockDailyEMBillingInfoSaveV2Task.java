@@ -460,7 +460,11 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         bill.setBill(billingBlockTariff.getBill());
         bill.setAccumulateBill(billingBlockTariff.getAccumulateBill());
 
-        monthlyBillingLogDao.updateMonthlyUsageInfo(meter.getMdsId(), billingBlockTariff.getYyyymmdd(), billingBlockTariff.getAccumulateUsage(), billingBlockTariff.getAccumulateBill(), billingBlockTariff.getActiveEnergyImport(), billingBlockTariff.getActiveEnergyExport());
+        monthlyBillingLogDao.updateMonthlyUsageInfo(bill.getMDevId(), bill.getYyyymmdd(), bill.getAccumulateUsage(), bill.getAccumulateBill(), bill.getActiveEnergyImport(), bill.getActiveEnergyExport());
+        log.info("[SaveMonthlyBillingLog] MeterId[" + bill.getMDevId() + "] BillDay[" + bill.getYyyymmdd() +
+                "] AccumulateUsage[" + bill.getAccumulateUsage() + "] AccumulateBill[" + bill.getAccumulateBill() +
+                "] ActiveEnergyImport[" + bill.getActiveEnergyImport() + "]" + "] ActiveEnergyExport[" + bill.getActiveEnergyExport() + "]");
+        
         billingBlockTariffDao.add(bill);
     
         log.info("[SaveBillingBlockTariff] MeterId[" + bill.getMDevId() + "] BillDay[" + bill.getYyyymmdd() +
