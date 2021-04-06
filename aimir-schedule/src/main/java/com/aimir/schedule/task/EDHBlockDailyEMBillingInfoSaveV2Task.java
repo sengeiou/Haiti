@@ -39,6 +39,7 @@ import com.aimir.dao.mvm.DayEMDao;
 import com.aimir.dao.mvm.LpEMDao;
 import com.aimir.dao.system.CodeDao;
 import com.aimir.dao.system.ContractDao;
+import com.aimir.dao.system.MonthlyBillingLogDao;
 import com.aimir.dao.system.PrepaymentLogDao;
 import com.aimir.dao.system.TariffEMDao;
 import com.aimir.dao.system.TariffTypeDao;
@@ -105,6 +106,9 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 
     @Autowired
     LpEMDao lpEMDao;
+    
+    @Autowired
+    MonthlyBillingLogDao monthlyBillingLogDao;
 
     private boolean isNowRunning = false;
     
@@ -456,7 +460,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         bill.setBill(billingBlockTariff.getBill());
         bill.setAccumulateBill(billingBlockTariff.getAccumulateBill());
 
-//        billingBlockTariffDao.saveOrUpdate(bill);
+        monthlyBillingLogDao.updateMonthlyUsageInfo(meter.getMdsId(), billingBlockTariff.getYyyymmdd(), billingBlockTariff.getAccumulateUsage(), billingBlockTariff.getAccumulateBill(), billingBlockTariff.getActiveEnergyImport(), billingBlockTariff.getActiveEnergyExport());
         billingBlockTariffDao.add(bill);
     
         log.info("[SaveBillingBlockTariff] MeterId[" + bill.getMDevId() + "] BillDay[" + bill.getYyyymmdd() +
