@@ -13,11 +13,12 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aimir.dao.system.CodeDao;
 import com.aimir.model.system.Code;
-import com.aimir.util.ContextUtil;
 
 /**
  * CommonConstants.java Description 
@@ -27,11 +28,18 @@ import com.aimir.util.ContextUtil;
  * 2011. 5. 26.   v1.0       김상연         기기별 카테고리 타입
  *
  */
+@Component
 @Transactional
 public class CommonConstants {
     private static Log log = LogFactory.getLog(CommonConstants.class);
     
-    private static CodeDao codeDao = ContextUtil.getBean(CodeDao.class);
+    private static CodeDao codeDao;
+    //private static CodeDao codeDao = ContextUtil.getBean(CodeDao.class);
+    
+    @Autowired
+    public void setCodeDao(CodeDao _codeDao) {
+        codeDao = _codeDao;
+    }
     
     /**
      * 전기,가스,수도별로 순발열량/원유1톤순발열량 값으로
