@@ -297,6 +297,14 @@ public class Contract extends BaseObject implements JSONString, IAuditable {
 	@Column(name = "CURRENTARREARS", columnDefinition ="float default 0")
 	@ColumnInfo(name="CURRENTARREARS", descr="미납금")
 	private Double currentArrears;
+	
+	@Column(name = "CURRENTARREARS2", columnDefinition ="float default 0")
+	@ColumnInfo(name="CURRENTARREARS2", descr="미납금2")
+	private Double currentArrears2;
+	
+	@Column(name = "TOTALAMOUNTPAID")
+	@ColumnInfo(name="TOTALAMOUNTPAID", descr="고객이 지불한 총 금액")
+	private Double totalAmountPaid;
 
 	/**
 	 * 분할납부시 사용
@@ -763,6 +771,8 @@ public class Contract extends BaseObject implements JSONString, IAuditable {
 	        + "',amountPaid:'" + ((this.amountPaid == null)? "":this.amountPaid)
 	        + "',serviceType2:'" + this.serviceType2
 	        + "',currentArrears:'" + ((this.currentArrears == null)? "":this.currentArrears)
+	        + "',currentArrears2:'" + ((this.currentArrears2 == null)? "":this.currentArrears2)
+	        + "',totalAmountPaid:'" + ((this.totalAmountPaid == null)? "":this.totalAmountPaid)
 	        + "',chargeAvailable:'" + ((this.chargeAvailable == null)? "":this.chargeAvailable)
 	        + "',threshold1:'" + ((this.threshold1 == null)? 0.0:this.threshold1)
 	        + "',threshold2:'" + ((this.threshold2 == null)? 0.0:this.threshold2)
@@ -929,6 +939,18 @@ public class Contract extends BaseObject implements JSONString, IAuditable {
 	}
 	public void setCurrentArrears(Double arrears) {
 		this.currentArrears = arrears;
+	}
+    public Double getCurrentArrears2() {
+		return currentArrears2;
+	}
+	public void setCurrentArrears2(Double arrears2) {
+		this.currentArrears2 = arrears2;
+	}
+    public Double getTotalAmountPaid() {
+		return totalAmountPaid;
+	}
+	public void setTotalAmountPaid(Double totalAmountPaid) {
+		this.totalAmountPaid = totalAmountPaid;
 	}
 	public Double getFirstArrears() {
 		return firstArrears;

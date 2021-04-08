@@ -78,6 +78,9 @@ public class PrepaymentLog extends BaseObject implements JSONString{
 	private Integer keyTypeCodeId;
 	
 	private Double chargedCredit;		//충전한 금액
+	
+	@ColumnInfo(descr="VAT 빠지기 전 고객이 전달한 총 금액")
+	private Double totalAmountPaid;
 
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="operator_id", nullable=true)
@@ -138,6 +141,16 @@ public class PrepaymentLog extends BaseObject implements JSONString{
 	private Double arrears;
 
 	private Double chargedArrears;
+	
+	@ColumnInfo(descr="결제전 미수금2")
+	@Column(name="PRE_ARREARS2")
+	private Double preArrears2;
+	
+	@ColumnInfo(descr="결제후 미수금2")
+	@Column(name="ARREARS2")
+	private Double arrears2;
+
+	private Double chargedArrears2;
 	
 	@ColumnInfo(descr="")
 	@Column(name="INIT_CREDIT", columnDefinition="FLOAT default 0")
@@ -346,6 +359,12 @@ public class PrepaymentLog extends BaseObject implements JSONString{
 	public void setChargedCredit(Double chargedCredit) {
 		this.chargedCredit = chargedCredit;
 	}
+	public Double getTotalAmountPaid() {
+		return totalAmountPaid;
+	}
+	public void setTotalAmountPaid(Double totalAmountPaid) {
+		this.totalAmountPaid = totalAmountPaid;
+	}
 	public String getLastTokenDate() {
 		return lastTokenDate;
 	}
@@ -407,6 +426,18 @@ public class PrepaymentLog extends BaseObject implements JSONString{
 	public void setArrears(Double arrears) {
 		this.arrears = arrears;
 	}
+	public Double getPreArrears2() {
+		return preArrears2;
+	}
+	public void setPreArrears2(Double preArrears2) {
+		this.preArrears2 = preArrears2;
+	}
+	public Double getArrears2() {
+		return arrears2;
+	}
+	public void setArrears2(Double arrears2) {
+		this.arrears = arrears;
+	}
 	public Operator getOperator() {
 		return operator;
 	}
@@ -424,6 +455,12 @@ public class PrepaymentLog extends BaseObject implements JSONString{
 	}
 	public void setChargedArrears(Double chargedArrears) {
 		this.chargedArrears = chargedArrears;
+	}
+	public Double getChargedArrears2() {
+		return chargedArrears2;
+	}
+	public void setChargedArrears2(Double chargedArrears2) {
+		this.chargedArrears2 = chargedArrears2;
 	}
 	public String toString()
 	{
@@ -625,6 +662,7 @@ public class PrepaymentLog extends BaseObject implements JSONString{
 		    + "',keyNum:'" + this.keyNum
 		    + "',keyType:'" + ((this.keyType == null)? "null" : this.keyType.getId())
 		    + "',chargedCredit:'" + this.chargedCredit
+		    + "',totalAmountPaid:'" + this.totalAmountPaid
 		    + "',lastTokenDate:'" + this.lastTokenDate
 		    + "',lastTokenId:'" + this.lastTokenId
 		    + "',emergencyCreditAvailable:'" + this.emergencyCreditAvailable
