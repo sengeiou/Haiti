@@ -58,25 +58,28 @@ public class HaitiSMSTask extends ScheduleTask {
         
         SnowflakeGeneration.getInstance();
         
+        String mdevId = null;
         String smsType = null;
         if(args.length >= 2 ) {
 	        for(int i=0; i < args.length; i +=2 ) {
 	        	String nextArg = args[i];
 	        	
-	        	if (nextArg.startsWith("-smsType")) {
+	        	if (nextArg.startsWith("-mdevId")) {
+	        		mdevId = new String(args[i+1]);
+	        	} else if (nextArg.startsWith("-smsType")) {
 	        		smsType = new String(args[i+1]);
 	            } 
 	        }
 	        
-	        log.info("smsType : " + smsType);
+	        log.info("smsType : " + smsType+", mdevId : " +mdevId);
         }
         
         HaitiSMSTask task = ctx.getBean(HaitiSMSTask.class);
-        task.execute(ctx, smsType);
+        task.execute(ctx, mdevId, smsType);
         System.exit(0);
 	}
 	
-	private void execute(ApplicationContext ctx, String smsType) {
+	private void execute(ApplicationContext ctx, String mdevId, String smsType) {
 		if(isNowRunning){
             log.info("########### EDH SMS Task already running...");
             return;
@@ -84,7 +87,7 @@ public class HaitiSMSTask extends ScheduleTask {
         isNowRunning = true;
         log.info("########### START EDH SMS Task ###############");
         
-        List<Contract> targets = getTargetContract();
+        List<Contract> targets = getTargetContract(mdevId);
         if(targets == null || targets.size() == 0) {
         	log.info("target contract empty!! sms task finish!!!");
         	return;
@@ -115,14 +118,14 @@ public class HaitiSMSTask extends ScheduleTask {
         isNowRunning = false;        
 	}
 	
-	private List<Contract> getTargetContract() {
+	private List<Contract> getTargetContract(String mdevId) {
 		TransactionStatus txstatus = null;
 		List<Contract> targetList = new ArrayList<Contract>();
 		
 		try {
 			txstatus = txmanager.getTransaction(null);
 			
-			targetList = contractDao.getReqSendSMSList();
+			targetList = contractDao.getReqSendSMSList(mdevId);
 			
 			txmanager.commit(txstatus);
 		}catch(Exception e) {

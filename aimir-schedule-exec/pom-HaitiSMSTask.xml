@@ -40,7 +40,9 @@
               <sysproperty key="file.encoding" value="UTF-8"/>
               <sysproperty key="jmx.remote.x.server.connection.timeout" value="20000"/>
               <sysproperty key="jmx.remote.x.client.connection.check.period" value="0"/>              
-              <sysproperty key="log4j.configuration" value="log4j-HaitiSMSTask.xml"/>
+              <sysproperty key="log4j.configuration" value="log4j-HaitiSMSTask.xml"/>			  
+			  <arg value="-mdevId"/>
+              <arg value="${mdevId}"/>			  
               <arg value="-smsType"/>
               <arg value="${smsType}"/>
               <classpath>
