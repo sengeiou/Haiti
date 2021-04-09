@@ -513,10 +513,13 @@ public class PrepaymentLogDaoImpl  extends AbstractHibernateGenericDao< Prepayme
             sb.append("\n       p.id AS prepaymentLogId, ");
             sb.append("\n       p.balance AS balance, ");
             sb.append("\n       p.arrears AS arrears, ");
+            sb.append("\n       p.arrears2 AS arrears2, ");
+            sb.append("\n       p.vat AS vat, ");
             sb.append("\n       p.partpayInfo AS partpayInfo, ");
             sb.append("\n       p.isCanceled AS isCanceled, ");
             sb.append("\n       p.chargedCredit AS chargedCredit, ");
             sb.append("\n       p.chargedArrears AS chargedArrears, ");
+            sb.append("\n       p.chargedArrears2 AS chargedArrears2, ");
             sb.append("\n       p.usedCost AS usedCost, ");
             sb.append("\n       p.usedConsumption AS usedConsumption, ");
             sb.append("\n       p.contract.currentCredit AS currentCredit, ");

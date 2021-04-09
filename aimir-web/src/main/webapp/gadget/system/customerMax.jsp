@@ -1638,7 +1638,7 @@
                         $('#prepaymentTr05').show();
 
                         $('#currentArrears').val(data.contract.currentArrears);
-                        $('#oldArrearsD').val(data.contract.oldArrears);
+                        $('#oldArrearsD').val(data.contract.arrears2);
 
                         //arrearsPaymentCount값이 null인 경우는 분할납부를 완료한 경우만 가능.
                         if(isPartpayment == 'true' && data.contract.arrearsPaymentCount != null && data.contract.arrearsPaymentCount >= 0 &&
@@ -3845,7 +3845,7 @@
                                             <input type="text" id="contractStartDate" readonly="readonly" class="border-trans bg-trans"/>
                                         </td> 
                                         <td id="prepaymentTr01_1" style="display: none;" class="bold withinput">
-                                            <fmt:message key="aimir.oldArrears" />
+                                            <fmt:message key="aimir.arrears" />2
                                         </td>
                                         <td id="prepaymentTr01_2" style="display: none;" class="padding-r20px2">
                                             <input type="text" id="oldArrearsD" readonly="readonly" class="border-trans bg-trans"/>

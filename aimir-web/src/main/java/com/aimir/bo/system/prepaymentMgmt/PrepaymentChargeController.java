@@ -9,8 +9,10 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -190,7 +192,13 @@ public class PrepaymentChargeController {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("roleType", "vendor");
         params.put("supplierId", supplierId);
-        mav.addObject("depositVendorList", operatorDao.getOperatorListByRoleType(params));        
+        mav.addObject("depositVendorList", operatorDao.getOperatorListByRoleType(params)); 
+        
+        Date now = new Date(System.currentTimeMillis());
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss"); 
+        Map<String, Object> vat = prepaymentChargeManager.getVatByFixedVariable("CHARGE_TAX", null, format.format(now));
+        mav.addObject("vatAmount", vat.get("vatAmount"));
+        mav.addObject("vatUnit", vat.get("vatUnit"));
         
         try {
         	Properties prop = new Properties();
@@ -499,6 +507,7 @@ public class PrepaymentChargeController {
             @RequestParam int limit,
             String barcode,
             String contractNumber,
+            String phone,
             String customerNo,
             String customerName,
             String mdsId) {
@@ -511,6 +520,7 @@ public class PrepaymentChargeController {
         conditionMap.put("barcode", barcode);
         conditionMap.put("supplierId", supplierId);
         conditionMap.put("contractNumber", contractNumber);
+        conditionMap.put("phone", phone);
         conditionMap.put("customerNo", customerNo);
         conditionMap.put("customerName", customerName);
         conditionMap.put("mdsId", mdsId);
@@ -865,7 +875,10 @@ public class PrepaymentChargeController {
             @RequestParam String casherId,
             @RequestParam Integer contractId,
             @RequestParam Double amount,
+            @RequestParam Double totalAmountPaid,
             @RequestParam Double arrears,
+            @RequestParam Double arrears2,
+            @RequestParam Double vat,
             @RequestParam Integer supplierId,
             @RequestParam String mdsId,
             @RequestParam String lastTokenId,
@@ -895,6 +908,9 @@ public class PrepaymentChargeController {
         conditionMap.put("tariffCode", tariffCode);
         conditionMap.put("amount", amount);
         conditionMap.put("arrears", arrears);
+        conditionMap.put("arrears2", arrears2);
+        conditionMap.put("totalAmountPaid", totalAmountPaid);
+        conditionMap.put("vat", vat);
         conditionMap.put("contractPrice", contractPrice);
         conditionMap.put("isPartpayment", isPartpayment);
         conditionMap.put("partpayReset", partpayReset);
@@ -1554,6 +1570,7 @@ public class PrepaymentChargeController {
 	        conditionMap.put("customerName", StringUtil.nullToBlank(condition[3]));
 	        conditionMap.put("mdsId", StringUtil.nullToBlank(condition[4]));
 	        conditionMap.put("supplierId", supplierId);
+	        conditionMap.put("phone", StringUtil.nullToBlank(condition[6]));
 	        conditionMap.put("page", 1);
 	        conditionMap.put("limit", 10000000);
 
@@ -1575,9 +1592,12 @@ public class PrepaymentChargeController {
 	        msgMap.put("statusName", fmtMessage[5]);
 	        msgMap.put("lastTokenDate", fmtMessage[6]);
 	        msgMap.put("currentCredit", fmtMessage[7]);
-	        msgMap.put("currentArrears", fmtMessage[8]);
+	        msgMap.put("currentArrearsA", fmtMessage[8]);
 	        msgMap.put("barcode", fmtMessage[9]);
 	        msgMap.put("title", fmtMessage[10]);
+	        msgMap.put("currentArrearsB", fmtMessage[11]);
+	        msgMap.put("phone", fmtMessage[12]);
+	        
 	        
 			Supplier supplier = supplierManager.getSupplier(supplierId);
 			sbFileName.append(fmtMessage[10]+"_");
