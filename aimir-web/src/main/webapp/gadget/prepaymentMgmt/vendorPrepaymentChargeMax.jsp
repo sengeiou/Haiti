@@ -1311,7 +1311,7 @@
             	}else if(chargeArrears < 0 || chargeArrears > params.arrears || chargeArrears > totalAmountPaid){
             		Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.confirm.arrears.paid'/>");
             	}else if(chargeArrears2 < 0 || chargeArrears2 > params.arrears2 || chargeArrears2 > totalAmountPaid){
-            		Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.confirm.arrears.paid'/> B");
+            		Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.confirm.arrears.paid'/>");
             	}else{
    					callback();
             		//Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.msg.check.input.value'/>");
@@ -1504,7 +1504,7 @@
 	    				}],
 	                },
 	                {
-	                  xtype: 'label', html: '<fmt:message key="aimir.total.amount'/> : '+ '<b id="totalAmountB">'
+	                  xtype: 'label', html: 'Final Paid amount : '+ '<b id="totalAmountB">'
                 	}]
                 }
             }],
