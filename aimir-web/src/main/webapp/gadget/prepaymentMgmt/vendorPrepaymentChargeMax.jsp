@@ -146,18 +146,6 @@
           <fmt:message key='aimir.change.password'/>
         </a>
       </li>   
-      <li id="arrearsInfo" style="float: right">
-      	<span>
-            <input class="alt startDate vertical-top" name="startDateDisplay"  type='text' style="width: 70px;" readOnly/>
-            <input name="startDate" class="no-width" type="text"/>    
-            <label class="vertical-top">~</label>
-            <input class="alt endDate vertical-top" name="endDateDisplay"  type='text' style="width: 70px;" readOnly/>
-            <input name="endDate" class="no-width" type="text"/>    
-        </span>
-      	<span id='arrearsExcel' class="am_button margin-t1px vertical-top" style="margin-right: 10px;">
-            <a><fmt:message key="aimir.arrearsinfo.export"/></a>
-          </span>          
-      </li>
     </ul>
 	<div id="CashierChangePwdWin"></div>
     <div id="chargeTab" >
@@ -1077,7 +1065,7 @@
 
       selectedHistorySearch: function(sm, rowIndex, rec) {
 //        historyListModel.setHidden(10, true);
-        historyListModel.setHidden(12, true);
+        historyListModel.setHidden(13, true);
         var contractNumber = rec.json.contractNumber;
         var params = $.extend(true, {}, historyListParams, {
           contractNumber: contractNumber,
@@ -1280,7 +1268,7 @@
         var contractPrice = params.contractPrice;
         var customerName = params.customerName;
 
-        // validation check
+/*         // validation check
         // 지불 미수금이 잔여 미수금 보다 큰 경우 X
         if (!isNaN(chargeArrears) && !isNaN(currentArrears) 
           && chargeArrears > currentArrears) {
@@ -1291,7 +1279,7 @@
         // 지불 미수금과 지불 creit의 값이 숫자가 아닌 경우 
         if (isNaN(chargeAmount) && isNaN(chargeArrears)) {
           return;
-        }
+        } */
 
        	eventHandler.retypePaidAmount({
             title: "<fmt:message key='aimir.topup'/>",
@@ -1305,16 +1293,15 @@
    				params.payTypeId = payType;   // cash or check
    				
             	if(totalAmountPaid <= 0){
-            		Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.amount.paid'/><fmt:message key='aimir.msg.greater'/> " );
+            		Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.amount.paid'/> <fmt:message key='aimir.msg.greater'/> 0" );
             	}else if(chargeAmount <= 0){
-            		Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.total.amount'/><fmt:message key='aimir.msg.greater'/>");
+            		Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.total.amount'/> <fmt:message key='aimir.msg.greater'/> 0");
             	}else if(chargeArrears < 0 || chargeArrears > params.arrears || chargeArrears > totalAmountPaid){
-            		Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.confirm.arrears.paid'/>");
+            		Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.confirm.arrears.paid'/> A");
             	}else if(chargeArrears2 < 0 || chargeArrears2 > params.arrears2 || chargeArrears2 > totalAmountPaid){
-            		Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.confirm.arrears.paid'/>");
+            		Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.confirm.arrears.paid'/> B");
             	}else{
    					callback();
-            		//Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.msg.check.input.value'/>");
             	}
 
                /* if(currentArrears > 0) {
@@ -1399,7 +1386,7 @@
 			}else{
 				vat = vatAmount;
 			}
-			chargeAmount = totalAmountPaid - (chargeArrears + chargeArrears2 + vat);
+			chargeAmount = totalAmountPaid - chargeArrears - chargeArrears2 - vat;
 			$("#vatB").text(' (='+vat+')');
 			$("#totalAmountB").text(chargeAmount);
       	},
@@ -1472,8 +1459,9 @@
 		    						xtype : 'numberfield',
 		    						id	 : 'arrearsA',
 		    						minValue : 0,
-		    						maxValue : params.currentArrears2,
+		    						maxValue : params.currentArrears,
 		    						value : 0,
+		    						readOnly : params.currentArrears > 0 ? false:true,
 		    	                  	listeners:{
 		    		                    change: function(obj, value){
 		    		                    	eventHandler.changeCredit();
@@ -1490,6 +1478,7 @@
 		    						minValue : 0,
 		    						maxValue : params.currentArrears2,
 		    						value : 0,
+		    						readOnly : params.currentArrears == 0 ? false:true,
 		    	                  	listeners:{
 		    		                    change: function(obj, value){
 		    		                    	eventHandler.changeCredit();
@@ -1504,7 +1493,7 @@
 	    				}],
 	                },
 	                {
-	                  xtype: 'label', html: 'Final Paid amount : '+ '<b id="totalAmountB">'
+	                  xtype: 'label', html: 'Final Paid Amount : '+ '<b id="totalAmountB">'
                 	}]
                 }
             }],
@@ -1680,14 +1669,12 @@
       },        
       
       initChargeTab: function() {
-    	$('#arrearsInfo').hide();
         eventHandler.refreshDeposit();        
         contractListStore.reload();
         historyListStore.reload();
       },
 
       initHistoryTab: function() {
-    	 $('#arrearsInfo').show();
         eventHandler.depositHistoryListSearch();
       },      
 
@@ -2224,13 +2211,11 @@
       },
 
       initManagerTab: function() {
-    	$('#arrearsInfo').hide();
         casherManagerStore.reload();
       },
       
       
       initManagerPwdTab: function() {
-    	  $('#arrearsInfo').hide();
     	  isGetAllManager = (vendorRole=='admin') && (isManager == true);
     	  casherManagerPwdParams.allManager = isGetAllManager;
     	  casherManagerPwdParams.vendorId = $.trim($("#managerPwdTab input[name=searchVendorId]").val());
@@ -2239,7 +2224,6 @@
       },
 
       initPasswordTab: function() {
-    	$('#arrearsInfo').hide();
         if ( isFirstLogIn ) {
           $("#confirm-pwd").hide();
           $("#confirm-pwd input").val(null);
@@ -2406,15 +2390,11 @@
       $('#historyForm input[name=endDate]').datepicker(endProp);
       $('#depositHistory input[name=startDate]').datepicker(deStartProp);
       $('#depositHistory input[name=endDate]').datepicker(deEndProp);
-      $('#arrearsInfo input[name=startDate]').datepicker(deStartProp);
-      $('#arrearsInfo input[name=endDate]').datepicker(deEndProp);
       
       $('#historyForm input[name=startDate]').datepicker('setDate', startDate);
       $('#historyForm input[name=endDate]').datepicker('setDate', endDate);
       $('#depositHistory input[name=startDate]').datepicker('setDate', startDate);
       $('#depositHistory input[name=endDate]').datepicker('setDate', endDate);
-      $('#arrearsInfo input[name=startDate]').datepicker('setDate', startDate);
-      $('#arrearsInfo input[name=endDate]').datepicker('setDate', endDate);
 
       var initDateFormat = function(inst ,date) {
         var dbDate = $.datepicker.formatDate('yymmdd', date);

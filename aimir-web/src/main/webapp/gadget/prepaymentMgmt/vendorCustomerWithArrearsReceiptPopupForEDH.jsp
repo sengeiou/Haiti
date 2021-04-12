@@ -102,6 +102,14 @@
                             ${customerNumber}
                         </td>
                     </tr>
+                   	<tr>
+						<td>
+							<fmt:message key='aimir.contractNumber'/>
+						</td>
+						<td>
+							${contractNumber}
+						</td>
+					</tr>
                     <tr>
                         <td>
                             <fmt:message key='aimir.meterid'/>
@@ -110,14 +118,14 @@
                             ${meter}
                         </td>
                     </tr>
-<!--                    <tr>
-                        <td>
-                            <fmt:message key='aimir.code.g'/>
-                        </td>
-                        <td>
-                            ${gCode}
-                        </td>
-                    </tr>     -->
+                   	<tr>
+						<td>
+							<fmt:message key='aimir.shipment.gs1'/>
+						</td>
+						<td>
+							${gs1}
+						</td>
+					</tr>
                     <tr>
                         <td>
                             <fmt:message key='aimir.residental.activity'/>
@@ -165,43 +173,41 @@
                                     <td>
                                     </td>
                                     <td class='table-header'>
-                                        <fmt:message key='aimir.prepayment.initialcredit'/>
+                                        <fmt:message key='aimir.previous'/>
                                     </td>
                                     <td class='table-header'>
-                                        <fmt:message key='aimir.prepayment.currentcredit'/>
+                                        <fmt:message key='aimir.chargeAmount'/>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <fmt:message key="aimir.meterid"/>
-                                    </td>
-                                    <td class='table-value'>
-                                        ${lastMeter}
-                                    </td>
-                                    <td class='table-value'>
-                                        ${meter}
+                                    <td class='table-header'>
+                                        <fmt:message key='aimir.next'/>
                                     </td>
                                 </tr>
                                 <tr class='tr-credit'>
                                     <td>
-                                        <fmt:message key='aimir.credit'/>
+                                        <fmt:message key='aimir.arrears'/> A
                                     </td>
                                     <td class='table-value'>
                                         ${preArrears}
                                     </td>
                                     <td class='table-value'>
-                                        ${preBalance}
+                                        ${arrears}
+                                    </td>
+                                    <td class='table-value'>
+                                        ${currentArrears}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <fmt:message key='aimir.usageFee2'/>
+                                        <fmt:message key='aimir.arrears'/> B
                                     </td>
                                     <td class='table-value'>
-                                        ${arrears}
+                                        ${preArrears2}
                                     </td>
                                     <td class='table-value'>
-                                        ${amount}
+                                        ${arrears2}
+                                    </td>
+                                    <td class='table-value'>
+                                        ${currentArrears2}
                                     </td>
                                 </tr>
                                 <tr>
@@ -209,7 +215,10 @@
                                         <fmt:message key='aimir.balance'/>
                                     </td>
                                     <td class='table-value'>
-                                        ${currentArrears}
+                                        ${preBalance}
+                                    </td>
+                                    <td class='table-value'>
+                                        ${amount}
                                     </td>
                                     <td class='table-value'>
                                         ${currentBalance}
@@ -223,15 +232,31 @@
                             <fmt:message key="aimir.amount.paid"/>
                         </td>
                         <td>
-                            ${totalAmount}
+                            ${totalAmountPaid}
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <fmt:message key="aimir.prepayment.chargedarrears"/>
+                            <fmt:message key="aimir.prepayment.chargedarrears"/> A
                         </td>
                         <td>
                             ${arrears}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <fmt:message key="aimir.prepayment.chargedarrears"/> B
+                        </td>
+                        <td>
+                            ${arrears2}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <fmt:message key="aimir.prepayment.vat"/>
+                        </td>
+                        <td>
+                            ${vat}
                         </td>
                     </tr>
                     <tr>
@@ -332,7 +357,7 @@
         };
         var init = function () {
             //eventHandler.insertInitCredit();
-            window.resizeTo(375, 750);
+            window.resizeTo(295, 885);
             bind();
         };
         window.onload = function() {

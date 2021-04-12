@@ -1484,13 +1484,20 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
         Supplier supplier = supplierDao.get(supplierId);
         Contract contract = contractDao.get(contractId);
         
+        Double totalAmountPaid = StringUtil.nullToDoubleZero(prepaymentLog.getTotalAmountPaid());
         Double chargedCredit = StringUtil.nullToDoubleZero(prepaymentLog.getChargedCredit());
         Double chargedArrears = StringUtil.nullToDoubleZero(prepaymentLog.getChargedArrears());
+        Double chargedArrears2 = StringUtil.nullToDoubleZero(prepaymentLog.getChargedArrears2());
+        Double preArrears = StringUtil.nullToDoubleZero(prepaymentLog.getPreArrears());
+        Double preArrears2 = StringUtil.nullToDoubleZero(prepaymentLog.getPreArrears2());
+        Double arrears = StringUtil.nullToDoubleZero(prepaymentLog.getArrears());
+        Double arrears2 = StringUtil.nullToDoubleZero(prepaymentLog.getArrears2());
+        Double vat = StringUtil.nullToDoubleZero(prepaymentLog.getVat());
         Integer daysFromCharge = prepaymentLog.getDaysFromCharge();
+        
         BigDecimal bdChargedCredit = new BigDecimal(chargedCredit);
-        BigDecimal bdChargedArrears = new BigDecimal(chargedArrears);
 //        Double totalAmount = ((chargedCredit == null) ? 0D : chargedCredit) + ((chargedArrears == null) ? 0D : chargedArrears);
-        Double totalAmount = bdChargedCredit.add(bdChargedArrears).doubleValue();
+//        Double totalAmount = bdChargedCredit.add(bdChargedArrears).doubleValue();
         VendorCasher casher = prepaymentLog.getVendorCasher();
         DecimalFormat cdf = DecimalUtil.getDecimalFormat(supplier.getCd());
         DecimalFormat mdf = DecimalUtil.getDecimalFormat(supplier.getMd());
@@ -1584,13 +1591,14 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
         result.put("customerNumber", customerNumber);
         result.put("meter", meterId);
         result.put("gs1", gs1);
-        result.put("vat", prepaymentLog.getVat() == null ? "" : cdf.format(prepaymentLog.getVat()));
+        result.put("vat", cdf.format(vat));
         result.put("contractNumber", contract.getContractNumber());
         result.put("activity", tarrif);
         result.put("distinct", district);
         result.put("address", address);
         result.put("customerAddr", customerAddr);
         result.put("amount", cdf.format(chargedCredit));
+        result.put("totalAmountPaid", cdf.format(totalAmountPaid));
         result.put("casherId", casherId);
         result.put("casherName", casherName);
         result.put("currentBalance", cdf.format(prepaymentLog.getBalance()));
@@ -1598,16 +1606,16 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
         result.put("payType", prepaymentLog.getPayType() != null ? prepaymentLog.getPayType().getName() : "Cash"); // default : cash
 
         // 결제 영수증 미수금이 있는 경우 
-        if (prepaymentLog.getPreArrears() != null && prepaymentLog.getPreArrears() != 0d) {
+        if ((prepaymentLog.getPreArrears() != null && prepaymentLog.getPreArrears() != 0d) 
+        	|| (prepaymentLog.getPreArrears2() != null && prepaymentLog.getPreArrears2() != 0d)) {
             result.put("arrears", cdf.format(chargedArrears));
-            result.put("preArrears", cdf.format(prepaymentLog.getPreArrears() * (-1)));
+            result.put("arrears2", cdf.format(chargedArrears2));
+            result.put("currentArrears", cdf.format(arrears));
+            result.put("currentArrears2", cdf.format(arrears2));
+            result.put("preArrears", cdf.format(preArrears));
+            result.put("preArrears2", cdf.format(preArrears2));
             
-            if (prepaymentLog.getArrears() > 0d) {
-                result.put("currentArrears", cdf.format(prepaymentLog.getArrears() * (-1)));
-            } else {
-                result.put("currentArrears", cdf.format(prepaymentLog.getArrears()));
-            }
-            result.put("totalAmount", cdf.format(totalAmount));
+            
             result.put("lastMeter", lastMeterId);
             
             if(prepaymentLog.getInitCredit() != null && prepaymentLog.getInitCredit() != 0d) {
@@ -1638,7 +1646,7 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
                 Double subSidy = StringUtil.nullToDoubleZero(monthLog.getSubsidy());
                 Double lifeLineSubsidy = StringUtil.nullToDoubleZero(monthLog.getLifeLineSubsidy());
                 Double additionalSubsidy = StringUtil.nullToDoubleZero(monthLog.getAdditionalSubsidy());
-                Double vat = StringUtil.nullToDoubleZero(monthLog.getVat());
+                Double monthlyVat = StringUtil.nullToDoubleZero(monthLog.getVat());
 
                 BigDecimal bdTotalFees = new BigDecimal("0");
                 BigDecimal bdGovLevy = new BigDecimal(govLevy);
@@ -1648,7 +1656,7 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
                 BigDecimal bdSubSidy = new BigDecimal(subSidy);
                 BigDecimal bdLifeLineSubsidy = new BigDecimal(lifeLineSubsidy);
                 BigDecimal bdAdditionalSubsidy = new BigDecimal(additionalSubsidy);
-                BigDecimal bdVat = new BigDecimal(vat);
+                BigDecimal bdVat = new BigDecimal(monthlyVat);
                 BigDecimal bdUR = new BigDecimal(utilityRelief);
 
                 String tariffName = monthLog.getTariffIndex() == null ? tarrif : monthLog.getTariffIndex().getName();

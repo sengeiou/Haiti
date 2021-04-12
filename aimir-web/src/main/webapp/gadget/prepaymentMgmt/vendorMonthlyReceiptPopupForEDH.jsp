@@ -111,6 +111,14 @@
                         </td>
                     </tr>
                     <tr>
+						<td>
+							<fmt:message key='aimir.contractNumber'/>
+						</td>
+						<td>
+							${contractNumber}
+						</td>
+					</tr>
+                    <tr>
                         <td>
                             <b><fmt:message key='aimir.meterid'/></b>
                         </td>
@@ -118,14 +126,14 @@
                             ${meter}
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <b><fmt:message key='aimir.code.g'/></b>
-                        </td>
-                        <td colspan="2">
-                            ${gCode}
-                        </td>
-                    </tr>
+					<tr>
+						<td>
+							<fmt:message key='aimir.shipment.gs1'/>
+						</td>
+						<td>
+							${gs1}
+						</td>
+					</tr>
                     <tr>
                         <td>
                             <b><fmt:message key='aimir.residental.activity'/></b>
@@ -437,11 +445,11 @@
             <c:choose>
                 <c:when test="${hasArrears == 'true'}">
                 //window.resizeTo(320, 850);
-                window.resizeTo(320, 1100);
+                window.resizeTo(320, 1133);
                 </c:when>
                 <c:otherwise>
                 //window.resizeTo(320, 730);
-                window.resizeTo(320, 750);
+                window.resizeTo(320, 783);
                 </c:otherwise>
             </c:choose>
             bind();

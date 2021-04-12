@@ -411,7 +411,7 @@ public class PrepaymentChargeController {
         		mav.setViewName("/gadget/prepaymentMgmt/vendorMonthlyReceiptPopup");
             mav.addObject("hasArrears", new Boolean(result.get("preArrears") != null).toString());
         } else {
-            if (result.get("preArrears") != null) {
+            if (result.get("preArrears") != null || result.get("preArrears2") != null) {
                 // 잔여 미수금이 있는 경우 영수증 폼
             	if(withArrearsFile.exists())
             		mav.setViewName("/gadget/prepaymentMgmt/vendorCustomerWithArrearsReceiptPopupFor"+supplier.getName());

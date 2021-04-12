@@ -168,7 +168,7 @@
                                 <fmt:message key='aimir.amount.paid'/>
                             </td>
                             <td>
-                                ${amount}
+                                ${totalAmountPaid}
                             </td>
                         </tr>
                         <tr>
@@ -260,7 +260,7 @@
             $("span.close").click(eventHandler.close);
         };
         var init = function () {
-            window.resizeTo(320, 600);
+            window.resizeTo(280, 660);
             bind();
         };
         window.onload = function() {
