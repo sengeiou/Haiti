@@ -20,15 +20,6 @@
         .excel {
             background-image:url(${ctx}/themes/images/customer/icon_excel.png) !important;
         }        
-        .progress {
-        	 position:relative; width:100%; border: 1px solid #ddd; padding: 1px; border-radius: 3px;
-         }
-		.bar {
-			 background-color: #337ab7; width:0%; height:20px; border-radius: 3px;
-		 }
-		.percent {
-		 	position:absolute; display:inline-block; top:1px; left:48%;
-		 }
     </style>
     <script type="text/javascript" charset="utf-8" src="${ctx}/js/public.js"></script>
     <script type="text/javascript" src="${ctx}/js/tree/jquery.tree.min.js"></script>
@@ -73,9 +64,6 @@
         });
 
         var errorListExl;   // 엑셀리포트 생성 시 사용할 데이터
-        /* progressbar 정보 */
-        var bar = $('.bar');
-        var percent = $('.percent');
         var status = $('#status');
 
         $(document).ready(function() {
@@ -88,35 +76,9 @@
             }
 
             new AjaxUpload('saveBulk', {
-            	xhr: function() {
-                    var xhr = new window.XMLHttpRequest();
-                    xhr.upload.addEventListener("progress", function(evt) {
-                        if (evt.lengthComputable) {
-                            var percentComplete = Math.floor((evt.loaded / evt.total) * 100);
- 
-                            /* Do something with upload progress here */
-                            var percentVal = percentComplete + '%';
-                            bar.width(percentVal);
-                            percent.html(percentVal);
- 
-                        }
-                    }, false);
-                    return xhr;
-                },
                 action: '${ctx}/gadget/prepaymentMgmt/saveBulkCreatingCustomer.do',
                 data : {},
                 responseType : 'json',
-                
-                beforeSend:function(){
-                    // progress Modal 열기
-                    $("#pleaseWaitDialog").modal('show');
- 
-                    status.empty();
-                    var percentVal = '0%';
-                    bar.width(percentVal);
-                    percent.html(percentVal);
- 
-                },
                 onSubmit : function(file , ext){
                     // Allow only images. You should add security check on the server-side.
                     if (ext && /^(xls|xlsx)$/.test(ext)){
@@ -421,7 +383,7 @@
                     {header: "<fmt:message key="aimir.customerid"/>", dataIndex: 'cell0'}
                    ,{header: "<fmt:message key="aimir.customername"/>", dataIndex: 'cell1'}
                    ,{header: "<fmt:message key="aimir.contractNumber"/>", dataIndex: 'cell2'}
-                   ,{header: "<fmt:message key="aimir.cpno"/>", dataIndex: 'cell3'}
+                   ,{header: "<fmt:message key="aimir.contract.tariff.type"/>", dataIndex: 'cell3'}
                    ,{header: "<fmt:message key="aimir.sap.errorReason"/>", dataIndex: 'errMsg', width: colWidth - 4, renderer: addTooltip}
                 ],
                 defaults : {
@@ -685,25 +647,6 @@
                             <td>
                                 <span class="am_button margin-r5"><a href="#" id="saveBulk"><fmt:message key="aimir.button.register"/></a></span>
                                 <%-- <span class="am_button margin-r5"><a href="#" id="excel"><fmt:message key="aimir.button.excel"/></a></span> --%>
-                            </td>
-                            <td>
-                            	<!-- progress Modal -->
-								<div class="modal fade" id="pleaseWaitDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-								    <div class="modal-dialog">
-								        <div class="modal-content">
-								            <div class="modal-header">
-								            </div>
-								            <div class="modal-body">
-								                <!-- progress , bar, percent를 표시할 div 생성한다. -->
-								                <div class="progress">
-								                    <div class="bar"></div>
-								                    <div class="percent">0%</div>
-								                </div>
-								                <div id="status"></div>
-								            </div>
-								        </div>
-								    </div>
-								</div>
                             </td>
                         </tr>
                     </table>

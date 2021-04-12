@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -27,7 +29,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aimir.constants.CommonConstants.MeterType;
@@ -50,6 +54,7 @@ import com.aimir.model.system.TariffType;
 import com.aimir.service.system.prepayment.CreatingCustomerMgmtManager;
 import com.aimir.util.StringUtil;
 import com.aimir.util.TimeUtil;
+import com.google.common.collect.Iterators;
 
 /**
  * CreatingCustomerMgmtManagerImpl.java Description 
@@ -61,7 +66,11 @@ import com.aimir.util.TimeUtil;
  */
 @Service(value = "creatingCustomerMgmtManager")
 public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtManager {
-
+	@Resource(name="transactionManager")
+    HibernateTransactionManager txManager;
+	
+	private int batchSize = 100;
+	
     protected static Log logger = LogFactory.getLog(CreatingCustomerMgmtManagerImpl.class);
 
     @Autowired
@@ -106,6 +115,9 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
         String mobileNo = StringUtil.nullToBlank(conditionMap.get("mobileNo"));
         String email = StringUtil.nullToBlank(conditionMap.get("email"));
         String barcode = StringUtil.nullToBlank(conditionMap.get("barcode"));
+//        String tariffTypeName = StringUtil.nullToBlank(conditionMap.get("tariffTypeName"));
+//        String firstArrears = StringUtil.nullToBlank(conditionMap.get("firstArrears"));
+//        String oldArrears = StringUtil.nullToBlank(conditionMap.get("oldArrears"));
 
         String dateTime = null;
         try {
@@ -123,7 +135,9 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
         }
 
         Code serviceTypeCode = codeDao.getCodeIdByCodeObject(MeterType.EnergyMeter.getServiceType());
-        Code creditTypeCode = codeDao.getCodeIdByCodeObject(Code.PREPAYMENT);
+        Code creditTypeCode = codeDao.getCodeIdByCodeObject(Code.EMERGENCY_CREDIT);
+        Code statusCode = codeDao.getCodeIdByCodeObject(Code.NORMAL);
+//        TariffType tariffType = tariffTypeDao.findByCondition("name", tariffTypeName);
 
         Customer customer = new Customer();
         customer.setCustomerNo(customerNo);
@@ -133,18 +147,29 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
         customer.setSmsYn(1);
         customer.setEmail(email);
         customer.setSupplier(supplier);
-        Customer newCustomer = customerDao.add(customer);
+//        Customer newCustomer = customerDao.add(customer);
+        Customer newCustomer = customerDao.saveOrUpdate(customer);
 
         Contract contract = new Contract();
         contract.setContractNumber(contractNumber);
         contract.setLocation(location);
         contract.setServiceTypeCode(serviceTypeCode);   // Energy
-        contract.setCreditType(creditTypeCode);         // prepay
+        contract.setCreditType(creditTypeCode);         // emergency credit
+        contract.setStatus(statusCode);					// Normal
+//        contract.setTariffIndex(tariffType);			// TariffType
+        contract.setChargeAvailable(true);
         contract.setBarcode(barcode);
         contract.setContractDate(dateTime);
         contract.setSupplier(supplier);
         contract.setCustomer(newCustomer);
+        contract.setCurrentCredit(0.0);
+        contract.setCurrentArrears(0.0);
+        contract.setCurrentArrears2(0.0);
+        contract.setEmergencyCreditAvailable(true);
+        contract.setEmergencyCreditMaxDuration(365);
+        contract.setEmergencyCreditStartTime(dateTime);
         contractDao.add(contract);
+//        contractDao.merge(contract);
     }
 
     /**
@@ -200,6 +225,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
         TariffType tariffType = null;
         Code serviceTypeCode = null;
         Code creditTypeCode = null;
+        Code statusCode = null;
 
         for (Row row : sheet) {
             // header row skip
@@ -227,19 +253,6 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 continue;
             }
 
-            customerNo = getCellValue(row.getCell(0)).trim();
-            customerName = getCellValue(row.getCell(1)).trim();
-            contractNumber = getCellValue(row.getCell(2)).trim();
-            mobileNo = getCellValue(row.getCell(3)).trim();
-            tariffType = tariffTypeDao.findByCondition("name", getCellValue(row.getCell(4)).trim());
-            serviceTypeCode = codeDao.getCodeIdByCodeObject(MeterType.getByServiceType(getCellValue(row.getCell(5)).trim()).getServiceType());
-            if("PREPAYMENT".equals(getCellValue(row.getCell(2)).trim())) {
-            	creditTypeCode = codeDao.getCodeIdByCodeObject(Code.PREPAYMENT);
-            }else if("POSTPAY".equals(getCellValue(row.getCell(2)).trim())) {
-            	creditTypeCode = codeDao.getCodeIdByCodeObject(Code.POSTPAY);
-            }
-            
-            
             contractNumber = getCellValue(row.getCell(0)).trim();
             contractDate = getCellValue(row.getCell(1)).trim();
             tariffIndexID = getCellValue(row.getCell(2)).trim();
@@ -253,12 +266,8 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             meterNumber = getCellValue(row.getCell(9)).trim();
             oldArrears = Double.parseDouble(getCellValue(row.getCell(10)).trim());            
             serviceTypeCode = codeDao.getCodeIdByCodeObject(MeterType.EnergyMeter.getServiceType());
-            
-            /*if("PREPAYMENT".equals(getCellValue(row.getCell(6)).trim())) {
-            	creditTypeCode = codeDao.getCodeIdByCodeObject(Code.PREPAYMENT);
-            }else if("POSTPAY".equals(getCellValue(row.getCell(6)).trim())) {
-            	creditTypeCode = codeDao.getCodeIdByCodeObject(Code.POSTPAY);
-            }*/
+            statusCode = codeDao.getCodeIdByCodeObject(Code.NORMAL);
+            creditTypeCode = codeDao.getCodeIdByCodeObject(Code.EMERGENCY_CREDIT);
 
             // 비어있는 cell 이 있으면 에러처리
             if (contractNumber.isEmpty() || contractDate.isEmpty() || tariffIndexID.isEmpty() || customerNo.isEmpty() || customerName.isEmpty() || mobileNo.isEmpty()) {
@@ -335,13 +344,17 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             contract.setContractNumber(contractNumber);
             contract.setLocation(location);
             contract.setServiceTypeCode(serviceTypeCode);   // Energy
-            contract.setCreditType(creditTypeCode);         // prepay
+            contract.setCreditType(creditTypeCode);         // emergency credit
+            contract.setStatus(statusCode);					// Normal
+            contract.setTariffIndex(tariffType);			// TariffType
             contract.setContractDate(contractDate);
             contract.setSupplier(supplier);
             contract.setCustomer(newCustomer);
-            contract.setTariffIndex(tariffType);
-            contract.setOldArrears(oldArrears);
             contract.setMeter(newMeter);
+            contract.setCurrentCredit(0.0);
+            contract.setCurrentArrears(0.0);
+//            contract.setFirstArrears(firstArrears);
+//            contract.setOldArrears(oldArrears);
             contractDao.add(contract);
             contractDao.flushAndClear();
             
@@ -377,7 +390,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
     	
         Map<String, Object> result = new HashMap<String, Object>();
         List<List<Object>> errorList = new ArrayList<List<Object>>();
-
+        
         Supplier supplier = supplierDao.get(supplierId);
 
         List<Location> locationList = locationDao.getParentsBySupplierId(supplierId);
@@ -404,106 +417,77 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
         }
 
         XSSFSheet sheet = wb.getSheetAt(0);
-
-        // Getting cell contents
-        List<Object> errs = null;
-        String customerNo = null;
-        String customerName = null;
-        String contractNumber = null;
-        String mobileNo = null;
-        String contractDate = null;
-        String userAddress1 = null;
-        String userAddress2 = null;
-        String userAddress3 = null;
-        String meterNumber = null;
-        String tariffIndexID = null;
-        Double oldArrears = null;
-        
-        TariffType tariffType = null;
-        Code serviceTypeCode = null;
-        Code creditTypeCode = null;
         
         try {
-        	for (Row row : sheet) {
-                // header row skip
-                if (row.getRowNum() == 0) {
-                    continue;
-                }
+        	errorList = validateSheet(sheet, supplier, location);
+        	
+        	if (errorList.size() <= 0) {
+                result.put("status", "success");
+            } else {
+                result.put("status", "failure");
+            }
+        	
+        	// close OPCPackage
+        	if (pkg != null) {
+				pkg.close();
+            }
+		} catch (Exception e) {
+			logger.error("for try catch error : " + new Timestamp(date.getTime()) );
+		}
+        
+        result.put("errorList", errorList);
+        result.put("errorListSize", errorList.size());
 
-                // cell 개수가 안맞을 경우
-                /*if (row.getLastCellNum() < 11) {
-                    Iterator<Cell> itrCell = row.cellIterator();
-                    errs = new ArrayList<Object>();
-                    while(itrCell.hasNext()) {
-                        errs.add(getCellValue(itrCell.next()));
-                    }
-                    errs.add("Please input all cells");
-                    errorList.add(errs);
-                    continue;
-                }*/
+        // delete uploaded file
+//        File file = new File(excel.trim());
+//        file.delete();
+
+        return result;
+    }
+
+    private List<List<Object>> saveRows(List<Row> entities, Supplier supplier, Location location) {
+    	List<List<Object>> errorList = null;
+    	String contractNumber = null;
+    	String customerNo = null;
+    	String customerName = null;
+    	String tariffIndexID = null;
+        try {
+    		errorList = new ArrayList<List<Object>>();
+    		Date date = new Date();
+    		
+    		for (Row row : entities) {
 
                 contractNumber = getCellValue(row.getCell(0)).trim();
-                contractDate = getCellValue(row.getCell(1)).trim();
+                String contractDate = getCellValue(row.getCell(1)).trim();
                 tariffIndexID = getCellValue(row.getCell(2)).trim();
-                tariffType = tariffTypeDao.findByCondition("name", getCellValue(row.getCell(2)).trim());
                 customerNo = getCellValue(row.getCell(3)).trim();
                 customerName = getCellValue(row.getCell(4)).trim();
-                userAddress1 = getCellValue(row.getCell(5)).trim();
-                userAddress2 = getCellValue(row.getCell(6)).trim();
-                userAddress3 = getCellValue(row.getCell(7)).trim();
-                mobileNo = getCellValue(row.getCell(8)).trim();
-                meterNumber = "".equals(getCellValue(row.getCell(9)).trim()) ? null : getCellValue(row.getCell(9)).trim();
-                oldArrears = getCellValue(row.getCell(10)).trim() == "" ? null : Double.parseDouble(getCellValue(row.getCell(10)).trim());            
-                serviceTypeCode = codeDao.getCodeIdByCodeObject(MeterType.EnergyMeter.getServiceType());
-                /*if("PREPAYMENT".equals(getCellValue(row.getCell(6)).trim())) {
-                	creditTypeCode = codeDao.getCodeIdByCodeObject(Code.PREPAYMENT);
-                }else if("POSTPAY".equals(getCellValue(row.getCell(6)).trim())) {
-                	creditTypeCode = codeDao.getCodeIdByCodeObject(Code.POSTPAY);
-                }*/
-
-                // 비어있는 cell 이 있으면 에러처리
-                if (contractNumber.isEmpty() || contractDate.isEmpty() || tariffIndexID.isEmpty() || customerNo.isEmpty() || customerName.isEmpty() || mobileNo.isEmpty()) {
-                	errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "Please input all cells"));
-                    continue;
-                }
+                String userAddress1 = getCellValue(row.getCell(5)).trim();
+                String userAddress2 = getCellValue(row.getCell(6)).trim();
+                String userAddress3 = getCellValue(row.getCell(7)).trim();
+                String mobileNo = getCellValue(row.getCell(8)).trim();
+                String meterNumber = getCellValue(row.getCell(9)).trim().isEmpty() ? null : getCellValue(row.getCell(9)).trim();
+                String currentArrears1 = getCellValue(row.getCell(10)).trim().isEmpty() ? null : getCellValue(row.getCell(10)).trim();            
+                String currentArrears2 = getCellValue(row.getCell(11)).trim().isEmpty() ? null : getCellValue(row.getCell(11)).trim();            
+                TariffType tariffType = tariffTypeDao.findByCondition("name", tariffIndexID);
+                Code serviceTypeCode = codeDao.getCodeIdByCodeObject(MeterType.EnergyMeter.getServiceType());
+                Code statusCode = codeDao.getCodeIdByCodeObject(Code.NORMAL);
+                Code creditTypeCode = codeDao.getCodeIdByCodeObject(Code.EMERGENCY_CREDIT);
                 
-                // contractNumber 값이 sample이면 skip
-                if ("sample".equals(contractNumber)) {
+                if("sample".equals(contractNumber)) { // contractNumber 값이 sample이면 skip
                 	continue;
                 }
-
-                // customerNo 중복체크
-                Customer chkCustomer = customerDao.findByCondition("customerNo", customerNo);
-                customerDao.clear();
-                if (chkCustomer != null && chkCustomer.getId() != null) {
-                    errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "There is a duplicate Customer No : " + customerNo));
+                
+                // 비어있는 cell 이 있으면 에러처리
+                if (contractNumber.isEmpty() || tariffIndexID.isEmpty() || customerNo.isEmpty() || customerName.isEmpty()) {
+                    errorList.add(getErrorRecord(customerNo, customerName, contractNumber, tariffIndexID, "Please fill in the values in the cells"));
                     continue;
                 }
 
-                // contractNumber 중복체크
-                Contract chkContract = contractDao.findByCondition("contractNumber", contractNumber);
-                contractDao.clear();
-                if (chkContract != null && chkContract.getId() != null) {
-                    errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "There is a duplicate Contract Number : " + contractNumber));
-                    continue;
-                }
-                
-                Meter chkMeter = meterDao.findByCondition("mdsId", meterNumber);
-                meterDao.clear();
-                if (chkMeter != null && chkMeter.getId() != null) {
-                    errorList.add(getErrorRecord(customerNo, customerName, contractNumber, mobileNo, "There is a duplicate Meter Number : " + meterNumber));
-                    continue;
-                }
-                
                 // Add
-                String dateTime = null;
-                try {
-                    dateTime = TimeUtil.getCurrentTime();
-                } catch (ParseException e) {
-                    logger.error(e.getMessage(), e);
-                }
+                String dateTime = TimeUtil.getCurrentTime();
 
-                Customer customer = new Customer();
+                Customer customer = customerDao.findByCondition("customerNo", customerNo) == null ? new Customer() : customerDao.findByCondition("customerNo", customerNo);
                 customer.setCustomerNo(customerNo);
                 customer.setName(customerName);
                 customer.setAddress1(userAddress1);
@@ -512,73 +496,109 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 customer.setMobileNo(mobileNo);
                 customer.setSmsYn(1);
                 customer.setSupplier(supplier);
-                Customer newCustomer = customerDao.add(customer);
-                customerDao.flushAndClear();
+//                customerDao.merge(customer);
+//                customerDao.flushAndClear();
                 logger.debug("customerDao.add finished : " + new Timestamp(date.getTime()) );
                 
                 DeviceModel model = deviceModelDao.findByCondition("name", "I210+");
                 
                 Meter newMeter = new Meter();
                 if (meterNumber != null && !"".equals(meterNumber)) {
-                	Meter meter = new Meter();
+                	Meter meter = meterDao.findByCondition("mdsId", meterNumber);
                 	meter.setMdsId(meterNumber);
                 	meter.setSupplier(supplier);;
                 	meter.setLocation(location);
                 	meter.setModel(model);
                 	meter.setWriteDate(dateTime);
-                	newMeter = meterDao.add(meter);
-                	meterDao.flushAndClear();
+//                	meterDao.merge(meter);
+//                	meterDao.flushAndClear();
+                	newMeter = meter;
                 }
                 
-                Contract contract = new Contract();
+                Contract contract = contractDao.findByCondition("contractNumber", contractNumber) == null ? new Contract() : contractDao.findByCondition("contractNumber", contractNumber);
                 contract.setContractNumber(contractNumber);
                 contract.setLocation(location);
                 contract.setServiceTypeCode(serviceTypeCode);   // Energy
-                contract.setCreditType(creditTypeCode);         // prepay
+                contract.setCreditType(creditTypeCode);         // emergency credit
+                contract.setStatus(statusCode);					// Normal
+                contract.setTariffIndex(tariffType);			// TariffType
                 contract.setContractDate(contractDate);
+                contract.setChargeAvailable(true);
                 contract.setSupplier(supplier);
-                contract.setCustomer(newCustomer);
-                contract.setTariffIndex(tariffType);
-                contract.setOldArrears(oldArrears);
+                contract.setCustomer(customer);
+                contract.setCurrentCredit(contract.getCurrentCredit() == null ? 0.0 : contract.getCurrentCredit());
+                contract.setCurrentArrears(currentArrears1 == null  ?  0.0 : Double.parseDouble(currentArrears1));
+                contract.setCurrentArrears2(currentArrears2 == null  ?  0.0 : Double.parseDouble(currentArrears2));
+                contract.setEmergencyCreditAvailable(true);
+                contract.setEmergencyCreditMaxDuration(365);
+                contract.setEmergencyCreditStartTime(dateTime);
                 if (meterNumber != null && !"".equals(meterNumber)) {
                 	contract.setMeter(newMeter);
                 }
-                contractDao.add(contract);
+                contractDao.merge(contract);
                 contractDao.flushAndClear();
                 logger.debug("contractDao.add finished : " + new Timestamp(date.getTime()) );
-            } // for end : Row
+			}
+        	
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("for try catch error : " + new Timestamp(date.getTime()) );
+			logger.error("saveRows - for try catch error");
+			errorList.add(getErrorRecord(customerNo, customerName, contractNumber, tariffIndexID, "Please check the values"));
 		}
-        
+		return errorList;
+	}
 
-        if (errorList.size() <= 0) {
-            result.put("status", "success");
-        } else {
-            result.put("status", "failure");
-        }
+	private List<List<Object>> validateSheet(XSSFSheet sheet, Supplier supplier, Location location) {
+		TransactionStatus txStatus = null;
+		List<List<Object>> errorList = null;
+		try {
+			txStatus = txManager.getTransaction(null);
+			// 시트의 row
+	    	Iterator<Row> rowIterator = sheet.iterator();
+	    	List<Row> entities = new ArrayList<Row>();
+	    	// row 수 만큼
+	    	while (rowIterator.hasNext()) {
+	    		Row row = rowIterator.next();
+	    		// header row skip
+				if (row.getRowNum() == 0) {					
+					continue;
+		        }
+	    		entities.add(row);
+	    		
+	    		if(entities.size() % batchSize == 0) {
+	    			errorList = saveRows(entities, supplier, location);
+	    		}
+	    	}
+	    	
+	    	if(Iterators.size(rowIterator) <= batchSize) {
+	    		errorList = saveRows(entities, supplier, location);
+	    	}
+	    	
+	    	/*List<Object> errs = new ArrayList<Object>();
+	    	for (Row row : sheet) {
+	            if (row.getRowNum() == 0) {
+	                continue;
+	            }            
+	            compareMap.put(getCellValue(row.getCell(0)).trim(), getCellValue(row.getCell(0)).trim());
+	    	}
+	    	
+	    	for (String key : compareMap.keySet()) {
+	    		if(compareMap.containsKey(key)) {
+			        errs.add(compareMap.get(key));
+			        compareMap.remove(key);
+	    		}
+			}*/
+	    	
+	    	txManager.commit(txStatus);
+		} catch (Exception e) {
+			logger.error("validateSheet - for try catch error");
+			if(txStatus != null) txManager.rollback(txStatus);
+		}
+    	
+    	return errorList;
+	}
 
-        result.put("errorList", errorList);
-        result.put("errorListSize", errorList.size());
-
-        // close OPCPackage
-        try {
-            if (pkg != null) {
-                pkg.close();
-            }
-        } catch (IOException e) {
-            logger.error(e, e);
-        }
-
-        // delete uploaded file
-        File file = new File(excel.trim());
-        file.delete();
-
-        return result;
-    }
-
-    /**
+	/**
      * method name : sendCertificationSMS<b/>
      * method Desc : Creating Customer Manager 가젯에서 휴대폰번호를 인증한다.
      *
@@ -666,12 +686,12 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
      * @param errMsg
      * @return
      */
-    private List<Object> getErrorRecord(String customerNo, String customerName, String contractNumber, String mobileNo, String errMsg) {
+    private List<Object> getErrorRecord(String customerNo, String customerName, String contractNumber, String tariffIndexID, String errMsg) {
         List<Object> errs = new ArrayList<Object>();
         errs.add(customerNo);
         errs.add(customerName);
         errs.add(contractNumber);
-        errs.add(mobileNo);
+        errs.add(tariffIndexID);
         errs.add(errMsg);
         return errs;
     }
