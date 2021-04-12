@@ -75,7 +75,7 @@ public class CustomerDaoImpl extends AbstractHibernateGenericDao<Customer, Integ
         	Query query = getSession().createQuery("SELECT COUNT(o.loginId) FROM Operator o WHERE o.loginId = '" + loginId + "' ");
             return DataAccessUtils.intResult(query.list());   
         } else {
-        	Query query = getSession().createQuery("SELECT COUNT(c.loginId) FROM Customer c WHERE c.loginId = " + customerNo + " AND c.customerNo <> ? ");
+        	Query query = getSession().createQuery("SELECT COUNT(c.loginId) FROM Customer c WHERE c.loginId = " + loginId + " AND c.customerNo = " + customerNo);
             return DataAccessUtils.intResult(query.list());
         }
     }
