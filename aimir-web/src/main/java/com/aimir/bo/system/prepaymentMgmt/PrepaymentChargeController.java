@@ -1405,6 +1405,7 @@ public class PrepaymentChargeController {
             String customerName,
             String customerNo,
             String meterId,
+            String gs1,
             String startDate,
             String endDate,
             Integer locationId) {
@@ -1422,6 +1423,7 @@ public class PrepaymentChargeController {
         params.put("customerName", customerName);
         params.put("customerNo", customerNo);
         params.put("meterId", meterId);
+        params.put("gs1", gs1);
         params.put("startDate", startDate);
         params.put("endDate", endDate);
         params.put("locationId", locationId);
@@ -1592,10 +1594,10 @@ public class PrepaymentChargeController {
 	        msgMap.put("statusName", fmtMessage[5]);
 	        msgMap.put("lastTokenDate", fmtMessage[6]);
 	        msgMap.put("currentCredit", fmtMessage[7]);
-	        msgMap.put("currentArrearsA", fmtMessage[8]);
+	        msgMap.put("currentArrears", fmtMessage[8]);
 	        msgMap.put("barcode", fmtMessage[9]);
 	        msgMap.put("title", fmtMessage[10]);
-	        msgMap.put("currentArrearsB", fmtMessage[11]);
+	        msgMap.put("currentArrears2", fmtMessage[11]);
 	        msgMap.put("phone", fmtMessage[12]);
 	        
 	        

@@ -277,6 +277,10 @@
             <label><fmt:message key="aimir.meterid"/></label>
             <input name="meterId" type="text"/>   
           </span>
+          <span>
+            <label><fmt:message key="aimir.shipment.gs1"/></label>
+            <input name="gs1" type="text"/>   
+          </span>
         </div>
         <div>
           <span class="inline-block" style='margin-right: 1px;'>
@@ -625,7 +629,7 @@
       url: "${ctx}/gadget/prepaymentMgmt/vendorChargeHistoryList.do",
       totalProperty: 'count',
       root: 'list',
-      fields: ['vendor', 'casher','contractNo', 'customerId', 'meter', 
+      fields: ['vendor', 'casher','contractNo', 'customerId', 'meter', 'gs1', 
         'customerName', 'address', 'changeDate', 'chargeCredit', 'payType', 'chargeDeposit', 'deposit'],
       listeners: {
         beforeload: function(store, options) {
@@ -891,14 +895,15 @@
         {header: "<fmt:message key='aimir.buildingMgmt.contractNumber'/>"},
         {header: "<fmt:message key='aimir.customerid'/>"},
         {header: "<fmt:message key='aimir.meterid'/>"},
+        {header: "<fmt:message key='aimir.shipment.gs1'/>"},
         {header: "<fmt:message key='aimir.customername'/>"},
         {header: "<fmt:message key='aimir.address'/>"},
         {header: "<fmt:message key='aimir.hems.prepayment.chargedate'/>"},
         {header: "<fmt:message key='aimir.deposit.chargecredit'/>", align: 'right'},
-        {header: "<fmt:message key='aimir.paymenttype'/>",  align: 'center'},
-        {header: "<fmt:message key='aimir.deposit.chargedeposit'/>", align: 'right'},
-        {header: "<fmt:message key='aimir.deposit'/>", align: 'right', 
-          css: 'padding-right:10px'}
+        {header: "<fmt:message key='aimir.paymenttype'/>",  align: 'center'}
+        //{header: "<fmt:message key='aimir.deposit.chargedeposit'/>", align: 'right'},
+        //{header: "<fmt:message key='aimir.deposit'/>", align: 'right', 
+          //css: 'padding-right:10px'}
       ],
       defaults : {
         sortable: true,
@@ -1128,6 +1133,7 @@
 		      customerName: $("#depositHistory input[name=customerName]").val(),
 		      customerNo: $("#depositHistory input[name=customerId]").val(),
 		      meterId: $("#depositHistory input[name=meterId]").val(),
+		      gs1: $("#depositHistory input[name=gs1]").val(),
 		      casherId: $("#depositHistory input[name=casherId]").val(),
 		      startDate: $("#depositHistory input[name=startDate]").val(),
 		      endDate: $("#depositHistory input[name=endDate]").val(),
@@ -1263,23 +1269,8 @@
         var currentArrears = params.currentArrears;
         var currentArrears2 = params.currentArrears2;
         var currentAmount = params.currentAmount;
-        var chargeAmount = params.amount;
-        var chargeArrears = params.arrears;
         var contractPrice = params.contractPrice;
         var customerName = params.customerName;
-
-/*         // validation check
-        // 지불 미수금이 잔여 미수금 보다 큰 경우 X
-        if (!isNaN(chargeArrears) && !isNaN(currentArrears) 
-          && chargeArrears > currentArrears) {
-          Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.msg.check.input.arrears'/>");
-          return;
-        }
-
-        // 지불 미수금과 지불 creit의 값이 숫자가 아닌 경우 
-        if (isNaN(chargeAmount) && isNaN(chargeArrears)) {
-          return;
-        } */
 
        	eventHandler.retypePaidAmount({
             title: "<fmt:message key='aimir.topup'/>",
@@ -1303,75 +1294,6 @@
             	}else{
    					callback();
             	}
-
-               /* if(currentArrears > 0) {
-           	  //분할납부기능 사용여부
-           	  //(분할납부 기능을 사용하고) && (초기미수금보다 현재 미수금이 크거나 || 분할납부가 진행중이여서 현재미수금이 초기미수금보다 작아진 경우) 는 분할납부 기능 사용
-               	if((isPartpayment == true || isPartpayment == 'true') 
-               			&& (((currentArrears > initArrears) && (arrearsContractCount != '' || arrearsContractCount != null))
-               			|| ((currentArrears <= initArrears) && (Number(arrearsContractCount) > 0))) ) {
-               		if((currentArrears <= chargeAmount) && currentArrears == firstArrears) {
-	              		Ext.Msg.show({
-	  	                  title: customerName,
-	  	                  msg: "<fmt:message key='aimir.fullPay.arrears'/>",   // Do you want to pay in full arrears?
-	  	                  buttons: Ext.MessageBox.YESNO,
-	  	                  fn: function(btn) {
-	  	                      if(btn == 'yes') {
-	  	                    	params.amount = chargeAmount-currentArrears;
-	  	                    	params.arrears = currentArrears;
-
-	  	                    	callback();
-	  	                      } else {
-	  	                        eventHandler.partPayment(params,callback);
-	  	                      }
-
-	  	                  }
-	  	                });
-               		} else {
-                    eventHandler.partPayment(params,callback);
-               		}
-               	} else {
-	                Ext.Msg.show({
-	                  title: customerName,
-	                  msg: "<fmt:message key='aimir.msg.pay.amount.arrears'/>", // There is arrears, customer should pay. How much should pay for arrears?
-	                  buttons: Ext.MessageBox.OKCANCEL,
-	                  prompt: true,
-	                  fn: function(btn, text) {
-	                    var arrearsAmount = Number(text);
-	                    var cb = function(arrearsAmount, callback) {
-	                      if(btn == 'ok' 
-	                        && !isNaN(arrearsAmount) 
-	                        && (params.amount >= arrearsAmount)) {
-	                    	
-	                        // 입력한 미수금 금액이 남은 미수금 금액보다 큰경우 
-	                        // 미수금 금액은 남은 미수금 금액이 된다. 
-	                        if(currentArrears < arrearsAmount) {
-	                          arrearsAmount = currentArrears;
-	                        }
-	                        params.amount -= arrearsAmount;
-	                        params.arrears = arrearsAmount;
-	                        callback();
-	                      } else {
-	                        Ext.Msg.alert("<fmt:message key='aimir.error'/>",
-	                          "<fmt:message key='aimir.error'/>");
-	                      }
-	                    };
-	                    eventHandler.retypePaidAmount({
-	                      title: customerName,
-	                      amount: arrearsAmount,
-	                      msg: "<fmt:message key='aimir.retype.arrears'/>",  // Please retype paid arrears
-	                      amountLabel: "Paid Arrears",
-	                      payTypeLabel: "<fmt:message key='aimir.paymenttype'/>",
-	                      callback: function() {
-	                        cb(arrearsAmount, callback);
-	                      }
-	                    });
-	                  }
-	                });
-              	}
-              } else {
-                callback();
-              } */
             }
           });
       	},
@@ -1478,7 +1400,7 @@
 		    						minValue : 0,
 		    						maxValue : params.currentArrears2,
 		    						value : 0,
-		    						readOnly : params.currentArrears == 0 ? false:true,
+		    						readOnly : (params.currentArrears == 0 && params.currentArrears2 > 0) ? false:true,
 		    	                  	listeners:{
 		    		                    change: function(obj, value){
 		    		                    	eventHandler.changeCredit();

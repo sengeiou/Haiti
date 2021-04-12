@@ -1104,7 +1104,7 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
             prepaymentLog.setChargedArrears(arrears);
             prepaymentLog.setChargedArrears2(arrears2);
             prepaymentLog.setLastTokenDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
-            prepaymentLog.setLastTokenId(accountId);
+//            prepaymentLog.setLastTokenId(""+DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
             prepaymentLog.setOperator(operator);
             Integer emergencyYn = null;
             if (contract.getEmergencyCreditAvailable() != null) {
@@ -1125,19 +1125,20 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
             prepaymentLog.setPayType(codeDao.get(payTypeId));
             prepaymentLogDao.add(prepaymentLog);
             
+            
             log.info("prepaymentLog has been added");
             
-//            DepositHistory dh = new DepositHistory();
-//            dh.setOperator(updateOperator);
-//            dh.setContract(contract);
-//            dh.setCustomer(contract.getCustomer());
-//            dh.setMeter(meter);
-//            dh.setChangeDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
-//            dh.setChargeCredit(amount);
-//            dh.setDeposit(updateOperator.getDeposit());
-//            dh.setPrepaymentLog(prepaymentLog);
-//            
-//            depositHistoryDao.add(dh);    
+            DepositHistory dh = new DepositHistory();
+            dh.setOperator(updateOperator);
+            dh.setContract(contract);
+            dh.setCustomer(contract.getCustomer());
+            dh.setMeter(meter);
+            dh.setChangeDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
+            dh.setChargeCredit(amount);
+            dh.setDeposit(updateOperator.getDeposit());
+            dh.setPrepaymentLog(prepaymentLog);
+            
+            depositHistoryDao.add(dh);    
 
             // operator update
             if ( isVendor ) {
@@ -1156,7 +1157,7 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
             transactionManager.commit(txStatus);
             
             //SNS 전송
-            this.SMSNotification(contract, amount, preCredit, isCutOff);
+            //this.SMSNotification(contract, amount, preCredit, isCutOff);
 
             rtnStr = "success";
             result.put("result", rtnStr);
@@ -1518,7 +1519,8 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
         String district = "";
         String tarrif = "";
         String casherId = "";
-        String casherName = "";        
+        String casherName = "";
+        String lastTokenId = "";    
         
         if (operator.getLocation() != null) {
             vendorDistinct = operator.getLocation().getName();
@@ -1530,6 +1532,7 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
             customerNumber = customer.getCustomerNo();
             date = TimeLocaleUtil.getLocaleDate(prepaymentLog.getLastTokenDate(), lang, country);
             dateByYyyymmdd = TimeLocaleUtil.getLocaleDate(prepaymentLog.getLastTokenDate().substring(0,8), lang, country);
+            lastTokenId = prepaymentLog.getLastTokenId();
         }
         
         if (contract != null && contract.getMeter() != null) {
@@ -1591,6 +1594,7 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
         result.put("customerNumber", customerNumber);
         result.put("meter", meterId);
         result.put("gs1", gs1);
+        result.put("lastTokenId", lastTokenId);
         result.put("vat", cdf.format(vat));
         result.put("contractNumber", contract.getContractNumber());
         result.put("activity", tarrif);

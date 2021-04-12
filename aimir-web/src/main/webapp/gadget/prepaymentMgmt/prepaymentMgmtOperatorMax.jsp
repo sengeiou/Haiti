@@ -1265,11 +1265,11 @@
                     ,{header: "<fmt:message key="aimir.monthly"/> <fmt:message key="aimir.usage"/>(<fmt:message key='aimir.unit.kwh'/>)", dataIndex: 'MONTHLYUSAGE', align:'right' }
                     ,{header: "<fmt:message key="aimir.monthly"/> <fmt:message key="aimir.bill"/>(<fmt:message key='aimir.price.unit'/>)", dataIndex: 'MONTHLYCOST', align:'right' }
                     ,{header: "<fmt:message key="aimir.prepayment.vat"/>(<fmt:message key='aimir.price.unit'/>)", dataIndex: 'VAT', align:'right' }
-                    ,{header: "<fmt:message key="aimir.prepayment.levy"/>(<fmt:message key='aimir.price.unit'/>)", dataIndex: 'TOTALLEVY', align:'right' }
-                    ,{header: "<fmt:message key="aimir.prepayment.subsidy"/>(<fmt:message key='aimir.price.unit'/>)", dataIndex: 'TOTALSUBSIDY', align:'right' }
                     ,{header: "<fmt:message key="aimir.serviceCharge"/>(<fmt:message key='aimir.price.unit'/>)", dataIndex: 'SERVICECHARGE', align:'right' }
                     ,{header: "<fmt:message key="aimir.description"/>", dataIndex: 'DESCR', align:'left' }
                     /* ,{header: "<fmt:message key="aimir.hems.prepayment.consumption"/>(kWh)", dataIndex: 'usedConsumption', width: (width > mxwidth) ? width*(160/mxwidth) : 160, align:'right'}
+                    ,{header: "<fmt:message key="aimir.prepayment.levy"/>(<fmt:message key='aimir.price.unit'/>)", dataIndex: 'TOTALLEVY', align:'right' }
+                    ,{header: "<fmt:message key="aimir.prepayment.subsidy"/>(<fmt:message key='aimir.price.unit'/>)", dataIndex: 'TOTALSUBSIDY', align:'right' }
                      ,{
                     	header: "<fmt:message key="aimir.description"/>", 
                     	width: (width > mxwidth) ? width*(120/mxwidth) : 120,

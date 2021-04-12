@@ -96,7 +96,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <fmt:message key='aimir.accountNo'/><%-- <fmt:message key='aimir.customerid'/> --%>
+                            <fmt:message key='aimir.customerid'/><%-- <fmt:message key='aimir.customerid'/> --%>
                         </td>
                         <td>
                             ${customerNumber}
@@ -124,6 +124,14 @@
 						</td>
 						<td>
 							${gs1}
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<fmt:message key='aimir.hems.prepayment.transactionNum'/>
+						</td>
+						<td>
+							${lastTokenId}
 						</td>
 					</tr>
                     <tr>
