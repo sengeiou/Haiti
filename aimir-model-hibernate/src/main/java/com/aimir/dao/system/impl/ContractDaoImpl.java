@@ -2782,6 +2782,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         Integer supplierId = (Integer)conditionMap.get("supplierId");
         String barcode = StringUtil.nullToBlank(conditionMap.get("barcode"));
         String contractNumber = StringUtil.nullToBlank(conditionMap.get("contractNumber"));
+        String phone = StringUtil.nullToBlank(conditionMap.get("phone"));
         String customerNo = StringUtil.nullToBlank(conditionMap.get("customerNo"));
         String customerName = StringUtil.nullToBlank(conditionMap.get("customerName"));
         String mdsId = StringUtil.nullToBlank(conditionMap.get("mdsId"));
@@ -2795,18 +2796,20 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         } else {
             sb.append("\nSELECT cont.id AS contractId, ");
             sb.append("\n       meter.id AS meterId, ");
-            sb.append("\n       cont.customer.id AS customerId, ");
+            sb.append("\n       cust.id AS customerId, ");
             sb.append("\n       cont.contractNumber AS contractNumber, ");
             sb.append("\n       cont.currentCredit AS currentCredit, ");
             sb.append("\n       cont.currentArrears AS currentArrears, ");
+            sb.append("\n       cont.currentArrears2 AS currentArrears2, ");
             sb.append("\n       cont.contractPrice AS contractPrice, ");
-            sb.append("\n       cont.customer.customerNo AS customerNo, ");
-            sb.append("\n       cont.customer.name AS customerName, ");
+            sb.append("\n       cust.customerNo AS customerNo, ");
+            sb.append("\n       cust.mobileNo AS phone, ");
+            sb.append("\n       cust.name AS customerName, ");
             sb.append("\n       cont.barcode AS barcode, ");
-    //        sb.append("\n       cont.customer.address AS address, ");
-    //        sb.append("\n       cont.customer.address1 AS address1, ");
-            sb.append("\n       cont.customer.address2 AS address, ");
-    //        sb.append("\n       cont.customer.address3 AS address3, ");
+    //        sb.append("\n       cust.address AS address, ");
+    //        sb.append("\n       cust.address1 AS address1, ");
+            sb.append("\n       cust.address2 AS address, ");
+    //        sb.append("\n       cust.address3 AS address3, ");
             sb.append("\n       meter.mdsId AS mdsId, ");
             sb.append("\n       cont.lastTokenDate AS lastTokenDate, ");
             sb.append("\n       cont.lastTokenId AS lastTokenId, ");
@@ -2825,12 +2828,17 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         sb.append("\n     modem.mcu mcu");
         sb.append("\n     LEFT OUTER JOIN ");
         sb.append("\n     cont.status stat");
+        sb.append("\n     LEFT OUTER JOIN ");
+        sb.append("\n     cont.customer cust");
 
         sb.append("\nWHERE cont.supplier.id = :supplierId ");
         sb.append("\nAND   cont.creditType.code IN ('2.2.1', '2.2.2') ");   // prepay, emergency credit
 
         if (!contractNumber.isEmpty()) {
             sb.append("\nAND   cont.contractNumber LIKE :contractNumber ");
+        }
+        if (!phone.isEmpty()) {
+            sb.append("\nAND   cust.mobileNo = :phone ");
         }
         if (!customerNo.isEmpty()) {
             sb.append("\nAND   cont.customer.customerNo LIKE :customerNo ");
@@ -2859,8 +2867,11 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         if (!customerNo.isEmpty()) {
             query.setString("customerNo", customerNo + "%");
         }
-        if (!customerName.isEmpty()) {
-            query.setString("customerName", "%" + customerName + "%");
+        if (!customerNo.isEmpty()) {
+            query.setString("customerNo", customerNo + "%");
+        }
+        if (!phone.isEmpty()) {
+            query.setString("phone", phone);
         }
         if (!mdsId.isEmpty()) {
             query.setString("mdsId", mdsId + "%");

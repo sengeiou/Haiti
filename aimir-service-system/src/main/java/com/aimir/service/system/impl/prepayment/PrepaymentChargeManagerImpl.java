@@ -37,6 +37,7 @@ import com.aimir.dao.system.CodeDao;
 import com.aimir.dao.system.ContractChangeLogDao;
 import com.aimir.dao.system.ContractDao;
 import com.aimir.dao.system.DepositHistoryDao;
+import com.aimir.dao.system.FixedVariableDao;
 import com.aimir.dao.system.LocationDao;
 import com.aimir.dao.system.OperatorDao;
 import com.aimir.dao.system.PrepaymentLogDao;
@@ -52,6 +53,7 @@ import com.aimir.model.system.Code;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.ContractChangeLog;
 import com.aimir.model.system.Customer;
+import com.aimir.model.system.FixedVariable;
 import com.aimir.model.system.Location;
 import com.aimir.model.system.Operator;
 import com.aimir.model.system.PrepaymentLog;
@@ -128,6 +130,9 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
 
     @Autowired
     LocationDao locationDao;
+    
+    @Autowired
+    FixedVariableDao fixedVariableDao;
 
     /**
      * method name : getPrepaymentChargeList<b/>
@@ -150,6 +155,7 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
             map.put("lastTokenDate", TimeLocaleUtil.getLocaleDate((String)map.get("lastTokenDate"), lang, country));
             map.put("currentCredit", ((map.get("currentCredit") != null) ? cdf.format(DecimalUtil.ConvertNumberToDouble(map.get("currentCredit"))) : cdf.format(0d)));
             map.put("currentArrears", ((map.get("currentArrears") != null) ? cdf.format(DecimalUtil.ConvertNumberToDouble(map.get("currentArrears"))) : cdf.format(0d)));
+            map.put("currentArrears2", ((map.get("currentArrears2") != null) ? cdf.format(DecimalUtil.ConvertNumberToDouble(map.get("currentArrears2"))) : cdf.format(0d)));
         }
         
         return result;
@@ -189,7 +195,11 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
             map.put("lastTokenDate", TimeLocaleUtil.getLocaleDate((String)map.get("lastTokenDate"), lang, country));
 //            map.put("currentCredit", ((map.get("currentCredit") != null) ? cdf.format(DecimalUtil.ConvertNumberToDouble(map.get("currentCredit"))) : cdf.format(0d)));
             map.put("balance", ((map.get("balance") != null) ? cdf.format(DecimalUtil.ConvertNumberToDouble(map.get("balance"))) : cdf.format(0d)));
+            map.put("vat", ((map.get("vat") != null) ? cdf.format(DecimalUtil.ConvertNumberToDouble(map.get("vat"))) : cdf.format(0d)));
+            map.put("arrears", ((map.get("arrears") != null) ? cdf.format(DecimalUtil.ConvertNumberToDouble(map.get("arrears"))) : cdf.format(0d)));
+            map.put("arrears2", ((map.get("arrears2") != null) ? cdf.format(DecimalUtil.ConvertNumberToDouble(map.get("arrears2"))) : cdf.format(0d)));
             map.put("chargedArrears", ((map.get("chargedArrears") != null) ? cdf.format(DecimalUtil.ConvertNumberToDouble(map.get("chargedArrears"))) : cdf.format(0d)));
+            map.put("chargedArrears2", ((map.get("chargedArrears2") != null) ? cdf.format(DecimalUtil.ConvertNumberToDouble(map.get("chargedArrears2"))) : cdf.format(0d)));
             map.put("chargedCredit", ((map.get("chargedCredit") != null) ? cdf.format(DecimalUtil.ConvertNumberToDouble(map.get("chargedCredit"))) : cdf.format(0d)));
         }
 
@@ -912,21 +922,21 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
         Boolean isVendor = (Boolean) condition.get("isVendor");
         String supplierName = StringUtil.nullToBlank(condition.get("supplierName"));
         String casherId = StringUtil.nullToBlank(condition.get("casherId"));
-        String dateTime = StringUtil.nullToBlank(condition.get("dateTime"));
         Integer contractId = (Integer) condition.get("contractId");
         String contractNumber = StringUtil.nullToBlank(condition.get("contractNumber"));
         String mdsId = StringUtil.nullToBlank(condition.get("mdsId"));
         String accountId = StringUtil.nullToBlank(condition.get("accountId"));
-        Double amount = (Double) condition.get("amount"); 
+        Double amount = (Double) condition.get("amount");	//실제 충전 금액
         Double arrears = (Double) condition.get("arrears");
-        Double totalAmount = StringUtil.nullToDoubleZero(amount) + StringUtil.nullToDoubleZero(arrears);
+        Double arrears2 = (Double) condition.get("arrears2");
         Double contractDemand = (Double) condition.get("contractDemand");
-        Integer tariffCode = (Integer) condition.get("tariffCode");
         Integer operatorId = (Integer) condition.get("operatorId");
         Double contractPrice = (Double) condition.get("contractPrice");
         Boolean isPartpayment = (Boolean) condition.get("isPartpayment");
         Boolean partpayReset = (Boolean) condition.get("partpayReset");
         Integer payTypeId = (Integer) condition.get("payTypeId");
+        Double totalAmountPaid = (Double) condition.get("totalAmountPaid");	//고객이 지불한 총 금액 (amount+vat+arrears1+2)
+        Double vat = (Double) condition.get("vat");
         
         String rtnStr = "";
         
@@ -972,7 +982,7 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
             Operator updateOperator = operatorDao.get(operatorId);
             Double currentDeposit = updateOperator.getDeposit();
 
-            if ( isVendor && (currentDeposit == null || currentDeposit < totalAmount) ) {
+            if ( isVendor && (currentDeposit == null || currentDeposit < amount) ) {
                 // 잔고 부족 
                 transactionManager.rollback(txStatus);
                 result.put("result", "fail : Insufficient Quota Balance");
@@ -981,17 +991,19 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
 
             String lastChargeDate = StringUtil.nullToBlank(contract.getLastTokenDate());
             Double preCredit = StringUtil.nullToDoubleZero(contract.getCurrentCredit());
-            Double currentCredit = new BigDecimal(StringUtil.nullToZero(contract.getCurrentCredit())).
-                    add(new BigDecimal(amount)).doubleValue();
+            Double currentCredit = new BigDecimal(StringUtil.nullToZero(contract.getCurrentCredit())).add(new BigDecimal(amount)).doubleValue();
             Double preArrears = StringUtil.nullToDoubleZero(contract.getCurrentArrears());
-            Double currnetArrears = new BigDecimal(StringUtil.nullToDoubleZero(contract.getCurrentArrears())).
-                    subtract(new BigDecimal(arrears)).doubleValue();
+            Double preArrears2 = StringUtil.nullToDoubleZero(contract.getCurrentArrears2());
+            Double currnetArrears = new BigDecimal(StringUtil.nullToDoubleZero(contract.getCurrentArrears())).subtract(new BigDecimal(arrears)).doubleValue();
+            Double currnetArrears2 = new BigDecimal(StringUtil.nullToDoubleZero(contract.getCurrentArrears2())).subtract(new BigDecimal(arrears2)).doubleValue();
 
             //지수부 표현으로 화면표시 방지
             NumberFormat f= NumberFormat.getInstance();
             f.setGroupingUsed(true);
             String val = f.format(currnetArrears);
             currnetArrears = Double.parseDouble(val.replace(",", ""));
+            String val2 = f.format(currnetArrears2);
+            currnetArrears2 = Double.parseDouble(val2.replace(",", ""));
 
             Boolean isCutOff = false;    // 차단여부
 
@@ -1007,7 +1019,7 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
             Operator operator = operatorDao.get(operatorId);
             // insert ContractChangeLog
             addContractChangeLog(contract, operator, "lastTokenDate", contract.getLastTokenDate(), DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
-            addContractChangeLog(contract, operator, "chargedCredit", contract.getChargedCredit(), totalAmount);
+            addContractChangeLog(contract, operator, "chargedCredit", contract.getChargedCredit(), amount);
             addContractChangeLog(contract, operator, "currentCredit", contract.getCurrentCredit(), currentCredit.toString());
             addContractChangeLog(contract, operator, "lastChargeCnt", contract.getLastChargeCnt(), lastChargeCnt.toString());
 
@@ -1017,9 +1029,11 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
             }
             
             contract.setLastTokenDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
-            contract.setChargedCredit(totalAmount);
+            contract.setChargedCredit(amount);
             contract.setCurrentCredit(currentCredit);
             contract.setCurrentArrears(currnetArrears);
+            contract.setCurrentArrears2(currnetArrears2);
+            contract.setTotalAmountPaid(totalAmountPaid);
             contract.setLastChargeCnt(lastChargeCnt);
             
             Integer tempPaymentCount = null;
@@ -1088,6 +1102,7 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
             prepaymentLog.setKeyType(keyCode);
             prepaymentLog.setChargedCredit(amount);
             prepaymentLog.setChargedArrears(arrears);
+            prepaymentLog.setChargedArrears2(arrears2);
             prepaymentLog.setLastTokenDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
             prepaymentLog.setLastTokenId(accountId);
             prepaymentLog.setOperator(operator);
@@ -1099,8 +1114,12 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
             prepaymentLog.setPowerLimit(contractDemand);
             prepaymentLog.setPreBalance(preCredit);
             prepaymentLog.setBalance(currentCredit);
+            prepaymentLog.setTotalAmountPaid(totalAmountPaid);
+            prepaymentLog.setVat(vat);
             prepaymentLog.setPreArrears(preArrears);
+            prepaymentLog.setPreArrears2(preArrears2);
             prepaymentLog.setArrears(currnetArrears);
+            prepaymentLog.setArrears2(currnetArrears2);
             prepaymentLog.setLocation(contract.getLocation());
             prepaymentLog.setTariffIndex(contract.getTariffIndex());
             prepaymentLog.setPayType(codeDao.get(payTypeId));
@@ -1108,21 +1127,21 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
             
             log.info("prepaymentLog has been added");
             
-            DepositHistory dh = new DepositHistory();
-            dh.setOperator(updateOperator);
-            dh.setContract(contract);
-            dh.setCustomer(contract.getCustomer());
-            dh.setMeter(meter);
-            dh.setChangeDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
-            dh.setChargeCredit(totalAmount);
-            dh.setDeposit(updateOperator.getDeposit());
-            dh.setPrepaymentLog(prepaymentLog);
-            
-            depositHistoryDao.add(dh);    
+//            DepositHistory dh = new DepositHistory();
+//            dh.setOperator(updateOperator);
+//            dh.setContract(contract);
+//            dh.setCustomer(contract.getCustomer());
+//            dh.setMeter(meter);
+//            dh.setChangeDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
+//            dh.setChargeCredit(amount);
+//            dh.setDeposit(updateOperator.getDeposit());
+//            dh.setPrepaymentLog(prepaymentLog);
+//            
+//            depositHistoryDao.add(dh);    
 
             // operator update
             if ( isVendor ) {
-                updateOperator.setDeposit(currentDeposit - totalAmount);
+                updateOperator.setDeposit(currentDeposit - amount);
             }
             operatorDao.update(updateOperator);
             log.info("operator update is completed");
@@ -1487,6 +1506,7 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
         String address = "";
         String customerAddr = "";
         String meterId = "";
+        String gs1 = "";
         String lastMeterId = "";
         String district = "";
         String tarrif = "";
@@ -1507,6 +1527,7 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
         
         if (contract != null && contract.getMeter() != null) {
             meterId = contract.getMeter().getMdsId();
+            gs1 = contract.getMeter().getGs1();
             lastMeterId = contract.getMeter().getInstallProperty();
             customerName = contract.getCustomer().getName();
         }
@@ -1562,7 +1583,9 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
         result.put("customer", customerName);
         result.put("customerNumber", customerNumber);
         result.put("meter", meterId);
-        result.put("gCode", contract.getContractNumber());
+        result.put("gs1", gs1);
+        result.put("vat", prepaymentLog.getVat() == null ? "" : cdf.format(prepaymentLog.getVat()));
+        result.put("contractNumber", contract.getContractNumber());
         result.put("activity", tarrif);
         result.put("distinct", district);
         result.put("address", address);
@@ -1888,10 +1911,11 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
                 contract = contractDao.get(contractId);
     
                 Double arrears = (Double) ObjectUtils.defaultIfNull(contract.getCurrentArrears() + prepayLog.getChargedArrears(), null);
+                Double arrears2 = (Double) ObjectUtils.defaultIfNull(contract.getCurrentArrears2() + prepayLog.getChargedArrears2(), null);
                 Double balance = (Double) ObjectUtils.defaultIfNull(contract.getCurrentCredit() - prepayLog.getChargedCredit(), null);
                 Double total = StringUtil.nullToDoubleZero(balance) + StringUtil.nullToDoubleZero(arrears);
-                totalAmount = StringUtil.nullToDoubleZero(prepayLog.getChargedArrears()) + 
-                        StringUtil.nullToDoubleZero(prepayLog.getChargedCredit()); 
+//                totalAmount = StringUtil.nullToDoubleZero(prepayLog.getChargedArrears()) + StringUtil.nullToDoubleZero(prepayLog.getChargedCredit()); 
+                totalAmount = (Double) ObjectUtils.defaultIfNull(contract.getTotalAmountPaid(), null);
                         
                 if ( commitedVendor.getRole().getName().equals("vendor")) {
                     commitedVendor = prepayLog.getOperator();
@@ -1900,11 +1924,13 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
                 }
     
                 Double preArrears = contract.getCurrentArrears();
+                Double preArrears2 = contract.getCurrentArrears2();
                 Double preBalance = contract.getCurrentCredit();
                 Double preChargedCredit = contract.getChargedCredit();
                 
                 addContractChangeLog(contract, operator, "currentCredit", preBalance, balance);
                 addContractChangeLog(contract, operator, "currentArrears", preArrears, arrears);
+                addContractChangeLog(contract, operator, "currentArrears2", preArrears2, arrears2);
                 addContractChangeLog(contract, operator, "chargedCredit", preChargedCredit, -totalAmount);
                 
                 //분할납부사용중이면서 해당 로그에 arrears를 charge했던 로그를 취소하는 경우
@@ -1931,6 +1957,7 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
                 //분할납부가 끝난고객의 경우
                 contract.setCurrentCredit(balance);
                 contract.setCurrentArrears(arrears);
+                contract.setCurrentArrears2(arrears2);
                 //수정 전 소스의 프로세스대로 수정했으나 본래 모델에 정의된 본래 사용의도와 동일하지 않음.
                 contract.setChargedCredit(-totalAmount);
                 contractDao.update(contract);
@@ -2084,4 +2111,16 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
         
         return codeMapList;
     }
+
+	@Override
+	public Map<String, Object> getVatByFixedVariable(String name, Integer tariffId, String applydate) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		FixedVariable vat = fixedVariableDao.getFixedVariableDao("CHARGE_TAX", null, applydate);
+		String vatAmount = vat.getAmount();
+		String vatUnit = vat.getUnit();
+		result.put("vatAmount", vatAmount);
+		result.put("vatUnit", vatUnit);
+		return result;
+	}
+    
 }
