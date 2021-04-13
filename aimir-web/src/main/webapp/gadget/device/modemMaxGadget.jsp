@@ -2625,7 +2625,8 @@
 
     // 모뎀 삭제
     function deleteModemInfo() {
-    	CaptchaPanel("delete");
+    	//CaptchaPanel("delete");
+    	DeleteModemPanel();
     }
     
     var captchacount=1;	//틀린 횟수 체크
@@ -2759,7 +2760,7 @@
  			Ext.getCmp('deleteModemWindowPanel').close();
  		} 		
  		
- 		Ext.getCmp('captchaWindowPanel').close();
+ 		//Ext.getCmp('captchaWindowPanel').close();
  		var deleteModemFormPanel =  new Ext.form.FormPanel({ 		      		         		       
  		        id          : 'formpanel',
  		        defaultType : 'fieldset', 		 
@@ -5446,7 +5447,8 @@
     	}
     	
     	function getSetParameterCaptcha(){
-    		CaptchaPanel("getSetParam");
+    		//CaptchaPanel("getSetParam");
+    		getSetParameter();
     	}
     	// Get/Set Parameter
 		// 0x2002 Modem Reset Time
