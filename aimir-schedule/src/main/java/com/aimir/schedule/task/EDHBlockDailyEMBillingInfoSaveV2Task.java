@@ -279,7 +279,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         		for (int i = 1; i < sequenceBillings.size(); i++) {
         			BigDecimal bill = convertBigDecimal(sequenceBillings.get(i).getBill());
         			saveBillingBlockTariff(contract, meter, sequenceBillings.get(i));		// BillingBlockTariff 저장
-        			contract.setCurrentCredit(currentCredit.subtract(bill).doubleValue());
+        			contract.setCurrentCredit(sequenceBillings.get(i).getBalance());
         			log.info("[Update CurrentCredit Contract:"+ contract.getContractNumber() + " ] MeterId[" + meter.getMdsId() + "] yyyymmdd[" + lastDayEM.getYyyymmdd() + "] "
         					+ "==> BlockBill[" + sequenceBillings.get(i).getBill() + "] lastAccumulateBill[" + sequenceBillings.get(i-1).getBill()+ "]");
     			}
@@ -530,7 +530,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     
     private boolean validateBillingValues(Contract contract, DayEM lastDayEM, BillingBlockTariff lastBilling) {
     	boolean result = false;
-    	
+    	log.info("### validateBillingValues   contract "+contract.getTariffIndexId()+"  lastDayEM "+lastDayEM.getValue()+"  lastBilling "+lastBilling.getActiveEnergy());
     	// Day_EM value가 이전 activeEnergy 보다 클떄 진행하고 작으면 Wrong 테이블 저장
     	if(lastDayEM.getValue() < lastBilling.getActiveEnergy()) {
     		addWrongBillingBlockTariff(contract, contract.getMeter(), lastDayEM, lastBilling, BILLING_BLOCK_ERROR_CODE.AEPS);

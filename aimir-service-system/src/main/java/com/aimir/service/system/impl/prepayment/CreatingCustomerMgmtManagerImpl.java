@@ -468,7 +468,8 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 String mobileNo = getCellValue(row.getCell(8)).trim();
                 String meterNumber = getCellValue(row.getCell(9)).trim().isEmpty() ? null : getCellValue(row.getCell(9)).trim();
                 String currentArrears1 = getCellValue(row.getCell(10)).trim().isEmpty() ? null : getCellValue(row.getCell(10)).trim();            
-                String currentArrears2 = getCellValue(row.getCell(11)).trim().isEmpty() ? null : getCellValue(row.getCell(11)).trim();            
+                String currentArrears2 = getCellValue(row.getCell(11)).trim().isEmpty() ? null : getCellValue(row.getCell(11)).trim();
+                String carrier = getCellValue(row.getCell(12)).trim();
                 TariffType tariffType = tariffTypeDao.findByCondition("name", tariffIndexID);
                 Code serviceTypeCode = codeDao.getCodeIdByCodeObject(MeterType.EnergyMeter.getServiceType());
                 Code statusCode = codeDao.getCodeIdByCodeObject(Code.NORMAL);
@@ -496,8 +497,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 customer.setMobileNo(mobileNo);
                 customer.setSmsYn(1);
                 customer.setSupplier(supplier);
-//                customerDao.merge(customer);
-//                customerDao.flushAndClear();
+                customer.setCarrier(carrier);
                 logger.debug("customerDao.add finished : " + new Timestamp(date.getTime()) );
                 
                 DeviceModel model = deviceModelDao.findByCondition("name", "I210+");
@@ -510,8 +510,6 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 	meter.setLocation(location);
                 	meter.setModel(model);
                 	meter.setWriteDate(dateTime);
-//                	meterDao.merge(meter);
-//                	meterDao.flushAndClear();
                 	newMeter = meter;
                 }
                 
