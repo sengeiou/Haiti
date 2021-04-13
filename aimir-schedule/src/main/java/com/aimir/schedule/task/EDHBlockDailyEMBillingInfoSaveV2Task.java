@@ -259,7 +259,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
             	
         	// 마지막 시간이 현재 시간보다 작으면 월 기준으로 선불 계산한다.
         	// compareTo - lastAccumulateDate가 lastDayEM 날짜 보다 작으면 음수 반환, 크면 양수 반환, 같으면 0 리턴
-        	if (lastBilling.getYyyymmdd().compareTo(lastDayEM.getYyyymmdd()) < 0) {
+        	if (lastBilling.getYyyymmdd().compareTo(lastDayEM.getYyyymmdd()) <= 0 && lastBilling.getActiveEnergy() < lastDayEM.getValue()) {
         		
         		// DAY_EM 마지막 날짜와 lastAccumulateDate간의 시간차이를 비교하여 일수로 반환
         		long diffDays = Long.parseLong(calculateDiffDays(lastDayEM.getYyyymmdd(), lastBilling.getYyyymmdd()));
@@ -275,7 +275,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         		sequenceBillings = gatherBillingBlock(sequenceBillings, diffDays, tariffEMList, contract, meter, lastDayEM);
         		
                 // Contract 잔액을 차감한다.
-        		BigDecimal currentCredit = convertBigDecimal(contract.getCurrentCredit());
+        		BigDecimal currentCredit = contract.getCurrentCredit() != null ? convertBigDecimal(contract.getCurrentCredit()) : new BigDecimal(0);
         		for (int i = 1; i < sequenceBillings.size(); i++) {
         			BigDecimal bill = convertBigDecimal(sequenceBillings.get(i).getBill());
         			saveBillingBlockTariff(contract, meter, sequenceBillings.get(i));		// BillingBlockTariff 저장
