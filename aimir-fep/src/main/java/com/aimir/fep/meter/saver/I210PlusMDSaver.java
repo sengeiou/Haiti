@@ -13,6 +13,7 @@ import com.aimir.fep.command.conf.SM110Meta;
 import com.aimir.fep.command.mbean.CommandGW;
 import com.aimir.fep.command.mbean.CommandGW.OnDemandOption;
 import com.aimir.fep.meter.AbstractMDSaver;
+import com.aimir.fep.meter.data.LPData;
 import com.aimir.fep.meter.entry.IMeasurementData;
 import com.aimir.fep.meter.parser.I210Plus;
 import com.aimir.fep.util.CmdUtil;
@@ -38,74 +39,77 @@ public class I210PlusMDSaver extends AbstractMDSaver {
 		
 		Meter meter = meterDao.get(parser.getMDevId());
 		
-		// Save LP Data(S)
-		saveLPUsingLpNormalization(
-				CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()),
-				md,
-				parser.getLPData(),
-				parser.getMDevId(),
-				parser.getDeviceId(),
-				parser.getMDevType(), 
-				parser.getMeteringTime());
-		// Save LP Data(E)
-		
-		// Save MeteringDataEM(S)		
-		try {
-			MeteringDataEM meteringDataEM = new MeteringDataEM();
-			meteringDataEM.setCh1(parser.getTOTAL_DEL_KWH());
-			meteringDataEM.setCh2(parser.getTOTAL_DEL_PLUS_RCVD_KWH());
-			meteringDataEM.setCh3(parser.getTOTAL_DEL_MINUS_RCVD_KWH());
-			meteringDataEM.setCh4(parser.getTOTAL_REC_KWH());
-			meteringDataEM.setDeviceId(meter.getMcu().getSysID());
-			meteringDataEM.setDeviceType(DeviceType.MCU.toString());
-			meteringDataEM.setHhmmss(parser.getMeteringTime().substring(8));
-			meteringDataEM.setMeteringType(CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()).getType());
-			meteringDataEM.setValue(parser.getTOTAL_DEL_KWH());
-			meteringDataEM.setWriteDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
-			meteringDataEM.setYyyymmdd(parser.getMeteringTime().substring(0,8));
-			// PK
-			meteringDataEM.setMDevId(parser.getMDevId());
-			meteringDataEM.setYyyymmddhhmmss(parser.getMeteringTime());
-			meteringDataEM.setDst(parser.getDst());
-			meteringDataEM.setMDevType(parser.getMDevType().toString());
+		if(parser.isSavingLP()) {
+			// Save LP Data(S)
+			saveLPUsingLpNormalization(
+					CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()),
+					md,
+					parser.getLPData(),
+					parser.getMDevId(),
+					parser.getDeviceId(),
+					parser.getMDevType(), 
+					parser.getMeteringTime());
 			
-			meteringDataEM.setLocation(meter.getLocation());	
-			meteringDataEM.setMeter(meter);
-			meteringDataEM.setModem(meter.getModem());
-			meteringDataEM.setSupplier(meter.getSupplier());
-			meteringDataDao.merge(meteringDataEM);
-		} catch (Exception e) {
-			log.error(e,e);
-		}
-		// Save MeteringDataEM(E)
-		
-		// Save switch status(S)
-		try {
-			boolean switchStatus = parser.getACTUAL_SWITCH_STATE(); // 0 – Open, 1 – Close 
-			log.debug("meter.getMeterStatus() : " + meter.getMeterStatus());
-			log.debug("switchStatus(true=normal,false=cutoff) : " + switchStatus);
-			if(switchStatus){
-				String code = CommonConstants.getMeterStatusCode(MeterStatus.Normal);
-				meter.setMeterStatus(CommonConstants.getMeterStatus(code));
-			}else{
-				String code = CommonConstants.getMeterStatusCode(MeterStatus.CutOff);
-				meter.setMeterStatus(CommonConstants.getMeterStatus(code));
+			// Save LP Data(E)
+			
+			// Save MeteringDataEM(S)		
+			try {
+				MeteringDataEM meteringDataEM = new MeteringDataEM();
+				meteringDataEM.setCh1(parser.getTOTAL_DEL_KWH());
+				meteringDataEM.setCh2(parser.getTOTAL_DEL_PLUS_RCVD_KWH());
+				meteringDataEM.setCh3(parser.getTOTAL_DEL_MINUS_RCVD_KWH());
+				meteringDataEM.setCh4(parser.getTOTAL_REC_KWH());
+				meteringDataEM.setDeviceId(meter.getMcu().getSysID());
+				meteringDataEM.setDeviceType(DeviceType.MCU.toString());
+				meteringDataEM.setHhmmss(parser.getMeteringTime().substring(8));
+				meteringDataEM.setMeteringType(CommonConstants.MeteringType.getMeteringType(parser.getMeteringType()).getType());
+				meteringDataEM.setValue(parser.getTOTAL_DEL_KWH());
+				meteringDataEM.setWriteDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
+				meteringDataEM.setYyyymmdd(parser.getMeteringTime().substring(0,8));
+				// PK
+				meteringDataEM.setMDevId(parser.getMDevId());
+				meteringDataEM.setYyyymmddhhmmss(parser.getMeteringTime());
+				meteringDataEM.setDst(parser.getDst());
+				meteringDataEM.setMDevType(parser.getMDevType().toString());
+				
+				meteringDataEM.setLocation(meter.getLocation());	
+				meteringDataEM.setMeter(meter);
+				meteringDataEM.setModem(meter.getModem());
+				meteringDataEM.setSupplier(meter.getSupplier());
+				meteringDataDao.merge(meteringDataEM);
+			} catch (Exception e) {
+				log.error(e,e);
 			}
-			log.debug("meter.getMeterStatus() : " + meter.getMeterStatus());
-			//meter's last_read_date
-            log.debug("meter.LastReadDate Update: ["+meter.getLastReadDate()+"] --> ["+parser.getMeteringTime().substring(0,10) + "0000" +"].");
-            //meter.setLastReadDate(parser.getMeteringTime().substring(0,14));
-            meter.setLastReadDate(parser.getMeteringTime().substring(0,10) + "0000");                   
-            if(parser.getLPData() != null && parser.getLPData().length > 0) {
-            	if(parser.getLPData()[0].getCh()[0] != null) {
-            		//I210+일 때는 채널이 1개밖에 없다. 만약 모델이 추가되면 수정해야 한다.
-            		meter.setLastMeteringValue(parser.getLPData()[0].getCh()[0]);	
-            	}
-            }
-            
-			meterDao.update(meter);
-		} catch (Exception e) {
-			log.error(e,e);
+			// Save MeteringDataEM(E)
+			
+			// Save switch status(S)
+			try {
+				boolean switchStatus = parser.getACTUAL_SWITCH_STATE(); // 0 – Open, 1 – Close 
+				log.debug("meter.getMeterStatus() : " + meter.getMeterStatus());
+				log.debug("switchStatus(true=normal,false=cutoff) : " + switchStatus);
+				if(switchStatus){
+					String code = CommonConstants.getMeterStatusCode(MeterStatus.Normal);
+					meter.setMeterStatus(CommonConstants.getMeterStatus(code));
+				}else{
+					String code = CommonConstants.getMeterStatusCode(MeterStatus.CutOff);
+					meter.setMeterStatus(CommonConstants.getMeterStatus(code));
+				}
+				log.debug("meter.getMeterStatus() : " + meter.getMeterStatus());
+				//meter's last_read_date
+	            log.debug("meter.LastReadDate Update: ["+meter.getLastReadDate()+"] --> ["+parser.getMeteringTime().substring(0,10) + "0000" +"].");
+	            //meter.setLastReadDate(parser.getMeteringTime().substring(0,14));
+	            meter.setLastReadDate(parser.getMeteringTime().substring(0,10) + "0000");                   
+	            if(parser.getLPData() != null && parser.getLPData().length > 0) {
+	            	if(parser.getLPData()[0].getCh()[0] != null) {
+	            		//I210+일 때는 채널이 1개밖에 없다. 만약 모델이 추가되면 수정해야 한다.
+	            		meter.setLastMeteringValue(parser.getLPData()[0].getCh()[0]);	
+	            	}
+	            }
+	            
+				meterDao.update(meter);
+			} catch (Exception e) {
+				log.error(e,e);
+			}
 		}
 		// Save switch status(E)
 

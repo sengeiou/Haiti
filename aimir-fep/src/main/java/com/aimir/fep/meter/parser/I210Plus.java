@@ -5,10 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import com.aimir.constants.CommonConstants.MeterStatus;
 import com.aimir.fep.meter.data.EventLogData;
 import com.aimir.fep.meter.data.Instrument;
@@ -39,6 +39,8 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 
 	private static Log log = LogFactory.getLog(I210Plus.class);
 
+	private final String STD_START_CHAR = "I";			
+	
 	private byte[] rawData = null;
 
 	private ArrayList<LPData> lpDataList = new ArrayList<LPData>();
@@ -53,6 +55,7 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 	private MT115 mt115 = null;
 	private ArrayList<NT509> nt509List = new ArrayList<NT509>();
 	
+	private String START_CHR = null;
 	private Double TOTAL_DEL_KWH = null;
 	private Double TOTAL_DEL_PLUS_RCVD_KWH = null;
 	private Double TOTAL_DEL_MINUS_RCVD_KWH = null;
@@ -145,6 +148,7 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 					log.debug(mt019.printAll());
 					
 					// Set Veriables
+					START_CHR = mt019.getSTART_CHR();
 					TOTAL_DEL_KWH = mt019.getTOTAL_DEL_KWH();
 					TOTAL_DEL_PLUS_RCVD_KWH = mt019.getTOTAL_DEL_PLUS_RCVD_KWH();
 					TOTAL_DEL_MINUS_RCVD_KWH = mt019.getTOTAL_DEL_MINUS_RCVD_KWH();
@@ -315,7 +319,7 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 
 	public LPData[] getLPData() {
 		//return lpDataList.toArray(new LPData[0]);
-		
+
 		Double[] ch = new Double[1];
 		ch[0] = (this.getTOTAL_DEL_KWH() / 10000);
 
@@ -801,7 +805,7 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 		}
 		return null;
 	}
-
+/*
 	public boolean isSavingLP() {
 
 		try {
@@ -816,7 +820,19 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 		}
 		return false;
 	}
-
+*/
+	
+	public boolean isSavingLP() {
+		if(STD_START_CHAR.equals(START_CHR)) {
+			return true;
+		} else {
+			log.info("ERROR START CHR. please check hex.");
+			return false;
+		}
+		
+	}
+	
+	
 	public MeteringFail getMeteringFail() {
 //        if(nuri_t002 != null){
 //            return nuri_t002.getMeteringFail();
