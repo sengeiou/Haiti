@@ -225,7 +225,7 @@
     }
 
     Ext.onReady(function() {
-        Ext.QuickTips.init();
+    	Ext.QuickTips.init();
         // editAuth 가 true 가 아니면 CUD 제한
         if (editAuth == "true") {
             $("#pane-Customer-Info-Button").show();
@@ -461,11 +461,11 @@
 
                         $("#creditTypeU").change(function(value){   
                             var selectedText = document.getElementById('creditTypeU').options[document.getElementById('creditTypeU').selectedIndex].id;
-                            if (selectedText == "2.2.1") { //prepay
+                            if (selectedText == "2.2.1"||selectedText == "2.2.2") {
                                 $('#prepaymentStatusTr').show();
                                 $('#prepaymentStatusTr2').show();
                                 $('#prepaymentStatusTr3').show();
-                                $('#prepaymentStatusTr4').show();
+                                //$('#prepaymentStatusTr4').show();
                                 $('#prepaymentStatusTr5').show();
 
                                 $('.contractUpdate').css('bottom', '50');
@@ -574,10 +574,10 @@
                         }
 
                         // old arrears
-                        if(json.contract.oldArrears == null || json.contract.oldArrears == "") {
-                            $("#oldArrearsU").val("");
+                        if(json.contract.currentArrears2 == null || json.contract.currentArrears2 == "") {
+                            $("#currentArrears2U").val("");
                         } else {
-                            $("#oldArrearsU").val(json.contract.oldArrears);
+                            $("#currentArrears2U").val(json.contract.currentArrears2);
                         }
 
                         // Current arrears
@@ -778,11 +778,11 @@
                  dataType : "json",
                  url:'${ctx}/gadget/system/getPartpayInfoByContractNumber.do',
                  success: function(json,status) {
-                     if ( json.contract.creditTypeCode == "2.2.1" ) {
+                     if ( json.contract.creditTypeCode == "2.2.1" || json.contract.creditTypeCode == "2.2.2") {
                              //숫자가 아닐경우.
-                             if(isNaN($("#oldArrearsU").val())) {
-                                 $("#oldArrearsU").val('');
-                                 $("#oldArrearsU").focus();
+                             if(isNaN($("#currentArrears2U").val())) {
+                                 $("#currentArrears2U").val('');
+                                 $("#currentArrears2U").focus();
                                  isReturn=true;
                              }
 
@@ -862,7 +862,7 @@
                         'id' : contractId,
                         'prevContractId' : selectContractId,
                         'customerId' : customerId,
-                        "oldArrears" : $("#oldArrearsU").val(),
+                        "currentArrears2" : $("#currentArrears2U").val(),
                         'currentArrears' : $('#currentArrearsU').val(),
                         'arrearsContractCount' : $('#arrearsContractCountU').val(),
                         'chargeAvailable' : (chargeAvailable == null) ? "" : chargeAvailable,
@@ -943,10 +943,10 @@
                         'supplier' : supplierId,
                         //'id' : contractId,
                         //"curPage" : curPage,
+                        //"currentArrears" : $("#currentArrearsU").val(),
                         "customerId" : customerId,
                         "prevContractId" : selectContractId,
                         "isPartpayment" : isPartpayment,
-                        "oldArrears" : $("#oldArrearsU").val(),
                         "initArreara" : initArrears
                     },
                     dataType : "json",
@@ -1624,7 +1624,7 @@
                     var creditTypeCode= data.contract.creditTypeCode;
 
                     //Payment Stat.가 선불 타입인 경우..
-                    if (creditTypeCode == '2.2.1') {
+                    if (creditTypeCode == '2.2.1' || creditTypeCode == '2.2.2') {
                         $('#prepaymentTr01_1').show();
                         $('#prepaymentTr01_2').show();
                         $('#prepaymentTr01_3').show();
@@ -1632,13 +1632,13 @@
                         $('#prepaymentTr01_5').show();
                         $('#prepaymentTr01_6').show();
                         
-                        $('#prepaymentTr02').show();
+                        //$('#prepaymentTr02').show();
                         $('#prepaymentTr03').show();
-                        $('#prepaymentTr04').show();
-                        $('#prepaymentTr05').show();
+                        //$('#prepaymentTr04').show();
+                        //$('#prepaymentTr05').show();
 
                         $('#currentArrears').val(data.contract.currentArrears);
-                        $('#oldArrearsD').val(data.contract.oldArrears);
+                        $('#currentArrears2').val(data.contract.currentArrears2);
 
                         //arrearsPaymentCount값이 null인 경우는 분할납부를 완료한 경우만 가능.
                         if(isPartpayment == 'true' && data.contract.arrearsPaymentCount != null && data.contract.arrearsPaymentCount >= 0 &&
@@ -1727,7 +1727,7 @@
                         });
 
                         //버튼 위치 조정
-                        $('.contractInfoUpdateForm').css('bottom', '50');
+                        //$('.contractInfoUpdateForm').css('bottom', '50');
                     } else {
                         $('#prepaymentTr01_1').hide();
                         $('#prepaymentTr01_2').hide();
@@ -2237,7 +2237,12 @@
     var contractNumber= "";
 
     //트리그리드 JsonStore fetch func
-    function customerExtTreeSearch() {
+    function customerExtTreeSearch() {    	
+        
+    	if(window.opener != null && window.opener.customerObj != null){
+        	$('#customerNoA').val(window.opener.customerObj.customerId);
+        }
+    	
         treeData = new Ext.data.JsonStore({
             autoLoad: {params:{start: 0, limit: 10}},
             url: "${ctx}/gadget/system/customerMax.do?param=customerExtList",
@@ -2279,8 +2284,14 @@
                          });
                 },
                 load: function(store, record, options){
-                    //setContractCount(treeData.reader.jsonData.totalCustomer);
-                    $("#contractCount").html(treeData.reader.jsonData.totalContractCount);
+                    /* vendor에서 링크로 접속 여부 확인 */
+                    if(window.opener != null && window.opener.customerObj != null){
+                    	customerId = record[0].id;
+                    	loadCustomerInfo();
+                    }else{
+	                    //setContractCount(treeData.reader.jsonData.totalCustomer);
+	                    $("#contractCount").html(treeData.reader.jsonData.totalContractCount);
+                    }
                     makeCustomerTree();
                 }
             }
@@ -3844,19 +3855,19 @@
                                         <td class="padding-r20px2">
                                             <input type="text" id="contractStartDate" readonly="readonly" class="border-trans bg-trans"/>
                                         </td> 
-                                        <td id="prepaymentTr01_1" style="display: none;" class="bold withinput">
-                                            <fmt:message key="aimir.arrears" />
-                                        </td>
-                                        <td id="prepaymentTr01_2" style="display: none;" class="padding-r20px2">
-                                            <input type="text" id="oldArrearsD" readonly="readonly" class="border-trans bg-trans"/>
-                                        </td> 
 										<!-- 미수금 -->
                                         <td id="prepaymentTr01_3" style="display: none;" class="bold withinput">
-                                            <fmt:message key="aimir.arrears" />
+                                            <fmt:message key="aimir.arrears" /> A
                                         </td>
                                         <td id="prepaymentTr01_4" style="display: none;"  class="padding-r20px2">
                                             <input type="text" id="currentArrears" readonly="readonly" class="border-trans bg-trans"/>
                                         </td>
+                                        <td id="prepaymentTr01_1" style="display: none;" class="bold withinput">
+                                            <fmt:message key="aimir.arrears" /> B
+                                        </td>
+                                        <td id="prepaymentTr01_2" style="display: none;" class="padding-r20px2">
+                                            <input type="text" id="currentArrears2" readonly="readonly" class="border-trans bg-trans"/>
+                                        </td> 
                                         <!-- 미수금 납부상태-->
                                         <td id="prepaymentTr01_5" style="display: none;"  class="bold withinput">
 											<fmt:message key='aimir.payment.contractCnt'/>
@@ -3868,12 +3879,6 @@
                                
                                     <tr id="prepaymentTr02" style="display: none;">
                                         <!-- 바코드 -->
-                                        <td class="bold withinput">
-                                            <fmt:message key="aimir.barcode"/>
-                                        </td>
-                                        <td>
-                                            <input type='text' id='barcode' readonly class="border-trans bg-trans" style="width: 120px;"/>
-                                        </td>
                                         <td class="bold withinput">
                                             <fmt:message key='aimir.debtType'/>
                                         </td>
@@ -3899,6 +3904,12 @@
                                     </tr>
                                     
                                     <tr id="prepaymentTr03" style="display: none;">
+                                        <td class="bold withinput">
+                                            <fmt:message key="aimir.barcode"/>
+                                        </td>
+                                        <td>
+                                            <input type='text' id='barcode' readonly class="border-trans bg-trans" style="width: 120px;"/>
+                                        </td>
                                         <td class="bold withinput">
                                             <fmt:message key="aimir.charging" />
                                         </td>
@@ -4100,17 +4111,17 @@
 
                                     <!-- 지불상태(선불을 선택했을 경우 보여주는 div -->
                                     <tr id="prepaymentStatusTr">
-                                     	<td class="bold withinput">
-                                            <fmt:message key="aimir.oldArrears"/>
-                                        </td>
-                                        <td>
-                                            <input type='text' id='oldArrearsU' name="oldArrearsU" style="width: 150px"/>
-                                        </td>
                                         <td class="bold withinput">
-                                            <fmt:message key="aimir.arrears"/>
+                                            <fmt:message key="aimir.arrears"/> A
                                         </td>
                                         <td>
                                             <input type='text' id='currentArrearsU' name="currentArrears" style="width: 150px"/>
+                                        </td>
+                                     	<td class="bold withinput">
+                                            <fmt:message key="aimir.arrears"/> B
+                                        </td>
+                                        <td>
+                                            <input type='text' id='currentArrears2U' name="currentArrears2U" style="width: 150px"/>
                                         </td>
                                         
                                         <td class="bold withinput">
@@ -4121,7 +4132,7 @@
                                         </td>
                                     </tr>
                                     
-                                    <tr id="prepaymentStatusTr4">
+                                    <tr id="prepaymentStatusTr4" style="display: none;">
                                     	<td class="bold withinput">
                                     		<fmt:message key='aimir.debtType'/>
                                     	</td>
@@ -4531,7 +4542,7 @@ function bottomContractStatusTab(){
             $("#creditTypeU").change(function(value) {
                 //var selectedText = document.getElementById('creditTypeU').options[document.getElementById('creditTypeU').selectedIndex].text;
                 var selectedText = $("#creditTypeU option:selected").get(0).id;
-                if (selectedText == '2.2.1') { //prepay
+                if (selectedText == '2.2.1'||selectedText == '2.2.2') { //prepay
                     $('#prepaymentStatusTr').show();
                 } else {
                     $('#prepaymentStatusTr').hide();

@@ -156,6 +156,7 @@
                     $("#InfoEmail").html(json.customer.email);
                     $("#InfoTelephoneNo").html(json.customer.telephoneNo);
                     $("#InfoMobileNo").html(json.customer.mobileNo);
+                    $("#InfoCarrier").html(json.customer.carrier);
                     
                     var loginId = json.customer.loginId;
                     if(loginId != null && loginId != "" && loginId != "null" && loginId != '"null"') {
@@ -209,6 +210,7 @@
                     $("#InfoEmail").html("");
                     $("#InfoTelephoneNo").html("");
                     $("#InfoMobileNo").html("");
+                    $("#InfoCarrier").html("");
                     //남아공 필드 추가
                     $("#identityOrCompanyRegNoDetail").html("");
                     $("#initialsDetail").html("");
@@ -595,8 +597,12 @@
 							class="input-fake"></div></td>
 				</tr>
 				<tr>
-					<th class="darkgraybold11pt"><fmt:message
-							key="aimir.celluarphone" />
+					<th class="darkgraybold11pt"><fmt:message key="aimir.carrier" />
+						<!--통신사--></th>
+					<td class="gray11pt"><div id="InfoCarrier" class="input-fake"></div></td>
+				</tr>
+				<tr>
+					<th class="darkgraybold11pt"><fmt:message key="aimir.celluarphone" />
 						<!--핸드폰번호--></th>
 					<td class="gray11pt"><div id="InfoMobileNo" class="input-fake"></div></td>
 				</tr>
@@ -605,8 +611,7 @@
                     <td class="gray11pt"><div id="InfoLoginId" class="input-fake"></div></td>
                 </tr>
 				<tr>
-					<th class="darkgraybold11pt">SMS <fmt:message
-							key='aimir.operator.receiveSetting' /></th>
+					<th class="darkgraybold11pt">SMS <fmt:message key='aimir.operator.receiveSetting' /></th>
 					<td class="gray11pt"><div id="InfoSmsYn" class="input-fake"></div></td>
 				</tr>
 				<tr>

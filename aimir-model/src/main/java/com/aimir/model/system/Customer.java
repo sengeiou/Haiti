@@ -44,6 +44,8 @@ public class Customer extends User implements JSONString{
 	
 	private String mobileNo;
 	
+	private String carrier;
+	
 	// Land Line for South Africa
 	private String telephoneNo;
 
@@ -178,6 +180,13 @@ public class Customer extends User implements JSONString{
 		this.mobileNo = mobileNo;
 	}
 
+	public String getCarrier() {
+		return carrier;
+	}
+	public void setCarrier(String carrier) {
+		this.carrier = carrier;
+	}
+
 	public String getTelephoneNo() {
 		return telephoneNo;
 	}
@@ -272,6 +281,7 @@ public class Customer extends User implements JSONString{
 	        + "',co2MileId:'" + this.co2MileId  
 	        + "',telephoneNo:'" + this.telephoneNo
 	        + "',mobileNo:'" + this.mobileNo
+	        + "',carrier:'" + this.carrier
 	        + "',email:'" + this.getEmail()  
 	        + "',smsYn:'" + this.smsYn  
 	        + "',emailYn:'" + this.emailYn

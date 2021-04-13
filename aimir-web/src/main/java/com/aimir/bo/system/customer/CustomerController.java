@@ -608,6 +608,9 @@ public class CustomerController {
             if (customer.getMobileNo() == null) {
                 customer.setMobileNo("");
             }
+            if (customer.getCarrier() == null) {
+                customer.setCarrier("");
+            }
         }
 
         model.addObject("customer", customer);

@@ -2386,7 +2386,7 @@ public class ContractManagerImpl implements ContractManager {
 //            	contract1.setBarcode(barcode);
 //            }
 //        }
-        if (contract.getCreditType() != null && contract.getCreditType().getId() == prepaymentCodeId) {
+        if (contract.getCreditType() != null && (contract.getCreditType().getId() == prepaymentCodeId || contract.getCreditType().getId() == emergencyCodeId)) {
             contract1.setCreditStatus(contract.getCreditStatus());
             contract1.setPrepaymentThreshold(contract.getPrepaymentThreshold());
 
@@ -2394,9 +2394,9 @@ public class ContractManagerImpl implements ContractManager {
                 contract1.setBarcode(barcode);
             }
             
-            contract1.setOldArrears(contract.getOldArrears());
             
             contract1.setCurrentArrears(contract.getCurrentArrears());
+            contract1.setCurrentArrears2(contract.getCurrentArrears2());
             addContractChangeLog(preContractArrears, contract.getCurrentArrears(), "currentArrears", startDatetime, writeDatetime, customer, operator, contract);
             
             if(isPartpayment) {
@@ -2433,10 +2433,10 @@ public class ContractManagerImpl implements ContractManager {
         dao.update(contract1);
         dao.flushAndClear();
         
-        //분할납부일 경우 적용
+        /*//분할납부일 경우 적용
         //선불고객이면서 고객의 미수금이 입력되었을 때 고객에게 SMS 문자를 전송한다. 이때 미수금은 initial Credit(initArrears)를 제외하고 판단한다
         Double currentArrears = contract.getCurrentArrears() == null ? 0.0 : contract.getCurrentArrears();
-        if(isPartpayment && (contract.getCreditType() != null && contract.getCreditType().getId() == prepaymentCodeId) &&
+        if(isPartpayment && (contract.getCreditType() != null && (contract.getCreditType().getId() == prepaymentCodeId || contract.getCreditType().getId() == emergencyCodeId)) &&
         		!(preContractArrears.equals(contract.getCurrentArrears())) && (currentArrears > initArrears)) {
     		try {
 	    		Supplier supplier = supplierDao.getSupplierById(contract1.getSupplierId());
@@ -2463,7 +2463,7 @@ public class ContractManagerImpl implements ContractManager {
     		} catch (Exception e) {
     			logger.error(e,e);
 			}
-    	}
+    	}*/
     }
 
     /**

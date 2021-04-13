@@ -1005,7 +1005,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         sb.append("\n       c.receiptNumber AS receiptNumber, ");
         sb.append("\n       c.amountPaid AS amountPaid, ");
         sb.append("\n       c.serviceType2 AS serviceType2, ");
-        sb.append("\n       c.oldArrears AS oldArrears, ");
+        sb.append("\n       c.currentArrears2 AS currentArrears2, ");
         sb.append("\n       c.currentArrears AS currentArrears, ");
         sb.append("\n       c.firstArrears AS firstArrears, ");
         sb.append("\n       c.arrearsPaymentCount AS arrearsPaymentCount, ");

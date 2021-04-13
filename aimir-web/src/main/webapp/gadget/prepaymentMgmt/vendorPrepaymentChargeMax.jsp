@@ -826,7 +826,9 @@
       columns: [
           {header: "<fmt:message key='aimir.contractNumber'/>", dataIndex: 'contractNumber'}
          ,{header: "<fmt:message key='aimir.customername'/>", dataIndex: 'customerName'}
-         ,{header: "<fmt:message key='aimir.celluarphone'/>", dataIndex: 'phone'}
+         ,{header: "<fmt:message key='aimir.celluarphone'/>", dataIndex: 'phone', renderer: function(value, metaData, record, index) {
+             var tplBtn = new Ext.Template("<a href='#;' onclick='getCustomerWindowWithID("+record.data.customerNo+");'>"+value+"</a>");
+             return value ? tplBtn.apply():"";}}
          ,{header: "<fmt:message key='aimir.supplystatus'/>", dataIndex: 'statusName'}
          ,{header: "<fmt:message key='aimir.hems.prepayment.lastchargedate'/>", dataIndex: 'lastTokenDate', align: 'center',tooltip: "<fmt:message key='aimir.hems.prepayment.lastchargedate'/>"}
          ,{header: "<fmt:message key='aimir.credit'/>", dataIndex: 'currentCredit',  align: 'right'}
@@ -2387,6 +2389,19 @@
             metadata.attr = 'ext:qtip="' + value + '"';
         }
         return value;
+    }
+    
+    function getCustomerWindowWithID(selectedCustomerId) {
+        if(selectedCustomerId != null && selectedCustomerId != ""){
+           	var customerObj = new Object();
+           	customerObj.customerId = selectedCustomerId;
+
+           	var opts = "width=1400px, height=630px, left=100px, top=100px, location= no, resizable=no, status=no";
+           	customerInfoWindow = window.open("${ctx}/gadget/system/customerMax.do", "Connected Customer ", opts);
+           	customerInfoWindow.opener.customerObj = customerObj;
+        }else{
+            Ext.Msg.alert('<fmt:message key='aimir.message'/>','<fmt:message key="aimir.extjs.empty"/>');
+        }
     }
 
     /*]]>*/

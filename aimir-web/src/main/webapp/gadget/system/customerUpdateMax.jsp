@@ -93,6 +93,13 @@
                 if (mobileNo != "null") {
                     $("#mobileNo").val(mobileNo);
                 }
+                
+                var carrier = customer.carrier;
+
+                if (carrier != "null") {
+                    $("#carrier").val(carrier);
+                }
+                $("#carrier").selectbox();
 
                 originalLoginId = customer.loginId;
                 if(originalLoginId != null && originalLoginId != "" 
@@ -618,6 +625,15 @@
                     <tr><th class="darkgraybold11pt"><fmt:message key='aimir.tel.no'/><!-- 유선전화 --></th>
                         <td class="gray11pt">
                             <input name="telephoneNo" id="telephoneNo" type="text"></td>
+                    </tr>
+                    <tr><th class="darkgraybold11pt"><fmt:message key='aimir.carrier'/><!-- 통신사 --></th>
+                        <td class="gray11pt">
+                            <select name="carrier" id="carrier" type="text">
+                            	<option value=""> </option>
+                            	<option value="Digicel">Digicel</option>
+                            	<option value="Natcom">Natcom</option>
+                            </select>
+                        </td>
                     </tr>
                     <tr><th class="darkgraybold11pt"><fmt:message key='aimir.celluarphone'/><!-- 핸드폰번호 --></th>
                         <td class="gray11pt">
