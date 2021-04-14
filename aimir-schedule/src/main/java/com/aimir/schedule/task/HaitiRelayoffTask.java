@@ -132,7 +132,7 @@ public class HaitiRelayoffTask extends ScheduleTask {
 		}
 		
 		if(checkBreakRelayTime()) {
-			log.info("Can't relay off because it's the after " + BREAK_RELAY_OFF_HOUR +" o'clock " );
+			log.info("Can't relay off because it's the after : " + BREAK_RELAY_OFF_HOUR +" o'clock ~ " + BREAK_REALY_ON_HOUR + " o'clock");
 			return;
 		}
 		
