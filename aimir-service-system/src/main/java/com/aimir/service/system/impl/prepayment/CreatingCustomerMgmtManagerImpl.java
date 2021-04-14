@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -69,7 +70,9 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
 	@Resource(name="transactionManager")
     HibernateTransactionManager txManager;
 	
-	private int batchSize = 100;
+	private int batchSize = 10;
+	private static int totalSize = 0;
+	private static int forSize = 0;
 	
     protected static Log logger = LogFactory.getLog(CreatingCustomerMgmtManagerImpl.class);
 
@@ -383,7 +386,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
      * @param supplierId
      * @return
      */
-    @Transactional(readOnly=false)
+//    @Transactional(readOnly=false)
     public Map<String, Object> saveBulkCreatingCustomerByExcelXLSX(String excel, Integer supplierId) {
     	Timestamp timestamp = new Timestamp(System.currentTimeMillis());
     	Date date = new Date();
@@ -419,6 +422,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
         XSSFSheet sheet = wb.getSheetAt(0);
         
         try {
+        	logger.info("before validateSheet supplier: "+supplier+" location : "+location);
         	errorList = validateSheet(sheet, supplier, location);
         	
         	if (errorList.size() <= 0) {
@@ -446,12 +450,16 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
     }
 
     private List<List<Object>> saveRows(List<Row> entities, Supplier supplier, Location location) {
+    	TransactionStatus txStatus = null;
     	List<List<Object>> errorList = null;
     	String contractNumber = null;
     	String customerNo = null;
     	String customerName = null;
     	String tariffIndexID = null;
+    	
         try {
+        	txStatus = txManager.getTransaction(null);
+        	
     		errorList = new ArrayList<List<Object>>();
     		Date date = new Date();
     		
@@ -487,77 +495,134 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
 
                 // Add
                 String dateTime = TimeUtil.getCurrentTime();
-
-                Customer customer = customerDao.findByCondition("customerNo", customerNo) == null ? new Customer() : customerDao.findByCondition("customerNo", customerNo);
-                customer.setCustomerNo(customerNo);
-                customer.setName(customerName);
-                customer.setAddress1(userAddress1);
-                customer.setAddress2(userAddress2);
-                customer.setAddress3(userAddress3);
-                customer.setMobileNo(mobileNo);
-                customer.setSmsYn(1);
-                customer.setSupplier(supplier);
-                customer.setCarrier(carrier);
-                customerDao.merge(customer);
-                customerDao.flushAndClear();
+                
+                logger.info("### Customer 생성 customerNo : "+customerNo);
+//                Customer customer = customerDao.findByCondition("customerNo", customerNo) == null ? new Customer() : customerDao.findByCondition("customerNo", customerNo);
+                Customer customer = customerDao.findByCondition("customerNo", customerNo);
+                if(customer == null) {
+                	customer = new Customer();
+                	customer.setCustomerNo(customerNo);
+                    customer.setName(customerName);
+                    customer.setAddress1(userAddress1);
+                    customer.setAddress2(userAddress2);
+                    customer.setAddress3(userAddress3);
+                    customer.setMobileNo(mobileNo);
+                    customer.setSmsYn(1);
+                    customer.setSupplier(supplier);
+                    customer.setCarrier(carrier);
+                    customerDao.add(customer);
+                }else {
+                	customer.setCustomerNo(customerNo);
+                	customer.setName(customerName);
+                	customer.setAddress1(userAddress1);
+                	customer.setAddress2(userAddress2);
+                	customer.setAddress3(userAddress3);
+                	customer.setMobileNo(mobileNo);
+                	customer.setSmsYn(1);
+                	customer.setSupplier(supplier);
+                	customer.setCarrier(carrier);
+                	customerDao.update(customer);
+                }
+//                customerDao.flushAndClear();
+                logger.info("### Customer 저장 : "+customer.toString());
                 logger.debug("customerDao.add finished : " + new Timestamp(date.getTime()) );
                 
                 DeviceModel model = deviceModelDao.findByCondition("name", "I210+");
                 
                 Meter newMeter = new Meter();
                 if (meterNumber != null && !"".equals(meterNumber)) {
-                	Meter meter = meterDao.findByCondition("mdsId", meterNumber);
+                	logger.info("### newMeter 생성 meterNumber : "+meterNumber+".");
+                	Meter meter = meterDao.findByCondition("mdsId", meterNumber.toString());
+                	if(meter == null) {
+                		errorList.add(getErrorRecord(customerNo, customerName, contractNumber, tariffIndexID, "Unregistered meter"));
+                		continue;
+                	}
+                	
+                	logger.info("### Meter 조회 : "+meter.toString());
                 	meter.setMdsId(meterNumber);
                 	meter.setSupplier(supplier);;
                 	meter.setLocation(location);
                 	meter.setModel(model);
                 	meter.setWriteDate(dateTime);
-                	meterDao.merge(meter);
-                	meterDao.flushAndClear();
+                	meterDao.update(meter);
+//                	meterDao.flushAndClear();
+                	logger.info("### Meter 저장 : "+meter.toString());
                 	newMeter = meter;
                 }
-                
-                Contract contract = contractDao.findByCondition("contractNumber", contractNumber) == null ? new Contract() : contractDao.findByCondition("contractNumber", contractNumber);
-                contract.setContractNumber(contractNumber);
-                contract.setLocation(location);
-                contract.setServiceTypeCode(serviceTypeCode);   // Energy
-                contract.setCreditType(creditTypeCode);         // emergency credit
-                contract.setStatus(statusCode);					// Normal
-                contract.setTariffIndex(tariffType);			// TariffType
-                contract.setContractDate(contractDate);
-                contract.setChargeAvailable(true);
-                contract.setSupplier(supplier);
-                contract.setCustomer(customer);
-                contract.setCurrentCredit(contract.getCurrentCredit() == null ? 0.0 : contract.getCurrentCredit());
-                contract.setCurrentArrears(currentArrears1 == null  ?  0.0 : Double.parseDouble(currentArrears1));
-                contract.setCurrentArrears2(currentArrears2 == null  ?  0.0 : Double.parseDouble(currentArrears2));
-                contract.setEmergencyCreditAvailable(true);
-                contract.setEmergencyCreditMaxDuration(365);
-                contract.setEmergencyCreditStartTime(dateTime);
-                if (meterNumber != null && !"".equals(meterNumber)) {
-                	contract.setMeter(newMeter);
+                logger.info("### Contract 생성 contractNumber : "+contractNumber);
+//                Contract contract = contractDao.findByCondition("contractNumber", contractNumber) == null ? new Contract() : contractDao.findByCondition("contractNumber", contractNumber);
+                Contract contract = contractDao.findByCondition("contractNumber", contractNumber);
+                if(contract == null) {
+                	contract = new Contract();
+                	contract.setContractNumber(contractNumber);
+                    contract.setLocation(location);
+                    contract.setServiceTypeCode(serviceTypeCode);   // Energy
+                    contract.setCreditType(creditTypeCode);         // emergency credit
+                    contract.setStatus(statusCode);					// Normal
+                    contract.setTariffIndex(tariffType);			// TariffType
+                    contract.setContractDate(contractDate);
+                    contract.setChargeAvailable(true);
+                    contract.setSupplier(supplier);
+                    contract.setCustomer(customer);
+                    contract.setCurrentCredit(contract.getCurrentCredit() == null ? 0.0 : contract.getCurrentCredit());
+                    contract.setCurrentArrears(currentArrears1 == null  ?  0.0 : Double.parseDouble(currentArrears1));
+                    contract.setCurrentArrears2(currentArrears2 == null  ?  0.0 : Double.parseDouble(currentArrears2));
+                    contract.setEmergencyCreditAvailable(true);
+                    contract.setEmergencyCreditMaxDuration(365);
+                    contract.setEmergencyCreditStartTime(dateTime);
+                    if (meterNumber != null && !"".equals(meterNumber)) {
+                    	contract.setMeter(newMeter);
+                    }
+                    contractDao.add(contract);
+                }else {
+                	contract.setContractNumber(contractNumber);
+                	contract.setLocation(location);
+                	contract.setServiceTypeCode(serviceTypeCode);   // Energy
+                	contract.setCreditType(creditTypeCode);         // emergency credit
+                	contract.setStatus(statusCode);					// Normal
+                	contract.setTariffIndex(tariffType);			// TariffType
+                	contract.setContractDate(contractDate);
+                	contract.setChargeAvailable(true);
+                	contract.setSupplier(supplier);
+                	contract.setCustomer(customer);
+                	contract.setCurrentCredit(contract.getCurrentCredit() == null ? 0.0 : contract.getCurrentCredit());
+                	contract.setCurrentArrears(currentArrears1 == null  ?  0.0 : Double.parseDouble(currentArrears1));
+                	contract.setCurrentArrears2(currentArrears2 == null  ?  0.0 : Double.parseDouble(currentArrears2));
+                	contract.setEmergencyCreditAvailable(true);
+                	contract.setEmergencyCreditMaxDuration(365);
+                	contract.setEmergencyCreditStartTime(dateTime);
+                	if (meterNumber != null && !"".equals(meterNumber)) {
+                		contract.setMeter(newMeter);
+                	}
+                	contractDao.update(contract);
                 }
-                contractDao.merge(contract);
-                contractDao.flushAndClear();
+//                contractDao.flushAndClear();
+                logger.info("### Contract 저장  : "+contract.toString());
                 logger.debug("contractDao.add finished : " + new Timestamp(date.getTime()) );
+                logger.info("### saveRows for size :  " + ++forSize +",  totalSize : "+ totalSize);
 			}
-        	
+    		
+    		txManager.commit(txStatus);
 		} catch (Exception e) {
-			e.printStackTrace();
 			logger.error("saveRows - for try catch error");
+			logger.error(e,e);
 			errorList.add(getErrorRecord(customerNo, customerName, contractNumber, tariffIndexID, "Please check the values"));
+			if(txStatus != null) txManager.rollback(txStatus);
 		}
 		return errorList;
 	}
 
 	private List<List<Object>> validateSheet(XSSFSheet sheet, Supplier supplier, Location location) {
-		TransactionStatus txStatus = null;
-		List<List<Object>> errorList = null;
+		List<List<Object>> errorList = new ArrayList<List<Object>>();
 		try {
-			txStatus = txManager.getTransaction(null);
 			// 시트의 row
 	    	Iterator<Row> rowIterator = sheet.iterator();
 	    	List<Row> entities = new ArrayList<Row>();
+	    	
+			if (rowIterator instanceof Collection) {
+				totalSize = ((Collection<?>) rowIterator).size();
+		    }
+	    	
 	    	// row 수 만큼
 	    	while (rowIterator.hasNext()) {
 	    		Row row = rowIterator.next();
@@ -568,12 +633,12 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
 	    		entities.add(row);
 	    		
 	    		if(entities.size() % batchSize == 0) {
-	    			errorList = saveRows(entities, supplier, location);
+	    			errorList.addAll(saveRows(entities, supplier, location));
 	    		}
 	    	}
 	    	
 	    	if(Iterators.size(rowIterator) <= batchSize) {
-	    		errorList = saveRows(entities, supplier, location);
+	    		errorList.addAll(saveRows(entities, supplier, location));
 	    	}
 	    	
 	    	/*List<Object> errs = new ArrayList<Object>();
@@ -591,10 +656,8 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
 	    		}
 			}*/
 	    	
-	    	txManager.commit(txStatus);
 		} catch (Exception e) {
 			logger.error("validateSheet - for try catch error");
-			if(txStatus != null) txManager.rollback(txStatus);
 		}
     	
     	return errorList;
