@@ -154,7 +154,7 @@
         updContractMeterColModel = new Ext.grid.ColumnModel({
             columns: [
                 {id: "mdsId", header: '<fmt:message key='aimir.meterid'/>', dataIndex: 'mdsId'},
-                {id: "gs1", header: '<fmt:message key='aimir.shipment.gs1'/>', dataIndex: 'gs1'}
+                {id: "gs1", header: '<fmt:message key='aimir.meterSN'/>', dataIndex: 'gs1'}
             ],
             defaults: {
                 sortable: true
@@ -1146,6 +1146,11 @@
                     obj.id=creditTypeData[i].id;
                     creditTypeArr[i]=obj;
                 };
+                $('#creditTypeA').loadSelect(creditTypeArr);
+                $("#creditTypeA option:eq(0)").replaceWith("<option value=''>" + allStr + "</option>");
+                $("#creditTypeA").val('');
+                $("#creditTypeA").selectbox();
+                
                 $('#creditTypeB').loadSelect(creditTypeArr);
                 $("#creditTypeB option:eq(0)").replaceWith("<option value=''>" + allStr + "</option>");
                 $("#creditTypeB").val('');
@@ -1833,7 +1838,7 @@
         fmtMessage[27] = "<fmt:message key="aimir.hems.prepayment.balanceaftercharged"/>[<fmt:message key="aimir.price.unit"/>]";//충전 후 잔액[원]
         fmtMessage[28] = "<fmt:message key="aimir.hems.prepayment.transactionNum"/>";//거래번호
         
-        fmtMessage[29] = "<fmt:message key="aimir.shipment.gs1"/>";//gs1 = Meter SN
+        fmtMessage[29] = "<fmt:message key="aimir.meterSN"/>";//gs1 = Meter SN
 
         return fmtMessage;
     }
@@ -2307,37 +2312,42 @@
         var scrollWidth = 22;
         var tgWidth = width - scrollWidth;
         var customerTreeColModel = [
-             {header: "<fmt:message key='aimir.customerid'/>", dataIndex: 'customerNo', width: tgWidth/10,
+        	{header: "<fmt:message key='aimir.contractNumber'/>", dataIndex: 'contractNumber', width: tgWidth/10 * 2,
+                tpl: new Ext.XTemplate('{contractNumber:this.viewToolTip}', {
+                    viewToolTip: addTreeTooltip
+                })
+            } 
+        	,{header: "<fmt:message key='aimir.customerid'/>", dataIndex: 'customerNo', width: tgWidth/10,
                  tpl: new Ext.XTemplate('{customerNo:this.viewToolTip}', {
                      viewToolTip: addTreeTooltip
                  })
              }
-             ,{header: "<fmt:message key='aimir.customername'/>", dataIndex: 'customerName', width: tgWidth/10,
+             ,{header: "<fmt:message key='aimir.customername'/>", dataIndex: 'customerName', width: tgWidth/10 * 2,
                  tpl: new Ext.XTemplate('{customerName:this.viewToolTip}', {
                      viewToolTip: addTreeTooltip
                  })
              }             
-            ,{header: "<fmt:message key='aimir.address'/>", dataIndex: 'address', width: tgWidth/10 * 3,
+            ,{header: "<fmt:message key='aimir.address'/>", dataIndex: 'address', width: tgWidth/10 * 4,
                 tpl: new Ext.XTemplate('{address:this.viewToolTip}', {
                     viewToolTip: addTreeTooltip
                 })
             }
-            ,{header: "<fmt:message key='aimir.supply.type'/>", dataIndex: 'serviceTypeName', width: tgWidth/10}
+            /* ,{header: "<fmt:message key='aimir.supply.type'/>", dataIndex: 'serviceTypeName', width: tgWidth/10}
             ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'meterId', width: tgWidth/10,
                 tpl: new Ext.XTemplate('{meterId:this.viewToolTip}', {
                     viewToolTip: addTreeTooltip
                 })
-            }
-            ,{header: "<fmt:message key='aimir.shipment.gs1'/>", dataIndex: 'gs1', width: tgWidth/10,
+            } */
+            ,{header: "<fmt:message key='aimir.meterSN'/>", dataIndex: 'gs1', width: tgWidth/10,
                 tpl: new Ext.XTemplate('{gs1:this.viewToolTip}', {
                     viewToolTip: addTreeTooltip
                 })
             }
-            ,{header: "<fmt:message key='aimir.sic'/>", dataIndex: 'sicName', width: (tgWidth/10 *2),
+            /* ,{header: "<fmt:message key='aimir.sic'/>", dataIndex: 'sicName', width: (tgWidth/10 *2),
                 tpl: new Ext.XTemplate('{sicName:this.viewToolTip}', {
                     viewToolTip: addTreeTooltip
                 })
-            }
+            } */
         ];
 
         customerTreeRootNode = new Ext.tree.AsyncTreeNode({
@@ -2775,7 +2785,7 @@
                ,{header: fmtMessage[7],  dataIndex: 'SICNAME',         tooltip: fmtMessage[7]}
                ,{header: fmtMessage[8],  dataIndex: 'EMAIL',           tooltip: fmtMessage[8]}
                ,{header: fmtMessage[9],  dataIndex: 'TELEPHONENO',     tooltip: fmtMessage[9]}
-               ,{header: fmtMessage[10], dataIndex: 'MOBILENO',        tooltip: fmtMessage[10], width: (width/43)-4}
+               ,{header: fmtMessage[10], dataIndex: 'MOBILENO',        tooltip: fmtMessage[10]}
             ],
             defaults: {
                 sortable: true
@@ -3284,36 +3294,55 @@
                     <tr>
                         <td class="withinput"><fmt:message key="aimir.contractNumber"/></td>
                         <td><input id="contractNumberA"></td>
+                        
                         <td class="withinput"><fmt:message key="aimir.customername"/></td>
                         <td class="padding-r20px2"><input id="customerNameA" type="text"></td>
-                        <td class="withinput"><fmt:message key="aimir.shipment.gs1"/></td>
-                        <td class="padding-r20px2"><input id="gs1" type="text"></td>
+                        
                         <td class="withinput"><fmt:message key="aimir.location.supplier" /></td>
                         <td class="padding-r20px2">
                             <input type="text" id="locationAText" name="location.name" style="width:142px">
                             <input type="hidden" id="locationA" name="location.id" value="" />
                         </td>
-                        <td class="withinput"><fmt:message key="aimir.address" /></td>
-                        <td><input id="addressA"></td>
-                        <c:if test="${role == 'admin'}">
+                        <td class="withinput"><fmt:message key="aimir.paymenttype" /></td>
+                        <td class="padding-r20px2"><select id="creditTypeA" style="width:125px;"></select></td>
+                        <%-- <td class="withinput"><fmt:message key="aimir.address" /></td>
+                        <td><input id="addressA"></td> --%>
+                        <%-- <c:if test="${role == 'admin'}">
                         	<td class="withinput"><fmt:message key="aimir.operator" /></td>
                         	<td colspan="4" class="padding-r20px2"><select id="operatorA"></select></td>
 
-                        </c:if>
+                        </c:if> --%>
                     </tr>
                     <tr>
                         <td class="withinput"><fmt:message key="aimir.customerid"/></td>
                         <td class="padding-r20px2"><input id="customerNoA" type="text"></td>
-                        <td class="withinput"><fmt:message key="aimir.meterid" /></td>
-                        <td class="padding-r20px2"><input id="mdsIdA"></td>
+                        
+                        <td class="withinput"><fmt:message key="aimir.phoneNumber"/></td>
+                        <td class="padding-r20px2"><input id="phoneNumberA"></td>
+                        
+                        <td class="withinput"><fmt:message key="aimir.barcode"/></td>
+                        <td class="padding-r20px2"><input id="barcodeA"></td>
+                        
                         <td class="withinput"><fmt:message key="aimir.supply.type" /></td>
                         <td class="padding-r20px2"><select id="serviceTypeA" style="width:142px"></select></td>
-                        <td class="withinput"><fmt:message key="aimir.sic" /><!-- 산업분류코드 --></td>
+                        
+                        <!-- <td class="withinput"><fmt:message key="aimir.sic" /></td>
                         <td ><input name="sicAText" id='sicAText' type="text" />
                             <input type="hidden" id="sicIdA" value=""></input>
                             <input type="hidden" id="sicIdsA" value=""></input>
                             <span class="am_button margin-l10 margin-t1px">
-                        </td>
+                        </td> --><!-- 산업분류코드 -->
+                    </tr>
+                    <tr>
+                    	<td class="withinput"><fmt:message key="aimir.meterSN"/></td>
+                        <td class="padding-r20px2"><input id="gs1" type="text"></td>
+                        
+                        <td class="withinput"><fmt:message key="aimir.meterid" /></td>
+                        <td class="padding-r20px2"><input id="mdsIdA"></td>
+                        
+                        <td class="withinput"><fmt:message key="aimir.oldmeterSN" /></td>
+                        <td class="padding-r20px2"><input id="oldmdsIdA"></td>
+                        
                         <c:if test="${role == 'admin'}">
                         	<td class="withinput"><fmt:message key="aimir.contract"/><fmt:message key="aimir.day" /></td>
 	                        <td>
@@ -3375,7 +3404,7 @@
                     <tr>
                         <td class="withinput"><fmt:message key="aimir.meterid" /></td>
                         <td class="padding-r20px2"><input id="mdsIdB" type="text"></td>
-                        <td class="withinput"><fmt:message key="aimir.shipment.gs1" /></td>
+                        <td class="withinput"><fmt:message key="aimir.meterSN" /></td>
                         <td class="padding-r20px2"><input id="gs1B" type="text"></td>
                         <td class="withinput"><fmt:message key="aimir.supplystatus" /></td>
                         <td class="padding-r20px2"><select id="statusB" style="width: 125px"></select></td>
@@ -3509,7 +3538,7 @@
                     <tr>
                         <td class="withinput"><fmt:message key="aimir.meterid" /></td>
                         <td class="padding-r20px2"><input id="mdsIdD"></td>
-                        <td class="withinput"><fmt:message key="aimir.shipment.gs1" /></td>
+                        <td class="withinput"><fmt:message key="aimir.meterSN" /></td>
                         <td class="padding-r20px2"><input id="gs1D"></td>
                         <td class="withinput"><fmt:message key="aimir.supplystatus" /></td>
                         <td class="padding-r20px2"><select id="statusD" style="width:125px;"></select></td>
@@ -3806,7 +3835,7 @@
                                         </td>   
                                                                                                                         
                                         <!-- gs1 -->
-                                        <td class="bold withinput"><fmt:message key="aimir.shipment.gs1" /></td>
+                                        <td class="bold withinput"><fmt:message key="aimir.meterSN" /></td>
                                         <td class="padding-r20px2">
                                             <input type="text" id="meterGs1" readonly class="border-trans bg-trans" style="width: 120px; text-align: left;"/>
                                         </td>  
@@ -4074,7 +4103,7 @@
  
                                         </td>
                                         
-                                        <td class="bold withinput"><fmt:message key="aimir.shipment.gs1"/></td>
+                                        <td class="bold withinput"><fmt:message key="aimir.meterSN"/></td>
                                         <td><input name="meterGs1U" style="width:150px" id="meterGs1U" type="text"/></td>
                                         
                                         <td>
