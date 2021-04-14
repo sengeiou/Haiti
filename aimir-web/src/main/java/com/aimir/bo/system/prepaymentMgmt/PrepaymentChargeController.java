@@ -36,6 +36,7 @@ import com.aimir.dao.prepayment.VendorCasherDao;
 import com.aimir.dao.system.DepositHistoryDao;
 import com.aimir.dao.system.LanguageDao;
 import com.aimir.dao.system.LocationDao;
+import com.aimir.dao.system.MonthlyBillingLogDao;
 import com.aimir.dao.system.OperatorDao;
 import com.aimir.dao.system.PrepaymentLogDao;
 import com.aimir.dao.system.SupplierDao;
@@ -43,6 +44,7 @@ import com.aimir.esapi.AimirAuthenticator;
 import com.aimir.esapi.AimirUser;
 import com.aimir.model.prepayment.VendorCasher;
 import com.aimir.model.system.Contract;
+import com.aimir.model.system.MonthlyBillingLog;
 import com.aimir.model.system.Operator;
 import com.aimir.model.system.Role;
 import com.aimir.model.system.Supplier;
@@ -119,6 +121,9 @@ public class PrepaymentChargeController {
     
     @Autowired
     DebtEntManager debtEntManager;
+    
+    @Autowired
+    MonthlyBillingLogDao monthlyBillingLogDao;
 
     private static final String PASSWORD = "";
     /**
@@ -382,7 +387,8 @@ public class PrepaymentChargeController {
     public ModelAndView loadPrepaymentChargeReceiptPopup(
             @RequestParam("supplierId") Integer supplierId,
             @RequestParam("contractId") Integer contractId,
-            @RequestParam("prepaymentLogId") Long prepaymentLogId) {
+            @RequestParam("prepaymentLogId") Long prepaymentLogId,
+            @RequestParam(required=false, value="mdsId") String mdsId) {
         ModelAndView mav = new ModelAndView();
 
         Map<String, Object> conditionMap = new HashMap<String, Object>();
@@ -403,30 +409,35 @@ public class PrepaymentChargeController {
         String filePath = ESAPI.httpUtilities().getCurrentRequest().getRealPath("/gadget/prepaymentMgmt/vendorCustomerReceiptPopupFor"+supplier.getName()+".jsp");
         File file = new File(filePath);
         
-        mav.addObject("isFirst", (Boolean)result.get("isFirst"));
-        mav.addObject("haspreArrears", (Boolean)(result.get("preArrears") != null || result.get("preArrears2") != null));
+        MonthlyBillingLog monthLog = monthlyBillingLogDao.getLastMonthlyBillingLog(contractId, mdsId);
+        String lastBillingMonth = monthLog.getYyyymm();
+        Double lastServiceCharge = monthLog.getServiceCharge();
         
-        if ((Boolean)result.get("isFirst")) {
-            // 월 정산 영수증 폼
-        	if(monthlyFile.exists())
-        		mav.setViewName("/gadget/prepaymentMgmt/vendorMonthlyReceiptPopupFor"+supplier.getName());
-        	else
-        		mav.setViewName("/gadget/prepaymentMgmt/vendorMonthlyReceiptPopup");
-            mav.addObject("hasArrears", new Boolean(result.get("preArrears") != null).toString());
-        } else {
-            if (result.get("preArrears") != null || result.get("preArrears2") != null) {
-                // 잔여 미수금이 있는 경우 영수증 폼
-            	if(withArrearsFile.exists())
-            		mav.setViewName("/gadget/prepaymentMgmt/vendorCustomerWithArrearsReceiptPopupFor"+supplier.getName());
-            	else
-            		mav.setViewName("/gadget/prepaymentMgmt/vendorCustomerWithArrearsReceiptPopup");
-            } else {
-            	if(file.exists())
-            		mav.setViewName("/gadget/prepaymentMgmt/vendorCustomerReceiptPopupFor"+supplier.getName());
-            	else
-            		mav.setViewName("/gadget/prepaymentMgmt/vendorCustomerReceiptPopup");
-            }
-        }
+        mav.addObject("lastBillingMonth", lastBillingMonth);
+        mav.addObject("lastServiceCharge", lastServiceCharge);
+        mav.setViewName("/gadget/prepaymentMgmt/vendorCustomerWithArrearsReceiptPopupForEDH");
+        
+//        if ((Boolean)result.get("isFirst")) {
+//            // 월 정산 영수증 폼
+//        	if(monthlyFile.exists())
+//        		mav.setViewName("/gadget/prepaymentMgmt/vendorMonthlyReceiptPopupFor"+supplier.getName());
+//        	else
+//        		mav.setViewName("/gadget/prepaymentMgmt/vendorMonthlyReceiptPopup");
+//            mav.addObject("hasArrears", new Boolean(result.get("preArrears") != null).toString());
+//        } else {
+//            if (result.get("preArrears") != null || result.get("preArrears2") != null) {
+//                // 잔여 미수금이 있는 경우 영수증 폼
+//            	if(withArrearsFile.exists())
+//            		mav.setViewName("/gadget/prepaymentMgmt/vendorCustomerWithArrearsReceiptPopupFor"+supplier.getName());
+//            	else
+//            		mav.setViewName("/gadget/prepaymentMgmt/vendorCustomerWithArrearsReceiptPopup");
+//            } else {
+//            	if(file.exists())
+//            		mav.setViewName("/gadget/prepaymentMgmt/vendorCustomerReceiptPopupFor"+supplier.getName());
+//            	else
+//            		mav.setViewName("/gadget/prepaymentMgmt/vendorCustomerReceiptPopup");
+//            }
+//        }
 
         return mav;
     }

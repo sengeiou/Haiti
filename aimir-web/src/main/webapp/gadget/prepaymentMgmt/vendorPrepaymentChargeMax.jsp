@@ -1589,7 +1589,8 @@
           vendor: vendor,
           supplierId: supplierId,
           contractId: rec.contractId || rec.json.contractId,
-          prepaymentLogId: rec.prepaymentLogId || rec.json.prepaymentLogId
+          prepaymentLogId: rec.prepaymentLogId || rec.json.prepaymentLogId,
+          mdsId: rec.mdsId || rec.json.mdsId
         }
         
         if ( receiptPopupWindow ) {

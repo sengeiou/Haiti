@@ -181,13 +181,13 @@
                                     <td>
                                     </td>
                                     <td class='table-header'>
-                                        <fmt:message key='aimir.previous'/>
+                                        <fmt:message key='aimir.before'/> <fmt:message key='aimir.charging'/>
                                     </td>
                                     <td class='table-header'>
-                                        <fmt:message key='aimir.chargeAmount'/>
+                                        <fmt:message key='aimir.charging'/>
                                     </td>
                                     <td class='table-header'>
-                                        <fmt:message key='aimir.next'/>
+                                        <fmt:message key='aimir.after'/> <fmt:message key='aimir.charging'/>
                                     </td>
                                 </tr>
                                 <tr class='tr-credit'>
@@ -232,6 +232,16 @@
                                         ${currentBalance}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>
+                                        <fmt:message key='aimir.prepayment.vat'/>
+                                    </td>
+                                    <td/>
+                                    <td class='table-value'>
+                                        ${vat}
+                                    </td>
+                                    <td/>
+                                </tr>
                             </table>
                         </td>
                     </tr>
@@ -243,7 +253,7 @@
                             ${totalAmountPaid}
                         </td>
                     </tr>
-                    <tr>
+                    <%-- <tr>
                         <td>
                             <fmt:message key="aimir.prepayment.chargedarrears"/> A
                         </td>
@@ -274,7 +284,7 @@
                         <td class="charge-amount">
                             ${amount}
                         </td>
-                    </tr>
+                    </tr>  --%>
                     <tr>
                         <td>
                             <fmt:message key="aimir.prepayment.beforebalance"/>
@@ -293,6 +303,7 @@
                     </tr>
                 </table>
             </td></tr></table>
+            <div style="text-align: center"><fmt:message key="aimir.serviceCharge"/> is ${lastServiceCharge} (${lastBillingMonth})</div>
         </div>
 
     </div>
