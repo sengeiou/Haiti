@@ -545,8 +545,8 @@
         			            , "sicId" :_sicId
                                 , "currentbalanceValue" : $("#currentBalance").val()
                                 , "preMdsId"	: $.trim($("#preMdsIdA").val())
-                                , "currentArrears" : $("#currentArrearsA").val()
-                                , "currentArrears2" : $("#currentArrearsB").val()
+                                /* , "currentArrears" : $("#currentArrearsA").val()
+                                , "currentArrears2" : $("#currentArrearsB").val() */
                                 , "isPartpayment" : isPartpayment
                                 , "debtSaveInfo" : JSON.stringify(debtSaveArrA)
         			        },
