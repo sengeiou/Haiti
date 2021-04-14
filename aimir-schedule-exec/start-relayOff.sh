@@ -7,4 +7,4 @@ do
         kill -9 $pid
 done
 
-mvn -e -f /home/aimir/aimiramm.dev/aimir-schedule-exec/pom-HaitiRelayoffTask.xml -DmdevId= -DdcuSysId= antrun:run 2>&1 > /dev/null &
+mvn -e -f /home/aimir/aimiramm/aimir-schedule-exec/pom-HaitiRelayoffTask.xml -DmdevId= -DdcuSysId= antrun:run 2>&1 > /dev/null &
