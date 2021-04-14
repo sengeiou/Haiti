@@ -70,7 +70,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
 	@Resource(name="transactionManager")
     HibernateTransactionManager txManager;
 	
-	private int batchSize = 10;
+	private int batchSize = 100;
 	private static int totalSize = 0;
 	private static int forSize = 0;
 	
@@ -619,6 +619,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
 	    	Iterator<Row> rowIterator = sheet.iterator();
 	    	List<Row> entities = new ArrayList<Row>();
 	    	
+	    	forSize = 0;
 			if (rowIterator instanceof Collection) {
 				totalSize = ((Collection<?>) rowIterator).size();
 		    }
