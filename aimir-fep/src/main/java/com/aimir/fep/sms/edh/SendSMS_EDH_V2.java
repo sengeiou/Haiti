@@ -100,9 +100,16 @@ public class SendSMS_EDH_V2 {
 	}
 	
 	private String getMobileNumber(String m) {
-		if(m == null) 
+		if(m == null || m.length() != 12)  {
+			log.info("mobile number is Invalid!! mobile number : " + m);
 			return null;
+		}
 		
+		if(!m.startsWith(countryCode)) {
+			log.info("mobile number not startWith | mobile nubmer : " + m +",  countryCode : " +countryCode);
+			return null;
+		}
+		/*
 		StringBuffer buffer = new StringBuffer();
 		if(m.startsWith("010")) {
 			buffer.append("+").append(countryCode).append(m.substring(1, m.length()));
@@ -111,5 +118,7 @@ public class SendSMS_EDH_V2 {
 		}
 		
 		return buffer.toString().replaceAll("-", "");
+		*/
+		return m.replaceAll("-", "");
 	}
 }
