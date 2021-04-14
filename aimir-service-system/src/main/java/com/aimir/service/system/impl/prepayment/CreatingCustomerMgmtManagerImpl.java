@@ -498,6 +498,8 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 customer.setSmsYn(1);
                 customer.setSupplier(supplier);
                 customer.setCarrier(carrier);
+                customerDao.merge(customer);
+                customerDao.flushAndClear();
                 logger.debug("customerDao.add finished : " + new Timestamp(date.getTime()) );
                 
                 DeviceModel model = deviceModelDao.findByCondition("name", "I210+");
@@ -510,6 +512,8 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 	meter.setLocation(location);
                 	meter.setModel(model);
                 	meter.setWriteDate(dateTime);
+                	meterDao.merge(meter);
+                	meterDao.flushAndClear();
                 	newMeter = meter;
                 }
                 
