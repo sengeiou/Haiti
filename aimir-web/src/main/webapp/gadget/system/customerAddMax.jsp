@@ -320,7 +320,13 @@
             if($("#mobileNo").val().length !=0) {
             	mobileNo = $("#mobileNo").val();
             }
+            
+            var carrier;
 
+            if (carrier != "null") {
+                $("#carrier").val(carrier);
+            }
+            $("#carrier").selectbox();
 
             $("#mobileNo").attr("value" , mobileNo);
             $("#telephoneNo").attr("value" , telephoneNo);
@@ -648,6 +654,15 @@
 								<td class="gray11pt">
 									<input name="telephoneNo" id="telephoneNo" type="text"></td>
 							</tr>
+							<tr><th class="darkgraybold11pt"><fmt:message key='aimir.carrier'/><!-- 통신사 --></th>
+		                        <td class="gray11pt">
+		                            <select name="carrier" id="carrier" type="text">
+			                           	<option value=""> </option>
+			                           	<option value="Digicel">Digicel</option>
+			                           	<option value="Natcom">Natcom</option>
+		                            </select>
+		                        </td>
+		                   	</tr>
 							<tr><th class="darkgraybold11pt"><fmt:message key='aimir.celluarphone'/></th>
 								<td class="gray11pt">
 									<input name="mobileNo" id="mobileNo" type="text"></td>

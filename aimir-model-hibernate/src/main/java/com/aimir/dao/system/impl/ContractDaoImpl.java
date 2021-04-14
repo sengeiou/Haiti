@@ -1424,15 +1424,12 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         }
         sb.append("\nFROM Meter mt left outer join mt.meterStatus ms ");
 
-        if (!mdsId.isEmpty()) {
-            sb.append("\nWHERE mt.mdsId LIKE :mdsId ");
-            sb.append("\nAND (mt.meterStatus is null OR ms.name <> :deleteName) ");
-        } else {
-            sb.append("\nWHERE (mt.meterStatus is null OR ms.name <> :deleteName) ");
-        }
+        sb.append("\nWHERE (mt.meterStatus is null OR ms.name <> :deleteName) ");
         
-        if (!gs1.isEmpty()) {
-        	sb.append("\nOR mt.gs1 LIKE :gs1 ");
+        if (!gs1.isEmpty() && !"".equals(gs1)) {
+        	sb.append("\nAND mt.gs1 LIKE :gs1 ");
+        }else if (!mdsId.isEmpty() && !"".equals(mdsId)) {
+            sb.append("\nAND mt.mdsId LIKE :mdsId ");
         }
         
         if (!isCount) {
@@ -1440,11 +1437,10 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         }
 
         Query query = getSession().createQuery(new SQLWrapper().getQuery(sb.toString()));
-        if (!mdsId.isEmpty()) {
+        if (!gs1.isEmpty() && !"".equals(gs1)) {
+        	query.setString("gs1", "%" + gs1 + "%");
+        }else if (!mdsId.isEmpty() && !"".equals(mdsId)) {
             query.setString("mdsId", "%" + mdsId + "%");
-        }
-        if (!gs1.isEmpty()) {
-            query.setString("gs1", "%" + gs1 + "%");
         }
         query.setString("deleteName", MeterStatus.Delete.name());
         if (isCount) {

@@ -335,7 +335,7 @@
                     if ( json.creditType.code == "2.2.1" ) {
                     	$('#meterDiv').css("left",890);
                         $("#pane-creditType-prepay1").show();
-                        $("#pane-creditType-prepay2").show();
+                        //$("#pane-creditType-prepay2").show();
                         $("#pane-creditType-prepay3").show();
                         $("#pane-creditType-prepay4").show();
                         $("#pane-creditType-prepay-update").show();

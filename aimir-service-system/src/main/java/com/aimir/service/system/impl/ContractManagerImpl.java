@@ -2037,7 +2037,7 @@ public class ContractManagerImpl implements ContractManager {
         String initArrears = StringUtil.nullToBlank(conditionMap.get("initArrears"));
         Operator operator = operatorDao.get(operatorId);
 
-        // Update 화면에서 신규등록할 경우 기존 Contract 의 customer 를 null 로 수정한다.
+        // Update 화면에서 신규등록할 경우 기존 Contract 의 customer 를 null 로 수정한다. 
         if (prevContractId != null) {
             Customer prevCustomer = customerDao.get(customerId);
             Contract prevContract = dao.get(prevContractId);
@@ -2111,8 +2111,11 @@ public class ContractManagerImpl implements ContractManager {
 		if(newContract.getCurrentArrears() != null) {
 			addContractChangeLog("", newContract.getCurrentArrears(), "currentArrears", startDatetime, startDatetime, newContract.getCustomer(), operator, newContract);
 		}
+		if(newContract.getCurrentArrears2() != null) {
+			addContractChangeLog("", newContract.getCurrentArrears2(), "currentArrears2", startDatetime, startDatetime, newContract.getCustomer(), operator, newContract);
+		}
 		
-        try {
+/*        try {
         	//분할납부이 경우 적용
         	//담당자가 고객의 Arrears를 등록했을 때 초기 미수금(initArrears)보다 큰 미수금이면 고객에게 SMS 메세지를 전송한다.
 	    	if(isPartpayment && (contract.getCreditType().getId() == prepaymentCodeId || contract.getCreditType().getId() == emergencyCodeId) &&
@@ -2147,7 +2150,7 @@ public class ContractManagerImpl implements ContractManager {
 	    	}
         } catch (Exception e) {
         	logger.error(e,e);
-		}
+		}*/
 		
         return newContract;
     }

@@ -857,7 +857,7 @@
               }
             })
           }         
-         ,{header: "", renderer: saveBtnArea}
+         ,{header: "<fmt:message key='aimir.amount.paid'/>", renderer: saveBtnArea}
       ],
       defaults: {
           sortable: true
