@@ -1287,11 +1287,11 @@
    				
             	if(totalAmountPaid <= 0){
             		Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.amount.paid'/> <fmt:message key='aimir.msg.greater'/> 0" );
-            	}else if(chargeAmount <= 0){
+            	}else if(chargeAmount < 0){
             		Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.total.amount'/> <fmt:message key='aimir.msg.greater'/> 0");
-            	}else if(chargeArrears < 0 || chargeArrears > params.arrears || chargeArrears > totalAmountPaid){
+            	}else if(chargeArrears < 0 || chargeArrears > params.currentArrears || chargeArrears > totalAmountPaid){
             		Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.confirm.arrears.paid'/> A");
-            	}else if(chargeArrears2 < 0 || chargeArrears2 > params.arrears2 || chargeArrears2 > totalAmountPaid){
+            	}else if(chargeArrears2 < 0 || chargeArrears2 > params.currentArrears2 || chargeArrears2 > totalAmountPaid){
             		Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.confirm.arrears.paid'/> B");
             	}else{
    					callback();
@@ -1310,6 +1310,13 @@
 			}else{
 				vat = vatAmount;
 			}
+			
+			if(Number(bCurrentArrears) - chargeArrears == 0){
+				Ext.getCmp('arrearsB').setReadOnly(false);
+			}else{
+				Ext.getCmp('arrearsB').setReadOnly(true);
+			}
+			
 			chargeAmount = totalAmountPaid - chargeArrears - chargeArrears2 - vat;
 			$("#vatB").text(' (='+vat+')');
 			$("#totalAmountB").text(chargeAmount);
@@ -1376,7 +1383,8 @@
 	    				    items : [
 	    				    	{
 		    						xtype : 'label',
-	    							text : "Current Arrears A  =  "+ params.currentArrears,
+		    						id: 'currentArrears',
+	    							html : "Current Arrears A  =  <b id='bCurrentArrears'>"+ params.currentArrears+"</b>",
 	    							anchor: '100%'
 	    						},{
 		    				    	fieldLabel : "Arrears A",
@@ -1393,7 +1401,7 @@
 		    		                },
 	    						},{
 		    						xtype : 'label',
-	    							text : "Current Arrears B  =  "+ params.currentArrears2,
+		    						html : "Current Arrears B  =  <b id='bCurrentArrears2'>"+ params.currentArrears2+"</b>",
 	    							anchor: '100%'
 	    						},{
 		    				    	fieldLabel : "Arrears B",
@@ -2401,6 +2409,30 @@
            	customerInfoWindow.opener.customerObj = customerObj;
         }else{
             Ext.Msg.alert('<fmt:message key='aimir.message'/>','<fmt:message key="aimir.extjs.empty"/>');
+        }
+    }
+    
+    $(document).ready(function(){
+        $(document).bind('keydown',function(e){
+            if (e.keyCode == 123 /* F12 */) {
+                e.preventDefault();
+                alert("F12 is not available.");
+                e.returnValue = false;
+            }
+            if (e.ctrlKey && e.shiftKey) { 
+                e.preventDefault(); 
+                alert("Ctrl + Shift is not available.");
+                e.returnValue = false;
+            }
+        });
+    });
+
+    document.onmousedown=disableclick;
+    function disableclick(event){
+        if (event.button==2) {
+            event.preventDefault(); 
+            alert("Right click is not available.");
+            return false;
         }
     }
 

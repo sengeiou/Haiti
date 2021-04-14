@@ -403,6 +403,9 @@ public class PrepaymentChargeController {
         String filePath = ESAPI.httpUtilities().getCurrentRequest().getRealPath("/gadget/prepaymentMgmt/vendorCustomerReceiptPopupFor"+supplier.getName()+".jsp");
         File file = new File(filePath);
         
+        mav.addObject("isFirst", (Boolean)result.get("isFirst"));
+        mav.addObject("haspreArrears", (Boolean)(result.get("preArrears") != null || result.get("preArrears2") != null));
+        
         if ((Boolean)result.get("isFirst")) {
             // 월 정산 영수증 폼
         	if(monthlyFile.exists())
@@ -895,6 +898,12 @@ public class PrepaymentChargeController {
         Operator vendor = operatorDao.get(operatorId);
         Boolean isVendor = vendor.getRole().getName().equals("vendor");
 
+        if(totalAmountPaid != arrears + arrears2 + vat + amount) {
+        	mav.addObject("result", "Fail");
+        	mav.addObject("descr", "Invalid values.");
+        	return mav;
+        }
+        
         Map<String, Object> conditionMap = new HashMap<String, Object>();
         conditionMap.put("isVendor", isVendor);
         conditionMap.put("supplierId", supplierId);
@@ -915,7 +924,7 @@ public class PrepaymentChargeController {
         conditionMap.put("isPartpayment", isPartpayment);
         conditionMap.put("partpayReset", partpayReset);
         conditionMap.put("payTypeId", payTypeId);
-
+        
         Map<String, Object> result = prepaymentChargeManager.vendorSavePrepaymentCharge(conditionMap);
         mav.addObject("deposit", result.get("deposit"));
         mav.addObject("prepaymentLogId", result.get("prepaymentLogId"));
