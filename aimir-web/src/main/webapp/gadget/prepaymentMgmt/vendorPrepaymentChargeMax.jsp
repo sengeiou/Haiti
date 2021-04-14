@@ -1311,7 +1311,7 @@
 				vat = vatAmount;
 			}
 			
-			if(Number(bCurrentArrears) - chargeArrears == 0){
+			if(Number($("#bCurrentArrears").val()) - chargeArrears == 0){
 				Ext.getCmp('arrearsB').setReadOnly(false);
 			}else{
 				Ext.getCmp('arrearsB').setReadOnly(true);
