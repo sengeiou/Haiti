@@ -1295,11 +1295,11 @@ public class CustomerController {
             	contract.setCurrentCredit(Double.parseDouble(currentbalanceValue));
             }
             
-            String initArrears = prop.getProperty("prepay.init.arrears");
+/*            String initArrears = prop.getProperty("prepay.init.arrears");
             initArrears = (initArrears == null || initArrears.isEmpty()) ? null : initArrears;
             if(contract.getCurrentArrears() == null || "".equals(contract.getCurrentArrears())) {
             	contract.setCurrentArrears((initArrears == null) ? null : Double.parseDouble(initArrears));
-            }
+            }*/
             
             if(contract.getPrepaymentThreshold() == null || "".equals(contract.getPrepaymentThreshold())) {
             	String initAlertBalance = prop.getProperty("prepay.init.alertBalance");
@@ -1333,7 +1333,7 @@ public class CustomerController {
             conditionMap.put("operatorId", operatorId);
             conditionMap.put("serviceType2", serviceType2);
             conditionMap.put("isPartpayment", isPartpayment);
-            conditionMap.put("initArrears", initArrears);
+            //conditionMap.put("initArrears", initArrears);
 
             if(debtInfoList.size() > 0) {
             	conditionMap.put("debtSaveInfo", debtInfoList);
@@ -2933,7 +2933,7 @@ public class CustomerController {
      * @return
      */
     @RequestMapping(value = "/gadget/contract/getMeterGridList")
-    public ModelAndView getMeterGridList (@RequestParam("mdsId") String mdsId, @RequestParam("gs1") String gs1) {
+    public ModelAndView getMeterGridList (@RequestParam("mdsId") String mdsId, @RequestParam(value="gs1", required=false) String gs1) {
         ModelAndView mav = new ModelAndView("jsonView");
         HttpServletRequest request = ESAPI.httpUtilities().getCurrentRequest();
 

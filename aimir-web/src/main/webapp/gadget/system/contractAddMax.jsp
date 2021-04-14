@@ -42,6 +42,7 @@
 
     // Meter ID
     var addContractSearchMdsId = "";
+    var addContractSearchGs1 = "";
 
     //매터 그리드 관련 프로퍼티
     var addContractMeterGridOn = false;
@@ -58,12 +59,13 @@
             autoLoad: {params:{start: 0, limit: rowSize}},
             url: "${ctx}/gadget/contract/getMeterGridList.do",
             baseParams: {
-                mdsId : addContractSearchMdsId
+                mdsId : addContractSearchMdsId,
+                gs1 : addContractSearchGs1
             },
             // totol count value
             totalProperty: 'totalCount',
             root: 'result',
-            fields: ["mdsId", "id"],
+            fields: ["mdsId", "id", "gs1"],
             listeners: {
                 beforeload: function(store, options) {
                 options.params || (options.params = {});
@@ -77,12 +79,13 @@
         //Meter model column setting
         addContractMeterColModel = new Ext.grid.ColumnModel({
             columns: [
-                {id: "mdsId", header: '<fmt:message key='aimir.meterid'/>', dataIndex: 'mdsId', width: 296}
+                {id: "mdsId", header: '<fmt:message key='aimir.meterid'/>', dataIndex: 'mdsId'},
+                {id: "gs1", header: '<fmt:message key='aimir.meterSN'/>', dataIndex: 'gs1'}
             ],
             defaults: {
                 sortable: true
                ,menuDisabled: true
-               ,width: 250
+               ,width: 195
            }
         });
 
@@ -94,7 +97,7 @@
                 autoScroll:false,
                 //autoScroll:true,
                 //autoExpandColumn: "mdsId",
-                width: 300,
+                width: 400,
                 style: 'align:center; ',
                 height: 125,
                 stripeRows : true,
@@ -137,8 +140,10 @@
         var row = s.getSelected();
 
         var mdsId = row.get('mdsId');
+        var gs1 = row.get('gs1');
 
         $("#mdsId").val(mdsId);
+        $("#gs1").val(gs1);
     }
 
     //html onload func
@@ -161,6 +166,7 @@
         });
 
         addContractSearchMdsId = "";
+        addContractSearchGs1 = "";
         $("#meterDiv").show();
         getAddContractMeterGridList();
     });
@@ -409,9 +415,9 @@
                 if(isPartpayment == 'true') {
                 if ( json.creditType.code == "2.2.1" ) {
                     //숫자가 아닐경우.
-                    if(isNaN($("#oldArrearsA").val())) {
-                        $("#oldArrearsA").val('');
-                        $("#oldArrearsA").focus();
+                    if(isNaN($("#currentArrearsB").val())) {
+                        $("#currentArrearsB").val('');
+                        $("#currentArrearsB").focus();
                         isReturn=true;
                     }
 
@@ -488,6 +494,7 @@
                 type:"POST",
                 data: {
                     "mdsId" : $("#mdsId").val(),
+                    "gs1" : $("#meterGs1U").val(gs1),
                     "contractNumber" : $.trim($("#contractNumber2").val()),
                     //'threshold' : $('#threshold').val(),//추가
                     "sicId" : _sicId,//추가
@@ -509,10 +516,9 @@
                     'threshold1' : $('#threshold1A').val(),
                     'threshold2' : $('#threshold2A').val(),
                     'threshold3' : $('#threshold3A').val(),
-                    'oldArrears' : $("#oldArrearsA").val(),
                     'currentArrears' : $('#currentArrearsA').val(),
+                    'currentArrears2' : $("#currentArrearsB").val(),
                     'arrearsContractCount' : $('#arrearsContractCount').val(),
-
                     'chargeAvailable' : $('input[name="chargeAvailable"]:checked').val(),
                     'preMdsId' : $.trim($("#preMdsIdA").val()),
                     "isPartpayment" : isPartpayment,
@@ -539,7 +545,8 @@
         			            , "sicId" :_sicId
                                 , "currentbalanceValue" : $("#currentBalance").val()
                                 , "preMdsId"	: $.trim($("#preMdsIdA").val())
-                                , "oldArrears" : $("#oldArrearsA").val()
+                                , "currentArrears" : $("#currentArrearsA").val()
+                                , "currentArrears2" : $("#currentArrearsB").val()
                                 , "isPartpayment" : isPartpayment
                                 , "debtSaveInfo" : JSON.stringify(debtSaveArrA)
         			        },
@@ -563,7 +570,8 @@
                         //,"curPage" : curPage
                         ,"sicId" :_sicId
                         , "preMdsId"	: $.trim($("#preMdsIdA").val())
-                        , "oldArrears" : $("#oldArrearsA").val()
+/*                         , "currentArrears" : $("#currentArrearsA").val()
+                        , "currentArrears2" : $("#currentArrearsB").val() */
                         , "isPartpayment" : isPartpayment
                     },
                     datatype : 'json'
@@ -806,6 +814,7 @@
         $("#serviceTypeCode").trigger("change");
 
     	$("#mdsId").val(info.mdsId);
+    	$("#gs1").val(info.gs1);
     	ContractMeterId = info.meterId;
 
         if (info.status == "") {
@@ -859,7 +868,7 @@
         $("#currentArrearsA").val(info.currentArrears);
         getCurrentArrears = info.currentArrears;
         
-        $("#oldArrearsA").val(info.oldArrears);
+        $("#currentArrearsB").val(info.currentArrears2);
         $("#arrearsContractCount").val(info.arrearsContractCount);
         getArrearsContractCount = info.arrearsContractCount;
         
@@ -893,7 +902,7 @@
     //미터 서치버튼 클릭 event
     $("#meterSearchButton").click(function(){
         addContractSearchMdsId = $("#mdsId").val();
-
+        addContractSearchGs1 = $("#gs1").val();
      	//MeterGridOn= true;
 
      	//미터 리스트 가져오기.
@@ -1065,10 +1074,12 @@
                                     <td><input name="threshold3" style="width:180px" id="threshold3A" type="text"/></td>
                                     <!-- meter id -->
                                     <td class="bold withinput"><fmt:message key="aimir.meterid"/></td>
-
-                                    <!-- meter id 인폿box -->
+                                    <td><input name="mdsId" id="mdsId" type="text" style="width:150px;"/></td>
+                                        
+                                    <td class="bold withinput"><fmt:message key="aimir.meterSN"/></td>
+                                    <td><input name="gs1" style="width:150px" id="gs1" type="text"/></td>
+                                        
                                     <td >
-                                        <input name="mdsId" id="mdsId" type="text" style="width:150px;"/>
 
                                     <!-- search button -->
                                     	<span class="am_button margin-l10 margin-t1px">
@@ -1091,10 +1102,10 @@
                                 </tr>
 
                                 <tr id="pane-creditType-prepay1" style="display:none;">
-                                    <td class="bold withinput"><fmt:message key="aimir.oldArrears"/></td>
-                                    <td><input name="oldArrearsA" id="oldArrearsA" style="width:150px" type="text"/></td>
-                                    <td class="bold withinput"><fmt:message key="aimir.arrears"/><!-- 미수금 --></td>
+                                    <td class="bold withinput"><fmt:message key="aimir.arrears"/> A<!-- 미수금 --></td>
                                     <td><input name="currentArrears" id="currentArrearsA" style="width:150px" type="text" value="${arrears}"/></td>
+                                    <td class="bold withinput"><fmt:message key="aimir.arrears"/> B</td>
+                                    <td><input name="currentArrears2" id="currentArrearsB" style="width:150px" type="text" value="${arrears2}"/></td>
                                     <td class="bold withinput"><fmt:message key="aimir.payment.contractCnt"/><!--지불납부횟수--></td>
                                     <td><input type="text" name="arrearsContractCount" id="arrearsContractCount" style="width:180px;"></td>
                                 </tr>

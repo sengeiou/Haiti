@@ -306,12 +306,13 @@
                         $("#customerNocheckValue").html("<ul><li class='available'><fmt:message key="aimir.dup.available"/></li></ul>");
                         $("#customerNocheckValue").show();
                     } else {
-                        $("#customerNocheckValue").html("<ul><li class='reject'><fmt:message key="aimir.dup.inuse"/></li></ul>");
+                        $("#customerNocheckValue").html("<ul><li class='available'><fmt:message key="aimir.dup.inuse"/></li></ul>");
                         $("#customerNocheckValue").show();
                         $("#customerNo").select();
                         $("#customerNo").focus();
                     }
-                    $("#customerNoCheckYn").val(json.checkYN);
+                    /* $("#customerNoCheckYn").val(json.checkYN); */
+                    $("#customerNoCheckYn").val(true);
                 }
             );
         }
@@ -489,7 +490,7 @@
                 return false;
             }
 
-            $.post('${ctx}/gadget/prepaymentMgmt/sendCertificationSMS.do',
+            /* $.post('${ctx}/gadget/prepaymentMgmt/sendCertificationSMS.do',
                 {mobileNo : mobileNo1 + "-" + mobileNo2 + "-" + mobileNo3},
                 function(json) {
                     var result = json.result;
@@ -504,7 +505,9 @@
                     }
                     $("#certificationCheckYn").val(checkYN);
                 }
-            );
+            ); */
+            var checkYN = "true";
+            $("#certificationCheckYn").val(checkYN);
         }
 
         // open excel download popup
@@ -591,7 +594,7 @@
                                     <input type="text" id="mobileNo1" style="width:40px;"/><input type="text" value="-" class="between" readonly="readonly" tabindex="-1"/>
                                     <input type="text" id="mobileNo2" style="width:50px;"/><input type="text" value="-" class="between" readonly="readonly" tabindex="-1"/>
                                     <input type="text" id="mobileNo3" style="width:50px;"/><input type="hidden" id="certificationCheckYn"/>
-                                    <div id="btn" style="width: 280px;"><ul><li><a onclick="javascript:sendCertificationSMS();" class="on"><fmt:message key="aimir.certification"/></a></li></ul></div>
+                                    <div id="btn" style="width: 280px;"><%-- <ul><li><a onclick="javascript:sendCertificationSMS();" class="on"><fmt:message key="aimir.certification"/></a></li></ul> --%></div>
                                 </td>
                                 <th class="padding-r10px" style="padding-bottom: 7px !important;">
                                     <fmt:message key="aimir.email"/>
