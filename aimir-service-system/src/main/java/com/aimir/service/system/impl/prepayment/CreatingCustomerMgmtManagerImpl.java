@@ -635,6 +635,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
 	    		
 	    		if(entities.size() % batchSize == 0) {
 	    			errorList.addAll(saveRows(entities, supplier, location));
+	    			entities.clear();
 	    		}
 	    	}
 	    	
