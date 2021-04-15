@@ -2331,6 +2331,10 @@ public class CustomerController {
             conditionMap.put("serviceTypeTab", condition[15]);
             conditionMap.put("supplierId", condition[16]);
             conditionMap.put("gs1", condition[17]);
+            conditionMap.put("phoneNumber", condition[18]);
+            conditionMap.put("barcode", condition[19]);
+            conditionMap.put("oldMdsId", condition[20]);
+            conditionMap.put("tariffType", condition[21]);
 
             result = contractManager.getContractsTree(conditionMap);
             total = new Integer(result.size()).longValue();
