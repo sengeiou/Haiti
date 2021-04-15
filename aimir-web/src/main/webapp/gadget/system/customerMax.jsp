@@ -154,7 +154,7 @@
         updContractMeterColModel = new Ext.grid.ColumnModel({
             columns: [
                 {id: "mdsId", header: '<fmt:message key='aimir.meterid'/>', dataIndex: 'mdsId'},
-                {id: "gs1", header: '<fmt:message key='aimir.meterSN'/>', dataIndex: 'gs1'}
+                {id: "gs1", header: '<fmt:message key='aimir.shipment.gs1'/>', dataIndex: 'gs1'}
             ],
             defaults: {
                 sortable: true
@@ -324,6 +324,8 @@
             });
 
         $("#contractStatusTab").subtabs();
+        
+        $('#customer_type').selectbox();
 
         // update 화면 출력
         $("#contractInfoUpdateForm").click(function() {
@@ -463,8 +465,8 @@
                             var selectedText = document.getElementById('creditTypeU').options[document.getElementById('creditTypeU').selectedIndex].id;
                             if (selectedText == "2.2.1"||selectedText == "2.2.2") {
                                 $('#prepaymentStatusTr').show();
-                                $('#prepaymentStatusTr2').show();
-                                $('#prepaymentStatusTr3').show();
+                                //$('#prepaymentStatusTr2').show();
+                                //$('#prepaymentStatusTr3').show();
                                 //$('#prepaymentStatusTr4').show();
                                 $('#prepaymentStatusTr5').show();
 
@@ -1387,6 +1389,11 @@
             conditionArray[13] = $('#serviceTypeA').val();
             conditionArray[15] = $('#contractNumberA').val();
             conditionArray[16] = $('#operatorA').val();
+            conditionArray[17] = $('#phoneNumberA').val();
+            conditionArray[18] = $('#barcodeA').val();
+            conditionArray[19] = $('#oldmdsIdA').val();
+            conditionArray[20] = $('#customer_type').val();
+            
         } else if (serviceTypeTab == 'EM') {
             conditionArray[0] = $('#customerNoB').val();
             conditionArray[1] = $('#customerNameB').val();
@@ -1838,7 +1845,7 @@
         fmtMessage[27] = "<fmt:message key="aimir.hems.prepayment.balanceaftercharged"/>[<fmt:message key="aimir.price.unit"/>]";//충전 후 잔액[원]
         fmtMessage[28] = "<fmt:message key="aimir.hems.prepayment.transactionNum"/>";//거래번호
         
-        fmtMessage[29] = "<fmt:message key="aimir.meterSN"/>";//gs1 = Meter SN
+        fmtMessage[29] = "<fmt:message key="aimir.shipment.gs1"/>";//gs1 = Meter SN
 
         return fmtMessage;
     }
@@ -2269,7 +2276,13 @@
                 address: $('#addressA').val(),
                 serviceType: $('#serviceTypeA').val(),
                 serviceTypeTab: serviceTypeTab,
-                operatorId: $('#operatorA').val()
+                operatorId: $('#operatorA').val(),
+                barcode: $('#barcodeA').val(),
+                oldMdsId: $('#oldmdsIdA').val(),
+                operatorId: $('#operatorA').val(),
+                phoneNumber : $('#phoneNumberA').val(),
+            	barcode : $('#barcodeA').val(),
+            	tariffType : $('#customer_type').val().toString()
             },
             reader: new Ext.data.JsonReader({
                 root: 'root',
@@ -2338,7 +2351,7 @@
                     viewToolTip: addTreeTooltip
                 })
             } */
-            ,{header: "<fmt:message key='aimir.meterSN'/>", dataIndex: 'gs1', width: tgWidth/10,
+            ,{header: "<fmt:message key='aimir.shipment.gs1'/>", dataIndex: 'gs1', width: tgWidth/10,
                 tpl: new Ext.XTemplate('{gs1:this.viewToolTip}', {
                     viewToolTip: addTreeTooltip
                 })
@@ -2943,6 +2956,7 @@
             serviceType : conditionArray[13],
             serviceTypeTab : conditionArray[14],
             gs1 : conditionArray[16],
+            //tariffType:
         };
 
         store = new Ext.data.JsonStore({
@@ -3118,6 +3132,11 @@
         conditions[15] = serviceTypeTab;
         conditions[16] = supplierId;
         conditions[17] = $('#gs1').val();
+        conditions[18] = $('#phoneNumberA').val();
+        conditions[19] = $('#barcodeA').val();
+        conditions[20] = $('#oldmdsIdA').val();
+        conditions[21] = $('#customer_type').val();
+        
 
         obj.condition = conditions;
         obj.fmtMessage = fmtMessage;
@@ -3312,6 +3331,8 @@
                         	<td colspan="4" class="padding-r20px2"><select id="operatorA"></select></td>
 
                         </c:if> --%>
+						<td class="gray11pt withinput" style="width:60px;"><fmt:message key="aimir.contract.tariff.type"/></td>
+						<td><form:select id="customer_type"  path="tariffType" items="${tariffType}" style="width:230px;"/></td>
                     </tr>
                     <tr>
                         <td class="withinput"><fmt:message key="aimir.customerid"/></td>
@@ -3334,13 +3355,13 @@
                         </td> --><!-- 산업분류코드 -->
                     </tr>
                     <tr>
-                    	<td class="withinput"><fmt:message key="aimir.meterSN"/></td>
+                    	<td class="withinput"><fmt:message key="aimir.shipment.gs1"/></td>
                         <td class="padding-r20px2"><input id="gs1" type="text"></td>
                         
                         <td class="withinput"><fmt:message key="aimir.meterid" /></td>
                         <td class="padding-r20px2"><input id="mdsIdA"></td>
                         
-                        <td class="withinput"><fmt:message key="aimir.oldmeterSN" /></td>
+                        <td class="withinput"><fmt:message key="aimir.oldGs1" /></td>
                         <td class="padding-r20px2"><input id="oldmdsIdA"></td>
                         
                         <c:if test="${role == 'admin'}">
@@ -3404,7 +3425,7 @@
                     <tr>
                         <td class="withinput"><fmt:message key="aimir.meterid" /></td>
                         <td class="padding-r20px2"><input id="mdsIdB" type="text"></td>
-                        <td class="withinput"><fmt:message key="aimir.meterSN" /></td>
+                        <td class="withinput"><fmt:message key="aimir.shipment.gs1" /></td>
                         <td class="padding-r20px2"><input id="gs1B" type="text"></td>
                         <td class="withinput"><fmt:message key="aimir.supplystatus" /></td>
                         <td class="padding-r20px2"><select id="statusB" style="width: 125px"></select></td>
@@ -3538,7 +3559,7 @@
                     <tr>
                         <td class="withinput"><fmt:message key="aimir.meterid" /></td>
                         <td class="padding-r20px2"><input id="mdsIdD"></td>
-                        <td class="withinput"><fmt:message key="aimir.meterSN" /></td>
+                        <td class="withinput"><fmt:message key="aimir.shipment.gs1" /></td>
                         <td class="padding-r20px2"><input id="gs1D"></td>
                         <td class="withinput"><fmt:message key="aimir.supplystatus" /></td>
                         <td class="padding-r20px2"><select id="statusD" style="width:125px;"></select></td>
@@ -3835,7 +3856,7 @@
                                         </td>   
                                                                                                                         
                                         <!-- gs1 -->
-                                        <td class="bold withinput"><fmt:message key="aimir.meterSN" /></td>
+                                        <td class="bold withinput"><fmt:message key="aimir.shipment.gs1" /></td>
                                         <td class="padding-r20px2">
                                             <input type="text" id="meterGs1" readonly class="border-trans bg-trans" style="width: 120px; text-align: left;"/>
                                         </td>  
@@ -4103,7 +4124,7 @@
  
                                         </td>
                                         
-                                        <td class="bold withinput"><fmt:message key="aimir.meterSN"/></td>
+                                        <td class="bold withinput"><fmt:message key="aimir.shipment.gs1"/></td>
                                         <td><input name="meterGs1U" style="width:150px" id="meterGs1U" type="text"/></td>
                                         
                                         <td>
@@ -4222,7 +4243,7 @@
                                         <!-- <td colspan="3"></td> -->
                                     </tr>
 
-                                    <tr id="prepaymentStatusTr2">
+                                    <tr id="prepaymentStatusTr2" style="display:none;">
                                         <td colspan="7">
                                             <span class="withinput" style="font-weight: bold;">
                                                 <fmt:message key="aimir.usingBalanceOfFee" />
@@ -4233,7 +4254,7 @@
                                             </span>
                                         </td>
                                     </tr>
-                                    <tr id="prepaymentStatusTr3">
+                                    <tr id="prepaymentStatusTr3" style="display:none;">
                                         <td colspan="7">
                                             <span class="withinput" style="font-weight: bold;">
                                                 %

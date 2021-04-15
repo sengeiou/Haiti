@@ -516,10 +516,15 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         String customerNo = (String)conditionMap.get("customerNo");
         String customerName = (String)conditionMap.get("customerName");
         String mdsId = (String)conditionMap.get("mdsId");
+        String gs1 = StringUtil.nullToBlank(conditionMap.get("gs1"));
         String sicId = StringUtil.nullToBlank(conditionMap.get("customerType"));
         String operatorId = StringUtil.nullToBlank(conditionMap.get("operatorId"));
         String startDate = StringUtil.nullToBlank(conditionMap.get("startDate"));
         String endDate = StringUtil.nullToBlank(conditionMap.get("endDate"));
+        String phoneNumber = StringUtil.nullToBlank(conditionMap.get("phoneNumber"));
+        String barcode = StringUtil.nullToBlank(conditionMap.get("barcode"));
+        String oldMdsId = StringUtil.nullToBlank(conditionMap.get("oldMdsId"));
+        String tariffType = StringUtil.nullToBlank(conditionMap.get("tariffType"));
         String[] sicIds = sicId.split(",");
         List<Integer> sicIdList = new ArrayList<Integer>();
 
@@ -540,6 +545,8 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         sb.append("FROM Contract cont ");
         sb.append("     RIGHT OUTER JOIN ");
         sb.append("     cont.customer cust ");
+        sb.append("     LEFT OUTER JOIN ");
+        sb.append("     cont.meter me ");
         sb.append("WHERE cust.supplier.id = :supplierId ");
 
         if (!contractNumber.isEmpty()) {
@@ -565,6 +572,22 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("    OR cust.address3 LIKE :address) ");
         }
 
+        if (!"".equals(phoneNumber)) {
+            sb.append("AND   cust.mobileNo = :phoneNumber ");
+        }
+        if (!"".equals(barcode)) {
+            sb.append("AND   cont.barcode = :barcode ");
+        }
+        if (!"".equals(oldMdsId)) {
+            sb.append("AND   cont.preMdsId = :oldMdsId ");
+        }
+        if (!"".equals(tariffType)) {
+            sb.append("AND   cont.tariffIndexId = :tariffType ");
+        }
+        if (!"".equals(gs1)) {
+            sb.append("AND   me.gs1 = :gs1 ");
+        }
+        
         if (!"".equals(serviceType) && !serviceType.equals("null")) {
             sb.append("AND   cont.serviceTypeCode.id = :serviceType ");
         }
@@ -617,6 +640,21 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 
         if (!"".equals(mdsId)) {
             query.setString("mdsId", mdsId+"%");
+        }
+        if (!"".equals(gs1)) {
+            query.setString("gs1", gs1);
+        }
+        if (!"".equals(phoneNumber)) {
+            query.setString("phoneNumber", phoneNumber);
+        }
+        if (!"".equals(barcode)) {
+            query.setString("barcode", barcode);
+        }
+        if (!"".equals(oldMdsId)) {
+            query.setString("oldMdsId", oldMdsId);
+        }
+        if (!"".equals(tariffType)) {
+            query.setInteger("tariffType", Integer.parseInt(tariffType));
         }
 
         if (sicIdList.size() > 0) {
@@ -674,10 +712,15 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
                 sicIdList.add(Integer.valueOf(obj));
             }
         }
-        String gs1 = (String)conditionMap.get("gs1");
+        String gs1 = StringUtil.nullToBlank(conditionMap.get("gs1"));
         String address = (String)conditionMap.get("address");
         String serviceType = (String)conditionMap.get("serviceType");
         String supplierId = (String)conditionMap.get("supplierId");
+        String phoneNumber = StringUtil.nullToBlank(conditionMap.get("phoneNumber"));
+        String barcode = StringUtil.nullToBlank(conditionMap.get("barcode"));
+        String oldMdsId = StringUtil.nullToBlank(conditionMap.get("oldMdsId"));
+        String tariffType = StringUtil.nullToBlank(conditionMap.get("tariffType"));
+        
         List<Integer> locationIdList = (List<Integer>)conditionMap.get("locationIdList");
 
         StringBuilder sb = new StringBuilder();
@@ -687,6 +730,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         } else {
             sb.append("SELECT DISTINCT cust.id AS CUSTOMER_ID, ");
 //            sb.append("       me.gs1 AS GS1, ");
+//            sb.append("       cont.contractNumber AS CONTRACT_NUMBER, ");
             sb.append("       cust.name AS CUSTOMER_NAME, ");
             sb.append("       cust.address AS CUSTOMER_ADDRESS, ");
             sb.append("       cust.address1 AS CUSTOMER_ADDRESS1, ");
@@ -718,20 +762,32 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("    OR cust.address2 LIKE :address ");
             sb.append("    OR cust.address3 LIKE :address) ");
         }
+        if (!"".equals(phoneNumber)) {
+            sb.append("AND   cust.mobileNo = :phoneNumber ");
+        }
         if (!"".equals(serviceType) && !serviceType.equals("null")) {
-            sb.append("AND   cont.serviceTypeCode.id = :serviceType ");
+        	sb.append("AND   cont.serviceTypeCode.id = :serviceType ");
         }
         if(!"".equals(operatorId)) {
-            sb.append("AND   cont.operator.id = :operatorId ");
+        	sb.append("AND   cont.operator.id = :operatorId ");
         }
         if (!"".equals(startDate)) {
-            sb.append("\nAND   cont.contractDate >= :startDate ");
+        	sb.append("\nAND   cont.contractDate >= :startDate ");
         }
         if (!"".equals(endDate)) {
-            sb.append("\nAND   cont.contractDate <= :endDate ");
+        	sb.append("\nAND   cont.contractDate <= :endDate ");
         }
         if (!"".equals(mdsId)) {
-            sb.append("AND   cont.meter.mdsId LIKE :mdsId ");
+        	sb.append("AND   cont.meter.mdsId LIKE :mdsId ");
+        }
+        if (!"".equals(barcode)) {
+            sb.append("AND   cont.barcode = :barcode ");
+        }
+        if (!"".equals(oldMdsId)) {
+            sb.append("AND   cont.preMdsId = :oldMdsId ");
+        }
+        if (!"".equals(tariffType)) {
+            sb.append("AND   cont.tariffIndexId = :tariffType ");
         }
         if (!"".equals(gs1)) {
             sb.append("AND   me.gs1 = :gs1 ");
@@ -781,6 +837,18 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         }
         if (!"".equals(gs1)) {
             query.setString("gs1", gs1);
+        }
+        if (!"".equals(phoneNumber)) {
+            query.setString("phoneNumber", phoneNumber);
+        }
+        if (!"".equals(barcode)) {
+            query.setString("barcode", barcode);
+        }
+        if (!"".equals(oldMdsId)) {
+            query.setString("oldMdsId", oldMdsId);
+        }
+        if (!"".equals(tariffType)) {
+            query.setInteger("tariffType", Integer.parseInt(tariffType));
         }
         if (sicIdList.size() > 0) {
             query.setParameterList("sicIdList", sicIdList);

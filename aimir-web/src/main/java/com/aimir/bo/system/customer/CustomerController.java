@@ -82,6 +82,7 @@ import com.aimir.service.device.MCUManager;
 import com.aimir.service.device.MeterManager;
 import com.aimir.service.device.ModemManager;
 import com.aimir.service.mvm.BillingManager;
+import com.aimir.service.mvm.SearchMeteringDataManager;
 import com.aimir.service.system.CodeManager;
 import com.aimir.service.system.ContractChangeLogManager;
 import com.aimir.service.system.ContractManager;
@@ -197,6 +198,9 @@ public class CustomerController {
     
     @Autowired
     DebtEntManager debtEntManager;
+    
+    @Autowired
+    SearchMeteringDataManager searchMeteringDataManager;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -232,12 +236,14 @@ public class CustomerController {
         String initArrears = prop.getProperty("prepay.init.arrears");
 
         int supplierId = user.getRoleData().getSupplier().getId();
+        Map<String, String> tariffType = searchMeteringDataManager.getTariffTypeList();
 
         mav.addObject("editAuth", authMap.get("cud"));  // 수정권한(write/command = true)
         mav.addObject("supplierId", supplierId);
         mav.addObject("isPartpayment" , (isPartpayment == null || "".equals(isPartpayment)) ? false : isPartpayment);
         mav.addObject("initArrears" , (initArrears == null || "".equals(initArrears)) ? 0 : Integer.parseInt(initArrears));
         mav.addObject("role" , role.getName());
+        mav.addObject("tariffType", tariffType);
         
         return mav;
     }
@@ -2212,6 +2218,10 @@ public class CustomerController {
             @RequestParam("serviceType") String serviceType,
             @RequestParam("serviceTypeTab") String serviceTypeTab,
             @RequestParam("gs1") String gs1,
+            @RequestParam("phoneNumber") String phoneNumber,
+            @RequestParam("barcode") String barcode,
+            @RequestParam("oldMdsId") String oldMdsId,
+            @RequestParam("tariffType") String tariffType,
             @RequestParam(value="operatorId", required=false) String operatorId) {
 
         ModelAndView mav = new ModelAndView("jsonView");
@@ -2255,6 +2265,10 @@ public class CustomerController {
         conditionMap.put("serviceType", serviceType);
         conditionMap.put("serviceTypeTab", serviceTypeTab);
         conditionMap.put("gs1", gs1);
+        conditionMap.put("phoneNumber", phoneNumber);
+        conditionMap.put("barcode", barcode);
+        conditionMap.put("oldMdsId", oldMdsId);
+        conditionMap.put("tariffType", tariffType);
         conditionMap.put("supplierId", supplier.getId().toString());
         conditionMap.put("operatorId", operatorId);
         log.info("startDate["+startDate+"], endDate["+endDate+"]");
