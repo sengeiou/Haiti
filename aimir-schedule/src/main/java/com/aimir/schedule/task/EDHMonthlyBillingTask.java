@@ -251,7 +251,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 		//월 정산 기록이 없다면... 첫번째 월의 사용량을 일할계산한다.
 		if(monthlyBillingLog == null) {
 			String fDate = contract.getContractDate() != null ? contract.getContractDate() : meter.getInstallDate();
-			int installDay = Integer.parseInt(fDate.substring(4, 6));
+			int installDay = Integer.parseInt(fDate.substring(6, 8));
 			
 			Calendar cal = DateTimeUtil.getCalendar(fDate);
 			int monthMaxDay = cal.getMaximum(Calendar.DAY_OF_MONTH);
