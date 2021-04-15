@@ -2291,7 +2291,7 @@
             }),
             totalProperty: 'total',
             root:'root',
-            fields: ["customerName", "location", "customerNo", "serviceType", "chargedCreditView", "expanded", "gs1",
+            fields: [/* "customerName", */ "location", "customerNo", "serviceType", "chargedCreditView", "expanded", "gs1",
                      "iconCls", "serviceTypeName", "meterId", "customerId", "address", "contractId", "contractNumber", "sicName"],
 
             listeners: {
@@ -2325,16 +2325,16 @@
         var scrollWidth = 22;
         var tgWidth = width - scrollWidth;
         var customerTreeColModel = [
-        	{header: "<fmt:message key='aimir.contractNumber'/>", dataIndex: 'contractNumber', width: tgWidth/10 * 2,
-                tpl: new Ext.XTemplate('{contractNumber:this.viewToolTip}', {
-                    viewToolTip: addTreeTooltip
-                })
-            } 
-        	,{header: "<fmt:message key='aimir.customerid'/>", dataIndex: 'customerNo', width: tgWidth/10,
+        	{header: "<fmt:message key='aimir.customerid'/>", dataIndex: 'customerNo', width: tgWidth/10,
                  tpl: new Ext.XTemplate('{customerNo:this.viewToolTip}', {
                      viewToolTip: addTreeTooltip
                  })
              }
+        	,{header: "<fmt:message key='aimir.contractNumber'/>", dataIndex: 'contractNumber', width: tgWidth/10 * 2,
+                tpl: new Ext.XTemplate('{contractNumber:this.viewToolTip}', {
+                    viewToolTip: addTreeTooltip
+                })
+            } 
              ,{header: "<fmt:message key='aimir.customername'/>", dataIndex: 'customerName', width: tgWidth/10 * 2,
                  tpl: new Ext.XTemplate('{customerName:this.viewToolTip}', {
                      viewToolTip: addTreeTooltip

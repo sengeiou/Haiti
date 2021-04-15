@@ -126,14 +126,6 @@
 							${gs1}
 						</td>
 					</tr>
-					<tr>
-						<td>
-							<fmt:message key='aimir.hems.prepayment.transactionNum'/>
-						</td>
-						<td>
-							${lastTokenId}
-						</td>
-					</tr>
                     <tr>
                         <td>
                             <fmt:message key='aimir.residental.activity'/>
@@ -176,68 +168,68 @@
                     </tr>
                     <tr>
                         <td colspan=2 class='td-table'>
-                            <table border='1' class='inner-table' style="width: 100%;">
+                            <table border='1' class='inner-table' style="width: 100%; ">
                                 <tr>
                                     <td>
                                     </td>
-                                    <td class='table-header'>
-                                        <fmt:message key='aimir.before'/> <fmt:message key='aimir.charging'/>
+                                    <td class='table-header' style='font-size: 4vw'>
+                                        <fmt:message key='aimir.before'/><br><fmt:message key='aimir.charging'/>
                                     </td>
-                                    <td class='table-header'>
+                                    <td class='table-header' style='font-size: 4vw'>
                                         <fmt:message key='aimir.charging'/>
                                     </td>
-                                    <td class='table-header'>
-                                        <fmt:message key='aimir.after'/> <fmt:message key='aimir.charging'/>
+                                    <td class='table-header' style='font-size: 4vw'>
+                                        <fmt:message key='aimir.after'/><br><fmt:message key='aimir.charging'/>
                                     </td>
                                 </tr>
                                 <tr class='tr-credit'>
-                                    <td>
+                                    <td class='table-header' style='font-size: 4vw'>
                                         <fmt:message key='aimir.arrears'/> A
                                     </td>
-                                    <td class='table-value'>
+                                    <td class='table-value' style='font-size: 4vw'>
                                         ${preArrears}
                                     </td>
-                                    <td class='table-value'>
+                                    <td class='table-value' style='font-size: 4vw'>
                                         ${arrears}
                                     </td>
-                                    <td class='table-value'>
+                                    <td class='table-value' style='font-size: 4vw'>
                                         ${currentArrears}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td class='table-header' style='font-size: 4vw'>
                                         <fmt:message key='aimir.arrears'/> B
                                     </td>
-                                    <td class='table-value'>
+                                    <td class='table-value' style='font-size: 4vw'>
                                         ${preArrears2}
                                     </td>
-                                    <td class='table-value'>
+                                    <td class='table-value' style='font-size: 4vw'>
                                         ${arrears2}
                                     </td>
-                                    <td class='table-value'>
+                                    <td class='table-value' style='font-size: 4vw'>
                                         ${currentArrears2}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td class='table-header' style='font-size: 4vw'>
                                         <fmt:message key='aimir.balance'/>
                                     </td>
-                                    <td class='table-value'>
+                                    <td class='table-value' style='font-size: 4vw'>
                                         ${preBalance}
                                     </td>
-                                    <td class='table-value'>
+                                    <td class='table-value' style='font-size: 4vw'>
                                         ${amount}
                                     </td>
-                                    <td class='table-value'>
+                                    <td class='table-value' style='font-size: 4vw'>
                                         ${currentBalance}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td class='table-header' style='font-size: 4vw'>
                                         <fmt:message key='aimir.prepayment.vat'/>
                                     </td>
                                     <td/>
-                                    <td class='table-value'>
+                                    <td class='table-value' style='font-size: 4vw'>
                                         ${vat}
                                     </td>
                                     <td/>
@@ -303,7 +295,7 @@
                     </tr>
                 </table>
             </td></tr></table>
-            <div style="text-align: center"><fmt:message key="aimir.serviceCharge"/> is ${lastServiceCharge} (${lastBillingMonth})</div>
+            <div style="text-align: center"><fmt:message key="aimir.serviceCharge"/> is ${lastServiceCharge} <fmt:message key="aimir.price.unit"/></div>
         </div>
 
     </div>
@@ -376,7 +368,7 @@
         };
         var init = function () {
             //eventHandler.insertInitCredit();
-            window.resizeTo(295, 885);
+            window.resizeTo(285, 790);
             bind();
         };
         window.onload = function() {

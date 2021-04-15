@@ -875,13 +875,13 @@
         {header: "<fmt:message key='aimir.arrears'/> A", align: 'right', dataIndex: 'arrears'},
         {header: "<fmt:message key='aimir.prepayment.chargearrears'/> B", align: 'right', dataIndex: 'chargedArrears2'},
         {header: "<fmt:message key='aimir.arrears'/> B", align: 'right', dataIndex: 'arrears2'},
-        {header: "<fmt:message key='aimir.hems.prepayment.transactionNum'/>", dataIndex: 'lastTokenId'},
-        {header: "<fmt:message key='aimir.prepayment.authCode'/>", dataIndex: 'authCode'},
+        {header: "<fmt:message key='aimir.contract.receioptNo'/>", dataIndex: 'lastTokenId'},
+        //{header: "<fmt:message key='aimir.prepayment.authCode'/>", dataIndex: 'authCode'},
         //{header: "<fmt:message key='aimir.prepayment.municipalityCode'/>", dataIndex: 'municipalityCode'},
         {header: "<fmt:message key='aimir.paymenttype'/>",  align: 'center', dataIndex: 'payType'},
         {header: "<fmt:message key='aimir.partpayInfo'/>", renderer: partpayInfoArea, align: 'center', dataIndex: 'firstArrears'},
-        {header: "", renderer: receiptBtnArea},        
-        {header: "", renderer: cancelBtnArea, hidden: isHiddenCancelBtn},
+        {header: "<fmt:message key='aimir.receipt'/>", renderer: receiptBtnArea},        
+        {header: "<fmt:message key='aimir.partpayInfo'/>", renderer: cancelBtnArea, hidden: isHiddenCancelBtn},
         {header: "", renderer: relayOnBtnArea, hidden: true}
       ],
       defaults: {sortable: true, 
@@ -1073,7 +1073,7 @@
 
       selectedHistorySearch: function(sm, rowIndex, rec) {
 //        historyListModel.setHidden(10, true);
-        historyListModel.setHidden(13, true);
+        historyListModel.setHidden(12, true);
         var contractNumber = rec.json.contractNumber;
         var params = $.extend(true, {}, historyListParams, {
           contractNumber: contractNumber,
@@ -1591,7 +1591,7 @@
           supplierId: supplierId,
           contractId: rec.contractId || rec.json.contractId,
           prepaymentLogId: rec.prepaymentLogId || rec.json.prepaymentLogId,
-          mdsId: selectedMdsId
+          mdsId: selectedMdsId || rec.json.mdsId 
         }
         
         if ( receiptPopupWindow ) {
