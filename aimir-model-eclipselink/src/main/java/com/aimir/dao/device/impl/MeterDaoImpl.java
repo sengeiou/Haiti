@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.apache.commons.logging.Log;
@@ -71,20 +72,31 @@ public class MeterDaoImpl extends AbstractJpaDao<Meter, Integer> implements Mete
 
     @Transactional(readOnly=true, propagation=Propagation.REQUIRED)
     public Meter getMeterByModemDeviceSerial(String deviceSerial, int modemPort) {
-        String sql = "select m from Meter m where m.modemPort = :modemPort and m.modem.deviceSerial = :deviceSerial";
-        Query query = em.createQuery(sql, Meter.class);
-        query.setParameter("modemPort", modemPort);
-        query.setParameter("deviceSerial", deviceSerial);
-        return (Meter)query.getSingleResult();
+    	try {
+	        String sql = "select m from Meter m where m.modemPort = :modemPort and m.modem.deviceSerial = :deviceSerial";
+	        Query query = em.createQuery(sql, Meter.class);
+	        query.setParameter("modemPort", modemPort);
+	        query.setParameter("deviceSerial", deviceSerial);
+	        return (Meter)query.getSingleResult();
+    	}catch(NoResultException e) {
+    		return null;
+    	}catch(Exception ex) {
+    		return null;
+    	}
     }
 
     @Transactional(readOnly=true, propagation=Propagation.REQUIRES_NEW)
     public List<Object> getMetersByMcuName(String name) {
-        String sql = "select id from Meter where m.modem.mcu.sysID = :mcuId";
-        Query query = em.createQuery(sql, Integer.class);
-        query.setParameter("mcuId", name);
-        return query.getResultList();
-
+    	try {
+	        String sql = "select id from Meter where m.modem.mcu.sysID = :mcuId";
+	        Query query = em.createQuery(sql, Integer.class);
+	        query.setParameter("mcuId", name);
+	        return query.getResultList();
+    	}catch(NoResultException e) {
+    		return null;
+    	}catch(Exception ex) {
+    		return null;
+    	}
     }
 
     @Override
