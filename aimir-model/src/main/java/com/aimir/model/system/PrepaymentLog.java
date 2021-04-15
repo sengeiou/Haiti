@@ -436,7 +436,7 @@ public class PrepaymentLog extends BaseObject implements JSONString{
 		return arrears2;
 	}
 	public void setArrears2(Double arrears2) {
-		this.arrears = arrears;
+		this.arrears2 = arrears2;
 	}
 	public Operator getOperator() {
 		return operator;

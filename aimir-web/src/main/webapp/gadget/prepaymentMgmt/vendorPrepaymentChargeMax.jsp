@@ -1311,7 +1311,7 @@
 				vat = vatAmount;
 			}
 			
-			if(Number(bCurrentArrears) - chargeArrears == 0){
+			if(Number($("#bCurrentArrears").val()) - chargeArrears == 0){
 				Ext.getCmp('arrearsB').setReadOnly(false);
 			}else{
 				Ext.getCmp('arrearsB').setReadOnly(true);
@@ -1589,7 +1589,8 @@
           vendor: vendor,
           supplierId: supplierId,
           contractId: rec.contractId || rec.json.contractId,
-          prepaymentLogId: rec.prepaymentLogId || rec.json.prepaymentLogId
+          prepaymentLogId: rec.prepaymentLogId || rec.json.prepaymentLogId,
+          mdsId: rec.mdsId || rec.json.mdsId
         }
         
         if ( receiptPopupWindow ) {
