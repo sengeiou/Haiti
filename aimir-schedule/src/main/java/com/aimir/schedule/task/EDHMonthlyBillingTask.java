@@ -260,7 +260,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 			int usingDay = 	monthMaxDay - installDay;
 			
 			BigDecimal avgDaySC = getBigDecimal(avgDay * usingDay);
-			log.info("serviceCharge : " + serviceCharge + ", installDay : " + installDay +", monthMaxDay : " + monthMaxDay+", avgDay : " + avgDay+", usingDay : " + usingDay+", avgDaySC : " +avgDaySC);
+			log.info("fDate : " + fDate + ",serviceCharge : " + serviceCharge + ", installDay : " + installDay +", monthMaxDay : " + monthMaxDay+", avgDay : " + avgDay+", usingDay : " + usingDay+", avgDaySC : " +avgDaySC);
 			
 			String yyyymm = fDate.substring(0, 6);
 			monthlyBillingLog = setMonthlyBillingLog(yyyymm, avgDaySC);
@@ -287,6 +287,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 		log.debug("before balance : " + balance);
 		
 		log.debug("saveMonthlyBillingLog : " + saveMonthlyBillingList.size());
+		/*
 		if(saveMonthlyBillingList.size() > 0) {
 			for(MonthlyBillingLog mb : saveMonthlyBillingList) {
 				
@@ -305,6 +306,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 			log.debug("after balance : " + balance);
 			contractDao.update(contract);
 		}
+		*/
 	}
 	
 	private BigDecimal getBigDecimal(Object val) {
