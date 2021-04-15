@@ -1197,6 +1197,50 @@
             }
         }
         
+        // Emergency Credit 정보를 저장
+        function saveEmergenCreditInfo(mode,days,limit) {
+
+            if (selectedContractNumber == "") {
+                return;
+            }
+
+            if (mode == null) {
+            	mode = "";
+            }
+            if (days == "") {
+            	days = "0";
+            }
+            if (limit == "") {
+            	limit = 0;
+            }
+            
+            $.post("${ctx}/gadget/prepaymentMgmt/updateEmergencyCreditInfo.do",
+                  {contractNumber : selectedContractNumber,
+                   autoChange     : mode,
+                   duration       : days,
+                   limitPower     : limit
+                   }
+                   , function(json) {
+                       if (json.status == "success") {
+                           Ext.MessageBox.alert("<fmt:message key="aimir.message"/>", "(DB Update) <fmt:message key="aimir.save"/>", getNotificationInfo);
+                       } else {
+                           Ext.MessageBox.alert("<fmt:message key="aimir.message"/>", "(DB Update) <fmt:message key="aimir.save.error"/>");
+                       }
+                       
+                       if(isSts){
+			               $.getJSON('${ctx}/gadget/device/command/cmdSetEmergencyCredit.do', {
+			                   'target' : selectedMeterId,
+			                   'ec_mode' :mode,
+			                   'days' : days
+			               }, function(returnData) {
+			                   Ext.Msg.hide();
+			                   Ext.Msg.alert('<fmt:message key='aimir.message'/>', 'Execute Set Emergency : '+returnData.result);
+			               });
+                       }
+                   }
+           );
+        }
+        
         /* 충전이력 리스트 START */
         var selectedContractNumber;
         var selectedSPN;
@@ -3828,7 +3872,7 @@
   			formId: 'emergencyForm',
             bodyStyle:'padding:10px 10px 10px 10px',
             labelWidth: 140,
-            listeners: {
+/*             listeners: {
             	afterlayout: function(c){
 	             	if(emergencyCreditAutoChange == true){
 	             		Ext.getCmp('limit').enable();
@@ -3840,8 +3884,9 @@
 	            		Ext.getCmp('enable').setValue(false);
 	            	}
             	}
-            },
-            items: [{
+            }, */
+            items: [
+/*             	{
                     xtype: 'label',
                     html: 'Wasion Meter(<b>Limited Amount</b>), Suni Kamstrupt Meter(<b>Days</b>)<br>',
               	},{
@@ -3861,10 +3906,11 @@
 	                      {boxLabel: '<fmt:message key="aimir.disable2"/>', id:'disable', name: 'radio-action2', value:'0'},
 	                      {boxLabel: '<fmt:message key="aimir.enable2"/>', id:'enable', name: 'radio-action2', value:'1'}
 	                  ]
-	            },{
+	            }, */
+	            {
 	                xtype: 'numberfield',
 	                width : 50,
-	                fieldLabel: 'Limited Amount/Days ',
+	                fieldLabel: 'Emergency Credit (days) ',
 	                id : 'limit',
 	                value: emergencyCreditMaxDuration
 	            }],
@@ -3873,15 +3919,10 @@
 	          	text: ' OK ',
 	          	formBind : true,
 	          	handler: function() {
-	            	Ext.Msg.wait('Waiting for response.', 'Wait !');
-	                $.getJSON('${ctx}/gadget/device/command/cmdSetEmergencyCredit.do', {
-	                    'target' : selectedMeterId,
-	                    'ec_mode' : Ext.getCmp('type').getValue().value,
-	                    'days' : Ext.getCmp('limit').getValue()
-	                }, function(returnData) {
-	                    Ext.Msg.hide();
-	                    Ext.Msg.alert('<fmt:message key='aimir.message'/>', returnData.result);
-	                });	
+	          		var mode = ""//Ext.getCmp('type').getValue().value;
+	          		var days = Ext.getCmp('limit').getValue();
+	          		var limit = prepaymentPowerDelayView;
+                    saveEmergenCreditInfo(mode,days,limit);
 	           	}
 	         },{
 	          		text: 'Cancel',
@@ -3898,8 +3939,8 @@
               title  : ' Set Emergency Credit ',
               pageX : 600,
               pageY : 200,
-              height : 200,
-              width  : 540,
+              height : 150,
+              width  : 300,
               layout : 'fit',
               bodyStyle   : 'padding: 5px 5px 5px 5px;',
               items  : [emergencyCreditFormPanel],
