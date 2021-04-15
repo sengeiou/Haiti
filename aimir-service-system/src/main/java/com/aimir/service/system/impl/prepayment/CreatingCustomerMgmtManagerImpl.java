@@ -72,7 +72,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
 	
 	private int batchSize = 100;
 	private static int totalSize = 0;
-	private static int forSize = 0;
+	private static int loopSize = 0;
 	
     protected static Log logger = LogFactory.getLog(CreatingCustomerMgmtManagerImpl.class);
 
@@ -388,7 +388,6 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
      */
 //    @Transactional(readOnly=false)
     public Map<String, Object> saveBulkCreatingCustomerByExcelXLSX(String excel, Integer supplierId) {
-    	Timestamp timestamp = new Timestamp(System.currentTimeMillis());
     	Date date = new Date();
     	
         Map<String, Object> result = new HashMap<String, Object>();
@@ -422,8 +421,9 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
         XSSFSheet sheet = wb.getSheetAt(0);
         
         try {
-        	logger.info("before validateSheet supplier: "+supplier+" location : "+location);
+        	logger.info("Read Sheet init timestamp : "+ new Timestamp(System.currentTimeMillis()));
         	errorList = validateSheet(sheet, supplier, location);
+        	logger.info("Read Sheet end timestamp : "+ new Timestamp(System.currentTimeMillis()));
         	
         	if (errorList.size() <= 0) {
                 result.put("status", "success");
@@ -436,7 +436,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
 				pkg.close();
             }
 		} catch (Exception e) {
-			logger.error("for try catch error : " + new Timestamp(date.getTime()) );
+			logger.error("saveBulkCreating() for try catch error : " + new Timestamp(date.getTime()) );
 		}
         
         result.put("errorList", errorList);
@@ -599,7 +599,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
 //                contractDao.flushAndClear();
                 logger.info("### Contract 저장  : "+contract.toString());
                 logger.debug("contractDao.add finished : " + new Timestamp(date.getTime()) );
-                logger.info("### saveRows for size :  " + ++forSize +",  totalSize : "+ totalSize);
+                logger.info("### saveRows loop size :  " + ++loopSize +",  totalSize : "+ totalSize);
 			}
     		
     		txManager.commit(txStatus);
@@ -619,10 +619,8 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
 	    	Iterator<Row> rowIterator = sheet.iterator();
 	    	List<Row> entities = new ArrayList<Row>();
 	    	
-	    	forSize = 0;
-			if (rowIterator instanceof Collection) {
-				totalSize = ((Collection<?>) rowIterator).size();
-		    }
+	    	loopSize = 0;
+			totalSize = Iterators.size(rowIterator);
 	    	
 	    	// row 수 만큼
 	    	while (rowIterator.hasNext()) {
@@ -659,7 +657,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
 			}*/
 	    	
 		} catch (Exception e) {
-			logger.error("validateSheet - for try catch error");
+			logger.error("validateSheet() for try catch error");
 		}
     	
     	return errorList;
