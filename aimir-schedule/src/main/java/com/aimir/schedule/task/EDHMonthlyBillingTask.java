@@ -251,16 +251,16 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 		//월 정산 기록이 없다면... 첫번째 월의 사용량을 일할계산한다.
 		if(monthlyBillingLog == null) {
 			String fDate = contract.getContractDate() != null ? contract.getContractDate() : meter.getInstallDate();
-			int installDay = Integer.parseInt(fDate.substring(4, 6));
+			int installDay = Integer.parseInt(fDate.substring(6, 8));
 			
 			Calendar cal = DateTimeUtil.getCalendar(fDate);
-			int monthMaxDay = cal.getMaximum(Calendar.DAY_OF_MONTH);
+			int monthMaxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 			
 			double avgDay = serviceCharge / monthMaxDay;
 			int usingDay = 	monthMaxDay - installDay;
 			
 			BigDecimal avgDaySC = getBigDecimal(avgDay * usingDay);
-			log.info("serviceCharge : " + serviceCharge + ", installDay : " + installDay +", monthMaxDay : " + monthMaxDay+", avgDay : " + avgDay+", usingDay : " + usingDay+", avgDaySC : " +avgDaySC);
+			log.info("fDate : " + fDate + ",serviceCharge : " + serviceCharge + ", installDay : " + installDay +", monthMaxDay : " + monthMaxDay+", avgDay : " + avgDay+", usingDay : " + usingDay+", avgDaySC : " +avgDaySC);
 			
 			String yyyymm = fDate.substring(0, 6);
 			monthlyBillingLog = setMonthlyBillingLog(yyyymm, avgDaySC);
@@ -287,6 +287,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 		log.debug("before balance : " + balance);
 		
 		log.debug("saveMonthlyBillingLog : " + saveMonthlyBillingList.size());
+		
 		if(saveMonthlyBillingList.size() > 0) {
 			for(MonthlyBillingLog mb : saveMonthlyBillingList) {
 				
@@ -305,6 +306,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 			log.debug("after balance : " + balance);
 			contractDao.update(contract);
 		}
+		
 	}
 	
 	private BigDecimal getBigDecimal(Object val) {

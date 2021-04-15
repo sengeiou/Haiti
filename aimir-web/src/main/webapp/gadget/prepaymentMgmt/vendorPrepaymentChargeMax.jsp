@@ -2345,12 +2345,12 @@
     };
 
     // vendor(Operator)가 3rd party인 경우(role = 'vendor')에만 예치금이 보인다
-    var initDepositSettings = function() {
+    /* var initDepositSettings = function() {
       if ( isVendor ) {
         $(".current-deposit").removeClass("hidden");
         $(".current-deposit").show();
       }
-    }
+    } */
     
     var init = function() {
       Ext.QuickTips.init();
