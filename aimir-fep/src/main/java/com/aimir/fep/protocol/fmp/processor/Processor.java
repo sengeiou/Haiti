@@ -45,7 +45,7 @@ public abstract class Processor implements MessageListener
 
 
     public void onMessage(Message msg) {    	
-    	long seq = SnowflakeGeneration.getId();
+    	String seq = SnowflakeGeneration.getId();
     	log.info("thread name : " + Thread.currentThread().getName() +", seq : "+seq);
     	
         if (msg instanceof ObjectMessage) {

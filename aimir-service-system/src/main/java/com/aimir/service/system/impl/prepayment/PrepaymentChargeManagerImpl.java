@@ -39,6 +39,7 @@ import com.aimir.dao.system.ContractDao;
 import com.aimir.dao.system.DepositHistoryDao;
 import com.aimir.dao.system.FixedVariableDao;
 import com.aimir.dao.system.LocationDao;
+import com.aimir.dao.system.MonthlyBillingLogDao;
 import com.aimir.dao.system.OperatorDao;
 import com.aimir.dao.system.PrepaymentLogDao;
 import com.aimir.dao.system.SupplierDao;
@@ -133,6 +134,7 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
     
     @Autowired
     FixedVariableDao fixedVariableDao;
+
 
     /**
      * method name : getPrepaymentChargeList<b/>
@@ -1631,69 +1633,70 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
         }
 
         condition.put("lastTokenDate", prepaymentLog.getLastTokenDate());
-        // 월 첫번째 영수증 여부 체크
-        Boolean isFirst = prepaymentLogDao.checkMonthlyFirstReceipt(condition);
-        result.put("isFirst", isFirst);
-
-        // 월간 정산 영수증의 경우
-        if (isFirst) {
-            PrepaymentLog monthLog = prepaymentLogDao.getMonthlyPaidData(condition);
-
-            if (monthLog != null) {
-                Double govLevy = StringUtil.nullToDoubleZero(monthLog.getGovLevy());
-                Double publicLevy = StringUtil.nullToDoubleZero(monthLog.getPublicLevy());
-                Double monthlyServiceCharge = StringUtil.nullToDoubleZero(monthLog.getMonthlyServiceCharge());
-                Double monthlyTotalAmount = StringUtil.nullToDoubleZero(monthLog.getMonthlyTotalAmount());
-                Double monthlyPaidAmount = StringUtil.nullToDoubleZero(monthLog.getMonthlyPaidAmount());
-                Double monthlyConsumption = StringUtil.nullToDoubleZero(monthLog.getUsedConsumption());
-                Double utilityRelief = StringUtil.nullToDoubleZero(monthLog.getUtilityRelief());
-                Double subSidy = StringUtil.nullToDoubleZero(monthLog.getSubsidy());
-                Double lifeLineSubsidy = StringUtil.nullToDoubleZero(monthLog.getLifeLineSubsidy());
-                Double additionalSubsidy = StringUtil.nullToDoubleZero(monthLog.getAdditionalSubsidy());
-                Double monthlyVat = StringUtil.nullToDoubleZero(monthLog.getVat());
-
-                BigDecimal bdTotalFees = new BigDecimal("0");
-                BigDecimal bdGovLevy = new BigDecimal(govLevy);
-                BigDecimal bdPublicLevy = new BigDecimal(publicLevy);
-                BigDecimal bdMonthlyServiceCharge = new BigDecimal(monthlyServiceCharge);
-                BigDecimal bdMonthlyPaidAmount = new BigDecimal(monthlyPaidAmount);
-                BigDecimal bdSubSidy = new BigDecimal(subSidy);
-                BigDecimal bdLifeLineSubsidy = new BigDecimal(lifeLineSubsidy);
-                BigDecimal bdAdditionalSubsidy = new BigDecimal(additionalSubsidy);
-                BigDecimal bdVat = new BigDecimal(monthlyVat);
-                BigDecimal bdUR = new BigDecimal(utilityRelief);
-
-                String tariffName = monthLog.getTariffIndex() == null ? tarrif : monthLog.getTariffIndex().getName();
-                
-                if ("Residential".equals(tariffName)) {
-                    // totalFees : monthlyServiceCharge + govLevy + publicLevy - additionalSubsidy - subSidy - lifeLineSubsidy
-                    //bdTotalFees = bdMonthlyServiceCharge.add(bdGovLevy).add(bdPublicLevy);
-                    bdTotalFees = bdMonthlyServiceCharge;
-                    bdTotalFees = bdTotalFees.subtract(bdAdditionalSubsidy).subtract(bdSubSidy).subtract(bdLifeLineSubsidy).subtract(bdUR);
-                } else if ("Non Residential".equals(tariffName)) {
-                    // totalFees : monthlyServiceCharge + vat + govLevy + publicLevy - additionalSubsidy
-                    //bdTotalFees = bdMonthlyServiceCharge.add(bdVat).add(bdGovLevy).add(bdPublicLevy).subtract(bdAdditionalSubsidy);
-                    bdTotalFees = bdMonthlyServiceCharge.add(bdVat).subtract(bdAdditionalSubsidy);
-                }
-
-                result.put("monthlyPaidAmount", cdf.format(monthlyPaidAmount));
-                result.put("monthlyTotalAmount", cdf.format(monthlyTotalAmount));
-                result.put("monthlyConsumption", mdf.format(monthlyConsumption));
-                result.put("utilityRelief", cdf.format(utilityRelief));
-                result.put("serviceCharge", cdf.format(monthlyServiceCharge));
-                result.put("publicLevy", cdf.format(publicLevy));
-                result.put("govLevy", cdf.format(govLevy));
-                result.put("govSubsidy", feeValueformat(cdf, subSidy));
-                result.put("lifeLineSubsidy", feeValueformat(cdf, lifeLineSubsidy));
-                result.put("additionalSubsidy", feeValueformat(cdf, additionalSubsidy));
-                result.put("vat", cdf.format(vat));
-                result.put("additionalAmount", cdf.format(StringUtil.nullToDoubleZero(monthLog.getUsedCost())));
-                result.put("totalFees", cdf.format(bdTotalFees.doubleValue()));
-                result.put("chargeValue", cdf.format(bdMonthlyPaidAmount.add(bdTotalFees)));
-            } else {
-                result.put("isFirst", false);
-            }
-        }
+        
+//        // 월 첫번째 영수증 여부 체크
+//        Boolean isFirst = prepaymentLogDao.checkMonthlyFirstReceipt(condition);
+//        result.put("isFirst", isFirst);
+//
+//        // 월간 정산 영수증의 경우
+//        if (isFirst) {
+//            PrepaymentLog monthLog = prepaymentLogDao.getMonthlyPaidData(condition);
+//
+//            if (monthLog != null) {
+//                Double govLevy = StringUtil.nullToDoubleZero(monthLog.getGovLevy());
+//                Double publicLevy = StringUtil.nullToDoubleZero(monthLog.getPublicLevy());
+//                Double monthlyServiceCharge = StringUtil.nullToDoubleZero(monthLog.getMonthlyServiceCharge());
+//                Double monthlyTotalAmount = StringUtil.nullToDoubleZero(monthLog.getMonthlyTotalAmount());
+//                Double monthlyPaidAmount = StringUtil.nullToDoubleZero(monthLog.getMonthlyPaidAmount());
+//                Double monthlyConsumption = StringUtil.nullToDoubleZero(monthLog.getUsedConsumption());
+//                Double utilityRelief = StringUtil.nullToDoubleZero(monthLog.getUtilityRelief());
+//                Double subSidy = StringUtil.nullToDoubleZero(monthLog.getSubsidy());
+//                Double lifeLineSubsidy = StringUtil.nullToDoubleZero(monthLog.getLifeLineSubsidy());
+//                Double additionalSubsidy = StringUtil.nullToDoubleZero(monthLog.getAdditionalSubsidy());
+//                Double monthlyVat = StringUtil.nullToDoubleZero(monthLog.getVat());
+//
+//                BigDecimal bdTotalFees = new BigDecimal("0");
+//                BigDecimal bdGovLevy = new BigDecimal(govLevy);
+//                BigDecimal bdPublicLevy = new BigDecimal(publicLevy);
+//                BigDecimal bdMonthlyServiceCharge = new BigDecimal(monthlyServiceCharge);
+//                BigDecimal bdMonthlyPaidAmount = new BigDecimal(monthlyPaidAmount);
+//                BigDecimal bdSubSidy = new BigDecimal(subSidy);
+//                BigDecimal bdLifeLineSubsidy = new BigDecimal(lifeLineSubsidy);
+//                BigDecimal bdAdditionalSubsidy = new BigDecimal(additionalSubsidy);
+//                BigDecimal bdVat = new BigDecimal(monthlyVat);
+//                BigDecimal bdUR = new BigDecimal(utilityRelief);
+//
+//                String tariffName = monthLog.getTariffIndex() == null ? tarrif : monthLog.getTariffIndex().getName();
+//                
+//                if ("Residential".equals(tariffName)) {
+//                    // totalFees : monthlyServiceCharge + govLevy + publicLevy - additionalSubsidy - subSidy - lifeLineSubsidy
+//                    //bdTotalFees = bdMonthlyServiceCharge.add(bdGovLevy).add(bdPublicLevy);
+//                    bdTotalFees = bdMonthlyServiceCharge;
+//                    bdTotalFees = bdTotalFees.subtract(bdAdditionalSubsidy).subtract(bdSubSidy).subtract(bdLifeLineSubsidy).subtract(bdUR);
+//                } else if ("Non Residential".equals(tariffName)) {
+//                    // totalFees : monthlyServiceCharge + vat + govLevy + publicLevy - additionalSubsidy
+//                    //bdTotalFees = bdMonthlyServiceCharge.add(bdVat).add(bdGovLevy).add(bdPublicLevy).subtract(bdAdditionalSubsidy);
+//                    bdTotalFees = bdMonthlyServiceCharge.add(bdVat).subtract(bdAdditionalSubsidy);
+//                }
+//
+//                result.put("monthlyPaidAmount", cdf.format(monthlyPaidAmount));
+//                result.put("monthlyTotalAmount", cdf.format(monthlyTotalAmount));
+//                result.put("monthlyConsumption", mdf.format(monthlyConsumption));
+//                result.put("utilityRelief", cdf.format(utilityRelief));
+//                result.put("serviceCharge", cdf.format(monthlyServiceCharge));
+//                result.put("publicLevy", cdf.format(publicLevy));
+//                result.put("govLevy", cdf.format(govLevy));
+//                result.put("govSubsidy", feeValueformat(cdf, subSidy));
+//                result.put("lifeLineSubsidy", feeValueformat(cdf, lifeLineSubsidy));
+//                result.put("additionalSubsidy", feeValueformat(cdf, additionalSubsidy));
+//                result.put("vat", cdf.format(vat));
+//                result.put("additionalAmount", cdf.format(StringUtil.nullToDoubleZero(monthLog.getUsedCost())));
+//                result.put("totalFees", cdf.format(bdTotalFees.doubleValue()));
+//                result.put("chargeValue", cdf.format(bdMonthlyPaidAmount.add(bdTotalFees)));
+//            } else {
+//                result.put("isFirst", false);
+//            }
+//        }
 
         return result; 
     }

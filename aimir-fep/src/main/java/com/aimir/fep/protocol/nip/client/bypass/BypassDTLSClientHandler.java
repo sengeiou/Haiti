@@ -43,7 +43,7 @@ public class BypassDTLSClientHandler implements RawDataChannel {
 	private BypassClient bypassClient;
 	private DTLSConnector dtlsConnector;
 	private BypassCommandAction commandAction;
-	private long sequenceLog;
+	private String sequenceLog;
 	
 	static {
 		ScandiumLogger.initialize();

@@ -8,7 +8,7 @@ import com.aimir.model.device.CommLog;
 public class CommLogMessage implements Serializable{
 	
 	private CommLog commLog;
-	private long sequenceLog;
+	private String sequenceLog;
 	
 	public CommLogMessage(CommLog commLog) {
 		this.commLog = commLog;
@@ -23,11 +23,11 @@ public class CommLogMessage implements Serializable{
 		this.commLog = commLog;
 	}
 
-	public long getSequenceLog() {
+	public String getSequenceLog() {
 		return sequenceLog;
 	}
 
-	public void setSequenceLog(long sequenceLog) {
+	public void setSequenceLog(String sequenceLog) {
 		this.sequenceLog = sequenceLog;
 	}
 
