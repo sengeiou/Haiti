@@ -581,7 +581,7 @@
       url: "${ctx}/gadget/prepaymentMgmt/getChargeHistoryList.do",
       totalProperty: 'totalCount',
       root: 'result',
-      fields: ["lastTokenDate", "chargedCredit", "chargedArrears", "chargedArrears2", "balance", "arrears", "arrears2", "vat",
+      fields: ["lastTokenDate", "chargedCredit", "chargedArrears", "chargedArrears2", "balance", "arrears", "arrears2", "vat", "prepaymentLogId",
         "lastTokenId", "authCode", "municipalityCode", "payType", "firstArrears", "arrearsContractCount", "arrearsPaymentCount","partpayInfo"],
       listeners: {
         beforeload: function(store, options) {
@@ -845,18 +845,7 @@
                allowNegative: false
            })
           } 	*/
-         ,{header: "<fmt:message key='aimir.barcode'/>", align: 'left', dataIndex: 'barcode',
-            editor: new Ext.form.NumberField({
-              id: 'barcode',
-              allowBlank: true,
-              allowNegative: false,
-              listeners: {
-                change: function(field, newVal, oldVal) {
-                  eventHandler.updateBarcode(field, newVal, oldVal);
-                }
-              }
-            })
-          }         
+         ,{header: "<fmt:message key='aimir.barcode'/>", align: 'left', dataIndex: 'barcode'}         
          ,{header: "<fmt:message key='aimir.amount.paid'/>", renderer: saveBtnArea}
       ],
       defaults: {
@@ -875,13 +864,13 @@
         {header: "<fmt:message key='aimir.arrears'/> A", align: 'right', dataIndex: 'arrears'},
         {header: "<fmt:message key='aimir.prepayment.chargearrears'/> B", align: 'right', dataIndex: 'chargedArrears2'},
         {header: "<fmt:message key='aimir.arrears'/> B", align: 'right', dataIndex: 'arrears2'},
-        {header: "<fmt:message key='aimir.hems.prepayment.transactionNum'/>", dataIndex: 'lastTokenId'},
-        {header: "<fmt:message key='aimir.prepayment.authCode'/>", dataIndex: 'authCode'},
+        {header: "<fmt:message key='aimir.contract.receioptNo'/>", align: 'center',  dataIndex: 'prepaymentLogId'},
+        //{header: "<fmt:message key='aimir.prepayment.authCode'/>", dataIndex: 'authCode'},
         //{header: "<fmt:message key='aimir.prepayment.municipalityCode'/>", dataIndex: 'municipalityCode'},
         {header: "<fmt:message key='aimir.paymenttype'/>",  align: 'center', dataIndex: 'payType'},
         {header: "<fmt:message key='aimir.partpayInfo'/>", renderer: partpayInfoArea, align: 'center', dataIndex: 'firstArrears'},
-        {header: "", renderer: receiptBtnArea},        
-        {header: "", renderer: cancelBtnArea, hidden: isHiddenCancelBtn},
+        {header: "<fmt:message key='aimir.receipt'/>", renderer: receiptBtnArea},        
+        {header: "<fmt:message key='aimir.partpayInfo'/>", renderer: cancelBtnArea, hidden: isHiddenCancelBtn},
         {header: "", renderer: relayOnBtnArea, hidden: true}
       ],
       defaults: {sortable: true, 
@@ -1073,7 +1062,7 @@
 
       selectedHistorySearch: function(sm, rowIndex, rec) {
 //        historyListModel.setHidden(10, true);
-        historyListModel.setHidden(13, true);
+        historyListModel.setHidden(12, true);
         var contractNumber = rec.json.contractNumber;
         var params = $.extend(true, {}, historyListParams, {
           contractNumber: contractNumber,
@@ -1591,7 +1580,7 @@
           supplierId: supplierId,
           contractId: rec.contractId || rec.json.contractId,
           prepaymentLogId: rec.prepaymentLogId || rec.json.prepaymentLogId,
-          mdsId: selectedMdsId
+          mdsId: selectedMdsId || rec.json.mdsId 
         }
         
         if ( receiptPopupWindow ) {
@@ -2356,12 +2345,12 @@
     };
 
     // vendor(Operator)가 3rd party인 경우(role = 'vendor')에만 예치금이 보인다
-    var initDepositSettings = function() {
+    /* var initDepositSettings = function() {
       if ( isVendor ) {
         $(".current-deposit").removeClass("hidden");
         $(".current-deposit").show();
       }
-    }
+    } */
     
     var init = function() {
       Ext.QuickTips.init();
