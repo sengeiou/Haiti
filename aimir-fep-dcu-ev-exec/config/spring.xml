@@ -84,7 +84,7 @@
     <property name="jpaDialect" ref="jpaDialect" />
   </bean>
      -->
-     
+
   <!-- Entity Manager Factory  -->
   <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
     <property name="persistenceXmlLocation" value="classpath:config/persistence.xml" />
@@ -110,6 +110,10 @@
   <!-- Activates scanning of @Autowired -->            
   <context:annotation-config/>
     
+ <context:component-scan base-package="com.aimir">
+        <context:exclude-filter type="regex" expression="com\.aimir\.fep\.sms.*"/>
+ </context:component-scan>
+
   <!--  MBeans Server
   <bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean"/>
     

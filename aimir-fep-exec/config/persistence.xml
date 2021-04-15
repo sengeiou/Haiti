@@ -10,9 +10,9 @@
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver" />
-      <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@172.16.10.190:1521:orcl"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@186.1.198.137:14521:aimir"/>
       <property name="javax.persistence.jdbc.user" value="aimir"/>
-      <property name="javax.persistence.jdbc.password" value="aimir"/>
+      <property name="javax.persistence.jdbc.password" value="nuribucks1"/>
       <property name="eclipselink.ddl-generation" value="none" />
       <property name="eclipselink.ddl-generation.output-mode" value="database" />
       <property name="eclipselink.logging.level.sql" value="off"/>

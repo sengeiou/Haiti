@@ -26,8 +26,9 @@ then
     MVNREPOSITORY=~/.m2/repository
 fi
 
-cd /home/aimir/aimiramm.dev/aimir-fep-exec
-mvn -e -f pom-feph.xml antrun:run -DfepName=FEPEV -Dif4Port=8000 -DniTcpPort=8001 -DniUdpPort=8002 -DcommandPort=8900 -DniPanaPort=8004 -DjmxPort=1099 2>&1 > /dev/null &
+cd /home/aimir/aimiramm/aimir-fep-dcu-ev-exec
+mvn -e -f pom-feph.xml antrun:run -DfepName=FEPEV -Dif4Port=8001 -DniTcpPort=18041 -DniUdpPort=18042 -DauthTcpPort=19041 -DauthUdpPort=19042 -DcommandPort=18940 -DjmxPort=11049 2>&1 > /dev/null &
+#mvn -e -f pom-feph.xml antrun:run -DfepName=FEPEV -Dif4Port=8000 -DniTcpPort=8001 -DniUdpPort=8002 -DcommandPort=8900 -DniPanaPort=8004 -DjmxPort=1099 2>&1 > /dev/null &
 
 #mvn -e -f pom-feph.xml antrun:run -DfepName=FEP1 -Dif4Port=8000 -DniTcpPort=8001 -DniUdpPort=8002 -DcommandPort=8900 -DjmxPort=1099 -Dspring.instrument.path=$MVNREPOSITORY/org/springframework/spring-instrument/4.2.5.RELEASE 2>&1 > /dev/null &
 

@@ -1,4 +1,4 @@
-.idea/
+﻿.idea/
 /.metadata
 /.settings
 .classpath
@@ -14,4 +14,4 @@ penta
 bin/
 aimir-fep/src/test/*
 .test_1
-.DS_Store
+*.properties

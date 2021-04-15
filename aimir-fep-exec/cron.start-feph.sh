@@ -2,7 +2,7 @@
 
 . /home/aimir/.bashrc
 
-CHK_ALIVE=(`netstat -ano|grep :::8000 | grep LISTEN | wc -l`)
+CHK_ALIVE=(`netstat -ano|grep :::8001 | grep LISTEN | wc -l`)
 if [ $CHK_ALIVE  -ge 1 ]
 then
 echo "feph is working"
@@ -26,7 +26,7 @@ then
     MVNREPOSITORY=~/.m2/repository
 fi
 
-cd /home/aimir/aimiramm.dev/aimir-fep-exec
+cd /home/aimir/aimiramm/aimir-fep-exec
 mvn -e -f pom-feph.xml antrun:run -DfepName=FEP1 -Dif4Port=8000 -DniTcpPort=7001 -DniUdpPort=8002 -DcommandPort=8900 -DniPanaPort=8004 -DjmxPort=1099 2>&1 > /dev/null &
 
 #mvn -e -f pom-feph.xml antrun:run -DfepName=FEP1 -Dif4Port=8000 -DniTcpPort=8001 -DniUdpPort=8002 -DcommandPort=8900 -DjmxPort=1099 -Dspring.instrument.path=$MVNREPOSITORY/org/springframework/spring-instrument/4.2.5.RELEASE 2>&1 > /dev/null &

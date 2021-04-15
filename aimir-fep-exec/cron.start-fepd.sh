@@ -26,7 +26,7 @@ then
     MVNREPOSITORY=~/.m2/repository
 fi
 
-cd /home/aimir/aimiramm.dev/aimir-fep-exec
+cd /home/aimir/aimiramm/aimir-fep-exec
 mvn -e -f pom-fepd.xml antrun:run -DfepName=FEP1 -DjmxPort=1299 -DenableWS=true 2>&1 > /dev/null & 
 
 #mvn -e -f pom-fepd.xml antrun:run -DfepName=FEP1 -DjmxPort=1299 -DenableWS=true -Dspring.instrument.path=$MVNREPOSITORY/org/springframework/spring-instrument/4.2.5.RELEASE 2>&1 > /dev/null & 
