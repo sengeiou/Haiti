@@ -95,7 +95,7 @@ public class FMPClientProtocolHandler extends IoHandlerAdapter
     private long openCircuitTime = 0L;
     private long closedCircuitTime = 0L;
 
-    private long sequenceLog;
+    private String sequenceLog;
     
     public FMPClientProtocolHandler() {
     	this.sequenceLog = SnowflakeGeneration.getId();

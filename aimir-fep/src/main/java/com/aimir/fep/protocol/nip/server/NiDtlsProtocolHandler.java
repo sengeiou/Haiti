@@ -113,7 +113,7 @@ public class NiDtlsProtocolHandler extends NICommandActionHandlerAdaptor impleme
     
     private SessionId sessionId;
     
-    private long sequenceLog; 
+    private String sequenceLog; 
     
     // if frame is multi
     private Map<Integer, byte[]> multiFrame = null;

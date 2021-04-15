@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aimir.constants.CommonConstants;
 import com.aimir.fep.command.mbean.CommandGWMBean;
+import com.aimir.fep.logger.snowflake.SnowflakeGeneration;
 import com.aimir.fep.meter.MeterDataSaverMain;
 import com.aimir.fep.meter.data.MDHistoryData;
 import com.aimir.fep.protocol.fmp.common.SlideWindow;
@@ -407,10 +408,20 @@ public class DFProcessor extends Processor
             datacnt = DataUtil.getIntTo2Byte(bdatacnt);
             byte[] blen = null;
             byte[] bx = null;
-
+            
+            String threadName = Thread.currentThread().getName();
+            String seq = SnowflakeGeneration.getId();
+            log.debug("# DF datacnt : " + datacnt);
+            
             //EMDataList안에 MDList 갯수 만큼 MDList를 하나씩 가지는 EMDataList를 만들어서 저장 로직을 수행하도록 함
             for (int i = 0; i < datacnt; i++) {
-
+            	String th = threadName;
+            	String ths = null;
+            	
+            	th = th+"_" + i;
+            	ths = th;
+            	SnowflakeGeneration.setSeq(th, ths);
+            	
                 bos = new ByteArrayOutputStream();
                 bos.write(sid);
                 bos.write(mid);
@@ -470,8 +481,12 @@ public class DFProcessor extends Processor
                     }
                 }
         		total_datacnt++;
+        		
+        		SnowflakeGeneration.deleteId(th);
             }
 
+            SnowflakeGeneration.setSeq(threadName, seq);
+            
             available = is.available();
             log.debug("AVAILABLE[" + available + "]");
 
