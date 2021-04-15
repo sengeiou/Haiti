@@ -250,6 +250,9 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         			+ " mdsId[" + meter.getMdsId() + "] ");
             
             lastDayEM = getDayEM(meter.getMdsId(), lastBilling.getYyyymmdd());	//최근 DAY_EM 조회
+            if(lastDayEM != null) {
+            	log.info("#### lastDayEM is ["+ lastDayEM.toJSONString()+ "] ####");
+            }
             
             //데이터 검증 하여 BILLING_BLOCK_TARIFF_WRONG 이력 남기고 리턴하여 for문으로 다시 돌아감
             if(validateBillingValues(contract, lastDayEM, lastBilling)) {
@@ -483,7 +486,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
             condition.add(new Condition("id.mdevType", new Object[]{DeviceType.Meter}, null, Restriction.EQ));
             condition.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
             condition.add(new Condition("id.channel", new Object[]{I210Channel.ActiveEnergyImp.getChannel()}, null, Restriction.EQ));
-            condition.add(new Condition("id.yyyymmdd", new Object[]{yyyymmdd}, null, Restriction.GE));
+//            condition.add(new Condition("id.yyyymmdd", new Object[]{yyyymmdd}, null, Restriction.GE));
             
             List<DayEM> ret = dayEMDao.findByConditions(condition);
             DayEM lastDayEM = null;
@@ -530,7 +533,13 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     
     private boolean validateBillingValues(Contract contract, DayEM lastDayEM, BillingBlockTariff lastBilling) {
     	boolean result = false;
-    	log.info("### validateBillingValues   contract "+contract.getTariffIndexId()+"  lastDayEM "+lastDayEM.getValue()+"  lastBilling "+lastBilling.getActiveEnergy());
+    	
+    	if(lastDayEM == null) {
+        	log.info("### validateBillingValues DayEM is null Contract[" +contract.getContractNumber() + "] Meter[" + contract.getMeter().getMdsId() + "] ###");
+        	return true;
+        }
+    	
+    	log.info("### validateBillingValues   contract["+contract.getTariffIndexId()+"]  lastDayEM["+lastDayEM.getValue()+"]  lastBilling["+lastBilling.getActiveEnergy() + "] ###");
     	// Day_EM value가 이전 activeEnergy 보다 클떄 진행하고 작으면 Wrong 테이블 저장
     	if(lastDayEM.getValue() < lastBilling.getActiveEnergy()) {
     		addWrongBillingBlockTariff(contract, contract.getMeter(), lastDayEM, lastBilling, BILLING_BLOCK_ERROR_CODE.AEPS);
