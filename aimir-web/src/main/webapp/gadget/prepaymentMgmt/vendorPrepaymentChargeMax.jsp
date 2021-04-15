@@ -581,7 +581,7 @@
       url: "${ctx}/gadget/prepaymentMgmt/getChargeHistoryList.do",
       totalProperty: 'totalCount',
       root: 'result',
-      fields: ["lastTokenDate", "chargedCredit", "chargedArrears", "chargedArrears2", "balance", "arrears", "arrears2", "vat",
+      fields: ["lastTokenDate", "chargedCredit", "chargedArrears", "chargedArrears2", "balance", "arrears", "arrears2", "vat", "prepaymentLogId",
         "lastTokenId", "authCode", "municipalityCode", "payType", "firstArrears", "arrearsContractCount", "arrearsPaymentCount","partpayInfo"],
       listeners: {
         beforeload: function(store, options) {
@@ -845,18 +845,7 @@
                allowNegative: false
            })
           } 	*/
-         ,{header: "<fmt:message key='aimir.barcode'/>", align: 'left', dataIndex: 'barcode',
-            editor: new Ext.form.NumberField({
-              id: 'barcode',
-              allowBlank: true,
-              allowNegative: false,
-              listeners: {
-                change: function(field, newVal, oldVal) {
-                  eventHandler.updateBarcode(field, newVal, oldVal);
-                }
-              }
-            })
-          }         
+         ,{header: "<fmt:message key='aimir.barcode'/>", align: 'left', dataIndex: 'barcode'}         
          ,{header: "<fmt:message key='aimir.amount.paid'/>", renderer: saveBtnArea}
       ],
       defaults: {
@@ -875,7 +864,7 @@
         {header: "<fmt:message key='aimir.arrears'/> A", align: 'right', dataIndex: 'arrears'},
         {header: "<fmt:message key='aimir.prepayment.chargearrears'/> B", align: 'right', dataIndex: 'chargedArrears2'},
         {header: "<fmt:message key='aimir.arrears'/> B", align: 'right', dataIndex: 'arrears2'},
-        {header: "<fmt:message key='aimir.contract.receioptNo'/>", dataIndex: 'lastTokenId'},
+        {header: "<fmt:message key='aimir.contract.receioptNo'/>", align: 'center',  dataIndex: 'prepaymentLogId'},
         //{header: "<fmt:message key='aimir.prepayment.authCode'/>", dataIndex: 'authCode'},
         //{header: "<fmt:message key='aimir.prepayment.municipalityCode'/>", dataIndex: 'municipalityCode'},
         {header: "<fmt:message key='aimir.paymenttype'/>",  align: 'center', dataIndex: 'payType'},

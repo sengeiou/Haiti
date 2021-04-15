@@ -69,7 +69,7 @@
                         <fmt:message key='aimir.contract.receioptNo'/>
                     </td>
                     <td>
-                        SC-- ${logId}
+                        ${logId}
                     </td>
                 </tr>
             </table>
@@ -170,69 +170,37 @@
                         <td colspan=2 class='td-table'>
                             <table border='1' class='inner-table' style="width: 100%; ">
                                 <tr>
-                                    <td>
+                                    <td class='table-header' style='font-size: 1em'>
+                                        <fmt:message key='aimir.arrears'/>
                                     </td>
-                                    <td class='table-header' style='font-size: 4vw'>
-                                        <fmt:message key='aimir.before'/><br><fmt:message key='aimir.charging'/>
+                                    <td class='table-header' style='font-size: 1em'>
+                                        <fmt:message key='aimir.previous'/>
                                     </td>
-                                    <td class='table-header' style='font-size: 4vw'>
-                                        <fmt:message key='aimir.charging'/>
-                                    </td>
-                                    <td class='table-header' style='font-size: 4vw'>
-                                        <fmt:message key='aimir.after'/><br><fmt:message key='aimir.charging'/>
+                                    <td class='table-header' style='font-size: 1em'>
+                                        ( - )
                                     </td>
                                 </tr>
                                 <tr class='tr-credit'>
-                                    <td class='table-header' style='font-size: 4vw'>
+                                    <td class='table-header' style='font-size: 1em'>
                                         <fmt:message key='aimir.arrears'/> A
                                     </td>
-                                    <td class='table-value' style='font-size: 4vw'>
+                                    <td class='table-value' style='font-size: 1em'>
                                         ${preArrears}
                                     </td>
-                                    <td class='table-value' style='font-size: 4vw'>
+                                    <td class='table-value' style='font-size: 1em'>
                                         ${arrears}
                                     </td>
-                                    <td class='table-value' style='font-size: 4vw'>
-                                        ${currentArrears}
-                                    </td>
                                 </tr>
                                 <tr>
-                                    <td class='table-header' style='font-size: 4vw'>
+                                    <td class='table-header' style='font-size: 1em'>
                                         <fmt:message key='aimir.arrears'/> B
                                     </td>
-                                    <td class='table-value' style='font-size: 4vw'>
+                                    <td class='table-value' style='font-size: 1em'>
                                         ${preArrears2}
                                     </td>
-                                    <td class='table-value' style='font-size: 4vw'>
+                                    <td class='table-value' style='font-size: 1em'>
                                         ${arrears2}
                                     </td>
-                                    <td class='table-value' style='font-size: 4vw'>
-                                        ${currentArrears2}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class='table-header' style='font-size: 4vw'>
-                                        <fmt:message key='aimir.balance'/>
-                                    </td>
-                                    <td class='table-value' style='font-size: 4vw'>
-                                        ${preBalance}
-                                    </td>
-                                    <td class='table-value' style='font-size: 4vw'>
-                                        ${amount}
-                                    </td>
-                                    <td class='table-value' style='font-size: 4vw'>
-                                        ${currentBalance}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class='table-header' style='font-size: 4vw'>
-                                        <fmt:message key='aimir.prepayment.vat'/>
-                                    </td>
-                                    <td/>
-                                    <td class='table-value' style='font-size: 4vw'>
-                                        ${vat}
-                                    </td>
-                                    <td/>
                                 </tr>
                             </table>
                         </td>
@@ -245,25 +213,9 @@
                             ${totalAmountPaid}
                         </td>
                     </tr>
-                    <%-- <tr>
-                        <td>
-                            <fmt:message key="aimir.prepayment.chargedarrears"/> A
-                        </td>
-                        <td>
-                            ${arrears}
-                        </td>
-                    </tr>
                     <tr>
                         <td>
-                            <fmt:message key="aimir.prepayment.chargedarrears"/> B
-                        </td>
-                        <td>
-                            ${arrears2}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <fmt:message key="aimir.prepayment.vat"/>
+                            <fmt:message key="aimir.prepayment.vat"/> ( - )
                         </td>
                         <td>
                             ${vat}
@@ -276,7 +228,7 @@
                         <td class="charge-amount">
                             ${amount}
                         </td>
-                    </tr>  --%>
+                    </tr>
                     <tr>
                         <td>
                             <fmt:message key="aimir.prepayment.beforebalance"/>
@@ -368,7 +320,7 @@
         };
         var init = function () {
             //eventHandler.insertInitCredit();
-            window.resizeTo(285, 790);
+            window.resizeTo(285, 735);
             bind();
         };
         window.onload = function() {
