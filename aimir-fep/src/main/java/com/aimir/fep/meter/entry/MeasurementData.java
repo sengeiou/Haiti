@@ -155,6 +155,7 @@ public class MeasurementData implements IMeasurementData
                 }
                 this.parser = (MeterDataParser)Class.forName(deviceConfig.getParserName()).newInstance();
                 log.debug("Parser Instance Created..");
+                log.info("meter : " + meter.getMdsId() +", modem : " + meter.getModem().getDeviceSerial() +", timestamp : " + getTimeStamp());
 
                 // SP-687
                 this.parser.setDeviceId(this.mcuId);
