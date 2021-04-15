@@ -682,7 +682,7 @@
         	text: "<fmt:message key='aimir.topup'/>",            
             width: 40, 
             handler: function(b, e) {
-            	
+            	selectedMdsId = rec.data.mdsId;
             	eventHandler.saveChargeAmount(rec);
             }
           }).render(id);
@@ -1055,6 +1055,7 @@
     	renderTo: 'casherManagerPwdDiv'
     })
 
+    var selectedMdsId = "";
     var totalAmountPaid = 0;
     var chargeAmount = 0;
     var chargeArrears = 0;
@@ -1590,7 +1591,7 @@
           supplierId: supplierId,
           contractId: rec.contractId || rec.json.contractId,
           prepaymentLogId: rec.prepaymentLogId || rec.json.prepaymentLogId,
-          mdsId: rec.mdsId || rec.json.mdsId
+          mdsId: selectedMdsId
         }
         
         if ( receiptPopupWindow ) {
