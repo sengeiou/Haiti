@@ -1466,7 +1466,13 @@ public abstract class AbstractMDSaver
             	
         		for(MeteringLP mLP : lpList) {
         			mLP.setModemSerial(meter.getModem().getDeviceSerial());
-        			appendBuilder.append(mLP.getExternalTableValue());
+        			String extTableValue = mLP.getExternalTableValue();
+                    log.info("ReplaceAll Before Metering Data : " + extTableValue);
+                    
+                    extTableValue = extTableValue.replaceAll("null", "");
+                    log.info("ReplaceAll After Metering Data : " + extTableValue);
+                    
+        			appendBuilder.append(extTableValue);
             	}	
             }
             filePrefix = "LP_EM_EXT_";
