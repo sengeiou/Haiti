@@ -1199,11 +1199,11 @@ public class PrepaymentLogDaoImpl  extends AbstractHibernateGenericDao< Prepayme
         }
         if(searchType.equals("all") || searchType.equals("month")) {
 //			이번 달 month billing 반드시 포함 조건        	
-//        	query.setString("searchStartMonth", searchStartDate.substring(0, 6));
-//        	query.setString("searchEndMonth", searchEndDate.substring(0, 6));
+        	query.setString("searchStartMonth", searchStartDate.substring(0, 6));
+        	query.setString("searchEndMonth", searchEndDate.substring(0, 6));
         	query.setInteger("contractId", contractId);
-        	query.setString("searchStartMonth", searchStartDate);
-        	query.setString("searchEndMonth", searchEndDate);
+//        	query.setString("searchStartMonth", searchStartDate);
+//        	query.setString("searchEndMonth", searchEndDate);
         }
 
         if (isCount) {

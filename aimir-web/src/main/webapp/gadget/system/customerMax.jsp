@@ -1382,10 +1382,10 @@
             conditionArray[6] = $('#mdsIdA').val();
             conditionArray[7] = '';
             conditionArray[8] = '';
-            conditionArray[9] = $('#sicIdsA').val();
+            conditionArray[9] = '';//$('#sicIdsA').val();
             conditionArray[10] = $('#startDateA').val();
             conditionArray[11] = $('#endDateA').val();
-            conditionArray[12] = $('#addressA').val();
+            conditionArray[12] = '';//$('#addressA').val();
             conditionArray[13] = $('#serviceTypeA').val();
             conditionArray[15] = $('#contractNumberA').val();
             conditionArray[16] = $('#operatorA').val();
@@ -2270,16 +2270,14 @@
                 mdsId: $('#mdsIdA').val(),
                 status: '',
                 dr: '',
-                customerType: $('#sicIdsA').val(),
+                customerType: '',//$('#sicIdsA').val(),
                 startDate: $('#startDateA').val(),
                 endDate: $('#endDateA').val(),
-                address: $('#addressA').val(),
+                address: '',//$('#addressA').val(),
                 serviceType: $('#serviceTypeA').val(),
                 serviceTypeTab: serviceTypeTab,
                 operatorId: $('#operatorA').val(),
-                barcode: $('#barcodeA').val(),
                 oldMdsId: $('#oldmdsIdA').val(),
-                operatorId: $('#operatorA').val(),
                 phoneNumber : $('#phoneNumberA').val(),
             	barcode : $('#barcodeA').val(),
             	tariffType : $('#customer_type').val().toString()
@@ -2393,7 +2391,7 @@
                     status : '',
                     dr : '',
                     gs1 :  $('#gs1').val(),
-                    customerType : $('#sicIdsA').val(),
+                    customerType : '',//$('#sicIdsA').val(),
                     startDate : $('#startDateA').val(),
                     endDate : $('#endDateA').val(),
                     serviceType : $('#serviceTypeA').val(),
@@ -2407,7 +2405,7 @@
                 treeLoader.baseParams.location = $("#locationA").val();
                 treeLoader.baseParams.mdsId = $("#mdsIdA").val();
                 treeLoader.baseParams.gs1 = $("#gs1").val();
-                treeLoader.baseParams.customerType = $("#sicIdsA").val();
+                treeLoader.baseParams.customerType = '';//$("#sicIdsA").val();
                 treeLoader.baseParams.serviceType = $("#serviceTypeA").val();
                 treeLoader.baseParams.serviceTypeTab = serviceTypeTab;
                 treeLoader.baseParams.operatorId = $("#operatorA").val();
@@ -3124,10 +3122,10 @@
         conditions[7] = $('#mdsIdA').val();
         conditions[8] = '';
         conditions[9] = '';
-        conditions[10] = $('#sicIdsA').val();
+        conditions[10] = '';//$('#sicIdsA').val();
         conditions[11] = '';
         conditions[12] = '';
-        conditions[13] = $('#addressA').val();
+        conditions[13] = '';//$('#addressA').val();
         conditions[14] = $('#serviceTypeA').val();
         conditions[15] = serviceTypeTab;
         conditions[16] = supplierId;

@@ -254,7 +254,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 			int installDay = Integer.parseInt(fDate.substring(6, 8));
 			
 			Calendar cal = DateTimeUtil.getCalendar(fDate);
-			int monthMaxDay = cal.getMaximum(Calendar.DAY_OF_MONTH);
+			int monthMaxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 			
 			double avgDay = serviceCharge / monthMaxDay;
 			int usingDay = 	monthMaxDay - installDay;
@@ -287,7 +287,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 		log.debug("before balance : " + balance);
 		
 		log.debug("saveMonthlyBillingLog : " + saveMonthlyBillingList.size());
-		/*
+		
 		if(saveMonthlyBillingList.size() > 0) {
 			for(MonthlyBillingLog mb : saveMonthlyBillingList) {
 				
@@ -306,7 +306,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 			log.debug("after balance : " + balance);
 			contractDao.update(contract);
 		}
-		*/
+		
 	}
 	
 	private BigDecimal getBigDecimal(Object val) {
