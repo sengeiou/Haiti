@@ -96,6 +96,7 @@ public class I210PlusMDSaver extends AbstractMDSaver {
 				}
 				
 				log.debug("meter.getMeterStatus() : " + meter.getMeterStatus());
+				/*
 				//meter's last_read_date
 	            log.info("meter.LastReadDate Meter : " + meter.getMdsId() +" ["+meter.getLastReadDate()+"] --> ["+parser.getMeteringTime().substring(0,10) + "0000" +"].");
 	            //meter.setLastReadDate(parser.getMeteringTime().substring(0,14));
@@ -106,8 +107,9 @@ public class I210PlusMDSaver extends AbstractMDSaver {
 	            		meter.setLastMeteringValue(parser.getLPData()[0].getCh()[0]);	
 	            	}
 	            }
-	            
+	            */
 				meterDao.update(meter);
+				
 			} catch (Exception e) {
 				log.error(e,e);
 			}
