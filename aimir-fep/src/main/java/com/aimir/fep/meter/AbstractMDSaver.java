@@ -1469,8 +1469,8 @@ public abstract class AbstractMDSaver
         			String extTableValue = mLP.getExternalTableValue();
                     log.info("ReplaceAll Before Metering Data : " + extTableValue);
                     
-                    extTableValue = extTableValue.replaceAll("null", "");
-                    log.info("ReplaceAll After Metering Data : " + extTableValue);
+                    String reEextTableValue = extTableValue.replaceAll("null", "");
+                    log.info("ReplaceAll After Metering Data : " + reEextTableValue);
                     
         			appendBuilder.append(extTableValue);
             	}	
@@ -1488,8 +1488,8 @@ public abstract class AbstractMDSaver
                     String extTableValue = mLP.getExternalTableValue();
                     log.info("ReplaceAll Before Metering Data : " + extTableValue);
                     
-                    extTableValue = extTableValue.replaceAll("null", "");
-                    log.info("ReplaceAll After Metering Data : " + extTableValue);
+                    String reEextTableValue = extTableValue.replaceAll("null", "");
+                    log.info("ReplaceAll After Metering Data : " + reEextTableValue);
                     
                     appendBuilder.append(extTableValue);
                 }
