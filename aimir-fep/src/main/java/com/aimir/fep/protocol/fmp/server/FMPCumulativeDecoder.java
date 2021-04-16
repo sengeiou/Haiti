@@ -1,5 +1,6 @@
 package com.aimir.fep.protocol.fmp.server;
 
+import com.aimir.fep.logger.snowflake.SnowflakeGeneration;
 import com.aimir.fep.meter.parser.plc.PLCDataConstants;
 import com.aimir.fep.protocol.fmp.frame.AMUGeneralDataConstants;
 import com.aimir.fep.protocol.fmp.frame.GeneralDataConstants;
@@ -60,6 +61,8 @@ public class FMPCumulativeDecoder extends CumulativeProtocolDecoder
     {
         try
         {
+        	SnowflakeGeneration.setSession(session);
+        	
             log.info("Received [" + session.getRemoteAddress() + 
                     "] : LIMIT["+in.limit()+"] POSITION[" + in.position() + "]");
             log.debug(" IN_HEX : " + in.getHexDump());
