@@ -561,10 +561,12 @@ class HaitiRelayoffTaskSubClz implements Runnable {
 	              	 contract.setEmergencyCreditAutoChange(null);
 	                 contract.setEmergencyCreditMaxDuration(null);
 	                 contract.setEmergencyCreditStartTime(null);
-	                  
+	                 contract.setEmergencyCreditAvailable(false); 
+	                 
 	                 contractDao.update(contract);
 				 } else if (Code.EMERGENCY_CREDIT.equals(eType.getCode())) {
 					 contract.setCreditType(eType);
+					 contract.setEmergencyCreditAvailable(true);
 					 if(contract.getEmergencyCreditStartTime() == null)
 	            		 contract.setEmergencyCreditStartTime(TimeUtil.getCurrentTime());
 				 }
