@@ -1445,6 +1445,8 @@ public abstract class AbstractMDSaver
     private void saveLPDataUsingLPTimeUsingProcedure(MeteringType meteringType, Map<Integer, LinkedList<MeteringLP>> lpMap, 
     		Meter meter, DeviceType mdevType) throws Exception {
     	
+    	double lastMeteringValue = 0d;
+    	String lastMeteringTime = null;
     	StringBuilder appendBuilder = null;    	 
     	MeterType meterType = MeterType.valueOf(meter.getMeterType().getName());
     	MeterConfig meterConfig = (MeterConfig)meter.getModel().getDeviceConfig();
@@ -1465,6 +1467,9 @@ public abstract class AbstractMDSaver
             	LinkedList<MeteringLP> lpList = lpMap.get(channel);
             	
         		for(MeteringLP mLP : lpList) {
+        			lastMeteringValue = mLP.getValue();
+        			lastMeteringTime = mLP.getYyyymmddhhmiss();
+        			
         			mLP.setModemSerial(meter.getModem().getDeviceSerial());
         			String extTableValue = mLP.getExternalTableValue();
                     log.info("ReplaceAll Before Metering Data : " + extTableValue);
@@ -1513,7 +1518,13 @@ public abstract class AbstractMDSaver
         	
         	log.info("mappingID ["+mappingID+"] filename["+filename+"] procedure["+parameter.get("PROCEDURE_NAME")+"] procedureReuslt ["+procedureReuslt+"]");
         	
-        	if(procedureReuslt.contains("ERROR")) {
+        	if(procedureReuslt.contains("SUCESS")) {
+        		if(lastMeteringTime != null) {
+        			log.info("meter.LastReadDate Meter : " + meter.getMdsId() +" ["+meter.getLastReadDate()+"] --> ["+ lastMeteringTime +"] | value [" + meter.getLastMeteringValue()+"] --> [" + lastMeteringValue +"]");
+        			meter.setLastMeteringValue(lastMeteringValue);
+        			meter.setLastReadDate(lastMeteringTime);
+        		}
+        	} else if(procedureReuslt.contains("ERROR")) {
         		try {
         			ProcedureRecoveryLogger prLogger = new ProcedureRecoveryLogger();
         			prLogger.makeLPOfProcedureERR(appendBuilder.toString());
