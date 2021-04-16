@@ -549,9 +549,7 @@
 						<!-- 남아공 추가 요구 필드 END -->
 
 			<div class="headspace">
-				<span><label class="check" id="InfoName1"></label></span><span
-					class="nocheck gray11pt"><fmt:message
-						key='aimir.operator.userDetail' />
+				<span><label class="check" id="InfoName1"></label></span><span class="nocheck gray11pt"><fmt:message key='aimir.operator.userDetail' />
 					<!-- 님의 상세정보 --></span>
 			</div>
 

@@ -152,7 +152,7 @@ function getGroups() {
 
 
     <div class="headspace-enter">
-        <span><label class="check" id="label-default">${operator.loginId}</label></span><div class="nocheck gray11pt">&nbsp;<fmt:message key='aimir.operator.userDetail'/><!-- 님의 상세정보 --> <fmt:message key='aimir.update'/></div>
+        <span><label class="check" id="label-default"><%-- ${operator.loginId} --%></label></span><div class="nocheck gray11pt"><fmt:message key='aimir.view.detail'/><!-- 님의 상세정보 --> <fmt:message key='aimir.update'/></div>
     </div>
 
 
@@ -164,7 +164,7 @@ function getGroups() {
             <td><font class="input-fake blue11pt">${customerNo}</font></td>
         </tr>
         <tr><th class="bluebold11pt"><fmt:message key='aimir.name.user'/></th>
-            <td><font class="input-fake blue11pt">${operator.name}</font></td>
+            <td><input name="name" type="text" value="${operator.name}"/></td>
         </tr>
         <tr><th class="darkgraybold11pt"><fmt:message key='aimir.alias'/></th>
             <td><input name="aliasName" type="text" value="${operator.aliasName}"/></td>

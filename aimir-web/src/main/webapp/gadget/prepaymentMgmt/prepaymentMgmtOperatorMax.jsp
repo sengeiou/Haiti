@@ -1226,8 +1226,8 @@
                        } else {
                            Ext.MessageBox.alert("<fmt:message key="aimir.message"/>", "(DB Update) <fmt:message key="aimir.save.error"/>");
                        }
-                       
-                       if(isSts){
+                       emergencyCreditFormPanel.close();
+/*                        if(isSts){
 			               $.getJSON('${ctx}/gadget/device/command/cmdSetEmergencyCredit.do', {
 			                   'target' : selectedMeterId,
 			                   'ec_mode' :mode,
@@ -1236,7 +1236,7 @@
 			                   Ext.Msg.hide();
 			                   Ext.Msg.alert('<fmt:message key='aimir.message'/>', 'Execute Set Emergency : '+returnData.result);
 			               });
-                       }
+                       } */
                    }
            );
         }
@@ -3872,7 +3872,7 @@
   			formId: 'emergencyForm',
             bodyStyle:'padding:10px 10px 10px 10px',
             labelWidth: 140,
-/*             listeners: {
+            listeners: {
             	afterlayout: function(c){
 	             	if(emergencyCreditAutoChange == true){
 	             		Ext.getCmp('limit').enable();
@@ -3884,11 +3884,10 @@
 	            		Ext.getCmp('enable').setValue(false);
 	            	}
             	}
-            }, */
-            items: [
-/*             	{
+            },
+            items: [{
                     xtype: 'label',
-                    html: 'Wasion Meter(<b>Limited Amount</b>), Suni Kamstrupt Meter(<b>Days</b>)<br>',
+                    html: 'Emergency Credit Settings',
               	},{
                     xtype : 'radiogroup',
                     id : 'type',
@@ -3906,8 +3905,7 @@
 	                      {boxLabel: '<fmt:message key="aimir.disable2"/>', id:'disable', name: 'radio-action2', value:'0'},
 	                      {boxLabel: '<fmt:message key="aimir.enable2"/>', id:'enable', name: 'radio-action2', value:'1'}
 	                  ]
-	            }, */
-	            {
+	            },{
 	                xtype: 'numberfield',
 	                width : 50,
 	                fieldLabel: 'Emergency Credit (days) ',
@@ -3919,7 +3917,7 @@
 	          	text: ' OK ',
 	          	formBind : true,
 	          	handler: function() {
-	          		var mode = ""//Ext.getCmp('type').getValue().value;
+	          		var mode = Ext.getCmp('type').getValue().value;
 	          		var days = Ext.getCmp('limit').getValue();
 	          		var limit = prepaymentPowerDelayView;
                     saveEmergenCreditInfo(mode,days,limit);
@@ -3939,8 +3937,8 @@
               title  : ' Set Emergency Credit ',
               pageX : 600,
               pageY : 200,
-              height : 150,
-              width  : 300,
+              height : 200,
+              width  : 400,
               layout : 'fit',
               bodyStyle   : 'padding: 5px 5px 5px 5px;',
               items  : [emergencyCreditFormPanel],
