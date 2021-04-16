@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.mina.core.session.IoSession;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -127,6 +128,14 @@ public class SnowflakeGeneration {
 		}catch(Exception e) {
 			log.error(e,e);
 		}
+	}
+	
+	public static void setSession(IoSession session) {
+		long sessionId = session.getId();
+		
+		String key = sessionId + Thread.currentThread().getName();
+		Thread.currentThread().setName(key);
+		setSeq(key, getId(key));
 	}
 	
 /*		

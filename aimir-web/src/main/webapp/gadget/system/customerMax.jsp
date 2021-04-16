@@ -15,7 +15,7 @@
 
 <link href="${ctx}/js/extjs/resources/css/ext-all.css" rel="stylesheet" type="text/css" title="blue" />
 <link href="${ctx}/js/extjs/resources/css/treegrid.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" charset="utf-8" src="${ctx}/js/public.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx}/js/public2.js"></script>
 <script type="text/javascript" charset="utf-8" src="${ctx}/js/tree/jquery.tree.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="${ctx}/js/tree/location.tree.js"></script>
 <script type="text/javascript" charset="utf-8" src="${ctx}/js/extjs/adapter/ext/ext-base.js"></script>
@@ -1990,20 +1990,18 @@
     }
 
     function fcChartRender() {
+    	
         var width = $('#fcChartDiv').width();
         $('#fcChartDiv').show();
-        fcChart = new FusionCharts("${ctx}/flexapp/swf/fcChart/MSColumn3D.swf", "fcChartId", width, "170", "0", "0");
         
-        // 특정 클라이언트에서 render()함수가 한번 호출했을때 동작하지 않는 경우 발생
-        fcChart.addEventListener("DrawComplete", function (event) {
-            if( !fcChart.hasRendered() ) {
-                fcChart.render("fcChartDiv").defer(500);
-            }
-        });
-        fcChart.setDataXML(fcChartDataXml);
-        fcChart.setTransparent("transparent");
-        fcChart.render("fcChartDiv");
-
+        fcChart = new FusionCharts({
+    		type: 'MSColumn3D',
+    		renderAt : 'fcChartDiv',
+    		width : width,
+    		height : '170',
+    		dataSource : fcChartDataXml
+    	});
+    	fcChart.render();
     }
 
     var changeLogStore;

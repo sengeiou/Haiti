@@ -120,7 +120,7 @@
                 <span>
                  <label class="check" id="label-default">
                  <!-- details of -->
-                    <fmt:message key='aimir.useroper.detailsof'/>   ${operator.loginId}
+                    <fmt:message key='aimir.view.detail'/>   <%-- ${operator.loginId} --%>
                 </label>
                 </span>
             </div>
