@@ -1301,7 +1301,7 @@
 				vat = vatAmount;
 			}
 			
-			if(Number($("#bCurrentArrears").val()) - chargeArrears == 0){
+			if(Number($("#bCurrentArrears").text()) - chargeArrears == 0){
 				Ext.getCmp('arrearsB').setReadOnly(false);
 			}else{
 				Ext.getCmp('arrearsB').setReadOnly(true);
@@ -2361,7 +2361,7 @@
       renderGrid();
       $("#menu").tabs();
       locationTreeGoGo('treeDiv2', 'searchWord', 'locationId');
-      initDepositSettings();
+      //initDepositSettings();
       bind();    
       eventHandler.refreshDeposit();
       eventHandler.tagExcelButton(); 
