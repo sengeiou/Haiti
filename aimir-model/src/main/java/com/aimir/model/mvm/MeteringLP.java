@@ -291,8 +291,9 @@ public abstract class MeteringLP {
 		builder.append(getModemTime()).append("|");
 		builder.append(getDcuTime());
 		builder.append("\n");
-				
-		return builder.toString().replaceAll("null", "");
+			
+		return builder.toString();
+		//return builder.toString().replaceAll("null", "");
 	}
 	
 }
