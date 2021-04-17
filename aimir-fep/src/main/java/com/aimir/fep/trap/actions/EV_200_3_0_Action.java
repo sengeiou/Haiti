@@ -210,9 +210,11 @@ public class EV_200_3_0_Action implements EV_Action
                 mcu.setSysSwVersion(swVersion);
                 mcuDao.update(mcu);
             }
-        }
-        finally {
-            if (txstatus != null) txmanager.commit(txstatus);
+            
+            txmanager.commit(txstatus);
+        } catch(Exception e) {
+            if (txstatus != null) 
+            	txmanager.rollback(txstatus);
         }
 
         // Get MCU Information

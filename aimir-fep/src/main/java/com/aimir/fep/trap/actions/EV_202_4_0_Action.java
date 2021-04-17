@@ -117,11 +117,14 @@ public class EV_202_4_0_Action implements EV_Action
    	            String ipaddr = event.getEventAttrValue("ethIpAddr");
    	            log.debug("ipaddr ["+ipaddr+"]");
    	            
+   	            /*
    	            if (ipaddr != null && !ipaddr.equals("") && !ipaddr.equals("0.0.0.0"))
    	            {
    	            	mcu.setIpAddr(ipaddr);
    	            }
+   	            */
    	            
+   	            mcu.setIpAddr(ipaddr);
 				mcu.setInstallDate(currentTime);
 				mcu.setLastCommDate(currentTime);
 				mcu.setNetworkStatus(1);
@@ -153,11 +156,14 @@ public class EV_202_4_0_Action implements EV_Action
    	            log.debug("ipaddr ["+ipaddr+"]");
    	            
    	            mcu.setLastCommDate(currentTime);
+   	            mcu.setIpAddr(ipaddr);
+   	            /*
    	            if (ipaddr != null && !ipaddr.equals("") && !ipaddr.equals("0.0.0.0"))
 	            {
    	            	if (mcu.getIpAddr() == null || !mcu.getIpAddr().equals(ipaddr))
    	            		mcu.setIpAddr(ipaddr);
 	            }
+   	            */
    	            
    	            mcuDao.update(mcu);
             }
