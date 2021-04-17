@@ -393,6 +393,7 @@ public class DFProcessor extends Processor
         	String sthv = thv + "_" + num; 
         	Thread.currentThread().setName(sth);
         	SnowflakeGeneration.setSeq(sth, sthv);
+        	num++;
         	
             byte[] sid = new byte[8];
             is.read(sid, 0, sid.length);

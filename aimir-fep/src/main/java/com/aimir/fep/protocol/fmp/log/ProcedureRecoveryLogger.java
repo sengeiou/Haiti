@@ -12,6 +12,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -155,7 +156,7 @@ public class ProcedureRecoveryLogger extends ExternalTableLogger {
     	ObjectOutputStream out = null;
     	try {    		
     		File f = null;
-            f = new File(backupPath, String.valueOf(SnowflakeGeneration.getId()));
+            f = new File(backupPath, UUID.randomUUID().toString().replaceAll("-", ""));
     		Writer writer = new BufferedWriter(new OutputStreamWriter(
     				new FileOutputStream(f), "utf-8"));
     		writer.write(body);
