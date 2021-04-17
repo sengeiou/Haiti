@@ -1524,6 +1524,10 @@ public abstract class AbstractMDSaver
         			meter.setLastMeteringValue(lastMeteringValue);
         			meter.setLastReadDate(lastMeteringTime);
         		}
+        		//저장이 안되기 때문에 데이터 백업
+        		ProcedureRecoveryLogger prLogger = new ProcedureRecoveryLogger();
+    			prLogger.makeLPOfProcedureERR(appendBuilder.toString());
+    			
         	} else if(procedureReuslt.contains("ERROR")) {
         		try {
         			ProcedureRecoveryLogger prLogger = new ProcedureRecoveryLogger();
