@@ -1494,9 +1494,9 @@ public abstract class AbstractMDSaver
     	try {
         	LpEmExternal ext = new LpEmExternal();
         	
-        	ext.setMdevId(mLP.getId().getMdevId());
-        	ext.setYyyymmddhhmiss(mLP.getId().getYyyymmddhhmiss());
-        	ext.setChannel(mLP.getId().getChannel());
+        	ext.setMdevId(mLP.getMDevId());
+        	ext.setYyyymmddhhmiss(mLP.getYyyymmddhhmiss());
+        	ext.setChannel(mLP.getChannel());
         	ext.setMdevType(mLP.getMDevType().name());
         	ext.setDst(mLP.getDst());
         	ext.setDeviceId(mLP.getDeviceId());    	
