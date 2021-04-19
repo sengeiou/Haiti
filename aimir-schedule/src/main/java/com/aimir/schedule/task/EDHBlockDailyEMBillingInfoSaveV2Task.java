@@ -250,9 +250,6 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         			+ " mdsId[" + meter.getMdsId() + "] ");
             
             lastDayEM = getDayEM(meter.getMdsId(), lastBilling.getYyyymmdd());	//최근 DAY_EM 조회
-            if(lastDayEM != null) {
-            	log.info("#### lastDayEM is ["+ lastDayEM.toJSONString()+ "] ####");
-            }
             
             //데이터 검증 하여 BILLING_BLOCK_TARIFF_WRONG 이력 남기고 리턴하여 for문으로 다시 돌아감
             if(validateBillingValues(contract, lastDayEM, lastBilling)) {
@@ -263,7 +260,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         	// 마지막 시간이 현재 시간보다 작으면 월 기준으로 선불 계산한다.
         	// compareTo - lastAccumulateDate가 lastDayEM 날짜 보다 작으면 음수 반환, 크면 양수 반환, 같으면 0 리턴
         	if (lastBilling.getYyyymmdd().compareTo(lastDayEM.getYyyymmdd()) <= 0 && lastBilling.getActiveEnergy() < lastDayEM.getValue()) {
-        		
+        		log.info("#### dailyBilling start  lastBilling yyyymmdd["+ lastBilling.getYyyymmdd()+ "] ActiveEnergy[" + lastBilling.getActiveEnergy() + "] lastDayEM yyyymmdd["+ lastDayEM.getYyyymmdd() +"] ActiveEnergy["+ lastDayEM.getValue() +"] ####");
         		// DAY_EM 마지막 날짜와 lastAccumulateDate간의 시간차이를 비교하여 일수로 반환
         		long diffDays = Long.parseLong(calculateDiffDays(lastDayEM.getYyyymmdd(), lastBilling.getYyyymmdd()));
         		log.info("#### diffDays : "+ diffDays+ " ####");
@@ -537,6 +534,8 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     	if(lastDayEM == null) {
         	log.info("### validateBillingValues DayEM is null Contract[" +contract.getContractNumber() + "] Meter[" + contract.getMeter().getMdsId() + "] ###");
         	return true;
+        }else {
+        	log.info("#### validateBillingValues start  lastBilling yyyymmdd["+ lastBilling.getYyyymmdd()+ "] ActiveEnergy[" + lastBilling.getActiveEnergy() + "] lastDayEM yyyymmdd["+ lastDayEM.getYyyymmdd() +"] ActiveEnergy["+ lastDayEM.getValue() +"] ####");
         }
     	
     	log.info("### validateBillingValues   contract["+contract.getTariffIndexId()+"]  lastDayEM["+lastDayEM.getValue()+"]  lastBilling["+lastBilling.getActiveEnergy() + "] ###");
