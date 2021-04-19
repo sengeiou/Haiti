@@ -80,7 +80,7 @@
         addContractMeterColModel = new Ext.grid.ColumnModel({
             columns: [
                 {id: "mdsId", header: '<fmt:message key='aimir.meterid'/>', dataIndex: 'mdsId'},
-                {id: "gs1", header: '<fmt:message key='aimir.meterSN'/>', dataIndex: 'gs1'}
+                {id: "gs1", header: '<fmt:message key='aimir.shipment.gs1'/>', dataIndex: 'gs1'}
             ],
             defaults: {
                 sortable: true
@@ -252,7 +252,6 @@
             }
         );
         locationTreeGoGo('treeDivADD', 'location', 'locationADD');
-        sicTreeGoGo('treeDivSI', 'sicIText', 'sicId', null, null, true);  // 하위노드만 선택가능
     }
 
     function getTariffList(serviceType) {
@@ -364,23 +363,6 @@
             return;
         }
         
-    	// SIC Code validation 처리
-    	if ($("#sicIText").val() == "") {
-            Ext.Msg.alert('<fmt:message key='aimir.message'/>',"<fmt:message key="aimir.msg.selectsic"/>");      // SIC Code 를 선택해주세요.
-            $("#sicIText").focus();
-            return;
-        }
-    	
-        //계약용량
-        /*
-        if ( $("#contractDemand").val() == "" || $("#contractDemand").length == 0  ) {
-            var str5 = "<fmt:message key="aimir.enterContractAmount"/>";//계약용량을 입력 해 주세요
-            Ext.Msg.alert('<fmt:message key='aimir.message'/>',str5);
-            $("#contractDemand").focus();
-            return;
-        }
-        */
-
         //공급상태
         if ( $("#status").val() == 0 ) {
             var str6 = "<fmt:message key="aimir.selectService"/>";      // 서비스를 선택 해 주세요
@@ -397,13 +379,6 @@
             return;
         }
 
-        //sicId_input
-        /*if ( $("#sicId_input").val() == 0 ) {
-            var str14 = "sicId_input 를 선택해 주세요";
-            Ext.Msg.alert('<fmt:message key='aimir.message'/>',str14);
-            $("#sicId_input").focus();
-            return;
-        }*/
         var isReturn = false;
         $.ajax({
             type : "POST",
@@ -487,8 +462,6 @@
             return;
         }
 
-        var _sicId = $("#sicId").val();
-
         if (existContract) {        // update contract
             $.ajax({
                 type:"POST",
@@ -496,8 +469,6 @@
                     "mdsId" : $("#mdsId").val(),
                     "gs1" : $("#meterGs1U").val(gs1),
                     "contractNumber" : $.trim($("#contractNumber2").val()),
-                    //'threshold' : $('#threshold').val(),//추가
-                    "sicId" : _sicId,//추가
                     "serviceTypeCode" : $("#serviceTypeCode").val(),
                     "tariffIndex" : ($("#tariffIndex").val() != null) ? $("#tariffIndex").val() : "",
                     "locationId2" : $("#locationADD").val(),
@@ -506,13 +477,10 @@
                     "creditType" : $("#creditType").val(),
                     "creditStatus" : ($("#creditStatusA").val() != null) ? $("#creditStatusA").val() : "",
                     "prepaymentThreshold" : ($("#prepaymentThreshold").val() != null) ? $("#prepaymentThreshold").val() : "",
-                    //'startDatetime' : $('#startDateTimeHidden').val(),
                     'id' : $("#contractId").val(),
                     'customerId' : $("#customer").val(),
                     'fromInsert' : "true",
                     'serviceType2' : ($("#serviceType2").val() != null) ?  $("#serviceType2").val() : "",
-//                    'receiptNumber' : $("#receiptNoA").val(),
-//                    'amountPaid' : $("#amountPaidA").val(),
                     'threshold1' : $('#threshold1A').val(),
                     'threshold2' : $('#threshold2A').val(),
                     'threshold3' : $('#threshold3A').val(),
@@ -533,20 +501,13 @@
             });// ajaxEnd
         } else {        // insert contract
             if($("#currentBalance").val() != '' && $("#currentBalance").val() != null){  // 충전할 Current Balance가 있을 경우            	
-            	//var temp = {'debtInfo':debtSaveArrA};
-            //	var saveCurrentBalanceProcess = function(resultSaveBalanceValue){
         			var options = {			        
         			        url : '${ctx}/gadget/system/customerMax.do?param=createContract',
         			        type : 'post',
         			        data:{
-        			            //"mdsId" : $("#mdsId").val()
         			              "contractNumber" : $.trim($("#contractNumber2").val())
-        			            //,"curPage" : curPage
-        			            , "sicId" :_sicId
                                 , "currentbalanceValue" : $("#currentBalance").val()
                                 , "preMdsId"	: $.trim($("#preMdsIdA").val())
-                                /* , "currentArrears" : $("#currentArrearsA").val()
-                                , "currentArrears2" : $("#currentArrearsB").val() */
                                 , "isPartpayment" : isPartpayment
                                 , "debtSaveInfo" : JSON.stringify(debtSaveArrA)
         			        },
@@ -556,7 +517,6 @@
                     $('#contractForm').ajaxSubmit(options);            		
             //    }       
             
-                //eventHandler.saveChargeAmount($("#currentBalance").val(), saveCurrentBalanceProcess);  // Current Balanace 재확인 구문
             }else { 
 
                 var options = {
@@ -565,13 +525,8 @@
                     url : '${ctx}/gadget/system/customerMax.do?param=createContract',
                     type : 'post',
                     data:{
-                        //"mdsId" : $("#mdsId").val()
                         "contractNumber" : $.trim($("#contractNumber2").val())
-                        //,"curPage" : curPage
-                        ,"sicId" :_sicId
                         , "preMdsId"	: $.trim($("#preMdsIdA").val())
-/*                         , "currentArrears" : $("#currentArrearsA").val()
-                        , "currentArrears2" : $("#currentArrearsB").val() */
                         , "isPartpayment" : isPartpayment
                     },
                     datatype : 'json'
@@ -829,9 +784,6 @@
 
         $("#contractDemand").val(info.contractDemand);
 
-        $("#sicId").val(info.sicId);
-        $("#sicIText").val(info.sicName);
-
         $("#amountPaidA").val(info.amountPaid);
         $("#receiptNoA").val(info.receiptNumber);
 
@@ -1045,12 +997,6 @@
                                        <input type="hidden" id="locationADD" name="location.id" value="" />
                                     </td>
                                     
-                                    <!-- 예전 미터 시리얼 -->
-                                    <td class="bold withinput"><fmt:message key="aimir.preMeterid"/></td>
-
-                                    <td >
-                                        <input name="preMdsIdA" id="preMdsIdA" type="text" style="width:150px;"/>
-                                    </td>
                                     
                                 </tr>
 <!--                            <tr><td class="bold withinput"><fmt:message key="aimir.contract.receioptNo"/></td>
@@ -1064,19 +1010,25 @@
                                 </tr>   -->
                                 <!--  임계치 설정 -->
                                 <tr>
-                                    <td class="bold withinput"><fmt:message key="aimir.threshold1"/></td>
+<%--                                     <td class="bold withinput"><fmt:message key="aimir.threshold1"/></td>
                                     <td><input name="threshold1" style="width:150px" id="threshold1A" type="text"/></td>
 
                                     <td class="bold withinput"><fmt:message key="aimir.threshold2"/></td>
                                     <td><input name="threshold2" style="width:150px" id="threshold2A" type="text"/></td>
 
                                     <td class="bold withinput"><fmt:message key="aimir.threshold3"/></td>
-                                    <td><input name="threshold3" style="width:180px" id="threshold3A" type="text"/></td>
+                                    <td><input name="threshold3" style="width:180px" id="threshold3A" type="text"/></td> --%>
+                                    
+                                    <!-- 예전 미터 시리얼 -->
+                                    <td class="bold withinput"><fmt:message key="aimir.preMeterid"/></td>
+                                    <td >
+                                        <input name="preMdsIdA" id="preMdsIdA" type="text" style="width:150px;"/>
+                                    </td>
                                     <!-- meter id -->
                                     <td class="bold withinput"><fmt:message key="aimir.meterid"/></td>
                                     <td><input name="mdsId" id="mdsId" type="text" style="width:150px;"/></td>
                                         
-                                    <td class="bold withinput"><fmt:message key="aimir.meterSN"/></td>
+                                    <td class="bold withinput"><fmt:message key="aimir.shipment.gs1"/></td>
                                     <td><input name="gs1" style="width:150px" id="gs1" type="text"/></td>
                                         
                                     <td >
@@ -1090,12 +1042,6 @@
                                     <td class="bold withinput"><fmt:message key="aimir.paymenttype"/><!-- 지불타입--></td>
                                     <td><select name="creditType" id="creditType" style="width:150px;" onchange="javascript:creditTypeSelect(document.getElementById('creditType').options[document.getElementById('creditType').selectedIndex].value);"></select></td>
 
-                                    <td class="bold withinput"><fmt:message key="aimir.sic" /><!-- 산업분류코드 --></td>
-                                    <!-- <td><select name="sicId" id="sicId" style="width:250px;"></select></td> -->
-                                    <td><input type="text" id='sicIText' name="sic.name" style="width:150px;"/>
-                                        <input type="hidden" id="sicId" name="sic.id" value=""/>
-                                    </td>             
-                                    
                                     <td class="bold withinput"><fmt:message key="aimir.contract.demand.amount"/><!-- 계약용량--></td>
                                     <td><input name="contractDemand" style="width:180px" id="contractDemand" type="text"/></td>
 

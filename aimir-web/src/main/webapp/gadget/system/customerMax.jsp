@@ -20,7 +20,6 @@
 <script type="text/javascript" charset="utf-8" src="${ctx}/js/tree/location.tree.js"></script>
 <script type="text/javascript" charset="utf-8" src="${ctx}/js/extjs/adapter/ext/ext-base.js"></script>
 <script type="text/javascript" charset="utf-8" src="${ctx}/js/extjs/ext-all.js"></script>
-<script type="text/javascript" charset="utf-8" src="${ctx}/js/tree/sic.tree.js"></script>
 
 <%-- TreeGrid 관련 js --%>
 <script type="text/javascript" charset="utf-8" src="${ctx}/js/extjs/treegrid/TreeGridSorter.js"></script>
@@ -470,7 +469,7 @@
                                 //$('#prepaymentStatusTr4').show();
                                 $('#prepaymentStatusTr5').show();
 
-                                $('.contractUpdate').css('bottom', '50');
+                                $('.contractUpdate').css('bottom', '0');
                                 $('#meterDiv2').css('left',935);
 
                             } else {
@@ -619,10 +618,10 @@
                         }
                         
                         // sic
-                        var sicName = $("#sicName").val();
+/*                         var sicName = $("#sicName").val();
                         var sicId = $("#sicId").val();
                         $("#sicUText").val(sicName);
-                        $("#sicIdU").val(sicId);
+                        $("#sicIdU").val(sicId); */
 
                         //location
                         var locationName = $("#locationName").val();
@@ -702,8 +701,8 @@
             }
 
             // 미터 아이디
-            if ($("#meterMdsIdU").val() == "") {
-                Ext.Msg.alert('<fmt:message key='aimir.message'/>',"<fmt:message key="aimir.inputMeterid"/>");       // 미터 아이디를 입력해 주세요.
+            if ($("#meterMdsIdU").val() == "" && $("#meterGs1U").val() == "") {
+                Ext.Msg.alert('<fmt:message key='aimir.message'/>',"<fmt:message key="aimir.inputMeterid"/> (or <fmt:message key="aimir.shipment.gs1"/> )");       // 미터 아이디를 입력해 주세요.
                 $("#meterMdsIdU").focus();
                 return;
             }
@@ -757,11 +756,6 @@
             } else {
                 Ext.Msg.alert('<fmt:message key='aimir.message'/>',"<fmt:message key="aimir.erroroccured"/>");
                 return;
-            }
-
-            if ($('#sicUText').val() == "") {
-                Ext.Msg.alert('<fmt:message key='aimir.message'/>',"<fmt:message key="aimir.msg.selectsic"/>");          // SIC Code 를 선택해주세요.
-                return false;
             }
 
             if ($('#locationUText').val() == "") {
@@ -844,9 +838,6 @@
                         'mdsId': meterId,
                         'contractNumber':$('#contractNumberU').val(),
                         'threshold' : $('#threshold').val(),//추가
-                        'sicId' : $('#sicIdU').val(),//추가
-//                        'amountPaid' : $('#amountPaidU').val(),//추가
-//                        'receiptNumber' : $('#receiptNoU').val(),//추가
                         'serviceType2' : $('#serviceType2U').val(),//추가
                         'threshold1' : $('#threshold1U').val(),
                         'threshold2' : $('#threshold2U').val(),
@@ -926,9 +917,6 @@
                         'mdsId' : meterId,
                         'contractNumber' : $('#contractNumberU').val(),
                         'threshold' : $('#threshold').val(),//추가
-                        'sicId' : $('#sicIdU').val(),//추가
-//                        'amountPaid' : $('#amountPaidU').val(),//추가
-//                        'receiptNo' : $('#receiptNoU').val(),//추가
                         'threshold1' : $('#threshold1U').val(),
                         'threshold2' : $('#threshold2U').val(),
                         'threshold3' : $('#threshold3U').val(),
@@ -943,9 +931,6 @@
                         'prepaymentThreshold' : $('#prepaymentThresholdU').val(),
                         'startDatetime' : $('#startDateTimeHidden').val(),
                         'supplier' : supplierId,
-                        //'id' : contractId,
-                        //"curPage" : curPage,
-                        //"currentArrears" : $("#currentArrearsU").val(),
                         "customerId" : customerId,
                         "prevContractId" : selectContractId,
                         "isPartpayment" : isPartpayment,
@@ -1129,11 +1114,6 @@
                 //$("#customerTypeA").val('');
                 //$("#customerTypeA").selectbox();
 
-                //$('#sicIdA').loadSelect(json.sicList);
-                //$("#sicIdA option:eq(0)").replaceWith("<option value=''>" + allStr + "</option>");
-                //$("#sicIdA").val('');
-                //$("#sicIdA").selectbox();
-
                 $('#tariffIndexB').loadSelect(json.tariffTypeEM);
                 $("#tariffIndexB option:eq(0)").replaceWith("<option value=''>" + allStr + "</option>");
                 $("#tariffIndexB").val('');
@@ -1192,11 +1172,6 @@
                 $("#statusC").val('');
                 $("#statusC").selectbox();
 
-             //   $('#sicIdC').loadSelect(json.sicList);
-             //   $("#sicIdC option:eq(0)").replaceWith("<option value=''>" + allStr + "</option>");
-             //   $("#sicIdC").val('');
-             //   $("#sicIdC").selectbox();
-
                 $('#tariffIndexD').loadSelect(json.tariffTypeWM);
                 $("#tariffIndexD option:eq(0)").replaceWith("<option value=''>" + allStr + "</option>");
                 $("#tariffIndexD").val('');
@@ -1211,11 +1186,6 @@
                 $("#statusD option:eq(0)").replaceWith("<option value=''>" + allStr + "</option>");
                 $("#statusD").val('');
                 $("#statusD").selectbox();
-
-             //   $('#sicIdD').loadSelect(json.sicList);
-           //     $("#sicIdD option:eq(0)").replaceWith("<option value=''>" + allStr + "</option>");
-            //    $("#sicIdD").val('');
-             //   $("#sicIdD").selectbox();
 
                 $('#tariffIndexD').loadSelect(json.tariffTypeWM);
                 $("#tariffIndexD option:eq(0)").replaceWith("<option value=''>" + allStr + "</option>");
@@ -1247,11 +1217,6 @@
                 $("#statusE").val('');
                 $("#statusE").selectbox();
 
-               // $('#sicIdE').loadSelect(json.sicList);
-              //  $("#sicIdE option:eq(0)").replaceWith("<option value=''>" + allStr + "</option>");
-              //  $("#sicIdE").val('');
-              //  $("#sicIdE").selectbox();
-
                 $('#tariffIndexF').loadSelect(json.tariffTypeWM);
                 $("#tariffIndexF option:eq(0)").replaceWith("<option value=''>" + allStr + "</option>");
                 $("#tariffIndexF").val('');
@@ -1266,11 +1231,6 @@
                 $("#statusF option:eq(0)").replaceWith("<option value=''>" + allStr + "</option>");
                 $("#statusF").val('');
                 $("#statusF").selectbox();
-
-            //    $('#sicIdF').loadSelect(json.sicList);
-             //   $("#sicIdF option:eq(0)").replaceWith("<option value=''>" + allStr + "</option>");
-            //    $("#sicIdF").val('');
-             //   $("#sicIdF").selectbox();
         });
 
         locationTreeGoGo('treeDivA', 'locationAText', 'locationA');
@@ -1282,15 +1242,6 @@
 
         locationTreeGoGo('treeDivU', 'locationUText', 'locationU');
 
-        sicTreeGoGo('treeDivSA', 'sicAText', 'sicIdA', null, 'sicIdsA');   // sicIds:상위노드 포함 하위노드가 저장되는 field
-        sicTreeGoGo('treeDivSB', 'sicBText', 'sicIdB', null, 'sicIdsB');   // sicIds:상위노드 포함 하위노드가 저장되는 field
-        sicTreeGoGo('treeDivSC', 'sicCText', 'sicIdC', null, 'sicIdsC');   // sicIds:상위노드 포함 하위노드가 저장되는 field
-        sicTreeGoGo('treeDivSD', 'sicDText', 'sicIdD', null, 'sicIdsD');   // sicIds:상위노드 포함 하위노드가 저장되는 field
-        sicTreeGoGo('treeDivSE', 'sicEText', 'sicIdE', null, 'sicIdsE');   // sicIds:상위노드 포함 하위노드가 저장되는 field
-        sicTreeGoGo('treeDivSF', 'sicFText', 'sicIdF', null, 'sicIdsF');   // sicIds:상위노드 포함 하위노드가 저장되는 field
-
-
-        sicTreeGoGo('treeDivSU', 'sicUText', 'sicIdU', null, null, true);  // 하위노드만 선택가능
     }
 
     var date = new Date();
@@ -1404,7 +1355,7 @@
             conditionArray[6] = $('#mdsIdB').val();
             conditionArray[7] = $('#statusB').val();
             conditionArray[8] = $('#drB').val();
-            conditionArray[9] = $('#sicIdsB').val();
+            conditionArray[9] = '';//$('#sicIdsB').val();
             conditionArray[10] = $('#startDateB').val();
             conditionArray[11] = $('#endDateB').val();
             conditionArray[12] = '';                 // 주소
@@ -1421,7 +1372,7 @@
             conditionArray[6] = $('#mdsIdC').val();
             conditionArray[7] = $('#statusC').val();
             conditionArray[8] = '';
-            conditionArray[9] = $('#sicIdsC').val();
+            conditionArray[9] = '';//$('#sicIdsC').val();
             conditionArray[10] = $('#startDateC').val();
             conditionArray[11] = $('#endDateC').val();
             conditionArray[12] = '';                 // 주소
@@ -1437,7 +1388,7 @@
             conditionArray[6] = $('#mdsIdD').val();
             conditionArray[7] = $('#statusD').val();
             conditionArray[8] = '';
-            conditionArray[9] = $('#sicIdsD').val();
+            conditionArray[9] = '';// $('#sicIdsD').val();
             conditionArray[10] = $('#startDateD').val();
             conditionArray[11] = $('#endDateD').val();
             conditionArray[12] = '';                 // 주소
@@ -1454,7 +1405,7 @@
             conditionArray[6] = $('#mdsIdE').val();
             conditionArray[7] = $('#statusE').val();
             conditionArray[8] = '';
-            conditionArray[9] = $('#sicIdsE').val();
+            conditionArray[9] = '';//$('#sicIdsE').val();
             conditionArray[10] = $('#startDateE').val();
             conditionArray[11] = $('#endDateE').val();
             conditionArray[12] = '';                 // 주소
@@ -1470,7 +1421,7 @@
             conditionArray[6] = $('#mdsIdF').val();
             conditionArray[7] = $('#statusF').val();
             conditionArray[8] = '';
-            conditionArray[9] = $('#sicIdsF').val();
+            conditionArray[9] = '';//$('#sicIdsF').val();
             conditionArray[10] = $('#startDateF').val();
             conditionArray[11] = $('#endDateF').val();
             conditionArray[12] = '';                 // 주소
@@ -1613,10 +1564,7 @@
                     $('#meterMdsId').val(data.contract.mdsId);
                     $('#preMdsId').val(data.contract.preMdsId);
                     $('#meterGs1').val(data.contract.gs1);
-                    $('#sicName').val(data.contract.sicName);
                     $('#contractNumber').val(data.contract.contractNumber);
-//                    $('#receiptNoD').val(data.contract.receiptNumber);
-//                    $('#amountPaidD').val(data.contract.amountPaid);
                     $('#serviceType2D').val(data.contract.serviceType2);
                     $('#threshold1').val(data.contract.threshold1);
                     $('#threshold2').val(data.contract.threshold2);
@@ -1628,7 +1576,6 @@
                     contractNumber = data.contract.contractNumber;
                     $('#contractNumberU').val(contractNumber);
 
-                    $('#sicId').val(data.contract.sicId);
                     $('#barcode').val(data.contract.barcode);
                     $('#meterMdsId').val(data.contract.mdsId);
                     $('#meterMdsIdU_id').val(data.contract.meterId);
@@ -2352,11 +2299,6 @@
                     viewToolTip: addTreeTooltip
                 })
             }
-            /* ,{header: "<fmt:message key='aimir.sic'/>", dataIndex: 'sicName', width: (tgWidth/10 *2),
-                tpl: new Ext.XTemplate('{sicName:this.viewToolTip}', {
-                    viewToolTip: addTreeTooltip
-                })
-            } */
         ];
 
         customerTreeRootNode = new Ext.tree.AsyncTreeNode({
@@ -2675,9 +2617,6 @@
         $('#threshold2U').val(info.threshold2);
         $('#threshold3U').val(info.threshold3);
 
-        $("#sicIdU").val(info.sicId);
-        $("#sicUText").val(info.sicName);
-
         if (info.serviceType2 == "") {
             $("#serviceType2U option:eq(0)").attr("selected", "true");
         } else {
@@ -2745,7 +2684,7 @@
             mdsId : conditionArray[6],
             status : conditionArray[7],
             dr : conditionArray[8],
-            sicIds : conditionArray[9],
+            sicIds : '',//conditionArray[9],
             startDate : conditionArray[10],
             endDate : conditionArray[11],
             address : conditionArray[12],
@@ -3342,13 +3281,6 @@
                         
                         <td class="withinput"><fmt:message key="aimir.supply.type" /></td>
                         <td class="padding-r20px2"><select id="serviceTypeA" style="width:142px"></select></td>
-                        
-                        <!-- <td class="withinput"><fmt:message key="aimir.sic" /></td>
-                        <td ><input name="sicAText" id='sicAText' type="text" />
-                            <input type="hidden" id="sicIdA" value=""></input>
-                            <input type="hidden" id="sicIdsA" value=""></input>
-                            <span class="am_button margin-l10 margin-t1px">
-                        </td> --><!-- 산업분류코드 -->
                     </tr>
                     <tr>
                     	<td class="withinput"><fmt:message key="aimir.shipment.gs1"/></td>
@@ -3427,11 +3359,6 @@
                         <td class="padding-r20px2"><select id="statusB" style="width: 125px"></select></td>
                         <td class="withinput"><fmt:message key="aimir.customer.dr" /></td>
                         <td class="padding-r20px2"><select id="drB" style="width: 125px"></select></td>
-                        <td class="withinput"><fmt:message key="aimir.sic" /></td>
-                        <!-- <td><select id="customerTypeB" style="width:270px"></select></td> -->
-                        <td><input name="sicBText" id='sicBText' style="width:270px;" type="text" />
-                            <input type="hidden" id="sicIdB" value=""></input>
-                            <input type="hidden" id="sicIdsB" value=""></input></td>
                     </tr>
                     <tr>
                         <td class="withinput"><fmt:message key="aimir.contract.tariff.type" /></td>
@@ -3495,11 +3422,6 @@
                         <td class="withinput"><fmt:message key="aimir.supplystatus" /></td>
                         <td class="padding-r20px2"><select id="statusC" style="width:125px;"></select></td>
                         <td class="withinput"><fmt:message key="aimir.sic" /></td>
-                        <td colspan="3">
-                            <input name="sicCText" id='sicCText' style="width:310px;" type="text" />
-                            <input type="hidden" id="sicIdC" value=""></input>
-                            <input type="hidden" id="sicIdsC" value=""></input>
-                        </td>
                         <td class="withinput">
                             <fmt:message key="aimir.contract"/><fmt:message key="aimir.day" />
                         </td>
@@ -3546,11 +3468,6 @@
                             <input type="text" id="locationDText" name="location.name" style="width:142px">
                             <input type="hidden" id="locationD" name="location.id" value="" />
                         </td>
-                        <td class="withinput"><fmt:message key="aimir.sic" /></td>
-                        <td class="padding-r20px2">
-                            <input name="sicDText" id='sicDText' style="width:270px;" type="text" />
-                            <input type="hidden" id="sicIdD" value=""/>
-                            <input type="hidden" id="sicIdsD" value=""/></td>
                     </tr>
                     <tr>
                         <td class="withinput"><fmt:message key="aimir.meterid" /></td>
@@ -3610,11 +3527,6 @@
                             <input type="text" id="locationEText" name="location.name" style="width:142px">
                             <input type="hidden" id="locationE" name="location.id" value="" />
                         </td>
-                        <td class="withinput"><fmt:message key="aimir.sic" /></td>
-                        <td class="padding-r20px2">
-                            <input name="sicEText" id='sicEText' style="width:270px;" type="text" />
-                            <input type="hidden" id="sicIdE" value=""/>
-                            <input type="hidden" id="sicIdsE" value=""/></td>
                     </tr>
                     <tr>
                         <td class="withinput"><fmt:message key="aimir.meterid" /></td>
@@ -3681,12 +3593,7 @@
                         <td class="padding-r20px2"><input id="mdsIdF"></td>
                         <td class="withinput"><fmt:message key="aimir.supplystatus" /></td>
                         <td class="padding-r20px2"><select id="statusF" style="width:125px;"></select></td>
-                        <td class="withinput"><fmt:message key="aimir.sic" /></td>
-                                                        <!-- <td class="padding-r20px2"><select id="customerTypeF" style="width:270px;"></select></td> -->
                         <td class="padding-r20px2">
-                            <input name="sicFText" id='sicFText' style="width:270px;" type="text" />
-                            <input type="hidden" id="sicIdF" value=""/>
-                            <input type="hidden" id="sicIdsF" value=""/></td>
                         <td class="withinput"><fmt:message key="aimir.contract"/><fmt:message key="aimir.day" /></td>
                         <td colspan="3">
                             <span><input id="startDateF" type="text" style="width:80px"></span>
@@ -3803,11 +3710,6 @@
                                             <input type="hidden" id="locationId" readonly class="border-trans bg-trans" style="width: 120px;"/>
                                         </td>
 
-										<!-- 이전 미터 id -->
-										<td class="bold withinput"><fmt:message key="aimir.preMeterid"/></td>
-                                        <td class="padding-r20px2">
-                                            <input type="text" id="preMdsId" readonly class="border-trans bg-trans" style="width: 120px;"/>
-                                        </td>
                                         
                                     </tr>
 <!--                          
@@ -3830,7 +3732,7 @@
 -->
                                     <!--  임계치 설정 -->
                                     <tr>
-                                        <td class="bold withinput"><fmt:message key="aimir.threshold1"/></td>
+<%--                                         <td class="bold withinput"><fmt:message key="aimir.threshold1"/></td>
                                         <td class="padding-r20px2"> 
                                             <input type="text" id="threshold1" readonly class="border-trans bg-trans" style="width: 120px;"/>
                                         </td>
@@ -3843,8 +3745,13 @@
                                         <td class="bold withinput"><fmt:message key="aimir.threshold3"/></td>
                                         <td class="padding-r20px2"> 
                                             <input type="text" id="threshold3" readonly class="border-trans bg-trans" style="width: 120px;"/>
-                                        </td>
+                                        </td> --%>
                                                                                 
+										<!-- 이전 미터 id -->
+										<td class="bold withinput"><fmt:message key="aimir.preMeterid"/></td>
+                                        <td class="padding-r20px2">
+                                            <input type="text" id="preMdsId" readonly class="border-trans bg-trans" style="width: 120px;"/>
+                                        </td>
                                         <!-- 미터id -->
                                         <td class="bold withinput"><fmt:message key="aimir.meterid" /></td>
                                         <td class="padding-r20px2">
@@ -3866,15 +3773,6 @@
                                             <input type="text" id="creditTypeName" readonly class="border-trans bg-trans" style="width: 120px;"/>
                                         </td>
 
-                                        <!-- sic id code -->
-                                        <td class="bold withinput">
-                                            <fmt:message key="aimir.sic" /><!-- 산업분류코드 -->
-                                        </td>
-                                        <td class="padding-r20px2">
-                                            <input type="text" id="sicName" readonly class="border-trans bg-trans" style="width: 120px; text-align: left;"/>
-                                            <input type="hidden" value="" id="sicId" readonly class="border-trans bg-trans" style="width: 120px; text-align: left;"/>
-                                        </td>
-                                        
                                         <!-- 계약전력 -->
                                         <td class="bold withinput">
                                             <fmt:message key="aimir.contract.demand.amount" />
@@ -4084,10 +3982,6 @@
                                             <input type="text" id="locationUText" name="location.name" style="width:180px"/>
                                             <input type="hidden" id="locationU" name="location.id" value="" />
                                         </td>
-                                        <!-- 예전미터 시리얼 -->
-                                        <td class="bold withinput"><fmt:message key="aimir.preMeterid"/></td>
-                                        <td><input name="preMdsIdU" style="width:150px" id="preMdsIdU" type="text"/></td>
-
                                     </tr>
 <!--
                                     <tr>
@@ -4103,14 +3997,18 @@
 -->                                    
                                     <!--  임계치 설정 -->
                                     <tr>
-                                        <td class="bold withinput"><fmt:message key="aimir.threshold1"/></td>
+<%--                                         <td class="bold withinput"><fmt:message key="aimir.threshold1"/></td>
                                         <td><input name="threshold1U" style="width:150px" id="threshold1U" type="text"/></td>
 
                                         <td class="bold withinput"><fmt:message key="aimir.threshold2"/></td>
                                         <td><input name="threshold2U" style="width:150px" id="threshold2U" type="text"/></td>
 
                                         <td class="bold withinput"><fmt:message key="aimir.threshold3"/></td>
-                                        <td><input name="threshold3U" style="width:180px" id="threshold3U" type="text"/></td>
+                                        <td><input name="threshold3U" style="width:180px" id="threshold3U" type="text"/></td> --%>
+                                        
+                                        <!-- 예전미터 시리얼 -->
+                                        <td class="bold withinput"><fmt:message key="aimir.preMeterid"/></td>
+                                        <td><input name="preMdsIdU" style="width:150px" id="preMdsIdU" type="text"/></td>
                                         
                                          <!-- 미터id U-->
                                         <td class="bold withinput" ><fmt:message key="aimir.meterid" /></td>
@@ -4121,7 +4019,7 @@
                                         </td>
                                         
                                         <td class="bold withinput"><fmt:message key="aimir.shipment.gs1"/></td>
-                                        <td><input name="meterGs1U" style="width:150px" id="meterGs1U" type="text"/></td>
+                                        <td><input name="meterGs1U" style="width:180px" id="meterGs1U" type="text"/></td>
                                         
                                         <td>
                                             <!-- search button2 -->
@@ -4140,18 +4038,12 @@
                                             </select>
                                         </td>
 
-                                        <td class="bold withinput"><fmt:message key="aimir.sic" /><!-- 산업분류코드 --></td>
-                                        <td class="padding-r20px2">
-                                            <input type="text" id='sicUText' name="sic.name" style="width:150px;"/>
-                                            <input type="hidden" id="sicIdU" name="sic.id" value=""/>
-                                        </td>
-                                        
 										<!-- 계약전력 -->
                                         <td class="bold withinput">
                                             <fmt:message key="aimir.contract.demand.amount" />
                                         </td>
                                         <td class="padding-r20px2">
-                                            <input type="text" id='contractDemandU' style="width: 180px;"/>
+                                            <input type="text" id='contractDemandU' style="width: 150px;"/>
                                         </td>
                                     </tr>
 
@@ -4261,8 +4153,16 @@
 
                                 </table>
 
+                                <div id="treeDivUOuter" class="tree-billing auto" style="display:none;">
+                                    <div id="treeDivU"></div>
+                                </div>
+                                <div id="treeDivSUOuter" class="tree-billing auto" style="display:none;">
+                                    <div id="treeDivSU"></div>
+                                </div>
+                                <div id="meterDiv2" class="meterDiv2"></div>
+                                
                                 <!--업데이트 /캔슬 버튼-->
-                                <div id="btn" class="contractUpdate" style="bottom: 50px;left: 680px;">
+                                <div id="btn" class="contractUpdate" style="left: 680px;">
                                     <ul>
                                         <li class="input">
                                             <a id="contractUpdate" class="on">
@@ -4278,15 +4178,6 @@
                                         </li>
                                     </ul>
                                 </div>
-
-                                <div id="treeDivUOuter" class="tree-billing auto" style="display:none;">
-                                    <div id="treeDivU"></div>
-                                </div>
-                                <div id="treeDivSUOuter" class="tree-billing auto" style="display:none;">
-                                    <div id="treeDivSU"></div>
-                                </div>
-
-                                <div id="meterDiv2" class="meterDiv2"></div>
 
                             </li>
 

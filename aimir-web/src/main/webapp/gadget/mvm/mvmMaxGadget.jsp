@@ -813,7 +813,7 @@
 <!-- search-background DIV (E) -->
 
 <div id="btn" class="btn_right_top2 margin-t10px">
-    <ul><li><a href="javascript:showCmpChart()" class="on"><fmt:message key="aimir.comparison"/>&nbsp;<fmt:message key="aimir.view.chart"/></a></li></ul>
+    <%-- <ul><li><a href="javascript:showCmpChart()" class="on"><fmt:message key="aimir.comparison"/>&nbsp;<fmt:message key="aimir.view.chart"/></a></li></ul> --%>
     <ul><li><a href="javascript:openExcelReport()" class="on"><fmt:message key="aimir.button.excel"/></a></li></ul>
 </div>
 <div class="gadget_body2">

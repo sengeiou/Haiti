@@ -80,7 +80,7 @@
                 <table border='0' cellspacing="0">
                     <tr>
                         <td>
-                            <fmt:message key='aimir.date'/>
+                            <fmt:message key='aimir.receipt.date'/>
                         </td>
                         <td>
                             ${date}
@@ -88,18 +88,10 @@
                     </tr>
                     <tr>
                         <td>
-                            <fmt:message key='aimir.customer'/>
+                            <fmt:message key='aimir.receipt.customer'/>
                         </td>
                         <td>
                             ${customer}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <fmt:message key='aimir.customerid'/><%-- <fmt:message key='aimir.customerid'/> --%>
-                        </td>
-                        <td>
-                            ${customerNumber}
                         </td>
                     </tr>
                    	<tr>
@@ -128,7 +120,7 @@
 					</tr>
                     <tr>
                         <td>
-                            <fmt:message key='aimir.residental.activity'/>
+                            <fmt:message key='aimir.receipt.activity'/>
                         </td>
                         <td>
                             ${activity}
@@ -136,7 +128,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <fmt:message key='aimir.location.district'/>
+                            <fmt:message key='aimir.receipt.district'/>
                         </td>
                         <td>
                             ${distinct}
@@ -144,7 +136,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <fmt:message key='aimir.payment'/>
+                            <fmt:message key='aimir.receipt.payment'/>
                         </td>
                         <td>
                             ${payType}
@@ -152,7 +144,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <fmt:message key='aimir.address'/>
+                            <fmt:message key='aimir.receipt.address'/>
                         </td>
                         <td>
                             ${address}
@@ -160,10 +152,26 @@
                     </tr>
                     <tr>
                         <td>
-                            <fmt:message key='aimir.date.last.charge.date'/>
+                            <fmt:message key='aimir.receipt.lastChargeDate'/>
                         </td>
                         <td>
                             ${daysFromCharge}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <fmt:message key="aimir.receipt.beforeBalance"/>
+                        </td>
+                        <td>
+                            ${preBalance}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <fmt:message key="aimir.receipt.currentBalance"/>
+                        </td>
+                        <td>
+                            ${currentBalance}
                         </td>
                     </tr>
                     <tr>
@@ -177,29 +185,29 @@
                                         <fmt:message key='aimir.previous'/>
                                     </td>
                                     <td class='table-header' style='font-size: 1em'>
-                                        ( - )
+                                        <fmt:message key='aimir.current'/>
                                     </td>
                                 </tr>
                                 <tr class='tr-credit'>
                                     <td class='table-header' style='font-size: 1em'>
-                                        <fmt:message key='aimir.arrears'/> A
+                                        <fmt:message key='aimir.arrearsA'/>
                                     </td>
                                     <td class='table-value' style='font-size: 1em'>
                                         ${preArrears}
                                     </td>
                                     <td class='table-value' style='font-size: 1em'>
-                                        ${arrears}
+                                        ${currentArrears}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class='table-header' style='font-size: 1em'>
-                                        <fmt:message key='aimir.arrears'/> B
+                                    <td class='table-header' style='font-size: 0.9em'>
+                                        <fmt:message key='aimir.arrearsB'/>
                                     </td>
                                     <td class='table-value' style='font-size: 1em'>
                                         ${preArrears2}
                                     </td>
                                     <td class='table-value' style='font-size: 1em'>
-                                        ${arrears2}
+                                        ${currentArrears2}
                                     </td>
                                 </tr>
                             </table>
@@ -207,10 +215,10 @@
                     </tr>
                     <tr>
                         <td>
-                            <fmt:message key="aimir.amount.paid"/>
+                            <fmt:message key="aimir.receipt.charegedAmount"/>
                         </td>
-                        <td>
-                            ${totalAmountPaid}
+                        <td class="charge-amount">
+                            ${amount}
                         </td>
                     </tr>
                     <tr>
@@ -223,31 +231,14 @@
                     </tr>
                     <tr>
                         <td>
-                            <fmt:message key="aimir.chargeAmount"/>
-                        </td>
-                        <td class="charge-amount">
-                            ${amount}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <fmt:message key="aimir.prepayment.beforebalance"/>
+                            <fmt:message key="aimir.amount.paid"/>
                         </td>
                         <td>
-                            ${preBalance}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <fmt:message key="aimir.prepayment.currentbalance"/>
-                        </td>
-                        <td>
-                            ${currentBalance}
+                            ${totalAmountPaid}
                         </td>
                     </tr>
                 </table>
             </td></tr></table>
-            <div style="text-align: center"><fmt:message key="aimir.serviceCharge"/> is ${lastServiceCharge} <fmt:message key="aimir.price.unit"/></div>
         </div>
 
     </div>
@@ -320,7 +311,7 @@
         };
         var init = function () {
             //eventHandler.insertInitCredit();
-            window.resizeTo(285, 735);
+            window.resizeTo(285, 785);
             bind();
         };
         window.onload = function() {
