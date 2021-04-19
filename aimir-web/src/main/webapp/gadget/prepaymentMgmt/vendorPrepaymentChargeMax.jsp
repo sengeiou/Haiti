@@ -832,8 +832,8 @@
          ,{header: "<fmt:message key='aimir.supplystatus'/>", dataIndex: 'statusName'}
          ,{header: "<fmt:message key='aimir.hems.prepayment.lastchargedate'/>", dataIndex: 'lastTokenDate', align: 'center',tooltip: "<fmt:message key='aimir.hems.prepayment.lastchargedate'/>"}
          ,{header: "<fmt:message key='aimir.credit'/>", dataIndex: 'currentCredit',  align: 'right'}
-         ,{header: "<fmt:message key='aimir.arrears'/> A", dataIndex: 'currentArrears', align: 'right'}
-         ,{header: "<fmt:message key='aimir.arrears'/> B", dataIndex: 'currentArrears2', align: 'right'}
+         ,{header: "<fmt:message key='aimir.arrearsA'/>", dataIndex: 'currentArrears', align: 'right'}
+         ,{header: "<fmt:message key='aimir.arrearsB'/>", dataIndex: 'currentArrears2', align: 'right'}
  /*		 ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'mdsId'}
          ,{header: "<fmt:message key='aimir.customerid'/>", dataIndex: 'customerNo'}
          ,{header: "<fmt:message key='aimir.address'/>", dataIndex: 'address'}
@@ -845,7 +845,18 @@
                allowNegative: false
            })
           } 	*/
-         ,{header: "<fmt:message key='aimir.barcode'/>", align: 'left', dataIndex: 'barcode'}         
+         ,{header: "<fmt:message key='aimir.barcode'/>", align: 'left', dataIndex: 'barcode',
+            editor: new Ext.form.NumberField({
+              id: 'barcode',
+              allowBlank: true,
+              allowNegative: false,
+              listeners: {
+                change: function(field, newVal, oldVal) {
+                  eventHandler.updateBarcode(field, newVal, oldVal);
+                }
+              }
+            })
+          }         
          ,{header: "<fmt:message key='aimir.amount.paid'/>", renderer: saveBtnArea}
       ],
       defaults: {
@@ -860,10 +871,10 @@
         {header: "<fmt:message key='aimir.hems.prepayment.chargedate'/>", dataIndex: 'lastTokenDate'},
         {header: "<fmt:message key='aimir.chargeAmount'/>", align: 'right', dataIndex: 'chargedCredit'},
         {header: "<fmt:message key='aimir.credit'/>", align: 'right', dataIndex: 'balance'},
-        {header: "<fmt:message key='aimir.prepayment.chargearrears'/> A", align: 'right', dataIndex: 'chargedArrears'},
-        {header: "<fmt:message key='aimir.arrears'/> A", align: 'right', dataIndex: 'arrears'},
-        {header: "<fmt:message key='aimir.prepayment.chargearrears'/> B", align: 'right', dataIndex: 'chargedArrears2'},
-        {header: "<fmt:message key='aimir.arrears'/> B", align: 'right', dataIndex: 'arrears2'},
+        {header: "<fmt:message key='aimir.prepayment.chargearrears'/> <fmt:message key='aimir.arrearsA'/>", align: 'right', dataIndex: 'chargedArrears'},
+        {header: "<fmt:message key='aimir.usageFee2'/>", align: 'right', dataIndex: 'arrears'},
+        {header: "<fmt:message key='aimir.prepayment.chargearrears'/> <fmt:message key='aimir.arrearsB'/>", align: 'right', dataIndex: 'chargedArrears2'},
+        {header: "<fmt:message key='aimir.arrearsB'/>", align: 'right', dataIndex: 'arrears2'},
         {header: "<fmt:message key='aimir.contract.receioptNo'/>", align: 'center',  dataIndex: 'prepaymentLogId'},
         //{header: "<fmt:message key='aimir.prepayment.authCode'/>", dataIndex: 'authCode'},
         //{header: "<fmt:message key='aimir.prepayment.municipalityCode'/>", dataIndex: 'municipalityCode'},
@@ -2021,10 +2032,10 @@
         header[5] = '<fmt:message key="aimir.supplystatus"/>'; // Supply Status        
         header[6] = '<fmt:message key="aimir.hems.prepayment.lastchargedate"/>'; //Last Charge Date
         header[7] = '<fmt:message key="aimir.credit"/>'; //Credit
-        header[8] = '<fmt:message key="aimir.arrears"/> A'; //Arrears A
+        header[8] = '<fmt:message key="aimir.arrearsA"/>'; //Arrears A
         header[9] = '<fmt:message key="aimir.barcode"/>'; //Barcode
         header[10] = '<fmt:message key="aimir.vendorprepayment.contract.list"/>'; //파일명 : Vendor Prepayment Contract List
-        header[11] = '<fmt:message key="aimir.arrears"/> B'; //Arrears B
+        header[11] = '<fmt:message key="aimir.arrearsB"/>'; //Arrears B
         header[12] = '<fmt:message key="aimir.celluarphone"/>'; //celluarphone 
 
         //parameter
