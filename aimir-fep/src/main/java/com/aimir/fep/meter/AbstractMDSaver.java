@@ -1472,10 +1472,7 @@ public abstract class AbstractMDSaver
         			
         			mLP.setModemSerial(meter.getModem().getDeviceSerial());
         			String extTableValue = mLP.getExternalTableValue();
-                    log.info("ReplaceAll Before Metering Data : " + extTableValue);
-                    
-                    String reEextTableValue = extTableValue.replaceAll("null", "");
-                    log.info("ReplaceAll After Metering Data : " + reEextTableValue);
+                    log.info("ReplaceAll Metering Data : " + extTableValue);
                     
         			appendBuilder.append(extTableValue);
             	}	
@@ -1491,10 +1488,7 @@ public abstract class AbstractMDSaver
                 for(MeteringLP mLP : lpList) {
                     mLP.setModemSerial(meter.getModem().getDeviceSerial());
                     String extTableValue = mLP.getExternalTableValue();
-                    log.info("ReplaceAll Before Metering Data : " + extTableValue);
-                    
-                    String reEextTableValue = extTableValue.replaceAll("null", "");
-                    log.info("ReplaceAll After Metering Data : " + reEextTableValue);
+                    log.info("ReplaceAll Metering Data : " + extTableValue);
                     
                     appendBuilder.append(extTableValue);
                 }
