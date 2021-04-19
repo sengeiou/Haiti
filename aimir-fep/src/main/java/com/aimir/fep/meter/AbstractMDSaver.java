@@ -41,6 +41,7 @@ import com.aimir.constants.CommonConstants.OperatorType;
 import com.aimir.constants.CommonConstants.PowerEventStatus;
 import com.aimir.constants.CommonConstants.ResultStatus;
 import com.aimir.constants.CommonConstants.TargetClass;
+import com.aimir.dao.device.LpEmExternalDao;
 import com.aimir.dao.device.MeterDao;
 import com.aimir.dao.device.MeterEventDao;
 import com.aimir.dao.device.MeterEventLogDao;
@@ -118,6 +119,7 @@ import com.aimir.model.mvm.DayPk;
 import com.aimir.model.mvm.DaySPM;
 import com.aimir.model.mvm.DayWM;
 import com.aimir.model.mvm.LpEM;
+import com.aimir.model.mvm.LpEmExternal;
 import com.aimir.model.mvm.LpGM;
 import com.aimir.model.mvm.LpHM;
 import com.aimir.model.mvm.LpPk;
@@ -278,6 +280,9 @@ public abstract class AbstractMDSaver
     
     @Autowired
     protected DeviceModelDao deviceModelDao;    
+    
+    @Autowired
+    protected LpEmExternalDao lpEmExternalDao;
     
     final static DecimalFormat dformat = new DecimalFormat("#0.000000");
     
@@ -1444,6 +1449,79 @@ public abstract class AbstractMDSaver
     
     private void saveLPDataUsingLPTimeUsingProcedure(MeteringType meteringType, Map<Integer, LinkedList<MeteringLP>> lpMap, 
     		Meter meter, DeviceType mdevType) throws Exception {
+    	double lastMeteringValue = 0d;
+    	String lastMeteringTime = null;
+    	MeterType meterType = MeterType.valueOf(meter.getMeterType().getName());
+    	MeterConfig meterConfig = (MeterConfig)meter.getModel().getDeviceConfig();
+    	
+    	makeChLPsUsingLPTime(lpMap, meter);
+    	
+    	LinkedList<MeteringLP> ch1List = lpMap.get(ElectricityChannel.Usage.getChannel());
+    	Iterator<Integer> channels = lpMap.keySet().iterator();
+    	
+    	if(meteringType != null && meterType.equals(meterType.EnergyMeter)) { //현재 EnergyMeter 만 표시, 만약 다른 Meter Type 필요하다면 하단에 처리 필요
+            while(channels.hasNext()) {
+            	LpEmExternal emExternal = null;
+            	Integer channel = channels.next();
+            	LinkedList<MeteringLP> lpList = lpMap.get(channel);
+            	
+            	try {
+            		for(MeteringLP mLP : lpList) {
+            			lastMeteringValue = mLP.getValue();
+            			lastMeteringTime = mLP.getYyyymmddhhmiss();
+            			
+            			mLP.setModemSerial(meter.getModem().getDeviceSerial());
+            			
+            			emExternal = getLpEmExternal(mLP);
+            			log.debug("LP : " + emExternal.toString());
+            			if(emExternal != null) {
+            	    		lpEmExternalDao.add(emExternal);
+            	    	}
+                	}	
+            	}catch(Exception e) {
+            		log.error(e,e);
+            		throw e;
+            	}
+            	
+    			log.info("meter.LastReadDate Meter : " + meter.getMdsId() +" ["+meter.getLastReadDate()+"] --> ["+ lastMeteringTime +"] | value [" + meter.getLastMeteringValue()+"] --> [" + lastMeteringValue +"]");
+    			meter.setLastMeteringValue(lastMeteringValue);
+    			meter.setLastReadDate(lastMeteringTime);
+            }
+    	}
+    }
+    
+    private LpEmExternal getLpEmExternal(MeteringLP mLP) {
+    	try {
+        	LpEmExternal ext = new LpEmExternal();
+        	
+        	ext.setMdevId(mLP.getId().getMdevId());
+        	ext.setYyyymmddhhmiss(mLP.getId().getYyyymmddhhmiss());
+        	ext.setChannel(mLP.getId().getChannel());
+        	ext.setMdevType(mLP.getMDevType().name());
+        	ext.setDst(mLP.getDst());
+        	ext.setDeviceId(mLP.getDeviceId());    	
+        	ext.setDeviceType(mLP.getDeviceType().name());
+        	ext.setMeteringtype(mLP.getMeteringType());
+        	ext.setDeviceSerial(mLP.getModemSerial());
+        	ext.setLpStatus(mLP.getLpStatus());
+        	ext.setIntervalYn(mLP.getIntervalYN());
+        	ext.setValue(mLP.getValue());
+        	ext.setWritedate(mLP.getWriteDate());
+        	ext.setContractId(mLP.getContractId());
+        	ext.setModemTime(mLP.getModemTime());
+        	ext.setDcuTime(mLP.getDcuTime());
+        	
+        	return ext;
+    	}catch(Exception e) {
+    		log.error(e, e);
+    	}
+
+    	return null;
+    }
+    
+    @Deprecated
+    private void saveLPDataUsingLPTimeUsingProcedureOld(MeteringType meteringType, Map<Integer, LinkedList<MeteringLP>> lpMap, 
+    		Meter meter, DeviceType mdevType) throws Exception {
     	
     	double lastMeteringValue = 0d;
     	String lastMeteringTime = null;
@@ -1452,8 +1530,6 @@ public abstract class AbstractMDSaver
     	MeterConfig meterConfig = (MeterConfig)meter.getModel().getDeviceConfig();
     	
     	makeChLPsUsingLPTime(lpMap, meter);
-    	
-    	LinkedList<MeteringLP> ch1List = lpMap.get(ElectricityChannel.Usage.getChannel());
     	
         log.debug("Using JPA - Procedure | mdevId["+meter.getMdsId()+"] channel["+lpMap.size()+"] channel[1] count["+lpMap.get(1).size()+"]");
         Iterator<Integer> channels = lpMap.keySet().iterator();
