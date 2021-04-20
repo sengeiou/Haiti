@@ -420,7 +420,7 @@ public class DFProcessor extends Processor
             byte[] blen = null;
             byte[] bx = null;
                         
-            log.debug("# DF datacnt : " + datacnt+", mcu : " + mcuId + ", data : " + IOUtils.toString(is,"UTF-8"));
+            log.debug("# DF datacnt : " + datacnt+", mcu : " + mcuId + ", data : " + Hex.decode(IOUtils.toByteArray(is)));
             
             //EMDataList안에 MDList 갯수 만큼 MDList를 하나씩 가지는 EMDataList를 만들어서 저장 로직을 수행하도록 함
             for (int i = 0; i < datacnt; i++) {
