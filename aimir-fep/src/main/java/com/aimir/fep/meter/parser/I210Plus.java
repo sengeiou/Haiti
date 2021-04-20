@@ -112,6 +112,7 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 		Modem modem = meter.getModem();
 		MCU mcu = modem.getMcu();
 		if(modem != null) {
+			/*
 			throwMsg = checkTableLength("Total", data);
 			if(throwMsg != null) {
 				StringBuffer buffer = new StringBuffer();
@@ -127,6 +128,7 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 				
 				throw new Exception(buffer.toString());
 			}
+			*/
 		}
 
 		int offset = 0;
