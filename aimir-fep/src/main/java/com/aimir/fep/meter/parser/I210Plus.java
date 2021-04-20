@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.aimir.constants.CommonConstants.MeterStatus;
+import com.aimir.constants.CommonConstants.TargetClass;
 import com.aimir.fep.meter.data.EventLogData;
 import com.aimir.fep.meter.data.Instrument;
 import com.aimir.fep.meter.data.LPData;
@@ -20,8 +21,11 @@ import com.aimir.fep.meter.parser.SM110Table.MT019;
 import com.aimir.fep.meter.parser.SM110Table.MT115;
 import com.aimir.fep.meter.parser.SM110Table.NT509;
 import com.aimir.fep.meter.parser.SM110Table.ST001;
+import com.aimir.fep.util.EventUtil;
 import com.aimir.fep.util.Hex;
 import com.aimir.fep.util.Util;
+import com.aimir.model.device.MCU;
+import com.aimir.model.device.Modem;
 import com.aimir.model.system.Supplier;
 import com.aimir.util.DateTimeUtil;
 import com.aimir.util.TimeLocaleUtil;
@@ -101,8 +105,29 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 	public void parse(byte[] data) throws Exception {
 		rawData = data;
 		int totlen = data.length;
+		String throwMsg = null;
 		log.info("meter : " + meter.getMdsId() +", data : "+Hex.decode(data));
 		log.debug("TOTLEN[" + totlen + "]");
+
+		Modem modem = meter.getModem();
+		MCU mcu = modem.getMcu();
+		if(modem != null) {
+			throwMsg = checkTableLength("Total", data);
+			if(throwMsg != null) {
+				StringBuffer buffer = new StringBuffer();
+				if(mcu != null)
+					buffer.append("MCU : ").append(mcu.getSysID()).append(", Meter : ").append(meter.getMdsId()).append(", ").append(throwMsg);
+				else
+					buffer.append("MCU is null, Modem : ").append(modem.getDeviceSerial()).append(", Meter : ").append(meter.getMdsId()).append(", ").append(throwMsg);
+				
+				EventUtil.sendEvent("Equipment Notification",
+	                    TargetClass.valueOf(meter.getMeterType().getName()),
+	                    meter.getMdsId(),
+	                    new String[][] {{"message", buffer.toString()}});
+				
+				throw new Exception(buffer.toString());
+			}
+		}
 
 		int offset = 0;
 		while (offset + 6 < totlen) {
@@ -120,8 +145,25 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 
 			System.arraycopy(data, offset, b, 0, len);
 			offset += len;
-
+			
 			try {
+				throwMsg = checkTableLength("tbName", b);
+				if(throwMsg != null) {
+					StringBuffer buffer = new StringBuffer();
+					if(mcu != null)
+						buffer.append("MCU : ").append(mcu.getSysID()).append(", Meter : ").append(meter.getMdsId()).append(", ").append(throwMsg);
+					else
+						buffer.append("MCU is null, Modem : ").append(modem.getDeviceSerial()).append(", Meter : ").append(meter.getMdsId()).append(", ").append(throwMsg);
+					
+					EventUtil.sendEvent("Equipment Notification",
+		                    TargetClass.valueOf(meter.getMeterType().getName()),
+		                    meter.getMdsId(),
+		                    new String[][] {{"message", buffer.toString()}});
+					
+					throw new Exception(buffer.toString());
+					
+				}
+				
 				if (tbName.equals("S001")) {
 					log.debug("[S001] len=[" + len + "] data=>\n" + Util.getHexString(b));
 					// Parse
@@ -175,6 +217,8 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 				} else {
 					log.debug("unknown table=[" + tbName + "] data=>\n" + Util.getHexString(b));
 				}
+			}catch(ArrayIndexOutOfBoundsException be) {
+				log.error(be, be);				
 			} catch (Exception e) {
 				log.error(e, e);
 			}
@@ -182,6 +226,33 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 		log.debug("I210+ Data Parse Finished :: DATA[" + toString() + "]");
 	}
 
+	public String checkTableLength(String tbName, byte[] b) {
+		String reStr = null;
+		
+		if (tbName.equals("Total")) {
+			if(b.length != 148) {
+				reStr = "Invalid Metering Data length | length : " + b.length +"/148, data : " +Hex.decode(b);  
+			}
+		} else if (tbName.equals("S001")) {
+			if(b.length != 32) {
+				reStr = "Invalid Table Data length | '" + tbName +"' length : " + b.length +"/32, data : " +Hex.decode(b);  
+			}
+		} else if (tbName.equals("M019")) {
+			if(b.length != 40) {
+				reStr = "Invalid Table Data length | '" + tbName +"' length : " + b.length +"/40, data : " +Hex.decode(b);
+			}
+		} else if (tbName.equals("M115")) {
+			if(b.length != 24) {
+				reStr = "Invalid Table Data length | '" + tbName +"' length : " + b.length +"/24, data : " +Hex.decode(b);
+			}
+		} else if (tbName.equals("M114")) {
+			if(b.length != 28) {
+				reStr = "Invalid Table Data length | '" + tbName +"' length : " + b.length +"/28, data : " +Hex.decode(b);
+			}
+		}
+		
+		return reStr;
+	}
 	
 	public Double getTOTAL_DEL_KWH() {
 		return TOTAL_DEL_KWH;
