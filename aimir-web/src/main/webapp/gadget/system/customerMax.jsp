@@ -3801,13 +3801,13 @@
                                         </td> 
 										<!-- 미수금 -->
                                         <td id="prepaymentTr01_3" style="display: none;" class="bold withinput">
-                                            <fmt:message key="aimir.arrears" /> A
+                                            <fmt:message key="aimir.arrearsA" />
                                         </td>
                                         <td id="prepaymentTr01_4" style="display: none;"  class="padding-r20px2">
                                             <input type="text" id="currentArrears" readonly="readonly" class="border-trans bg-trans"/>
                                         </td>
                                         <td id="prepaymentTr01_1" style="display: none;" class="bold withinput">
-                                            <fmt:message key="aimir.arrears" /> B
+                                            <fmt:message key="aimir.arrearsB" />
                                         </td>
                                         <td id="prepaymentTr01_2" style="display: none;" class="padding-r20px2">
                                             <input type="text" id="currentArrears2" readonly="readonly" class="border-trans bg-trans"/>
@@ -4050,13 +4050,13 @@
                                     <!-- 지불상태(선불을 선택했을 경우 보여주는 div -->
                                     <tr id="prepaymentStatusTr">
                                         <td class="bold withinput">
-                                            <fmt:message key="aimir.arrears"/> A
+                                            <fmt:message key="aimir.arrearsA"/>
                                         </td>
                                         <td>
                                             <input type='text' id='currentArrearsU' name="currentArrears" style="width: 150px"/>
                                         </td>
                                      	<td class="bold withinput">
-                                            <fmt:message key="aimir.arrears"/> B
+                                            <fmt:message key="aimir.arrearsB"/>
                                         </td>
                                         <td>
                                             <input type='text' id='currentArrears2U' name="currentArrears2U" style="width: 150px"/>

@@ -102,14 +102,6 @@
 							${contractNumber}
 						</td>
 					</tr>
-                    <tr>
-                        <td>
-                            <fmt:message key='aimir.meterid'/>
-                        </td>
-                        <td>
-                            ${meter}
-                        </td>
-                    </tr>
                    	<tr>
 						<td>
 							<fmt:message key='aimir.shipment.gs1'/>
@@ -162,7 +154,7 @@
                         <td>
                             <fmt:message key="aimir.receipt.beforeBalance"/>
                         </td>
-                        <td>
+                        <td style="float:right">
                             ${preBalance}
                         </td>
                     </tr>
@@ -170,7 +162,7 @@
                         <td>
                             <fmt:message key="aimir.receipt.currentBalance"/>
                         </td>
-                        <td>
+                        <td style="float:right">
                             ${currentBalance}
                         </td>
                     </tr>
@@ -182,15 +174,15 @@
                                         <fmt:message key='aimir.arrears'/>
                                     </td>
                                     <td class='table-header' style='font-size: 1em'>
-                                        <fmt:message key='aimir.previous'/>
+                                        <fmt:message key='aimir.receipt.previous'/>
                                     </td>
                                     <td class='table-header' style='font-size: 1em'>
-                                        <fmt:message key='aimir.current'/>
+                                        <fmt:message key='aimir.receipt.current'/>
                                     </td>
                                 </tr>
                                 <tr class='tr-credit'>
                                     <td class='table-header' style='font-size: 1em'>
-                                        <fmt:message key='aimir.arrearsA'/>
+                                        <fmt:message key='aimir.receipt.arrearsA'/>
                                     </td>
                                     <td class='table-value' style='font-size: 1em'>
                                         ${preArrears}
@@ -201,7 +193,7 @@
                                 </tr>
                                 <tr>
                                     <td class='table-header' style='font-size: 0.9em'>
-                                        <fmt:message key='aimir.arrearsB'/>
+                                        <fmt:message key='aimir.receipt.arrearsB'/>
                                     </td>
                                     <td class='table-value' style='font-size: 1em'>
                                         ${preArrears2}
@@ -217,7 +209,7 @@
                         <td>
                             <fmt:message key="aimir.receipt.charegedAmount"/>
                         </td>
-                        <td class="charge-amount">
+                        <td style="float:right">
                             ${amount}
                         </td>
                     </tr>
@@ -225,7 +217,7 @@
                         <td>
                             <fmt:message key="aimir.prepayment.vat"/> ( - )
                         </td>
-                        <td>
+                        <td style="float:right">
                             ${vat}
                         </td>
                     </tr>
@@ -233,7 +225,7 @@
                         <td>
                             <fmt:message key="aimir.amount.paid"/>
                         </td>
-                        <td>
+                        <td style="float:right">
                             ${totalAmountPaid}
                         </td>
                     </tr>
@@ -311,7 +303,7 @@
         };
         var init = function () {
             //eventHandler.insertInitCredit();
-            window.resizeTo(285, 785);
+            window.resizeTo(285, 730);
             bind();
         };
         window.onload = function() {
