@@ -361,13 +361,13 @@ public class MeterDataSaverMain
         Meter meter = meterDao.get(md.getMeterDataParser().getMDevId());
         md.getMeterDataParser().setMeter(meter);
         
-        if (md.getMeterDataParser().getMeter().getModel() != null)
+        if (md.getMeterDataParser().getMeter().getModel() != null) 
             config = md.getMeterDataParser().getMeter().getModel().getDeviceConfig();
-        
+            
         if (config == null || (config != null && (config.getSaverName() == null || "".equals(config.getSaverName()))))
             config = md.getMeterDataParser().getMeter().getModem().getModel().getDeviceConfig();
         
-        log.debug("Saver[" + config.getSaverName() + "]");
+        log.debug("meter : " + md.getMeterDataParser().getMeter().getMdsId() +", configId : " + config.getId()+", saver: " + config.getSaverName() + "");
         // 저장 객체를 생성한다.
 
         // 2012.12.13 ondemand 에 대한 저장 로직 추가
