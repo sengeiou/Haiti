@@ -419,8 +419,6 @@ public class DFProcessor extends Processor
             datacnt = DataUtil.getIntTo2Byte(bdatacnt);
             byte[] blen = null;
             byte[] bx = null;
-                        
-            log.debug("# DF datacnt : " + datacnt+", mcu : " + mcuId);
             
             //EMDataList안에 MDList 갯수 만큼 MDList를 하나씩 가지는 EMDataList를 만들어서 저장 로직을 수행하도록 함
             for (int i = 0; i < datacnt; i++) {
@@ -445,6 +443,8 @@ public class DFProcessor extends Processor
                 bos.write(bx);
                 bos.flush();
                 bos.close();
+                
+                log.debug("# DF datacnt : " + datacnt+", mcu : " + mcuId +", hex data : " + Hex.decode(bx) );
 
                 //SP-882
                 if (kafkaEnable) {
