@@ -424,7 +424,33 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
         
         try {
         	logger.info("Read Sheet init timestamp : "+ new Timestamp(System.currentTimeMillis()));
-        	errorList = validateSheet(sheet, supplier, location);
+        	// 시트의 row
+	    	Iterator<Row> rowIterator = sheet.iterator();
+	    	List<Row> entities = new ArrayList<Row>();
+	    	
+	    	loopSize = 0;
+			totalSize = Iterators.size(rowIterator);
+			
+	    	// row 수 만큼
+	    	while (rowIterator.hasNext()) {
+	    		Row row = rowIterator.next();
+	    		// header row skip
+				if (row.getRowNum() == 0) {					
+					continue;
+		        }
+	    		entities.add(row);
+	    		
+	    		if(entities.size() % batchSize == 0) {
+	    			errorList.addAll(saveRows(entities, supplier, location));
+	    			entities.clear();
+	    		}
+	    	}
+	    	
+	    	if(Iterators.size(rowIterator) <= batchSize) {
+	    		errorList.addAll(saveRows(entities, supplier, location));
+	    	}
+        	
+//        	errorList = validateSheet(sheet, supplier, location);
         	logger.info("Read Sheet end timestamp : "+ new Timestamp(System.currentTimeMillis()));
         	
         	if (errorList.size() <= 0) {
@@ -617,7 +643,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
 		return errorList;
 	}
 
-	private List<List<Object>> validateSheet(XSSFSheet sheet, Supplier supplier, Location location) {
+	public List<List<Object>> validateSheet(XSSFSheet sheet, Supplier supplier, Location location) {
 		List<List<Object>> errorList = new ArrayList<List<Object>>();
 		try {
 			// 시트의 row

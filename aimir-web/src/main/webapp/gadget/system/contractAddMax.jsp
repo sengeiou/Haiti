@@ -1048,9 +1048,9 @@
                                 </tr>
 
                                 <tr id="pane-creditType-prepay1" style="display:none;">
-                                    <td class="bold withinput"><fmt:message key="aimir.arrears"/> A<!-- 미수금 --></td>
+                                    <td class="bold withinput"><fmt:message key="aimir.arrearsA"/><!-- 미수금 --></td>
                                     <td><input name="currentArrears" id="currentArrearsA" style="width:150px" type="text" value="${arrears}"/></td>
-                                    <td class="bold withinput"><fmt:message key="aimir.arrears"/> B</td>
+                                    <td class="bold withinput"><fmt:message key="aimir.arrearsB"/></td>
                                     <td><input name="currentArrears2" id="currentArrearsB" style="width:150px" type="text" value="${arrears2}"/></td>
                                     <td class="bold withinput"><fmt:message key="aimir.payment.contractCnt"/><!--지불납부횟수--></td>
                                     <td><input type="text" name="arrearsContractCount" id="arrearsContractCount" style="width:180px;"></td>
