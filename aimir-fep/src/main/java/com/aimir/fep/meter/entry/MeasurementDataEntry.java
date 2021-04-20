@@ -675,7 +675,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
             modem.setCommState(1);
             modem.setLastLinkTime(modem.getInstallDate());
             if (ns == null || "".equals(ns))
-                modem.setNameSpace("SP");
+                modem.setNameSpace("");
             else
                 modem.setNameSpace(ns);
             modem.setProtocolVersion("0102");
