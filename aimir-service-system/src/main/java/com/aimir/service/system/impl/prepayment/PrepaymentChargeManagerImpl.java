@@ -1608,18 +1608,18 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
         result.put("casherId", casherId);
         result.put("casherName", casherName);
         result.put("currentBalance", cdf.format(prepaymentLog.getBalance()));
-        result.put("preBalance", prepaymentLog.getPreBalance() == null ? "" : cdf.format(prepaymentLog.getPreBalance()));
+        result.put("preBalance", prepaymentLog.getPreBalance());
         result.put("payType", prepaymentLog.getPayType() != null ? prepaymentLog.getPayType().getName() : "Cash"); // default : cash
 
         // 결제 영수증 미수금이 있는 경우 
         if ((prepaymentLog.getPreArrears() != null && prepaymentLog.getPreArrears() != 0d) 
         	|| (prepaymentLog.getPreArrears2() != null && prepaymentLog.getPreArrears2() != 0d)) {
-            result.put("arrears", cdf.format(chargedArrears));
-            result.put("arrears2", cdf.format(chargedArrears2));
-            result.put("currentArrears", cdf.format(arrears));
-            result.put("currentArrears2", cdf.format(arrears2));
-            result.put("preArrears", cdf.format(preArrears));
-            result.put("preArrears2", cdf.format(preArrears2));
+            result.put("arrears", chargedArrears);
+            result.put("arrears2", chargedArrears2);
+            result.put("currentArrears", arrears);
+            result.put("currentArrears2", arrears2);
+            result.put("preArrears", preArrears);
+            result.put("preArrears2", preArrears2);
             
             
             result.put("lastMeter", lastMeterId);
@@ -1627,8 +1627,8 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
             if(prepaymentLog.getInitCredit() != null && prepaymentLog.getInitCredit() != 0d) {
                 Double initCredit = prepaymentLog.getInitCredit();
                 bdChargedCredit = bdChargedCredit.subtract(new BigDecimal(initCredit));
-                result.put("amount", cdf.format(bdChargedCredit.doubleValue()));
-                result.put("initCredit", cdf.format(initCredit));
+                result.put("amount", bdChargedCredit.doubleValue());
+                result.put("initCredit", initCredit);
             }
         }
 
