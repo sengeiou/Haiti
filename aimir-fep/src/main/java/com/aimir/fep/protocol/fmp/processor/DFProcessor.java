@@ -23,6 +23,7 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -419,7 +420,7 @@ public class DFProcessor extends Processor
             byte[] blen = null;
             byte[] bx = null;
                         
-            log.debug("# DF datacnt : " + datacnt);
+            log.debug("# DF datacnt : " + datacnt+", mcu : " + mcuId + ", data : " + IOUtils.toString(is,"UTF-8"));
             
             //EMDataList안에 MDList 갯수 만큼 MDList를 하나씩 가지는 EMDataList를 만들어서 저장 로직을 수행하도록 함
             for (int i = 0; i < datacnt; i++) {
