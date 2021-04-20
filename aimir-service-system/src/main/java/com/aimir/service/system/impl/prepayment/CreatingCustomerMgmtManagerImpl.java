@@ -18,6 +18,7 @@ import java.util.Properties;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.map.MultiKeyMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -35,6 +36,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.aimir.constants.CommonConstants.MeterStatus;
 import com.aimir.constants.CommonConstants.MeterType;
 import com.aimir.dao.device.MeterDao;
 import com.aimir.dao.system.CodeDao;
@@ -475,13 +477,15 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 String userAddress3 = getCellValue(row.getCell(7)).trim();
                 String mobileNo = getCellValue(row.getCell(8)).trim();
                 String meterNumber = getCellValue(row.getCell(9)).trim().isEmpty() ? null : getCellValue(row.getCell(9)).trim();
-                String currentArrears1 = getCellValue(row.getCell(10)).trim().isEmpty() ? null : getCellValue(row.getCell(10)).trim();            
-                String currentArrears2 = getCellValue(row.getCell(11)).trim().isEmpty() ? null : getCellValue(row.getCell(11)).trim();
-                String carrier = getCellValue(row.getCell(12)).trim();
+                String previousMeter = getCellValue(row.getCell(10)).trim();
+                String currentArrears1 = getCellValue(row.getCell(11)).trim().isEmpty() ? null : getCellValue(row.getCell(10)).trim();            
+                String currentArrears2 = getCellValue(row.getCell(12)).trim().isEmpty() ? null : getCellValue(row.getCell(11)).trim();
+                String carrier = getCellValue(row.getCell(13)).trim();
                 TariffType tariffType = tariffTypeDao.findByCondition("name", tariffIndexID);
                 Code serviceTypeCode = codeDao.getCodeIdByCodeObject(MeterType.EnergyMeter.getServiceType());
                 Code statusCode = codeDao.getCodeIdByCodeObject(Code.NORMAL);
                 Code creditTypeCode = codeDao.getCodeIdByCodeObject(Code.EMERGENCY_CREDIT);
+                Code meterStatusCode = codeDao.getCodeIdByCodeObject(MeterStatus.NewRegistered.getCode());
                 
                 if("sample".equals(contractNumber)) { // contractNumber 값이 sample이면 skip
                 	continue;
@@ -497,7 +501,6 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 String dateTime = TimeUtil.getCurrentTime();
                 
                 logger.info("### Customer 생성 customerNo : "+customerNo);
-//                Customer customer = customerDao.findByCondition("customerNo", customerNo) == null ? new Customer() : customerDao.findByCondition("customerNo", customerNo);
                 Customer customer = customerDao.findByCondition("customerNo", customerNo);
                 if(customer == null) {
                 	customer = new Customer();
@@ -543,6 +546,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 	meter.setSupplier(supplier);;
                 	meter.setLocation(location);
                 	meter.setModel(model);
+                	meter.setMeterStatus(meterStatusCode);
                 	meter.setWriteDate(dateTime);
                 	meterDao.update(meter);
 //                	meterDao.flushAndClear();
@@ -550,7 +554,6 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 	newMeter = meter;
                 }
                 logger.info("### Contract 생성 contractNumber : "+contractNumber);
-//                Contract contract = contractDao.findByCondition("contractNumber", contractNumber) == null ? new Contract() : contractDao.findByCondition("contractNumber", contractNumber);
                 Contract contract = contractDao.findByCondition("contractNumber", contractNumber);
                 if(contract == null) {
                 	contract = new Contract();
@@ -567,6 +570,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                     contract.setCurrentCredit(contract.getCurrentCredit() == null ? 0.0 : contract.getCurrentCredit());
                     contract.setCurrentArrears(currentArrears1 == null  ?  0.0 : Double.parseDouble(currentArrears1));
                     contract.setCurrentArrears2(currentArrears2 == null  ?  0.0 : Double.parseDouble(currentArrears2));
+                    contract.setPreMdsId(previousMeter);
                     contract.setEmergencyCreditAvailable(true);
                     contract.setEmergencyCreditMaxDuration(365);
                     contract.setEmergencyCreditStartTime(dateTime);
@@ -588,6 +592,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 	contract.setCurrentCredit(contract.getCurrentCredit() == null ? 0.0 : contract.getCurrentCredit());
                 	contract.setCurrentArrears(currentArrears1 == null  ?  0.0 : Double.parseDouble(currentArrears1));
                 	contract.setCurrentArrears2(currentArrears2 == null  ?  0.0 : Double.parseDouble(currentArrears2));
+                	contract.setPreMdsId(previousMeter);
                 	contract.setEmergencyCreditAvailable(true);
                 	contract.setEmergencyCreditMaxDuration(365);
                 	contract.setEmergencyCreditStartTime(dateTime);
@@ -621,7 +626,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
 	    	
 	    	loopSize = 0;
 			totalSize = Iterators.size(rowIterator);
-	    	
+			
 	    	// row 수 만큼
 	    	while (rowIterator.hasNext()) {
 	    		Row row = rowIterator.next();
@@ -641,27 +646,30 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
 	    		errorList.addAll(saveRows(entities, supplier, location));
 	    	}
 	    	
-	    	/*List<Object> errs = new ArrayList<Object>();
-	    	for (Row row : sheet) {
-	            if (row.getRowNum() == 0) {
-	                continue;
-	            }            
-	            compareMap.put(getCellValue(row.getCell(0)).trim(), getCellValue(row.getCell(0)).trim());
-	    	}
-	    	
-	    	for (String key : compareMap.keySet()) {
-	    		if(compareMap.containsKey(key)) {
-			        errs.add(compareMap.get(key));
-			        compareMap.remove(key);
-	    		}
-			}*/
-	    	
 		} catch (Exception e) {
 			logger.error("validateSheet() for try catch error");
 		}
     	
     	return errorList;
 	}
+	
+	public void validateCell(List<Row> entities){
+		
+		MultiKeyMap compareMap = new MultiKeyMap();
+    	List<Object> errs = new ArrayList<Object>();
+    	
+    	for (Row row : entities) {
+    		logger.info("row.getCell(0) "+ row.getCell(0));
+    		compareMap.put(getCellValue(row.getCell(0)).trim(), getCellValue(row.getCell(9)).trim(), row);
+    	}
+    	
+    	for (Object key : compareMap.keySet()) {
+    		if(compareMap.containsKey(key)) {
+		        errs.add(compareMap.get(key));
+		        compareMap.remove(key);
+    		}
+		}
+   	}
 
 	/**
      * method name : sendCertificationSMS<b/>
