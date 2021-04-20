@@ -364,8 +364,10 @@ public class MeterDataSaverMain
         if (md.getMeterDataParser().getMeter().getModel() != null) 
             config = md.getMeterDataParser().getMeter().getModel().getDeviceConfig();
             
-        if (config == null || (config != null && (config.getSaverName() == null || "".equals(config.getSaverName()))))
+        if (config == null || (config != null && (config.getSaverName() == null || "".equals(config.getSaverName())))) {
+        	log.debug("meter model config invalid.");
             config = md.getMeterDataParser().getMeter().getModem().getModel().getDeviceConfig();
+        }
         
         log.debug("meter : " + md.getMeterDataParser().getMeter().getMdsId() +", configId : " + config.getId()+", saver: " + config.getSaverName() + "");
         // 저장 객체를 생성한다.
