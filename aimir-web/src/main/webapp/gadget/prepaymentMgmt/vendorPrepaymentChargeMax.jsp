@@ -1307,7 +1307,7 @@
 			chargeArrears2 = Number(Ext.getCmp('arrearsB').getValue());
 			
 			if(vatUnit=='%'){
-				vat = (totalAmountPaid - (chargeArrears + chargeArrears2)) * vatAmount/100;
+				vat = Math.floor( (totalAmountPaid - (chargeArrears + chargeArrears2)) * vatAmount/100 );
 			}else{
 				vat = vatAmount;
 			}
