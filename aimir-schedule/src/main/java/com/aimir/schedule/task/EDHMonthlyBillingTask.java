@@ -249,7 +249,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 		}
 		
 		double serviceCharge = Double.parseDouble(fixedVariable.getAmount());
-		monthlyBillingLog = monthlyBillingLogDao.getLastMonthlyBillingLog(contractId, meter.getMdsId(), curMonth);
+		monthlyBillingLog = monthlyBillingLogDao.getLastMonthlyBillingLog(contractId, meter.getMdsId(), null);
 		if(monthlyBillingLog == null) {
 			//한번도 월정산이 되지 않은 미터
 			saveMonthlyBillingList = getMonthBillingLogList(serviceCharge);
