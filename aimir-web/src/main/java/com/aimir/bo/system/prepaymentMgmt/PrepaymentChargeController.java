@@ -208,7 +208,7 @@ public class PrepaymentChargeController {
         try {
         	Properties prop = new Properties();
             prop.load(getClass().getClassLoader().getResourceAsStream("command.properties"));            
-            mav.addObject("logoImg", prop.getProperty("supplier.logo.filename") == null ? "/images/ECG_logo.gif" : prop.getProperty("supplier.logo.filename").trim());
+            mav.addObject("logoImg", prop.getProperty("supplier.logo.filename") == null ? "/images/HAITI_logo.gif" : prop.getProperty("supplier.logo.filename").trim());
             String isPartpayment = prop.getProperty("partpayment.use");
             String initArrears = prop.getProperty("prepay.init.arrears");
             mav.addObject("isPartpayment" , (isPartpayment == null || "".equals(isPartpayment)) ? false : isPartpayment);
@@ -275,7 +275,7 @@ public class PrepaymentChargeController {
         try {
         	Properties prop = new Properties();
             prop.load(getClass().getClassLoader().getResourceAsStream("command.properties"));            
-            mav.addObject("logoImg", prop.getProperty("supplier.logo.filename") == null ? "/images/ECG_logo.gif" : prop.getProperty("supplier.logo.filename").trim());
+            mav.addObject("logoImg", prop.getProperty("supplier.logo.filename") == null ? "/images/HAITI_logo.gif" : prop.getProperty("supplier.logo.filename").trim());
             String isPartpayment = prop.getProperty("partpayment.use");
             String initArrears = prop.getProperty("prepay.init.arrears");
             mav.addObject("isPartpayment" , (isPartpayment == null || "".equals(isPartpayment)) ? false : isPartpayment);
@@ -336,7 +336,7 @@ public class PrepaymentChargeController {
         try {
         	Properties prop = new Properties();
             prop.load(getClass().getClassLoader().getResourceAsStream("command.properties"));            
-            mav.addObject("logoImg", prop.getProperty("supplier.logo.filename") == null ? "/images/ECG_logo.gif" : prop.getProperty("supplier.logo.filename").trim());
+            mav.addObject("logoImg", prop.getProperty("supplier.logo.filename") == null ? "/images/HAITI_logo.gif" : prop.getProperty("supplier.logo.filename").trim());
 		} catch (Exception e) {
 			log.debug(e,e);	
 		}
