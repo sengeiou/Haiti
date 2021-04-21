@@ -94,6 +94,7 @@ public class MonthlyBillingLogDaoImpl extends AbstractHibernateGenericDao<Monthl
 		Query query = getSession().createNativeQuery(sbQuery.toString());
 		query.setParameter("yyyymm", yyyymm);
 		query.setParameter("mdevId", mdevId);
+		query.setParameter("contractId", contractId);
 		query.setParameter("monthlyConsumption", monthlyConsumption);
 		query.setParameter("monthlyBill", monthlyUsageBill);
 		query.setParameter("activeEnergyImport", activeEnergyImport);
