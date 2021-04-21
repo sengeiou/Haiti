@@ -388,7 +388,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
      * @param supplierId
      * @return
      */
-//    @Transactional(readOnly=false)
+    @Transactional(readOnly=false)
     public Map<String, Object> saveBulkCreatingCustomerByExcelXLSX(String excel, Integer supplierId) {
     	Date date = new Date();
     	
@@ -420,16 +420,18 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
             logger.error(e, e);
         }
 
-        XSSFSheet sheet = wb.getSheetAt(0);
+        XSSFSheet sheet = null;
         
         try {
+        	sheet = wb.getSheetAt(0);
+        	Iterator<Row> rowIterator = sheet.iterator();
+        	List<Row> entities = new ArrayList<Row>();
+        	
         	logger.info("Read Sheet init timestamp : "+ new Timestamp(System.currentTimeMillis()));
-        	// 시트의 row
-	    	Iterator<Row> rowIterator = sheet.iterator();
-	    	List<Row> entities = new ArrayList<Row>();
 	    	
 	    	loopSize = 0;
-			totalSize = Iterators.size(rowIterator);
+//			totalSize = Iterators.size(rowIterator);
+			logger.info("validateSheet() start");
 			
 	    	// row 수 만큼
 	    	while (rowIterator.hasNext()) {
@@ -445,11 +447,12 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
 	    			entities.clear();
 	    		}
 	    	}
-	    	
+			logger.info("entities size is under batchSize : " + Iterators.size(rowIterator));
 	    	if(Iterators.size(rowIterator) <= batchSize) {
 	    		errorList.addAll(saveRows(entities, supplier, location));
 	    	}
-        	
+	    	
+	    	
 //        	errorList = validateSheet(sheet, supplier, location);
         	logger.info("Read Sheet end timestamp : "+ new Timestamp(System.currentTimeMillis()));
         	
@@ -477,11 +480,49 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
         return result;
     }
 
-    private List<List<Object>> saveRows(List<Row> entities, Supplier supplier, Location location) {
+    private List<List<Object>> validateSheetWithIterator(Iterator<Row> rowIterator, Supplier supplier, Location location) {
+    	List<List<Object>> errorList = new ArrayList<List<Object>>();
+		try {
+			// 시트의 row
+	    	List<Row> entities = new ArrayList<Row>();
+	    	
+	    	loopSize = 0;
+			totalSize = Iterators.size(rowIterator);
+			logger.info("validateSheet() start");
+			
+	    	// row 수 만큼
+			for (int i = 0; i < totalSize; i++) {
+				Row row = rowIterator.next();
+	    		// header row skip
+				if (row.getRowNum() == 0) {					
+					continue;
+		        }
+	    		entities.add(row);
+	    		
+	    		if(entities.size() % batchSize == 0) {
+	    			errorList.addAll(saveRows(entities, supplier, location));
+	    			entities.clear();
+	    		}
+			}
+			
+			logger.info("entities size is under batchSize : " + Iterators.size(rowIterator));
+	    	if(Iterators.size(rowIterator) <= batchSize) {
+	    		errorList.addAll(saveRows(entities, supplier, location));
+	    	}
+	    	
+		} catch (Exception e) {
+			logger.error("validateSheet() for try catch error");
+		}
+    	
+    	return errorList;
+		
+	}
+
+	private List<List<Object>> saveRows(List<Row> entities, Supplier supplier, Location location) {
     	TransactionStatus txStatus = null;
     	List<List<Object>> errorList = null;
-    	String contractNumber = null;
-    	String customerNo = null;
+    	String NIB = null;
+    	String NIC = null;
     	String customerName = null;
     	String tariffIndexID = null;
     	
@@ -493,10 +534,10 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
     		
     		for (Row row : entities) {
 
-                contractNumber = getCellValue(row.getCell(0)).trim();
+    			NIB = getCellValue(row.getCell(0)).trim();		// contractNumber
                 String contractDate = getCellValue(row.getCell(1)).trim();
                 tariffIndexID = getCellValue(row.getCell(2)).trim();
-                customerNo = getCellValue(row.getCell(3)).trim();
+                NIC = getCellValue(row.getCell(3)).trim();		// customerNo
                 customerName = getCellValue(row.getCell(4)).trim();
                 String userAddress1 = getCellValue(row.getCell(5)).trim();
                 String userAddress2 = getCellValue(row.getCell(6)).trim();
@@ -513,24 +554,24 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 Code creditTypeCode = codeDao.getCodeIdByCodeObject(Code.EMERGENCY_CREDIT);
                 Code meterStatusCode = codeDao.getCodeIdByCodeObject(MeterStatus.NewRegistered.getCode());
                 
-                if("sample".equals(contractNumber)) { // contractNumber 값이 sample이면 skip
+                if("sample".equals(NIB)) { // contractNumber 값이 sample이면 skip
                 	continue;
                 }
                 
                 // 비어있는 cell 이 있으면 에러처리
-                if (contractNumber.isEmpty() || tariffIndexID.isEmpty() || customerNo.isEmpty() || customerName.isEmpty()) {
-                    errorList.add(getErrorRecord(customerNo, customerName, contractNumber, tariffIndexID, "Please fill in the values in the cells"));
+                if (NIB.isEmpty() || tariffIndexID.isEmpty() || NIC.isEmpty() || customerName.isEmpty()) {
+                    errorList.add(getErrorRecord(NIC, customerName, NIB, tariffIndexID, "Please fill in the values in the cells"));
                     continue;
                 }
 
                 // Add
                 String dateTime = TimeUtil.getCurrentTime();
                 
-                logger.info("### Customer 생성 customerNo : "+customerNo);
-                Customer customer = customerDao.findByCondition("customerNo", customerNo);
+                logger.info("### Customer 생성 customerNo : "+NIC);
+                Customer customer = customerDao.findByCondition("customerNo", NIC);
                 if(customer == null) {
                 	customer = new Customer();
-                	customer.setCustomerNo(customerNo);
+                	customer.setCustomerNo(NIC);
                     customer.setName(customerName);
                     customer.setAddress1(userAddress1);
                     customer.setAddress2(userAddress2);
@@ -541,7 +582,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                     customer.setCarrier(carrier);
                     customerDao.add(customer);
                 }else {
-                	customer.setCustomerNo(customerNo);
+                	customer.setCustomerNo(NIC);
                 	customer.setName(customerName);
                 	customer.setAddress1(userAddress1);
                 	customer.setAddress2(userAddress2);
@@ -563,7 +604,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 	logger.info("### newMeter 생성 meterNumber : "+meterNumber+".");
                 	Meter meter = meterDao.findByCondition("mdsId", meterNumber.toString());
                 	if(meter == null) {
-                		errorList.add(getErrorRecord(customerNo, customerName, contractNumber, tariffIndexID, "Unregistered meter"));
+                		errorList.add(getErrorRecord(NIC, customerName, NIB, tariffIndexID, "Unregistered meter"));
                 		continue;
                 	}
                 	
@@ -579,11 +620,11 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 	logger.info("### Meter 저장 : "+meter.toString());
                 	newMeter = meter;
                 }
-                logger.info("### Contract 생성 contractNumber : "+contractNumber);
-                Contract contract = contractDao.findByCondition("contractNumber", contractNumber);
+                logger.info("### Contract 생성 contractNumber : "+NIB);
+                Contract contract = contractDao.findByCondition("contractNumber", NIB);
                 if(contract == null) {
                 	contract = new Contract();
-                	contract.setContractNumber(contractNumber);
+                	contract.setContractNumber(NIB);
                     contract.setLocation(location);
                     contract.setServiceTypeCode(serviceTypeCode);   // Energy
                     contract.setCreditType(creditTypeCode);         // emergency credit
@@ -605,7 +646,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                     }
                     contractDao.add(contract);
                 }else {
-                	contract.setContractNumber(contractNumber);
+                	contract.setContractNumber(NIB);
                 	contract.setLocation(location);
                 	contract.setServiceTypeCode(serviceTypeCode);   // Energy
                 	contract.setCreditType(creditTypeCode);         // emergency credit
@@ -637,7 +678,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
 		} catch (Exception e) {
 			logger.error("saveRows - for try catch error");
 			logger.error(e,e);
-			errorList.add(getErrorRecord(customerNo, customerName, contractNumber, tariffIndexID, "Please check the values"));
+			errorList.add(getErrorRecord(NIC, customerName, NIB, tariffIndexID, "Please check the values"));
 			if(txStatus != null) txManager.rollback(txStatus);
 		}
 		return errorList;
@@ -651,7 +692,8 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
 	    	List<Row> entities = new ArrayList<Row>();
 	    	
 	    	loopSize = 0;
-			totalSize = Iterators.size(rowIterator);
+//			totalSize = Iterators.size(rowIterator);
+			logger.info("validateSheet() start");
 			
 	    	// row 수 만큼
 	    	while (rowIterator.hasNext()) {
@@ -667,7 +709,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
 	    			entities.clear();
 	    		}
 	    	}
-	    	
+			logger.info("entities size is under batchSize : " + Iterators.size(rowIterator));
 	    	if(Iterators.size(rowIterator) <= batchSize) {
 	    		errorList.addAll(saveRows(entities, supplier, location));
 	    	}
