@@ -357,6 +357,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 		
 		String fDate = lastMonthBilling.getYyyymm() + "01000000";
 		Calendar cal = DateTimeUtil.getCalendar(fDate);
+		cal.add(Calendar.MONTH, 1);
 		
 		Calendar now = Calendar.getInstance();
 		while(true) {
