@@ -572,35 +572,6 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 // Add
                 String dateTime = TimeUtil.getCurrentTime();
                 
-                logger.info("### Customer 생성 customerNo : "+NIC);
-                Customer customer = customerDao.findByCondition("customerNo", NIC);
-                if(customer == null) {
-                	customer = new Customer();
-                	customer.setCustomerNo(NIC);
-                    customer.setName(customerName);
-                    customer.setAddress1(userAddress1);
-                    customer.setAddress2(userAddress2);
-                    customer.setAddress3(userAddress3);
-                    customer.setMobileNo(mobileNo);
-                    customer.setSmsYn(1);
-                    customer.setSupplier(supplier);
-                    customer.setCarrier(carrier);
-                    customerDao.add(customer);
-                }else {
-                	customer.setCustomerNo(NIC);
-                	customer.setName(customerName);
-                	customer.setAddress1(userAddress1);
-                	customer.setAddress2(userAddress2);
-                	customer.setAddress3(userAddress3);
-                	customer.setMobileNo(mobileNo);
-                	customer.setSmsYn(1);
-                	customer.setSupplier(supplier);
-                	customer.setCarrier(carrier);
-                	customerDao.update(customer);
-                }
-                logger.info("### Customer 저장 : "+customer.toString());
-                logger.debug("customerDao.add finished : " + new Timestamp(date.getTime()) );
-                
                 DeviceModel model = deviceModelDao.findByCondition("name", "I210+");
                 
                 Meter newMeter = new Meter();
@@ -633,6 +604,36 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 	meterDao.update(meter);
                 	newMeter = meter;
                 }
+                
+                logger.info("### Customer 생성 customerNo : "+NIC);
+                Customer customer = customerDao.findByCondition("customerNo", NIC);
+                if(customer == null) {
+                	customer = new Customer();
+                	customer.setCustomerNo(NIC);
+                    customer.setName(customerName);
+                    customer.setAddress1(userAddress1);
+                    customer.setAddress2(userAddress2);
+                    customer.setAddress3(userAddress3);
+                    customer.setMobileNo(mobileNo);
+                    customer.setSmsYn(1);
+                    customer.setSupplier(supplier);
+                    customer.setCarrier(carrier);
+                    customerDao.add(customer);
+                }else {
+                	customer.setCustomerNo(NIC);
+                	customer.setName(customerName);
+                	customer.setAddress1(userAddress1);
+                	customer.setAddress2(userAddress2);
+                	customer.setAddress3(userAddress3);
+                	customer.setMobileNo(mobileNo);
+                	customer.setSmsYn(1);
+                	customer.setSupplier(supplier);
+                	customer.setCarrier(carrier);
+                	customerDao.update(customer);
+                }
+                logger.info("### Customer 저장 : "+customer.toString());
+                logger.debug("customerDao.add finished : " + new Timestamp(date.getTime()) );
+                
                 logger.info("### Contract 생성 contractNumber : "+NIB);
                 Contract contract = contractDao.findByCondition("contractNumber", NIB);
                 if(contract == null) {
