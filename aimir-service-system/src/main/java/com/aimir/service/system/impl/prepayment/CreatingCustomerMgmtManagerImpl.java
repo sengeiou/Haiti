@@ -39,6 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.aimir.constants.CommonConstants.MeterStatus;
 import com.aimir.constants.CommonConstants.MeterType;
 import com.aimir.dao.device.MeterDao;
+import com.aimir.dao.device.MeterMapperDao;
 import com.aimir.dao.system.CodeDao;
 import com.aimir.dao.system.ContractDao;
 import com.aimir.dao.system.CustomerDao;
@@ -47,6 +48,7 @@ import com.aimir.dao.system.LocationDao;
 import com.aimir.dao.system.SupplierDao;
 import com.aimir.dao.system.TariffTypeDao;
 import com.aimir.model.device.Meter;
+import com.aimir.model.device.MeterMapper;
 import com.aimir.model.system.Code;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.Customer;
@@ -98,6 +100,9 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
     
     @Autowired
     MeterDao meterDao;
+    
+    @Autowired
+    MeterMapperDao  meterMapperDao;
     
     @Autowired
     DeviceModelDao deviceModelDao;
@@ -545,8 +550,8 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 String mobileNo = getCellValue(row.getCell(8)).trim();
                 String meterNumber = getCellValue(row.getCell(9)).trim().isEmpty() ? null : getCellValue(row.getCell(9)).trim();
                 String previousMeter = getCellValue(row.getCell(10)).trim();
-                String currentArrears1 = getCellValue(row.getCell(11)).trim().isEmpty() ? null : getCellValue(row.getCell(10)).trim();            
-                String currentArrears2 = getCellValue(row.getCell(12)).trim().isEmpty() ? null : getCellValue(row.getCell(11)).trim();
+                String currentArrears1 = getCellValue(row.getCell(11)).trim().isEmpty() ? null : getCellValue(row.getCell(11)).trim();            
+                String currentArrears2 = getCellValue(row.getCell(12)).trim().isEmpty() ? null : getCellValue(row.getCell(12)).trim();
                 String carrier = getCellValue(row.getCell(13)).trim();
                 TariffType tariffType = tariffTypeDao.findByCondition("name", tariffIndexID);
                 Code serviceTypeCode = codeDao.getCodeIdByCodeObject(MeterType.EnergyMeter.getServiceType());
@@ -593,7 +598,6 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 	customer.setCarrier(carrier);
                 	customerDao.update(customer);
                 }
-//                customerDao.flushAndClear();
                 logger.info("### Customer 저장 : "+customer.toString());
                 logger.debug("customerDao.add finished : " + new Timestamp(date.getTime()) );
                 
@@ -601,23 +605,32 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 
                 Meter newMeter = new Meter();
                 if (meterNumber != null && !"".equals(meterNumber)) {
-                	logger.info("### newMeter 생성 meterNumber : "+meterNumber+".");
-                	Meter meter = meterDao.findByCondition("mdsId", meterNumber.toString());
+                	// MeterMapper에서 명판 미터아이디로 
+                	MeterMapper meterMapper = meterMapperDao.findByCondition("meterPrintedMdsId", meterNumber.toString());
+                	if(meterMapper == null) {
+                		errorList.add(getErrorRecord(NIC, customerName, NIB, tariffIndexID, "Can not find the meter in MeterMapper"));
+                		continue;
+                	}
+                	
+                	if(meterMapper.getMeterObisMdsId() == null) {
+                		errorList.add(getErrorRecord(NIC, customerName, NIB, tariffIndexID, "MeterObisMdsId is null"));
+                		continue;
+                	}
+                	logger.info("### MeterMapper search result - METER_OBIS_MDSID ["+ meterMapper.getMeterObisMdsId()+"] METER_PRINTED_MDSID [" + meterMapper.getMeterPrintedMdsId() + "]");
+                	
+                	Meter meter = meterDao.findByCondition("mdsId", meterMapper.getMeterObisMdsId());
                 	if(meter == null) {
                 		errorList.add(getErrorRecord(NIC, customerName, NIB, tariffIndexID, "Unregistered meter"));
                 		continue;
                 	}
-                	
-                	logger.info("### Meter 조회 : "+meter.toString());
-                	meter.setMdsId(meterNumber);
+                	logger.info("### Meter search result - MdsId ["+ meter.getMdsId()+"]");
+                	meter.setMdsId(meterMapper.getMeterObisMdsId());
                 	meter.setSupplier(supplier);;
                 	meter.setLocation(location);
                 	meter.setModel(model);
                 	meter.setMeterStatus(meterStatusCode);
                 	meter.setWriteDate(dateTime);
                 	meterDao.update(meter);
-//                	meterDao.flushAndClear();
-                	logger.info("### Meter 저장 : "+meter.toString());
                 	newMeter = meter;
                 }
                 logger.info("### Contract 생성 contractNumber : "+NIB);
@@ -668,7 +681,6 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 	}
                 	contractDao.update(contract);
                 }
-//                contractDao.flushAndClear();
                 logger.info("### Contract 저장  : "+contract.toString());
                 logger.debug("contractDao.add finished : " + new Timestamp(date.getTime()) );
                 logger.info("### saveRows loop size :  " + ++loopSize +",  totalSize : "+ totalSize);
