@@ -86,7 +86,7 @@ Ext.gadget.Manager = function() {
 		
 		//가젯 close버튼 클릭시 발생되는 이벤트 정의.
 		//if(isAdmin){
-		if(!isCustomerRole && !isVendor){
+		if(isAdmin){
 			tools.push({
 				  id:'close', qtip: 'Close'
 				, handler: function(e, target, panel)
