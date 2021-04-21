@@ -338,7 +338,10 @@ public class EV_203_105_0_Action implements EV_Action
                     
                     DeviceModel meterModel = deviceModelDao.findByCondition("name", str2.trim());
                     if(meterModel != null) {
+                    	log.debug("meter : " + meter.getMdsId()+", meter model : " + meterModel.toString());
                     	meter.setModel(meterModel);
+                    } else {
+                    	log.debug("meter : " + meter.getMdsId()+" model is null! str1 : " + str1 +", str2 : " + str2);
                     }
                     // TODO meter.setLpInterval();
                     meterDao.add(meter);

@@ -444,7 +444,7 @@ public class DFProcessor extends Processor
                 bos.flush();
                 bos.close();
                 
-                log.debug("# DF datacnt : " + datacnt+", mcu : " + mcuId +", hex data : " + Hex.decode(bx) );
+                log.debug("# DF datacnt : " + datacnt+", mcu : " + mcuId +", hex data : " + Hex.decode(bos.toByteArray()) );
 
                 //SP-882
                 if (kafkaEnable) {
