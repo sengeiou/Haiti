@@ -31,7 +31,7 @@ public class MonthlyBillingLogDaoImpl extends AbstractJpaDao<MonthlyBillingLog, 
 	}
 
 	@Override
-	public MonthlyBillingLog getLastMonthlyBillingLog(Integer contractId, String mdevId) {
+	public MonthlyBillingLog getLastMonthlyBillingLog(Integer contractId, String mdevId, String yyyymm) {
 		// TODO Auto-generated method stub
 		return null;
 	}

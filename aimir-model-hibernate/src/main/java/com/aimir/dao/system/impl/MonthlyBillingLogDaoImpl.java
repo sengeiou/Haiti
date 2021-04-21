@@ -25,7 +25,7 @@ public class MonthlyBillingLogDaoImpl extends AbstractHibernateGenericDao<Monthl
 	}
 
 	@Override
-	public MonthlyBillingLog getLastMonthlyBillingLog(Integer contractId, String mdevId) {
+	public MonthlyBillingLog getLastMonthlyBillingLog(Integer contractId, String mdevId, String yyyymm) {
 		if(contractId == null && mdevId == null) {
 			log.info("contractId and mdevId is null!!");
 			return null;
@@ -43,6 +43,10 @@ public class MonthlyBillingLogDaoImpl extends AbstractHibernateGenericDao<Monthl
 			if(mdevId != null)
 				sbQuery.append("\n		AND mb.MDS_ID = :mdevId");
 			
+			if(yyyymm != null && !yyyymm.isEmpty())
+				sbQuery.append("\n		AND mb.YYYYMM = :yyyymm");
+			
+			
 			sbQuery.append("\n		ORDER BY mb.YYYYMM DESC");	
 			sbQuery.append("\n		FETCH first 1 ROW ONLY");
 			sbQuery.append("\n )");
@@ -53,6 +57,9 @@ public class MonthlyBillingLogDaoImpl extends AbstractHibernateGenericDao<Monthl
 			
 			if(mdevId != null)
 				query.setParameter("mdevId", mdevId);
+			
+			if(yyyymm != null && !yyyymm.isEmpty())
+				query.setParameter("yyyymm", yyyymm);
 			
 			return (MonthlyBillingLog)query.getSingleResult();
 		}catch(NoResultException e) {
