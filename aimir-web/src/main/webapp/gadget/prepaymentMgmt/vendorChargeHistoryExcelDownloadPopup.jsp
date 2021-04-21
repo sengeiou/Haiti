@@ -39,7 +39,7 @@
                 supplierId: opener.supplierId,
                 vendorRole: opener.vendorRole,
                 fromDepositGadget : opener.fromDepositGadget,
-                reportType: $$.find("#depositHistory select[name=reportType]").val(),
+                reportType: $$.find("#reportType").val(),
                 subType: $$.find("#depositHistory select[name=subType]").val(),
                 contract: $$.find("#depositHistory input[name=contract]").val(),
                 customerName: $$.find("#depositHistory input[name=customerName]").val(),

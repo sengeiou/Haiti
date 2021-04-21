@@ -58,6 +58,7 @@ public class CommonController {
 		int customerRole = 0;
 		int supplierId = 0;
 		int maxMeters =0;
+		String vendor = "";
 		
 		String loginId ="";//Main 화면에서 로그인중인 사용자를 보여주기 위해 추가
 		String supplierName = ""; //공급사 이름으로 화면을 편집하기 위해 추가
@@ -67,6 +68,7 @@ public class CommonController {
 		if(aimirUser!=null && !aimirUser.isAnonymous()){                 
 		    loginUserId = aimirUser.getAccountId();
 			roleId = aimirUser.getRoleData().getId();
+			vendor = aimirUser.getRoleData().getName().toLowerCase();
             customerRole = (aimirUser.getRoleData().getCustomerRole() != null && aimirUser.getRoleData().getCustomerRole() == true) ? 1 : 0;
             
             isAdmin = aimirUser.getRoleData().getName().equals("admin");
@@ -111,6 +113,7 @@ public class CommonController {
 		
 		mav.addObject("operatorId", loginUserId==0?"":Long.toString(loginUserId));
 		mav.addObject("roleId"    , roleId    ==0?"":Integer.toString(roleId)   );
+		mav.addObject("isVendor", vendor.equals("vendor")?true:false);
 		mav.addObject("customerRole",customerRole);
 		mav.addObject("supplierId", supplierId==0?"":Integer.toString(supplierId));		
 		mav.addObject("supplierName", supplierName);

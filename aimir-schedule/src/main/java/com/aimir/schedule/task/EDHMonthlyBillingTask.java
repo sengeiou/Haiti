@@ -128,7 +128,7 @@ public class EDHMonthlyBillingTask extends ScheduleTask {
 		try {
 			txstatus = txmanager.getTransaction(null);
 			
-			queryResult = contractDao.getValidContractList(mdevId);
+			queryResult = contractDao.getMnthlyBillingContractList(mdevId);
 			if(queryResult == null || queryResult.size() == 0)
 				return null;
 			
@@ -229,8 +229,11 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 			return;
 		}
 		
+		List<MonthlyBillingLog> saveMonthlyBillingList = null;
+		String curMonth = DateTimeUtil.getDateString(new Date(), "yyyyMM");
+		
 		//이번달 월정산 여부를 확인한다.
-		MonthlyBillingLog monthlyBillingLog = monthlyBillingLogDao.getLastMonthlyBillingLog(contractId, meter.getMdsId());
+		MonthlyBillingLog monthlyBillingLog = monthlyBillingLogDao.getLastMonthlyBillingLog(contractId, meter.getMdsId(), curMonth);
 		if(monthlyBillingLog != null) {
 			log.debug("yyyymm : " + monthlyBillingLog.getYyyymm() +", mdsId : " +monthlyBillingLog.getMdsId());
 			return;
@@ -245,46 +248,19 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 			log.info("fixedVariable is null!! check parameter!!, name : " + FIXED_VAR.SERVICE_CHARGE.name()+", tariffId : " + contract.getTariffIndexId()+", applyDate : "+DateTimeUtil.getDateString(new Date()));
 		}
 		
-		List<MonthlyBillingLog> saveMonthlyBillingList = new ArrayList<MonthlyBillingLog>();
-		
 		double serviceCharge = Double.parseDouble(fixedVariable.getAmount());
-		//월 정산 기록이 없다면... 첫번째 월의 사용량을 일할계산한다.
+		monthlyBillingLog = monthlyBillingLogDao.getLastMonthlyBillingLog(contractId, meter.getMdsId(), null);
 		if(monthlyBillingLog == null) {
-			String fDate = contract.getContractDate() != null ? contract.getContractDate() : meter.getInstallDate();
-			int installDay = Integer.parseInt(fDate.substring(6, 8));
-			
-			Calendar cal = DateTimeUtil.getCalendar(fDate);
-			int monthMaxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-			
-			double avgDay = serviceCharge / monthMaxDay;
-			int usingDay = 	monthMaxDay - installDay;
-			
-			BigDecimal avgDaySC = getBigDecimal(avgDay * usingDay);
-			log.info("fDate : " + fDate + ",serviceCharge : " + serviceCharge + ", installDay : " + installDay +", monthMaxDay : " + monthMaxDay+", avgDay : " + avgDay+", usingDay : " + usingDay+", avgDaySC : " +avgDaySC);
-			
-			String yyyymm = fDate.substring(0, 6);
-			monthlyBillingLog = setMonthlyBillingLog(yyyymm, avgDaySC);
-			saveMonthlyBillingList.add(monthlyBillingLog);
+			//한번도 월정산이 되지 않은 미터
+			saveMonthlyBillingList = getMonthBillingLogList(serviceCharge);
+		} else {
+			//한번이상 정산되었지만 이번달에 정산되지 않은 미터
+			saveMonthlyBillingList = getMonthBillingLogList(serviceCharge, monthlyBillingLog); 
 		}
-		
-		Calendar opar = Calendar.getInstance();
-		opar.setTime(DateTimeUtil.getDateFromYYYYMMDD(monthlyBillingLog.getYyyymm() + "01"));
-		opar.add(Calendar.MONTH, 1);
-		
-		Calendar now = Calendar.getInstance();
-		while(true) {
-			if(now.before(opar)) {
-				break;
-			} 
-			
-			String yyyymm = DateTimeUtil.getDateString(opar.getTime(), "yyyyMM");
-			MonthlyBillingLog monthlyLog = setMonthlyBillingLog(yyyymm, new BigDecimal(String.valueOf(serviceCharge)));
-			saveMonthlyBillingList.add(monthlyLog);
-			opar.add(Calendar.MONTH, 1);
-		}
-	
+
+		StringBuffer buffer = new StringBuffer();
 		BigDecimal balance = getBigDecimal(contract.getCurrentCredit());
-		log.debug("before balance : " + balance);
+		buffer.append("before balance : ").append(balance).append(", ");
 		
 		log.debug("saveMonthlyBillingLog : " + saveMonthlyBillingList.size());
 		
@@ -303,11 +279,102 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 			}
 			
 			contract.setCurrentCredit(balance.doubleValue());
-			log.debug("after balance : " + balance);
 			contractDao.update(contract);
+			
+			buffer.append("after balance : ").append(balance);
+			log.info("balance changed || " + buffer.toString());
+		}
+	}
+	
+	private List<MonthlyBillingLog> getMonthBillingLogList(double monthlyTax) throws Exception {
+		List<MonthlyBillingLog> resultList = new ArrayList<MonthlyBillingLog>();
+		
+		String fDate = contract.getContractDate() != null ? contract.getContractDate() : meter.getInstallDate();
+		fDate = fDate.substring(0, 8) + "01000000";
+		Calendar cal = DateTimeUtil.getCalendar(fDate);
+		
+		Calendar now = Calendar.getInstance();
+		while(true) {
+			if(now.before(cal)) {
+				break;
+			} 
+			
+			String yyyymm = DateTimeUtil.getDateString(cal.getTime(), "yyyyMM");
+			MonthlyBillingLog monthlyLog = setMonthlyBillingLog(yyyymm, new BigDecimal(String.valueOf(monthlyTax)));
+			resultList.add(monthlyLog);
+			
+			cal.add(Calendar.MONTH, 1);
 		}
 		
+		return resultList;
 	}
+	
+	/*
+	 * 계약일 기준으로 계약일(day) * (월 기본료 / 계얄월 마지막일)으로 계산 - //2021.04.21 일에 상관없이 무조건 월 기본료 차감으로 변경 됨
+	private List<MonthlyBillingLog> getMonthBillingLogList(double monthlyTax) throws Exception {
+		MonthlyBillingLog monthlyBillingLog = null;
+		List<MonthlyBillingLog> resultList = new ArrayList<MonthlyBillingLog>();
+		
+		String fDate = contract.getContractDate() != null ? contract.getContractDate() : meter.getInstallDate();
+		int installDay = Integer.parseInt(fDate.substring(6, 8));
+		
+		Calendar cal = DateTimeUtil.getCalendar(fDate);
+		int monthMaxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		
+		double avgDay = monthlyTax / monthMaxDay;
+		int usingDay = 	monthMaxDay - installDay;
+		
+		BigDecimal avgDaySC = getBigDecimal(avgDay * usingDay);
+		log.info("fDate : " + fDate + ",serviceCharge : " + monthlyTax + ", installDay : " + installDay +", monthMaxDay : " + monthMaxDay+", avgDay : " + avgDay+", usingDay : " + usingDay+", avgDaySC : " +avgDaySC);
+		
+		String yyyymm = fDate.substring(0, 6);
+		monthlyBillingLog = setMonthlyBillingLog(yyyymm, avgDaySC);
+		resultList.add(monthlyBillingLog);
+		
+		Calendar opar = Calendar.getInstance();
+		opar.setTime(DateTimeUtil.getDateFromYYYYMMDD(monthlyBillingLog.getYyyymm() + "01"));
+		opar.add(Calendar.MONTH, 1);
+		
+		Calendar now = Calendar.getInstance();
+		while(true) {
+			if(now.before(opar)) {
+				break;
+			} 
+			
+			yyyymm = DateTimeUtil.getDateString(opar.getTime(), "yyyyMM");
+			MonthlyBillingLog monthlyLog = setMonthlyBillingLog(yyyymm, new BigDecimal(String.valueOf(monthlyTax)));
+			resultList.add(monthlyLog);
+			opar.add(Calendar.MONTH, 1);
+		}
+		
+		
+		return resultList;
+	}
+	*/
+	
+	private List<MonthlyBillingLog> getMonthBillingLogList(double monthlyTax, MonthlyBillingLog lastMonthBilling) throws Exception {
+		List<MonthlyBillingLog> resultList = new ArrayList<MonthlyBillingLog>();
+		
+		String fDate = lastMonthBilling.getYyyymm() + "01000000";
+		Calendar cal = DateTimeUtil.getCalendar(fDate);
+		cal.add(Calendar.MONTH, 1);
+		
+		Calendar now = Calendar.getInstance();
+		while(true) {
+			if(now.before(cal)) {
+				break;
+			} 
+			
+			String yyyymm = DateTimeUtil.getDateString(cal.getTime(), "yyyyMM");
+			MonthlyBillingLog monthlyLog = setMonthlyBillingLog(yyyymm, new BigDecimal(String.valueOf(monthlyTax)));
+			resultList.add(monthlyLog);
+			
+			cal.add(Calendar.MONTH, 1);
+		}
+		
+		return resultList;
+	}
+	
 	
 	private BigDecimal getBigDecimal(Object val) {
 		return getBigDecimal(val, RoundingMode.FLOOR, 2);
@@ -355,7 +422,6 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 		m.setMdsId(meter.getMdsId());
 		m.setServiceCharge(sc.doubleValue());
 		m.setWriteDate(DateTimeUtil.getDateString(new Date()));
-		m.setTariffType(yyyymm);
 		
 		return m;
 	}

@@ -957,4 +957,11 @@ public interface ContractDao extends GenericDao<Contract, Integer>{
      * @현재 미터와 연결이 유효한 계약 리스트
      */
     public List<Contract> getValidContractList(String mdevId);
+    
+    /**
+     * @param  mdevId(Option)
+     * @return List<Contract>
+     * @현재 월 정산 대상 조회 리스트
+     */
+    public List<Contract> getMnthlyBillingContractList(String mdevId);
 }

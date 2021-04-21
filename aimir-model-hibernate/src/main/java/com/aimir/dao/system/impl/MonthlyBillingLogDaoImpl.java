@@ -25,7 +25,7 @@ public class MonthlyBillingLogDaoImpl extends AbstractHibernateGenericDao<Monthl
 	}
 
 	@Override
-	public MonthlyBillingLog getLastMonthlyBillingLog(Integer contractId, String mdevId) {
+	public MonthlyBillingLog getLastMonthlyBillingLog(Integer contractId, String mdevId, String yyyymm) {
 		if(contractId == null && mdevId == null) {
 			log.info("contractId and mdevId is null!!");
 			return null;
@@ -43,6 +43,10 @@ public class MonthlyBillingLogDaoImpl extends AbstractHibernateGenericDao<Monthl
 			if(mdevId != null)
 				sbQuery.append("\n		AND mb.MDS_ID = :mdevId");
 			
+			if(yyyymm != null && !yyyymm.isEmpty())
+				sbQuery.append("\n		AND mb.YYYYMM = :yyyymm");
+			
+			
 			sbQuery.append("\n		ORDER BY mb.YYYYMM DESC");	
 			sbQuery.append("\n		FETCH first 1 ROW ONLY");
 			sbQuery.append("\n )");
@@ -54,6 +58,9 @@ public class MonthlyBillingLogDaoImpl extends AbstractHibernateGenericDao<Monthl
 			if(mdevId != null)
 				query.setParameter("mdevId", mdevId);
 			
+			if(yyyymm != null && !yyyymm.isEmpty())
+				query.setParameter("yyyymm", yyyymm);
+			
 			return (MonthlyBillingLog)query.getSingleResult();
 		}catch(NoResultException e) {
 			return null;
@@ -62,7 +69,7 @@ public class MonthlyBillingLogDaoImpl extends AbstractHibernateGenericDao<Monthl
 	}
 
 	@Override
-	public int updateMonthlyUsageInfo(String mdevId, String yyyymmdd, double monthlyConsumption, double monthlyUsageBill, double activeEnergyImport, double activeEnergyExport) {
+	public int updateMonthlyUsageInfo(int contractId, String mdevId, String yyyymmdd, double monthlyConsumption, double monthlyUsageBill, double activeEnergyImport, double activeEnergyExport) {
 		if(mdevId == null || yyyymmdd == null)
 			return -1;
 		
@@ -72,7 +79,7 @@ public class MonthlyBillingLogDaoImpl extends AbstractHibernateGenericDao<Monthl
 		sbQuery.append("\n MERGE INTO MONTHLY_BILLING_LOG mb  ");
 		sbQuery.append("\n 	USING ( ");
 		sbQuery.append("\n 		SELECT * FROM MONTHLY_BILLING_LOG bl ");
-		sbQuery.append("\n 		WHERE bl.MDS_ID = :mdevId AND bl.YYYYMM = :yyyymm	 ");
+		sbQuery.append("\n 		WHERE bl.MDS_ID = :mdevId AND bl.YYYYMM = :yyyymm AND bl.CONTRACT_ID = :contractId ");
 		sbQuery.append("\n 	)t ");
 		sbQuery.append("\n 	ON  ");
 		sbQuery.append("\n 		(mb.MDS_ID = t.MDS_ID AND mb.YYYYMM = t.YYYYMM) ");
@@ -87,6 +94,7 @@ public class MonthlyBillingLogDaoImpl extends AbstractHibernateGenericDao<Monthl
 		Query query = getSession().createNativeQuery(sbQuery.toString());
 		query.setParameter("yyyymm", yyyymm);
 		query.setParameter("mdevId", mdevId);
+		query.setParameter("contractId", contractId);
 		query.setParameter("monthlyConsumption", monthlyConsumption);
 		query.setParameter("monthlyBill", monthlyUsageBill);
 		query.setParameter("activeEnergyImport", activeEnergyImport);

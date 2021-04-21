@@ -31,13 +31,13 @@ public class MonthlyBillingLogDaoImpl extends AbstractJpaDao<MonthlyBillingLog, 
 	}
 
 	@Override
-	public MonthlyBillingLog getLastMonthlyBillingLog(Integer contractId, String mdevId) {
+	public MonthlyBillingLog getLastMonthlyBillingLog(Integer contractId, String mdevId, String yyyymm) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int updateMonthlyUsageInfo(String mdevId, String yyyymmdd, double monthlyConsumption, double monthlyUsageBill, double activeEnergyImport, double activeEnergyExport) {
+	public int updateMonthlyUsageInfo(int contractId, String mdevId, String yyyymmdd, double monthlyConsumption, double monthlyUsageBill, double activeEnergyImport, double activeEnergyExport) {
 		// TODO Auto-generated method stub
 		return -1;
 	}
