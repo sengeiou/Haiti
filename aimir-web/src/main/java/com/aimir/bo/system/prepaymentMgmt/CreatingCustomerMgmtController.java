@@ -174,14 +174,14 @@ public class CreatingCustomerMgmtController {
             multipartFile.transferTo(uFile);
         }
 
-        String ext = fullpath.substring(fullpath.lastIndexOf(".")+1).trim();
+//        String ext = fullpath.substring(fullpath.lastIndexOf(".")+1).trim();
 
         Map<String, Object> result = null;
-        if ("xls".equals(ext.toLowerCase())) {
+        /*if ("xls".equals(ext.toLowerCase())) {
             result = creatingCustomerMgmtManager.saveBulkCreatingCustomerByExcelXLS(fullpath, supplierId);
-        } else if ("xlsx".equals(ext.toLowerCase())) {
+        } else if ("xlsx".equals(ext.toLowerCase())) {*/
             result = creatingCustomerMgmtManager.saveBulkCreatingCustomerByExcelXLSX(fullpath, supplierId);
-        }
+//        }
 
         ModelAndView mav = new ModelAndView("jsonView");
         mav.addObject("status", result.get("status"));

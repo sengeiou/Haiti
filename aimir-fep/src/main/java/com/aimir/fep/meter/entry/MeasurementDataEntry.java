@@ -1034,6 +1034,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
         	if(meter.getModel() == null || meter.getModel().getName().equals("")) {
         		DeviceModel defaultModel = getDefaultModel(modem.getSupplier(), meter.getMdsId(), "meter", getVendor().getName());
             	if(defaultModel != null) {
+            		log.info("meter : " + meter.getMdsId() +", default model : " + defaultModel.toString());
             		meter.setModel(defaultModel);
             	}
         	}

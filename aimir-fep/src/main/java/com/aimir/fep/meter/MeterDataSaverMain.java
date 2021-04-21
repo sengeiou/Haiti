@@ -358,7 +358,8 @@ public class MeterDataSaverMain
         }
         
         // lazyexception
-        Meter meter = meterDao.get(md.getMeterDataParser().getMDevId());
+        //Meter meter = meterDao.get(md.getMeterDataParser().getMDevId());
+        Meter meter = md.getMeterDataParser().getMeter();
         md.getMeterDataParser().setMeter(meter);
         
         if (md.getMeterDataParser().getMeter().getModel() != null) 
