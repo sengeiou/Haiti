@@ -14,5 +14,5 @@ public interface MonthlyBillingLogDao extends GenericDao<MonthlyBillingLog, Mont
 	/*
 	 * 특정 미터의 월사용량 및 월사용금액을 업데이트 하기 위한 용도
 	 */
-	public int updateMonthlyUsageInfo(String mdevId, String yyyymmdd, double monthlyConsumption, double monthlyUsageBill, double activeEnergyImport, double activeEnergyExport);
+	public int updateMonthlyUsageInfo(int contractId, String mdevId, String yyyymmdd, double monthlyConsumption, double monthlyUsageBill, double activeEnergyImport, double activeEnergyExport);
 }
