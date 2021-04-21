@@ -3357,8 +3357,8 @@
                         <td class="padding-r20px2"><input id="gs1B" type="text"></td>
                         <td class="withinput"><fmt:message key="aimir.supplystatus" /></td>
                         <td class="padding-r20px2"><select id="statusB" style="width: 125px"></select></td>
-                        <td class="withinput"><fmt:message key="aimir.customer.dr" /></td>
-                        <td class="padding-r20px2"><select id="drB" style="width: 125px"></select></td>
+                        <%-- <td class="withinput"><fmt:message key="aimir.customer.dr" /></td>
+                        <td class="padding-r20px2"><select id="drB" style="width: 125px"></select></td> --%>
                     </tr>
                     <tr>
                         <td class="withinput"><fmt:message key="aimir.contract.tariff.type" /></td>
@@ -3368,7 +3368,7 @@
                         <td class="withinput"><fmt:message key="aimir.paymenttype" /></td>
                         <td class="padding-r20px2"><select id="creditTypeB" style="width:125px;"></select></td>
                         <td class="withinput"><fmt:message key="aimir.contract"/><fmt:message key="aimir.day" /></td>
-                        <td colspan="4">
+                        <td>
                             <span><input id="startDateB" type="text" style="width:80px;"></span>
                             <span><input value="~" type="text" class="between"></span>
                             <span><input id="endDateB" type="text" style="width:80px;"></span>
