@@ -3553,4 +3553,32 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 		List<Contract> result = getSession().createNativeQuery(sbQuery.toString(), Contract.class).getResultList();
 		return result;
 	}
+	
+	@Override
+	public List<Contract> getMnthlyBillingContractList(String mdevId) {
+		StringBuffer sbQuery = new StringBuffer();
+		
+		sbQuery.append(" SELECT  ");
+		sbQuery.append("\n 	co.* ");
+		sbQuery.append("\n FROM  ");
+		sbQuery.append("\n ( ");
+		sbQuery.append("\n 	SELECT me.mds_id FROM meter me, contract co WHERE me.id = co.METER_ID  ");
+		sbQuery.append("\n 		AND (me.METER_STATUS IS NULL OR me.meter_status != (select id from code where code = '1.3.3.9')) ");
+		sbQuery.append("\n 		AND (co.status_id IS NULL OR co.status_id != (select id from code where code = '2.1.3')) ");
+		sbQuery.append("\n 		GROUP BY me.MDS_ID  ");
+		sbQuery.append("\n 	MINUS  ");
+		sbQuery.append("\n 	SELECT mb.MDS_ID FROM MONTHLY_BILLING_LOG mb  ");
+		sbQuery.append("\n 		WHERE mb.YYYYMM = (SELECT TO_CHAR(sysdate, 'YYYYMM') FROM DUAL) ");
+		sbQuery.append("\n 		GROUP BY mb.MDS_ID  ");
+		sbQuery.append("\n )a, meter me, contract co ");
+		sbQuery.append("\n WHERE ");
+		sbQuery.append("\n 	a.mds_id = me.MDS_ID ");
+		sbQuery.append("\n 	AND co.METER_ID = me.id ");
+		
+		if(mdevId != null  && !mdevId.isEmpty())
+			sbQuery.append("\n 	AND me.mds_id = " + mdevId);
+		
+		List<Contract> result = getSession().createNativeQuery(sbQuery.toString(), Contract.class).getResultList();
+		return result;
+	}
 }
