@@ -167,7 +167,7 @@ public class DepositHistoryDataMakeExcel {
             // total : dataList에서 마지막 데이터가 합계 데이터이다.
             Map<String, String> totalData = dataList.get(dataList.size() -1); 
            
-            printTotal(sheet, reportType, totalData, rowNumber, onlyTotal, withDebt);
+            printTotal(sheet, reportType, totalData, ++rowNumber, onlyTotal, withDebt);
             
             //파일 생성
             FileOutputStream fs = null;

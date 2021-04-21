@@ -223,6 +223,9 @@
           <label class="check"><fmt:message key='aimir.hems.prepayment.chargehistory'/></label>
         </div>
         <div class="wrapper">
+        	<table class="searching">
+        	</table>
+        	
           <input name="contractNumber" class="hidden" type="text"></input>
           <span>
             <label><fmt:message key="aimir.searchDate"/></label>
@@ -234,7 +237,10 @@
           </span>
           <span id="historySearch" class="am_button margin-l10 margin-t1px">
             <a class="on"><fmt:message key="aimir.button.search" /></a>
-          </span>    
+          </span>
+<%--           <span id="historyExcel" class="am_button margin-l10 margin-t1px">
+            <a class="on"><fmt:message key="aimir.button.excel" /></a>
+          </span>    --%>
         </div>
       </form>
       <!--검색조건 끝-->
@@ -245,90 +251,121 @@
     <div id="historyTab">
       <!--검색조건-->
       <form id="depositHistory" class="searchoption-container">
-        <div>
-          <!-- <input name="vendor" type="text" class="hidden"/> -->
+        <div class="searchbox">
+          <%-- 
           <span class='inline-block'> 
             <select id='report-type' name='reportType'>
               <option value='all'><fmt:message key='aimir.all'/></option>
               <option value='deposit'><fmt:message key='aimir.deposit'/></option>
               <option value='sales'><fmt:message key='aimir.sales'/></option>
-            </select>
+            </select> 
           </span>
-          <span class='inline-block'> 
-            <select id='sub-type' name='subType'>
-              <option value='all'><fmt:message key='aimir.all'/></option>
-              <option value='cancelled'><fmt:message key='aimir.cancelled'/></option>
-              <option value='unCancelled'><fmt:message key='aimir.uncancelled'/></option>
-            </select>
-          </span>
-          <span>
-            <label><fmt:message key='aimir.buildingMgmt.contractNumber'/></label>
-            <input name="contract" type="text"/>
-          </span>
-          <span>
-            <label><fmt:message key="aimir.customer"/> <fmt:message key="aimir.userreg.name"/>
-            </label><input name="customerName" type="text"/>
-          </span>
-          <span>
-            <label><fmt:message key="aimir.customerid"/></label>
-            <input name="customerId" type="text"/>
-          </span>
-          <span>
-            <label><fmt:message key="aimir.meterid"/></label>
-            <input name="meterId" type="text"/>   
-          </span>
-          <span>
-            <label><fmt:message key="aimir.shipment.gs1"/></label>
-            <input name="gs1" type="text"/>   
-          </span>
-        </div>
-        <div>
-          <span class="inline-block" style='margin-right: 1px;'>
-            <label><fmt:message key="aimir.vendor"/></label>
-          </span>
-          <span class="inline-block">
-            <select id='vendor' style="width: 120px; display: inline;">
-                <c:choose>
-                    <c:when test="${role == 'admin'}">
-                        <option value=""><fmt:message key="aimir.all" /></option>
-                        <c:forEach var="depositVendorList" items="${depositVendorList}">
-                            <c:choose>
-                                <c:when test="${not empty depositVendorList}">
-                                    <option value="${depositVendorList.loginId}">${depositVendorList.loginId}</option>
-                                </c:when>
-                            </c:choose>
-                        </c:forEach>
-                    </c:when>
-                    <c:otherwise>
-                        <option value="${vendor}">${vendor}</option>
-                    </c:otherwise>
-                </c:choose>
-            </select>
-          </span>
-          <span class="inline-block">
-            <label><fmt:message key="aimir.board.location"/></label>
-            <input name="searchWord" id='searchWord' type="text" style="width: 120px" /> 
-            <input type='hidden' id='locationId'></input>
-          </span>
-          <span>
-            <label><fmt:message key="aimir.prepayment.casher"/></label>
-            <input name="casherId" type="text"/></input>
-          </span>
-          <span>
-            <label><fmt:message key="aimir.searchDate"/></label>
-            <input class="alt startDate" name="startDateDisplay" type='text' readOnly/><input name="startDate" type="hidden"/>
-            <label>~</label>
-            <input class="alt endDate" name="endDateDisplay" type='text' readOnly/><input name="endDate" type="hidden"/>
-          </span>
-          <span id='depositHistorySearch' class="am_button margin-l10 margin-t1px">
-            <a><fmt:message key="aimir.button.search"/></a>
-          </span>   
-          <span id='depositHistoryExcel' class="am_button margin-l10 margin-t1px margin-r5">
-            <a><fmt:message key="aimir.button.excel"/></a>
-          </span>             
-          <span id='depositHistoryTotalExcel' class="am_button margin-t1px">
-            <a><fmt:message key="aimir.total"/> <fmt:message key="aimir.button.excel"/></a>
-          </span>   
+          --%>
+          <table class="searching">
+          <input type='hidden' id='reportType' name='reportType' value='sales'/>
+          	<tr>
+	          <td class="withinput">
+	          	<fmt:message key='aimir.cancelled'/>
+	          </td>
+	          <td class="padding-r20px2">
+	            <select id='sub-type' name='subType'>
+	              <option value='all'><fmt:message key='aimir.all'/></option>
+	              <option value='cancelled'><fmt:message key='aimir.cancelled'/></option>
+	              <option value='unCancelled'><fmt:message key='aimir.uncancelled'/></option>
+	            </select>
+	          </td>
+	          <td class="withinput">
+	            <fmt:message key='aimir.buildingMgmt.contractNumber'/>
+	          </td>
+	          <td class="padding-r20px2">
+	            <input name="contract" type="text"/>
+	          </td>
+	          <td class="withinput">
+	            <fmt:message key="aimir.customer"/> <fmt:message key="aimir.userreg.name"/>
+	          </td>
+	          <td class="padding-r20px2">
+	            <input name="customerName" type="text"/>
+	          </td>
+	          <td class="withinput">
+	            <fmt:message key="aimir.customerid"/>
+	          </td>
+	          <td class="padding-r20px2">
+	            <input name="customerId" type="text"/>
+	          </td>
+	          <td class="withinput">
+	            <fmt:message key="aimir.meterid"/>
+	          </td>
+	          <td class="padding-r20px2">
+	            <input name="meterId" type="text"/>   
+	          </td>
+	          <td class="withinput">
+	            <fmt:message key="aimir.shipment.gs1"/>
+	          </td>
+	          <td class="padding-r20px2">
+	            <input name="gs1" type="text"/>   
+	          </td>
+          	</tr>
+          	<tr>
+	          <td class="withinput">
+	            <fmt:message key="aimir.vendor"/>
+	          </td>
+	          <td class="inline-block">
+	            <select id='vendor' style="width: 120px; display: inline;">
+	                <c:choose>
+	                    <c:when test="${role == 'admin'}">
+	                        <option value=""><fmt:message key="aimir.all" /></option>
+	                        <c:forEach var="depositVendorList" items="${depositVendorList}">
+	                            <c:choose>
+	                                <c:when test="${not empty depositVendorList}">
+	                                    <option value="${depositVendorList.loginId}">${depositVendorList.loginId}</option>
+	                                </c:when>
+	                            </c:choose>
+	                        </c:forEach>
+	                    </c:when>
+	                    <c:otherwise>
+	                        <option value="${vendor}">${vendor}</option>
+	                    </c:otherwise>
+	                </c:choose>
+	            </select>
+	          </td>
+	          <td class="withinput">
+	            <fmt:message key="aimir.board.location"/>
+	          </td>
+	          <td class="padding-r20px2">
+	            <input name="searchWord" id='searchWord' type="text" style="width: 120px" /> 
+	            <input type='hidden' id='locationId'></input>
+	          </td>
+	          <td class="withinput">
+	            <fmt:message key="aimir.prepayment.casher"/>
+	          </td>
+	          <td class="padding-r20px2">
+	            <input name="casherId" type="text"/></input>
+	          </td>
+	          <td class="withinput">
+		            <fmt:message key="aimir.searchDate"/>
+	          </td>
+	          <td class="withinput" style="width:220px">
+	          	<span>
+		            <input class="alt startDate" name="startDateDisplay" type='text' readOnly/><input name="startDate" type="hidden"/>
+		            <label>~</label>
+		            <input class="alt endDate" name="endDateDisplay" type='text' readOnly/><input name="endDate" type="hidden"/>
+	          	</span>
+	          </td>
+	          <td>
+		          <span id='depositHistorySearch' class="am_button margin-l10 margin-t1px">
+		            <a><fmt:message key="aimir.button.search"/></a>
+		          </span>
+	          </td>
+	          <td>
+		          <span id='depositHistoryExcel' class="am_button margin-l10 margin-t1px margin-r5">
+		            <a><fmt:message key="aimir.button.excel"/></a>
+		          </span>             
+		          <span id='depositHistoryTotalExcel' class="am_button margin-t1px">
+		            <a><fmt:message key="aimir.total"/> <fmt:message key="aimir.button.excel"/></a>
+		          </span>   
+	          </td>
+          	</tr>
+          </table>
         </div>        
       </form>
       <!--검색조건 끝-->
@@ -1130,7 +1167,7 @@
       depositHistoryListSearch: function() {
 	      var params = $.extend(true, {}, vendorHistoryParams, {
 		      vendor: $("#vendor").val(),
-		      reportType: $("#depositHistory select[name=reportType]").val(),
+		      reportType: $("#reportType").val(),
 		      subType : $("#depositHistory select[name=subType]").val(),
 		      contract: $("#depositHistory input[name=contract]").val(),
 		      customerName: $("#depositHistory input[name=customerName]").val(),
@@ -2075,7 +2112,15 @@
 
           window.open(
             "${ctx}/gadget/prepaymentMgmt/vendorChargeHistoryExcelDownloadPopup.do", "arrearsInfoExcel", opt);
-        },
+      },
+      
+      historyExcel: function() {
+          excelType = 5;
+          var opt = "width=600px, height=400px, left=100px, top=100px  resizable=no, status=no";
+
+          window.open(
+            "${ctx}/gadget/prepaymentMgmt/vendorChargeHistoryExcelDownloadPopup.do", "historyExcel", opt);
+      },
 
       addManager: function() {
         //clientMacAddress = document.MacAddress.getMacAddress();
@@ -2250,7 +2295,7 @@
       },
 
       tagExcelButton: function() {
-        var val = $("#depositHistory select[name=reportType]").val();
+        var val = $("#reportType").val();
         if (val == "all") {
           $("#depositHistoryExcel").hide();
           $("#depositHistoryTotalExcel").hide();
@@ -2269,9 +2314,10 @@
       $('#depositHistory span#depositHistoryExcel').click(eventHandler.depositHistoryExcel);
       $('#depositHistory span#depositHistoryTotalExcel').click(eventHandler.depositHistoryTotalExcel);
       $('#arrearsExcel').click(eventHandler.arrearsExcel);
+      $('#historyExcel').click(eventHandler.historyExcel);
       $('input[name=startDate]').datepicker('option',{onSelect:eventHandler.modifiedDateFormat});
       $('input[name=endDate]').datepicker('option',{onSelect:eventHandler.modifiedDateFormat});
-      $("#depositHistory select[name=reportType]").bind('change', eventHandler.tagExcelButton);
+      //$("#report-type").bind('change', eventHandler.tagExcelButton);
 
       contractListSm.addListener('rowselect', eventHandler.selectedHistorySearch);
       $('a[href=#chargeTab]').bind('click', eventHandler.initChargeTab);
@@ -2365,7 +2411,7 @@
     
     var init = function() {
       Ext.QuickTips.init();
-      $("#report-type").selectbox();
+      //$("#report-type").selectbox();
       $("#sub-type").selectbox();
       $("#vendor").selectbox();
       initCalendar();
@@ -2429,7 +2475,7 @@
         });
     });
 
-    document.onmousedown=disableclick;
+/*     document.onmousedown=disableclick;
     function disableclick(event){
         if (event.button==2) {
             event.preventDefault(); 
@@ -2437,7 +2483,7 @@
             return false;
         }
     }
-
+ */
     /*]]>*/
     </script>
 </body>
