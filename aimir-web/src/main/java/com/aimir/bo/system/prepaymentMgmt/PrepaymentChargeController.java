@@ -2010,9 +2010,7 @@ public class PrepaymentChargeController {
         }
 
         Map<String, Object> result = new HashMap<String, Object>();
-
-        List<Map<String, Object>> depositHistoryList = (List<Map<String, Object>>)depositHistoryDao.getDepositHistoryList(
-                condition).get("list");
+        List<Map<String, Object>> depositHistoryList = (List<Map<String, Object>>)depositHistoryDao.getDepositHistoryList(condition).get("list");
 
         result.put("startDate", startDate);
         result.put("endDate", endDate);
@@ -2428,13 +2426,13 @@ public class PrepaymentChargeController {
 
         for (Map<String, Object> map : historyList) {
             Map<String, String> data = new HashMap<String, String>();
-            Integer prepaymentLogId = (map.get("prepaymentLogId") == null) ? null : ((Long)map.get("prepaymentLogId"))
-                    .intValue();
+            Integer prepaymentLogId = (map.get("prepaymentLogId") == null) ? null : ((Long)map.get("prepaymentLogId")).intValue();
             String changeDate = (String)map.get("changeDate");
             Double chargedCredit = (Double)map.get("chargedCredit");
             Double chargedArrears = (Double)map.get("chargedArrears");
             Integer vendorCasherId = (Integer)map.get("vendorCasherId");
             Integer vendingStationId = (Integer)map.get("vendingStationId");
+            
             Integer contractId = (Integer)map.get("contractId");
             Integer meterId = (Integer)map.get("meterId");
             Integer tariffId = (Integer)map.get("tariffId");
@@ -2455,7 +2453,7 @@ public class PrepaymentChargeController {
             data.put("date", date);
 
             if (prepaymentLogId != null) {
-                data.put("prepaymentLogId", "SC--" + map.get("prepaymentLogId").toString());
+                data.put("prepaymentLogId", map.get("prepaymentLogId").toString());
                 data.put("paymentType", payType);
                 data.put("chargedCredit", df.format(StringUtil.nullToDoubleZero(chargedCredit)));
                 data.put("chargedArrears", df.format(StringUtil.nullToDoubleZero(chargedArrears)));
@@ -2468,6 +2466,8 @@ public class PrepaymentChargeController {
 
                 if (vendorCasherId != null) {
                     data.put("cashier", (String)map.get("vendorCasherName"));
+                    data.put("cashierId", (String)map.get("vcCasherId"));
+                    data.put("cashierName", (String)map.get("vendorCasherName"));
                 }
                 if (vendingStationId != null) {
                     data.put("vendingStationName", (String)map.get("vendingStationName"));
@@ -2518,7 +2518,7 @@ public class PrepaymentChargeController {
                 Double tax = StringUtil.nullToDoubleZero((Double)map.get("tax"));
                 Double netValue = StringUtil.nullToDoubleZero((Double)map.get("netValue"));
                 Integer historyOpId = (Integer)map.get("historyOpId");
-                data.put("depositHistoryId", "SC--" + map.get("depositHistoryId").toString());
+                data.put("depositHistoryId", map.get("depositHistoryId").toString());
                 data.put("chargedDeposit", df.format(chargeDeposit));
                 data.put("commission", df.format(commisstion));
                 data.put("tax", df.format(tax));
@@ -2608,7 +2608,7 @@ public class PrepaymentChargeController {
             data.put("date", date);
 
             if (map.get("PREPAYMENTLOGID") != null) {
-                data.put("prepaymentLogId", "SC--" + map.get("PREPAYMENTLOGID").toString());
+                data.put("prepaymentLogId", map.get("PREPAYMENTLOGID").toString());
                 data.put("paymentType", payType);
                 data.put("chargedCredit", df.format(chargedCredit));
                 data.put("chargedArrears", df.format(chargedArrears));
@@ -2673,7 +2673,7 @@ public class PrepaymentChargeController {
                 BigDecimal tax = map.get("TAX") == null ? new BigDecimal(0) : new BigDecimal(Double.parseDouble(map.get("TAX").toString()));
                 BigDecimal netValue = map.get("NETVALUE") == null ? new BigDecimal(0) : new BigDecimal(Double.parseDouble(map.get("NETVALUE").toString()));
                 Integer historyOpId = map.get("HISTORYOPID") == null ? null : Integer.parseInt(map.get("HISTORYOPID").toString());
-                data.put("depositHistoryId", "SC--" + map.get("DEPOSITHISTORYID").toString());
+                data.put("depositHistoryId", map.get("DEPOSITHISTORYID").toString());
                 data.put("chargedDeposit", df.format(chargeDeposit));
                 data.put("commission", df.format(commisstion));
                 data.put("tax", df.format(tax));

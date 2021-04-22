@@ -1287,7 +1287,7 @@
                             }
                         }}
                     ,{header: "<fmt:message key="aimir.contractNumber"/>", dataIndex: 'CONTRACTID', align:'left'}
-                    ,{header: "<fmt:message key="aimir.accountNo"/>", dataIndex: 'SPN', align:'left' ,width:100 }
+                    //,{header: "<fmt:message key="aimir.accountNo"/>", dataIndex: 'SPN', align:'left' ,width:100 }
                     ,{header: "<fmt:message key="aimir.time.date"/>", dataIndex: 'DATETIME', align:'left' ,width:140 }
                     ,{header: "<fmt:message key="aimir.prepayment.beforebalance"/>(<fmt:message key='aimir.price.unit'/>)", dataIndex: 'BEFOREBALANCE', align:'right' }
                     ,{header: "<fmt:message key="aimir.balance"/>(<fmt:message key='aimir.price.unit'/>)", dataIndex: 'BALANCE', align:'right' }
@@ -1348,7 +1348,7 @@
                     	  }
                       }),
                       autoScroll:false,
-                      height: 305,
+                      height: 550,
                       stripeRows : true,
                       columnLines: true,
                       loadMask:{
@@ -1363,7 +1363,7 @@
                       },
                       // paging bar on the bottom
                       bbar: new Ext.PagingToolbar({
-                          pageSize: 10,
+                          pageSize: 20,
                           store: chargeHistoryStore,
                           displayInfo: true,
                           displayMsg: ' {0} - {1} / {2}'
@@ -1410,7 +1410,7 @@
                 chargeHistoryStore.setBaseParam('searchStartDate', $('#searchStartDate').val());
                 chargeHistoryStore.setBaseParam('searchEndDate', $('#searchEndDate').val());
                 chargeHistoryStore.setBaseParam('mdsId', selectedMdsId);
-                chargeHistoryStore.load({params:{start: 0, limit: 10}});                
+                chargeHistoryStore.load({params:{start: 0, limit: 20}});                
             }
 
 
@@ -3695,8 +3695,8 @@
                 header[3] = '<fmt:message key="aimir.time.date"/>';
                 header[4] = '<fmt:message key="aimir.prepayment.beforebalance"/>(<fmt:message key="aimir.price.unit"/>)';
                 header[5] = '<fmt:message key="aimir.balance"/>(<fmt:message key="aimir.price.unit"/>)';
-                header[6] = '<fmt:message key="aimir.bill"/>(<fmt:message key="aimir.price.unit"/>)';
-                header[7] = '<fmt:message key="aimir.usage"/>(<fmt:message key="aimir.unit.kwh"/>)';
+                header[6] = '<fmt:message key="aimir.usage"/>(<fmt:message key="aimir.unit.kwh"/>)';
+                header[7] = '<fmt:message key="aimir.bill"/>(<fmt:message key="aimir.price.unit"/>)';
                 header[8] = '<fmt:message key="aimir.chargeAmount"/>(<fmt:message key="aimir.price.unit"/>)';
                 header[9] = '<fmt:message key="aimir.prepayment.token"/>';
                 header[10] = '<fmt:message key="aimir.cancel"/> <fmt:message key="aimir.time.date"/>';

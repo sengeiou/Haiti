@@ -275,16 +275,16 @@
 	            </select>
 	          </td>
 	          <td class="withinput">
-	            <fmt:message key='aimir.buildingMgmt.contractNumber'/>
-	          </td>
-	          <td class="padding-r20px2">
-	            <input name="contract" type="text"/>
-	          </td>
-	          <td class="withinput">
 	            <fmt:message key="aimir.customer"/> <fmt:message key="aimir.userreg.name"/>
 	          </td>
 	          <td class="padding-r20px2">
 	            <input name="customerName" type="text"/>
+	          </td>
+	          <td class="withinput">
+	            <fmt:message key='aimir.buildingMgmt.contractNumber'/>
+	          </td>
+	          <td class="padding-r20px2">
+	            <input name="contract" type="text"/>
 	          </td>
 	          <td class="withinput">
 	            <fmt:message key="aimir.customerid"/>
@@ -306,10 +306,11 @@
 	          </td>
           	</tr>
           	<tr>
-	          <td class="withinput">
+          	
+	          <td class="withinput checkCashier">
 	            <fmt:message key="aimir.vendor"/>
 	          </td>
-	          <td class="inline-block">
+	          <td class="inline-block checkCashier">
 	            <select id='vendor' style="width: 120px; display: inline;">
 	                <c:choose>
 	                    <c:when test="${role == 'admin'}">
@@ -328,17 +329,17 @@
 	                </c:choose>
 	            </select>
 	          </td>
-	          <td class="withinput">
+	          <td class="withinput checkCashier">
 	            <fmt:message key="aimir.board.location"/>
 	          </td>
-	          <td class="padding-r20px2">
+	          <td class="padding-r20px2 checkCashier">
 	            <input name="searchWord" id='searchWord' type="text" style="width: 120px" /> 
 	            <input type='hidden' id='locationId'></input>
 	          </td>
-	          <td class="withinput">
+	          <td class="withinput checkCashier">
 	            <fmt:message key="aimir.prepayment.casher"/>
 	          </td>
-	          <td class="padding-r20px2">
+	          <td class="padding-r20px2 checkCashier">
 	            <input name="casherId" type="text"/></input>
 	          </td>
 	          <td class="withinput">
@@ -360,7 +361,7 @@
 		          <span id='depositHistoryExcel' class="am_button margin-l10 margin-t1px margin-r5">
 		            <a><fmt:message key="aimir.button.excel"/></a>
 		          </span>             
-		          <span id='depositHistoryTotalExcel' class="am_button margin-t1px">
+		          <span id='depositHistoryTotalExcel' class="am_button margin-t1px" style="display: none;">
 		            <a><fmt:message key="aimir.total"/> <fmt:message key="aimir.button.excel"/></a>
 		          </span>   
 	          </td>
@@ -683,7 +684,7 @@
       url: "${ctx}/gadget/prepaymentMgmt/casherManagerList.do",
       totalProperty: 'count',
       root: 'list',
-      fields: ['casherId', 'name', 'status', 'lastUpdateDate','isManager'],
+      fields: ['casherId', 'name', 'status', 'lastUpdateDate', 'isManager'],
       listeners: {
         beforeload: function(store, options) {
           var params = options.params;
@@ -1758,6 +1759,11 @@
               if(isManager) {
             	  isHiddenPasswordBtn = true;  
               }
+              
+              if(!isManager){
+            	  $("#casherId").val(params.casherId);
+            	  $(".checkCashier").hide(); 
+              }
                
               isFirstLogIn = json.isFirstLogIn != null ? json.isFirstLogIn : true;
               logOn(json);
@@ -2301,7 +2307,7 @@
           $("#depositHistoryTotalExcel").hide();
         } else {
           $("#depositHistoryExcel").show();
-          $("#depositHistoryTotalExcel").show();
+          //$("#depositHistoryTotalExcel").show();
         }
       }
     };
@@ -2464,18 +2470,18 @@
         $(document).bind('keydown',function(e){
             if (e.keyCode == 123 /* F12 */) {
                 e.preventDefault();
-                alert("F12 is not available.");
+                //alert("F12 is not available.");
                 e.returnValue = false;
             }
             if (e.ctrlKey && e.shiftKey) { 
                 e.preventDefault(); 
-                alert("Ctrl + Shift is not available.");
+                //alert("Ctrl + Shift is not available.");
                 e.returnValue = false;
             }
         });
     });
-
-/*     document.onmousedown=disableclick;
+    
+    document.onmousedown=disableclick;
     function disableclick(event){
         if (event.button==2) {
             event.preventDefault(); 
@@ -2483,7 +2489,7 @@
             return false;
         }
     }
- */
+
     /*]]>*/
     </script>
 </body>
