@@ -135,7 +135,7 @@
             });
 
             $('#contractGourp').selectbox();
-            $('#meteringSF').selectbox();
+            //$('#meteringSF').selectbox();
             $('#customer_type').selectbox();
             $('#device_type').selectbox();
 
@@ -750,14 +750,16 @@
                     <input name="searchWord2" id="searchWord2" style="width:120px;" type="text" />
                     <input type="hidden" id="customType" value=""></input>
                 </td>
+                <input style="display: none;" id="meteringSF" value="s">
                 <td class="space20"></td>
+<%-- 
                 <td class="gray11pt withinput"><fmt:message key="aimir.button.metering"/></td>
                 <td>
-                    <select id="meteringSF" style="width:80px">
+                    <select id="meteringSF" style="width:80px" >
                         <option value="s"><fmt:message key="aimir.success"/></option>
                         <option value="f"><fmt:message key="aimir.failed"/></option>
                     </select>
-                </td>
+                </td> --%>
             </tr>
             <tr>
                 <td class="gray11pt withinput" style="width: 95px"><fmt:message key="aimir.location"/></td>
