@@ -1131,9 +1131,9 @@ public class PrepaymentMgmtCustomerController {
 			sbFileName.append(TimeUtil.getCurrentTimeMilli());
 			
 			
-			List<Map<String, Object>> listForDebt =  prepaymentMgmtCustomerManager.getDebtBySPN(conditionMap);
-			msgMap.put("amountDebt", (String) listForDebt.get(0).get("AMOUNT_DEBT"));
-			msgMap.put("countDebt", listForDebt.get(0).get("COUNT_DEBT").toString());
+//			List<Map<String, Object>> listForDebt =  prepaymentMgmtCustomerManager.getDebtBySPN(conditionMap);
+//			msgMap.put("amountDebt", (String) listForDebt.get(0).get("AMOUNT_DEBT"));
+//			msgMap.put("countDebt", listForDebt.get(0).get("COUNT_DEBT").toString());
 
 			/**
 			 * 파일 삭제

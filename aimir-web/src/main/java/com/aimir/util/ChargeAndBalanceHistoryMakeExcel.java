@@ -73,7 +73,6 @@ public class ChargeAndBalanceHistoryMakeExcel {
 			int colIdx = 0;
 			sheet.setColumnWidth(colIdx++, 256 * 15);
 			sheet.setColumnWidth(colIdx++, 256 * 20);
-			sheet.setColumnWidth(colIdx++, 256 * 15);
 			sheet.setColumnWidth(colIdx++, 256 * 20);
 			sheet.setColumnWidth(colIdx++, 256 * 20);
 			sheet.setColumnWidth(colIdx++, 256 * 20);
@@ -95,13 +94,13 @@ public class ChargeAndBalanceHistoryMakeExcel {
 			cell.setCellValue(reportTitle);
 			cell.setCellStyle(ExcelUtil.getStyle(workbook, fontTitle, 0, 0, 0, 0, 0, 0, 0, 1, 0));
 			
-			row = sheet.createRow(1);
-			cell = row.createCell(1);
-			cell.setCellValue("Debt Amount : "+msgMap.get("amountDebt"));
-			cell.setCellStyle(ExcelUtil.getStyle(workbook, fontTitle, 0, 0, 0, 0, 0, 0, 0, 1, 0));
-			cell = row.createCell(3);
-			cell.setCellValue("Debt Count : "+msgMap.get("countDebt"));
-			cell.setCellStyle(ExcelUtil.getStyle(workbook, fontTitle, 0, 0, 0, 0, 0, 0, 0, 1, 0));
+//			row = sheet.createRow(1);
+//			cell = row.createCell(1);
+//			cell.setCellValue("Debt Amount : "+msgMap.get("amountDebt"));
+//			cell.setCellStyle(ExcelUtil.getStyle(workbook, fontTitle, 0, 0, 0, 0, 0, 0, 0, 1, 0));
+//			cell = row.createCell(3);
+//			cell.setCellValue("Debt Count : "+msgMap.get("countDebt"));
+//			cell.setCellStyle(ExcelUtil.getStyle(workbook, fontTitle, 0, 0, 0, 0, 0, 0, 0, 1, 0));
 			
 			sheet.addMergedRegion(new CellRangeAddress(0, (short) 0, 0, (short) (totalColumnCnt - 1)));
 
@@ -116,10 +115,6 @@ public class ChargeAndBalanceHistoryMakeExcel {
 
 			cell = row.createCell(cellCnt++);
 			cell.setCellValue(msgMap.get("contractNumber"));
-			cell.setCellStyle(titleCellStyle);
-
-			cell = row.createCell(cellCnt++);
-			cell.setCellValue(msgMap.get("accountNo"));
 			cell.setCellStyle(titleCellStyle);
 
 			cell = row.createCell(cellCnt++);
@@ -146,17 +141,9 @@ public class ChargeAndBalanceHistoryMakeExcel {
 			cell.setCellValue(msgMap.get("chargeAmount"));
 			cell.setCellStyle(titleCellStyle);
 
-//			cell = row.createCell(9);
-//			cell.setCellValue(msgMap.get("token"));
-//			cell.setCellStyle(titleCellStyle);
-			
 			cell = row.createCell(cellCnt++);
 			cell.setCellValue(msgMap.get("canceledDate"));
 			cell.setCellStyle(titleCellStyle);
-			
-//			cell = row.createCell(11);
-//			cell.setCellValue(msgMap.get("canceledToken"));
-//			cell.setCellStyle(titleCellStyle);
 
 			cell = row.createCell(cellCnt++);
 			cell.setCellValue(msgMap.get("paymenttype"));
@@ -172,14 +159,6 @@ public class ChargeAndBalanceHistoryMakeExcel {
 
 			cell = row.createCell(cellCnt++);
 			cell.setCellValue(msgMap.get("vat"));
-			cell.setCellStyle(titleCellStyle);
-
-			cell = row.createCell(cellCnt++);
-			cell.setCellValue(msgMap.get("levy"));
-			cell.setCellStyle(titleCellStyle);
-
-			cell = row.createCell(cellCnt++);
-			cell.setCellValue(msgMap.get("subsidy"));
 			cell.setCellStyle(titleCellStyle);
 
 			cell = row.createCell(cellCnt++);
@@ -207,10 +186,6 @@ public class ChargeAndBalanceHistoryMakeExcel {
 				
 				cell = row.createCell(cellCnt++);
 				cell.setCellValue(resultMap.get("CONTRACTID") == null ? "" : resultMap.get("CONTRACTID").toString());
-				cell.setCellStyle(dataCellStyle);
-				
-				cell = row.createCell(cellCnt++);
-				cell.setCellValue(resultMap.get("SPN") == null ? "" : resultMap.get("SPN").toString());
 				cell.setCellStyle(dataCellStyle);
 				
 				cell = row.createCell(cellCnt++);
@@ -264,15 +239,7 @@ public class ChargeAndBalanceHistoryMakeExcel {
 				cell = row.createCell(cellCnt++);								
 				cell.setCellValue(resultMap.get("VAT") == null ? "" : resultMap.get("VAT").toString());
 				cell.setCellStyle(dataCellStyle2);
-				
-				cell = row.createCell(cellCnt++);
-				cell.setCellValue(resultMap.get("TOTALLEVY") == null ? "" : resultMap.get("TOTALLEVY").toString());
-				cell.setCellStyle(dataCellStyle2);
-				
-				cell = row.createCell(cellCnt++);
-				cell.setCellValue(resultMap.get("TOTALSUBSIDY") == null ? "" : resultMap.get("TOTALSUBSIDY").toString());
-				cell.setCellStyle(dataCellStyle2);
-				
+
 				cell = row.createCell(cellCnt++);
 				cell.setCellValue(resultMap.get("SERVICECHARGE") == null ? "" : resultMap.get("SERVICECHARGE").toString());
 				cell.setCellStyle(dataCellStyle2);

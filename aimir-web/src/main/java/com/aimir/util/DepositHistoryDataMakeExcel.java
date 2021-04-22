@@ -110,7 +110,7 @@ public class DepositHistoryDataMakeExcel {
             sheet.setColumnWidth(colIdx++, (256*65)/7); //vending Station
             sheet.setColumnWidth(colIdx++, (256*65)/7); //cashier
             sheet.setColumnWidth(colIdx++, (256*20)/7); //cashier
-            sheet.setColumnWidth(colIdx++, (256*75)/7); //customer
+            sheet.setColumnWidth(colIdx++, (256*100)/7); //customer
             sheet.setColumnWidth(colIdx++, (256*75)/7); //accoutNo
             sheet.setColumnWidth(colIdx++, (256*75)/7); //meterId
             sheet.setColumnWidth(colIdx++, (256*75)/7); //prepaymentType
