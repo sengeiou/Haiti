@@ -3642,7 +3642,7 @@
         
         <li><a href="#paymentLogTab" id="_paymentLogTab"><fmt:message key="aimir.prepaidPlan" /></a></li>
 -->
-            <li><a href="#billingMonthTab" id="_billingMonthTab"><fmt:message key="aimir.monthly.usage" /></a></li>
+            <li><a href="#billingMonthTab" id="_billingMonthTab" style="display: none;"><fmt:message key="aimir.monthly.usage" /></a></li>
         </ul>
 
         <div class="tabcontentsbox">
