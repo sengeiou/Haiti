@@ -66,7 +66,7 @@ public class CustomerDaoImpl extends AbstractHibernateGenericDao<Customer, Integ
 	}
 
 	public int idOverlapCheck(String customerNo) {
-		Query query = getSession().createQuery("SELECT COUNT(c.customerNo) FROM Customer c WHERE c.customerNo = " + customerNo + " ");
+		Query query = getSession().createQuery("SELECT COUNT(c.customerNo) FROM Customer c WHERE c.customerNo = '" + customerNo + "' ");
 		return DataAccessUtils.intResult(query.list());		
 	}
 	
