@@ -2430,6 +2430,8 @@ public class PrepaymentChargeController {
             String changeDate = (String)map.get("changeDate");
             Double chargedCredit = (Double)map.get("chargedCredit");
             Double chargedArrears = (Double)map.get("chargedArrears");
+            Double chargedArrears2 = (Double)map.get("chargedArrears");
+            Double totalAmountPaid = (Double)map.get("totalAmountPaid");
             Integer vendorCasherId = (Integer)map.get("vendorCasherId");
             Integer vendingStationId = (Integer)map.get("vendingStationId");
             
@@ -2457,6 +2459,8 @@ public class PrepaymentChargeController {
                 data.put("paymentType", payType);
                 data.put("chargedCredit", df.format(StringUtil.nullToDoubleZero(chargedCredit)));
                 data.put("chargedArrears", df.format(StringUtil.nullToDoubleZero(chargedArrears)));
+                data.put("chargedArrears2", df.format(StringUtil.nullToDoubleZero(chargedArrears2)));
+                data.put("totalAmountPaid", df.format(StringUtil.nullToDoubleZero(totalAmountPaid)));
                 data.put("cancelReason", cancelReason);
                 data.put("cancelDate", cancelLocaleDate);
                 data.put("lastTokenId", lastTokenId);
