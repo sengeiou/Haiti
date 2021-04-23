@@ -410,6 +410,7 @@ public class DepositHistoryDaoImpl extends AbstractHibernateGenericDao<DepositHi
         sbList.append("\n        plpt.name as payType, ");
         sbList.append("\n        pl.chargedArrears AS chargedArrears, ");
         sbList.append("\n        pl.chargedArrears2 AS chargedArrears2, ");
+        sbList.append("\n        pl.totalAmountPaid AS totalAmountPaid, ");
         sbList.append("\n        pl.isCanceled AS isCanceled, ");
         sbList.append("\n        pl.cancelDate AS cancelDate, ");
         sbList.append("\n        pl.cancelReason AS cancelReason, ");
