@@ -2413,7 +2413,9 @@ public class PrepaymentChargeController {
         String lang = supplier.getLang().getCode_2letter();
         Map<String, String> total = new HashMap<String, String>();
         Double totalChargedCredit = 0d;
+        Double totalAmountPaidSum = 0d;
         Double totalChargedArrears = 0d;
+        Double totalChargedArrears2 = 0d;
         Double totalChargedDeposit = 0d;
         Double totalChargedCommission = 0d;
         Double totalChargedTax = 0d;
@@ -2466,7 +2468,9 @@ public class PrepaymentChargeController {
                 data.put("lastTokenId", lastTokenId);
 
                 totalChargedCredit += StringUtil.nullToDoubleZero(chargedCredit);
+                totalAmountPaidSum += StringUtil.nullToDoubleZero(totalAmountPaid);
                 totalChargedArrears += StringUtil.nullToDoubleZero(chargedArrears);
+                totalChargedArrears2 += StringUtil.nullToDoubleZero(chargedArrears2);
 
                 if (vendorCasherId != null) {
                     data.put("cashier", (String)map.get("vendorCasherName"));
@@ -2542,6 +2546,7 @@ public class PrepaymentChargeController {
             total.put("totalChargedCommission", df.format(totalChargedCommission));
             total.put("totalChargedTax", df.format(totalChargedTax));
             total.put("totalChargedNetValue", df.format(totalChargedNetValue));
+            total.put("totalAmountPaidSum", df.format(totalAmountPaidSum));
             result.add(data);
         }
         result.add(total);

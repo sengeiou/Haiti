@@ -54,8 +54,8 @@
 
         .meterDiv2 {
             position: absolute;
-            top: 170;
-            left: 835;
+            top: 130;
+            left: 990;
             z-index: 100;
         }        
         .meterDiv {

@@ -42,6 +42,12 @@
         $('#operatorAddForm a#addOperator').click( function() {
 
             var loginId = $.trim($("#operatorAddForm :input[name='loginId']").val());
+         	// 공백문자 거절
+            var fmt1 = /\s/;
+            if( loginId.length > 0 && fmt1.exec(loginId) ){
+            	Ext.Msg.alert('<fmt:message key='aimir.message'/>','<fmt:message key="aimir.notspace"/>');return;
+            }
+            
 			$("#operatorAddForm :input[name='loginId']").val(loginId);
             if (loginId) {
 				if (!checkedLoginId || preLoginId != loginId) {
