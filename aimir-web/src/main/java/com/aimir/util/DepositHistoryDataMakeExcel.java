@@ -299,7 +299,7 @@ public class DepositHistoryDataMakeExcel {
     	accountNo("aimir.accountNo", 6, "accountNo", "L", null),
     	meterId("aimir.meterid", 7, "meterId", "L", null),
     	paymentType("aimir.paymenttype", 8, "paymentType", "L", null), 
-    	chargedCredit("aimir.chargeAmount", 9, "chargedCredit", "R", "totalChargedCredit"),
+    	chargedCredit("aimir.amount.paid", 9, "totalAmountPaid", "R", "totalAmountPaid"),
     	chargedArrearsA("aimir.prepayment.chargearrearsA", 10, "chargedArrears", "R", null),
     	chargedArrearsB("aimir.prepayment.chargearrearsB", 11, "chargedArrears2", "R", null),
     	tariff("aimir.residental.activity", 13, "tariffName", "L", null),
