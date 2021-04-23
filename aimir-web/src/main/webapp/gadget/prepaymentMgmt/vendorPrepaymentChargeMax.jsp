@@ -668,7 +668,7 @@
       totalProperty: 'count',
       root: 'list',
       fields: ['vendor', 'casher','contractNo', 'customerId', 'meter', 'gs1', 
-        'customerName', 'address', 'changeDate', 'chargeCredit', 'payType', 'chargeDeposit', 'deposit'],
+        'customerName', 'address', 'changeDate', 'totalAmountPaid', 'payType', 'chargeDeposit', 'deposit'],
       listeners: {
         beforeload: function(store, options) {
           var params = options.params;
@@ -939,7 +939,7 @@
         {header: "<fmt:message key='aimir.customername'/>"},
         {header: "<fmt:message key='aimir.address'/>"},
         {header: "<fmt:message key='aimir.hems.prepayment.chargedate'/>"},
-        {header: "<fmt:message key='aimir.deposit.chargecredit'/>", align: 'right'},
+        {header: "<fmt:message key='aimir.amount.paid'/>", align: 'right'},
         {header: "<fmt:message key='aimir.paymenttype'/>",  align: 'center'}
         //{header: "<fmt:message key='aimir.deposit.chargedeposit'/>", align: 'right'},
         //{header: "<fmt:message key='aimir.deposit'/>", align: 'right', 

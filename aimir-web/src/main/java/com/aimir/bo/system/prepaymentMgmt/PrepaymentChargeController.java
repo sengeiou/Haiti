@@ -2430,7 +2430,7 @@ public class PrepaymentChargeController {
             String changeDate = (String)map.get("changeDate");
             Double chargedCredit = (Double)map.get("chargedCredit");
             Double chargedArrears = (Double)map.get("chargedArrears");
-            Double chargedArrears2 = (Double)map.get("chargedArrears");
+            Double chargedArrears2 = (Double)map.get("chargedArrears2");
             Double totalAmountPaid = (Double)map.get("totalAmountPaid");
             Integer vendorCasherId = (Integer)map.get("vendorCasherId");
             Integer vendingStationId = (Integer)map.get("vendingStationId");

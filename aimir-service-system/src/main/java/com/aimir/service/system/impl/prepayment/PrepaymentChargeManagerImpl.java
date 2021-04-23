@@ -2010,10 +2010,10 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
                 map.put("changeDate", TimeLocaleUtil.getLocaleDate((String)hmap.get("changeDate"), lang, country));
             }
 
-            Double chargeCredit = (Double)hmap.get("chargeCredit");
+            Double totalAmountPaid = (Double)hmap.get("totalAmountPaid");
             Double chargeDeposit = (Double)hmap.get("netValue");
 
-            map.put("chargeCredit", chargeCredit != null ? df.format(chargeCredit) : null);
+            map.put("totalAmountPaid", totalAmountPaid != null ? df.format(totalAmountPaid) : null);
             if(hmap.get("payType") != null){
                 map.put("payType", hmap.get("payType").toString());             
             }
