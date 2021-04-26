@@ -112,7 +112,11 @@
 
     <span id="logIn" class="am_button margin-l10 margin-t1px">
       <a class="on"><fmt:message key="aimir.login.login" /></a>
-    </span>    
+    </span>
+    <span id="Initialization" class="am_button margin-l10 margin-t1px">
+      <a class="on">Initialization</a>
+    </span>
+    <div id="InitializePwdDiv"></div>    
   </div>
 
   <div id="menu">
@@ -1772,6 +1776,14 @@
             }
         });
       },
+      
+      Initialization: function() {
+          var rec = {
+            casherId: "",
+            vendorId: vendor          
+          };
+	        eventHandler.initializePassword(JSON.stringify(rec));
+        },
 
       addCasher: function() {
         var params = {
@@ -1865,7 +1877,7 @@
 
     	  if(Ext.getCmp('CashierChangePwdWinId') == undefined) {
 	    	  var passChange = new Ext.FormPanel ({
-	   		  	frame:true,
+	   		  	frame: true,
 				width: 300,
 				height: 160,
 				bodyStyle:'padding:5px 5px 5px 5px',
@@ -1967,6 +1979,119 @@
     	  } else {
     		  passChangeWin.show(this);
     	  }
+      },
+      
+      initializePassword: function(rec) {
+    	  var changeVendorId = vendor;
+    	  if(Ext.getCmp('initializePassWinId') == undefined) {
+    		  var initializePass = new Ext.FormPanel ({
+  	   		  	frame: true,
+  				width: 300,
+  				height: 210,
+  				bodyStyle:'padding:5px 5px 5px 5px',
+  				defaultType: 'textfield',
+  				items: [{ 
+  	            	xtype:'fieldset',
+  	                title: '<fmt:message key="aimir.hems.alert.inputPassword"/>',
+  	                bodyStyle:'padding:5px 5px 5px 5px',
+  	                //collapsible: true,
+  	                autoHeight:true,
+  	                defaultType: 'textfield', 
+  				     items : [{
+  				    	 fieldLabel : "CashierId",
+  							xtype : 'textfield',
+  							inputType: 'text',
+  							id	 : 'casherId',
+  							name : 'casherId'},
+  				    	{fieldLabel : "<fmt:message key='aimir.newpassword'/>",
+  						xtype : 'textfield',
+  						inputType: 'password',
+  						id	 : 'fp_password',
+  						name : 'fp_password'},
+  						{fieldLabel : "<fmt:message key='aimir.userreg.confirmpassword'/>",
+  						xtype : 'textfield',
+  						inputType: 'password',
+  						id	 : 'fp_confirmPwd',
+  						name : 'fp_confirmPwd'}]
+  				}],
+  				buttons:[{text : '<fmt:message key="aimir.ok"/>',
+  						handler : function() {
+  							var casherId = Ext.getCmp('casherId').getValue();
+  							var pass = Ext.getCmp('fp_password').getValue();
+  							var checkPass = Ext.getCmp('fp_confirmPwd').getValue();	
+  							console.log("checkPass",checkPass);
+  							console.log("pass",pass);
+  							if(pass == checkPass) {
+  								Ext.Msg.show({
+  										title: casherId,
+  							            msg:  "<fmt:message key='aimir.wouldChange'/>",
+  							            buttons: Ext.MessageBox.OKCANCEL,
+  							            fn: function(btn, text) {
+  							            	if(btn == 'ok') {
+  							            		var params = {
+  					        				          vendor: changeVendorId,
+  					        				          casherId: casherId, 
+  					        				          password: checkPass
+  				        				        };
+  							            		
+  							            		$.post("${ctx}/gadget/prepaymentMgmt/changePwd.do", params,
+  							   				            function(json) {
+  							   				              if (json.result == "success") {
+  							   				            	initializePassWin.hide();
+  						   									Ext.getCmp('fp_password').setValue();
+  						   									Ext.getCmp('fp_confirmPwd').setValue();
+  							   				            	Ext.Msg.alert(casherId,"<fmt:message key='aimir.success'/>");
+  							   				              } else {
+  							   				            	initializePassWin.hide();
+  						   									Ext.getCmp('fp_password').setValue();
+  						   									Ext.getCmp('fp_confirmPwd').setValue();
+  							   				            	Ext.Msg.alert(casherId,"<fmt:message key='aimir.failed'/>");
+  							   				              }              
+  						   				            	}
+  						          				  );
+  							            		
+  							            	} else {
+  							            		return false;
+  							            	}
+  							            }
+  								});
+  	          				  
+  	          			  } else {
+  	          				Ext.getCmp('fp_password').setValue();
+  							Ext.getCmp('fp_confirmPwd').setValue();
+  	          				Ext.Msg.alert("<fmt:message key='aimir.error'/>", 
+  	          	                "<fmt:message key='aimir.hems.alert.notMatchPassword'/>");
+  	          				//$('#fp_password').focus();
+  	          			  }
+  	
+  						}},
+  						{text : '<fmt:message key="aimir.cancel"/>',
+  						handler : function() {
+  							initializePassWin.hide();
+  							Ext.getCmp('fp_password').setValue();
+  							Ext.getCmp('fp_confirmPwd').setValue();
+  							
+  						}}
+  						]
+  	    	  });
+  	    	  
+  	    	  initializePassWin = new Ext.Window({
+  				    title : 'Initialize password',
+  				    id : 'initializePassWinId',
+  				    applyTo : 'InitializePwdDiv',
+  				    autoScroll : true,
+  				    width : 330,
+  					height : 280,
+  					pageX : 600,
+  					pageY : 210,
+  				    items : [initializePass],
+  				    closeAction : 'hide'
+  				});
+  				initializePassWin.show(this);
+    	  } else {
+    		  initializePassWin.show(this);
+    	  }
+	    	  
       },
       
       confirmPwd: function() {
@@ -2333,6 +2458,7 @@
       $('a[href=#passwordTab]').bind('click', eventHandler.initPasswordTab);
       $('#barcodeNumber').bind('change', eventHandler.selectBarcode);
       $("#loginWrapper span#logIn").click(eventHandler.logIn);
+      $("#loginWrapper span#Initialization").click(eventHandler.Initialization);
       $("#loginWrapper input[name=password]").bind('keyup', function(event) {
           var evCode = (window.netscape) ? event.which : event.keyCode;
 
