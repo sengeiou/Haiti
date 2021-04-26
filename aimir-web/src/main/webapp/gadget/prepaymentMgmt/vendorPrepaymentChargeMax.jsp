@@ -394,6 +394,7 @@
 						    <a>Cashier Sales Report</a>
 						</span>
 					</td>
+					<td>You can only view the sales totals for the logged-in account.</td>
       			</tr>
       		</table>
       	</div>
@@ -578,6 +579,7 @@
     //var isHiddenCancelBtn = (vendorRole == 'admin') ? false : true; 
     var isHiddenCancelBtn = (vendorRole == 'admin' || vendorRole == 'edh_vendor' || vendorRole == 'ECG vendor') ? false : true; 
     var isHiddenPasswordBtn
+    var loginCasherId;
 
     var contractGrid;
     var historyGrid;
@@ -1672,9 +1674,8 @@
           var opt = "width=270px, height=300px, resizable=no, status=no";
 
           var params = {
-            vendor: vendor=='admin' ? '':vendor,
             supplierId: supplierId,
-            casherId: $("#depositHistory input[name=casherId]").val(),
+            casherId: loginCasherId,
             startDate: $("#report input[name=startDate]").val(),
             endDate: $("#report input[name=endDate]").val()
           }
@@ -1811,7 +1812,9 @@
             	  $("#depositHistory input[name=casherId]").val(params.casherId);
             	  $(".checkCashier").hide(); 
               }
-               
+              
+              loginCasherId = params.casherId;
+              
               isFirstLogIn = json.isFirstLogIn != null ? json.isFirstLogIn : true;
               logOn(json);
             } else {
