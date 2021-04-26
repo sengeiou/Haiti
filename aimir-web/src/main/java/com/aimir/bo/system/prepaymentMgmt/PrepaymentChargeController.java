@@ -420,7 +420,6 @@ public class PrepaymentChargeController {
     @RequestMapping(value = "/gadget/prepaymentMgmt/totalReceiptByCashierPopup")
     public ModelAndView loadTotalReceiptByCashierPopup(
     		@RequestParam Integer supplierId,
-            String vendor,
             String vendorRole,
             String startDate,
             String endDate,
@@ -429,7 +428,6 @@ public class PrepaymentChargeController {
         ModelAndView mav = new ModelAndView();
 
         Map<String, Object> condition = new HashMap<String, Object>();
-        condition.put("vendor", vendor);
         condition.put("supplierId", supplierId);
         condition.put("reportType", "sales");
         condition.put("subType", "uncanceled");
@@ -448,7 +446,6 @@ public class PrepaymentChargeController {
         
         String date = TimeLocaleUtil.getLocaleDate(startDate, lang, country) + " ~ " + TimeLocaleUtil.getLocaleDate(endDate, lang, country);
         mav.addObject("date", date);
-        mav.addObject("vendor", (vendor==null||"".equals(vendor)) ? "ALL" : vendor);
         mav.addObject("casherId", (casherId==null||"".equals(casherId)) ? "ALL" : casherId);
         mav.addAllObjects(dataList.get(dataList.size()-1));
         mav.setViewName("/gadget/prepaymentMgmt/totalReceiptByCashier");

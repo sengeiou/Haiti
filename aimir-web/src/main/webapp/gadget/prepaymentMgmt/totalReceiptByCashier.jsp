@@ -55,14 +55,6 @@
 	                            ${date}
 	                        </td>
 	                    </tr>
-	                    <tr>
-                        	<td>
-	                            <fmt:message key='aimir.vendor'/>
-	                        </td>
-                            <td width="110">
-                                ${vendor}
-                            </td>
-                        </tr>
                         <tr>
                         	<td>
 	                            <fmt:message key='aimir.cahierId'/>
@@ -152,12 +144,36 @@
         };
         var init = function () {
             //eventHandler.insertInitCredit();
-            window.resizeTo(280, 300);
+            window.resizeTo(280, 280);
             bind();
         };
         window.onload = function() {
             init();
         };
+        
+        $(document).ready(function(){
+            $(document).bind('keydown',function(e){
+                if (e.keyCode == 123 /* F12 */) {
+                    e.preventDefault();
+                    //alert("F12 is not available.");
+                    e.returnValue = false;
+                }
+                if (e.ctrlKey && e.shiftKey) { 
+                    e.preventDefault(); 
+                    //alert("Ctrl + Shift is not available.");
+                    e.returnValue = false;
+                }
+            });
+        });
+        
+        document.onmousedown=disableclick;
+        function disableclick(event){
+            if (event.button==2) {
+                event.preventDefault(); 
+                alert("Right click is not available.");
+                return false;
+            }
+        }
     /*]]>*/
     </script>
 </body>

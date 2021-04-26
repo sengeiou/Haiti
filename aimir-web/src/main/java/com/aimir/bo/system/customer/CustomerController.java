@@ -1836,7 +1836,7 @@ public class CustomerController {
     @RequestMapping(value="/gadget/system/customerMax", params="param=updateContract")
     public ModelAndView modifyContract(@ModelAttribute("contract") Contract contract,
              @RequestParam("mdsId") String mdsId,
-             @RequestParam("sicId") Integer sicId,
+             @RequestParam(value="sicId", required=false) Integer sicId,
              @RequestParam("locationId2") Integer locationId2,
              @RequestParam("customerId") Integer customerId,
              @RequestParam(value="prevContractId", required=false) Integer prevContractId,
