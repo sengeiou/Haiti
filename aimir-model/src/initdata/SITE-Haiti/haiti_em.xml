@@ -1296,7 +1296,16 @@
                        troubleAdvice='' 
                        oid='203.109.0' 
                        monitor='SaveAndMonitor' 
-                       timeout='840'/>                                                   
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Warning' 
+                       name='MCU Battery Error' 
+                       descr='MCU Battery Error' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='200.30.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>       
     
     <!-- Meter Event -->
     <device.MeterEvent 
