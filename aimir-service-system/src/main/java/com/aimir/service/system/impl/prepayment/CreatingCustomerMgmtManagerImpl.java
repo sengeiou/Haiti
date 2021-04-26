@@ -485,44 +485,6 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
         return result;
     }
 
-    private List<List<Object>> validateSheetWithIterator(Iterator<Row> rowIterator, Supplier supplier, Location location) {
-    	List<List<Object>> errorList = new ArrayList<List<Object>>();
-		try {
-			// 시트의 row
-	    	List<Row> entities = new ArrayList<Row>();
-	    	
-	    	loopSize = 0;
-			totalSize = Iterators.size(rowIterator);
-			logger.info("validateSheet() start");
-			
-	    	// row 수 만큼
-			for (int i = 0; i < totalSize; i++) {
-				Row row = rowIterator.next();
-	    		// header row skip
-				if (row.getRowNum() == 0) {					
-					continue;
-		        }
-	    		entities.add(row);
-	    		
-	    		if(entities.size() % batchSize == 0) {
-	    			errorList.addAll(saveRows(entities, supplier, location));
-	    			entities.clear();
-	    		}
-			}
-			
-			logger.info("entities size is under batchSize : " + Iterators.size(rowIterator));
-	    	if(Iterators.size(rowIterator) <= batchSize) {
-	    		errorList.addAll(saveRows(entities, supplier, location));
-	    	}
-	    	
-		} catch (Exception e) {
-			logger.error("validateSheet() for try catch error");
-		}
-    	
-    	return errorList;
-		
-	}
-
 	private List<List<Object>> saveRows(List<Row> entities, Supplier supplier, Location location) {
     	TransactionStatus txStatus = null;
     	List<List<Object>> errorList = null;

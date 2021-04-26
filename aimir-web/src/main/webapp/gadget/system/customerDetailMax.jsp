@@ -333,7 +333,7 @@
                     }
                     //선불
                     if ( json.creditType.code == "2.2.1" ) {
-                    	$('#meterDiv').css("left",890);
+                    	$('#meterDiv').css("left",1000);
                         $("#pane-creditType-prepay1").show();
                         //$("#pane-creditType-prepay2").show();
                         $("#pane-creditType-prepay3").show();

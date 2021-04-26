@@ -268,8 +268,9 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         		//해당 TariffEM 정보를 가져온다.
         		List<TariffEM> tariffEMList = getTariffEMList(contract, lastBilling.getYyyymmdd());
         		
+        		// 마지막 BillingBlockTariff 추가
         		LinkedList<BillingBlockTariff> sequenceBillings = new LinkedList<BillingBlockTariff>();
-        		sequenceBillings.add(lastBilling);	// 마지막 BillingBlockTariff 추가
+        		sequenceBillings.add(lastBilling);
         		
         		// BillingBlockTariff low 생성
         		sequenceBillings = gatherBillingBlock(sequenceBillings, diffDays, tariffEMList, contract, meter, lastDayEM);

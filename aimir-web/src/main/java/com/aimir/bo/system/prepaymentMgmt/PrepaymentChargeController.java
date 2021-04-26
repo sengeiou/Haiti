@@ -407,6 +407,53 @@ public class PrepaymentChargeController {
         
         return mav;
     }
+    
+    /**
+     * method name : loadPrepaymentChargeReceiptPopup<b/>
+     * method Desc : 영수증 팝업창에서 영수증 화면을 호출한다.
+     *
+     * @param supplierId
+     * @param contractId
+     * @param prepaymentLogId
+     * @return
+     */
+    @RequestMapping(value = "/gadget/prepaymentMgmt/totalReceiptByCashierPopup")
+    public ModelAndView loadTotalReceiptByCashierPopup(
+    		@RequestParam Integer supplierId,
+            String vendor,
+            String vendorRole,
+            String startDate,
+            String endDate,
+            String casherId
+            ) {
+        ModelAndView mav = new ModelAndView();
+
+        Map<String, Object> condition = new HashMap<String, Object>();
+        condition.put("vendor", vendor);
+        condition.put("supplierId", supplierId);
+        condition.put("reportType", "sales");
+        condition.put("subType", "uncanceled");
+        condition.put("startDate", startDate);
+        condition.put("endDate", endDate);
+        condition.put("casherId", casherId);
+        condition.put("loginIntId", null);
+        condition.put("onlyLoginData", false);
+        
+        Supplier supplier = supplierDao.get(supplierId);
+        String country = supplier.getCountry().getCode_2letter();
+        String lang = supplier.getLang().getCode_2letter();
+        
+        List<Map<String, Object>> depositHistoryList = (List<Map<String, Object>>)depositHistoryDao.getDepositHistoryList(condition).get("list");
+        List<Map<String, String>> dataList = getExcelData(depositHistoryList, supplier);
+        
+        String date = TimeLocaleUtil.getLocaleDate(startDate, lang, country) + " ~ " + TimeLocaleUtil.getLocaleDate(endDate, lang, country);
+        mav.addObject("date", date);
+        mav.addObject("vendor", (vendor==null||"".equals(vendor)) ? "ALL" : vendor);
+        mav.addObject("casherId", (casherId==null||"".equals(casherId)) ? "ALL" : casherId);
+        mav.addAllObjects(dataList.get(dataList.size()-1));
+        mav.setViewName("/gadget/prepaymentMgmt/totalReceiptByCashier");
+        return mav;
+    }
 
     @RequestMapping(value = "/gadget/prepaymentMgmt/prepaymentChargeReceiptPopupWithDebt")
     public ModelAndView loadPrepaymentChargeReceiptPopupWithDebt(

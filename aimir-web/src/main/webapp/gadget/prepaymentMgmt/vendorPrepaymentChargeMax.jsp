@@ -112,7 +112,11 @@
 
     <span id="logIn" class="am_button margin-l10 margin-t1px">
       <a class="on"><fmt:message key="aimir.login.login" /></a>
-    </span>    
+    </span>
+    <span id="Initialization" class="am_button margin-l10 margin-t1px">
+      <a class="on">Initialization</a>
+    </span>
+    <div id="InitializePwdDiv"></div>    
   </div>
 
   <div id="menu">
@@ -370,6 +374,30 @@
         </div>        
       </form>
       <!--검색조건 끝-->
+      
+      <form id='report' class="searchoption-container">
+      	<div class="searchbox">
+      		<table class="searching">
+      			<tr>
+      				<td class="padding-r20px2">
+						Report <fmt:message key="aimir.searchDate"/>
+					</td>
+					<td>
+						<span id='report'>
+					        <input class="alt startDate" name="startDateDisplay" type='text' readOnly/><input name="startDate" type="hidden"/>
+					        <label>~</label>
+					        <input class="alt endDate" name="endDateDisplay" type='text' readOnly/><input name="endDate" type="hidden"/>
+						</span>
+					</td>
+					<td class="padding-r20px2">
+						<span id='totalReceiptByCashier' class="am_button margin-l10 margin-t1px margin-r5">
+						    <a>Cashier Sales Report</a>
+						</span>
+					</td>
+      			</tr>
+      		</table>
+      	</div>
+	  </form>
 
       <div id="depositChargeHistoryDiv"></div>
       <div id="treeDiv2Outer" class="tree-billing auto" style="display:none;">
@@ -1478,7 +1506,6 @@
 	                if(payType == '' || payType == 'Select...'){
 	                    Ext.Msg.alert("<fmt:message key='aimir.alert'/>", "<fmt:message key='aimir.msg.check.input.value'/>");
 	                }else{
-	                	console.log('searchwin handler !');
 	                    params.callback(payType);
 	                	//saveAction();
 	                }
@@ -1638,7 +1665,27 @@
         
         var queryString = CommonUtil.getQueryString(params);
         receiptPopupWindow = window.open(url + queryString, "receiptPopupWindow", opt);
-      },        
+      },
+      
+      totalReceiptByCashierPopup: function(rec) {
+          var url = "${ctx}/gadget/prepaymentMgmt/totalReceiptByCashierPopup.do";
+          var opt = "width=270px, height=300px, resizable=no, status=no";
+
+          var params = {
+            vendor: vendor=='admin' ? '':vendor,
+            supplierId: supplierId,
+            casherId: $("#depositHistory input[name=casherId]").val(),
+            startDate: $("#report input[name=startDate]").val(),
+            endDate: $("#report input[name=endDate]").val()
+          }
+          
+          if ( receiptPopupWindow ) {
+            receiptPopupWindow.close();
+          }
+          
+          var queryString = CommonUtil.getQueryString(params);
+          receiptPopupWindow = window.open(url + queryString, "receiptPopupWindow", opt);
+      },     
       
       initChargeTab: function() {
         eventHandler.refreshDeposit();        
@@ -1761,7 +1808,7 @@
               }
               
               if(!isManager){
-            	  $("#casherId").val(params.casherId);
+            	  $("#depositHistory input[name=casherId]").val(params.casherId);
             	  $(".checkCashier").hide(); 
               }
                
@@ -1967,6 +2014,119 @@
     	  } else {
     		  passChangeWin.show(this);
     	  }
+      },
+      
+      initializePassword: function(rec) {
+    	  var changeVendorId = vendor;
+    	  if(Ext.getCmp('initializePassWinId') == undefined) {
+    		  var initializePass = new Ext.FormPanel ({
+  	   		  	frame: true,
+  				width: 300,
+  				height: 210,
+  				bodyStyle:'padding:5px 5px 5px 5px',
+  				defaultType: 'textfield',
+  				items: [{ 
+  	            	xtype:'fieldset',
+  	                title: '<fmt:message key="aimir.hems.alert.inputPassword"/>',
+  	                bodyStyle:'padding:5px 5px 5px 5px',
+  	                //collapsible: true,
+  	                autoHeight:true,
+  	                defaultType: 'textfield', 
+  				     items : [{
+  				    	 fieldLabel : "CashierId",
+  							xtype : 'textfield',
+  							inputType: 'text',
+  							id	 : 'casherId',
+  							name : 'casherId'},
+  				    	{fieldLabel : "<fmt:message key='aimir.newpassword'/>",
+  						xtype : 'textfield',
+  						inputType: 'password',
+  						id	 : 'fp_password',
+  						name : 'fp_password'},
+  						{fieldLabel : "<fmt:message key='aimir.userreg.confirmpassword'/>",
+  						xtype : 'textfield',
+  						inputType: 'password',
+  						id	 : 'fp_confirmPwd',
+  						name : 'fp_confirmPwd'}]
+  				}],
+  				buttons:[{text : '<fmt:message key="aimir.ok"/>',
+  						handler : function() {
+  							var casherId = Ext.getCmp('casherId').getValue();
+  							var pass = Ext.getCmp('fp_password').getValue();
+  							var checkPass = Ext.getCmp('fp_confirmPwd').getValue();	
+  							console.log("checkPass",checkPass);
+  							console.log("pass",pass);
+  							if(pass == checkPass) {
+  								Ext.Msg.show({
+  										title: casherId,
+  							            msg:  "<fmt:message key='aimir.wouldChange'/>",
+  							            buttons: Ext.MessageBox.OKCANCEL,
+  							            fn: function(btn, text) {
+  							            	if(btn == 'ok') {
+  							            		var params = {
+  					        				          vendor: changeVendorId,
+  					        				          casherId: casherId, 
+  					        				          password: checkPass
+  				        				        };
+  							            		
+  							            		$.post("${ctx}/gadget/prepaymentMgmt/changePwd.do", params,
+  							   				            function(json) {
+  							   				              if (json.result == "success") {
+  							   				            	initializePassWin.hide();
+  						   									Ext.getCmp('fp_password').setValue();
+  						   									Ext.getCmp('fp_confirmPwd').setValue();
+  							   				            	Ext.Msg.alert(casherId,"<fmt:message key='aimir.success'/>");
+  							   				              } else {
+  							   				            	initializePassWin.hide();
+  						   									Ext.getCmp('fp_password').setValue();
+  						   									Ext.getCmp('fp_confirmPwd').setValue();
+  							   				            	Ext.Msg.alert(casherId,"<fmt:message key='aimir.failed'/>");
+  							   				              }              
+  						   				            	}
+  						          				  );
+  							            		
+  							            	} else {
+  							            		return false;
+  							            	}
+  							            }
+  								});
+  	          				  
+  	          			  } else {
+  	          				Ext.getCmp('fp_password').setValue();
+  							Ext.getCmp('fp_confirmPwd').setValue();
+  	          				Ext.Msg.alert("<fmt:message key='aimir.error'/>", 
+  	          	                "<fmt:message key='aimir.hems.alert.notMatchPassword'/>");
+  	          				//$('#fp_password').focus();
+  	          			  }
+  	
+  						}},
+  						{text : '<fmt:message key="aimir.cancel"/>',
+  						handler : function() {
+  							initializePassWin.hide();
+  							Ext.getCmp('fp_password').setValue();
+  							Ext.getCmp('fp_confirmPwd').setValue();
+  							
+  						}}
+  						]
+  	    	  });
+  	    	  
+  	    	  initializePassWin = new Ext.Window({
+  				    title : 'Initialize password',
+  				    id : 'initializePassWinId',
+  				    applyTo : 'InitializePwdDiv',
+  				    autoScroll : true,
+  				    width : 330,
+  					height : 280,
+  					pageX : 600,
+  					pageY : 210,
+  				    items : [initializePass],
+  				    closeAction : 'hide'
+  				});
+  				initializePassWin.show(this);
+    	  } else {
+    		  initializePassWin.show(this);
+    	  }
+	    	  
       },
       
       confirmPwd: function() {
@@ -2318,6 +2478,7 @@
       $('#historyForm span#historySearch').click(eventHandler.historyListSearch);
       $('#depositHistory span#depositHistorySearch').click(eventHandler.depositHistoryListSearch);
       $('#depositHistory span#depositHistoryExcel').click(eventHandler.depositHistoryExcel);
+      $('#report span#totalReceiptByCashier').click(eventHandler.totalReceiptByCashierPopup);
       $('#depositHistory span#depositHistoryTotalExcel').click(eventHandler.depositHistoryTotalExcel);
       $('#arrearsExcel').click(eventHandler.arrearsExcel);
       $('#historyExcel').click(eventHandler.historyExcel);
@@ -2333,6 +2494,7 @@
       $('a[href=#passwordTab]').bind('click', eventHandler.initPasswordTab);
       $('#barcodeNumber').bind('change', eventHandler.selectBarcode);
       $("#loginWrapper span#logIn").click(eventHandler.logIn);
+      $("#loginWrapper span#Initialization").click(eventHandler.Initialization);
       $("#loginWrapper input[name=password]").bind('keyup', function(event) {
           var evCode = (window.netscape) ? event.which : event.keyCode;
 
@@ -2376,11 +2538,15 @@
       $('#historyForm input[name=endDate]').datepicker(endProp);
       $('#depositHistory input[name=startDate]').datepicker(deStartProp);
       $('#depositHistory input[name=endDate]').datepicker(deEndProp);
+      $('#report input[name=startDate]').datepicker(deEndProp);
+      $('#report input[name=endDate]').datepicker(deEndProp);
       
       $('#historyForm input[name=startDate]').datepicker('setDate', startDate);
       $('#historyForm input[name=endDate]').datepicker('setDate', endDate);
       $('#depositHistory input[name=startDate]').datepicker('setDate', startDate);
       $('#depositHistory input[name=endDate]').datepicker('setDate', endDate);
+      $('#report input[name=startDate]').datepicker('setDate', endDate);
+      $('#report input[name=endDate]').datepicker('setDate', endDate);
 
       var initDateFormat = function(inst ,date) {
         var dbDate = $.datepicker.formatDate('yymmdd', date);
@@ -2393,6 +2559,7 @@
 
       initDateFormat($('input[name=startDate]'), startDate);
       initDateFormat($('input[name=endDate]'), endDate);
+      initDateFormat($('#report input[name=startDate]'), endDate);
     };
     
     // 로그인 이전 화면 설정

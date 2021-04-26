@@ -143,7 +143,7 @@
         var gs1 = row.get('gs1');
 
         $("#mdsId").val(mdsId);
-        $("#gs1").val(gs1);
+        $("#gs1A").val(gs1);
     }
 
     //html onload func
@@ -467,7 +467,7 @@
                 type:"POST",
                 data: {
                     "mdsId" : $("#mdsId").val(),
-                    "gs1" : $("#meterGs1U").val(gs1),
+                    "gs1" : $("#meterGs1U").val(),
                     "contractNumber" : $.trim($("#contractNumber2").val()),
                     "serviceTypeCode" : $("#serviceTypeCode").val(),
                     "tariffIndex" : ($("#tariffIndex").val() != null) ? $("#tariffIndex").val() : "",
@@ -769,7 +769,7 @@
         $("#serviceTypeCode").trigger("change");
 
     	$("#mdsId").val(info.mdsId);
-    	$("#gs1").val(info.gs1);
+    	$("#gs1A").val(info.gs1);
     	ContractMeterId = info.meterId;
 
         if (info.status == "") {
@@ -854,7 +854,7 @@
     //미터 서치버튼 클릭 event
     $("#meterSearchButton").click(function(){
         addContractSearchMdsId = $("#mdsId").val();
-        addContractSearchGs1 = $("#gs1").val();
+        addContractSearchGs1 = $("#gs1A").val();
      	//MeterGridOn= true;
 
      	//미터 리스트 가져오기.
@@ -1029,7 +1029,7 @@
                                     <td><input name="mdsId" id="mdsId" type="text" style="width:150px;"/></td>
                                         
                                     <td class="bold withinput"><fmt:message key="aimir.shipment.gs1"/></td>
-                                    <td><input name="gs1" style="width:150px" id="gs1" type="text"/></td>
+                                    <td><input name="gs1" style="width:150px" id="gs1A" type="text"/></td>
                                         
                                     <td >
 
