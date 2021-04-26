@@ -374,6 +374,30 @@
         </div>        
       </form>
       <!--검색조건 끝-->
+      
+      <form id='report' class="searchoption-container">
+      	<div class="searchbox">
+      		<table class="searching">
+      			<tr>
+      				<td class="padding-r20px2">
+						Report <fmt:message key="aimir.searchDate"/>
+					</td>
+					<td>
+						<span id='report'>
+					        <input class="alt startDate" name="startDateDisplay" type='text' readOnly/><input name="startDate" type="hidden"/>
+					        <label>~</label>
+					        <input class="alt endDate" name="endDateDisplay" type='text' readOnly/><input name="endDate" type="hidden"/>
+						</span>
+					</td>
+					<td class="padding-r20px2">
+						<span id='totalReceiptByCashier' class="am_button margin-l10 margin-t1px margin-r5">
+						    <a>Cashier Sales Report</a>
+						</span>
+					</td>
+      			</tr>
+      		</table>
+      	</div>
+	  </form>
 
       <div id="depositChargeHistoryDiv"></div>
       <div id="treeDiv2Outer" class="tree-billing auto" style="display:none;">
@@ -1482,7 +1506,6 @@
 	                if(payType == '' || payType == 'Select...'){
 	                    Ext.Msg.alert("<fmt:message key='aimir.alert'/>", "<fmt:message key='aimir.msg.check.input.value'/>");
 	                }else{
-	                	console.log('searchwin handler !');
 	                    params.callback(payType);
 	                	//saveAction();
 	                }
@@ -1642,7 +1665,27 @@
         
         var queryString = CommonUtil.getQueryString(params);
         receiptPopupWindow = window.open(url + queryString, "receiptPopupWindow", opt);
-      },        
+      },
+      
+      totalReceiptByCashierPopup: function(rec) {
+          var url = "${ctx}/gadget/prepaymentMgmt/totalReceiptByCashierPopup.do";
+          var opt = "width=270px, height=300px, resizable=no, status=no";
+
+          var params = {
+            vendor: vendor=='admin' ? '':vendor,
+            supplierId: supplierId,
+            casherId: $("#depositHistory input[name=casherId]").val(),
+            startDate: $("#report input[name=startDate]").val(),
+            endDate: $("#report input[name=endDate]").val()
+          }
+          
+          if ( receiptPopupWindow ) {
+            receiptPopupWindow.close();
+          }
+          
+          var queryString = CommonUtil.getQueryString(params);
+          receiptPopupWindow = window.open(url + queryString, "receiptPopupWindow", opt);
+      },     
       
       initChargeTab: function() {
         eventHandler.refreshDeposit();        
@@ -1765,7 +1808,7 @@
               }
               
               if(!isManager){
-            	  $("#casherId").val(params.casherId);
+            	  $("#depositHistory input[name=casherId]").val(params.casherId);
             	  $(".checkCashier").hide(); 
               }
                
@@ -1776,14 +1819,6 @@
             }
         });
       },
-      
-      Initialization: function() {
-          var rec = {
-            casherId: "",
-            vendorId: vendor          
-          };
-	        eventHandler.initializePassword(JSON.stringify(rec));
-        },
 
       addCasher: function() {
         var params = {
@@ -1877,7 +1912,7 @@
 
     	  if(Ext.getCmp('CashierChangePwdWinId') == undefined) {
 	    	  var passChange = new Ext.FormPanel ({
-	   		  	frame: true,
+	   		  	frame:true,
 				width: 300,
 				height: 160,
 				bodyStyle:'padding:5px 5px 5px 5px',
@@ -2443,6 +2478,7 @@
       $('#historyForm span#historySearch').click(eventHandler.historyListSearch);
       $('#depositHistory span#depositHistorySearch').click(eventHandler.depositHistoryListSearch);
       $('#depositHistory span#depositHistoryExcel').click(eventHandler.depositHistoryExcel);
+      $('#report span#totalReceiptByCashier').click(eventHandler.totalReceiptByCashierPopup);
       $('#depositHistory span#depositHistoryTotalExcel').click(eventHandler.depositHistoryTotalExcel);
       $('#arrearsExcel').click(eventHandler.arrearsExcel);
       $('#historyExcel').click(eventHandler.historyExcel);
@@ -2502,11 +2538,15 @@
       $('#historyForm input[name=endDate]').datepicker(endProp);
       $('#depositHistory input[name=startDate]').datepicker(deStartProp);
       $('#depositHistory input[name=endDate]').datepicker(deEndProp);
+      $('#report input[name=startDate]').datepicker(deEndProp);
+      $('#report input[name=endDate]').datepicker(deEndProp);
       
       $('#historyForm input[name=startDate]').datepicker('setDate', startDate);
       $('#historyForm input[name=endDate]').datepicker('setDate', endDate);
       $('#depositHistory input[name=startDate]').datepicker('setDate', startDate);
       $('#depositHistory input[name=endDate]').datepicker('setDate', endDate);
+      $('#report input[name=startDate]').datepicker('setDate', endDate);
+      $('#report input[name=endDate]').datepicker('setDate', endDate);
 
       var initDateFormat = function(inst ,date) {
         var dbDate = $.datepicker.formatDate('yymmdd', date);
@@ -2519,6 +2559,7 @@
 
       initDateFormat($('input[name=startDate]'), startDate);
       initDateFormat($('input[name=endDate]'), endDate);
+      initDateFormat($('#report input[name=startDate]'), endDate);
     };
     
     // 로그인 이전 화면 설정

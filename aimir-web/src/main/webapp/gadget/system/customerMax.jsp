@@ -60,8 +60,8 @@
         }        
         .meterDiv {
             position: absolute;
-            top: 170;
-            left: 825;
+            top: 130;
+            left: 990;
             z-index: 100;
         }          
         .btn-savecontract {
@@ -469,8 +469,7 @@
                                 //$('#prepaymentStatusTr4').show();
                                 $('#prepaymentStatusTr5').show();
 
-                                $('.contractUpdate').css('bottom', '0');
-                                $('#meterDiv2').css('left',935);
+                                //$('.contractUpdate').css('bottom', '0');
 
                             } else {
                                 $("#prepaymentStatusTr").hide();
@@ -479,8 +478,7 @@
                                 $("#prepaymentStatusTr4").hide();
                                 $('#prepaymentStatusTr5').hide();
 
-                                $(".contractUpdate").css("bottom", "-22");
-                                $('#meterDiv2').css('left',835);
+                                //$(".contractUpdate").css("bottom", "-22");
                             }
                         });
 
@@ -679,7 +677,7 @@
         $("#contractInfoUpdateCancel").click(function() {
             $('#contractInfoUpdate').hide();
             $('#contractInfoDetail').show();
-            $('.contractUpdate').css('bottom', '50');
+            //$('.contractUpdate').css('bottom', '50')
             clearDebtSave();
         });
 
@@ -4162,7 +4160,7 @@
                                 <div id="meterDiv2" class="meterDiv2"></div>
                                 
                                 <!--업데이트 /캔슬 버튼-->
-                                <div id="btn" class="contractUpdate" style="left: 680px;">
+                                <div id="btn" class="contractUpdate" style="bottom: -10px;left: 680px;">
                                     <ul>
                                         <li class="input">
                                             <a id="contractUpdate" class="on">

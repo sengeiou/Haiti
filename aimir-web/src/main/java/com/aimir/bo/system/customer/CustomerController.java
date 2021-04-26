@@ -1234,7 +1234,7 @@ public class CustomerController {
             @ModelAttribute("contractForm") Contract contract,
             @RequestParam("mdsId") String mdsId,
             @RequestParam("contractNumber") String contractNumber,
-            @RequestParam("sicId") Integer sicId,
+            @RequestParam(value="sicId", required=false)  Integer sicId,
             @RequestParam(value="customerId", required=false) Integer customerId,
             @RequestParam(value="prevContractId", required=false) Integer prevContractId,
             @RequestParam(value="serviceType2", required=false) String serviceType2,
