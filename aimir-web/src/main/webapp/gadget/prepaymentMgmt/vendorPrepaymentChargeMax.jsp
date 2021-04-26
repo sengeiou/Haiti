@@ -1822,6 +1822,14 @@
             }
         });
       },
+      
+      Initialization: function() {
+          var rec = {
+            casherId: $("#loginWrapper input[name=loginId]").val(),
+            vendorId: vendor          
+          };
+	        eventHandler.initializePassword(JSON.stringify(rec));
+        },
 
       addCasher: function() {
         var params = {
