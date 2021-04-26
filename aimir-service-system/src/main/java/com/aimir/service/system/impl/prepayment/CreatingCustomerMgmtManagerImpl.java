@@ -551,7 +551,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 	}
                 	logger.info("### MeterMapper search result - METER_OBIS_MDSID ["+ meterMapper.getMeterObisMdsId()+"] METER_PRINTED_MDSID [" + meterMapper.getMeterPrintedMdsId() + "]");
                 	
-                	Meter meter = meterDao.findByCondition("mdsId", meterMapper.getMeterObisMdsId());
+                	Meter meter = meterDao.findByCondition("mdsId", meterMapper.getMeterObisMdsId().toString());
                 	if(meter == null) {
                 		errorList.add(getErrorRecord(NIC, customerName, NIB, tariffIndexID, "Unregistered meter"));
                 		continue;
