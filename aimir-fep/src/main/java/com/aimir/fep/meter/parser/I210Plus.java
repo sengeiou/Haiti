@@ -149,7 +149,7 @@ public class I210Plus extends MeterDataParser implements java.io.Serializable {
 			offset += len;
 			
 			try {
-				throwMsg = checkTableLength("tbName", b);
+				throwMsg = checkTableLength(tbName, b);				
 				if(throwMsg != null) {
 					StringBuffer buffer = new StringBuffer();
 					if(mcu != null)
