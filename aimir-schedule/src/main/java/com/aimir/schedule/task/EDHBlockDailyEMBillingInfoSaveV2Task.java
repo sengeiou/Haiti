@@ -484,7 +484,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
             condition.add(new Condition("id.mdevType", new Object[]{DeviceType.Meter}, null, Restriction.EQ));
             condition.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
             condition.add(new Condition("id.channel", new Object[]{I210Channel.ActiveEnergyImp.getChannel()}, null, Restriction.EQ));
-//            condition.add(new Condition("id.yyyymmdd", new Object[]{yyyymmdd}, null, Restriction.GE));
+            condition.add(new Condition("id.yyyymmdd", new Object[]{yyyymmdd}, null, Restriction.GE));
             
             List<DayEM> ret = dayEMDao.findByConditions(condition);
             DayEM lastDayEM = null;
