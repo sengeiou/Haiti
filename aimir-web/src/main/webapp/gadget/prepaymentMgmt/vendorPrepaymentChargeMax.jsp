@@ -2044,7 +2044,7 @@
   	                autoHeight:true,
   	                defaultType: 'textfield', 
   				     items : [{
-  				    	 fieldLabel : "CashierId",
+  				    	 fieldLabel : "Cashier ID",
   							xtype : 'textfield',
   							inputType: 'text',
   							id	 : 'casherId',
@@ -2052,19 +2052,19 @@
   				    	{fieldLabel : "<fmt:message key='aimir.newpassword'/>",
   						xtype : 'textfield',
   						inputType: 'password',
-  						id	 : 'fp_password',
-  						name : 'fp_password'},
+  						id	 : 'newPwd',
+  						name : 'newPwd'},
   						{fieldLabel : "<fmt:message key='aimir.userreg.confirmpassword'/>",
   						xtype : 'textfield',
   						inputType: 'password',
-  						id	 : 'fp_confirmPwd',
-  						name : 'fp_confirmPwd'}]
+  						id	 : 'confirmPwd',
+  						name : 'confirmPwd'}]
   				}],
   				buttons:[{text : '<fmt:message key="aimir.ok"/>',
   						handler : function() {
   							var casherId = Ext.getCmp('casherId').getValue();
-  							var pass = Ext.getCmp('fp_password').getValue();
-  							var checkPass = Ext.getCmp('fp_confirmPwd').getValue();	
+  							var pass = Ext.getCmp('newPwd').getValue();
+  							var checkPass = Ext.getCmp('confirmPwd').getValue();	
   							console.log("checkPass",checkPass);
   							console.log("pass",pass);
   							if(pass == checkPass) {
@@ -2084,13 +2084,13 @@
   							   				            function(json) {
   							   				              if (json.result == "success") {
   							   				            	initializePassWin.hide();
-  						   									Ext.getCmp('fp_password').setValue();
-  						   									Ext.getCmp('fp_confirmPwd').setValue();
+  						   									Ext.getCmp('newPwd').setValue();
+  						   									Ext.getCmp('confirmPwd').setValue();
   							   				            	Ext.Msg.alert(casherId,"<fmt:message key='aimir.success'/>");
   							   				              } else {
   							   				            	initializePassWin.hide();
-  						   									Ext.getCmp('fp_password').setValue();
-  						   									Ext.getCmp('fp_confirmPwd').setValue();
+  						   									Ext.getCmp('newPwd').setValue();
+  						   									Ext.getCmp('confirmPwd').setValue();
   							   				            	Ext.Msg.alert(casherId,"<fmt:message key='aimir.failed'/>");
   							   				              }              
   						   				            	}
@@ -2103,19 +2103,19 @@
   								});
   	          				  
   	          			  } else {
-  	          				Ext.getCmp('fp_password').setValue();
-  							Ext.getCmp('fp_confirmPwd').setValue();
+  	          				Ext.getCmp('newPwd').setValue();
+  							Ext.getCmp('confirmPwd').setValue();
   	          				Ext.Msg.alert("<fmt:message key='aimir.error'/>", 
   	          	                "<fmt:message key='aimir.hems.alert.notMatchPassword'/>");
-  	          				//$('#fp_password').focus();
+  	          				//$('#newPwd').focus();
   	          			  }
   	
   						}},
   						{text : '<fmt:message key="aimir.cancel"/>',
   						handler : function() {
   							initializePassWin.hide();
-  							Ext.getCmp('fp_password').setValue();
-  							Ext.getCmp('fp_confirmPwd').setValue();
+  							Ext.getCmp('newPwd').setValue();
+  							Ext.getCmp('confirmPwd').setValue();
   							
   						}}
   						]
