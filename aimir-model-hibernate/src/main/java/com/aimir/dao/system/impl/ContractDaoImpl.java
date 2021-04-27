@@ -2931,8 +2931,8 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         if (!customerNo.isEmpty()) {
             query.setString("customerNo", customerNo + "%");
         }
-        if (!customerNo.isEmpty()) {
-            query.setString("customerNo", customerNo + "%");
+        if (!customerName.isEmpty()) {
+            query.setString("customerName", customerName + "%");
         }
         if (!phone.isEmpty()) {
             query.setString("phone", phone);

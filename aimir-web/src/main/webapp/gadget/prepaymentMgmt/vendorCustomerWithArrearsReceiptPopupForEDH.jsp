@@ -166,7 +166,7 @@
                             ${currentBalance}
                         </td>
                     </tr>
-                    <tr>
+                    <tr class='arrearsTable' style='display: none;'>
                         <td colspan=2 class='td-table'>
                             <table border='1' class='inner-table' style="width: 100%; ">
                                 <tr>
@@ -245,6 +245,17 @@
         </center>
     </div>
    <script type="text/javascript" charset="utf-8">/*<![CDATA[*/
+	   var height = 260 + $('.contents-wrapper').height();
+	   
+	   var preArrears = "${preArrears}";
+	   var preArrears2 = "${preArrears2}";
+	   
+	   if(preArrears != '' || preArrears2 != ''){
+		   $('.arrearsTable').show();
+		   height += 80;
+	   } 
+	   
+	   
         var initCredit = Number(${initCredit});
         var eventHandler = {
             receiptPrint: function() {
@@ -303,12 +314,14 @@
         };
         var init = function () {
             //eventHandler.insertInitCredit();
-            window.resizeTo(285, 730);
+            window.resizeTo(285, height);
             bind();
         };
         window.onload = function() {
             init();
         };
+        
+       
     /*]]>*/
     </script>
 </body>
