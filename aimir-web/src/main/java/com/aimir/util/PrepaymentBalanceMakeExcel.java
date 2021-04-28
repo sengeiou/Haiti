@@ -98,7 +98,7 @@ public class PrepaymentBalanceMakeExcel {
 			Integer cellCnt = 0;
 			
 			cell = row.createCell(cellCnt++);
-			cell.setCellValue(msgMap.get("contractNo"));
+			cell.setCellValue(msgMap.get("customerNumber"));
 			cell.setCellStyle(titleCellStyle);
 			
 //			cell = row.createCell(cellCnt++);
@@ -168,7 +168,7 @@ public class PrepaymentBalanceMakeExcel {
 				cellCnt = 0;
 				
 				cell = row.createCell(cellCnt++);
-				cell.setCellValue(resultMap.get("contractNumber") == null ? "" : resultMap.get("contractNumber").toString());
+				cell.setCellValue(resultMap.get("customerNumber") == null ? "" : resultMap.get("customerNumber").toString());
 				cell.setCellStyle(dataCellStyle);
 				
 //				cell = row.createCell(cellCnt++);

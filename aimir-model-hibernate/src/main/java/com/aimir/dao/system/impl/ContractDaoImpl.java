@@ -2342,6 +2342,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 
         String contractNumber = (String) conditionMap.get("contractNumber");
         String customerName = (String) conditionMap.get("customerName");
+        String customerNumber = (String) conditionMap.get("customerNumber");
         String statusCode 	= (String) conditionMap.get("statusCode");
         String amountStatus = StringUtil.nullToBlank(conditionMap.get("amountStatus"));
         String mdsId 		= (String) conditionMap.get("mdsId");
@@ -2363,6 +2364,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         } else {
             sb.append("\nSELECT c.contractNumber AS contractNumber, ");                        // Contract No.
             sb.append("\n       c.customer.name AS customerName, ");                           // Customer Name
+            sb.append("\n       c.customer.customerNo AS customerNumber, ");                   // customerNo
             sb.append("\n       c.customer.mobileNo AS mobileNo, ");                           // mobile No.
             sb.append("\n       m.mdsId AS mdsId, ");                                          // Meter ID
             sb.append("\n       m.id AS meterId, ");
@@ -2413,6 +2415,10 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         if (customerName != null && !customerName.isEmpty()) {
             sb.append("\nAND   UPPER(c.customer.name) LIKE UPPER('%'||:customerName||'%') ");
         }
+        
+        if (customerNumber !=null && !customerNumber.isEmpty()) {
+            sb.append("\nAND   c.customer.customerNo LIKE :customerNumber||'%' ");
+        }
 
         if (statusCode != null && !statusCode.isEmpty()) {
             sb.append("\nAND   c.status.id = :statusCode ");
@@ -2447,7 +2453,9 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         if (contractNumber != null && !contractNumber.isEmpty()) {
             query.setString("contractNumber", contractNumber);
         }
-
+        if (customerNumber != null && !customerNumber.isEmpty()) {
+            query.setString("customerNumber", customerNumber);
+        }
         if (mdsId != null && !mdsId.isEmpty()) {
             query.setString("mdsId", mdsId);
         }
@@ -2931,8 +2939,8 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         if (!customerNo.isEmpty()) {
             query.setString("customerNo", customerNo + "%");
         }
-        if (!customerNo.isEmpty()) {
-            query.setString("customerNo", customerNo + "%");
+        if (!customerName.isEmpty()) {
+            query.setString("customerName", customerName + "%");
         }
         if (!phone.isEmpty()) {
             query.setString("phone", phone);
