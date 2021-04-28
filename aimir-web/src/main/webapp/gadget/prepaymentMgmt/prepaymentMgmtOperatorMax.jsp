@@ -751,7 +751,8 @@
                 autoLoad: {params:{start: 0, limit: 20}},
                 url: "${ctx}/gadget/prepaymentMgmt/getPrepaymentContractList.do",
                 baseParams: {
-                    contractNumber : $("#contractNumber").val(),
+                    contractNumber : '',//$("#contractNumber").val(),
+                    customerNumber : $("#customerNumber").val(),
                     customerName : $("#customerName").val(),
                     statusCode 	: $("#statusCode").val(),
                     paymentType : $("#paymentType").val(),
@@ -766,7 +767,7 @@
                 },
                 totalProperty: 'totalCount',
                 root:'result',
-                fields: ["contractNumber", "customerName", "mdsId", "serviceTypeCode", "serviceTypeName", "creditTypeCode", "creditTypeName", "tariffTypeName","mobileNo",
+                fields: ["contractNumber", "customerNumber", "customerName", "mdsId", "serviceTypeCode", "serviceTypeName", "creditTypeCode", "creditTypeName", "tariffTypeName","mobileNo",
                          "prepaymentPowerDelay", "lastTokenDate", "currentCredit", "statusName", "emergencyCreditStartTime", "emergencyCreditMaxDuration", "emergencyCreditMaxDate",
                          "meterId", "mcuId", "modelName","lastReadDate","ihdId","address", "SPN", "gs1"],
                 listeners: {
@@ -797,8 +798,8 @@
 
             prepayContractColModel = new Ext.grid.ColumnModel({
                 columns: [
-                     {header: "<fmt:message key="aimir.contractNumber"/>", dataIndex: 'contractNumber', renderer: addTooltip, width: width/10-10}
                     //,{header: "<fmt:message key="aimir.accountNo"/>", dataIndex: 'SPN'}
+                     {header: "<fmt:message key="aimir.customerid"/>", dataIndex: 'customerNumber', renderer: addTooltip, width: width/10-10}
                     ,{header: "<fmt:message key="aimir.customername"/>", dataIndex: 'customerName', renderer: addTooltip}
                     ,{header: "<fmt:message key="aimir.celluarphone"/>", dataIndex: 'mobileNo', renderer: addTooltip}
                     ,{header: "<fmt:message key="aimir.hems.prepayment.lastchargedate"/>", dataIndex: 'lastTokenDate'}
@@ -3649,7 +3650,7 @@
                 obj.excelType = 'main_list'
 
                 //title
-                header[0] = '<fmt:message key="aimir.contractNumber"/>';
+                header[0] = '<fmt:message key="aimir.customerid"/>';
                 header[1] = '<fmt:message key="aimir.accountNo"/>'; 
                 header[2] = '<fmt:message key="aimir.customername"/>'; 
                 header[3] = '<fmt:message key="aimir.celluarphone"/>'; 
@@ -3668,7 +3669,7 @@
                 
 
                 //parameter
-                param[0] = $("#contractNumber").val();
+                param[0] = $("#customerNumber").val();
                 param[1] = $("#customerName").val();
                 param[2] = $("#statusCode").val();
                 param[3] = $("#mdsId").val();
@@ -4175,8 +4176,8 @@
         <div style="margin-top: 10px; margin-bottom: 10px;">
             <table class="search_basic" style="width: auto;">
                 <tr>
-                    <td><fmt:message key='aimir.contractNumber'/></td>
-                    <td><input id="contractNumber" name="contractNumber" style="width:130px"/></td>
+                    <td><fmt:message key='aimir.customerid'/></td> 
+                    <td><input id="customerNumber" name="customerNumber" style="width:130px"/></td>
                     <td><fmt:message key="aimir.meterid"/><!-- 미터 아이디 --></td>
                     <td><input name="mdsId" id='mdsId' type="text" style="width:100px"/></td>
                     <td><fmt:message key="aimir.shipment.gs1"/></td>

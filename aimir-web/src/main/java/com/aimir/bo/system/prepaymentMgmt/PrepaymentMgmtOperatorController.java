@@ -185,6 +185,7 @@ public class PrepaymentMgmtOperatorController {
     @RequestMapping(value = "/gadget/prepaymentMgmt/getPrepaymentContractList")
     public ModelAndView getPrepaymentContractList(@RequestParam("contractNumber") String contractNumber,
             @RequestParam("customerName") String customerName,
+            @RequestParam("customerNumber") String customerNumber,
             @RequestParam("statusCode") String statusCode,
             @RequestParam("amountStatus") String amountStatus,
             @RequestParam("mdsId") String mdsId,
@@ -206,6 +207,7 @@ public class PrepaymentMgmtOperatorController {
         int limit = Integer.parseInt(request.getParameter("limit"));
 
         Map<String, Object> conditionMap = new HashMap<String, Object>();
+        conditionMap.put("customerNumber", StringUtil.nullToBlank(customerNumber));
         conditionMap.put("contractNumber", StringUtil.nullToBlank(contractNumber));
         conditionMap.put("customerName", StringUtil.nullToBlank(customerName));
         conditionMap.put("statusCode", StringUtil.nullToBlank(statusCode));

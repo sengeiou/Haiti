@@ -747,7 +747,7 @@ public class PrepaymentMgmtCustomerController {
 		try {
 			Integer supplierId = Integer.parseInt(condition[6]);
 			
-	        conditionMap.put("contractNumber", StringUtil.nullToBlank(condition[0]));
+	        conditionMap.put("customerNumber", StringUtil.nullToBlank(condition[0]));
 	        conditionMap.put("customerName", StringUtil.nullToBlank(condition[1]));
 	        conditionMap.put("statusCode", StringUtil.nullToBlank(condition[2]));
 	        conditionMap.put("mdsId", condition[3]);
@@ -772,7 +772,7 @@ public class PrepaymentMgmtCustomerController {
 	        /**
 	         *  Excel Title 생성
 	         */
-	        msgMap.put("contractNo", fmtMessage[0]);
+	        msgMap.put("customerNumber", fmtMessage[0]);
 	        msgMap.put("accountNo", fmtMessage[1]);
 	        msgMap.put("customername", fmtMessage[2]);
 	        msgMap.put("celluarphone", fmtMessage[3]);
