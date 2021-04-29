@@ -81,6 +81,14 @@ response.setDateHeader ("Expires", -1); //prevents caching at the proxy
     // 탭명칭 변경시 값입력
     var tabNames = {hourly:'',daily:'',period:'',weekly:'',monthly:'',monthlyPeriod:'',weekDaily:'',seasonal:'',yearly:''};
 
+    
+    $(document).ready(function(){        
+		var twidth = $(this.operatorDetailForm).children('table').width();
+		var pwidth = "'" + twidth + "'px"		
+		$('#operatorDetailForm').find('#btn-right').width(pwidth);
+		$("#btn-rigth").css('float','left');
+    });
+    
     //윈도우 리싸이즈시 event
     $(window).resize(function() {
 
