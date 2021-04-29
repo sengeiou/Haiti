@@ -210,7 +210,7 @@ response.setDateHeader ("Expires", -1); //prevents caching at the proxy
                 },
                 load: function(store, record, options) {
                 	if(record.length > 0) {
-                		for(var n=0; n<record.length, n++) {
+                		for(var n=0; n<record.length; n++) {
                 			if(record[n].data.loginDenied == "false")
                 				record[n].data.loginDenied = "NO";
                 			else
