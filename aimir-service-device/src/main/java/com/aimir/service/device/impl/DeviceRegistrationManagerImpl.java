@@ -509,9 +509,10 @@ public class DeviceRegistrationManagerImpl implements DeviceRegistrationManager 
             }
             
             // ModemSerial 중복체크
-            /*MeterMapper chkModem = meterMapperDao.findByCondition("modemDeviceSerial", ModemSerial);
+            MeterMapper chkModem = meterMapperDao.findByCondition("modemDeviceSerial", ModemSerial);
             meterMapperDao.clear();
-
+            
+            /*
             if (chkModem != null && chkModem.getId() != null) {
                 errorList.add(getErrorRecord(ModemSerial, MeterSerial, "There is a duplicate Modem : " + ModemSerial));
                 continue;
@@ -528,11 +529,22 @@ public class DeviceRegistrationManagerImpl implements DeviceRegistrationManager 
 
             // Add
         	try {
-        		MeterMapper newMeter = new MeterMapper();
+        		if(chkModem == null) {
+        			MeterMapper newMeter = new MeterMapper();
+            		newMeter.setModemDeviceSerial(ModemSerial);
+            		newMeter.setMeterPrintedMdsId(MeterSerial);
+            		meterMapperDao.add(newMeter);
+        		}else {
+        			chkModem.setModemDeviceSerial(ModemSerial);
+        			chkModem.setMeterPrintedMdsId(MeterSerial);
+            		meterMapperDao.update(chkModem);
+        		}
+        		
+        		/*MeterMapper newMeter = new MeterMapper();
         		newMeter.setModemDeviceSerial(ModemSerial);
         		newMeter.setMeterPrintedMdsId(MeterSerial);
         		meterMapperDao.merge(newMeter);
-        		meterMapperDao.flushAndClear();
+        		meterMapperDao.flushAndClear();*/
     			
     		} catch (Exception e) {
     			logger.error(e.getMessage(), e);

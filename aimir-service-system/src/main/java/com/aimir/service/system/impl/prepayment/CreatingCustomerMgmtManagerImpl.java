@@ -526,7 +526,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 }
                 
                 // 비어있는 cell 이 있으면 에러처리
-                if (NIB.isEmpty() || tariffIndexID.isEmpty() || NIC.isEmpty() || customerName.isEmpty()) {
+                if (NIB.isEmpty() || tariffIndexID.isEmpty() || NIC.isEmpty()) {
                     errorList.add(getErrorRecord(NIC, customerName, NIB, tariffIndexID, "Please fill in the values in the cells"));
                     continue;
                 }

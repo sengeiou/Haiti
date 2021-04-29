@@ -94,11 +94,11 @@ public class VendorPrepaymentContractMakeExcel {
 			row = sheet.createRow(dataGapsStartRow);
 
 			cell = row.createCell(0);
-			cell.setCellValue(msgMap.get("contractNumber"));
-			cell.setCellStyle(titleCellStyle);
-
-			cell = row.createCell(1);
 			cell.setCellValue(msgMap.get("customerNo"));
+			cell.setCellStyle(titleCellStyle);
+			
+			cell = row.createCell(1);
+			cell.setCellValue(msgMap.get("contractNumber"));
 			cell.setCellStyle(titleCellStyle);
 
 			cell = row.createCell(2);
@@ -147,11 +147,11 @@ public class VendorPrepaymentContractMakeExcel {
 				row = sheet.createRow(i + (dataGapsStartRow + 1));
 		        
 				cell = row.createCell(0);
-				cell.setCellValue(resultMap.get("contractNumber") == null ? "" : resultMap.get("contractNumber").toString());
+				cell.setCellValue(resultMap.get("customerNo") == null ? "" : resultMap.get("customerNo").toString());
 				cell.setCellStyle(dataCellStyle);
 				
 				cell = row.createCell(1);
-				cell.setCellValue(resultMap.get("customerNo") == null ? "" : resultMap.get("customerNo").toString());
+				cell.setCellValue(resultMap.get("contractNumber") == null ? "" : resultMap.get("contractNumber").toString());
 				cell.setCellStyle(dataCellStyle);
 				
 				cell = row.createCell(2);

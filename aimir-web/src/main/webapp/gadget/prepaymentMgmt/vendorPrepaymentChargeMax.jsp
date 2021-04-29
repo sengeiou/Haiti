@@ -162,7 +162,7 @@
 			            	<fmt:message key='aimir.barcode'/>
 						</td>
                         <td class="padding-r20px2">
-			            	<input id="barcodeNumber" type="text" style="width:110px;">
+			            	<input id="barcodeNumber" type="text" style="width:120px;">
 			          	</td>
 			          	<td class="withinput">
 			            	<fmt:message key='aimir.celluarphone'/>
@@ -173,22 +173,22 @@
 			        </tr>
 			        <tr class="clear-form">
 						<td class="withinput">
+							<fmt:message key="aimir.customerid"/>
+						</td>
+                        <td class="padding-r20px2">
+							<input id="customerNo" type="text" style="width:120px;">
+						</td>
+						<td class="withinput">
 						  	<fmt:message key="aimir.contractNumber"/>
 						</td>
                         <td class="padding-r20px2">
-						  	<input id="contractNumber" type="text" style="width:110px;">
+						  	<input id="contractNumber" type="text" style="width:120px;">
 						</td>
 						<td class="withinput">
 							<fmt:message key="aimir.customername"/>
 						</td>
                         <td class="padding-r20px2">
 							<input id="customerName" type="text" style="width:120px;">
-						</td>
-						<td class="withinput">
-							<fmt:message key="aimir.customerid"/>
-						</td>
-                        <td class="padding-r20px2">
-							<input id="customerNo" type="text" style="width:120px;">
 						</td>
 <%-- 						<td class="withinput">
 							<fmt:message key="aimir.meterid"/>
@@ -892,7 +892,7 @@
 
     var contractListModel = new Ext.grid.ColumnModel({
       columns: [
-          {header: "<fmt:message key='aimir.contractNumber'/>", dataIndex: 'contractNumber'}
+          {header: "<fmt:message key='aimir.customerid'/>", dataIndex: 'customerNo'}
          ,{header: "<fmt:message key='aimir.customername'/>", dataIndex: 'customerName'}
          ,{header: "<fmt:message key='aimir.celluarphone'/>", dataIndex: 'phone', renderer: function(value, metaData, record, index) {
              var tplBtn = new Ext.Template("<a href='#;' onclick='getCustomerWindowWithID("+record.data.customerNo+");'>"+value+"</a>");
