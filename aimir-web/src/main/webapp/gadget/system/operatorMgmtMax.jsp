@@ -181,7 +181,7 @@ response.setDateHeader ("Expires", -1); //prevents caching at the proxy
     
     function setBtnDivWidh() {        
 		var twidth = $(this.operatorDetailForm).children('table').width();
-		var pwidth = "'" + twidth + "'px"		
+		var pwidth = "'" + twidth + "px'"		
 		$('#operatorDetailForm').find('#btn-right').width(pwidth);
 		$("#btn-rigth").css('float','left');
     }
