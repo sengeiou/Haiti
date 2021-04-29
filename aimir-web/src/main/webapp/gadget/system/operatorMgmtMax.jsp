@@ -180,10 +180,9 @@ response.setDateHeader ("Expires", -1); //prevents caching at the proxy
 
     
     function setBtnDivWidh() {        
-		var twidth = $(this.operatorDetailForm).children('table').width();
-		var pwidth = "'" + twidth + "px'"		
-		$('#operatorDetailForm').find('#btn-right').width(pwidth);
-		$("#btn-rigth").css('float','left');
+		var twidth = $(this.operatorDetailForm).children('table').width();		
+		$('#operatorDetailForm').find('#btn-right').width(twidth);
+		$('#operatorDetailForm').find('#btn-right').css('float','left');
     }
     
     //사용자 목록 그리드  그리기.
