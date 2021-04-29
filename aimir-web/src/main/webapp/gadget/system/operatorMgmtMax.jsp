@@ -227,7 +227,6 @@ response.setDateHeader ("Expires", -1); //prevents caching at the proxy
 
 
     function makeOperatorListGridPanel() {
-    	HSW
         var width = $("#OperatorListDiv").width();
 
         colModel = new Ext.grid.ColumnModel({
