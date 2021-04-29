@@ -2,6 +2,7 @@ package com.aimir.dao.mvm.impl;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -263,9 +264,9 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         StringBuffer sb = new StringBuffer();
 
         if (isCount) {
-            sb.append("\nSELECT COUNT(*) AS cnt FROM (SELECT co.id ");
+            sb.append("\nSELECT COUNT(*) AS cnt FROM (SELECT co.id, da.mdev_id AS mdsid ");
         } else {
-            sb.append("\nSELECT tb.totalUsage AS \"totalUsage\", ");
+            sb.append("\nSELECT tb.totalUsage-NVL(pre.preusage,0) AS \"totalUsage\", ");
             sb.append("\n       tb.contractNo AS \"contractNo\", ");
             sb.append("\n       tb.customerName AS \"customerName\", ");
             sb.append("\n       tb.tariffName AS \"tariffName\", ");
@@ -277,7 +278,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
             if (rankingType.equals(CommonConstants.RankingType.ZERO.getType())) {
                 sb.append("0 ");
             } else {
-                sb.append("SUM(da.value) ");
+                sb.append("MAX(da.value) ");
             }
             sb.append("AS totalUsage, ");
 
@@ -338,12 +339,12 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         sb.append("\n         da.mdev_id ");
 
         if (rankingType.equals(CommonConstants.RankingType.ZERO.getType())) {
-            sb.append("\nHAVING SUM(da.total) = 0 ");
+            sb.append("\nHAVING MAX(da.value) = 0 ");
         } else if (totalUsage != null) {
             if (rankingType.equals(CommonConstants.RankingType.BEST.getType())) {
-                sb.append("\nHAVING SUM(da.total) >= :totalUsage ");
+                sb.append("\nHAVING MAX(da.value) >= :totalUsage ");
             } else {
-                sb.append("\nHAVING SUM(da.total) <= :totalUsage ");
+                sb.append("\nHAVING MAX(da.value) <= :totalUsage ");
             }
         } else if (!usageRange.isEmpty()) {
             String[] condArr = usageRange.split(",", 4);
@@ -353,7 +354,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
                 StringBuilder sbCond = new StringBuilder();
 
                 if (!condArr[0].isEmpty() && !condArr[1].isEmpty()) {
-                    sbCond.append("\nHAVING SUM(da.total) ");
+                    sbCond.append("\nHAVING MAX(da.value) ");
                     sbCond.append(condArr[1]).append(" ");
                     sbCond.append(condArr[0]).append(" ");
                 }
@@ -364,7 +365,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
                     } else {
                         sbCond.append("\n   AND");
                     }
-                    sbCond.append(" SUM(da.total) ");
+                    sbCond.append(" MAX(da.value) ");
                     sbCond.append(condArr[3]).append(" ");
                     sbCond.append(condArr[2]).append(" ");
                 }
@@ -373,6 +374,15 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         }
 
         sb.append("\n) tb ");
+        
+        sb.append("\n     LEFT OUTER JOIN  ( ");
+        sb.append("\n     	SELECT mdev_id, max(value) as preusage ");
+		sb.append("\n     	FROM "+ dayTable);
+        sb.append("\n     	WHERE channel = 1 ");
+        sb.append("\n     	AND YYYYMMDD < :startDate ");
+        sb.append("\n     		GROUP BY mdev_id ");
+        sb.append("\n     ) pre  ");
+		sb.append("\n     ON pre.mdev_id = tb.mdsId ");
 
         if (!isCount) {
             sb.append("\nORDER BY ");
@@ -2761,6 +2771,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
 
         String contractNumber = StringUtil.nullToBlank(conditionMap.get("contractNumber"));
         String customerName = StringUtil.nullToBlank(conditionMap.get("customerName"));
+        String customerNumber = StringUtil.nullToBlank(conditionMap.get("customerNumber"));
         String meteringSF = StringUtil.nullToBlank(conditionMap.get("meteringSF"));
         
         String friendlyName = StringUtil.nullToBlank(conditionMap.get("friendlyName"));
@@ -2931,6 +2942,9 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
                 sb.append("\n    AND   UPPER(cu.name) = UPPER((:customerName) ");
         	}
         }
+        if (!customerNumber.isEmpty()) {
+        	sb.append("\n    AND   cu.customerNo LIKE :customerNumber ");
+        }
 
         if (!mcuId.isEmpty()) {
             sb.append("\n    AND   mo.id = mt.modem_id ");
@@ -3027,6 +3041,10 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         if (!customerName.isEmpty()) {
             query.setString("customerName", customerName);
         }
+        
+        if (!customerNumber.isEmpty()) {
+            query.setString("customerNumber", customerNumber);
+        }
 
         if (!mcuId.isEmpty()) {
             query.setString("mcuId", mcuId);
@@ -3067,6 +3085,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         Integer limit = (Integer) conditionMap.get("limit");
         String contractNumber = StringUtil.nullToBlank(conditionMap.get("contractNumber"));
         String customerName = StringUtil.nullToBlank(conditionMap.get("customerName"));
+        String customerNumber = StringUtil.nullToBlank(conditionMap.get("customerNumber"));
         String meteringSF = StringUtil.nullToBlank(conditionMap.get("meteringSF"));
         String friendlyName = StringUtil.nullToBlank(conditionMap.get("friendlyName"));
         Integer isManualMeter = (Integer) conditionMap.get("isManualMeter");
@@ -3085,24 +3104,26 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         String prevEndDate = StringUtil.nullToBlank(conditionMap.get("prevEndDate"));
         
         String dayView = MeterType.valueOf(meterType).getDayViewName();
+        String DayTable = MeterType.valueOf(meterType).getDayTableName();
 
         StringBuilder sb = new StringBuilder();
 
         if (isTotal) {
-            sb.append("\nSELECT COUNT(*) AS cnt ");
+            sb.append("\nSELECT COUNT(SUM(dv.value)) AS cnt ");
         } else {
-            sb.append("\nSELECT dv.yyyymmdd AS YYYYMMDD,");
-            sb.append("\n       dv.mdev_id AS METER_NO, ");
-            sb.append("\n       mt.friendly_name AS FRIENDLY_NAME, ");
-            sb.append("\n       mt.gs1 AS GS1, ");
-            sb.append("\n       co.contract_number AS CONTRACT_NUMBER, ");
-            sb.append("\n       cu.name AS CUSTOMER_NAME, ");
-            sb.append("\n       mo.device_serial AS MODEM_ID, ");
-            sb.append("\n       dv.basevalue AS BASEVALUE, ");
-            sb.append("\n       dv.total_value AS VALUE ");
-//            sb.append("\n       pre.total_value AS PRE_VALUE ");
+            sb.append("\nSELECT MAX(dv.yyyymmdd) AS YYYYMMDD,");
+            sb.append("\n       MAX(dv.mdev_id) AS METER_NO, ");
+            sb.append("\n       MAX(cu.customerNo) AS CUSTOMER_NUMBER,	");
+            sb.append("\n       MAX(mt.friendly_name) AS FRIENDLY_NAME, ");
+            sb.append("\n       MAX(mt.gs1) AS GS1, ");
+            sb.append("\n       MAX(co.contract_number) AS CONTRACT_NUMBER, ");
+            sb.append("\n       MAX(cu.name) AS CUSTOMER_NAME, ");
+            sb.append("\n       MAX(mo.device_serial) AS MODEM_ID, ");
+            sb.append("\n       MAX(dv.basevalue) AS BASEVALUE, ");
+            sb.append("\n       MAX(dv.value) AS VALUE, ");
+            sb.append("\n       MAX(pre.value) AS PRE_VALUE ");
         }
-        sb.append("\nFROM ").append(dayView).append(" dv ");
+        sb.append("\nFROM ").append(DayTable).append(" dv ");
         sb.append("\nLEFT OUTER JOIN meter mt ON mt.mds_id = dv.mdev_id		");
         sb.append("\nLEFT OUTER JOIN modem mo ON mo.id = dv.modem_id		");
         sb.append("\nLEFT OUTER JOIN mcu mc ON mc.sys_id = dv.device_id		");
@@ -3110,13 +3131,15 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         sb.append("\nLEFT OUTER JOIN customer cu ON cu.id = co.customer_id  ");
         sb.append("\nLEFT OUTER JOIN code code ON co.sic_id = code.id 		");
         sb.append("\nLEFT OUTER JOIN group_member gm ON gm.member = co.contract_number ");
-//        sb.append("\nLEFT OUTER JOIN ( ");
-//        sb.append("\n    SELECT dv.total_value, ");
-//        sb.append("\n           dv.mdev_id ");
-//        sb.append("\n    FROM ").append(dayView).append(" dv ");
-//        sb.append("\n    WHERE dv.yyyymmdd BETWEEN :prevStartDate AND :prevEndDate ");
-//        sb.append("\n    AND dv.channel     = 1             "); 
-//        sb.append("\n) pre ON dv.mdev_id = pre.mdev_id ");
+        
+        sb.append("\nLEFT OUTER JOIN ( 								");
+        sb.append("\n    SELECT MAX(dv2.value) as value, 			");
+        sb.append("\n           dv2.mdev_id 						");
+        sb.append("\n    FROM ").append(DayTable).append(" dv2 		");
+        sb.append("\n    WHERE dv2.yyyymmdd = :prevStartDate 		");
+        sb.append("\n    AND dv2.channel     = 1             		"); 
+        sb.append("\n    GROUP BY mdev_id, yyyymmdd    				"); 
+        sb.append("\n) pre ON dv.mdev_id = pre.mdev_id 				");
         
         sb.append("\nWHERE dv.yyyymmdd BETWEEN :startDate AND :endDate ");
         sb.append("\nAND dv.channel     = 1             "); 
@@ -3127,9 +3150,9 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         }
 
         if (meteringSF.equals("s")) {
-            sb.append("\nAND dv.total_value      IS NOT NULL ");
+            sb.append("\nAND dv.value      IS NOT NULL ");
         } else {
-            sb.append("\nAND dv.total_value      IS NULL     ");
+            sb.append("\nAND dv.value      IS NULL     ");
         }
 
         if (!mdevId.isEmpty()) {
@@ -3159,6 +3182,9 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         	}else {
                 sb.append("\nAND   UPPER(cu.name) = UPPER(:customerName) ");
         	}
+        }
+        if (!customerNumber.isEmpty()) {
+        	sb.append("\nAND   cu.customerNo LIKE :customerNumber ");
         }
         if (!mcuId.isEmpty()) {
         	if(mcuId.indexOf('%') == 0 || mcuId.indexOf('%') == (mcuId.length()-1)) { // %문자가 양 끝에 있을경우
@@ -3195,6 +3221,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         if (!contractGroup.isEmpty()) {
             sb.append("\nAND   gm.group_id = :contractGroup ");
         }
+        sb.append("\nGROUP BY dv.yyyymmdd, dv.mdev_id ");
         if (!isTotal) {
             sb.append("\nORDER BY dv.yyyymmdd, dv.mdev_id ");
         }
@@ -3202,6 +3229,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         SQLQuery query = getSession().createSQLQuery(new SQLWrapper().getQuery(sb.toString()));
         query.setString("startDate", startDate);
         query.setString("endDate", endDate);
+        query.setString("prevStartDate", prevStartDate);
         query.setInteger("supplierId", supplierId);
 //        query.setString("prevStartDate", prevStartDate);
 //        query.setString("prevEndDate", prevEndDate);
@@ -3240,6 +3268,9 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         }
         if (!customerName.isEmpty()) {
             query.setString("customerName", customerName);
+        }
+        if (!customerNumber.isEmpty()) {
+            query.setString("customerNumber", customerNumber+"%");
         }
         if (!mcuId.isEmpty()) {
             query.setString("mcuId", mcuId);
@@ -3517,6 +3548,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         Integer limit = (Integer)conditionMap.get("limit");
         String contractNumber = StringUtil.nullToBlank(conditionMap.get("contractNumber"));
         String customerName = StringUtil.nullToBlank(conditionMap.get("customerName"));
+        String customerNumber = StringUtil.nullToBlank(conditionMap.get("customerNumber"));
         String meteringSF = StringUtil.nullToBlank(conditionMap.get("meteringSF"));
         String startDate = StringUtil.nullToBlank(conditionMap.get("startDate"));
         String endDate = StringUtil.nullToBlank(conditionMap.get("endDate"));
@@ -3537,20 +3569,21 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         StringBuilder sb = new StringBuilder();
 
         if (isTotal) {
-            sb.append("\nSELECT COUNT(NVL(max(dv.total_value),0))		");
+            sb.append("\nSELECT COUNT(NVL(max(dv.value),0))		");
         } else {
             sb.append("\nSELECT dv.mdev_id AS METER_NO,			");
             sb.append("\n       co.contract_number AS CONTRACT_NUMBER,	");
+            sb.append("\n       MAX(cu.customerNo) AS CUSTOMER_NUMBER,	");
             sb.append("\n       MAX(cu.name) AS CUSTOMER_NAME,		");
             sb.append("\n       MAX(mo.device_serial) AS MODEM_ID,	");
             sb.append("\n       MAX(code.name) AS SIC_NAME,			");
-            sb.append("\n       MAX(dv.total_value) AS VALUE_MAX,	");
-            sb.append("\n       SUM(dv.total_value) AS VALUE_SUM,	");
-            sb.append("\n       mt.gs1 AS GS1,	");
-            sb.append("\n       MAX(x.ch_method) AS CH_METHOD ");
-//            sb.append("\n       max(pre.total_value) AS PRE_VALUE	");
+            sb.append("\n       MAX(dv.value) AS VALUE_MAX,			");
+            sb.append("\n       SUM(dv.value) AS VALUE_SUM,			");
+            sb.append("\n       mt.gs1 AS GS1,						");
+            sb.append("\n       MAX(dv.ch_method) AS CH_METHOD, 	");
+            sb.append("\n       max(pre.value) AS PRE_VALUE			");
         }
-        sb.append("\nFROM ").append(dayView).append(" dv ");
+        sb.append("\nFROM ").append(dayTable).append(" dv 					");
         sb.append("\nLEFT OUTER JOIN meter mt ON mt.mds_id = dv.mdev_id		");
         sb.append("\nLEFT OUTER JOIN modem mo ON mo.id = dv.modem_id		");
         sb.append("\nLEFT OUTER JOIN mcu mc ON mc.sys_id = dv.device_id		");
@@ -3560,22 +3593,14 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         sb.append("\nLEFT OUTER JOIN group_member gm ON gm.member = co.contract_number ");
         
         // Prev Week join
-//        sb.append("\nLEFT OUTER JOIN ( 					"); 
-//        sb.append("\n    SELECT max(dv.total_value) AS TOTAL_VALUE,	");
-//        sb.append("\n           dv.mdev_id 				");
-//        sb.append("\n    FROM ").append(dayView).append(" dv ");
-//        sb.append("\n    WHERE dv.yyyymmdd BETWEEN :prevStartDate AND :prevEndDate ");
-//        sb.append("\n    AND dv.channel     = 1			"); 
-//        sb.append("\n    GROUP BY dv.mdev_id			"); 
-//        sb.append("\n) pre ON dv.mdev_id = pre.mdev_id	");
-        
-        /* SUM/MAX값에 따라 분기 (OPF-2583) */
-        sb.append("\nLEFT OUTER JOIN ( 							");
-        sb.append("\n    SELECT DISTINCT de.mdev_id, 			");
-        sb.append("\n           de.ch_method 					");
-        sb.append("\n    FROM ").append(dayTable).append(" de	");
-        sb.append("\n    WHERE de.yyyymmdd BETWEEN :startDate AND :endDate ");
-        sb.append("\n) x ON dv.mdev_id = x.mdev_id 				");
+        sb.append("\nLEFT OUTER JOIN ( 								"); 
+        sb.append("\n    SELECT max(dv2.value) as value,			");
+        sb.append("\n           dv2.mdev_id 						");
+        sb.append("\n    FROM ").append(dayTable).append(" dv2 		");
+        sb.append("\n    WHERE dv2.yyyymmdd = :prevStartDate 		");
+        sb.append("\n    AND dv2.channel     = 1					"); 
+        sb.append("\n    GROUP BY dv2.mdev_id, dv2.yyyymmdd			"); 
+        sb.append("\n) pre ON dv.mdev_id = pre.mdev_id				");
         
         sb.append("\nWHERE dv.yyyymmdd BETWEEN :startDate AND :endDate ");
         sb.append("\nAND dv.channel     = 1             "); 
@@ -3585,9 +3610,9 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
             sb.append("\n    AND   dv.mdev_type = :deviceType ");
         }
         if (meteringSF.equals("s")) {
-            sb.append("\n    AND   dv.total_value IS NOT NULL ");
+            sb.append("\n    AND   dv.value IS NOT NULL ");
         } else {
-            sb.append("\n    AND   dv.total_value IS NULL ");
+            sb.append("\n    AND   dv.value IS NULL ");
         }
         if (!mdevId.isEmpty()) {
         	if(mdevId.indexOf('%') == 0 || mdevId.indexOf('%') == (mdevId.length()-1)) { // %문자가 양 끝에 있을경우
@@ -3616,6 +3641,9 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         	}else {
                 sb.append("\n    AND   UPPER(cu.name) = UPPER(:customerName) ");
         	}
+        }
+        if (!customerNumber.isEmpty()) {
+        	sb.append("\n    AND   cu.customerNo LIKE :customerNumber ");
         }
         if (!mcuId.isEmpty()) {
         	if(mcuId.indexOf('%') == 0 || mcuId.indexOf('%') == (mcuId.length()-1)) { // %문자가 양 끝에 있을경우
@@ -3658,7 +3686,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         query.setString("startDate", startDate);
         query.setString("endDate", endDate);
         query.setInteger("supplierId", supplierId);
-//        query.setString("prevStartDate", prevStartDate);
+        query.setString("prevStartDate", prevStartDate);
 //        query.setString("prevEndDate", prevEndDate);
 
         if (!deviceType.isEmpty()) {
@@ -3700,7 +3728,11 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         if (!customerName.isEmpty()) {
             query.setString("customerName", customerName);
         }
-
+        
+        if (!customerNumber.isEmpty()) {
+            query.setString("customerNumber", customerNumber+"%");
+        }
+        
         if (!mcuId.isEmpty()) {
             query.setString("mcuId", mcuId);
         }
@@ -4971,7 +5003,9 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         String endDate = null;
         String startHour = StringUtil.nullToBlank(conditionMap.get("startHour"));
         String endHour = StringUtil.nullToBlank(conditionMap.get("endHour"));
+        String prevStartDate = StringUtil.nullToBlank(conditionMap.get("prevStartDate"));
         String contractNumber = StringUtil.nullToBlank(conditionMap.get("contractNumber"));
+        String customerNumber = StringUtil.nullToBlank(conditionMap.get("customerNumber"));
         String customerName = StringUtil.nullToBlank(conditionMap.get("customerName"));
         String mdsId = StringUtil.nullToBlank(conditionMap.get("friendlyName"));
         String meteringSF = StringUtil.nullToBlank(conditionMap.get("meteringSF"));
@@ -5005,10 +5039,13 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         	sb.append("\n		de.dst AS DST,				");
         	sb.append("\n		de.mdev_id AS METER_NO,		");
         	sb.append("\n		mt.friendly_name AS FRIENDLY_NAME,");
-        	sb.append("\n		mt.gs1 AS GS1,");
+        	sb.append("\n		mt.gs1 AS GS1,				");
         	sb.append("\n		co.contract_number,			");
+            sb.append("\n       cu.customerNo AS CUSTOMER_NUMBER,	");
+            sb.append("\n       cu.name AS CUSTOMER_NAME,			");
         	sb.append("\n		code.name AS SIC_NAME,		");
         	sb.append("\n		mo.device_serial AS MODEM_ID,");
+        	sb.append("\n       pre.value AS PRE_VALUE,	 	");
         	sb.append("\n		de.value AS VALUE			");
         }
         sb.append("\nFROM ").append(dayTable).append(" de 				"); 
@@ -5019,6 +5056,17 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         sb.append("\nLEFT OUTER JOIN customer cu ON cu.id = co.customer_id	");
         sb.append("\nLEFT OUTER JOIN code code ON co.sic_id = code.id 		");
         sb.append("\nLEFT OUTER JOIN group_member gm ON gm.member = co.contract_number ");
+        
+        sb.append("\nLEFT OUTER JOIN ( 								");
+        sb.append("\n    SELECT MAX(dv2.value) as value, 					");
+        sb.append("\n           dv2.mdev_id 						");
+        sb.append("\n    FROM ").append(dayTable).append(" dv2 		");
+        sb.append("\n    WHERE dv2.yyyymmdd BETWEEN :prevStartDate AND :startDate ");
+        sb.append("\n		AND dv2.hh >= CASE dv2.yyyymmdd WHEN :prevStartDate THEN :startHour ELSE '00' END "); 
+        sb.append("\n	 	AND dv2.hh <= CASE dv2.yyyymmdd WHEN :startDate   THEN :startHour   ELSE '23' END "); 
+        sb.append("\n    AND dv2.channel     = 1             		"); 
+        sb.append("\n    GROUP BY mdev_id             				"); 
+        sb.append("\n) pre ON de.mdev_id = pre.mdev_id 				");
 
         sb.append("\nWHERE de.yyyymmdd BETWEEN :startDate AND :endDate "); 
         sb.append("\nAND de.hh >= CASE de.yyyymmdd WHEN :startDate THEN :startHour ELSE '00' END "); 
@@ -5057,6 +5105,10 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         	}else {
                 sb.append("\nAND   UPPER(cu.name) = UPPER(:customerName) ");
         	}
+        }
+        
+        if (!customerNumber.isEmpty()) {
+        	sb.append("\nAND   cu.customerNo LIKE :customerNumber ");
         }
 
         if (!mcuId.isEmpty()) {
@@ -5113,6 +5165,7 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
 
         query.setString("startDate", startDate);
         query.setString("endDate", endDate);
+        query.setString("prevStartDate", prevStartDate);
         query.setString("startHour", startHour);
         query.setString("endHour", endHour);
         query.setInteger("supplierId", supplierId);
@@ -5160,7 +5213,11 @@ public class MeteringDayDaoImpl extends AbstractHibernateGenericDao<MeteringDay,
         if (!customerName.isEmpty()) {
             query.setString("customerName", customerName);
         }
-
+        
+        if (!customerNumber.isEmpty()) {
+            query.setString("customerNumber", customerNumber+"%");
+        }
+        
         if (!mcuId.isEmpty()) {
             query.setString("mcuId", mcuId);
         }
