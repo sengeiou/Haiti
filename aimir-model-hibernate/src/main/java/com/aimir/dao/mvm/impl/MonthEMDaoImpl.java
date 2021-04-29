@@ -1487,8 +1487,8 @@ public class MonthEMDaoImpl extends
 		StringBuilder sb = new StringBuilder()
 				.append(
 //						" SELECT m.id.yyyymm as DATE, m.total as TOTAL			       ")
-						" SELECT m.id.yyyymm as DATE, sum(m.value) as TOTAL			       ")
-				.append("   FROM MonthEM m                       			           ")
+						" SELECT m.id.yyyymm as DATE, sum(m.total_value) as TOTAL			       ")
+				.append("   FROM MonthEMView m                       			           ")
 				.append("  WHERE m.id.channel = :channel                               ")
 				.append("    AND m.contract.serviceTypeCode.code = :serviceTypeCode    ")
 				.append("    AND m.contract.status.code = :status                      ")

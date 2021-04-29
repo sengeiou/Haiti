@@ -115,7 +115,7 @@ public class MeteringDataMakeExcel {
             cell.setCellStyle(titleCellStyle);
 
             cell = row.createCell(cellCnt++);
-            cell.setCellValue(msgMap.get("contractNumber"));
+            cell.setCellValue(msgMap.get("customerNumber"));
             cell.setCellStyle(titleCellStyle);
             
             cell = row.createCell(cellCnt++);
@@ -165,7 +165,7 @@ public class MeteringDataMakeExcel {
                 cell.setCellStyle(noCellStyle);
 
                 cell = row.createCell(cellCnt++);
-                cell.setCellValue((String)resultMap.get("contractNumber"));
+                cell.setCellValue((String)resultMap.get("customerNumber"));
                 cell.setCellStyle(dataCellStyle);
 
                 cell = row.createCell(cellCnt++);
