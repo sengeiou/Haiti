@@ -175,9 +175,8 @@
             </tr>
         </table>
 
-
         <div id="btn-right" class="btn_right_bottom">
-            <ul><li><a href="#" id="operatorDelete"><fmt:message key="aimir.button.delete" /></a></li></ul>
+            <%-- <ul><li><a href="#" id="operatorDelete"><fmt:message key="aimir.button.delete" /></a></li></ul> --%>
             <ul><li><a href="#" id="openOperatorUpdateForm" ><fmt:message key="aimir.update"/></a></li></ul>
         </div>
 

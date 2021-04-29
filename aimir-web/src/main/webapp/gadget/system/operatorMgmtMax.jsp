@@ -105,7 +105,8 @@ response.setDateHeader ("Expires", -1); //prevents caching at the proxy
     fmtMessage[1] = "<fmt:message key="aimir.name.user"/>";   // 사용자 이름
     fmtMessage[2] = "<fmt:message key="aimir.tel.no"/>";  // 연락처
     fmtMessage[3] = "<fmt:message key="aimir.email"/>";    // E-mail
-    fmtMessage[4] = "<fmt:message key="aimir.user.logindenied"/>";      // 접속제한
+    /* fmtMessage[4] = "<fmt:message key="aimir.user.logindenied"/>";      // 접속제한 */
+    fmtMessage[4] = "<fmt:message key="aimir.login.deny"/>";      // 접속제한    
     fmtMessage[5] = "<fmt:message key="aimir.board.location"/>";      // 지역
     
     fmtMessage[6] = "<fmt:message key="aimir.number"/>";   //번호
@@ -208,6 +209,14 @@ response.setDateHeader ("Expires", -1); //prevents caching at the proxy
                     });
                 },
                 load: function(store, record, options) {
+                	if(record.length > 0) {
+                		for(var n=0; n<record.length, n++) {
+                			if(record[n].data.loginDenied == "false")
+                				record[n].data.loginDenied = "NO";
+                			else
+                				record[n].data.loginDenied = "YES";
+                		}
+                	}
                     makeOperatorListGridPanel();
                 }
             }
@@ -218,6 +227,7 @@ response.setDateHeader ("Expires", -1); //prevents caching at the proxy
 
 
     function makeOperatorListGridPanel() {
+    	HSW
         var width = $("#OperatorListDiv").width();
 
         colModel = new Ext.grid.ColumnModel({
@@ -237,7 +247,7 @@ response.setDateHeader ("Expires", -1); //prevents caching at the proxy
                 align: 'left',
                 width : width/5,
                 dataIndex : "name"
-            }, {
+            },{
                 header: fmtMessage[2],
                 width: width/5,
                 align: 'left',
@@ -247,6 +257,11 @@ response.setDateHeader ("Expires", -1); //prevents caching at the proxy
                 width: width/5,
                 align: 'left',
                 dataIndex: "email"
+            },{
+                header: fmtMessage[4],
+                align: 'left',
+                width : width/5,
+                dataIndex : "loginDenied"
             },{
                 header: fmtMessage[5],
                 width: width/5,
