@@ -177,13 +177,6 @@ response.setDateHeader ("Expires", -1); //prevents caching at the proxy
         }
     	openOperatorAddForm();
     }
-
-    
-    function setBtnDivWidh() {        
-		var twidth = $(this.operatorDetailForm).children('table').width();		
-		$('#operatorDetailForm').find('#btn-right').width(twidth);
-		$('#operatorDetailForm').find('#btn-right').css('float','left');
-    }
     
     //사용자 목록 그리드  그리기.
     var operatorGridStore;
@@ -298,7 +291,6 @@ response.setDateHeader ("Expires", -1); //prevents caching at the proxy
                         rowselect : function(selectionModel, rowIndex, record) {
                             var param = record.data;
                             getDetailOperator(param.id);
-                            setBtnDivWidh();
                         }
                     }
                 }),
