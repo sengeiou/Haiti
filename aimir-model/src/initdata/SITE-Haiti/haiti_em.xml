@@ -979,6 +979,8 @@
     <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.3"   model="NZC I211"    level="2"   desc="Self Dignosis" />
     <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.8"   model="NZC I211"    level="2"   desc="Time Synchronization" />
     <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.10"  model="NZC I211"    level="2"   desc="Reset" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.22"  model="NZC I211"    level="2"   desc="Ping" />
+    <device.OperationList  deviceTypeCode="1.1.1.3" operationCode="8.3.23"  model="NZC I211"    level="2"   desc="Trace Route" />
     
     <system.DeviceModel 
         deviceVendor="NURITelecom"
@@ -1039,6 +1041,24 @@
         name="NAMR-P109SR"
         deviceModel="NAMR-P109SR"
     /> 
+        
+<!--     <device.OperationList  deviceTypeCode="1.2.1.1" operationCode="8.2.14"  model="NAMR-P109SR"    level="2"   desc="Ping" />
+    <device.OperationList  deviceTypeCode="1.2.1.1" operationCode="8.2.15"  model="NAMR-P109SR"    level="2"   desc="Trace Route" /> -->   
+
+	<system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="125"
+        deviceType="1.2.1.26"
+        name="NAMR-P226SR"
+    />
+
+    <system.ModemConfig 
+        name="NAMR-P109SR"
+        deviceModel="NAMR-P226SR"
+    /> 
+        
+    <!-- <device.OperationList  deviceTypeCode="1.2.1.26" operationCode="8.2.14"  model="NAMR-P226SR"    level="2"   desc="Ping" />
+    <device.OperationList  deviceTypeCode="1.2.1.26" operationCode="8.2.15"  model="NAMR-P226SR"    level="2"   desc="Trace Route" /> -->
 
     <system.DeviceModel 
         deviceVendor="NURITelecom"
@@ -1097,6 +1117,9 @@
     <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.1"   model="I210+"   level="2"   desc="On Demand Metering" />
     <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.3"   model="I210+"   level="2"   desc="Meter Time Synchronization" />
     <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.4"   model="I210+"   level="2"   desc="Relay Switch" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.8"   model="I210+"   level="2"   desc="Relay Status" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.9"   model="I210+"   level="2"   desc="Relay On" />
+    <device.OperationList  deviceTypeCode="1.3.1.1" operationCode="8.1.10"  model="I210+"   level="2"   desc="Relay Off" />
 
     <system.DeviceModel 
         deviceVendor="Sensus"
@@ -1273,7 +1296,16 @@
                        troubleAdvice='' 
                        oid='203.109.0' 
                        monitor='SaveAndMonitor' 
-                       timeout='840'/>                                                   
+                       timeout='840'/>
+    <device.EventAlert eventAlertType='Alert' 
+                       severity='Warning' 
+                       name='MCU Battery Error' 
+                       descr='MCU Battery Error' 
+                       msgPattern='$(event.eventAttrs.message)' 
+                       troubleAdvice='' 
+                       oid='200.30.0' 
+                       monitor='SaveAndMonitor' 
+                       timeout='840'/>       
     
     <!-- Meter Event -->
     <device.MeterEvent 

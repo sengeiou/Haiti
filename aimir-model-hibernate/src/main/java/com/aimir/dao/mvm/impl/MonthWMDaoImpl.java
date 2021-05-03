@@ -268,7 +268,7 @@ public class MonthWMDaoImpl extends AbstractHibernateGenericDao<MonthWM, Integer
 			sb.append("   AND m.contract.tariffIndex = :tariffIndex ");
 		}
 		if(!"".equals(customerName)) {			
-			sb.append("   AND m.contract.customer.name = :customerName ");
+			sb.append("   AND UPPER(m.contract.customer.name) = UPPER(:customerName) ");
 		}
 		if(!"".equals(contractNo)) {			
 			sb.append("   AND m.contract.contractNumber = :contractNo ");
@@ -344,7 +344,7 @@ public class MonthWMDaoImpl extends AbstractHibernateGenericDao<MonthWM, Integer
 			sb.append("   AND m.contract.tariffIndex = :tariffIndex ");
 		}
 		if(!"".equals(customerName)) {			
-			sb.append("   AND m.contract.customer.name = :customerName ");
+			sb.append("   AND UPPER(m.contract.customer.name) = UPPER(:customerName) ");
 		}
 		if(!"".equals(contractNo)) {			
 			sb.append("   AND m.contract.contractNumber = :contractNo ");

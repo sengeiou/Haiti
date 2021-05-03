@@ -511,6 +511,7 @@ public class MeteringFailureManagerImpl implements MeteringFailureManager{
             meterData.setAddress     (StringUtil.nullToBlank(objs[i++]));
             meterData.setMdsId       (StringUtil.nullToBlank(objs[i++]));
             meterData.setMeterId     (StringUtil.nullToBlank(objs[i++]));
+            meterData.setGs1         (StringUtil.nullToBlank(objs[i++]));
             meterData.setMeterAddress(StringUtil.nullToBlank(objs[i++]));
             meterData.setModemId     (StringUtil.nullToBlank(objs[i++]));
             meterData.setMcuId       (StringUtil.nullToBlank(objs[i++]));

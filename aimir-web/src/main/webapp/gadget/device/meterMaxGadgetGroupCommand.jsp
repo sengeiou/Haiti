@@ -242,7 +242,8 @@
         }
    		else{
             // captcha success action is connected by targetService
-            CaptchaPanel();
+            //CaptchaPanel();
+   			setTimeout(targetService, 100);
         }
     }
 

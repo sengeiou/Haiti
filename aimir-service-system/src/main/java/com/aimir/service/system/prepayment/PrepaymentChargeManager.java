@@ -205,4 +205,6 @@ public interface PrepaymentChargeManager {
      * @param isValid
      */
     public void SMSNotificationForECG(Contract contract, Double amount, Double preCurrentCredit, Boolean isValid);
+    
+    public Map<String, Object> getVatByFixedVariable(String name, Integer tariffId, String applydate);
 }

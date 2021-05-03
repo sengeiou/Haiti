@@ -179,7 +179,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 
         queryBuffer.append(" SELECT   c.id ");
         queryBuffer.append(" FROM     Contract c INNER JOIN c.customer m  ");
-        queryBuffer.append(" WHERE m.name LIKE " + new StringBuilder().append('%').append(name).append('%').toString() + " ");
+        queryBuffer.append(" WHERE UPPER(m.name) LIKE UPPER(" + new StringBuilder().append('%').append(name).append('%').toString() + ") ");
         
         Query query = getSession().createQuery(queryBuffer.toString());
         return query.list();
@@ -472,7 +472,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("AND cust.customerNo like :customerNo ");
         }
         if(!"".equals(customerName)){
-            sb.append("AND cust.NAME like :customerName ");
+            sb.append("AND UPPER(cust.NAME) like UPPER(:customerName) ");
         }
         if(locationIdList != null) sb.append("AND loc.id IN (:locationIdList) ");
         if(!"".equals(address)) sb.append("AND cust.ADDRESS like :address ");
@@ -516,10 +516,15 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         String customerNo = (String)conditionMap.get("customerNo");
         String customerName = (String)conditionMap.get("customerName");
         String mdsId = (String)conditionMap.get("mdsId");
+        String gs1 = StringUtil.nullToBlank(conditionMap.get("gs1"));
         String sicId = StringUtil.nullToBlank(conditionMap.get("customerType"));
         String operatorId = StringUtil.nullToBlank(conditionMap.get("operatorId"));
         String startDate = StringUtil.nullToBlank(conditionMap.get("startDate"));
         String endDate = StringUtil.nullToBlank(conditionMap.get("endDate"));
+        String phoneNumber = StringUtil.nullToBlank(conditionMap.get("phoneNumber"));
+        String barcode = StringUtil.nullToBlank(conditionMap.get("barcode"));
+        String oldMdsId = StringUtil.nullToBlank(conditionMap.get("oldMdsId"));
+        String tariffType = StringUtil.nullToBlank(conditionMap.get("tariffType"));
         String[] sicIds = sicId.split(",");
         List<Integer> sicIdList = new ArrayList<Integer>();
 
@@ -540,6 +545,8 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         sb.append("FROM Contract cont ");
         sb.append("     RIGHT OUTER JOIN ");
         sb.append("     cont.customer cust ");
+        sb.append("     LEFT OUTER JOIN ");
+        sb.append("     cont.meter me ");
         sb.append("WHERE cust.supplier.id = :supplierId ");
 
         if (!contractNumber.isEmpty()) {
@@ -551,7 +558,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         }
 
         if (!"".equals(customerName)) {
-            sb.append("AND   cust.name LIKE :customerName ");
+            sb.append("AND   UPPER(cust.name) LIKE UPPER(:customerName) ");
         }
 
         if (locationIdList != null) {
@@ -565,6 +572,22 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("    OR cust.address3 LIKE :address) ");
         }
 
+        if (!"".equals(phoneNumber)) {
+            sb.append("AND   cust.mobileNo = :phoneNumber ");
+        }
+        if (!"".equals(barcode)) {
+            sb.append("AND   cont.barcode = :barcode ");
+        }
+        if (!"".equals(oldMdsId)) {
+            sb.append("AND   cont.preMdsId = :oldMdsId ");
+        }
+        if (!"".equals(tariffType)) {
+            sb.append("AND   cont.tariffIndexId = :tariffType ");
+        }
+        if (!"".equals(gs1)) {
+            sb.append("AND   me.gs1 = :gs1 ");
+        }
+        
         if (!"".equals(serviceType) && !serviceType.equals("null")) {
             sb.append("AND   cont.serviceTypeCode.id = :serviceType ");
         }
@@ -617,6 +640,21 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 
         if (!"".equals(mdsId)) {
             query.setString("mdsId", mdsId+"%");
+        }
+        if (!"".equals(gs1)) {
+            query.setString("gs1", gs1);
+        }
+        if (!"".equals(phoneNumber)) {
+            query.setString("phoneNumber", phoneNumber);
+        }
+        if (!"".equals(barcode)) {
+            query.setString("barcode", barcode);
+        }
+        if (!"".equals(oldMdsId)) {
+            query.setString("oldMdsId", oldMdsId);
+        }
+        if (!"".equals(tariffType)) {
+            query.setInteger("tariffType", Integer.parseInt(tariffType));
         }
 
         if (sicIdList.size() > 0) {
@@ -674,10 +712,15 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
                 sicIdList.add(Integer.valueOf(obj));
             }
         }
-
+        String gs1 = StringUtil.nullToBlank(conditionMap.get("gs1"));
         String address = (String)conditionMap.get("address");
         String serviceType = (String)conditionMap.get("serviceType");
         String supplierId = (String)conditionMap.get("supplierId");
+        String phoneNumber = StringUtil.nullToBlank(conditionMap.get("phoneNumber"));
+        String barcode = StringUtil.nullToBlank(conditionMap.get("barcode"));
+        String oldMdsId = StringUtil.nullToBlank(conditionMap.get("oldMdsId"));
+        String tariffType = StringUtil.nullToBlank(conditionMap.get("tariffType"));
+        
         List<Integer> locationIdList = (List<Integer>)conditionMap.get("locationIdList");
 
         StringBuilder sb = new StringBuilder();
@@ -686,6 +729,8 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("SELECT COUNT(DISTINCT cust.id) AS cnt ");
         } else {
             sb.append("SELECT DISTINCT cust.id AS CUSTOMER_ID, ");
+//            sb.append("       me.gs1 AS GS1, ");
+//            sb.append("       cont.contractNumber AS CONTRACT_NUMBER, ");
             sb.append("       cust.name AS CUSTOMER_NAME, ");
             sb.append("       cust.address AS CUSTOMER_ADDRESS, ");
             sb.append("       cust.address1 AS CUSTOMER_ADDRESS1, ");
@@ -696,6 +741,8 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         sb.append("FROM Contract cont ");
         sb.append("     RIGHT OUTER JOIN ");
         sb.append("     cont.customer cust ");
+        sb.append("     LEFT OUTER JOIN ");
+        sb.append("     cont.meter me ");
         sb.append("WHERE cust.supplier.id = :supplierId ");
         if (!contractNumber.isEmpty()) {
             sb.append("AND   cont.contractNumber LIKE :contractNumber ");
@@ -704,7 +751,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("AND   cust.customerNo LIKE :customerNo ");
         }
         if (!"".equals(customerName)) {
-            sb.append("AND   cust.name LIKE :customerName ");
+            sb.append("AND   UPPER(cust.name) LIKE UPPER(:customerName) ");
         }
         if (locationIdList != null) {
             sb.append("AND   cont.location.id IN (:locationIdList) ");
@@ -715,20 +762,35 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("    OR cust.address2 LIKE :address ");
             sb.append("    OR cust.address3 LIKE :address) ");
         }
+        if (!"".equals(phoneNumber)) {
+            sb.append("AND   cust.mobileNo = :phoneNumber ");
+        }
         if (!"".equals(serviceType) && !serviceType.equals("null")) {
-            sb.append("AND   cont.serviceTypeCode.id = :serviceType ");
+        	sb.append("AND   cont.serviceTypeCode.id = :serviceType ");
         }
         if(!"".equals(operatorId)) {
-            sb.append("AND   cont.operator.id = :operatorId ");
+        	sb.append("AND   cont.operator.id = :operatorId ");
         }
         if (!"".equals(startDate)) {
-            sb.append("\nAND   cont.contractDate >= :startDate ");
+        	sb.append("\nAND   cont.contractDate >= :startDate ");
         }
         if (!"".equals(endDate)) {
-            sb.append("\nAND   cont.contractDate <= :endDate ");
+        	sb.append("\nAND   cont.contractDate <= :endDate ");
         }
         if (!"".equals(mdsId)) {
-            sb.append("AND   cont.meter.mdsId LIKE :mdsId ");
+        	sb.append("AND   cont.meter.mdsId LIKE :mdsId ");
+        }
+        if (!"".equals(barcode)) {
+            sb.append("AND   cont.barcode = :barcode ");
+        }
+        if (!"".equals(oldMdsId)) {
+            sb.append("AND   cont.preMdsId = :oldMdsId ");
+        }
+        if (!"".equals(tariffType)) {
+            sb.append("AND   cont.tariffIndexId = :tariffType ");
+        }
+        if (!"".equals(gs1)) {
+            sb.append("AND   me.gs1 = :gs1 ");
         }
         if (sicIdList.size() > 0) {
             sb.append("AND   cont.sic.id IN (:sicIdList) ");
@@ -772,6 +834,21 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         }
         if (!"".equals(mdsId)) {
             query.setString("mdsId", mdsId+"%");
+        }
+        if (!"".equals(gs1)) {
+            query.setString("gs1", gs1);
+        }
+        if (!"".equals(phoneNumber)) {
+            query.setString("phoneNumber", phoneNumber);
+        }
+        if (!"".equals(barcode)) {
+            query.setString("barcode", barcode);
+        }
+        if (!"".equals(oldMdsId)) {
+            query.setString("oldMdsId", oldMdsId);
+        }
+        if (!"".equals(tariffType)) {
+            query.setInteger("tariffType", Integer.parseInt(tariffType));
         }
         if (sicIdList.size() > 0) {
             query.setParameterList("sicIdList", sicIdList);
@@ -830,6 +907,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         sb.append("       loc.name AS LOCATION_NAME, ");
         sb.append("       cd1.descr AS SERVICETYPE_NAME, ");
         sb.append("       meter.mdsId AS MDS_ID, ");
+        sb.append("       meter.gs1 AS GS1, ");
         sb.append("       cd2.descr AS SIC_NAME, ");
         sb.append("       cd1.id AS SERVICETYPE_ID, ");
         sb.append("       cont.customer.customerNo AS CUSTOMER_NO ");
@@ -944,7 +1022,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 
         if(!contractNumber.isEmpty()) sb.append("AND cont.contract_number like :contractNumber");
         if(!"".equals(customerNo)) sb.append("AND cust.customerNo like :customerNo ");
-        if(!"".equals(customerName)) sb.append("AND cust.name LIKE :customerName ");
+        if(!"".equals(customerName)) sb.append("AND UPPER(cust.name) LIKE UPPER(:customerName) ");
         if(locationIdList != null) sb.append("AND loc.id IN (:locationIdList) ");
         if(!"".equals(address)) sb.append("AND cust.address LIKE :address ");
         if(!"".equals(serviceType) && !serviceType.equals("null")) sb.append("AND cd1.id = :serviceType  ");
@@ -989,12 +1067,13 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         sb.append("\n       i.descr AS sicName ,");
         sb.append("\n       i.id AS sicId ,");
         sb.append("\n       m.id AS meterId, ");
+        sb.append("\n       m.gs1 AS gs1, ");
         sb.append("\n       c.contractNumber AS contractNumber, ");
         sb.append("\n       c.barcode AS barcode, ");
         sb.append("\n       c.receiptNumber AS receiptNumber, ");
         sb.append("\n       c.amountPaid AS amountPaid, ");
         sb.append("\n       c.serviceType2 AS serviceType2, ");
-        sb.append("\n       c.oldArrears AS oldArrears, ");
+        sb.append("\n       c.currentArrears2 AS currentArrears2, ");
         sb.append("\n       c.currentArrears AS currentArrears, ");
         sb.append("\n       c.firstArrears AS firstArrears, ");
         sb.append("\n       c.arrearsPaymentCount AS arrearsPaymentCount, ");
@@ -1038,6 +1117,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         String status = (String)conditionMap.get("status");
         String demandResponse = (String)conditionMap.get("dr");
         String sicId = (String)conditionMap.get("customerType");
+        String gs1 = (String)conditionMap.get("gs1");
         String operatorId = StringUtil.nullToBlank(conditionMap.get("operatorId"));
         String[] sicIds = sicId.split(",");
         List<Integer> sicIdList = new ArrayList<Integer>();
@@ -1062,7 +1142,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 
         StringBuilder sb = new StringBuilder()
         .append(" SELECT cont.CONTRACT_NUMBER, cust.NAME as CUSTNAME, loc.NAME as LOCNAME, tariff.NAME as TARIFFNAME, ")
-        .append("        cont.CONTRACTDEMAND, cd1.NAME as CREDITTYPENAME, mt.MDS_ID, cd2.NAME as STATUSNAME,   ")
+        .append("        cont.CONTRACTDEMAND, cd1.NAME as CREDITTYPENAME, mt.MDS_ID, cd2.NAME as STATUSNAME, mt.gs1,  ")
         .append(" case when cust.DEMANDRESPONSE = 0 then 'Y' when cust.DEMANDRESPONSE = 1 then 'N' end as DEMANDRESPONSE,   ")
 //        .append("        cd4.NAME as CUSTOMTYPENAME, cust.EMAIL, cust.TELEPHONENO, cust.MOBILENO,  ")
         .append("        cd4.NAME as SICNAME, cust.EMAIL, cust.TELEPHONENO, cust.MOBILENO,  ")
@@ -1082,7 +1162,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 
         if(!"".equals(contractNumber)) sb.append(" AND cont.CONTRACT_NUMBER like :contractNumber ");
         if(!"".equals(customerNo)) sb.append(" AND cust.customerno like :customerNo ");
-        if(!"".equals(customerName)) sb.append(" AND cust.NAME like :customerName ");
+        if(!"".equals(customerName)) sb.append(" AND UPPER(cust.NAME) like UPPER(:customerName) ");
 //        if(!"".equals(locationId)) sb.append(" AND cont.LOCATION_ID = :locationId ");
         if(locationIdList != null) sb.append(" AND cont.LOCATION_ID IN (:locationIdList) ");
         if(!"".equals(tariffIndex)) sb.append(" AND cont.TARIFFINDEX_ID = :tariffIndex ");
@@ -1097,6 +1177,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         if(!"".equals(startDate)) sb.append(" AND cont.CONTRACT_DATE >= :startDate ");
         if(!"".equals(endDate)) sb.append(" AND cont.CONTRACT_DATE <= :endDate ");
         if(!"".equals(operatorId)) sb.append(" AND cont.operator_id = :operatorId");
+        if(!"".equals(gs1)) sb.append(" AND mt.gs1 = :gs1");
         int firstResult = page * pageSize;
 
         String serviceTypeCode = "";
@@ -1127,6 +1208,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         if(!"".equals(startDate)) query.setString("startDate", startDate);
         if(!"".equals(endDate)) query.setString("endDate", endDate);
         if(!"".equals(operatorId)) query.setInteger("operatorId", Integer.parseInt(operatorId));
+        if(!"".equals(gs1)) query.setString("gs1", gs1);
         query.setFirstResult(firstResult);
         query.setMaxResults(pageSize);
 
@@ -1151,6 +1233,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         String customerName = StringUtil.nullToBlank(conditionMap.get("customerName"));
         String contractDemand = StringUtil.nullToBlank(conditionMap.get("contractDemand"));
         String mdsId = StringUtil.nullToBlank(conditionMap.get("mdsId"));
+        String gs1 = StringUtil.nullToBlank(conditionMap.get("gs1"));
         String demandResponse = StringUtil.nullToBlank(conditionMap.get("dr"));
         String startDate = StringUtil.nullToBlank(conditionMap.get("startDate"));
         String endDate = StringUtil.nullToBlank(conditionMap.get("endDate"));
@@ -1186,6 +1269,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         sb.append("\n       cont.contractdemand AS CONTRACTDEMAND, ");
         sb.append("\n       cd1.descr AS CREDITTYPENAME, ");
         sb.append("\n       mt.mds_id AS MDS_ID, ");
+        sb.append("\n       mt.gs1 AS GS1, ");
         sb.append("\n       cd2.descr AS STATUSNAME, ");
         sb.append("\n       CASE WHEN cust.demandresponse = 0 THEN 'Y' ");
         sb.append("\n            WHEN cust.demandresponse = 1 THEN 'N' END AS DEMANDRESPONSE, ");
@@ -1225,7 +1309,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("\nAND   cust.customerno LIKE :customerNo ");
         }
         if (!customerName.isEmpty()) {
-            sb.append("\nAND   cust.name LIKE :customerName ");
+            sb.append("\nAND   UPPER(cust.name) LIKE UPPER(:customerName) ");
         }
         if (locationIdList != null && locationIdList.size() > 0) {
             sb.append("\nAND   cont.location_id IN (:locationIdList) ");
@@ -1241,6 +1325,9 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         }
         if (!mdsId.isEmpty()) {
             sb.append("\nAND   mt.mds_Id LIKE :mdsId ");
+        }
+        if (!gs1.isEmpty()) {
+            sb.append("\nAND   mt.gs1 LIKE :gs1 ");
         }
         if (status != null) {
             sb.append("\nAND   cont.status_id = :status");
@@ -1298,6 +1385,9 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         }
         if (!mdsId.isEmpty()) {
             query.setString("mdsId", mdsId+"%");
+        }
+        if (!gs1.isEmpty()) {
+            query.setString("gs1", gs1);
         }
         if (status != null) {
             query.setInteger("status", status);
@@ -1387,6 +1477,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
     public List<Map<String, Object>> getMeterGridList(Map<String, Object> conditionMap, boolean isCount) {
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
         String mdsId = StringUtil.nullToBlank(conditionMap.get("mdsId"));
+        String gs1 = StringUtil.nullToBlank(conditionMap.get("gs1"));
         Integer page = (Integer)conditionMap.get("page");
         Integer limit = (Integer)conditionMap.get("limit");
 
@@ -1396,22 +1487,27 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("\nSELECT COUNT(*) AS cnt ");
         } else {
             sb.append("\nSELECT mt.id AS id, ");
+            sb.append("\n       mt.gs1 AS gs1, ");
             sb.append("\n       mt.mdsId AS mdsId ");
         }
         sb.append("\nFROM Meter mt left outer join mt.meterStatus ms ");
 
-        if (!mdsId.isEmpty()) {
-            sb.append("\nWHERE mt.mdsId LIKE :mdsId ");
-            sb.append("\nAND (mt.meterStatus is null OR ms.name <> :deleteName) ");
-        } else {
-            sb.append("\nWHERE (mt.meterStatus is null OR ms.name <> :deleteName) ");
+        sb.append("\nWHERE (mt.meterStatus is null OR ms.name <> :deleteName) ");
+        
+        if (!gs1.isEmpty() && !"".equals(gs1)) {
+        	sb.append("\nAND mt.gs1 LIKE :gs1 ");
+        }else if (!mdsId.isEmpty() && !"".equals(mdsId)) {
+            sb.append("\nAND mt.mdsId LIKE :mdsId ");
         }
+        
         if (!isCount) {
             sb.append("\nORDER BY mt.mdsId ");
         }
 
         Query query = getSession().createQuery(new SQLWrapper().getQuery(sb.toString()));
-        if (!mdsId.isEmpty()) {
+        if (!gs1.isEmpty() && !"".equals(gs1)) {
+        	query.setString("gs1", "%" + gs1 + "%");
+        }else if (!mdsId.isEmpty() && !"".equals(mdsId)) {
             query.setString("mdsId", "%" + mdsId + "%");
         }
         query.setString("deleteName", MeterStatus.Delete.name());
@@ -1519,7 +1615,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 
         if(!"".equals(contractNumber)) sb.append(" AND cont.CONTRACT_NUMBER like :contractNumber ");
         if(!"".equals(customerNumber)) sb.append(" AND cust.customerno like :customerNumber ");
-        if(!"".equals(customerName)) sb.append(" AND cust.NAME like :customerName ");
+        if(!"".equals(customerName)) sb.append(" AND UPPER(cust.NAME) like UPPER(:customerName) ");
 //        if(!"".equals(locationId)) sb.append(" AND cont.LOCATION_ID = :locationId ");
         if(locationIdList != null) sb.append(" AND cont.LOCATION_ID IN (:locationIdList) ");
         if(!"".equals(tariffIndex)) sb.append(" AND cont.TARIFFINDEX_ID = :tariffIndex ");
@@ -1718,7 +1814,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("\nAND   cust.customerNo LIKE '"+ customerNo +"%' ");
         }
         if (!customerName.isEmpty()) {
-            sb.append("\nAND   cust.name LIKE '"+ customerName +"%' ");
+            sb.append("\nAND   UPPER(cust.name) LIKE UPPER('"+ customerName +"%') ");
         }
         if (locationIdList != null && locationIdList.size() > 0) {
             sb.append("\nAND   co.locationId  IN (" + locationIdList + ") ");
@@ -1845,7 +1941,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         .append("  WHERE 1 = 1 ");
 
         if(!"".equals(customerNo))   sb.append("    AND cust.customerNo = :customerNo ");
-        if(!"".equals(customerName)) sb.append("    AND cust.NAME = :customerName ");
+        if(!"".equals(customerName)) sb.append("    AND UPPER(cust.NAME) = UPPER(:customerName) ");
         if(!"".equals(locationId))   sb.append("    AND c.LOCATION_ID = :locationId ");
         if(!"".equals(address))      sb.append("    AND cust.ADDRESS like :address ");
         if(!"".equals(serviceType))  sb.append("    AND c.SERVICETYPE_ID = :serviceType ");
@@ -2246,9 +2342,11 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 
         String contractNumber = (String) conditionMap.get("contractNumber");
         String customerName = (String) conditionMap.get("customerName");
-        String statusCode = (String) conditionMap.get("statusCode");
+        String customerNumber = (String) conditionMap.get("customerNumber");
+        String statusCode 	= (String) conditionMap.get("statusCode");
         String amountStatus = StringUtil.nullToBlank(conditionMap.get("amountStatus"));
-        String mdsId = (String) conditionMap.get("mdsId");
+        String mdsId 		= (String) conditionMap.get("mdsId");
+        String gs1 			= (String) conditionMap.get("gs1");
         Integer[] locationCondition = (Integer[]) conditionMap.get("locationCondition");
         // String address = (String)conditionMap.get("address");
         String serviceTypeCode = (String) conditionMap.get("serviceTypeCode");
@@ -2266,9 +2364,11 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         } else {
             sb.append("\nSELECT c.contractNumber AS contractNumber, ");                        // Contract No.
             sb.append("\n       c.customer.name AS customerName, ");                           // Customer Name
+            sb.append("\n       c.customer.customerNo AS customerNumber, ");                   // customerNo
             sb.append("\n       c.customer.mobileNo AS mobileNo, ");                           // mobile No.
             sb.append("\n       m.mdsId AS mdsId, ");                                          // Meter ID
-            sb.append("\n       m.id AS meterId, ");   
+            sb.append("\n       m.id AS meterId, ");
+            sb.append("\n       m.gs1 AS gs1, ");  
             sb.append("\n       model.name AS modelName, ");
             sb.append("\n       mcu.sysID AS mcuId, ");
             sb.append("\n       c.serviceTypeCode.code AS serviceTypeCode, ");
@@ -2304,12 +2404,20 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("\nAND   c.meter.mdsId LIKE :mdsId||'%' ");
         }
 
+        if (gs1 != null && !gs1.isEmpty()) {
+            sb.append("\nAND   c.meter.gs1 LIKE :gs1 ");
+        }
+        
         if (locationCondition != null && locationCondition.length > 0) {
             sb.append("\nAND   c.location.id IN (:locationCondition) ");
         }
 
         if (customerName != null && !customerName.isEmpty()) {
-            sb.append("\nAND   c.customer.name LIKE '%'||:customerName||'%' ");
+            sb.append("\nAND   UPPER(c.customer.name) LIKE UPPER('%'||:customerName||'%') ");
+        }
+        
+        if (customerNumber !=null && !customerNumber.isEmpty()) {
+            sb.append("\nAND   c.customer.customerNo LIKE :customerNumber||'%' ");
         }
 
         if (statusCode != null && !statusCode.isEmpty()) {
@@ -2345,11 +2453,17 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         if (contractNumber != null && !contractNumber.isEmpty()) {
             query.setString("contractNumber", contractNumber);
         }
-
+        if (customerNumber != null && !customerNumber.isEmpty()) {
+            query.setString("customerNumber", customerNumber);
+        }
         if (mdsId != null && !mdsId.isEmpty()) {
             query.setString("mdsId", mdsId);
         }
 
+        if (gs1 != null && !gs1.isEmpty()) {
+            query.setString("gs1", '%'+gs1+'%');
+        }
+        
         if (locationCondition != null && locationCondition.length > 0) {
             query.setParameterList("locationCondition", locationCondition);
         }
@@ -2591,6 +2705,25 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 
         return query.list();
     }
+    
+    @Override
+	public List<Contract> getContract(String payType, String serviceType) {
+    	StringBuffer sb = new StringBuffer();
+
+        sb.append(" FROM     Contract c ");
+        sb.append(" WHERE    (c.creditType.code = :perpay or c.creditType.code = :emergencyCredit)");
+        sb.append(" and c.status.code != :status ");
+        sb.append(" and c.meter is not null and c.serviceTypeCode.name = :serviceType ");
+        sb.append(" and c.customer is not null ");
+
+        Query query = getSession().createQuery(sb.toString());
+        query.setString("perpay", payType);
+        query.setString("emergencyCredit", Code.EMERGENCY_CREDIT);
+        query.setString("status", Code.TERMINATION);
+        query.setString("serviceType", serviceType);
+
+        return query.list();
+	}
 
     @Override
     public int idOverlapCheck(String contractNo) {
@@ -2721,6 +2854,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         Integer supplierId = (Integer)conditionMap.get("supplierId");
         String barcode = StringUtil.nullToBlank(conditionMap.get("barcode"));
         String contractNumber = StringUtil.nullToBlank(conditionMap.get("contractNumber"));
+        String phone = StringUtil.nullToBlank(conditionMap.get("phone"));
         String customerNo = StringUtil.nullToBlank(conditionMap.get("customerNo"));
         String customerName = StringUtil.nullToBlank(conditionMap.get("customerName"));
         String mdsId = StringUtil.nullToBlank(conditionMap.get("mdsId"));
@@ -2734,18 +2868,20 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         } else {
             sb.append("\nSELECT cont.id AS contractId, ");
             sb.append("\n       meter.id AS meterId, ");
-            sb.append("\n       cont.customer.id AS customerId, ");
+            sb.append("\n       cust.id AS customerId, ");
             sb.append("\n       cont.contractNumber AS contractNumber, ");
             sb.append("\n       cont.currentCredit AS currentCredit, ");
             sb.append("\n       cont.currentArrears AS currentArrears, ");
+            sb.append("\n       cont.currentArrears2 AS currentArrears2, ");
             sb.append("\n       cont.contractPrice AS contractPrice, ");
-            sb.append("\n       cont.customer.customerNo AS customerNo, ");
-            sb.append("\n       cont.customer.name AS customerName, ");
+            sb.append("\n       cust.customerNo AS customerNo, ");
+            sb.append("\n       cust.mobileNo AS phone, ");
+            sb.append("\n       cust.name AS customerName, ");
             sb.append("\n       cont.barcode AS barcode, ");
-    //        sb.append("\n       cont.customer.address AS address, ");
-    //        sb.append("\n       cont.customer.address1 AS address1, ");
-            sb.append("\n       cont.customer.address2 AS address, ");
-    //        sb.append("\n       cont.customer.address3 AS address3, ");
+    //        sb.append("\n       cust.address AS address, ");
+    //        sb.append("\n       cust.address1 AS address1, ");
+            sb.append("\n       cust.address2 AS address, ");
+    //        sb.append("\n       cust.address3 AS address3, ");
             sb.append("\n       meter.mdsId AS mdsId, ");
             sb.append("\n       cont.lastTokenDate AS lastTokenDate, ");
             sb.append("\n       cont.lastTokenId AS lastTokenId, ");
@@ -2764,6 +2900,8 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         sb.append("\n     modem.mcu mcu");
         sb.append("\n     LEFT OUTER JOIN ");
         sb.append("\n     cont.status stat");
+        sb.append("\n     LEFT OUTER JOIN ");
+        sb.append("\n     cont.customer cust");
 
         sb.append("\nWHERE cont.supplier.id = :supplierId ");
         sb.append("\nAND   cont.creditType.code IN ('2.2.1', '2.2.2') ");   // prepay, emergency credit
@@ -2771,11 +2909,14 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         if (!contractNumber.isEmpty()) {
             sb.append("\nAND   cont.contractNumber LIKE :contractNumber ");
         }
+        if (!phone.isEmpty()) {
+            sb.append("\nAND   cust.mobileNo = :phone ");
+        }
         if (!customerNo.isEmpty()) {
             sb.append("\nAND   cont.customer.customerNo LIKE :customerNo ");
         }
         if (!customerName.isEmpty()) {
-            sb.append("\nAND   cont.customer.name LIKE :customerName ");
+            sb.append("\nAND   UPPER(cont.customer.name) LIKE UPPER(:customerName) ");
         }
         if (!mdsId.isEmpty()) {
             sb.append("\nAND   meter.mdsId LIKE :mdsId ");
@@ -2799,7 +2940,10 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             query.setString("customerNo", customerNo + "%");
         }
         if (!customerName.isEmpty()) {
-            query.setString("customerName", "%" + customerName + "%");
+            query.setString("customerName", customerName + "%");
+        }
+        if (!phone.isEmpty()) {
+            query.setString("phone", phone);
         }
         if (!mdsId.isEmpty()) {
             query.setString("mdsId", mdsId + "%");
@@ -3332,4 +3476,117 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         }
         return result;
     }
+    
+	@Override
+	public List<Contract> getReqSendSMSList(String mdevId) {
+		StringBuffer sbQuery = new StringBuffer();
+		
+		sbQuery.append(" SELECT ");
+		sbQuery.append("\n 	co.* ");
+		sbQuery.append("\n FROM ");
+		sbQuery.append("\n 	contract co, meter me, customer cu");
+		sbQuery.append("\n WHERE");
+		sbQuery.append("\n 	co.METER_ID = me.id");
+		sbQuery.append("\n 	AND co.CUSTOMER_ID = cu.id");
+		
+		if(mdevId != null && !mdevId.isEmpty()) {
+			sbQuery.append("\n 	AND me.MDS_ID = '").append(mdevId).append("'");
+		}
+		
+		sbQuery.append("\n 	AND me.meter_status != (select id from code where code = '1.3.3.9')");
+		sbQuery.append("\n 	AND co.status_id != (select id from code where code = '2.1.3')");
+		sbQuery.append("\n 	AND me.LAST_READ_DATE >= (SELECT TO_CHAR(SYSDATE -15 ,'yyyymmddhh24miss') FROM dual)");
+		
+		List<Contract> result = getSession().createNativeQuery(sbQuery.toString(), Contract.class).getResultList();
+		return result;
+	}
+    
+	@Override
+	public void updateExpiredEmergencyCredit() {
+		StringBuffer sbQuery = new StringBuffer();
+		
+		sbQuery.append("MERGE INTO contract co");
+		sbQuery.append("\n	USING (");
+		sbQuery.append("\n		SELECT"); 
+		sbQuery.append("\n			*");
+		sbQuery.append("\n		FROM ");
+		sbQuery.append("\n		(");
+		sbQuery.append("\n			SELECT ");
+		sbQuery.append("\n				co.id, me.MDS_ID, ");
+		sbQuery.append("\n				(SELECT name FROM code WHERE id = co.CREDITTYPE_ID) AS creditType,");
+		sbQuery.append("\n				co.EMERGENCYCREDITAUTOCHANGE,");
+		sbQuery.append("\n				co.EMERGENCYCREDITMAXDURATION,");
+		sbQuery.append("\n				co.EMERGENCYCREDITSTARTTIME,");
+		sbQuery.append("\n				TO_date(co.EMERGENCYCREDITSTARTTIME, 'YYYYMMDDHH24MISS') + co.EMERGENCYCREDITMAXDURATION as EMERGENCYCREDITENDTIME");
+		sbQuery.append("\n			FROM ");
+		sbQuery.append("\n				contract co, meter me");
+		sbQuery.append("\n			WHERE ");
+		sbQuery.append("\n				co.METER_ID = me.ID ");
+		sbQuery.append("\n				AND co.EMERGENCYCREDITSTARTTIME IS NOT NULL");
+		sbQuery.append("\n				AND co.EMERGENCYCREDITMAXDURATION IS NOT NULL");
+		sbQuery.append("\n				AND co.EMERGENCYCREDITMAXDURATION > 0");
+		sbQuery.append("\n		)a");
+		sbQuery.append("\n		WHERE ");
+		sbQuery.append("\n			a.EMERGENCYCREDITENDTIME <= SYSDATE	");
+		sbQuery.append("\n	)t");
+		sbQuery.append("\n	ON (");
+		sbQuery.append("\n		co.id = t.id");
+		sbQuery.append("\n	)when matched THEN");
+		sbQuery.append("\n		UPDATE SET");
+		sbQuery.append("\n			co.EMERGENCYCREDITAUTOCHANGE = NULL,");
+		sbQuery.append("\n			co.EMERGENCYCREDITMAXDURATION = NULL,");
+		sbQuery.append("\n			co.EMERGENCYCREDITSTARTTIME = NULL,");
+		sbQuery.append("\n			co.CREDITTYPE_ID = (SELECT id FROM code WHERE name = 'prepay')");
+		
+		int updateCnt = getSession().createNativeQuery(sbQuery.toString()).executeUpdate();
+		logger.debug("query : "+sbQuery.toString() +", updateCnt : " + updateCnt);
+	}
+
+	@Override
+	public List<Contract> getValidContractList(String mdevId) {
+		StringBuffer sbQuery = new StringBuffer();
+		
+		sbQuery.append(" SELECT ");
+		sbQuery.append("\n 	co.* ");
+		sbQuery.append("\n FROM ");
+		sbQuery.append("\n 	contract co, meter me");
+		sbQuery.append("\n WHERE");
+		sbQuery.append("\n 	co.METER_ID = me.id");		
+		sbQuery.append("\n 	AND me.meter_status != (select id from code where code = '1.3.3.9')");
+		sbQuery.append("\n 	AND co.status_id != (select id from code where code = '2.1.3')");
+		
+		if(mdevId != null  && !mdevId.isEmpty())
+			sbQuery.append("\n 	AND me.mds_id = " + mdevId);
+		
+		List<Contract> result = getSession().createNativeQuery(sbQuery.toString(), Contract.class).getResultList();
+		return result;
+	}
+	
+	@Override
+	public List<Contract> getMnthlyBillingContractList(String mdevId) {
+		StringBuffer sbQuery = new StringBuffer();
+		
+		sbQuery.append(" SELECT  ");
+		sbQuery.append("\n 	co.* ");
+		sbQuery.append("\n FROM  ");
+		sbQuery.append("\n ( ");
+		sbQuery.append("\n 	SELECT me.mds_id FROM meter me, contract co WHERE me.id = co.METER_ID  ");
+		sbQuery.append("\n 		AND (me.METER_STATUS IS NULL OR me.meter_status != (select id from code where code = '1.3.3.9')) ");
+		sbQuery.append("\n 		AND (co.status_id IS NULL OR co.status_id != (select id from code where code = '2.1.3')) ");
+		sbQuery.append("\n 		GROUP BY me.MDS_ID  ");
+		sbQuery.append("\n 	MINUS  ");
+		sbQuery.append("\n 	SELECT mb.MDS_ID FROM MONTHLY_BILLING_LOG mb  ");
+		sbQuery.append("\n 		WHERE mb.YYYYMM = (SELECT TO_CHAR(sysdate, 'YYYYMM') FROM DUAL) ");
+		sbQuery.append("\n 		GROUP BY mb.MDS_ID  ");
+		sbQuery.append("\n )a, meter me, contract co ");
+		sbQuery.append("\n WHERE ");
+		sbQuery.append("\n 	a.mds_id = me.MDS_ID ");
+		sbQuery.append("\n 	AND co.METER_ID = me.id ");
+		
+		if(mdevId != null  && !mdevId.isEmpty())
+			sbQuery.append("\n 	AND me.mds_id = " + mdevId);
+		
+		List<Contract> result = getSession().createNativeQuery(sbQuery.toString(), Contract.class).getResultList();
+		return result;
+	}
 }

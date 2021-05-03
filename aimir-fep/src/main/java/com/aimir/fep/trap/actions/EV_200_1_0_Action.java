@@ -90,8 +90,8 @@ public class EV_200_1_0_Action implements EV_Action
             String mobileMode = event.getEventAttrValue("sysMobileMode");
             String sysEtherType = event.getEventAttrValue("sysEtherType");
             
-            String sysHwVersion = "2.0";
-            String sysSwVersion = "3.1";
+            String defaultSysHwVersion = "2.0";
+            String defaultSysSwVersion = "3.1";
             String sysSwRevision = FMPProperty.getProperty("mcu.revision.install");
             
             log.debug("sysEtherType[" + sysEtherType + "]");
@@ -147,11 +147,9 @@ public class EV_200_1_0_Action implements EV_Action
             mcu.setSysPhoneNumber(sysPhoneNumber);
             mcu.setSysLocalPort(new Integer(listenPort));
             mcu.setProtocolType(CommonConstants.getProtocolByName(protocolType+""));
-            mcu.setSysHwVersion(sysHwVersion);
-            mcu.setSysSwVersion(sysSwVersion);
+            mcu.setSysHwVersion(defaultSysHwVersion);
+            mcu.setSysSwVersion(defaultSysSwVersion);
             mcu.setSysSwRevision(sysSwRevision);
-            
-            
             
             // if not mcu, it's is created and installed.
             MCU existMcu = mcuDao.get(mcu.getSysID());        
@@ -205,36 +203,63 @@ public class EV_200_1_0_Action implements EV_Action
                 log.debug("DCU ADD="+mcu);
                 mcuDao.add_requires_new(mcu);
             }else{          
-                log.info("mcu["+existMcu.getSysID()+"] is existed!! - Location Id:"+existMcu.getLocation().getId()+" Location Name:"+existMcu.getLocation().getName());         
+                log.info("mcu["+existMcu.getSysID()+"] is existed!!");
+                
+                if(existMcu.getLocation() == null) {
+                	String defaultLocGeocoe = FMPProperty.getProperty("default.location.geocode");
+                    if(defaultLocGeocoe != null && !"".equals(defaultLocGeocoe)){
+                        Location defaultLocation = locationDao.findByCondition("geocode", defaultLocGeocoe);
+                        if(defaultLocation!=null) {
+                            log.info("MCU["+existMcu.getSysID()+"] Set Default Location["+defaultLocation.getId()+"]");
+                            existMcu.setLocation(defaultLocation);
+                        }else {
+                            log.info("MCU["+existMcu.getSysID()+"] Default Location["+defaultLocGeocoe+"] is Not Exist In DB, Set First Location["+locationDao.getAll().get(0).getId()+"]");
+                            existMcu.setLocation(locationDao.getAll().get(0));   
+                        }
+                    }else{
+                        log.info("MCU["+existMcu.getSysID()+"] Default Location is Not Exist In Properties, Set First Location["+locationDao.getAll().get(0).getId()+"]");
+                        existMcu.setLocation(locationDao.getAll().get(0));  
+                    }
+                }
+                
+                if(existMcu.getMcuType() == null) {
+                	existMcu.setMcuType(CommonConstants.getMcuTypeByName(mcuTypeEnum.name()));
+                }
+                
                 existMcu.setIpAddr(mcu.getIpAddr());
                 existMcu.setSysLocalPort(mcu.getSysLocalPort());
                 existMcu.setSysPhoneNumber(mcu.getSysPhoneNumber());
                 existMcu.setProtocolType(CommonConstants.getProtocolByName(protocolType+""));
-                existMcu.setSysHwVersion(sysHwVersion);
-                existMcu.setSysSwVersion(sysSwVersion);
+                
+                if(existMcu.getSysHwVersion() == null || existMcu.getSysHwVersion().isEmpty())
+                	existMcu.setSysHwVersion(defaultSysHwVersion);
+                
+                if(existMcu.getSysSwVersion() == null || existMcu.getSysSwVersion().isEmpty())                	
+                	existMcu.setSysSwVersion(defaultSysSwVersion);
+                
                 // existMcu.setSysSwRevision(sysSwRevision);
                 existMcu.setLastCommDate(TimeUtil.getCurrentTime());
                 
                 Code status = codeDao.findByCondition("code", CommonConstants.McuStatus.Normal.getCode());
                 if (status != null)
-                    mcu.setMcuStatus(status);
+                	existMcu.setMcuStatus(status);
                 
                 if (existMcu.getInstallDate() == null || "".equals(existMcu.getInstallDate()))
                     existMcu.setInstallDate(TimeUtil.getCurrentTime());
                 // 업데이트를 호출하지 않더라도 갱신이 된다.
+                
+                mcuDao.update(existMcu);
             }
             
             event.setActivatorIp(mcu.getIpAddr());
             event.setSupplier(mcu.getSupplier());
             event.setLocation(mcu.getLocation());
+            
+            txmanager.commit(txstatus);
         }
         catch(Exception e) {
         	log.error(e,e);
-        }
-        finally{
-            if (txstatus != null) {
-            	txmanager.commit(txstatus);
-            }
+        	txmanager.rollback(txstatus);
         }
     
         String hwVersion = mcu.getSysHwVersion();

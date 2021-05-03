@@ -93,12 +93,20 @@
                         </tr>
                         <tr>
                             <td>
-                                <fmt:message key='aimir.accountNo'/>
+                                <fmt:message key='aimir.customerid'/>
                             </td>
                             <td>
                                 ${customerNumber}
                             </td>
                         </tr>
+						<tr>
+							<td>
+								<fmt:message key='aimir.contractNumber'/>
+							</td>
+							<td>
+								${contractNumber}
+							</td>
+						</tr>
                         <tr>
                             <td>
                                 <fmt:message key='aimir.meterid'/>
@@ -107,14 +115,22 @@
                                 ${meter}
                             </td>
                         </tr>
-<!--                        <tr>
-                            <td>
-                                <fmt:message key='aimir.code.g'/>
-                            </td>
-                            <td>
-                                ${gCode}
-                            </td>
-                        </tr>   -->
+						<tr>
+							<td>
+								<fmt:message key='aimir.shipment.gs1'/>
+							</td>
+							<td>
+								${gs1}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<fmt:message key='aimir.hems.prepayment.transactionNum'/>
+							</td>
+							<td>
+								${lastTokenId}
+							</td>
+						</tr>
                         <tr>
                             <td>
                                 <fmt:message key='aimir.residental.activity'/>
@@ -160,7 +176,15 @@
                                 <fmt:message key='aimir.amount.paid'/>
                             </td>
                             <td>
-                                ${amount}
+                                ${totalAmountPaid}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <fmt:message key='aimir.prepayment.vat'/>
+                            </td>
+                            <td>
+                                ${vat}
                             </td>
                         </tr>
                         <tr>
@@ -244,7 +268,7 @@
             $("span.close").click(eventHandler.close);
         };
         var init = function () {
-            window.resizeTo(320, 600);
+            window.resizeTo(280, 660);
             bind();
         };
         window.onload = function() {

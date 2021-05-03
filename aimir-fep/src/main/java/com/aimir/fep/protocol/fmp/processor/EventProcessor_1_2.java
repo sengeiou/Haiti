@@ -61,7 +61,14 @@ public class EventProcessor_1_2 extends Processor
         trap.setProtocolVersion(protocolVersion);
         trap.setMcuId(ed.getMcuId());
         trap.setIpAddr(ed.getIpAddr());
-        trap.setCode(ed.getNameSpace().toString()+"_"+ed.getOid().toString());
+        
+        if(ed.getNameSpace() == null || ed.getNameSpace().toString().isEmpty()) {
+        	//Haiti는 namespace가 null이라도 해당 로직을 태우기 때문에 조건 처리 필요
+        	trap.setCode(ed.getOid().toString());
+        } else {
+        	trap.setCode(ed.getNameSpace().toString()+"_"+ed.getOid().toString());
+        }
+        
         trap.setSourceType(ed.getSrcType().toString());
         trap.setSourceId(ed.getSrcId().toString());
         if(ed.getSrcType().toString().equals("2")) {

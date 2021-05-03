@@ -1140,7 +1140,8 @@ html {
          		msg.getDialog().setPosition($("#dcuGridDiv").width()/2-30,250);
                 return ;
             }
-            CaptchaPanel("delete");
+            //CaptchaPanel("delete");
+            DeleteDCUPanel();
         };
         
         var captchacount=1;	//틀린 횟수 체크
@@ -1267,7 +1268,7 @@ html {
      			Ext.getCmp('deleteDCUWindowPanel').close();
      		} 		
      		
-     		Ext.getCmp('captchaWindowPanel').close();
+     		//Ext.getCmp('captchaWindowPanel').close();
      		var deleteDCUFormPanel =  new Ext.form.FormPanel({ 		      		         		       
      		        id          : 'formpanel',
      		        defaultType : 'fieldset', 		 

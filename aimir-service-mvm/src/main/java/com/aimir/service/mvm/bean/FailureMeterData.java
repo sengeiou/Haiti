@@ -15,6 +15,7 @@ public class FailureMeterData {
 	private String meterStatus;
 	private String timeDiff;
 	private String YYYYMMDD;
+	private String gs1;
 	
 	public String getMdsId() {
 		return mdsId;
@@ -99,5 +100,11 @@ public class FailureMeterData {
 	}
 	public String getYYYYMMDD(){
 		return YYYYMMDD;
+	}
+	public void setGs1(String gs1){
+		this.gs1 = gs1;
+	}
+	public String getGs1(){
+		return gs1;
 	}
 }

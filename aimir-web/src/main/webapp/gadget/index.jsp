@@ -86,7 +86,7 @@ Ext.gadget.Manager = function() {
 		
 		//가젯 close버튼 클릭시 발생되는 이벤트 정의.
 		//if(isAdmin){
-		if(!isCustomerRole){
+		if(isAdmin){
 			tools.push({
 				  id:'close', qtip: 'Close'
 				, handler: function(e, target, panel)
@@ -665,6 +665,7 @@ var isAdmin = '';
 var isDashAuth = '';
 var loginId = '';
 var operatorId = '';
+var isVendor;
 function getUserInfo() {
 	Ext.Ajax.request({
 		url : '../common/getUserInfo.do',
@@ -684,6 +685,7 @@ function getUserInfo() {
 			}
 			loginId =jsonArray.loginId;
 			operatorId =jsonArray.operatorId;
+			isVendor =jsonArray.isVendor;
 		},
 		//실패 시에 수행될 콜백 함수
 		failure: function (result, request) { 

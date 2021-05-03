@@ -545,7 +545,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
     				mcu.setDeviceModel(model);
     			}
     			mcu.setSysModel("DCU-DUMMY");
-                log.debug("DCU["+meter.getMdsId()+"] SET MODEL["+model.getName()+"]");
+                log.debug("DCU["+mcu.getSysID()+"] SET MODEL["+model.getName()+"]");
         	}
         	
             if(mcu.getSysHwVersion() == null || mcu.getSysHwVersion().equals("")){
@@ -675,7 +675,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
             modem.setCommState(1);
             modem.setLastLinkTime(modem.getInstallDate());
             if (ns == null || "".equals(ns))
-                modem.setNameSpace("SP");
+                modem.setNameSpace("");
             else
                 modem.setNameSpace(ns);
             modem.setProtocolVersion("0102");
@@ -1034,6 +1034,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
         	if(meter.getModel() == null || meter.getModel().getName().equals("")) {
         		DeviceModel defaultModel = getDefaultModel(modem.getSupplier(), meter.getMdsId(), "meter", getVendor().getName());
             	if(defaultModel != null) {
+            		log.info("meter : " + meter.getMdsId() +", default model : " + defaultModel.toString());
             		meter.setModel(defaultModel);
             	}
         	}

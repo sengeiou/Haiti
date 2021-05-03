@@ -17,11 +17,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aimir.constants.CommonConstants.ContractStatus;
+import com.aimir.dao.system.CodeDao;
 import com.aimir.dao.system.ContractChangeLogDao;
 import com.aimir.dao.system.ContractDao;
 import com.aimir.dao.system.LocationDao;
 import com.aimir.dao.system.OperatorDao;
 import com.aimir.dao.system.SupplierDao;
+import com.aimir.model.system.Code;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.ContractChangeLog;
 import com.aimir.model.system.Operator;
@@ -53,6 +55,9 @@ public class PrepaymentMgmtOperatorManagerImpl implements PrepaymentMgmtOperator
 
     @Autowired
     LocationDao locationDao; 
+
+    @Autowired
+    CodeDao codeDao; 
 
     /**
      * method name : getEmergencyCreditContractList
@@ -296,8 +301,17 @@ public class PrepaymentMgmtOperatorManagerImpl implements PrepaymentMgmtOperator
         }
 
         contract.setEmergencyCreditAutoChange(autoChange);
-        contract.setEmergencyCreditMaxDuration(duration);
-        contract.setPrepaymentPowerDelay(limitPower);
+        if(autoChange) {
+        	contract.setEmergencyCreditMaxDuration(duration);
+        }else {
+        	contract.setEmergencyCreditMaxDuration(null);
+        	contract.setEmergencyCreditStartTime(null);
+        	contract.setEmergencyCreditAvailable(false);
+        	Code code = codeDao.getCodeIdByCodeObject("2.2.1");
+        	contract.setCreditType(code);
+        }
+        //contract.setPrepaymentPowerDelay(limitPower);
+        
 
         contractDao.update(contract);
     }

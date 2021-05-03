@@ -110,7 +110,7 @@ public class NiProtocolHandler extends NICommandActionHandlerAdaptor implements 
     private Hashtable<Long, Object> response = new Hashtable<Long, Object>();
     private ProcessorHandler processorHandler;
     
-    private long sequenceLog = 0L;
+    private String sequenceLog = "0";
     
     public NiProtocolHandler() throws Exception { }
     

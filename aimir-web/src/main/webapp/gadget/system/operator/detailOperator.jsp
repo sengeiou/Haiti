@@ -120,13 +120,13 @@
                 <span>
                  <label class="check" id="label-default">
                  <!-- details of -->
-                    <fmt:message key='aimir.useroper.detailsof'/>   ${operator.loginId}
+                    <fmt:message key='aimir.view.detail'/>   <%-- ${operator.loginId} --%>
                 </label>
                 </span>
             </div>
         </div>
 
-        <table class="customer_detail">
+        <table class="customer_detail" style="width:100%">
             <colgroup>
             <col width="35%"  />
             <col width="" />
@@ -175,9 +175,8 @@
             </tr>
         </table>
 
-
         <div id="btn-right" class="btn_right_bottom">
-            <ul><li><a href="#" id="operatorDelete"><fmt:message key="aimir.button.delete" /></a></li></ul>
+            <!-- <ul><li><a href="#" id="operatorDelete"><fmt:message key="aimir.button.delete" /></a></li></ul> -->
             <ul><li><a href="#" id="openOperatorUpdateForm" ><fmt:message key="aimir.update"/></a></li></ul>
         </div>
 

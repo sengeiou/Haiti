@@ -60,6 +60,6 @@ public class BillingPk extends BasePk{
 
 	public String getHhmmss() {
 		return hhmmss;
-	}	
-
+	}
+	
 }

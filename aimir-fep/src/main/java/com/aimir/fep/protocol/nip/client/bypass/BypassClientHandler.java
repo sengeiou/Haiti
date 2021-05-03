@@ -46,7 +46,7 @@ public class BypassClientHandler extends IoHandlerAdapter {
 	private BypassClient bypassClient;
 	private BypassCommandAction commandAction;
 	
-	private long sequenceLog;
+	private String sequenceLog;
 
 	public BypassClientHandler(BypassClient bypassClient, BypassCommandAction commandAction) {
 		this.bypassClient = bypassClient;

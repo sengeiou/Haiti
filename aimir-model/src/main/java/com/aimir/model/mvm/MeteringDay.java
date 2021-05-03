@@ -192,6 +192,13 @@ public abstract class MeteringDay implements JSONString {
 		this.id.setYyyymmdd(yyyymmdd);
 	}
 	
+	public String getHh() {
+		return this.id.getHh();
+	}
+	public void setHh(String hh) {
+		this.id.setHh(hh);;
+	}
+	
 	public Integer getDst() {
 		return id.getDst();
 	}
@@ -346,7 +353,7 @@ public abstract class MeteringDay implements JSONString {
 	        + "','modemId':'" + ((modemId == null) ? "" : modemId)
 	        + "','endDeviceId':'" + ((endDeviceId == null) ? "" : endDeviceId)
 	        + "','meteringdate':'" + meteringDate
-	        + "','baseValue':'" + ((baseValue == null) ? "0" : ((df == null) ? baseValue : df.format(baseValue)) )
+	        + "','value':'" + ((value == null) ? "0" : ((df == null) ? value : df.format(value)) )
 	        + "'}";
     }    
 }

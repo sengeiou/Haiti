@@ -82,7 +82,7 @@ public class DepositHistoryDaoImpl extends AbstractHibernateGenericDao<DepositHi
             }
 
             if (!customerName.equals("")) {
-                sb.append("\nAND dh.customer.name LIKE :customerName ");
+                sb.append("\nAND UPPER(dh.customer.name) LIKE UPPER(:customerName) ");
             }           
         }
 
@@ -368,6 +368,7 @@ public class DepositHistoryDaoImpl extends AbstractHibernateGenericDao<DepositHi
         String customerNo = StringUtil.nullToBlank(params.get("customerNo"));
         String customerName = StringUtil.nullToBlank(params.get("customerName"));
         String meterId = StringUtil.nullToBlank(params.get("meterId"));
+        String gs1 = StringUtil.nullToBlank(params.get("gs1"));
         String casherId = StringUtil.nullToBlank(params.get("casherId"));
         String startDate = StringUtil.nullToBlank(params.get("startDate"));
         String endDate = StringUtil.nullToBlank(params.get("endDate"));
@@ -408,6 +409,8 @@ public class DepositHistoryDaoImpl extends AbstractHibernateGenericDao<DepositHi
         sbList.append("\n        pl.chargedCredit AS chargedCredit, ");
         sbList.append("\n        plpt.name as payType, ");
         sbList.append("\n        pl.chargedArrears AS chargedArrears, ");
+        sbList.append("\n        pl.chargedArrears2 AS chargedArrears2, ");
+        sbList.append("\n        pl.totalAmountPaid AS totalAmountPaid, ");
         sbList.append("\n        pl.isCanceled AS isCanceled, ");
         sbList.append("\n        pl.cancelDate AS cancelDate, ");
         sbList.append("\n        pl.cancelReason AS cancelReason, ");
@@ -420,6 +423,7 @@ public class DepositHistoryDaoImpl extends AbstractHibernateGenericDao<DepositHi
         sbList.append("\n        co.id AS contractId, ");
         sbList.append("\n        co.contractNumber AS geoCode, ");
         sbList.append("\n        me.id AS meterId, ");
+        sbList.append("\n        me.gs1 AS gs1, ");
         sbList.append("\n        me.mdsId AS mdsId, ");
         sbList.append("\n        ti.id AS tariffId, ");
         sbList.append("\n        ti.name AS tariffName, ");
@@ -528,13 +532,17 @@ public class DepositHistoryDaoImpl extends AbstractHibernateGenericDao<DepositHi
         }
 
         if (!"".equals(customerName)) {
-            sb.append("\nAND du.name LIKE :customerName ");
+            sb.append("\nAND UPPER(du.name) LIKE UPPER(:customerName) ");
         }
 
         if (!"".equals(meterId)) {
             sb.append("\nAND dm.mdsId LIKE :meterId ");
         }
 
+        if (!"".equals(gs1)) {
+            sb.append("\nAND me.gs1 LIKE :gs1 ");
+        }
+        
         if (!"".equals(casherId) ) {
             sb.append("\nAND vc.casherId LIKE :casherId ");
         }
@@ -596,6 +604,11 @@ public class DepositHistoryDaoImpl extends AbstractHibernateGenericDao<DepositHi
         if (!"".equals(meterId)) {
             queryCount.setString("meterId", meterId + "%");
             queryList.setString("meterId", meterId + "%");
+        }
+
+        if (!"".equals(gs1)) {
+            queryCount.setString("gs1", gs1 + "%");
+            queryList.setString("gs1", gs1 + "%");
         }
 
         if (!"".equals(casherId)) {

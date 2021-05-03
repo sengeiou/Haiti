@@ -42,6 +42,7 @@
 
     // Meter ID
     var addContractSearchMdsId = "";
+    var addContractSearchGs1 = "";
 
     //매터 그리드 관련 프로퍼티
     var addContractMeterGridOn = false;
@@ -58,12 +59,13 @@
             autoLoad: {params:{start: 0, limit: rowSize}},
             url: "${ctx}/gadget/contract/getMeterGridList.do",
             baseParams: {
-                mdsId : addContractSearchMdsId
+                mdsId : addContractSearchMdsId,
+                gs1 : addContractSearchGs1
             },
             // totol count value
             totalProperty: 'totalCount',
             root: 'result',
-            fields: ["mdsId", "id"],
+            fields: ["mdsId", "id", "gs1"],
             listeners: {
                 beforeload: function(store, options) {
                 options.params || (options.params = {});
@@ -77,12 +79,13 @@
         //Meter model column setting
         addContractMeterColModel = new Ext.grid.ColumnModel({
             columns: [
-                {id: "mdsId", header: '<fmt:message key='aimir.meterid'/>', dataIndex: 'mdsId', width: 296}
+                {id: "mdsId", header: '<fmt:message key='aimir.meterid'/>', dataIndex: 'mdsId'},
+                {id: "gs1", header: '<fmt:message key='aimir.shipment.gs1'/>', dataIndex: 'gs1'}
             ],
             defaults: {
                 sortable: true
                ,menuDisabled: true
-               ,width: 250
+               ,width: 195
            }
         });
 
@@ -94,7 +97,7 @@
                 autoScroll:false,
                 //autoScroll:true,
                 //autoExpandColumn: "mdsId",
-                width: 300,
+                width: 400,
                 style: 'align:center; ',
                 height: 125,
                 stripeRows : true,
@@ -137,8 +140,10 @@
         var row = s.getSelected();
 
         var mdsId = row.get('mdsId');
+        var gs1 = row.get('gs1');
 
         $("#mdsId").val(mdsId);
+        $("#gs1A").val(gs1);
     }
 
     //html onload func
@@ -161,6 +166,7 @@
         });
 
         addContractSearchMdsId = "";
+        addContractSearchGs1 = "";
         $("#meterDiv").show();
         getAddContractMeterGridList();
     });
@@ -246,7 +252,6 @@
             }
         );
         locationTreeGoGo('treeDivADD', 'location', 'locationADD');
-        sicTreeGoGo('treeDivSI', 'sicIText', 'sicId', null, null, true);  // 하위노드만 선택가능
     }
 
     function getTariffList(serviceType) {
@@ -358,23 +363,6 @@
             return;
         }
         
-    	// SIC Code validation 처리
-    	if ($("#sicIText").val() == "") {
-            Ext.Msg.alert('<fmt:message key='aimir.message'/>',"<fmt:message key="aimir.msg.selectsic"/>");      // SIC Code 를 선택해주세요.
-            $("#sicIText").focus();
-            return;
-        }
-    	
-        //계약용량
-        /*
-        if ( $("#contractDemand").val() == "" || $("#contractDemand").length == 0  ) {
-            var str5 = "<fmt:message key="aimir.enterContractAmount"/>";//계약용량을 입력 해 주세요
-            Ext.Msg.alert('<fmt:message key='aimir.message'/>',str5);
-            $("#contractDemand").focus();
-            return;
-        }
-        */
-
         //공급상태
         if ( $("#status").val() == 0 ) {
             var str6 = "<fmt:message key="aimir.selectService"/>";      // 서비스를 선택 해 주세요
@@ -391,13 +379,6 @@
             return;
         }
 
-        //sicId_input
-        /*if ( $("#sicId_input").val() == 0 ) {
-            var str14 = "sicId_input 를 선택해 주세요";
-            Ext.Msg.alert('<fmt:message key='aimir.message'/>',str14);
-            $("#sicId_input").focus();
-            return;
-        }*/
         var isReturn = false;
         $.ajax({
             type : "POST",
@@ -409,9 +390,9 @@
                 if(isPartpayment == 'true') {
                 if ( json.creditType.code == "2.2.1" ) {
                     //숫자가 아닐경우.
-                    if(isNaN($("#oldArrearsA").val())) {
-                        $("#oldArrearsA").val('');
-                        $("#oldArrearsA").focus();
+                    if(isNaN($("#currentArrearsB").val())) {
+                        $("#currentArrearsB").val('');
+                        $("#currentArrearsB").focus();
                         isReturn=true;
                     }
 
@@ -481,16 +462,13 @@
             return;
         }
 
-        var _sicId = $("#sicId").val();
-
         if (existContract) {        // update contract
             $.ajax({
                 type:"POST",
                 data: {
                     "mdsId" : $("#mdsId").val(),
+                    "gs1" : $("#meterGs1U").val(),
                     "contractNumber" : $.trim($("#contractNumber2").val()),
-                    //'threshold' : $('#threshold').val(),//추가
-                    "sicId" : _sicId,//추가
                     "serviceTypeCode" : $("#serviceTypeCode").val(),
                     "tariffIndex" : ($("#tariffIndex").val() != null) ? $("#tariffIndex").val() : "",
                     "locationId2" : $("#locationADD").val(),
@@ -499,20 +477,16 @@
                     "creditType" : $("#creditType").val(),
                     "creditStatus" : ($("#creditStatusA").val() != null) ? $("#creditStatusA").val() : "",
                     "prepaymentThreshold" : ($("#prepaymentThreshold").val() != null) ? $("#prepaymentThreshold").val() : "",
-                    //'startDatetime' : $('#startDateTimeHidden').val(),
                     'id' : $("#contractId").val(),
                     'customerId' : $("#customer").val(),
                     'fromInsert' : "true",
                     'serviceType2' : ($("#serviceType2").val() != null) ?  $("#serviceType2").val() : "",
-//                    'receiptNumber' : $("#receiptNoA").val(),
-//                    'amountPaid' : $("#amountPaidA").val(),
                     'threshold1' : $('#threshold1A').val(),
                     'threshold2' : $('#threshold2A').val(),
                     'threshold3' : $('#threshold3A').val(),
-                    'oldArrears' : $("#oldArrearsA").val(),
                     'currentArrears' : $('#currentArrearsA').val(),
+                    'currentArrears2' : $("#currentArrearsB").val(),
                     'arrearsContractCount' : $('#arrearsContractCount').val(),
-
                     'chargeAvailable' : $('input[name="chargeAvailable"]:checked').val(),
                     'preMdsId' : $.trim($("#preMdsIdA").val()),
                     "isPartpayment" : isPartpayment,
@@ -527,19 +501,13 @@
             });// ajaxEnd
         } else {        // insert contract
             if($("#currentBalance").val() != '' && $("#currentBalance").val() != null){  // 충전할 Current Balance가 있을 경우            	
-            	//var temp = {'debtInfo':debtSaveArrA};
-            //	var saveCurrentBalanceProcess = function(resultSaveBalanceValue){
         			var options = {			        
         			        url : '${ctx}/gadget/system/customerMax.do?param=createContract',
         			        type : 'post',
         			        data:{
-        			            //"mdsId" : $("#mdsId").val()
         			              "contractNumber" : $.trim($("#contractNumber2").val())
-        			            //,"curPage" : curPage
-        			            , "sicId" :_sicId
                                 , "currentbalanceValue" : $("#currentBalance").val()
                                 , "preMdsId"	: $.trim($("#preMdsIdA").val())
-                                , "oldArrears" : $("#oldArrearsA").val()
                                 , "isPartpayment" : isPartpayment
                                 , "debtSaveInfo" : JSON.stringify(debtSaveArrA)
         			        },
@@ -549,7 +517,6 @@
                     $('#contractForm').ajaxSubmit(options);            		
             //    }       
             
-                //eventHandler.saveChargeAmount($("#currentBalance").val(), saveCurrentBalanceProcess);  // Current Balanace 재확인 구문
             }else { 
 
                 var options = {
@@ -558,12 +525,8 @@
                     url : '${ctx}/gadget/system/customerMax.do?param=createContract',
                     type : 'post',
                     data:{
-                        //"mdsId" : $("#mdsId").val()
                         "contractNumber" : $.trim($("#contractNumber2").val())
-                        //,"curPage" : curPage
-                        ,"sicId" :_sicId
                         , "preMdsId"	: $.trim($("#preMdsIdA").val())
-                        , "oldArrears" : $("#oldArrearsA").val()
                         , "isPartpayment" : isPartpayment
                     },
                     datatype : 'json'
@@ -806,6 +769,7 @@
         $("#serviceTypeCode").trigger("change");
 
     	$("#mdsId").val(info.mdsId);
+    	$("#gs1A").val(info.gs1);
     	ContractMeterId = info.meterId;
 
         if (info.status == "") {
@@ -819,9 +783,6 @@
         $("#location").val(info.locationName);
 
         $("#contractDemand").val(info.contractDemand);
-
-        $("#sicId").val(info.sicId);
-        $("#sicIText").val(info.sicName);
 
         $("#amountPaidA").val(info.amountPaid);
         $("#receiptNoA").val(info.receiptNumber);
@@ -859,7 +820,7 @@
         $("#currentArrearsA").val(info.currentArrears);
         getCurrentArrears = info.currentArrears;
         
-        $("#oldArrearsA").val(info.oldArrears);
+        $("#currentArrearsB").val(info.currentArrears2);
         $("#arrearsContractCount").val(info.arrearsContractCount);
         getArrearsContractCount = info.arrearsContractCount;
         
@@ -893,7 +854,7 @@
     //미터 서치버튼 클릭 event
     $("#meterSearchButton").click(function(){
         addContractSearchMdsId = $("#mdsId").val();
-
+        addContractSearchGs1 = $("#gs1A").val();
      	//MeterGridOn= true;
 
      	//미터 리스트 가져오기.
@@ -1036,12 +997,6 @@
                                        <input type="hidden" id="locationADD" name="location.id" value="" />
                                     </td>
                                     
-                                    <!-- 예전 미터 시리얼 -->
-                                    <td class="bold withinput"><fmt:message key="aimir.preMeterid"/></td>
-
-                                    <td >
-                                        <input name="preMdsIdA" id="preMdsIdA" type="text" style="width:150px;"/>
-                                    </td>
                                     
                                 </tr>
 <!--                            <tr><td class="bold withinput"><fmt:message key="aimir.contract.receioptNo"/></td>
@@ -1055,46 +1010,48 @@
                                 </tr>   -->
                                 <!--  임계치 설정 -->
                                 <tr>
-                                    <td class="bold withinput"><fmt:message key="aimir.threshold1"/></td>
+<%--                                     <td class="bold withinput"><fmt:message key="aimir.threshold1"/></td>
                                     <td><input name="threshold1" style="width:150px" id="threshold1A" type="text"/></td>
 
                                     <td class="bold withinput"><fmt:message key="aimir.threshold2"/></td>
                                     <td><input name="threshold2" style="width:150px" id="threshold2A" type="text"/></td>
 
                                     <td class="bold withinput"><fmt:message key="aimir.threshold3"/></td>
-                                    <td><input name="threshold3" style="width:180px" id="threshold3A" type="text"/></td>
+                                    <td><input name="threshold3" style="width:180px" id="threshold3A" type="text"/></td> --%>
+                                    
+                                    <!-- 예전 미터 시리얼 -->
+                                    <td class="bold withinput"><fmt:message key="aimir.preMeterid"/></td>
+                                    <td >
+                                        <input name="preMdsIdA" id="preMdsIdA" type="text" style="width:150px;"/>
+                                    </td>
                                     <!-- meter id -->
                                     <td class="bold withinput"><fmt:message key="aimir.meterid"/></td>
-
-                                    <!-- meter id 인폿box -->
+                                    <td><input name="mdsId" id="mdsId" type="text" style="width:150px;"/></td>
+                                        
+                                    <td class="bold withinput"><fmt:message key="aimir.shipment.gs1"/></td>
+                                    <td><input name="gs1" style="width:150px" id="gs1A" type="text"/></td>
+                                        
                                     <td >
-                                        <input name="mdsId" id="mdsId" type="text" style="width:150px;"/>
 
                                     <!-- search button -->
                                     	<span class="am_button margin-l10 margin-t1px">
-                                        <a id="meterSearchButton" href="#" class="on"><fmt:message key="aimir.button.search" /></a></span>
+                                        <a id="meterSearchButton" href="#a" class="on"><fmt:message key="aimir.button.search" /></a></span>
                                     </td>        
                                 </tr>     
                                 <tr>
                                     <td class="bold withinput"><fmt:message key="aimir.paymenttype"/><!-- 지불타입--></td>
                                     <td><select name="creditType" id="creditType" style="width:150px;" onchange="javascript:creditTypeSelect(document.getElementById('creditType').options[document.getElementById('creditType').selectedIndex].value);"></select></td>
 
-                                    <td class="bold withinput"><fmt:message key="aimir.sic" /><!-- 산업분류코드 --></td>
-                                    <!-- <td><select name="sicId" id="sicId" style="width:250px;"></select></td> -->
-                                    <td><input type="text" id='sicIText' name="sic.name" style="width:150px;"/>
-                                        <input type="hidden" id="sicId" name="sic.id" value=""/>
-                                    </td>             
-                                    
                                     <td class="bold withinput"><fmt:message key="aimir.contract.demand.amount"/><!-- 계약용량--></td>
                                     <td><input name="contractDemand" style="width:180px" id="contractDemand" type="text"/></td>
 
                                 </tr>
 
                                 <tr id="pane-creditType-prepay1" style="display:none;">
-                                    <td class="bold withinput"><fmt:message key="aimir.oldArrears"/></td>
-                                    <td><input name="oldArrearsA" id="oldArrearsA" style="width:150px" type="text"/></td>
-                                    <td class="bold withinput"><fmt:message key="aimir.arrears"/><!-- 미수금 --></td>
+                                    <td class="bold withinput"><fmt:message key="aimir.arrearsA"/><!-- 미수금 --></td>
                                     <td><input name="currentArrears" id="currentArrearsA" style="width:150px" type="text" value="${arrears}"/></td>
+                                    <td class="bold withinput"><fmt:message key="aimir.arrearsB"/></td>
+                                    <td><input name="currentArrears2" id="currentArrearsB" style="width:150px" type="text" value="${arrears2}"/></td>
                                     <td class="bold withinput"><fmt:message key="aimir.payment.contractCnt"/><!--지불납부횟수--></td>
                                     <td><input type="text" name="arrearsContractCount" id="arrearsContractCount" style="width:180px;"></td>
                                 </tr>

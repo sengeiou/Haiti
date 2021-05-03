@@ -664,12 +664,12 @@
             <a class="on"><fmt:message key="aimir.button.search" /></a>
           </span>
         </div>
-        <div>              
+        <%-- <div>              
           <span class='bold-font'>
             <fmt:message key="aimir.deposit"/>
             <label class="current_deposit"></label>
           </span>
-        </div>
+        </div> --%>
       </form>
       <!--검색조건 끝-->
 

@@ -23,11 +23,13 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aimir.constants.CommonConstants;
 import com.aimir.fep.command.mbean.CommandGWMBean;
+import com.aimir.fep.logger.snowflake.SnowflakeGeneration;
 import com.aimir.fep.meter.MeterDataSaverMain;
 import com.aimir.fep.meter.data.MDHistoryData;
 import com.aimir.fep.protocol.fmp.common.SlideWindow;
@@ -383,7 +385,17 @@ public class DFProcessor extends Processor
         int total_datacnt = 0;
         boolean kafkaEnable = Boolean.parseBoolean(FMPProperty.getProperty("kafka.enable", "false"));
         
+        int num = 0;
+        String th = Thread.currentThread().getName();
+        String thv = SnowflakeGeneration.getId();
+        
         do {
+        	String sth = th + "_" + num;
+        	String sthv = thv + "_" + num; 
+        	Thread.currentThread().setName(sth);
+        	SnowflakeGeneration.setSeq(sth, sthv);
+        	num++;
+        	
             byte[] sid = new byte[8];
             is.read(sid, 0, sid.length);
 
@@ -407,10 +419,9 @@ public class DFProcessor extends Processor
             datacnt = DataUtil.getIntTo2Byte(bdatacnt);
             byte[] blen = null;
             byte[] bx = null;
-
+            
             //EMDataList안에 MDList 갯수 만큼 MDList를 하나씩 가지는 EMDataList를 만들어서 저장 로직을 수행하도록 함
             for (int i = 0; i < datacnt; i++) {
-
                 bos = new ByteArrayOutputStream();
                 bos.write(sid);
                 bos.write(mid);
@@ -432,6 +443,8 @@ public class DFProcessor extends Processor
                 bos.write(bx);
                 bos.flush();
                 bos.close();
+                
+                log.debug("# DF datacnt : " + datacnt+", mcu : " + mcuId +", hex data : " + Hex.decode(bos.toByteArray()) );
 
                 //SP-882
                 if (kafkaEnable) {
@@ -471,13 +484,15 @@ public class DFProcessor extends Processor
                 }
         		total_datacnt++;
             }
-
+            
             available = is.available();
             log.debug("AVAILABLE[" + available + "]");
 
+            SnowflakeGeneration.deleteId(sth);
         }
         while (available > 42); //MDData 최소 데이터 길이
-
+        
+        SnowflakeGeneration.setSeq(th, thv);
         long eTime = System.currentTimeMillis();
         log.info("MCU["+mcuId+"] - Transfer Data Count["+ total_datacnt +"] is End Total Duration["+(eTime-sTime)/1000+"]s");
         //------------------------------------------------

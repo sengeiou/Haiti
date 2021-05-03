@@ -3104,7 +3104,7 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 			}else { // New YYYYMMDDHH -> Just put data with Time
 				Map<String, Object> tmpMap = new HashMap<>();
 				tmpMap.put("channel_"+CHANNEL, VALUE);
-				tmpMap.put("meteringTime", TimeLocaleUtil.getLocaleDateHourMinute(YYYYMMDDHH+"00", lang, country));
+				tmpMap.put("meteringTime", TimeLocaleUtil.getLocaleDateHour(YYYYMMDDHH, lang, country));
 				mergeHourMap.put(YYYYMMDDHH, tmpMap);
 			}
 		}
@@ -3140,7 +3140,7 @@ public class MvmDetailViewManagerImpl implements MvmDetailViewManager {
 				for (String obj : channelArray) {
 					tmpMap.put("channel_"+obj, "-");
 				}
-				tmpMap.put("meteringTime", TimeLocaleUtil.getLocaleDateHour(date+"00", lang, country));
+				tmpMap.put("meteringTime", TimeLocaleUtil.getLocaleDateHour(date, lang, country));
 				result.add(tmpMap);
 			}
 		}

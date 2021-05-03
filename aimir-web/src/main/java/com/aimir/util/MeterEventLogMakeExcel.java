@@ -122,6 +122,10 @@ public class MeterEventLogMakeExcel {
 			cell = row.createCell(cellCnt++);
 			cell.setCellValue(msgMap.get("meterid"));
             cell.setCellStyle(titleCellStyle);
+			
+			cell = row.createCell(cellCnt++);
+			cell.setCellValue(msgMap.get("gs1"));
+            cell.setCellStyle(titleCellStyle);
             
 			cell = row.createCell(cellCnt++);
 			cell.setCellValue(msgMap.get("metertype"));
@@ -179,6 +183,10 @@ public class MeterEventLogMakeExcel {
 				
 				cell = row.createCell(cellCnt2++);
 				cell.setCellValue(resultMap.get("METERID")==null?"":resultMap.get("METERID").toString());
+            	cell.setCellStyle(dataCellStyle);
+				
+				cell = row.createCell(cellCnt2++);
+				cell.setCellValue(resultMap.get("GS1")==null?"":resultMap.get("GS1").toString());
             	cell.setCellStyle(dataCellStyle);
             	
 				cell = row.createCell(cellCnt2++);

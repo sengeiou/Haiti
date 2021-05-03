@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -29,8 +28,6 @@ import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.transform.AliasToEntityMapResultTransformer;
-import org.hibernate.transform.AliasedTupleSubsetResultTransformer;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.IntegerType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +69,7 @@ import com.aimir.util.TimeUtil;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 @Repository(value = "meterDao")
 public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> implements MeterDao {
+	protected static Log log = LogFactory.getLog(MeterDaoImpl.class);
 
 	@Autowired
     CodeDao codeDao;
@@ -180,6 +178,7 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
         List<Integer> locations = (ArrayList<Integer>)params.get("locationId");
         String customerId       = StringUtil.nullToBlank(params.get("customerId"));
         String meterId          = StringUtil.nullToBlank(params.get("meterId"));
+        String gs1          	= StringUtil.nullToBlank(params.get("gs1"));
         String mcuId            = StringUtil.nullToBlank(params.get("mcuId"));
         if(!params.get("currPage").equals("")&&params.get("currPage") != null){
             String currPage         = StringUtil.nullToBlank(params.get("currPage"));
@@ -203,6 +202,7 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
         query.append("\n          CONCAT '' CONCAT CASE WHEN customer.address3 IS NULL THEN '' ELSE customer.address3 END AS customerAddress ");
         query.append("\n      ,m.mds_id            AS mdsId ");
         query.append("\n      ,m.id                AS meterId ");
+        query.append("\n      ,m.gs1               AS gs1 ");
         query.append("\n      ,m.address           AS meterAddress ");
         query.append("\n      ,modem.device_serial AS modemId ");
         query.append("\n      ,mcu.sys_id        AS mcuId ");
@@ -226,8 +226,8 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
         query.append("\n                  AND   dt.mdev_id = m.mds_id ");
         query.append("\n                  AND   dt.yyyymmdd BETWEEN :searchStartDate AND :searchEndDate ");
         query.append("\n                  AND   dt.channel = :channel ");
-        if(locations != null)
-        	query.append("\n                  AND   dt.location_id IN (:locationId) ");
+//        if(locations != null)
+//        	query.append("\n                  AND   dt.location_id IN (:locationId) ");
         query.append("\n                 ) ");
         query.append("\nAND   m.meter = :meterType ");
         if(locations != null)
@@ -244,6 +244,9 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
         if (!"".equals(meterId)) {
             query.append("\nAND   m.mds_id LIKE  :meterId  ");
         }
+        if (!"".equals(gs1)) {
+            query.append("\nAND   m.gs1 LIKE  :gs1  ");
+        }
         if (!"".equals(mcuId)) {
             query.append("\nAND   mcu.sys_id LIKE :mcuId ");
         }
@@ -251,7 +254,7 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
             query.append("\nAND   m.supplier_id = :supplierId ");
         }
 
-        query.append("\nGROUP BY m.id, m.mds_id, contract.contract_number, customer.name, ");
+        query.append("\nGROUP BY m.id, m.mds_id, m.gs1, contract.contract_number, customer.name, ");
         query.append("\n         customer.address, customer.address1, customer.address2, customer.address3, ");
         query.append("\n         m.address,modem.device_serial,mcu.sys_id,m.last_read_date,m.meter_status,m.time_diff ");
 
@@ -280,6 +283,9 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
         }
         if (!"".equals(meterId)) {
             countQueryObj.setString("meterId", "%" + meterId + "%");
+        }
+        if (!"".equals(gs1)) {
+            countQueryObj.setString("gs1", "%" + gs1 + "%");
         }
         if (!"".equals(mcuId)) {
             countQueryObj.setString("mcuId", "%" + mcuId + "%");
@@ -313,6 +319,9 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
         }
         if (!"".equals(meterId)) {
             dataQueryObj.setString("meterId", "%" +meterId+ "%");
+        }
+        if (!"".equals(gs1)) {
+            dataQueryObj.setString("gs1", "%" +gs1+ "%");
         }
         if (!"".equals(mcuId)) {
             dataQueryObj.setString("mcuId", "%" + mcuId + "%");
@@ -1265,6 +1274,7 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
 
         String sMeterType         = StringUtil.nullToBlank(condition.get("sMeterType"));
         String sMdsId             = StringUtil.nullToBlank(condition.get("sMdsId"));
+        String sGs1               = StringUtil.nullToBlank(condition.get("sGs1"));
         String sDeviceSerial      = StringUtil.nullToBlank(condition.get("sDeviceSerial"));
         String sStatus            = StringUtil.nullToBlank(condition.get("sStatus"));
         String sMeterGroup        = StringUtil.nullToBlank(condition.get("sMeterGroup"));
@@ -1335,6 +1345,10 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
             sbQuery.append("AND me.mds_ID LIKE '"+ sMdsId +"%' \n");
         }
 
+        if (!sGs1.equals("")) {
+            sbQuery.append("AND me.gs1 LIKE '"+ sGs1 +"%' \n");
+        }
+        
         // meter address -> customer address로 변경한다. 스파사 요청
         if (!sMeterAddress.equals("")) {
             //sbQuery.append("     AND me.address LIKE '%"+ sMeterAddress +"%'");
@@ -1408,7 +1422,7 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
             sbQuery.append("AND customer.CUSTOMERNO like '" + sCustomerId +"%' \n");
         }
         if (!"".equals(sCustomerName)) {
-            sbQuery.append("AND customer.NAME like '" + sCustomerName + "%' \n");
+        	sbQuery.append("AND UPPER(customer.NAME) like UPPER('" + sCustomerName + "%') \n");
         }
 
         int dataListLen = 0;
@@ -1878,7 +1892,7 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
             sbQuery.append("    AND customer.CUSTOMERNO like '" + sCustomerId +"%'");
         }
         if (!"".equals(sCustomerName)) {
-            sbQuery.append("    AND customer.NAME like '" + sCustomerName + "%'");
+            sbQuery.append("    AND UPPER(customer.NAME) like UPPER('" + sCustomerName + "%')");
         }
         if (!"".equals(sGs1)) {
             sbQuery.append("    AND me.gs1 like '%" + sGs1 + "%'");
@@ -2315,7 +2329,7 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
             sbQuery.append("    AND customer.CUSTOMERNO like '" + sCustomerId +"%'");
         }
         if (!"".equals(sCustomerName)) {
-            sbQuery.append("    AND customer.NAME like '" + sCustomerName + "%'");
+            sbQuery.append("    AND UPPER(customer.NAME) like UPPER('" + sCustomerName + "%')");
         }
 
         StringBuffer sbQueryData = new StringBuffer();
@@ -2996,7 +3010,7 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
         StringBuffer sbQuery    = new StringBuffer();
 
         sbQuery = new StringBuffer();
-        sbQuery.append("  SELECT me.MDS_ID                    \n")
+        sbQuery.append("  SELECT me.MDS_ID as MDSID, me.GS1 as GS1  \n")
                .append("   FROM METER  me                     \n")
                .append("   LEFT OUTER JOIN CODE co            \n")
                .append("   ON ( me.meter_status = co.ID)      \n")
@@ -3006,8 +3020,8 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
 
         SQLQuery query = getSession().createSQLQuery(sbQuery.toString());
 
-        List dataList = null;
-        dataList = query.list();
+        List<Map<String, Object>> dataList = null;
+        dataList = query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
 
         // 실제 데이터
         int dataListLen = 0;
@@ -3018,8 +3032,9 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
 
             HashMap gridDataMap = new HashMap();
 
-            gridDataMap.put("no"          , i+1 );
-            gridDataMap.put("mdsId"      , dataList.get(i));
+            gridDataMap.put("no"         , i+1 );
+            gridDataMap.put("mdsId"      , dataList.get(i).get("MDSID"));
+            gridDataMap.put("gs1"        , dataList.get(i).get("GS1"));
 
 
             gridData.add(gridDataMap);
@@ -6052,7 +6067,7 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
       	 sb.append("    AND customer.CUSTOMERNO like '" + sCustomerId +"%'");
        }
        if (!"".equals(sCustomerName)) {
-      	 sb.append("    AND customer.NAME like '" + sCustomerName + "%'");
+      	 sb.append("    AND UPPER(customer.NAME) like UPPER('" + sCustomerName + "%)'");
        }
        if (!"".equals(sGs1)) {
       	 sb.append("    AND me.gs1 like '%" + sGs1 + "%'");
@@ -6806,7 +6821,7 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
         }
 
         if (!customerName.isEmpty()) {
-            sb.append("\nAND   cu.name LIKE :customerName ");
+            sb.append("\nAND   UPPER(cu.name) LIKE UPPER(:customerName) ");
         }
 
         if (!contractNumber.isEmpty()) {
@@ -9898,5 +9913,54 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
         query.setString("code", code);
         
         return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();        
+	}
+    
+    @Override
+	public List<Map<String, Object>> getRelayOnOffMeters(String action, String dcuSysId, String meterId) {
+    	if(action == null) {
+    		return null;
+    	}
+    	
+    	StringBuffer sbQuery = new StringBuffer();
+    	
+    	sbQuery.append("\n SELECT ");
+    	sbQuery.append("\n 	mo.protocol_type, me.mds_id, mo.MCU_ID, co.ID");
+    	sbQuery.append("\n FROM ");
+    	sbQuery.append("\n 	meter me, modem mo, mcu mcu, contract co");
+    	sbQuery.append("\n WHERE	");
+    	sbQuery.append("\n	 me.MODEM_ID = mo.ID ");
+    	sbQuery.append("\n	 AND co.METER_ID = me.id");
+    	sbQuery.append("\n	 AND mo.MCU_ID = mcu.id(+)");
+    	sbQuery.append("\n	 AND co.status_id != (select id from code where code = '2.1.3')");
+    	
+    	if(dcuSysId != null && !dcuSysId.isEmpty()) 
+    		sbQuery.append("\n	 AND mo.MCU_ID = '").append(dcuSysId).append("'");
+    
+    	if(meterId != null & !meterId.isEmpty())
+    		sbQuery.append("\n	 AND me.mds_id = '").append(meterId).append("'");
+    	
+    	if("RELAY_OFF".equalsIgnoreCase(action)) {
+    		sbQuery.append("\n	 AND me.meter_status != (select id from code where code = '1.3.3.4')"); //relay off
+    		sbQuery.append("\n	 AND co.CURRENTCREDIT < 0 ");
+    	} else if("RELAY_ON".equalsIgnoreCase(action)) {
+    		sbQuery.append("\n	 AND me.meter_status = (select id from code where code = '1.3.3.4')"); //relay on
+    		sbQuery.append("\n	 AND co.CURRENTCREDIT >= 0 ");
+    	}
+    	List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
+    	
+    	List<Object[]> queryList = getSession().createNativeQuery(sbQuery.toString()).list();
+    	log.debug("sbQuery : " + sbQuery.toString()+", queryList : " + queryList.size());
+    	
+    	for (Object[] objects : queryList) {
+    		Map<String, Object> map = new HashMap<String, Object>();
+    		map.put("protocol_type", objects[0]);
+    		map.put("mds_id", objects[1]);
+    		map.put("mcu_id", objects[2]);
+    		map.put("contract_id", objects[3]);
+    		
+    		result.add(map);
+    	}
+    	
+		return result;
 	}
 }

@@ -17,6 +17,7 @@ import com.aimir.model.device.Modem;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.Location;
 import com.aimir.model.system.Supplier;
+import com.aimir.model.system.TariffType;
 
 import org.eclipse.persistence.annotations.Index;
 import org.eclipse.persistence.annotations.Indexes;
@@ -84,6 +85,21 @@ public class BillingBlockTariff {
     
     @Column(name="enddevice_id", nullable=true, updatable=false, insertable=false)
     private Integer endDeviceId;
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "tariffIndex_id")
+	@ReferencedBy(name="code")
+	private TariffType tariffIndex;
+    
+    @Column(name="tariffIndex_id", nullable=true, updatable=false, insertable=false)
+	private Integer tariffIndexId;
+    
+    @ColumnInfo(descr="일정산의 데이터 유효성")
+    private Boolean validity;
+    
+    @Column(name="is_avg")
+    @ColumnInfo(descr="서버에서 평균값을 기준으로 계산한 Row 여부, true : 평균 계산  row, false : LP의 시간으로 계산된 row")
+    private Boolean isAvg;
     
     @Column(length=14)
     @ColumnInfo(name="데이터 작성시간")
@@ -285,7 +301,7 @@ public class BillingBlockTariff {
     public void setHhmmss(String hhmmss) {
         id.setHhmmss(hhmmss);
     }
-
+    
     public Double getBill() {
         return bill;
     }
@@ -357,8 +373,40 @@ public class BillingBlockTariff {
     public void setReativeEnergy(double reactiveEnergy) {
         this.reactiveEnergy = reactiveEnergy;
     }
+    
+    public TariffType getTariffIndex() {
+		return tariffIndex;
+	}
 
-    public String toJSONString() {
+	public void setTariffIndex(TariffType tariffIndex) {
+		this.tariffIndex = tariffIndex;
+	}
+
+	public Integer getTariffIndexId() {
+		return tariffIndexId;
+	}
+
+	public void setTariffIndexId(Integer tariffIndexId) {
+		this.tariffIndexId = tariffIndexId;
+	}
+
+	public Boolean getValidity() {
+		return validity;
+	}
+
+	public void setValidity(Boolean validity) {
+		this.validity = validity;
+	}
+
+	public Boolean isAvg() {
+		return isAvg;
+	}
+
+	public void setAvg(Boolean isAvg) {
+		this.isAvg = isAvg;
+	}
+
+	public String toJSONString() {
         StringBuffer buf = new StringBuffer();
         buf.append("{");
         buf.append("mdevType:'" + this.id.getMDevType());

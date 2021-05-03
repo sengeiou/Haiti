@@ -378,7 +378,7 @@
                 sCustomerName      : condition[19],
                 sPermitLocationId  : condition[20],
                 sMeterAddress      : condition[21],
-                sGs1					 : condition[22],
+                sGs1			   : condition[22],
                 sMbusSMYN          : condition[23],
                 sDeviceSerial	   : condition[24]
                 
@@ -1911,7 +1911,7 @@
 
     // 미터 기본 삭제 처리 
     var deleteMeterInfo = function() {
-    	CaptchaPanel("delete");
+    	DeleteMeterPanel();
     };
     
     var captchacount=1;	//틀린 횟수 체크
@@ -2049,7 +2049,7 @@
  			Ext.getCmp('deleteMeterWindowPanel').close();
  		} 		
  		
- 		Ext.getCmp('captchaWindowPanel').close();
+ 		//Ext.getCmp('captchaWindowPanel').close();
  		var deleteMeterFormPanel =  new Ext.form.FormPanel({ 		      		         		       
  		        id          : 'formpanel',
  		        defaultType : 'fieldset', 		 
@@ -2094,14 +2094,14 @@
 			        	        });
 			            		
 			            		Ext.getCmp('deleteMeterWindowPanel').close();
-	                        	Ext.getCmp('captchaWindowPanel').close();
+	                        	//Ext.getCmp('captchaWindowPanel').close();
 			            }}
 			        },{
 			            text: 'NO',
 		            	listeners: {
 	                        click: function(btn,e) {
 	                        	Ext.getCmp('deleteMeterWindowPanel').close();
-	                        	Ext.getCmp('captchaWindowPanel').close();
+	                        	//Ext.getCmp('captchaWindowPanel').close();
 	                        }
 	                    }
 		        }]
@@ -4651,6 +4651,7 @@
 		fmtMessage[25] = "<fmt:message key="aimir.meter.address"/>";
 		fmtMessage[26] = "<fmt:message key="aimir.sw.hw.ver"/>";
         fmtMessage[27] = "<fmt:message key="aimir.modemid"/>";
+        fmtMessage[28] = "<fmt:message key="aimir.shipment.gs1"/>";
 
 
 		obj.condition = getCondition();
@@ -6019,10 +6020,10 @@
 											<em class="btn_org"><a href="javascript:cmdRelayStatus();">Relay Status</a></em>
 										</div>
 										<div id="cmdRelayOffButton" class="floatleft margin-r5" style="display: none">
-											<em class="btn_org"><a href="javascript:CaptchaPanel('off');">Relay Off</a></em>
+											<em class="btn_org"><a href="javascript:cmdRelayOff();">Relay Off</a></em>
 										</div>
 										<div id="cmdRelayOnButton" class="floatleft margin-r5" style="display: none">
-											<em class="btn_org"><a href="javascript:CaptchaPanel('on');">Relay On</a></em>
+											<em class="btn_org"><a href="javascript:cmdRelayOn();">Relay On</a></em>
 										</div>
 										<%--<div id="relayControlButton" class="floatleft margin-r5">
                                             <em class="btn_org"><a href="javascript:cmdRelayStatus();">Relay Status</a></em>
@@ -6033,7 +6034,7 @@
 											<em class="btn_org"><a href="javascript:cmdMeterTimeSync();">Meter Time Sync</a></em>
 										</div>
 										<div id="limitPowerUsageButton" class="floatleft margin-r5">
-											<em class="btn_org"><a href="javascript:CaptchaPanel('limitPowerUsage');">
+											<em class="btn_org"><a href="javascript:cmdLimitPowerUsage();">
 											<fmt:message key="aimir.limitPowerUsage" /></a></em>
 										</div>
 										<div id="otaButton" class="floatleft margin-r5">

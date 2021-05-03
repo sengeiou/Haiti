@@ -23,6 +23,7 @@ import com.aimir.dao.AbstractHibernateGenericDao;
 import com.aimir.dao.prepayment.VendorCasherDao;
 import com.aimir.model.prepayment.VendorCasher;
 import com.aimir.model.system.Operator;
+import com.aimir.model.system.Role;
 import com.aimir.util.StringUtil;
 import com.aimir.util.TimeLocaleUtil;
 
@@ -225,12 +226,14 @@ public class VendorCasherDaoImpl extends AbstractHibernateGenericDao<VendorCashe
 		String id = StringUtil.nullToBlank(condition.get("casherId"));
 		String pwd = StringUtil.nullToBlank(condition.get("password"));
 		Operator vendor = (Operator) condition.get("vendor");
-		
+		Role role = vendor.getRole();
 		try {
 			Criteria criteria = getSession().createCriteria(VendorCasher.class);
 			criteria.add(Restrictions.eq("status", CasherStatus.WORK.getCode()));
 			criteria.add(Restrictions.eq("casherId", id));
-			criteria.add(Restrictions.eq("vendor", vendor));
+			if(!role.getName().equals("admin")) {
+				criteria.add(Restrictions.eq("vendor", vendor));
+			}
 			VendorCasher casher = (VendorCasher) criteria.uniqueResult();
 			casher.setPassword(pwd);
 			casher.setIsFirst(false);

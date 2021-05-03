@@ -114,20 +114,8 @@
 
                     customerNo_ = json.customer.customerNo;
 
-                    var _InfoCustomerNo = json.customer.customerNo;
-
-                    if(_InfoCustomerNo.length > 6){
-                    	var _star = "";
-
-                        for(var i=6; i<_InfoCustomerNo.length; i++){
-                            _star += "*";
-                        }
-
-                    	_InfoCustomerNo = _InfoCustomerNo.substring(0,6) + _star;
-                    }
-
-                    $("#InfoCustomerNo").html(_InfoCustomerNo) ;
-                    $("#InfoName1").html(json.customer.name);
+                    $("#InfoCustomerNo").html(customerNo_) ;
+                    //$("#InfoName1").html(json.customer.name);
                     $("#InfoName").html(json.customer.name);
 
                     var addr = json.customer.address;
@@ -136,29 +124,39 @@
                     var addr3 = json.customer.address3;
                     
                     if (addr1 != null && addr1 != "" && addr1 != "null" && addr1 != '"null"') {
-                        $("#InfoAddress1").html(addr1.replaceAll("_","'"));
+                    	$("#InfoAddress1").show();
+                    	$("#InfoAddress1").html(addr1.replaceAll("_","'"));
                     } else {
                         $("#InfoAddress1").html("");
+                        $("#InfoAddress1").hide();
                     }
                     if (addr2 != null && addr2 != "" && addr2 != "null" && addr2 != '"null"') {
-                        $("#InfoAddress2").html(addr2.replaceAll("_","'"));
+                    	$("#InfoAddress2").show();
+                    	$("#InfoAddress2").html(addr2.replaceAll("_","'"));
                     } else {
                         $("#InfoAddress2").html("");
+                        $("#InfoAddress2").hide();
                     }
                     if (addr3 != null && addr3 != "" && addr3 != "null" && addr3 != '"null"') {
-                        $("#InfoAddress3").html(addr3.replaceAll("_","'"));
+                    	$("#InfoAddress3").show();
+                    	$("#InfoAddress3").html(addr3.replaceAll("_","'"));
+                    	$("#InfoAddress3").height('auto');
                     } else {
                         $("#InfoAddress3").html("");
+                        $("#InfoAddress3").hide();
                     }
                     if (addr != null && addr != "" && addr != "null" && addr != '"null"') {
-                        $("#InfoAddress").html(addr.replaceAll("_","'"));
+                    	$("#InfoAddress").show();
+                    	$("#InfoAddress").html(addr.replaceAll("_","'"));
                     } else {
                         $("#InfoAddress").html("");
+                        $("#InfoAddress").hide();
                     }
 
                     $("#InfoEmail").html(json.customer.email);
                     $("#InfoTelephoneNo").html(json.customer.telephoneNo);
                     $("#InfoMobileNo").html(json.customer.mobileNo);
+                    $("#InfoCarrier").html(json.customer.carrier);
                     
                     var loginId = json.customer.loginId;
                     if(loginId != null && loginId != "" && loginId != "null" && loginId != '"null"') {
@@ -212,6 +210,7 @@
                     $("#InfoEmail").html("");
                     $("#InfoTelephoneNo").html("");
                     $("#InfoMobileNo").html("");
+                    $("#InfoCarrier").html("");
                     //남아공 필드 추가
                     $("#identityOrCompanyRegNoDetail").html("");
                     $("#initialsDetail").html("");
@@ -334,11 +333,11 @@
                     }
                     //선불
                     if ( json.creditType.code == "2.2.1" ) {
-                    	$('#meterDiv').css("left",890);
+                    	$('#meterDiv').css("left",1000);
                         $("#pane-creditType-prepay1").show();
-                        $("#pane-creditType-prepay2").show();
+                        //$("#pane-creditType-prepay2").show();
                         $("#pane-creditType-prepay3").show();
-                        $("#pane-creditType-prepay4").show();
+                        //$("#pane-creditType-prepay4").show();
                         $("#pane-creditType-prepay-update").show();
                     }
                 }
@@ -550,9 +549,7 @@
 						<!-- 남아공 추가 요구 필드 END -->
 
 			<div class="headspace">
-				<span><label class="check" id="InfoName1"></label></span><span
-					class="nocheck gray11pt"><fmt:message
-						key='aimir.operator.userDetail' />
+				<span><label class="check" id="InfoName1"></label></span><span class="nocheck gray11pt"><fmt:message key='aimir.view.detail' />
 					<!-- 님의 상세정보 --></span>
 			</div>
 
@@ -598,8 +595,12 @@
 							class="input-fake"></div></td>
 				</tr>
 				<tr>
-					<th class="darkgraybold11pt"><fmt:message
-							key="aimir.celluarphone" />
+					<th class="darkgraybold11pt"><fmt:message key="aimir.carrier" />
+						<!--통신사--></th>
+					<td class="gray11pt"><div id="InfoCarrier" class="input-fake"></div></td>
+				</tr>
+				<tr>
+					<th class="darkgraybold11pt"><fmt:message key="aimir.celluarphone" />
 						<!--핸드폰번호--></th>
 					<td class="gray11pt"><div id="InfoMobileNo" class="input-fake"></div></td>
 				</tr>
@@ -608,8 +609,7 @@
                     <td class="gray11pt"><div id="InfoLoginId" class="input-fake"></div></td>
                 </tr>
 				<tr>
-					<th class="darkgraybold11pt">SMS <fmt:message
-							key='aimir.operator.receiveSetting' /></th>
+					<th class="darkgraybold11pt">SMS <fmt:message key='aimir.operator.receiveSetting' /></th>
 					<td class="gray11pt"><div id="InfoSmsYn" class="input-fake"></div></td>
 				</tr>
 				<tr>

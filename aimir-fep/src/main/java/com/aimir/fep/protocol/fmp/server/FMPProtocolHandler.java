@@ -8,17 +8,11 @@ import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.UUID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.mina.core.buffer.CachedBufferAllocator;
 import org.apache.mina.core.buffer.IoBuffer;
-import org.apache.mina.core.future.CloseFuture;
-import org.apache.mina.core.future.IoFuture;
-import org.apache.mina.core.future.IoFutureListener;
-import org.apache.mina.core.future.WriteFuture;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
@@ -28,8 +22,8 @@ import org.springframework.stereotype.Component;
 
 import com.aimir.constants.CommonConstants;
 import com.aimir.constants.CommonConstants.Interface;
-import com.aimir.constants.CommonConstants.ThresholdName;
 import com.aimir.constants.CommonConstants.TargetClass;
+import com.aimir.constants.CommonConstants.ThresholdName;
 import com.aimir.fep.logger.snowflake.SnowflakeGeneration;
 import com.aimir.fep.meter.parser.plc.PLCData;
 import com.aimir.fep.meter.parser.plc.PLCDataConstants;
@@ -58,11 +52,11 @@ import com.aimir.fep.util.FMPProperty;
 import com.aimir.fep.util.FrameUtil;
 import com.aimir.fep.util.Hex;
 import com.aimir.fep.util.Message;
+import com.aimir.fep.util.threshold.CheckThreshold;
 import com.aimir.model.device.CommLog;
 import com.aimir.model.system.Code;
 import com.aimir.util.DateTimeUtil;
 import com.aimir.util.TimeUtil;
-import com.aimir.fep.util.threshold.CheckThreshold;
 
 /**
  * {@link FMPProtocolHandler} implementation of FEP FMP(AiMiR and MCU Protocol).
@@ -125,8 +119,10 @@ public class FMPProtocolHandler extends IoHandlerAdapter {
 	 * inherited method from ProtocolHandlerAdapter
 	 */
 	public void exceptionCaught(IoSession session, Throwable cause) {
-		log.debug("ExceptionCaught - " + cause.getMessage());
+		log.debug("ExceptionCaught - " + cause.getMessage());		
 		try {
+			SnowflakeGeneration.deleteId();
+			
 			if (cause.getMessage().contains("SSL handshake failed")) {
 				// Security Alarm
 				String activatorId = session.getRemoteAddress().toString();
@@ -493,7 +489,7 @@ public class FMPProtocolHandler extends IoHandlerAdapter {
 				commLog.setReceiverTypeCode(CommonConstants.getSenderReceiver(targetType + ""));
 				commLog.setReceiverId(DataUtil.getFepIdString());
 				commLog.setOperationCode(sd.getType());
-				log.debug("svcType" + sd.getSvc());
+				log.debug("svcType : " + sd.getSvc());
 				commLog.setSvcTypeCode(CommonConstants.getHeaderSvc(String.valueOf((char) sd.getSvc())));
 				//commLog.setSendBytes(new Long(GeneralDataConstants.HEADER_LEN
 				//            +GeneralDataConstants.TAIL_LEN+4));
@@ -744,6 +740,8 @@ public class FMPProtocolHandler extends IoHandlerAdapter {
 	 */
 	public void messageReceived(IoSession session, Object message) {
 		try {
+			SnowflakeGeneration.setSession(session);
+			
 			log.info("###### Message [ " + message.getClass().getName() + "]");
 			boolean kafkaEnable = Boolean.parseBoolean(FMPProperty.getProperty("kafka.enable"));
 			if (message instanceof PLCDataFrame) {
@@ -817,7 +815,7 @@ public class FMPProtocolHandler extends IoHandlerAdapter {
 	 * inherited method from ProtocolHandlerAdapter
 	 */
 	public void sessionOpened(IoSession session) {
-		SnowflakeGeneration.getId();
+		SnowflakeGeneration.setSession(session);
 		
 		// 로그 확인 편하도록....
 		log.info("    ");
@@ -1169,7 +1167,9 @@ public class FMPProtocolHandler extends IoHandlerAdapter {
 //			}
 		} else if (sdf.getSvc() == GeneralDataConstants.SVC_E) {
 			String ns = (String) session.getAttribute("nameSpace");
-			serviceType = ProcessorHandler.SERVICE_EVENT;
+			//serviceType = ProcessorHandler.SERVICE_EVENT;
+			/*2021.03.15 Haiti는 namespace가 지정되어 있다. 해당 SERVICE_EVENT 보낼경우 EventProcessor class에서 NoSuchBeanDefinitionException 에러가 발생하기 때문에 SERVICE_EVENT_1_2로 수정*/
+			serviceType = ProcessorHandler.SERVICE_EVENT_1_2;			
 			if (ns != null && !"".equals(ns)) {
 				serviceType = ProcessorHandler.SERVICE_EVENT_1_2;
 			}

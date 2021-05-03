@@ -211,6 +211,7 @@ public class MeterEventLogController {
         @RequestParam("eventName") String eventName,
         @RequestParam("meterType") String meterType,
         @RequestParam("meterId") String meterId,
+        @RequestParam("gs1") String gs1,
         @RequestParam("occurFreq") String occurFreq,
         @RequestParam("supplierId") String supplierId) {
 
@@ -236,6 +237,7 @@ public class MeterEventLogController {
             conditionMap.put("eventName", eventName);
             conditionMap.put("meterType", meterType);
             conditionMap.put("meterId", meterId);
+            conditionMap.put("gs1", gs1);
             conditionMap.put("occurFreq", occurFreq==null||occurFreq.length() == 0?"0":occurFreq);
 
             conditionMap.put("supplierId", supplierId);
@@ -267,6 +269,7 @@ public class MeterEventLogController {
             @RequestParam("eventName") String eventName,
             @RequestParam("meterType") String meterType,
             @RequestParam("meterId") String meterId,
+            @RequestParam("gs1") String gs1,
             @RequestParam("occurFreq") String occurFreq,
             @RequestParam("page") String page,
             @RequestParam("pageSize") String pageSize,
@@ -293,6 +296,7 @@ public class MeterEventLogController {
             conditionMap.put("eventName", eventName);
             conditionMap.put("meterType", meterType);
             conditionMap.put("meterId", meterId);
+            conditionMap.put("gs1", gs1);
             conditionMap.put("occurFreq", (occurFreq == null || occurFreq.isEmpty()) ? "0" : occurFreq);
             conditionMap.put("page", page);
             conditionMap.put("pageSize", pageSize);
@@ -327,6 +331,7 @@ public class MeterEventLogController {
             @RequestParam("eventName") String eventName,
             @RequestParam("meterType") String meterType,
             @RequestParam("meterId") String meterId,
+            @RequestParam("gs1") String gs1,
             @RequestParam("activatorId") String activatorId,
             @RequestParam("occurFreq") String occurFreq,
             @RequestParam("page") String page,
@@ -354,6 +359,7 @@ public class MeterEventLogController {
             conditionMap.put("eventName", eventName);
             conditionMap.put("meterType", meterType);
             conditionMap.put("meterId", meterId);
+            conditionMap.put("gs1", gs1);
             conditionMap.put("activatorId", activatorId);
             conditionMap.put("occurFreq", occurFreq==null||occurFreq.length() == 0?"0":occurFreq);
             conditionMap.put("page", page);
@@ -488,7 +494,8 @@ public class MeterEventLogController {
             msgMap.put("troubleAdvice", fmtMessage[8]);
             msgMap.put("excel",         fmtMessage[9]);
             msgMap.put("occurFreq",     fmtMessage[10]);
-            msgMap.put("title", fmtMessage[19]);
+            msgMap.put("title", 		fmtMessage[19]);
+            msgMap.put("gs1", 			fmtMessage[20]);
 
             msgMap.put("type",  type);
 

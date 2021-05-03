@@ -23,7 +23,7 @@ public class Message implements Serializable {
     private String filename = "";
     private String meteringType = "";
     private byte[] data;
-    private long sequenceLog = 0L;
+    private String sequenceLog = "0";
     
     public Message() {}
 
@@ -147,11 +147,15 @@ public class Message implements Serializable {
 		this.meteringType = meteringType;
 	}
 	
-	public long getSequenceLog() {
+	public String getSequenceLog() {
 		return sequenceLog;
 	}
 
 	public void setSequenceLog(long sequenceLog) {
+		setSequenceLog(String.valueOf(sequenceLog));
+	}
+	
+	public void setSequenceLog(String sequenceLog) {
 		this.sequenceLog = sequenceLog;
 	}
 

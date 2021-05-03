@@ -31,8 +31,14 @@
 
             if(obj.excelType == 'main_list'){
                 exUrl = '${ctx}/gadget/prepaymentMgmt/prepaymentBalanceExcelMake.do';
-            }else if('history'){
+            }else if(obj.excelType == 'balanceHistory'){
+                exUrl = '${ctx}/gadget/prepaymentMgmt/chargeAndBalanceHistoryExcelMake.do';
+            }else if(obj.excelType == 'history'){
                 exUrl = '${ctx}/gadget/prepaymentMgmt/prepaymentBalanceHistoryExcelMake.do';
+            }else if(obj.excelType == 'stsBalanceHistory'){
+                exUrl = '${ctx}/gadget/prepaymentMgmt/stsChargeHistoryExcelMake.do';
+            }else if(obj.excelType == 'STSHistory'){
+            	exUrl = '${ctx}/gadget/prepaymentMgmt/stsHistoryExcelMake.do';	
             }else {
                 Ext.MessageBox.alert('<fmt:message key="aimir.message"/>' + ' - PopUp', '<fmt:message key="aimir.firmware.msg20"/>');
                 return;                

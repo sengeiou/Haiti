@@ -1,20 +1,26 @@
 package com.aimir.schedule.task;
 
+import java.math.BigDecimal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.JobExecutionContext;
@@ -28,31 +34,28 @@ import org.springframework.transaction.TransactionStatus;
 import com.aimir.constants.CommonConstants.DeviceType;
 import com.aimir.dao.device.MeterDao;
 import com.aimir.dao.mvm.BillingBlockTariffDao;
+import com.aimir.dao.mvm.BillingBlockTariffWrongDao;
 import com.aimir.dao.mvm.DayEMDao;
 import com.aimir.dao.mvm.LpEMDao;
-import com.aimir.dao.mvm.MonthEMDao;
 import com.aimir.dao.system.CodeDao;
 import com.aimir.dao.system.ContractDao;
+import com.aimir.dao.system.MonthlyBillingLogDao;
 import com.aimir.dao.system.PrepaymentLogDao;
-import com.aimir.dao.system.SupplyTypeDao;
 import com.aimir.dao.system.TariffEMDao;
 import com.aimir.dao.system.TariffTypeDao;
-import com.aimir.dao.view.MonthEMViewDao;
+import com.aimir.fep.logger.snowflake.SnowflakeGeneration;
 import com.aimir.fep.util.DataUtil;
 import com.aimir.model.device.Meter;
 import com.aimir.model.mvm.BillingBlockTariff;
-import com.aimir.model.mvm.LpEM;
-import com.aimir.model.mvm.MonthEM;
+import com.aimir.model.mvm.BillingBlockTariffWrong;
+import com.aimir.model.mvm.DayEM;
 import com.aimir.model.system.Code;
 import com.aimir.model.system.Contract;
-import com.aimir.model.system.PrepaymentLog;
 import com.aimir.model.system.TariffEM;
 import com.aimir.model.system.TariffType;
-import com.aimir.model.view.MonthEMView;
 import com.aimir.util.Condition;
 import com.aimir.util.Condition.Restriction;
 import com.aimir.util.DateTimeUtil;
-import com.aimir.util.TimeUtil;
 
 /**
  * EDH의 Block Tariff 선불 요금을 계산하는 스케줄
@@ -66,6 +69,10 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 
     protected static Log log = LogFactory.getLog(EDHBlockDailyEMBillingInfoSaveV2Task.class);
     private static final String SERVICE_TYPE_EM = "Electricity";
+    private static final int BILLING_STANDARDS_DATE = 10;
+    private static final int METERING_MULTIPLE_NUMBER = 3;
+    private static final int MINIMUM_BILLING_USAGE = 100;
+    private static final int MAX_THREAD_WORKER = 10;
 
     @Resource(name="transactionManager")
     HibernateTransactionManager txManager;
@@ -83,19 +90,16 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     DayEMDao dayEMDao;
 
     @Autowired
-    MonthEMDao monthEMDao;
-
-    @Autowired
     TariffEMDao tariffEMDao;
 
     @Autowired
     TariffTypeDao tariffTypeDao;
 
     @Autowired
-    SupplyTypeDao supplyTypeDao;
-
-    @Autowired
     BillingBlockTariffDao billingBlockTariffDao;
+    
+    @Autowired
+    BillingBlockTariffWrongDao billingBlockTariffWrongDao ;
 
     @Autowired
     PrepaymentLogDao prepaymentLogDao;
@@ -104,13 +108,13 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     LpEMDao lpEMDao;
     
     @Autowired
-    MonthEMViewDao monthEMViewDao;
+    MonthlyBillingLogDao monthlyBillingLogDao;
 
     private boolean isNowRunning = false;
     
     /**
      *
-     * @author jiae
+     * @author jhdang
      * @desc   EDH 에서 사용하는 채널
      *
      */
@@ -128,11 +132,30 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         }
     }
     
+    public enum BILLING_BLOCK_ERROR_CODE {
+    	AEAE("Active Energy가 이전의 Active Energy의 3배보다 많은 경우"),
+    	AEPS("Active Energy가 이전의 Active Energy보다 작은 경우"),
+    	INVD("연결된 meter 또는 모뎀이 없는 경우"),
+    	INVT("연결된 meter의 Tariff 값이 없거나 이상한 경우"),
+    	ETC("기타");
+    	
+    	public String desc;
+    	BILLING_BLOCK_ERROR_CODE(String desc) {
+    		this.desc = desc;
+    	}
+    	
+    	public String getDesc() {
+			return this.desc;
+		}
+    }
+    
     public static void main(String[] args) {
     	try {
         	ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[]{"spring-BlockDailyEMBillingTask.xml"}); 
             DataUtil.setApplicationContext(ctx);
             
+            log.info("########### START EDHBlockDailyEMBillingInfoSaveV2Task ###############");
+            SnowflakeGeneration.getInstance();
             EDHBlockDailyEMBillingInfoSaveV2Task task = ctx.getBean(EDHBlockDailyEMBillingInfoSaveV2Task.class);
             task.execute(null);
 			
@@ -155,440 +178,505 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         log.info("########### START EDHBlockDailyEMBillingInfo ###############");
 
         // 일별 전기 요금 정보 등록
-        this.saveEmBillingDayInfo();
+        this.saveEMBillingDayInfo();
 
         log.info("########### END EDHBlockDailyEMBillingInfo ############");
         isNowRunning = false;
     }//execute end
 
-    public void saveEmBillingDayInfo() {
-
-        // 전기 계약 정보 취득
-        List<Integer> em_contractIds = this.getContractInfos(SERVICE_TYPE_EM);
-
-        TransactionStatus txStatus = null;
-
-        for(Integer contract_id : em_contractIds) {
-            // log.info("ContractId[" + contract_id + "]");
-
-            txStatus = txManager.getTransaction(null);
-            Contract contract = null;
-            try {
-                contract = contractDao.get(contract_id);
-                Code code = contract.getCreditType();
-                if (contract.getTariffIndexId() != null && contract.getCustomer() != null && contract.getMeter() != null) {
-                    if(Code.PREPAYMENT.equals(code.getCode()) || Code.EMERGENCY_CREDIT.equals(code.getCode())) { // 선불 요금일 경우
-                        log.info("Contract[" + contract.getContractNumber() + "] Meter[" + contract.getMeter().getMdsId() + "]");
-                        this.saveEmBillingDailyWithTariffEMCumulationCost(contract);
-                    }
-                }
-                txManager.commit(txStatus);
-            }
-            catch (Exception e) {
-                log.error("saveEmBillingDayInfo Exception ==> Contract number = " + contract.getContractNumber(), e);
-                txManager.rollback(txStatus);
-            }
-        }
-        // setSuccessResult();
-    }
-
-    private List<Integer> getContractInfos(String serviceType){
-        return contractDao.getPrepaymentContract(serviceType);
-    }
-
-    private void saveEmBillingDailyWithTariffEMCumulationCost(Contract contract)
-    throws Exception
-    {
-        SimpleDateFormat sd = new SimpleDateFormat("yyyyMMddHHmmss");
-
-        String mdsId = meterDao.get(contract.getMeterId()).getMdsId();
-        String currentDate = DateTimeUtil.getDateString(new Date());
-
-        //마지막 누적요금이 저장된 데이터를 가지고 온다.
-        List<Map<String, Object>> lastBilling = billingBlockTariffDao.getLastAccumulateBill(mdsId);
-        //마지막 누적요금 저장
-        double lastAccumulateBill = 0.0;
-        //마지막 누적사용량 저장
-        double lastAccumulateUsage = 0.0;
-        //마지막 누적요금이 저장된 날짜
-        String lastAccumulateDate = null;
-
-        if(lastBilling.size() <= 0) {
-            //마지막 누적 요금이 저장된 billingDayEM이 없을 경우 한번도 선불스케줄을 돌리지 않은것으로 간주
-            lastAccumulateBill = 0.0;
-            lastAccumulateUsage = 0.0;
-            // 두달 전 선불부터 시작한다.
-            lastAccumulateDate = TimeUtil.getPreMonth(currentDate, 2);
-        } else {
-            lastAccumulateBill = Double.parseDouble(lastBilling.get(0).get("ACCUMULATEBILL").toString());
-            lastAccumulateUsage = Double.parseDouble(lastBilling.get(0).get("ACCUMULATEUSAGE").toString());
-            lastAccumulateDate = lastBilling.get(0).get("YYYYMMDD").toString() + lastBilling.get(0).get("HHMMSS").toString();
-        }
-        log.info("1. Contract[" + contract.getContractNumber() + "] "
-        		+ " lastAccumulateBill: " + lastAccumulateBill 
-        		+ " lastAccumulateUsage: " + lastAccumulateUsage 
-        		+ " lastAccumulateDate: " + lastAccumulateDate);
-
-        // 마지막 시간이 현재 시간보다 작으면 월 기준으로 선불 계산한다.
-        if (lastAccumulateDate.compareTo(currentDate) < 0) {
-            String yyyymm = lastAccumulateDate.substring(0 ,6);
-            String endYyyymm = currentDate.substring(0, 6);
-            Calendar cal = Calendar.getInstance();
-            sd = new SimpleDateFormat("yyyyMM");
-            cal.setTime(sd.parse(yyyymm));
-
-            //해당 Tariff 정보를 가져온다.
-            TariffType tariffType = tariffTypeDao.get(contract.getTariffIndexId());
-            Integer tariffTypeCode = tariffType.getCode();
-            Map<String, Object> tariffParam = new HashMap<>();
-
-            tariffParam.put("tariffTypeCode", tariffTypeCode);
-            tariffParam.put("tariffIndex", tariffType);
-            List<TariffEM> tariffEMList = null;
-
-            while ((yyyymm=sd.format(cal.getTime()).substring(0, 6)).compareTo(endYyyymm) <= 0) {
-                tariffParam.put("searchDate", yyyymm+"31");
-                tariffEMList = tariffEMDao.getApplyedTariff(tariffParam);
-
-                // 바뀐타리프적용전 데이터가 올라온경우 바뀌기전 타리프로 계산해야하기때문에 추가
-                int a = Integer.parseInt(yyyymm);                
-                boolean isOldTariff = a < 201503 ? true : false; 
+    public void saveEMBillingDayInfo() {
+    	// Electricity 계약 목록 조회
+    	List<Contract> emContractList = getEMContractList(); 
+    	
+    	int threadPoolSize = MAX_THREAD_WORKER < emContractList.size() ? MAX_THREAD_WORKER : emContractList.size();
+    	ExecutorService executorService = Executors.newFixedThreadPool(threadPoolSize);
+    	
+    	try {
+	    	for (int i = 0; i < emContractList.size(); i++) {
+	    		Contract contract = emContractList.get(i);
+				log.info("contractNumber[" + contract.getContractNumber() + "] meterId[" + contract.getMeterId() + "]");
+                if (contract.getCustomerId() == null || contract.getMeterId() == null) continue;
                 
-                savePrebill(contract.getTariffIndex().getName(), contract.getMeter(), yyyymm, lastAccumulateBill, lastAccumulateUsage, tariffEMList, isOldTariff);
-                cal.add(Calendar.MONTH, 1);
-                lastAccumulateBill = 0;
-                lastAccumulateUsage = 0;
+	    		Runnable runnable = new Runnable() {
+	    			@Override
+	                public void run() {
+	    				SnowflakeGeneration.getId();
+		                try {
+							saveEmBillingDailyWithTariffEM(contract.getId());
+						} catch (Exception e) {
+							log.info("Thread runnable Exception : contractNumber[" + contract.getContractNumber() + "] meterId[" + contract.getMeterId() + "]");
+						}
+		                SnowflakeGeneration.deleteId();
+	    			}
+	    		};
+	    		
+	    		//스레드풀에게 작업 처리 요청
+	            executorService.execute(runnable);
+                }
+	    	
+    		//스레드풀 종료
+    		try {
+    			executorService.shutdown();
+                while (!executorService.isTerminated()) {
+                }
             }
+            catch (Exception e) {}
+    		
+        }catch (Exception e) {
+            log.error("saveEmBillingDayInfo Exception ==> " + e);
         }
     }
 
-    // yyyymm의 월 사용량을 가져와 선불을 계산하고 마지막 선불요금을 뺀다.
-    private void savePrebill(String tariffName, Meter meter, String yyyymm, double lastAccumulateBill, double lastAccumulateUsage, List<TariffEM> tariffEMList, boolean isOldTariff) throws Exception
-    {
-    	log.info("2. ####savePrebill####  MeterId[" + meter.getMdsId() + "] YYYYMM[" + yyyymm + "]");
+	private void saveEmBillingDailyWithTariffEM(Integer contractId) throws Exception {
+    	TransactionStatus txStatus = null;
+    	try {
+    		txStatus = txManager.getTransaction(null);
+    		
+    		Contract contract =  contractDao.findByCondition("id", contractId);
+    		Meter meter = meterDao.findByCondition("id", contract.getMeterId());
+            DayEM lastDayEM = null;
 
-        //마지막 누적요금이 계산된 달부터 오늘까지의 MonthEM
-        //EDH에 4개의 채널이 적용되어 있음.
-        List<Integer> channelList = new ArrayList<Integer>();
-        channelList.add(I210Channel.ActiveEnergyImp.getChannel());
-        // channelList.add(I210Channel.ActiveEnergyExp.getChannel());
-        // channelList.add(KamstrupChannel.ReactiveEnergyImp.getChannel());
-        // channelList.add(KamstrupChannel.ReactiveEnergyExp.getChannel());
-
-        Map<String, Object> condition = new HashMap<String, Object>();
-        condition.put("mdevType", DeviceType.Meter);
-        condition.put("mdevId", meter.getMdsId());
-        condition.put("channelList", channelList);
-        condition.put("yyyymm", yyyymm);
-        condition.put("dst", 0);
-
-        /*
-         * OPF-610 정규화 관련 처리로 인한 주석
-        List<MonthEM> monthEMs = monthEMDao.getMonthEMsByCondition(condition);
-        */
-        List<MonthEMView> monthEMs = monthEMViewDao.getMonthEMsByCondition(condition);
-        
-        
-        log.info("3. MeterId[" + meter.getMdsId() + "] YYYYMM[" + yyyymm + "] ==> monthEM size: " + monthEMs.size());
-        if (monthEMs.size() > 0) {
-			/*
-			 * OPF-610 정규화 관련 처리로 인한 주석
-			 * MonthEM monthEM = monthEMs.get(0);
-			 */
-        	MonthEMView monthEM = monthEMs.get(0);
-//            monthEM.setMDevType(DeviceType.Meter.name());
-//            monthEM.setMDevId(meter.getMdsId());
-
-            double monthBill = 0.0;
+            //마지막 누적요금이 저장된 데이터를 가지고 온다.
+            BillingBlockTariff lastBilling = getLastAccumulateBill(meter.getMdsId());
             
-            // 월 선불금액 계산
-            if(isOldTariff){  // 이전 타리프로 계산해야 하는지 체크
-                monthBill = blockBill1(meter.getMdsId(), tariffName, tariffEMList, monthEM.getTotal());
-            }else {
-                monthBill = blockBill2(meter.getMdsId(), tariffName, tariffEMList, monthEM.getTotal());            	
+            if(lastBilling == null) {
+            	// 마지막 누적 요금이 저장된 billingDayEM이 없을 경우 한번도 선불스케줄을 돌리지 않은것으로 간주
+            	lastBilling = makeNewBillingBlockTariff(contract);
             }
-
-
-            // 월의 마지막 lp 데이타의 시간을 가져온다.
-            String lastLpTime = getLastLpTime(meter.getMdsId(), monthEM);
-            // LP 날짜로 Billing Day를 생성하거나 업데이트한다.
-            saveBillingBlockTariff(meter, monthEM.getTotal(), lastLpTime, monthBill, lastAccumulateBill);
-
-            // 잔액을 차감한다.
-            Contract contract = meter.getContract();
-            contract.setCurrentCredit((contract.getCurrentCredit()==null? 0:contract.getCurrentCredit()) - (monthBill - lastAccumulateBill));
-            contractDao.update(contract);
-            log.info("7. [Update CurrentCredit Contract:"+ contract.getContractNumber() + " ] MeterId[" + meter.getMdsId() + "] YYYYMM[" + yyyymm + "] "
-            		+ "==> MonthBill[" + monthBill + "] lastAccumulateBill[" + lastAccumulateBill+ "]");
-
-            // 선불로그 기록
-            savePrepyamentLog(contract, monthEM.getTotal()-lastAccumulateUsage, monthBill-lastAccumulateBill, lastLpTime);
-        }
+            log.info("Contract[" + contract.getContractNumber() + "] "
+        			+ " lastAccumulateBill[" + convertBigDecimal(lastBilling.getAccumulateBill()) + "] "
+        			+ " lastAccumulateUsage[" + convertBigDecimal(lastBilling.getAccumulateUsage()) + "] "
+        			+ " lastAccumulateDate[" + lastBilling.getYyyymmdd().toString() + "] "
+        			+ " mdsId[" + meter.getMdsId() + "] ");
+            
+            lastDayEM = getDayEM(meter.getMdsId(), lastBilling.getYyyymmdd());	//최근 DAY_EM 조회
+            
+            //데이터 검증 하여 BILLING_BLOCK_TARIFF_WRONG 이력 남기고 리턴하여 for문으로 다시 돌아감
+            if(validateBillingValues(contract, lastDayEM, lastBilling)) {
+            	txManager.commit(txStatus);
+            	return;
+            }
+            	
+        	// 마지막 시간이 현재 시간보다 작으면 월 기준으로 선불 계산한다.
+        	// compareTo - lastAccumulateDate가 lastDayEM 날짜 보다 작으면 음수 반환, 크면 양수 반환, 같으면 0 리턴
+        	if (lastBilling.getYyyymmdd().compareTo(lastDayEM.getYyyymmdd()) <= 0 && lastBilling.getActiveEnergy() < lastDayEM.getValue()) {
+        		log.info("#### dailyBilling start  lastBilling yyyymmdd["+ lastBilling.getYyyymmdd()+ "] ActiveEnergy[" + lastBilling.getActiveEnergy() + "] lastDayEM yyyymmdd["+ lastDayEM.getYyyymmdd() +"] ActiveEnergy["+ lastDayEM.getValue() +"] ####");
+        		// DAY_EM 마지막 날짜와 lastAccumulateDate간의 시간차이를 비교하여 일수로 반환
+        		long diffDays = Long.parseLong(calculateDiffDays(lastDayEM.getYyyymmdd(), lastBilling.getYyyymmdd()));
+        		log.info("#### diffDays : "+ diffDays+ " ####");
+        		
+        		//해당 TariffEM 정보를 가져온다.
+        		List<TariffEM> tariffEMList = getTariffEMList(contract, lastBilling.getYyyymmdd());
+        		
+        		// 마지막 BillingBlockTariff 추가
+        		LinkedList<BillingBlockTariff> sequenceBillings = new LinkedList<BillingBlockTariff>();
+        		sequenceBillings.add(lastBilling);
+        		
+        		// BillingBlockTariff low 생성
+        		sequenceBillings = gatherBillingBlock(sequenceBillings, diffDays, tariffEMList, contract, meter, lastDayEM);
+        		
+                // Contract 잔액을 차감한다.
+        		BigDecimal currentCredit = contract.getCurrentCredit() != null ? convertBigDecimal(contract.getCurrentCredit()) : new BigDecimal(0);
+        		for (int i = 1; i < sequenceBillings.size(); i++) {
+        			BigDecimal bill = convertBigDecimal(sequenceBillings.get(i).getBill());
+        			saveBillingBlockTariff(contract, meter, sequenceBillings.get(i));		// BillingBlockTariff 저장
+        			contract.setCurrentCredit(sequenceBillings.get(i).getBalance());
+        			log.info("[Update CurrentCredit Contract:"+ contract.getContractNumber() + " ] MeterId[" + meter.getMdsId() + "] yyyymmdd[" + lastDayEM.getYyyymmdd() + "] "
+        					+ "==> BlockBill[" + sequenceBillings.get(i).getBill() + "] lastAccumulateBill[" + sequenceBillings.get(i-1).getBill()+ "]");
+    			}
+        		contractDao.merge(contract);
+        	}
+        	txManager.commit(txStatus);
+		} catch (Exception e) {
+			log.error("saveEmBillingDaily Exception ==> Contract number = " + contractId, e);
+			if(txStatus != null) txManager.rollback(txStatus);
+		}    	
+    }
+    
+	private LinkedList<BillingBlockTariff> gatherBillingBlock(LinkedList<BillingBlockTariff> sequenceBillings, long diffDays, List<TariffEM> tariffEMList, Contract contract, Meter meter, DayEM lastDayEM) throws ParseException{
+ 	   long compareCnt = diffDays % BILLING_STANDARDS_DATE == 0 ? (diffDays / BILLING_STANDARDS_DATE) -1 : diffDays / BILLING_STANDARDS_DATE ;
+ 		log.info("####  compareCnt : "+ compareCnt+ " ####");
+ 		BigDecimal avgDayUsage = new BigDecimal(0);
+ 		if(compareCnt > 0) {
+ 			avgDayUsage = convertBigDecimal(lastDayEM.getValue()).subtract(convertBigDecimal(sequenceBillings.get(0).getActiveEnergy())).divide(convertBigDecimal(diffDays), 4, BigDecimal.ROUND_HALF_UP) ; // 소수점 4자리 까지
+ 			log.info("####  avgDayUsage : "+ avgDayUsage+ " ####");
+ 		}
+ 		// 구간 정산
+ 	    for (int i = 0; i < compareCnt; i++) {
+ 			BillingBlockTariff lastIndex = sequenceBillings.getLast();
+ 			String nextBillingDay = calculateNextDays(lastIndex.getYyyymmdd(), BILLING_STANDARDS_DATE);
+ 			String remainBillingDay = null;
+ 			
+ 			// 다음 정산일과 이전 BillingBlockTariff 날짜 월이 다르면
+ 			if(!lastIndex.getYyyymmdd().subSequence(0, 6).equals(nextBillingDay.substring(0, 6))) {
+ 				BigDecimal usage = new BigDecimal(0);
+ 				String maxDay = maxDayOfMonth(lastIndex.getYyyymmdd());						//해당 월의 말일
+ 				remainBillingDay = calculateDiffDays(lastIndex.getYyyymmdd(), maxDay);		//이전 BillingBlockTariff 날짜와 해당 월의 말일 차이를 계산
+ 				if(!remainBillingDay.equals("0")) {											//이전 BillingBlockTariff 날짜와 해당 월의 말일 차이가 있다면
+ 					usage = avgDayUsage.multiply(convertBigDecimal(remainBillingDay));		//일평균
+ 					sequenceBillings.add(makeBillings(lastIndex, usage, maxDay, meter, contract.getTariffIndex().getName(), tariffEMList, true));
+ 				}
+ 				
+ 				lastIndex = sequenceBillings.getLast();
+ 				remainBillingDay = Integer.toString(BILLING_STANDARDS_DATE - Integer.parseInt(remainBillingDay));	//기준일 10일에서 말일 차이를 뺀다
+ 				nextBillingDay = calculateNextDays(lastIndex.getYyyymmdd(), Integer.parseInt(remainBillingDay));	//이전 BillingBlockTariff 날짜에서 다음 정산일을 구한다
+ 				BillingBlockTariff firstIndex = makeNewMonthBillingBlockTariff(lastIndex, nextBillingDay);			//달이 바뀌면서 BillingBlockTariff 초기화
+ 				usage = avgDayUsage.multiply(convertBigDecimal(remainBillingDay));									//남은 일수만큼의 일평균	
+ 				sequenceBillings.add(makeBillings(firstIndex, usage, nextBillingDay, meter, contract.getTariffIndex().getName(), tariffEMList, true));
+ 			}
+ 			// 다음 정산일과 이전 BillingBlockTariff 날짜 월이 같으면
+ 			else {
+ 				lastIndex = sequenceBillings.getLast();
+ 				nextBillingDay = calculateNextDays(lastIndex.getYyyymmdd(), BILLING_STANDARDS_DATE);	// 다음 정산일
+ 				BigDecimal usage = avgDayUsage.multiply(convertBigDecimal(BILLING_STANDARDS_DATE));		// 일평균
+ 				sequenceBillings.add(makeBillings(lastIndex, usage, nextBillingDay, meter, contract.getTariffIndex().getName(), tariffEMList, true));
+ 			}
+ 		}
+ 	    // 일반 정산
+ 		BillingBlockTariff lastIndex = sequenceBillings.getLast();
+ 		String remainBillingDay = null;
+ 		log.info("#### Last BillingBlockTariff conclusion begins  ####");
+ 		// 다음 정산일과 이전 BillingBlockTariff 날짜 월이 다르면
+ 		if(!lastIndex.getYyyymmdd().subSequence(0, 6).equals(lastDayEM.getYyyymmdd().substring(0, 6))) {
+ 			BigDecimal usage = new BigDecimal(0);
+ 			String maxDay = maxDayOfMonth(lastIndex.getYyyymmdd());						//해당 월의 말일
+ 			remainBillingDay = calculateDiffDays(lastIndex.getYyyymmdd(), maxDay);		//이전 BillingBlockTariff 날짜와 해당 월의 말일 차이를 계산
+ 			if(!remainBillingDay.equals("0")) {											//이전 BillingBlockTariff 날짜와 해당 월의 말일 차이가 있다면
+ 				usage = avgDayUsage.multiply(convertBigDecimal(remainBillingDay));		//일평균
+ 				sequenceBillings.add(makeBillings(lastIndex, usage, maxDay, meter, contract.getTariffIndex().getName(), tariffEMList, true));
+ 			}
+ 			
+ 			lastIndex = sequenceBillings.getLast();
+ 			remainBillingDay = calculateDiffDays(lastDayEM.getYyyymmdd(), lastIndex.getYyyymmdd());
+ 			BillingBlockTariff firstIndex = makeNewMonthBillingBlockTariff(lastIndex, remainBillingDay);					//달이 바뀌면서 BillingBlockTariff 초기화
+ 			usage = convertBigDecimal(lastDayEM.getValue()).subtract(convertBigDecimal(firstIndex.getActiveEnergy()));		//Day_EM의 마지막 값에서 이전 BillingBlockTariff ActiveEnergy를 뺀 값으로 저장
+ 			sequenceBillings.add(makeBillings(firstIndex, usage, lastDayEM.getYyyymmdd()+lastDayEM.getId().getHh(), meter, contract.getTariffIndex().getName(), tariffEMList, false));
+ 		}
+ 		// 다음 정산일과 이전 BillingBlockTariff 날짜 월이 같으면	
+ 		else {
+ 			lastIndex = sequenceBillings.getLast();
+ 			BigDecimal usage = convertBigDecimal(lastDayEM.getValue()).subtract(convertBigDecimal(lastIndex.getActiveEnergy()));
+ 			sequenceBillings.add(makeBillings(lastIndex, usage, lastDayEM.getYyyymmdd()+lastDayEM.getId().getHh(), meter, contract.getTariffIndex().getName(), tariffEMList, false));
+ 		}
+    
+ 		return sequenceBillings;
     }
 
-    private void saveBillingBlockTariff(Meter meter, double usage, String lastLpTime, double newbill, double oldbill) {
+    private BillingBlockTariff makeBillings(BillingBlockTariff lastIndex, BigDecimal usage, String date, Meter meter, String tariffName, List<TariffEM> tariffEMList, Boolean isAVG) {
+    	BillingBlockTariff bill = new BillingBlockTariff();
+    	if(isAVG) {
+    		bill.setYyyymmdd(date);
+    		bill.setHhmmss("000000");
+    	}else {
+    		bill.setYyyymmdd(date.substring(0, 8));
+    		bill.setHhmmss(date.substring(8)+"0000");
+    	}
+    	bill.setUsage(usage.doubleValue());																		// ACTIVEENERGY - Previous ACTIVEENERGY
+    	bill.setActiveEnergy(convertBigDecimal(lastIndex.getActiveEnergy()).add(usage).doubleValue());			// Previous ACTIVEENERGY + USAGE
+    	bill.setActiveEnergyImport(convertBigDecimal(lastIndex.getActiveEnergy()).add(usage).doubleValue());	// Previous ACTIVEENERGY + USAGE
+    	bill.setAccumulateUsage(convertBigDecimal(lastIndex.getAccumulateUsage()).add(usage).doubleValue());	// Previous ACCUMULATEUSAGE + USAGE
+    	// Tariff 구간 요금 계산
+    	BigDecimal accumulateBill = blockBill(meter.getMdsId(), tariffName, tariffEMList, convertBigDecimal(bill.getAccumulateUsage()));	//BlockTariff
+    	bill.setAccumulateBill(accumulateBill.doubleValue());
+    	BigDecimal billingBill = accumulateBill.subtract(convertBigDecimal(lastIndex.getAccumulateBill()));
+    	bill.setBill(accumulateBill.subtract(convertBigDecimal(lastIndex.getAccumulateBill())).doubleValue());	// ACCUMULATEBILL - Previous ACCUMULATEBILL = Bill
+    	bill.setBalance(convertBigDecimal(lastIndex.getBalance()).subtract(billingBill).doubleValue());			// Balance - Bill
+    	bill.setContractId(lastIndex.getContractId());
+    	bill.setAvg(isAVG);
+
+		return bill;
+	}
+    
+    public BigDecimal blockBill(String mdsId, String tariffName, List<TariffEM> tariffEMList, BigDecimal totalUsage) {
+    	BigDecimal returnBill = new BigDecimal(0);
+    	// 매월 기본요금 부과 - 월정산으로 대체
+    	// TCA, Fraise Special은 충전할 때 충전 요금에서 차감
+    	//BigDecimal serviceCharge = convertBigDecimal(tariffEMList.get(0).getServiceCharge());
+    	
+    	Collections.sort(tariffEMList, new Comparator<TariffEM>() {
+
+            @Override
+            public int compare(TariffEM t1, TariffEM t2) {
+                return t1.getSupplySizeMin() < t2.getSupplySizeMin()? -1:1;
+            }
+        });
+    	
+		for (TariffEM tariffEM : tariffEMList) {
+    		if ("Eclairage Public".equals(tariffName) || "Organisme Public".equals(tariffName) || "Organisme Autonome".equals(tariffName)) {
+    			returnBill = totalUsage.multiply(convertBigDecimal(tariffEM.getActiveEnergyCharge()));
+	        }else {
+	        	// 구간 SupplySizeMax 값보다 크면 (Max - Min) * ActiveEnergyCharge
+	        	if(tariffEM.getSupplySizeMax() != null && totalUsage.compareTo(convertBigDecimal(tariffEM.getSupplySizeMax())) >= 0) {
+            		returnBill = convertBigDecimal(tariffEM.getSupplySizeMax()).subtract(convertBigDecimal(tariffEM.getSupplySizeMin())).multiply(convertBigDecimal(tariffEM.getActiveEnergyCharge())).add(returnBill);
+            		log.info("Interval Bill : "+returnBill + " supplySize_Min : " + tariffEM.getSupplySizeMin() + " supplySize_Max : " + tariffEM.getSupplySizeMax() + " ActiveEnergyCharge : " + tariffEM.getActiveEnergyCharge());
+	        	}
+	        	// 구간 SupplySizeMax 값보다 작으면 (Usage - Min) * ActiveEnergyCharge
+	        	else {
+            		returnBill = totalUsage.subtract(convertBigDecimal(tariffEM.getSupplySizeMin())).multiply(convertBigDecimal(tariffEM.getActiveEnergyCharge())).add(returnBill);
+            		log.info("Interval Bill : "+returnBill + " supplySize_Min : " + tariffEM.getSupplySizeMin() + " supplySize_Max : " + tariffEM.getSupplySizeMax() + " ActiveEnergyCharge : " + tariffEM.getActiveEnergyCharge());
+            		break;	// 사용량이 현재 구간 SupplySizeMax보다 작으면 다음 구간 계산 불필요
+            	}
+	        }
+		}
+
+    	log.info("Total BlockBill is Meter[" + mdsId + "] ACCUMULATEUSAGE[" + totalUsage + "] Bill[" + returnBill + "]");
+        return returnBill.setScale(2, BigDecimal.ROUND_HALF_UP);	//소수점 2자리 까지
+    }
+    
+    private List<Contract> getEMContractList() {
+    	TransactionStatus txStatus = null;
+    	List<Contract> emContractList = new ArrayList<Contract>();
+    	try {
+    		txStatus = txManager.getTransaction(null);
+    		emContractList = contractDao.getContract(Code.PREPAYMENT, SERVICE_TYPE_EM);
+    		txManager.commit(txStatus);
+		} catch (Exception e) {
+			log.error("getEMContractList Exception ==> ", e);
+			if(txStatus != null) txManager.rollback(txStatus);
+		}
+		return emContractList;
+	}
+    
+    private void saveBillingBlockTariff(Contract contract, Meter meter, BillingBlockTariff billingBlockTariff) {
         BillingBlockTariff bill = new BillingBlockTariff();
 
         bill.setMDevId(meter.getMdsId());
-        bill.setYyyymmdd(lastLpTime.substring(0, 8));
-        bill.setHhmmss(lastLpTime.substring(8, 14));
+        bill.setYyyymmdd(billingBlockTariff.getYyyymmdd());
+        bill.setHhmmss(billingBlockTariff.getHhmmss());
         bill.setMDevType(DeviceType.Meter.name());
+        bill.setTariffIndex(contract.getTariffIndex());
         bill.setSupplier(meter.getSupplier());
         bill.setLocation(meter.getLocation());
+        bill.setContract(contract);
         bill.setMeter(meter);
         bill.setModem((meter == null) ? null : meter.getModem());
+        bill.setAvg(billingBlockTariff.isAvg());
+        bill.setValidity(true);
         bill.setWriteDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
-        bill.setAccumulateUsage(usage);
-        if (meter.getContract() != null)
-            bill.setContract(meter.getContract());
+        bill.setActiveEnergy(billingBlockTariff.getActiveEnergy());
+        bill.setActiveEnergyImport(billingBlockTariff.getActiveEnergyImport());
+        bill.setUsage(billingBlockTariff.getUsage());
+        bill.setAccumulateUsage(billingBlockTariff.getAccumulateUsage());
+        bill.setBalance(billingBlockTariff.getBalance());
+        bill.setBill(billingBlockTariff.getBill());
+        bill.setAccumulateBill(billingBlockTariff.getAccumulateBill());
 
-        //현재누적액 - 어제누적액
-        bill.setBill(newbill - oldbill);
-        bill.setAccumulateBill(newbill);
-
-        billingBlockTariffDao.saveOrUpdate(bill);
+        monthlyBillingLogDao.updateMonthlyUsageInfo(contract.getId(), bill.getMDevId(), bill.getYyyymmdd(), bill.getAccumulateUsage(), bill.getAccumulateBill(), bill.getActiveEnergyImport(), bill.getActiveEnergyExport());
+        log.info("[SaveMonthlyBillingLog] MeterId[" + bill.getMDevId() + "] BillDay[" + bill.getYyyymmdd() +
+                "] AccumulateUsage[" + bill.getAccumulateUsage() + "] AccumulateBill[" + bill.getAccumulateBill() +
+                "] ActiveEnergyImport[" + bill.getActiveEnergyImport() + "]" + "] ActiveEnergyExport[" + bill.getActiveEnergyExport() + "]");
         
-        log.info("6. [SaveBillingBlockTariff] MeterId[" + bill.getMDevId() + "] BillDay[" + bill.getYyyymmdd() +
-                "] BillTime[" + bill.getHhmmss() + "] AccumulateUsage[" + bill.getAccumulateUsage() +
-                "] AccumulateBill[" + bill.getAccumulateBill() + "] CurrentBill[" + bill.getBill() + "]");
-
-        
+        billingBlockTariffDao.add(bill);
+        log.info("[SaveBillingBlockTariff] MeterId[" + bill.getMDevId() + "] BillDay[" + bill.getYyyymmdd() +
+            "] BillTime[" + bill.getHhmmss() + "] AccumulateUsage[" + bill.getAccumulateUsage() +
+            "] AccumulateBill[" + bill.getAccumulateBill() + "] CurrentBill[" + bill.getBill() + "]");
     }
-
-    private void savePrepyamentLog(Contract contract, double usage, double bill, String lastLpTime) {
-        PrepaymentLog prepaymentLog = new PrepaymentLog();
-        prepaymentLog.setUsedConsumption(usage);
-        prepaymentLog.setBalance(contract.getCurrentCredit());
-        prepaymentLog.setChargedCredit(Double.parseDouble("0"));
-        prepaymentLog.setLastTokenDate(DateTimeUtil.getDateString(new Date()));
-        prepaymentLog.setContract(contract);
-        prepaymentLog.setCustomer(contract.getCustomer());
-        prepaymentLog.setUsedCost(bill);
-        prepaymentLog.setLastLpTime(lastLpTime.substring(0, 6));
-        prepaymentLog.setLocation(contract.getLocation());
-        prepaymentLog.setTariffIndex(contract.getTariffIndex());
-
-        log.info("8(END). [Save PrepaymentLog Contract:" + contract.getContractNumber() + "] ==> " + prepaymentLog.toString());
-
-        prepaymentLogDao.saveOrUpdate(prepaymentLog);
-    }
-
-    /*
-     * BillingDayEM의 시간에 넣기 위한 LP 마지막 시간을 가져온다.
+    
+    /**
+     * DAY 검침테이블에서 마지막 데이터를 가져온다.
+     * @param meterId
+     * @return
      */
-    private String getLastLpTime(String meterId, MonthEM monthEM) throws Exception {
-        String yyyymmdd = null;
-        String lpValue = null;
-        for (int i = 31; i > 0; i--) {
-            lpValue = BeanUtils.getProperty(monthEM, String.format("value_%02d", i));
-            if (lpValue != null && !lpValue.equals("")) {
-                yyyymmdd = String.format("%s%02d", monthEM.getYyyymm(), i);
-                log.info("5-1. MeterId [" + meterId + "] getLastLpTime: " + yyyymmdd);
-                break;
-            }
-        }
-        if (yyyymmdd != null) {
-            Set<Condition> condition = new HashSet<Condition>();
-            log.info("5-2. MeterId[" + meterId + "] MDevType[" + monthEM.getMDevType() + "] MDevId[" + monthEM.getMDevId() + "] YYYYMMDD[" + yyyymmdd + "]");
-            condition.add(new Condition("id.mdevType", new Object[]{monthEM.getMDevType()}, null, Restriction.EQ));
-            condition.add(new Condition("id.mdevId", new Object[]{monthEM.getMDevId()}, null, Restriction.EQ));
-            condition.add(new Condition("id.channel", new Object[]{1}, null, Restriction.EQ));
-            condition.add(new Condition("id.yyyymmddhhmiss", new Object[]{yyyymmdd+"000000", yyyymmdd+"235959"}, null, Restriction.BETWEEN));
-            // condition.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
-
-            List<LpEM> lpEMs = lpEMDao.findByConditions(condition);
-            LpEM lastLp = null;
-            if (lpEMs.size() > 0) {
-                lastLp = lpEMs.get(0);
-                for (int i = 0; i < lpEMs.size(); i++) {
-                    if (lastLp.getYyyymmddhh().compareTo(lpEMs.get(i).getYyyymmddhh()) < 0) {
-                        lastLp = lpEMs.get(i);
+    public DayEM getDayEM(String meterId, String yyyymmdd) {
+        try {
+            LinkedHashSet<Condition> condition = new LinkedHashSet<Condition>();
+            condition.add(new Condition("id.mdevId", new Object[]{meterId}, null, Restriction.EQ));
+            condition.add(new Condition("id.mdevType", new Object[]{DeviceType.Meter}, null, Restriction.EQ));
+            condition.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
+            condition.add(new Condition("id.channel", new Object[]{I210Channel.ActiveEnergyImp.getChannel()}, null, Restriction.EQ));
+            condition.add(new Condition("id.yyyymmdd", new Object[]{yyyymmdd}, null, Restriction.GE));
+            
+            List<DayEM> ret = dayEMDao.findByConditions(condition);
+            DayEM lastDayEM = null;
+            if(ret.size() != 0) {
+                lastDayEM = ret.get(0);
+                for (int i = 0; i < ret.size(); i++) {
+                    if (lastDayEM.getYyyymmdd().compareTo(ret.get(i).getYyyymmdd()) <= 0) {
+                    	lastDayEM = ret.get(i);
                     }
                 }
-            }
+             }
             
-            /*
-             * OPF-610 정규화 관련 처리로 인한 주석
-            if (lastLp.getValue_30() != null)
-                return lastLp.getYyyymmddhh() + "3000";
-            else if (lastLp.getValue_00() != null)
-                return lastLp.getYyyymmddhh() + "0000";
-             */   
+            return lastDayEM;
         }
-
+        catch (Exception e) {
+            log.error(e, e);
+        }
         return null;
     }
     
-    private String getLastLpTime(String meterId, MonthEMView monthEM) throws Exception {
-        String yyyymmdd = null;
-        String lpValue = null;
-        for (int i = 31; i > 0; i--) {
-            lpValue = BeanUtils.getProperty(monthEM, String.format("value_%02d", i));
-            if (lpValue != null && !lpValue.equals("")) {
-                yyyymmdd = String.format("%s%02d", monthEM.getYyyymm(), i);
-                log.info("5-1. MeterId [" + meterId + "] getLastLpTime: " + yyyymmdd);
-                break;
-            }
-        }
-        if (yyyymmdd != null) {
-            Set<Condition> condition = new HashSet<Condition>();
-            log.info("5-2. MeterId[" + meterId + "] MdevType[" + monthEM.getMdevType() + "] MdevId[" + monthEM.getMdevId() + "] YYYYMMDD[" + yyyymmdd + "]");
-            condition.add(new Condition("id.mdevType", new Object[]{monthEM.getMdevType()}, null, Restriction.EQ));
-            condition.add(new Condition("id.mdevId", new Object[]{monthEM.getMdevId()}, null, Restriction.EQ));
-            condition.add(new Condition("id.channel", new Object[]{1}, null, Restriction.EQ));
-            condition.add(new Condition("id.yyyymmddhhmiss", new Object[]{yyyymmdd+"000000", yyyymmdd+"235959"}, null, Restriction.BETWEEN));
-            // condition.add(new Condition("id.dst", new Object[]{0}, null, Restriction.EQ));
-
-            List<LpEM> lpEMs = lpEMDao.findByConditions(condition);
-            LpEM lastLp = null;
-            if (lpEMs.size() > 0) {
-                lastLp = lpEMs.get(0);
-                for (int i = 0; i < lpEMs.size(); i++) {
-                    if (lastLp.getYyyymmddhh().compareTo(lpEMs.get(i).getYyyymmddhh()) < 0) {
-                        lastLp = lpEMs.get(i);
+    public BillingBlockTariff getLastAccumulateBill(String meterId) {
+        try {
+            LinkedHashSet<Condition> condition = new LinkedHashSet<Condition>();
+            condition.add(new Condition("id.mdevId", new Object[]{meterId}, null, Restriction.EQ));
+            condition.add(new Condition("id.mdevType", new Object[]{DeviceType.Meter}, null, Restriction.EQ));
+            
+            List<BillingBlockTariff> ret = billingBlockTariffDao.findByConditions(condition);
+            BillingBlockTariff lastBillingBlockTariff = null;
+            if(ret.size() != 0) {
+            	lastBillingBlockTariff = ret.get(0);
+                for (int i = 0; i < ret.size(); i++) {
+                    if (lastBillingBlockTariff.getYyyymmdd().compareTo(ret.get(i).getYyyymmdd()) <= 0) {
+                    	lastBillingBlockTariff = ret.get(i);
                     }
                 }
-            }
+             }
             
-            /*
-             * OPF-610 정규화 관련 처리로 인한 주석
-            if (lastLp.getValue_30() != null)
-                return lastLp.getYyyymmddhh() + "3000";
-            else if (lastLp.getValue_00() != null)
-                return lastLp.getYyyymmddhh() + "0000";
-            */
-            
-            if(lastLp.getValue() != null) {
-            	if("30".equals(lastLp.getMinute()))
-            		return lastLp.getYyyymmddhh() + "3000";
-            	else if("00".equals(lastLp.getMinute()))
-            		return lastLp.getYyyymmddhh() + "0000";	
-            }
-            
+            return lastBillingBlockTariff;
+        }catch (ArrayIndexOutOfBoundsException e) {
+            log.info("BillingBlockTariff does not exist : "+ e);
         }
-
         return null;
     }
     
+    private boolean validateBillingValues(Contract contract, DayEM lastDayEM, BillingBlockTariff lastBilling) {
+    	boolean result = false;
+    	
+    	if(lastDayEM == null) {
+        	log.info("### validateBillingValues DayEM is null Contract[" +contract.getContractNumber() + "] Meter[" + contract.getMeter().getMdsId() + "] ###");
+        	return true;
+        }else {
+        	log.info("#### validateBillingValues start  lastBilling yyyymmdd["+ lastBilling.getYyyymmdd()+ "] ActiveEnergy[" + lastBilling.getActiveEnergy() + "] lastDayEM yyyymmdd["+ lastDayEM.getYyyymmdd() +"] ActiveEnergy["+ lastDayEM.getValue() +"] ####");
+        }
+    	
+    	log.info("### validateBillingValues   contract["+contract.getTariffIndexId()+"]  lastDayEM["+lastDayEM.getValue()+"]  lastBilling["+lastBilling.getActiveEnergy() + "] ###");
+    	// Day_EM value가 이전 activeEnergy 보다 클떄 진행하고 작으면 Wrong 테이블 저장
+    	if(lastDayEM.getValue() < lastBilling.getActiveEnergy()) {
+    		addWrongBillingBlockTariff(contract, contract.getMeter(), lastDayEM, lastBilling, BILLING_BLOCK_ERROR_CODE.AEPS);
+    		result = true;
+   		// activeEnergy 사용량 최소 100이상은 되고 Day_EM value가 activeEnergy 사용량 3배 보다 크면 Wrong 테이블 저장	 
+    	}else if(lastDayEM.getValue() > lastBilling.getActiveEnergy() * METERING_MULTIPLE_NUMBER && lastBilling.getActiveEnergy() > MINIMUM_BILLING_USAGE) {
+    		addWrongBillingBlockTariff(contract, contract.getMeter(), lastDayEM, lastBilling, BILLING_BLOCK_ERROR_CODE.AEAE);
+    		result = true;
+    	// tariffIndexId가 null이면 Wrong 테이블 저장	
+    	}else if(contract.getTariffIndexId() == null) {
+			addWrongBillingBlockTariff(contract, contract.getMeter(), lastDayEM, lastBilling, BILLING_BLOCK_ERROR_CODE.INVT);
+			result = true;
+		}
+       	return result;
+	}
     
-
-    public double blockBill1(String mdsId, String tariffName, List<TariffEM> tariffEMList, double usage) {
-        double returnBill = 0.0;
-
-        Collections.sort(tariffEMList, new Comparator<TariffEM>() {
-
-            @Override
-            public int compare(TariffEM t1, TariffEM t2) {
-                return t1.getSupplySizeMin() < t2.getSupplySizeMin()? -1:1;
-            }
-        });
-
-        if (tariffName.equals("Industrie BT") || tariffName.equalsIgnoreCase("Commerce")) {
-            returnBill = usage * tariffEMList.get(0).getActiveEnergyCharge() + tariffEMList.get(0).getServiceCharge();
-        }
-        else if (tariffName.equals("Industrie MT")) {
-           
-        }
-        else {
-            returnBill = tariffEMList.get(0).getServiceCharge();
-            // 0 ~ 1
-            if (usage <= tariffEMList.get(1).getSupplySizeMin()) {
-                
-            }
-            // 1 ~
-            else {
-                // ~ 30
-                if (usage <= tariffEMList.get(1).getSupplySizeMax()) {
-                    returnBill += usage * tariffEMList.get(1).getActiveEnergyCharge();
-                }
-                // ~ 200
-                else if (usage <= tariffEMList.get(2).getSupplySizeMax()) {
-                    returnBill += tariffEMList.get(1).getSupplySizeMax() * tariffEMList.get(1).getActiveEnergyCharge();
-                    returnBill += ((usage - tariffEMList.get(2).getSupplySizeMin()) * tariffEMList.get(2).getActiveEnergyCharge());
-                }
-                // 200 ~
-                else {
-                    returnBill += tariffEMList.get(1).getSupplySizeMax() * tariffEMList.get(1).getActiveEnergyCharge();
-                    returnBill += (tariffEMList.get(2).getSupplySizeMax()-tariffEMList.get(2).getSupplySizeMin()) * tariffEMList.get(2).getActiveEnergyCharge();
-                    returnBill += ((usage - tariffEMList.get(3).getSupplySizeMin()) * tariffEMList.get(3).getActiveEnergyCharge());
-                }
-            }
-        }
-
-        double tca = returnBill * 0.1;
-        double frais = tca * 0.1;
+    /*
+	 * 잘못된 일일정산 데이터를 저장
+	 */
+	private void addWrongBillingBlockTariff(Contract contract, Meter meter, DayEM lastDayEM, BillingBlockTariff lastBilling, BILLING_BLOCK_ERROR_CODE code) {
+    	try {
+	        BillingBlockTariffWrong billWrong = new BillingBlockTariffWrong();
+	        billWrong.setCode(code.name());
+	        billWrong.setMDevId(meter.getMdsId());
+	        billWrong.setYyyymmdd(lastDayEM.getYyyymmdd());
+	        billWrong.setYyyymmddhh(lastDayEM.getYyyymmdd()+lastDayEM.getId().getHh());
+	        billWrong.setLocation(meter.getLocation());
+	        billWrong.setContract(contract);
+	        billWrong.setMeter(meter);
+	        billWrong.setModem((meter == null) ? null : meter.getModem());
+	        billWrong.setWriteDate(DateTimeUtil.getCurrentDateTimeByFormat("yyyyMMddHHmmss"));
+	        billWrong.setActiveEnergy(lastDayEM.getValue());
+	        billWrong.setActiveEnergyImport(lastDayEM.getValue());
+	        billWrong.setPrevActiveEnergy(lastBilling.getActiveEnergy());
+	        billWrong.setPrevActiveEnergyImport(lastBilling.getActiveEnergyImport());
+	        billWrong.setPrevyyyymmddhh(lastBilling.getYyyymmdd()+lastBilling.getId().getHhmmss().substring(0, 2));
+	        billWrong.setLastBillingDate(DateTimeUtil.getDateString(new Date()));
+	        billWrong.setIntervalDay(Integer.parseInt(calculateDiffDays(lastDayEM.getYyyymmdd(), lastBilling.getYyyymmdd())));
+	        billWrong.setDescr(code.getDesc());
+	
+	        billingBlockTariffWrongDao.saveOrUpdate(billWrong);
         
-        log.debug("4. BlockBill1 Meter[" + mdsId + "] Bill[" + returnBill + "] TCA[" + tca + "] Frais[" + frais + "] Total[" + returnBill + tca + frais + "]");
-        
-        return returnBill + tca + frais;
-    }    
+	        log.info(" [SaveBillingBlockTariffWrong] + Code[" + billWrong.getCode() + "] MeterId[" + billWrong.getMDevId() + "] BillDay[" + billWrong.getYyyymmdd());
+    	}catch (Exception e) {
+    		log.error(e, e);
+		}
+	}
     
-    public double blockBill2(String mdsId, String tariffName, List<TariffEM> tariffEMList, double usage) {
-        double returnBill = 0.0;
-
-        Collections.sort(tariffEMList, new Comparator<TariffEM>() {
-
-            @Override
-            public int compare(TariffEM t1, TariffEM t2) {
-                return t1.getSupplySizeMin() < t2.getSupplySizeMin()? -1:1;
-            }
-        });
-
-        if (tariffName.equals("Industrie BT")) {
-            returnBill = usage * tariffEMList.get(0).getActiveEnergyCharge() + tariffEMList.get(0).getServiceCharge();
-        }
-        else if (tariffName.equals("Industrie MT")) {
-            // Heures creuses와 Heures pleines 두 종류가 있음.
-        }
-        else {
-        //tariffName : Residence or Commerce
-            returnBill = tariffEMList.get(0).getServiceCharge();
-//            returnBill += returnBill * 0.05; 
-            // 0 ~ 1
-            if (usage <= tariffEMList.get(1).getSupplySizeMin()) {
-                
-            }
-            // 1 ~
-            else {
-                // ~ 30
-                if (usage <= tariffEMList.get(1).getSupplySizeMax()) {
-                    returnBill += usage * tariffEMList.get(1).getActiveEnergyCharge();
-                    
-        //            returnBill += returnBill * 0.05;
-                }
-                // ~ 200
-                else if (usage <= tariffEMList.get(2).getSupplySizeMax()) {
-                    returnBill += tariffEMList.get(1).getSupplySizeMax() * tariffEMList.get(1).getActiveEnergyCharge();
-                    returnBill += ((usage - tariffEMList.get(2).getSupplySizeMin()) * tariffEMList.get(2).getActiveEnergyCharge());
-                    
-          //          returnBill += returnBill * 0.05;
-                }
-                // 200 ~
-                else {
-                    returnBill += tariffEMList.get(1).getSupplySizeMax() * tariffEMList.get(1).getActiveEnergyCharge();
-                    returnBill += (tariffEMList.get(2).getSupplySizeMax()-tariffEMList.get(2).getSupplySizeMin()) *
-                            tariffEMList.get(2).getActiveEnergyCharge();
-                    returnBill += ((usage - tariffEMList.get(3).getSupplySizeMin()) * tariffEMList.get(3).getActiveEnergyCharge());
-                    
-        //            returnBill += returnBill * 0.05;
-                }
-            }
-        }
-
-        // TCA = returnBill * 0.1
-        double tca = returnBill * 0.1;
-
-        // Frais special = tca * 0.1;
-        double frais = tca * 0.1;
-        
-        // 충전금 Service Charge 5%
-//        double serviceCharge = frais * 0.05;
-//        log.debug("New Service Charge[" + serviceCharge + "]");
-
-//        return returnBill + tca + frais + serviceCharge;
-        double temp = returnBill+tca+frais;
-        log.debug("4. BlockBill2 Meter[" + mdsId + "] Bill[" + returnBill + "] TCA[" + tca + "] Frais[" + frais + "] Total[" + temp + "]");
-        
-        return returnBill + tca + frais;
+    private BigDecimal convertBigDecimal(Object val) {
+    	BigDecimal bigDecimal = new BigDecimal(0);
+    	
+    	if(val instanceof String) {
+    		bigDecimal = new BigDecimal(String.valueOf(val));
+    	}else if(val instanceof Integer) {
+    		bigDecimal = new BigDecimal(Integer.toString((int) val));
+    	}else if(val instanceof Float) {
+    		bigDecimal = new BigDecimal(Float.toString((float) val));
+    	}else if(val instanceof Double) {
+    		bigDecimal = new BigDecimal(Double.toString((double) val));
+    	}else if(val instanceof Object) {
+    		bigDecimal = new BigDecimal(String.valueOf(val));
+    	}else {
+    		bigDecimal = new BigDecimal(String.valueOf(val));
+    	}
+    	
+    	return bigDecimal;
     }
+    
+    private String calculateDiffDays(String FirstDiff, String SecondDiff) throws ParseException {
+    	SimpleDateFormat sd = new SimpleDateFormat("yyyyMMdd");
+    	
+    	// date1, date2 두 날짜를 parse()를 통해 Date형으로 변환
+		Date FirstDate = sd.parse(FirstDiff);
+		Date SecondDate = sd.parse(SecondDiff);
+		long calDateDays = 0;
+		calDateDays = Math.abs(FirstDate.getTime() - SecondDate.getTime());
+		// FirstDiff와 SecondDiff간의 시간차이를 비교하여 일수로 반환
+		long diffDays = TimeUnit.DAYS.convert(calDateDays, TimeUnit.MILLISECONDS);
+    	
+		return Long.toString(diffDays);
+    }
+    
+    private String calculateNextDays(String yyyymmdd, int add) {
+		LocalDate localDate = LocalDate.of(Integer.parseInt(yyyymmdd.substring(0,4)), Integer.parseInt(yyyymmdd.substring(4,6)), Integer.parseInt(yyyymmdd.substring(6,8)));
+        LocalDate newDate = localDate.plusDays(add);
+		return newDate.format(DateTimeFormatter.BASIC_ISO_DATE);
+    }
+    
+   private String maxDayOfMonth(String yyyymmdd) {
+	   LocalDate localDate = LocalDate.of(Integer.parseInt(yyyymmdd.substring(0,4)), Integer.parseInt(yyyymmdd.substring(4,6)), Integer.parseInt(yyyymmdd.substring(6,8)));
+       Calendar cal = Calendar.getInstance();
+       cal.set(localDate.getYear(), localDate.getMonthValue()-1, localDate.getDayOfMonth()); //월은 -1해줘야 해당월로 인식
+       String maxDate = Integer.toString(localDate.getYear()) + String.format("%02d", localDate.getMonthValue()) + String.format("%02d", cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+       return maxDate;
+   }
+   
+   private List<TariffEM> getTariffEMList(Contract contract, String YYYYMMDD){
+	   //해당 Tariff 정보를 가져온다.
+	   TariffType tariffType = tariffTypeDao.get(contract.getTariffIndexId());
+	   Integer tariffTypeCode = tariffType.getCode();
+	
+	   Map<String, Object> tariffParam = new HashMap<>();
+	   tariffParam.put("tariffTypeCode", tariffTypeCode);
+	   tariffParam.put("tariffIndex", tariffType);
+	   List<TariffEM> tariffEMList = tariffEMDao.getApplyedTariff(tariffParam);
+	   
+	   return tariffEMList;
+   }
+   
+   private BillingBlockTariff makeNewBillingBlockTariff(Contract contract) {
+	   BillingBlockTariff billingBlockTariff = new BillingBlockTariff();
+	   billingBlockTariff.setMDevId(contract.getPreMdsId());
+	   billingBlockTariff.setMDevType(DeviceType.Meter.name());
+	   billingBlockTariff.setContract(contract);
+	   billingBlockTariff.setAccumulateBill(0.0);
+	   billingBlockTariff.setAccumulateUsage(0.0);
+	   billingBlockTariff.setActiveEnergy(0.0);
+	   billingBlockTariff.setActiveEnergyImport(0.0);
+	   billingBlockTariff.setActiveEnergyExport(0.0);
+	   billingBlockTariff.setUsage(0.0);
+	   billingBlockTariff.setBill(0.0);
+	   billingBlockTariff.setBalance(contract.getCurrentCredit() != null ? contract.getCurrentCredit() : 0);
+	   billingBlockTariff.setYyyymmdd(contract.getContractDate() != null ? contract.getContractDate().substring(0, 8) : contract.getMeter().getInstallDate().substring(0, 8));
+	   billingBlockTariff.setHhmmss(contract.getContractDate() != null ? contract.getContractDate().substring(8, 14) : contract.getMeter().getInstallDate().substring(8, 14));
+	   return billingBlockTariff;
+   }
+   
+   private BillingBlockTariff makeNewMonthBillingBlockTariff(BillingBlockTariff lastIndex, String yyyymmdd) {
+	   BillingBlockTariff billingBlockTariff = new BillingBlockTariff();
+	   billingBlockTariff.setAccumulateBill(0.0);
+	   billingBlockTariff.setAccumulateUsage(0.0);
+	   billingBlockTariff.setActiveEnergy(lastIndex.getActiveEnergy());
+	   billingBlockTariff.setActiveEnergyImport(lastIndex.getActiveEnergyImport());
+	   billingBlockTariff.setUsage(0.0);
+	   billingBlockTariff.setBill(0.0);
+	   billingBlockTariff.setBalance(lastIndex.getBalance());
+	   billingBlockTariff.setYyyymmdd(yyyymmdd);
+	   return billingBlockTariff;
+	}
 }

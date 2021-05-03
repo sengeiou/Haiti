@@ -8,6 +8,8 @@ import javax.jms.ObjectMessage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.aimir.fep.logger.snowflake.SnowflakeGeneration;
+
 /**
  * Abstract Processor
  *
@@ -42,7 +44,10 @@ public abstract class Processor implements MessageListener
     public abstract void restore() throws Exception;
 
 
-    public void onMessage(Message msg) {
+    public void onMessage(Message msg) {    	
+    	String seq = SnowflakeGeneration.getId();
+    	log.info("thread name : " + Thread.currentThread().getName() +", seq : "+seq);
+    	
         if (msg instanceof ObjectMessage) {
             try {
                 processing(((ObjectMessage) msg).getObject());
@@ -62,5 +67,7 @@ public abstract class Processor implements MessageListener
         else {
             log.warn("Message is not object, check it!!");
         }
+        
+        SnowflakeGeneration.deleteId();
     }
 }

@@ -7,13 +7,17 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,7 +33,9 @@ import org.apache.poi.xssf.extractor.XSSFExcelExtractor;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -131,7 +137,12 @@ import com.aimir.util.TimeUtil;
 
 @Service(value = "deviceRegistrationManager")
 public class DeviceRegistrationManagerImpl implements DeviceRegistrationManager {
-
+	@Resource(name="transactionManager")
+    HibernateTransactionManager txManager;
+	
+	private int batchSize = 30;
+	private static int loopSize = 0;
+	
 	private static Log logger = LogFactory.getLog(DeviceRegistrationManagerImpl.class);
 
 	@Autowired
@@ -486,83 +497,56 @@ public class DeviceRegistrationManagerImpl implements DeviceRegistrationManager 
             logger.error(e, e);
         }
 
-        XSSFSheet sheet = wb.getSheetAt(0);
-
-        // Getting cell contents
-        List<Object> errs = null;
-        String ModemSerial = null;
-        String MeterSerial = null;
-
-        for (Row row : sheet) {
-            // header row skip
-            if (row.getRowNum() == 0) {
-                continue;
+        XSSFSheet sheet = null;
+        
+        try {
+        	sheet = wb.getSheetAt(0);
+        	Iterator<Row> rowIterator = sheet.iterator();
+        	List<Row> entities = new ArrayList<Row>();
+        	
+        	logger.info("Read Sheet init timestamp : "+ new Timestamp(System.currentTimeMillis()));
+	    	
+	    	loopSize = 0;
+			logger.info("validateSheet() start");
+			
+	    	// row 수 만큼
+	    	while (rowIterator.hasNext()) {
+	    		Row row = rowIterator.next();
+	    		// header row skip
+				if (row.getRowNum() == 0) {					
+					continue;
+		        }
+	    		entities.add(row);
+	    		
+	    		if(entities.size() % batchSize == 0) {
+	    			errorList.addAll(saveRows(entities));
+	    			entities.clear();
+	    		}
+	    	}
+    		errorList.addAll(saveRows(entities));
+	    	
+        	logger.info("Read Sheet end timestamp : "+ new Timestamp(System.currentTimeMillis()));
+        	
+        	if (errorList.size() <= 0) {
+                result.put("resultMsg", "success");
+            } else {
+                result.put("resultMsg", "failure");
             }
-
-            ModemSerial = getCellValue(row.getCell(0)).trim();
-            MeterSerial = getCellValue(row.getCell(1)).trim();
-
-            // 비어있는 cell 이 있으면 에러처리
-            if (ModemSerial.isEmpty() || MeterSerial.isEmpty()) {
-                errorList.add(getErrorRecord(ModemSerial, MeterSerial, "Please input all cells"));
-                continue;
+        	
+        	// close OPCPackage
+        	if (pkg != null) {
+				pkg.close();
             }
-            
-            // ModemSerial 중복체크
-            /*MeterMapper chkModem = meterMapperDao.findByCondition("modemDeviceSerial", ModemSerial);
-            meterMapperDao.clear();
-
-            if (chkModem != null && chkModem.getId() != null) {
-                errorList.add(getErrorRecord(ModemSerial, MeterSerial, "There is a duplicate Modem : " + ModemSerial));
-                continue;
-            }
-            
-            // MeterSerial 중복체크
-            MeterMapper chkMeter = meterMapperDao.findByCondition("meterPrintedMdsId", MeterSerial);
-            meterMapperDao.clear();
-
-            if (chkMeter != null && chkMeter.getId() != null) {
-                errorList.add(getErrorRecord(ModemSerial, MeterSerial, "There is a duplicate Meter : " + MeterSerial));
-                continue;
-            }*/
-
-            // Add
-        	try {
-        		MeterMapper newMeter = new MeterMapper();
-        		newMeter.setModemDeviceSerial(ModemSerial);
-        		newMeter.setMeterPrintedMdsId(MeterSerial);
-        		meterMapperDao.merge(newMeter);
-        		meterMapperDao.flushAndClear();
-    			
-    		} catch (Exception e) {
-    			logger.error(e.getMessage(), e);
-//    			errorList.add(getErrorRecord(ModemSerial, MeterSerial, "There is a duplicate Modem : " + ModemSerial + " Meter : " + MeterSerial));
-    			continue;
-    		}
-            
-        } // for end : Row
-
-        if (errorList.size() <= 0) {
-            result.put("resultMsg", "success");
-        } else {
-            result.put("resultMsg", "failure");
-        }
-
+		} catch (Exception e) {
+			logger.error("insertBulkModemMeterforHaiti for try catch error : " + new Timestamp(System.currentTimeMillis()));
+		}
+        
         result.put("errorList", errorList);
         result.put("errorListSize", errorList.size());
-
-        // close OPCPackage
-        try {
-            if (pkg != null) {
-                pkg.close();
-            }
-        } catch (IOException e) {
-            logger.error(e, e);
-        }
-
+        
         // delete uploaded file
-        File file = new File(excel.trim());
-        file.delete();
+//        File file = new File(excel.trim());
+//        file.delete();
 
         return result;
 	}
@@ -578,12 +562,90 @@ public class DeviceRegistrationManagerImpl implements DeviceRegistrationManager 
      * @param errMsg
      * @return
      */
-    private List<Object> getErrorRecord(String ModemSerial, String MeterSerial, String errMsg) {
+    private List<Object> getErrorRecord(String ModemSerial, String MeterSerial, String MeterId, String errMsg) {
         List<Object> errs = new ArrayList<Object>();
         errs.add(ModemSerial);
         errs.add(MeterSerial);
+        errs.add(MeterId);
         errs.add(errMsg);
         return errs;
+    }
+    
+    private List<List<Object>> saveRows(List<Row> entities) {
+    	TransactionStatus txStatus = null;
+    	List<List<Object>> errorList = null;
+    	
+    	String ModemSerial = null;
+        String MeterSerial = null;
+        String MeterId = null;
+
+        try {
+    		txStatus = txManager.getTransaction(null);
+        	
+    		errorList = new ArrayList<List<Object>>();
+
+	        for (Row row : entities) {
+	            // header row skip
+	            if (row.getRowNum() == 0) {
+	                continue;
+	            }
+
+	            ModemSerial = getCellValue(row.getCell(0)).trim();
+	            MeterSerial = getCellValue(row.getCell(1)).trim();
+	            MeterId = getCellValue(row.getCell(2)).trim();
+
+	            // 비어있는 cell 이 있으면 에러처리
+	            if (ModemSerial.isEmpty() || MeterSerial.isEmpty()) {
+	                errorList.add(getErrorRecord(ModemSerial, MeterSerial, MeterId, "Please input [ModemSerial] cells"));
+	                continue;
+	            }
+	            
+	            // ModemSerial 중복체크
+	            MeterMapper chkModem = meterMapperDao.findByCondition("modemDeviceSerial", ModemSerial);
+	            meterMapperDao.clear();
+	            
+	            /*
+	            if (chkModem != null && chkModem.getId() != null) {
+	                errorList.add(getErrorRecord(ModemSerial, MeterSerial, "There is a duplicate Modem : " + ModemSerial));
+	                continue;
+	            }
+	            
+	            // MeterSerial 중복체크
+	            MeterMapper chkMeter = meterMapperDao.findByCondition("meterPrintedMdsId", MeterSerial);
+	            meterMapperDao.clear();
+
+	            if (chkMeter != null && chkMeter.getId() != null) {
+	                errorList.add(getErrorRecord(ModemSerial, MeterSerial, "There is a duplicate Meter : " + MeterSerial));
+	                continue;
+	            }*/
+
+	            // Add
+        		if(chkModem == null) {
+        			MeterMapper newMeter = new MeterMapper();
+            		newMeter.setModemDeviceSerial(ModemSerial);
+            		newMeter.setMeterPrintedMdsId(MeterSerial);
+            		newMeter.setMeterObisMdsId(MeterId);
+            		meterMapperDao.add(newMeter);
+            		logger.info("### New MeterMapper add  ModemSerial[" + ModemSerial + "] MeterSerial[" + MeterSerial + "] MeterId[" + MeterId + "]");
+        		}else {
+        			chkModem.setModemDeviceSerial(ModemSerial);
+        			chkModem.setMeterPrintedMdsId(MeterSerial);
+        			chkModem.setMeterObisMdsId(MeterId);
+            		meterMapperDao.update(chkModem);
+            		logger.info("### MeterMapper update ModemSerial[" + ModemSerial + "] MeterSerial[" + MeterSerial + "] MeterId[" + MeterId + "]");
+        		}
+        		logger.debug("MeterMapper save finished : " + new Timestamp(System.currentTimeMillis()));
+        		logger.info("### saveRows loop size :  " + ++loopSize);
+	        }
+	        
+	        txManager.commit(txStatus);
+    	}catch (Exception e) {
+    		logger.error("saveRows - for try catch error");
+			logger.error(e,e);
+			errorList.add(getErrorRecord(ModemSerial, MeterSerial, MeterId, "Please check the values"));
+			if(txStatus != null) txManager.rollback(txStatus);
+		}
+    	return errorList;
     }
 
 	public Map<String, Object> readShipmentExcelXLS(String excel, String fileType, int supplierId, String detailType) {

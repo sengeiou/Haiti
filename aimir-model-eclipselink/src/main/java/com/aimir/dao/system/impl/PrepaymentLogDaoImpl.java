@@ -194,5 +194,25 @@ public class PrepaymentLogDaoImpl  extends AbstractJpaDao< PrepaymentLog, Long> 
         return null;
     }
 	
-	
+
+	@Override
+	public List<Map<String, Object>> getSTSChargeHistory(Map<String, Object> conditionMap, boolean isCount) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Map<String, Object>> getChargeAndBalanceHistory(Map<String, Object> conditionMap, boolean isCount) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Map<String, Object>> getRecentStsHistory(Map<String, Object> conditionMap) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Map<String, Object>> getDebtBySPN(Map<String, Object> conditionMap) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

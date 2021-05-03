@@ -364,7 +364,7 @@ public class DayWMDaoImpl extends AbstractHibernateGenericDao<DayWM, Integer> im
 			sb.append("   AND d.contract.tariffIndex = :tariffIndex ");
 		}
 		if(!"".equals(customerName)) {			
-			sb.append("   AND d.contract.customer.name = :customerName ");
+			sb.append("   AND UPPER(d.contract.customer.name) = UPPER(:customerName) ");
 		}
 		if(!"".equals(contractNo)) {			
 			sb.append("   AND d.contract.contractNumber = :contractNo ");
@@ -440,7 +440,7 @@ public class DayWMDaoImpl extends AbstractHibernateGenericDao<DayWM, Integer> im
 			sb.append("   AND m.contract.tariffIndex = :tariffIndex ");
 		}
 		if(!"".equals(customerName)) {			
-			sb.append("   AND m.contract.customer.name = :customerName ");
+			sb.append("   AND UPPER(m.contract.customer.name) = UPPER(:customerName) ");
 		}
 		if(!"".equals(contractNo)) {			
 			sb.append("   AND m.contract.contractNumber = :contractNo ");

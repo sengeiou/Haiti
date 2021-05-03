@@ -136,6 +136,21 @@
         saverName="com.aimir.fep.meter.saver.SM110MDSaver"
         deviceModel="NAMR-P109SR"
     /> 
+    
+    <!-- Haiti -->
+	<system.DeviceModel 
+        deviceVendor="NURITelecom"
+        code="125"
+        deviceType="1.2.1.26"
+        name="NAMR-P226SR"
+    />
+
+    <system.ModemConfig 
+        name="NAMR-P226SR"
+        parserName="com.aimir.fep.meter.parser.SM110"
+        saverName="com.aimir.fep.meter.saver.SM110MDSaver"
+        deviceModel="NAMR-P226SR"
+    /> 
 
 
 <!-- Repeater -->

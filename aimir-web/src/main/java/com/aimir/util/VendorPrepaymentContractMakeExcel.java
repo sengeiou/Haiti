@@ -94,11 +94,11 @@ public class VendorPrepaymentContractMakeExcel {
 			row = sheet.createRow(dataGapsStartRow);
 
 			cell = row.createCell(0);
-			cell.setCellValue(msgMap.get("contractNumber"));
-			cell.setCellStyle(titleCellStyle);
-
-			cell = row.createCell(1);
 			cell.setCellValue(msgMap.get("customerNo"));
+			cell.setCellStyle(titleCellStyle);
+			
+			cell = row.createCell(1);
+			cell.setCellValue(msgMap.get("contractNumber"));
 			cell.setCellStyle(titleCellStyle);
 
 			cell = row.createCell(2);
@@ -109,29 +109,33 @@ public class VendorPrepaymentContractMakeExcel {
 			cell.setCellValue(msgMap.get("mdsId"));
 			cell.setCellStyle(titleCellStyle);
 
-			cell = row.createCell(4);
-			cell.setCellValue(msgMap.get("address"));
-			cell.setCellStyle(titleCellStyle);
+//			cell = row.createCell(4);
+//			cell.setCellValue(msgMap.get("address"));
+//			cell.setCellStyle(titleCellStyle);
 
-			cell = row.createCell(5);
+			cell = row.createCell(4);
 			cell.setCellValue(msgMap.get("statusName"));
 			cell.setCellStyle(titleCellStyle);
 
-			cell = row.createCell(6);
+			cell = row.createCell(5);
 			cell.setCellValue(msgMap.get("lastTokenDate"));
 			cell.setCellStyle(titleCellStyle);
 
-			cell = row.createCell(7);
+			cell = row.createCell(6);
 			cell.setCellValue(msgMap.get("currentCredit"));
 			cell.setCellStyle(titleCellStyle);
 			
-			cell = row.createCell(8);
+			cell = row.createCell(7);
 			cell.setCellValue(msgMap.get("currentArrears"));
+			cell.setCellStyle(titleCellStyle);
+			
+			cell = row.createCell(8);
+			cell.setCellValue(msgMap.get("currentArrears2"));
 			cell.setCellStyle(titleCellStyle);
 			
 			cell = row.createCell(9);
 			cell.setCellValue(msgMap.get("barcode"));
-			cell.setCellStyle(titleCellStyle);			
+			cell.setCellStyle(titleCellStyle);		
 
 			// Title End
 
@@ -143,11 +147,11 @@ public class VendorPrepaymentContractMakeExcel {
 				row = sheet.createRow(i + (dataGapsStartRow + 1));
 		        
 				cell = row.createCell(0);
-				cell.setCellValue(resultMap.get("contractNumber") == null ? "" : resultMap.get("contractNumber").toString());
+				cell.setCellValue(resultMap.get("customerNo") == null ? "" : resultMap.get("customerNo").toString());
 				cell.setCellStyle(dataCellStyle);
 				
 				cell = row.createCell(1);
-				cell.setCellValue(resultMap.get("customerNo") == null ? "" : resultMap.get("customerNo").toString());
+				cell.setCellValue(resultMap.get("contractNumber") == null ? "" : resultMap.get("contractNumber").toString());
 				cell.setCellStyle(dataCellStyle);
 				
 				cell = row.createCell(2);
@@ -158,24 +162,28 @@ public class VendorPrepaymentContractMakeExcel {
 				cell.setCellValue(resultMap.get("mdsId") == null ? "" : resultMap.get("mdsId").toString());
 				cell.setCellStyle(dataCellStyle);
 				
-				cell = row.createCell(4);
-				cell.setCellValue(resultMap.get("address") == null ? "" : resultMap.get("address").toString());
-				cell.setCellStyle(dataCellStyle);
+//				cell = row.createCell(4);
+//				cell.setCellValue(resultMap.get("address") == null ? "" : resultMap.get("address").toString());
+//				cell.setCellStyle(dataCellStyle);
 				
-				cell = row.createCell(5);
+				cell = row.createCell(4);
 				cell.setCellValue(resultMap.get("statusName") == null ? "" : resultMap.get("statusName").toString());
 				cell.setCellStyle(dataCellStyle);
 				
-				cell = row.createCell(6);
-				cell.setCellValue(resultMap.get("lastTokenDate") == null ? "" : TimeLocaleUtil.getLocaleDateByMediumFormat(((String) resultMap.get("lastTokenDate")), lang, country));
+				cell = row.createCell(5);
+				cell.setCellValue(resultMap.get("lastTokenDate") == null ? "" : resultMap.get("lastTokenDate").toString());
 				cell.setCellStyle(dataCellStyle);
 				
-				cell = row.createCell(7);
+				cell = row.createCell(6);
 				cell.setCellValue(resultMap.get("currentCredit") == null ? "" : resultMap.get("currentCredit").toString());
 				cell.setCellStyle(dataCellStyle);
 				
-				cell = row.createCell(8);
+				cell = row.createCell(7);
 				cell.setCellValue(resultMap.get("currentArrears") == null ? "" : resultMap.get("currentArrears").toString());
+				cell.setCellStyle(dataCellStyle);
+
+				cell = row.createCell(8);
+				cell.setCellValue(resultMap.get("currentArrears2") == null ? "" : resultMap.get("currentArrears2").toString());
 				cell.setCellStyle(dataCellStyle);
 
 				cell = row.createCell(9);

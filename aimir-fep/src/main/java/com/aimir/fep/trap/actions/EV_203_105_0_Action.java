@@ -100,6 +100,9 @@ public class EV_203_105_0_Action implements EV_Action
     
     @Autowired
     MeterMapperDao meterMapperDao;
+    
+    @Autowired
+    DeviceModelDao deviceModelDao;
 
     
     /**
@@ -158,8 +161,8 @@ public class EV_203_105_0_Action implements EV_Action
     				str.add(eventAttr[i].getValue());
     			}
             }
-            String str1 = str.get(0);
-            String str2 = str.get(1);
+            String str1 = str.get(0); //vendor
+            String str2 = str.get(1); //meter model
             String vendor = "";
             String vendorList = FMPProperty.getProperty("vendor");
     
@@ -246,6 +249,7 @@ public class EV_203_105_0_Action implements EV_Action
                         event);
                         */
             }
+            /*
             else {
                 if (modem.getMcu() != null && !mcu.getSysID().equals(modem.getMcu().getSysID())) {
                     // 실패하더라도 경고만 출력하고 계속 진행할 수 있도록 한다.
@@ -261,6 +265,8 @@ public class EV_203_105_0_Action implements EV_Action
                     modem.setMcu(mcu);
                 }
             }
+            */
+            
             
             String strModemPort = event.getEventAttrValue("modemPort");
             if (strModemPort == null || "".equals(strModemPort))
@@ -292,7 +298,7 @@ public class EV_203_105_0_Action implements EV_Action
                     if (modemType == ModemType.ZEUPLS)
                         pulseConstant = 100.0;
                     else if (modemType == ModemType.ZRU)
-                        pulseConstant = 0.01;
+                        pulseConstant = 0.001;
                     
                     switch (meterType) {
                     case EnergyMeter : 
@@ -329,7 +335,14 @@ public class EV_203_105_0_Action implements EV_Action
                     meter.setModem(modem);
                     meter.setModemPort(modemPort);
                     meter.setPulseConstant(pulseConstant);
-                    // TODO meter.setDeviceModel();
+                    
+                    DeviceModel meterModel = deviceModelDao.findByCondition("name", str2.trim());
+                    if(meterModel != null) {
+                    	log.debug("meter : " + meter.getMdsId()+", meter model : " + meterModel.toString());
+                    	meter.setModel(meterModel);
+                    } else {
+                    	log.debug("meter : " + meter.getMdsId()+" model is null! str1 : " + str1 +", str2 : " + str2);
+                    }
                     // TODO meter.setLpInterval();
                     meterDao.add(meter);
                     
@@ -434,13 +447,13 @@ public class EV_203_105_0_Action implements EV_Action
                                                  "Modem is connected with a Meter[" + vendor + "," + meterId + "]"));
             
             // setModemConfig(modem, meter);
+            txmanager.commit(txstatus);
         }
         catch (Exception e) {
-            throw e;
-        }
-        finally {
-            if (txstatus != null) txmanager.commit(txstatus);
-        }
+        	log.error(e,e);
+        	if (txstatus != null) 
+        		txmanager.rollback(txstatus);
+        }        
     }
 
     private void setModemConfig(Modem modem, Meter meter)

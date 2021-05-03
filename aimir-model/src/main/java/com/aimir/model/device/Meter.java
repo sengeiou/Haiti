@@ -291,7 +291,7 @@ public class Meter extends BaseObject implements JSONString, IAuditable {
 //     @JoinColumn(name="CONTRACT_NUMBER")
 //     @ReferencedBy(name="contractNumber")
     @XmlTransient
-    @OneToOne(mappedBy="meter", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @OneToOne(mappedBy="meter", cascade=CascadeType.ALL)
     private Contract contract;
     
     

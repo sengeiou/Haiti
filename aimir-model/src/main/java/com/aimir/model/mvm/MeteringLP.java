@@ -287,11 +287,19 @@ public abstract class MeteringLP {
 		builder.append(getIntervalYN()).append("|");
 		builder.append(getValue()).append("|");
 		builder.append(getWriteDate()).append("|");
-		builder.append(getContractId()).append("|");
+		
+		Integer conId = getContractId();
+		if(conId == null)
+			builder.append("|");
+		else
+			builder.append(getContractId()).append("|");
+				
 		builder.append(getModemTime()).append("|");
 		builder.append(getDcuTime());
 		builder.append("\n");
+			
 		return builder.toString();
+		//return builder.toString().replaceAll("null", "");
 	}
 	
 }

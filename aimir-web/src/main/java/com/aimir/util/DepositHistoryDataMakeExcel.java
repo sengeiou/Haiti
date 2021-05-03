@@ -108,28 +108,21 @@ public class DepositHistoryDataMakeExcel {
             sheet.setColumnWidth(colIdx++, (256*10)/7); //vending Station
             sheet.setColumnWidth(colIdx++, (256*10)/7); //vending Station
             sheet.setColumnWidth(colIdx++, (256*65)/7); //vending Station
-            sheet.setColumnWidth(colIdx++, (256*96)/7); //customer
-            sheet.setColumnWidth(colIdx++, (256*75)/7); //customer
+            sheet.setColumnWidth(colIdx++, (256*65)/7); //cashier
+            sheet.setColumnWidth(colIdx++, (256*20)/7); //cashier
+            sheet.setColumnWidth(colIdx++, (256*100)/7); //customer
             sheet.setColumnWidth(colIdx++, (256*75)/7); //accoutNo
             sheet.setColumnWidth(colIdx++, (256*75)/7); //meterId
             sheet.setColumnWidth(colIdx++, (256*75)/7); //prepaymentType
-            sheet.setColumnWidth(colIdx++, (256*75)/7); //chargeValue
-            sheet.setColumnWidth(colIdx++, (256*75)/7); //ChargedArrears
-            if(withDebt) {
-            	sheet.setColumnWidth(colIdx++, (256*75)/7); //ChargedDebt
-            	SALES_WIDTH += 1;
-            }
+            sheet.setColumnWidth(colIdx++, (256*80)/7); //chargeValue
+            sheet.setColumnWidth(colIdx++, (256*75)/7); //ChargedArrearsA
+            sheet.setColumnWidth(colIdx++, (256*75)/7); //ChargedArrearsB
             sheet.setColumnWidth(colIdx++, (256*75)/7); //activity
-            sheet.setColumnWidth(colIdx++, (256*75)/7); //GeoCode
-            sheet.setColumnWidth(colIdx++, (256*75)/7); //GeoCode
+            sheet.setColumnWidth(colIdx++, (256*75)/7); //activity
+            sheet.setColumnWidth(colIdx++, (256*75)/7); //NIC
             sheet.setColumnWidth(colIdx++, (256*75)/7); //billId
-            if("Spasa".equals(supplierName)) {
-            	sheet.setColumnWidth(colIdx++, (256*75)/7); //lastTokenId(transatonNumber)
-            	SALES_WIDTH += 1;
-            }
-            sheet.setColumnWidth(colIdx++, (256*75)/7); //date
+            sheet.setColumnWidth(colIdx++, (256*90)/7); //date
             sheet.setColumnWidth(colIdx++, (256*150)/7); //address
-            sheet.setColumnWidth(colIdx++, (256*75)/7); //operator
             sheet.setColumnWidth(colIdx++, (256*120)/7); //cancelDate
             sheet.setColumnWidth(colIdx++, (256*150)/7); //cancelReason
             
@@ -167,7 +160,7 @@ public class DepositHistoryDataMakeExcel {
             // total : dataList에서 마지막 데이터가 합계 데이터이다.
             Map<String, String> totalData = dataList.get(dataList.size() -1); 
            
-            printTotal(sheet, reportType, totalData, rowNumber, onlyTotal, withDebt);
+            printTotal(sheet, reportType, totalData, ++rowNumber, onlyTotal, withDebt);
             
             //파일 생성
             FileOutputStream fs = null;
@@ -251,7 +244,7 @@ public class DepositHistoryDataMakeExcel {
     	chargedArrears("aimir.prepayment.chargearrears", 9, "chargedArrears", "R", "totalChargedArrears"),
     	tariff("aimir.residental.activity", 10, "tariffName", "L", null),
     	geoCode("aimir.contractNumber", 11, "geoCode", "L", null),
-    	prepaymentLogId("aimir.billId", 13, "prepaymentLogId", "L", null),
+    	prepaymentLogId("aimir.contract.receioptNo", 13, "prepaymentLogId", "L", null),
     	lastTokenId("aimir.hems.prepayment.transactionNum", 14, "lastTokenId", "L", null),
     	date("aimir.date", 15, "date", "L", null), 
     	address("aimir.address", 16, "address", "L", null),
@@ -300,21 +293,22 @@ public class DepositHistoryDataMakeExcel {
     }
    
     enum SalesProperty implements ReportProperty {
-    	vendingStation("aimir.vendingStation", 0, "vendingStationName", "L", null), 
-    	customer("aimir.customer", 3, "customerName", "L", null),
-    	accountNo("aimir.accountNo", 5, "accountNo", "L", null),
-    	meterId("aimir.meterid", 6, "meterId", "L", null),
-    	paymentType("aimir.paymenttype", 7, "paymentType", "L", null), 
-    	chargedCredit("aimir.chargeAmount", 8, "chargedCredit", "R", "totalChargedCredit"),
-    	chargedArrears("aimir.prepayment.chargearrears", 9, "chargedArrears", "R", "totalChargedArrears"),
-    	tariff("aimir.residental.activity", 10, "tariffName", "L", null),
-    	geoCode("aimir.contractNumber", 11, "geoCode", "L", null),
-    	prepaymentLogId("aimir.billId", 13, "prepaymentLogId", "L", null),
-    	date("aimir.date", 14, "date", "L", null), 
-    	address("aimir.address", 15, "address", "L", null),
-    	cashier("aimir.operator", 16, "cashier", "L", null),
-    	cancelDate("aimir.cancelDate", 17, "cancelDate", "L", null),
-    	cancelReason("aimir.cancelReason", 18, "cancelReason", "L", null);
+    	vendingStation("aimir.id", 0, "cashierId", "L", null), 
+    	cashier("aimir.prepayment.casher" , 3, "cashierName", "L", null),
+    	customer("aimir.customer", 5, "customerName", "L", null),
+    	accountNo("aimir.accountNo", 6, "accountNo", "L", null),
+    	meterId("aimir.meterid", 7, "meterId", "L", null),
+    	paymentType("aimir.paymenttype", 8, "paymentType", "L", null), 
+    	totalAmountPaid("aimir.amount.paid", 9, "totalAmountPaid", "R", "totalAmountPaidSum"),
+    	chargedArrearsA("aimir.prepayment.chargearrearsA", 10, "chargedArrears", "R", null),
+    	chargedArrearsB("aimir.prepayment.chargearrearsB", 11, "chargedArrears2", "R", null),
+    	tariff("aimir.residental.activity", 13, "tariffName", "L", null),
+    	geoCode("aimir.contractNumber", 14, "geoCode", "L", null),
+    	prepaymentLogId("aimir.billId", 15, "prepaymentLogId", "L", null),
+    	date("aimir.date", 16, "date", "L", null), 
+    	address("aimir.address", 17, "address", "L", null),
+    	cancelDate("aimir.cancelDate", 18, "cancelDate", "L", null),
+    	cancelReason("aimir.cancelReason", 19, "cancelReason", "L", null);
     	
     	// column header의 msg property key
     	String columnHeader;
@@ -576,7 +570,7 @@ public class DepositHistoryDataMakeExcel {
     	
     	if ( reportType.equalsIgnoreCase("sales") || reportType.equalsIgnoreCase("cancelled")) {
     		if(reportType.equalsIgnoreCase("sales"))
-    			reportTitle = "Operator Sales Report";
+    			reportTitle = "Vendor/Cashier Report";
     		else if(reportType.equalsIgnoreCase("cancelled"))
     			reportTitle = "Operator Cancelled Report";
     		end = SALES_WIDTH;

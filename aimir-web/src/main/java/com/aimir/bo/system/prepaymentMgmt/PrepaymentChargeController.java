@@ -9,8 +9,10 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -34,6 +36,7 @@ import com.aimir.dao.prepayment.VendorCasherDao;
 import com.aimir.dao.system.DepositHistoryDao;
 import com.aimir.dao.system.LanguageDao;
 import com.aimir.dao.system.LocationDao;
+import com.aimir.dao.system.MonthlyBillingLogDao;
 import com.aimir.dao.system.OperatorDao;
 import com.aimir.dao.system.PrepaymentLogDao;
 import com.aimir.dao.system.SupplierDao;
@@ -41,6 +44,7 @@ import com.aimir.esapi.AimirAuthenticator;
 import com.aimir.esapi.AimirUser;
 import com.aimir.model.prepayment.VendorCasher;
 import com.aimir.model.system.Contract;
+import com.aimir.model.system.MonthlyBillingLog;
 import com.aimir.model.system.Operator;
 import com.aimir.model.system.Role;
 import com.aimir.model.system.Supplier;
@@ -117,6 +121,9 @@ public class PrepaymentChargeController {
     
     @Autowired
     DebtEntManager debtEntManager;
+    
+    @Autowired
+    MonthlyBillingLogDao monthlyBillingLogDao;
 
     private static final String PASSWORD = "";
     /**
@@ -190,12 +197,18 @@ public class PrepaymentChargeController {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("roleType", "vendor");
         params.put("supplierId", supplierId);
-        mav.addObject("depositVendorList", operatorDao.getOperatorListByRoleType(params));        
+        mav.addObject("depositVendorList", operatorDao.getOperatorListByRoleType(params)); 
+        
+        Date now = new Date(System.currentTimeMillis());
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss"); 
+        Map<String, Object> vat = prepaymentChargeManager.getVatByFixedVariable("CHARGE_TAX", null, format.format(now));
+        mav.addObject("vatAmount", vat.get("vatAmount"));
+        mav.addObject("vatUnit", vat.get("vatUnit"));
         
         try {
         	Properties prop = new Properties();
             prop.load(getClass().getClassLoader().getResourceAsStream("command.properties"));            
-            mav.addObject("logoImg", prop.getProperty("supplier.logo.filename") == null ? "/images/ECG_logo.gif" : prop.getProperty("supplier.logo.filename").trim());
+            mav.addObject("logoImg", prop.getProperty("supplier.logo.filename") == null ? "/images/HAITI_logo.gif" : prop.getProperty("supplier.logo.filename").trim());
             String isPartpayment = prop.getProperty("partpayment.use");
             String initArrears = prop.getProperty("prepay.init.arrears");
             mav.addObject("isPartpayment" , (isPartpayment == null || "".equals(isPartpayment)) ? false : isPartpayment);
@@ -262,7 +275,7 @@ public class PrepaymentChargeController {
         try {
         	Properties prop = new Properties();
             prop.load(getClass().getClassLoader().getResourceAsStream("command.properties"));            
-            mav.addObject("logoImg", prop.getProperty("supplier.logo.filename") == null ? "/images/ECG_logo.gif" : prop.getProperty("supplier.logo.filename").trim());
+            mav.addObject("logoImg", prop.getProperty("supplier.logo.filename") == null ? "/images/HAITI_logo.gif" : prop.getProperty("supplier.logo.filename").trim());
             String isPartpayment = prop.getProperty("partpayment.use");
             String initArrears = prop.getProperty("prepay.init.arrears");
             mav.addObject("isPartpayment" , (isPartpayment == null || "".equals(isPartpayment)) ? false : isPartpayment);
@@ -323,7 +336,7 @@ public class PrepaymentChargeController {
         try {
         	Properties prop = new Properties();
             prop.load(getClass().getClassLoader().getResourceAsStream("command.properties"));            
-            mav.addObject("logoImg", prop.getProperty("supplier.logo.filename") == null ? "/images/ECG_logo.gif" : prop.getProperty("supplier.logo.filename").trim());
+            mav.addObject("logoImg", prop.getProperty("supplier.logo.filename") == null ? "/images/HAITI_logo.gif" : prop.getProperty("supplier.logo.filename").trim());
 		} catch (Exception e) {
 			log.debug(e,e);	
 		}
@@ -374,7 +387,8 @@ public class PrepaymentChargeController {
     public ModelAndView loadPrepaymentChargeReceiptPopup(
             @RequestParam("supplierId") Integer supplierId,
             @RequestParam("contractId") Integer contractId,
-            @RequestParam("prepaymentLogId") Long prepaymentLogId) {
+            @RequestParam("prepaymentLogId") Long prepaymentLogId,
+            @RequestParam(required=false, value="mdsId") String mdsId) {
         ModelAndView mav = new ModelAndView();
 
         Map<String, Object> conditionMap = new HashMap<String, Object>();
@@ -384,39 +398,57 @@ public class PrepaymentChargeController {
 
         Map<String, Object> result = prepaymentChargeManager.getVendorCustomerReceiptData(conditionMap);
         mav.addAllObjects(result);
+        mav.setViewName("/gadget/prepaymentMgmt/vendorCustomerWithArrearsReceiptPopupForEDH");
+//        MonthlyBillingLog monthLog = monthlyBillingLogDao.getLastMonthlyBillingLog(contractId, mdsId);
+//        String lastBillingMonth = monthLog.getYyyymm();
+//        Double lastServiceCharge = monthLog.getServiceCharge();
+//        mav.addObject("lastBillingMonth", lastBillingMonth);
+//        mav.addObject("lastServiceCharge", lastServiceCharge);
+        
+        return mav;
+    }
+    
+    /**
+     * method name : loadPrepaymentChargeReceiptPopup<b/>
+     * method Desc : 영수증 팝업창에서 영수증 화면을 호출한다.
+     *
+     * @param supplierId
+     * @param contractId
+     * @param prepaymentLogId
+     * @return
+     */
+    @RequestMapping(value = "/gadget/prepaymentMgmt/totalReceiptByCashierPopup")
+    public ModelAndView loadTotalReceiptByCashierPopup(
+    		@RequestParam Integer supplierId,
+            String vendorRole,
+            String startDate,
+            String endDate,
+            String casherId
+            ) {
+        ModelAndView mav = new ModelAndView();
 
+        Map<String, Object> condition = new HashMap<String, Object>();
+        condition.put("supplierId", supplierId);
+        condition.put("reportType", "sales");
+        condition.put("subType", "uncanceled");
+        condition.put("startDate", startDate);
+        condition.put("endDate", endDate);
+        condition.put("casherId", casherId);
+        condition.put("loginIntId", null);
+        condition.put("onlyLoginData", false);
+        
         Supplier supplier = supplierDao.get(supplierId);
-        String monthlyFilePath = ESAPI.httpUtilities().getCurrentRequest().getRealPath("/gadget/prepaymentMgmt/vendorMonthlyReceiptPopupFor"+supplier.getName()+".jsp");
-        File monthlyFile = new File(monthlyFilePath);
+        String country = supplier.getCountry().getCode_2letter();
+        String lang = supplier.getLang().getCode_2letter();
         
-        String withArrearsFilePath = ESAPI.httpUtilities().getCurrentRequest().getRealPath("/gadget/prepaymentMgmt/vendorCustomerWithArrearsReceiptPopupFor"+supplier.getName()+".jsp");
-        File withArrearsFile = new File(withArrearsFilePath);
+        List<Map<String, Object>> depositHistoryList = (List<Map<String, Object>>)depositHistoryDao.getDepositHistoryList(condition).get("list");
+        List<Map<String, String>> dataList = getExcelData(depositHistoryList, supplier);
         
-        String filePath = ESAPI.httpUtilities().getCurrentRequest().getRealPath("/gadget/prepaymentMgmt/vendorCustomerReceiptPopupFor"+supplier.getName()+".jsp");
-        File file = new File(filePath);
-        
-        if ((Boolean)result.get("isFirst")) {
-            // 월 정산 영수증 폼
-        	if(monthlyFile.exists())
-        		mav.setViewName("/gadget/prepaymentMgmt/vendorMonthlyReceiptPopupFor"+supplier.getName());
-        	else
-        		mav.setViewName("/gadget/prepaymentMgmt/vendorMonthlyReceiptPopup");
-            mav.addObject("hasArrears", new Boolean(result.get("preArrears") != null).toString());
-        } else {
-            if (result.get("preArrears") != null) {
-                // 잔여 미수금이 있는 경우 영수증 폼
-            	if(withArrearsFile.exists())
-            		mav.setViewName("/gadget/prepaymentMgmt/vendorCustomerWithArrearsReceiptPopupFor"+supplier.getName());
-            	else
-            		mav.setViewName("/gadget/prepaymentMgmt/vendorCustomerWithArrearsReceiptPopup");
-            } else {
-            	if(file.exists())
-            		mav.setViewName("/gadget/prepaymentMgmt/vendorCustomerReceiptPopupFor"+supplier.getName());
-            	else
-            		mav.setViewName("/gadget/prepaymentMgmt/vendorCustomerReceiptPopup");
-            }
-        }
-
+        String date = TimeLocaleUtil.getLocaleDate(startDate, lang, country) + " ~ " + TimeLocaleUtil.getLocaleDate(endDate, lang, country);
+        mav.addObject("date", date);
+        mav.addObject("casherId", (casherId==null||"".equals(casherId)) ? "ALL" : casherId);
+        mav.addAllObjects(dataList.get(dataList.size()-1));
+        mav.setViewName("/gadget/prepaymentMgmt/totalReceiptByCashier");
         return mav;
     }
 
@@ -499,6 +531,7 @@ public class PrepaymentChargeController {
             @RequestParam int limit,
             String barcode,
             String contractNumber,
+            String phone,
             String customerNo,
             String customerName,
             String mdsId) {
@@ -511,6 +544,7 @@ public class PrepaymentChargeController {
         conditionMap.put("barcode", barcode);
         conditionMap.put("supplierId", supplierId);
         conditionMap.put("contractNumber", contractNumber);
+        conditionMap.put("phone", phone);
         conditionMap.put("customerNo", customerNo);
         conditionMap.put("customerName", customerName);
         conditionMap.put("mdsId", mdsId);
@@ -865,7 +899,10 @@ public class PrepaymentChargeController {
             @RequestParam String casherId,
             @RequestParam Integer contractId,
             @RequestParam Double amount,
+            @RequestParam Double totalAmountPaid,
             @RequestParam Double arrears,
+            @RequestParam Double arrears2,
+            @RequestParam Double vat,
             @RequestParam Integer supplierId,
             @RequestParam String mdsId,
             @RequestParam String lastTokenId,
@@ -882,6 +919,12 @@ public class PrepaymentChargeController {
         Operator vendor = operatorDao.get(operatorId);
         Boolean isVendor = vendor.getRole().getName().equals("vendor");
 
+        if(totalAmountPaid != arrears + arrears2 + vat + amount) {
+        	mav.addObject("result", "Fail");
+        	mav.addObject("descr", "Invalid values.");
+        	return mav;
+        }
+        
         Map<String, Object> conditionMap = new HashMap<String, Object>();
         conditionMap.put("isVendor", isVendor);
         conditionMap.put("supplierId", supplierId);
@@ -895,11 +938,14 @@ public class PrepaymentChargeController {
         conditionMap.put("tariffCode", tariffCode);
         conditionMap.put("amount", amount);
         conditionMap.put("arrears", arrears);
+        conditionMap.put("arrears2", arrears2);
+        conditionMap.put("totalAmountPaid", totalAmountPaid);
+        conditionMap.put("vat", vat);
         conditionMap.put("contractPrice", contractPrice);
         conditionMap.put("isPartpayment", isPartpayment);
         conditionMap.put("partpayReset", partpayReset);
         conditionMap.put("payTypeId", payTypeId);
-
+        
         Map<String, Object> result = prepaymentChargeManager.vendorSavePrepaymentCharge(conditionMap);
         mav.addObject("deposit", result.get("deposit"));
         mav.addObject("prepaymentLogId", result.get("prepaymentLogId"));
@@ -1389,6 +1435,7 @@ public class PrepaymentChargeController {
             String customerName,
             String customerNo,
             String meterId,
+            String gs1,
             String startDate,
             String endDate,
             Integer locationId) {
@@ -1406,6 +1453,7 @@ public class PrepaymentChargeController {
         params.put("customerName", customerName);
         params.put("customerNo", customerNo);
         params.put("meterId", meterId);
+        params.put("gs1", gs1);
         params.put("startDate", startDate);
         params.put("endDate", endDate);
         params.put("locationId", locationId);
@@ -1554,6 +1602,7 @@ public class PrepaymentChargeController {
 	        conditionMap.put("customerName", StringUtil.nullToBlank(condition[3]));
 	        conditionMap.put("mdsId", StringUtil.nullToBlank(condition[4]));
 	        conditionMap.put("supplierId", supplierId);
+	        conditionMap.put("phone", StringUtil.nullToBlank(condition[6]));
 	        conditionMap.put("page", 1);
 	        conditionMap.put("limit", 10000000);
 
@@ -1578,6 +1627,9 @@ public class PrepaymentChargeController {
 	        msgMap.put("currentArrears", fmtMessage[8]);
 	        msgMap.put("barcode", fmtMessage[9]);
 	        msgMap.put("title", fmtMessage[10]);
+	        msgMap.put("currentArrears2", fmtMessage[11]);
+	        msgMap.put("phone", fmtMessage[12]);
+	        
 	        
 			Supplier supplier = supplierManager.getSupplier(supplierId);
 			sbFileName.append(fmtMessage[10]+"_");
@@ -2002,9 +2054,7 @@ public class PrepaymentChargeController {
         }
 
         Map<String, Object> result = new HashMap<String, Object>();
-
-        List<Map<String, Object>> depositHistoryList = (List<Map<String, Object>>)depositHistoryDao.getDepositHistoryList(
-                condition).get("list");
+        List<Map<String, Object>> depositHistoryList = (List<Map<String, Object>>)depositHistoryDao.getDepositHistoryList(condition).get("list");
 
         result.put("startDate", startDate);
         result.put("endDate", endDate);
@@ -2407,7 +2457,9 @@ public class PrepaymentChargeController {
         String lang = supplier.getLang().getCode_2letter();
         Map<String, String> total = new HashMap<String, String>();
         Double totalChargedCredit = 0d;
+        Double totalAmountPaidSum = 0d;
         Double totalChargedArrears = 0d;
+        Double totalChargedArrears2 = 0d;
         Double totalChargedDeposit = 0d;
         Double totalChargedCommission = 0d;
         Double totalChargedTax = 0d;
@@ -2420,13 +2472,15 @@ public class PrepaymentChargeController {
 
         for (Map<String, Object> map : historyList) {
             Map<String, String> data = new HashMap<String, String>();
-            Integer prepaymentLogId = (map.get("prepaymentLogId") == null) ? null : ((Long)map.get("prepaymentLogId"))
-                    .intValue();
+            Integer prepaymentLogId = (map.get("prepaymentLogId") == null) ? null : ((Long)map.get("prepaymentLogId")).intValue();
             String changeDate = (String)map.get("changeDate");
             Double chargedCredit = (Double)map.get("chargedCredit");
             Double chargedArrears = (Double)map.get("chargedArrears");
+            Double chargedArrears2 = (Double)map.get("chargedArrears2");
+            Double totalAmountPaid = (Double)map.get("totalAmountPaid");
             Integer vendorCasherId = (Integer)map.get("vendorCasherId");
             Integer vendingStationId = (Integer)map.get("vendingStationId");
+            
             Integer contractId = (Integer)map.get("contractId");
             Integer meterId = (Integer)map.get("meterId");
             Integer tariffId = (Integer)map.get("tariffId");
@@ -2447,19 +2501,25 @@ public class PrepaymentChargeController {
             data.put("date", date);
 
             if (prepaymentLogId != null) {
-                data.put("prepaymentLogId", "SC--" + map.get("prepaymentLogId").toString());
+                data.put("prepaymentLogId", map.get("prepaymentLogId").toString());
                 data.put("paymentType", payType);
                 data.put("chargedCredit", df.format(StringUtil.nullToDoubleZero(chargedCredit)));
                 data.put("chargedArrears", df.format(StringUtil.nullToDoubleZero(chargedArrears)));
+                data.put("chargedArrears2", df.format(StringUtil.nullToDoubleZero(chargedArrears2)));
+                data.put("totalAmountPaid", df.format(StringUtil.nullToDoubleZero(totalAmountPaid)));
                 data.put("cancelReason", cancelReason);
                 data.put("cancelDate", cancelLocaleDate);
                 data.put("lastTokenId", lastTokenId);
 
                 totalChargedCredit += StringUtil.nullToDoubleZero(chargedCredit);
+                totalAmountPaidSum += StringUtil.nullToDoubleZero(totalAmountPaid);
                 totalChargedArrears += StringUtil.nullToDoubleZero(chargedArrears);
+                totalChargedArrears2 += StringUtil.nullToDoubleZero(chargedArrears2);
 
                 if (vendorCasherId != null) {
                     data.put("cashier", (String)map.get("vendorCasherName"));
+                    data.put("cashierId", (String)map.get("vcCasherId"));
+                    data.put("cashierName", (String)map.get("vendorCasherName"));
                 }
                 if (vendingStationId != null) {
                     data.put("vendingStationName", (String)map.get("vendingStationName"));
@@ -2510,7 +2570,7 @@ public class PrepaymentChargeController {
                 Double tax = StringUtil.nullToDoubleZero((Double)map.get("tax"));
                 Double netValue = StringUtil.nullToDoubleZero((Double)map.get("netValue"));
                 Integer historyOpId = (Integer)map.get("historyOpId");
-                data.put("depositHistoryId", "SC--" + map.get("depositHistoryId").toString());
+                data.put("depositHistoryId", map.get("depositHistoryId").toString());
                 data.put("chargedDeposit", df.format(chargeDeposit));
                 data.put("commission", df.format(commisstion));
                 data.put("tax", df.format(tax));
@@ -2530,6 +2590,7 @@ public class PrepaymentChargeController {
             total.put("totalChargedCommission", df.format(totalChargedCommission));
             total.put("totalChargedTax", df.format(totalChargedTax));
             total.put("totalChargedNetValue", df.format(totalChargedNetValue));
+            total.put("totalAmountPaidSum", df.format(totalAmountPaidSum));
             result.add(data);
         }
         result.add(total);
@@ -2600,7 +2661,7 @@ public class PrepaymentChargeController {
             data.put("date", date);
 
             if (map.get("PREPAYMENTLOGID") != null) {
-                data.put("prepaymentLogId", "SC--" + map.get("PREPAYMENTLOGID").toString());
+                data.put("prepaymentLogId", map.get("PREPAYMENTLOGID").toString());
                 data.put("paymentType", payType);
                 data.put("chargedCredit", df.format(chargedCredit));
                 data.put("chargedArrears", df.format(chargedArrears));
@@ -2665,7 +2726,7 @@ public class PrepaymentChargeController {
                 BigDecimal tax = map.get("TAX") == null ? new BigDecimal(0) : new BigDecimal(Double.parseDouble(map.get("TAX").toString()));
                 BigDecimal netValue = map.get("NETVALUE") == null ? new BigDecimal(0) : new BigDecimal(Double.parseDouble(map.get("NETVALUE").toString()));
                 Integer historyOpId = map.get("HISTORYOPID") == null ? null : Integer.parseInt(map.get("HISTORYOPID").toString());
-                data.put("depositHistoryId", "SC--" + map.get("DEPOSITHISTORYID").toString());
+                data.put("depositHistoryId", map.get("DEPOSITHISTORYID").toString());
                 data.put("chargedDeposit", df.format(chargeDeposit));
                 data.put("commission", df.format(commisstion));
                 data.put("tax", df.format(tax));

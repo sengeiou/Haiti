@@ -688,7 +688,9 @@ public class MvmMaxController {
     
     @RequestMapping(value="/gadget/mvm/mvmMaxGadgetExcelMake")
     public ModelAndView mvmMaxGadgetExcelMake (@RequestParam("supplierId") Integer supplierId,
-            @RequestParam("contractNumber") String contractNumber,           @RequestParam("customerName") String customerName,
+            @RequestParam("contractNumber") String contractNumber,
+            @RequestParam("customerNumber") String customerNumber,
+            @RequestParam("customerName") String customerName,
             @RequestParam("meteringSF") String meteringSF,
             @RequestParam("searchDateType") String searchDateType,
             @RequestParam("searchStartDate") String searchStartDate,
@@ -702,11 +704,12 @@ public class MvmMaxController {
             @RequestParam("mcuId") String mcuId,
             @RequestParam("deviceType") String deviceType,
             @RequestParam("mdevId") String mdevId,
+            @RequestParam("gs1") String gs1,
             @RequestParam("contractGroup") String contractGroup,
             @RequestParam("sicId") Integer sicId,
             @RequestParam("mvmMiniType") String mvmMiniType,
             @RequestParam("msgNumber") String msgNumber,
-            @RequestParam("msgContractNumber") String msgContractNumber,
+            @RequestParam("msgCustomerNumber") String msgCustomerNumber,
             @RequestParam("msgCustomerName") String msgCustomerName,
             @RequestParam("msgMeteringtime") String msgMeteringtime,
             @RequestParam("msgUsage") String msgUsage,
@@ -715,6 +718,7 @@ public class MvmMaxController {
             @RequestParam("msaPrevMeterValue") String msaPrevMeterValue,
             @RequestParam("msaPrevUsage") String msaPrevUsage,
             @RequestParam("msgMeterId") String msgMeterId,
+            @RequestParam("msgGs1") String msgGs1,
             @RequestParam("msgModemId") String msgModemId,
             @RequestParam(value="accumulate", required=false) String accumulate,
             @RequestParam(value="msgMeterValue", required=false) String msgMeterValue,
@@ -746,6 +750,7 @@ public class MvmMaxController {
         Map<String, Object> conditionMap = new HashMap<String, Object>();
         conditionMap.put("supplierId", supplierId);
         conditionMap.put("contractNumber", contractNumber);
+        conditionMap.put("customerNumber", customerNumber);
         conditionMap.put("customerName", customerName);
         conditionMap.put("meteringSF", meteringSF);
         conditionMap.put("searchDateType", searchDateType);
@@ -762,6 +767,7 @@ public class MvmMaxController {
         conditionMap.put("mcuId", mcuId);
         conditionMap.put("deviceType", deviceType);
         conditionMap.put("mdevId", mdevId);
+        conditionMap.put("gs1", gs1);
         conditionMap.put("contractGroup", contractGroup);
         conditionMap.put("sicId", sicId);
 
@@ -868,7 +874,7 @@ public class MvmMaxController {
 
         // message 생성
         msgMap.put("number", msgNumber);
-        msgMap.put("contractNumber", msgContractNumber);
+        msgMap.put("customerNumber", msgCustomerNumber);
         msgMap.put("customerName", msgCustomerName);
         msgMap.put("meteringTime", msgMeteringtime);
         msgMap.put("usage", msgUsage);
@@ -881,6 +887,7 @@ public class MvmMaxController {
         msgMap.put("meterValue2",msgMeterValue2);
         msgMap.put("prevMeterValue",msaPrevMeterValue);
         msgMap.put("prevUsage",msaPrevUsage);
+        msgMap.put("gs1",msgGs1);
         
         // check download dir
         File downDir = new File(filePath);
@@ -1021,6 +1028,7 @@ public class MvmMaxController {
     		@RequestParam("supplierId") Integer supplierId,
             @RequestParam("contractNumber") String contractNumber,
             @RequestParam("customerName") String customerName,
+            @RequestParam("customerNumber") String customerNumber,
             @RequestParam("meteringSF") String meteringSF,
             @RequestParam("searchDateType") String searchDateType,
             @RequestParam("searchStartDate") String searchStartDate,
@@ -1034,6 +1042,7 @@ public class MvmMaxController {
             @RequestParam("mcuId") String mcuId,
             @RequestParam("deviceType") String deviceType,
             @RequestParam("mdevId") String mdevId,
+            @RequestParam("gs1") String gs1,
             @RequestParam("contractGroup") String contractGroup,
             @RequestParam("sicIds") String sicIds,
             @RequestParam("mvmMiniType") String mvmMiniType) {
@@ -1050,6 +1059,7 @@ public class MvmMaxController {
             conditionMap.put("supplierId", supplierId);
             conditionMap.put("contractNumber", contractNumber);
             conditionMap.put("customerName", customerName);
+            conditionMap.put("customerNumber", customerNumber);
             conditionMap.put("meteringSF", meteringSF);
             
             if(searchStartDate.equals("0")) {
@@ -1089,6 +1099,7 @@ public class MvmMaxController {
             conditionMap.put("mcuId", mcuId);
             conditionMap.put("deviceType", deviceType);
             conditionMap.put("mdevId", mdevId);
+            conditionMap.put("gs1", gs1);
             conditionMap.put("contractGroup", contractGroup);
 
             if (!StringUtil.nullToBlank(sicIds).isEmpty()) {

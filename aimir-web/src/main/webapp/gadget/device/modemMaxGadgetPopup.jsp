@@ -328,7 +328,8 @@
                         return Ext.util.Format.number(store.totalLength - value + 1, numberFormat);
                     },
                     sortable: true
-                },{header: "Meter", dataIndex: 'meterMds', width:(gridWidth-50), align: 'center'}
+                },{header: "Meter", dataIndex: 'meterMds', width:(gridWidth-75)/2, align: 'center'}
+                ,{header: "Meter SN", dataIndex: 'gs1', width:(gridWidth-75)/2, align: 'center'}
             ],
             defaults: {
                 sortable: true
@@ -430,6 +431,7 @@
                 fields: [
                 	{ name: 'no', type: 'string' },//"no",
                     { name: "meterMds", type: "string" },
+                    { name: "gs1", type: "string" },
                     { name: "mdNumberPattern", type: "string" }
                          ]
             });//Store End
@@ -470,6 +472,7 @@
             fields: [
                       "no"
                      , "mdsId"
+                     , "gs1"
                      ]
         });//Store End
 
@@ -484,7 +487,8 @@
             columns: [
                myCboxSelModel,
                {header: "no", dataIndex: 'no', width:50, align: 'center'}
-               ,{header: "Meter", dataIndex: 'mdsId', width:(gridWidth-50),  align: 'center', editor:new Ext.form.TextField({allowBlank:false})}
+               ,{header: "Meter", dataIndex: 'mdsId', width:(gridWidth-75)/2,  align: 'center', editor:new Ext.form.TextField({allowBlank:false})}
+               ,{header: "Meter SN", dataIndex: 'gs1', width:(gridWidth-75)/2,  align: 'center', editor:new Ext.form.TextField({allowBlank:false})}
             ],
             defaults: {
                 sortable: false

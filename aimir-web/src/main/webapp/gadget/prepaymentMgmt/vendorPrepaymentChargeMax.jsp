@@ -112,7 +112,11 @@
 
     <span id="logIn" class="am_button margin-l10 margin-t1px">
       <a class="on"><fmt:message key="aimir.login.login" /></a>
-    </span>    
+    </span>
+    <span id="Initialization" class="am_button margin-l10 margin-t1px">
+      <a class="on">Initialization</a>
+    </span>
+    <div id="InitializePwdDiv"></div>    
   </div>
 
   <div id="menu">
@@ -146,58 +150,72 @@
           <fmt:message key='aimir.change.password'/>
         </a>
       </li>   
-      <li id="arrearsInfo" style="float: right">
-      	<span>
-            <input class="alt startDate vertical-top" name="startDateDisplay"  type='text' style="width: 70px;" readOnly/>
-            <input name="startDate" class="no-width" type="text"/>    
-            <label class="vertical-top">~</label>
-            <input class="alt endDate vertical-top" name="endDateDisplay"  type='text' style="width: 70px;" readOnly/>
-            <input name="endDate" class="no-width" type="text"/>    
-        </span>
-      	<span id='arrearsExcel' class="am_button margin-t1px vertical-top" style="margin-right: 10px;">
-            <a><fmt:message key="aimir.arrearsinfo.export"/></a>
-          </span>          
-      </li>
     </ul>
 	<div id="CashierChangePwdWin"></div>
     <div id="chargeTab" >
-
-      <!--검색조건-->
-      <form id="contractForm" class="searchoption-container">
-        <div>
-          <span>
-            <fmt:message key='aimir.barcode'/>
-            <input id="barcodeNumber" type="text" style="width:110px;">
-          </span>
-        </div>
-        <div class="clear-form">
-          <span>
-            <fmt:message key="aimir.contractNumber"/>
-            <input id="contractNumber" type="text" style="width:110px;">
-          </span>
-          <span>
-            <fmt:message key="aimir.customername"/>
-            <input id="customerName" type="text" style="width:120px;">
-          </span>
-          <span>
-            <fmt:message key="aimir.customerid"/>
-            <input id="customerNo" type="text" style="width:120px;">
-          </span>
-          <span>
-            <fmt:message key="aimir.meterid"/>
-            <input id="mdsId" type="text" style="width:120px;">
-          </span>
-          <span id="contractSearch" class="am_button margin-l10 margin-t1px">
-            <a class="on"><fmt:message key="aimir.button.search" /></a>
-          </span>
-          <span id='contractListTotalExcel' class="am_button margin-l10 margin-t1px">
-            <a><fmt:message key="aimir.button.excel"/></a>
-          </span>
-          <span class="bold-font hidden current-deposit">
-            <fmt:message key="aimir.deposit"/>
-            <label class="current_deposit"></label>
-          </span>
-        </div>
+      	<!--검색조건-->
+        <form id="contractForm" class="searchoption-container">
+      		<div class="searchbox">
+            	<table class="searching">
+			        <tr>
+			          	<td class="withinput">
+			            	<fmt:message key='aimir.barcode'/>
+						</td>
+                        <td class="padding-r20px2">
+			            	<input id="barcodeNumber" type="text" style="width:120px;">
+			          	</td>
+			          	<td class="withinput">
+			            	<fmt:message key='aimir.celluarphone'/>
+						</td>
+                        <td class="padding-r20px2">
+			            	<input id=phone type="text" style="width:120px;">
+			          	</td>
+			        </tr>
+			        <tr class="clear-form">
+						<td class="withinput">
+							<fmt:message key="aimir.customerid"/>
+						</td>
+                        <td class="padding-r20px2">
+							<input id="customerNo" type="text" style="width:120px;">
+						</td>
+						<td class="withinput">
+						  	<fmt:message key="aimir.contractNumber"/>
+						</td>
+                        <td class="padding-r20px2">
+						  	<input id="contractNumber" type="text" style="width:120px;">
+						</td>
+						<td class="withinput">
+							<fmt:message key="aimir.customername"/>
+						</td>
+                        <td class="padding-r20px2">
+							<input id="customerName" type="text" style="width:120px;">
+						</td>
+<%-- 						<td class="withinput">
+							<fmt:message key="aimir.meterid"/>
+						</td>
+                        <td class="padding-r20px2">
+							<input type="hidden" id="mdsId" type="text" style="width:120px;">
+						</td> --%>
+						<input type="hidden" id="mdsId" type="text" style="width:120px;">
+						<td>
+							<span id="contractSearch" class="am_button margin-l10 margin-t1px">
+							  	<a class="on"><fmt:message key="aimir.button.search" /></a>
+							</span>
+						</td>
+						<td>
+							<span id='contractListTotalExcel' class="am_button margin-l10 margin-t1px">
+							  	<a><fmt:message key="aimir.button.excel"/></a>
+							</span>
+						</td>
+							<span class="bold-font hidden current-deposit">
+								<fmt:message key="aimir.deposit"/>
+								<label class="current_deposit"></label>
+							</span>
+						<td>
+						</td>
+			        </tr>
+             	</table>
+        	</div>
       </form>
       <!--검색조건 끝-->
 
@@ -209,6 +227,9 @@
           <label class="check"><fmt:message key='aimir.hems.prepayment.chargehistory'/></label>
         </div>
         <div class="wrapper">
+        	<table class="searching">
+        	</table>
+        	
           <input name="contractNumber" class="hidden" type="text"></input>
           <span>
             <label><fmt:message key="aimir.searchDate"/></label>
@@ -220,7 +241,10 @@
           </span>
           <span id="historySearch" class="am_button margin-l10 margin-t1px">
             <a class="on"><fmt:message key="aimir.button.search" /></a>
-          </span>    
+          </span>
+<%--           <span id="historyExcel" class="am_button margin-l10 margin-t1px">
+            <a class="on"><fmt:message key="aimir.button.excel" /></a>
+          </span>    --%>
         </div>
       </form>
       <!--검색조건 끝-->
@@ -231,89 +255,150 @@
     <div id="historyTab">
       <!--검색조건-->
       <form id="depositHistory" class="searchoption-container">
-        <div>
-          <!-- <input name="vendor" type="text" class="hidden"/> -->
+        <div class="searchbox">
+          <%-- 
           <span class='inline-block'> 
             <select id='report-type' name='reportType'>
               <option value='all'><fmt:message key='aimir.all'/></option>
               <option value='deposit'><fmt:message key='aimir.deposit'/></option>
               <option value='sales'><fmt:message key='aimir.sales'/></option>
-            </select>
+            </select> 
           </span>
-          <span class='inline-block'> 
-            <select id='sub-type' name='subType'>
-              <option value='all'><fmt:message key='aimir.all'/></option>
-              <option value='cancelled'><fmt:message key='aimir.cancelled'/></option>
-              <option value='unCancelled'><fmt:message key='aimir.uncancelled'/></option>
-            </select>
-          </span>
-          <span>
-            <label><fmt:message key='aimir.buildingMgmt.contractNumber'/></label>
-            <input name="contract" type="text"/>
-          </span>
-          <span>
-            <label><fmt:message key="aimir.customer"/> <fmt:message key="aimir.userreg.name"/>
-            </label><input name="customerName" type="text"/>
-          </span>
-          <span>
-            <label><fmt:message key="aimir.customerid"/></label>
-            <input name="customerId" type="text"/>
-          </span>
-          <span>
-            <label><fmt:message key="aimir.meterid"/></label>
-            <input name="meterId" type="text"/>   
-          </span>
-        </div>
-        <div>
-          <span class="inline-block" style='margin-right: 1px;'>
-            <label><fmt:message key="aimir.vendor"/></label>
-          </span>
-          <span class="inline-block">
-            <select id='vendor' style="width: 120px; display: inline;">
-                <c:choose>
-                    <c:when test="${role == 'admin'}">
-                        <option value=""><fmt:message key="aimir.all" /></option>
-                        <c:forEach var="depositVendorList" items="${depositVendorList}">
-                            <c:choose>
-                                <c:when test="${not empty depositVendorList}">
-                                    <option value="${depositVendorList.loginId}">${depositVendorList.loginId}</option>
-                                </c:when>
-                            </c:choose>
-                        </c:forEach>
-                    </c:when>
-                    <c:otherwise>
-                        <option value="${vendor}">${vendor}</option>
-                    </c:otherwise>
-                </c:choose>
-            </select>
-          </span>
-          <span class="inline-block">
-            <label><fmt:message key="aimir.board.location"/></label>
-            <input name="searchWord" id='searchWord' type="text" style="width: 120px" /> 
-            <input type='hidden' id='locationId'></input>
-          </span>
-          <span>
-            <label><fmt:message key="aimir.prepayment.casher"/></label>
-            <input name="casherId" type="text"/></input>
-          </span>
-          <span>
-            <label><fmt:message key="aimir.searchDate"/></label>
-            <input class="alt startDate" name="startDateDisplay" type='text' readOnly/><input name="startDate" type="hidden"/>
-            <label>~</label>
-            <input class="alt endDate" name="endDateDisplay" type='text' readOnly/><input name="endDate" type="hidden"/>
-          </span>
-          <span id='depositHistorySearch' class="am_button margin-l10 margin-t1px">
-            <a><fmt:message key="aimir.button.search"/></a>
-          </span>   
-          <span id='depositHistoryExcel' class="am_button margin-l10 margin-t1px margin-r5">
-            <a><fmt:message key="aimir.button.excel"/></a>
-          </span>             
-          <span id='depositHistoryTotalExcel' class="am_button margin-t1px">
-            <a><fmt:message key="aimir.total"/> <fmt:message key="aimir.button.excel"/></a>
-          </span>   
+          --%>
+          <table class="searching">
+          <input type='hidden' id='reportType' name='reportType' value='sales'/>
+          	<tr>
+	          <td class="withinput">
+	          	<fmt:message key='aimir.cancelled'/>
+	          </td>
+	          <td class="padding-r20px2">
+	            <select id='sub-type' name='subType'>
+	              <option value='all'><fmt:message key='aimir.all'/></option>
+	              <option value='cancelled'><fmt:message key='aimir.cancelled'/></option>
+	              <option value='unCancelled'><fmt:message key='aimir.uncancelled'/></option>
+	            </select>
+	          </td>
+	          <td class="withinput">
+	            <fmt:message key="aimir.customer"/> <fmt:message key="aimir.userreg.name"/>
+	          </td>
+	          <td class="padding-r20px2">
+	            <input name="customerName" type="text"/>
+	          </td>
+	          <td class="withinput">
+	            <fmt:message key='aimir.buildingMgmt.contractNumber'/>
+	          </td>
+	          <td class="padding-r20px2">
+	            <input name="contract" type="text"/>
+	          </td>
+	          <td class="withinput">
+	            <fmt:message key="aimir.customerid"/>
+	          </td>
+	          <td class="padding-r20px2">
+	            <input name="customerId" type="text"/>
+	          </td>
+	          <td class="withinput">
+	            <fmt:message key="aimir.meterid"/>
+	          </td>
+	          <td class="padding-r20px2">
+	            <input name="meterId" type="text"/>   
+	          </td>
+	          <td class="withinput">
+	            <fmt:message key="aimir.shipment.gs1"/>
+	          </td>
+	          <td class="padding-r20px2">
+	            <input name="gs1" type="text"/>   
+	          </td>
+          	</tr>
+          	<tr>
+          	
+	          <td class="withinput checkCashier">
+	            <fmt:message key="aimir.vendor"/>
+	          </td>
+	          <td class="inline-block checkCashier">
+	            <select id='vendor' style="width: 120px; display: inline;">
+	                <c:choose>
+	                    <c:when test="${role == 'admin'}">
+	                        <option value=""><fmt:message key="aimir.all" /></option>
+	                        <c:forEach var="depositVendorList" items="${depositVendorList}">
+	                            <c:choose>
+	                                <c:when test="${not empty depositVendorList}">
+	                                    <option value="${depositVendorList.loginId}">${depositVendorList.loginId}</option>
+	                                </c:when>
+	                            </c:choose>
+	                        </c:forEach>
+	                    </c:when>
+	                    <c:otherwise>
+	                        <option value="${vendor}">${vendor}</option>
+	                    </c:otherwise>
+	                </c:choose>
+	            </select>
+	          </td>
+	          <td class="withinput checkCashier">
+	            <fmt:message key="aimir.board.location"/>
+	          </td>
+	          <td class="padding-r20px2 checkCashier">
+	            <input name="searchWord" id='searchWord' type="text" style="width: 120px" /> 
+	            <input type='hidden' id='locationId'></input>
+	          </td>
+	          <td class="withinput checkCashier">
+	            <fmt:message key="aimir.prepayment.casher"/>
+	          </td>
+	          <td class="padding-r20px2 checkCashier">
+	            <input name="casherId" type="text"/></input>
+	          </td>
+	          <td class="withinput">
+		            <fmt:message key="aimir.searchDate"/>
+	          </td>
+	          <td class="withinput" style="width:220px">
+	          	<span>
+		            <input class="alt startDate" name="startDateDisplay" type='text' readOnly/><input name="startDate" type="hidden"/>
+		            <label>~</label>
+		            <input class="alt endDate" name="endDateDisplay" type='text' readOnly/><input name="endDate" type="hidden"/>
+	          	</span>
+	          </td>
+	          <td>
+		          <span id='depositHistorySearch' class="am_button margin-l10 margin-t1px">
+		            <a><fmt:message key="aimir.button.search"/></a>
+		          </span>
+	          </td>
+	          <td>
+		          <span id='depositHistoryExcel' class="am_button margin-l10 margin-t1px margin-r5">
+		            <a><fmt:message key="aimir.button.excel"/></a>
+		          </span>             
+		          <span id='depositHistoryTotalExcel' class="am_button margin-t1px" style="display: none;">
+		            <a><fmt:message key="aimir.total"/> <fmt:message key="aimir.button.excel"/></a>
+		          </span>   
+	          </td>
+          	</tr>
+          </table>
         </div>        
       </form>
       <!--검색조건 끝-->
+      
+      <form id='report' class="searchoption-container">
+      	<div class="searchbox">
+      		<table class="searching">
+      			<tr>
+      				<td class="padding-r20px2">
+						Report <fmt:message key="aimir.searchDate"/>
+					</td>
+					<td>
+						<span id='report'>
+					        <input class="alt startDate" name="startDateDisplay" type='text' readOnly/><input name="startDate" type="hidden"/>
+					        <label>~</label>
+					        <input class="alt endDate" name="endDateDisplay" type='text' readOnly/><input name="endDate" type="hidden"/>
+						</span>
+					</td>
+					<td class="padding-r20px2">
+						<span id='totalReceiptByCashier' class="am_button margin-l10 margin-t1px margin-r5">
+						    <a>Cashier Sales Report</a>
+						</span>
+					</td>
+					<td>You can only view the sales totals for the logged-in account.</td>
+      			</tr>
+      		</table>
+      	</div>
+	  </form>
 
       <div id="depositChargeHistoryDiv"></div>
       <div id="treeDiv2Outer" class="tree-billing auto" style="display:none;">
@@ -488,10 +573,13 @@
     var hiddenCol = (editAuth != "true") ? true : false;    // 권한에 따라 show/hide
     var editCol = (editAuth != "true") ? false : true;      // 권한에 따라 edit 
                                                             // enable/disable
+   	var vatAmount=Number("${vatAmount}");
+   	var vatUnit="${vatUnit}";
 
     //var isHiddenCancelBtn = (vendorRole == 'admin') ? false : true; 
     var isHiddenCancelBtn = (vendorRole == 'admin' || vendorRole == 'edh_vendor' || vendorRole == 'ECG vendor') ? false : true; 
     var isHiddenPasswordBtn
+    var loginCasherId;
 
     var contractGrid;
     var historyGrid;
@@ -545,7 +633,7 @@
       root: 'result',
       fields: ['contractNumber', 'customerNo', 'customerName', 'mdsId', 
         'address', 'lastTokenDate', 'currentCredit', 'currentArrears', //'contractPrice', 
-        'barcode', 'chargeAvailable', 'statusName'],
+        'barcode', 'chargeAvailable', 'statusName', 'phone', 'currentArrears2'],
       listeners: {
         beforeload: function(store, options) {
           var params = options.params;
@@ -561,7 +649,7 @@
       url: "${ctx}/gadget/prepaymentMgmt/getChargeHistoryList.do",
       totalProperty: 'totalCount',
       root: 'result',
-      fields: ["lastTokenDate", "chargedCredit", "chargedArrears", "balance", "arrears",
+      fields: ["lastTokenDate", "chargedCredit", "chargedArrears", "chargedArrears2", "balance", "arrears", "arrears2", "vat", "prepaymentLogId",
         "lastTokenId", "authCode", "municipalityCode", "payType", "firstArrears", "arrearsContractCount", "arrearsPaymentCount","partpayInfo"],
       listeners: {
         beforeload: function(store, options) {
@@ -609,8 +697,8 @@
       url: "${ctx}/gadget/prepaymentMgmt/vendorChargeHistoryList.do",
       totalProperty: 'count',
       root: 'list',
-      fields: ['vendor', 'casher','contractNo', 'customerId', 'meter', 
-        'customerName', 'address', 'changeDate', 'chargeCredit', 'payType', 'chargeDeposit', 'deposit'],
+      fields: ['vendor', 'casher','contractNo', 'customerId', 'meter', 'gs1', 
+        'customerName', 'address', 'changeDate', 'totalAmountPaid', 'payType', 'chargeDeposit', 'deposit'],
       listeners: {
         beforeload: function(store, options) {
           var params = options.params;
@@ -626,7 +714,7 @@
       url: "${ctx}/gadget/prepaymentMgmt/casherManagerList.do",
       totalProperty: 'count',
       root: 'list',
-      fields: ['casherId', 'name', 'status', 'lastUpdateDate','isManager'],
+      fields: ['casherId', 'name', 'status', 'lastUpdateDate', 'isManager'],
       listeners: {
         beforeload: function(store, options) {
           var params = options.params;
@@ -659,10 +747,11 @@
       var button = function() {
         if( $("#"+id).length > 0 && ($div.children().length < 1)) {
           new Ext.Button({
-            text: "<fmt:message key='aimir.save2'/>",            
+        	text: "<fmt:message key='aimir.topup'/>",            
             width: 40, 
             handler: function(b, e) {
-              eventHandler.saveChargeAmount(rec);
+            	selectedMdsId = rec.data.mdsId;
+            	eventHandler.saveChargeAmount(rec);
             }
           }).render(id);
         } else {
@@ -803,16 +892,19 @@
 
     var contractListModel = new Ext.grid.ColumnModel({
       columns: [
-          {header: "<fmt:message key='aimir.contractNumber'/>", dataIndex: 'contractNumber'}
-         ,{header: "<fmt:message key='aimir.customerid'/>", dataIndex: 'customerNo'}
+          {header: "<fmt:message key='aimir.customerid'/>", dataIndex: 'customerNo'}
          ,{header: "<fmt:message key='aimir.customername'/>", dataIndex: 'customerName'}
-         ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'mdsId'}
-         ,{header: "<fmt:message key='aimir.address'/>", dataIndex: 'address'}
+         ,{header: "<fmt:message key='aimir.celluarphone'/>", dataIndex: 'phone', renderer: function(value, metaData, record, index) {
+             var tplBtn = new Ext.Template("<a href='#;' onclick='getCustomerWindowWithID("+record.data.customerNo+");'>"+value+"</a>");
+             return value ? tplBtn.apply():"";}}
          ,{header: "<fmt:message key='aimir.supplystatus'/>", dataIndex: 'statusName'}
-         ,{header: "<fmt:message key='aimir.hems.prepayment.lastchargedate'/>", dataIndex: 'lastTokenDate', align: 'center',
-             tooltip: "<fmt:message key='aimir.hems.prepayment.lastchargedate'/>"}
+         ,{header: "<fmt:message key='aimir.hems.prepayment.lastchargedate'/>", dataIndex: 'lastTokenDate', align: 'center',tooltip: "<fmt:message key='aimir.hems.prepayment.lastchargedate'/>"}
          ,{header: "<fmt:message key='aimir.credit'/>", dataIndex: 'currentCredit',  align: 'right'}
-         ,{header: "<fmt:message key='aimir.arrears'/>", dataIndex: 'currentArrears', align: 'right'}  
+         ,{header: "<fmt:message key='aimir.arrearsA'/>", dataIndex: 'currentArrears', align: 'right'}
+         ,{header: "<fmt:message key='aimir.arrearsB'/>", dataIndex: 'currentArrears2', align: 'right'}
+ /*		 ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'mdsId'}
+         ,{header: "<fmt:message key='aimir.customerid'/>", dataIndex: 'customerNo'}
+         ,{header: "<fmt:message key='aimir.address'/>", dataIndex: 'address'}
          ,{header: "<fmt:message key='aimir.amount.paid'/>", align: 'right', dataIndex: 'chargeAmount', 
            renderer: Ext.util.Format.numberRenderer("0,000.0000"),
            editor: new Ext.form.NumberField({
@@ -820,7 +912,7 @@
                allowBlank: true,
                allowNegative: false
            })
-          }
+          } 	*/
          ,{header: "<fmt:message key='aimir.barcode'/>", align: 'left', dataIndex: 'barcode',
             editor: new Ext.form.NumberField({
               id: 'barcode',
@@ -833,7 +925,7 @@
               }
             })
           }         
-         ,{header: "", renderer: saveBtnArea}
+         ,{header: "<fmt:message key='aimir.amount.paid'/>", renderer: saveBtnArea}
       ],
       defaults: {
           sortable: true
@@ -844,18 +936,20 @@
     
     var historyListModel = new Ext.grid.ColumnModel({
       columns: [
-        {header: "<fmt:message key='aimir.hems.prepayment.chargedate'/>"},
-        {header: "<fmt:message key='aimir.chargeAmount'/>", align: 'right'},
-        {header: "<fmt:message key='aimir.prepayment.chargearrears'/>", align: 'right'},
-        {header: "<fmt:message key='aimir.credit'/>", align: 'right'},
-        {header: "<fmt:message key='aimir.arrears'/>", align: 'right'},
-        {header: "<fmt:message key='aimir.hems.prepayment.transactionNum'/>"},
-        {header: "<fmt:message key='aimir.prepayment.authCode'/>"},
-        {header: "<fmt:message key='aimir.prepayment.municipalityCode'/>"},
-        {header: "<fmt:message key='aimir.paymenttype'/>",  align: 'center'},
-        {header: "<fmt:message key='aimir.partpayInfo'/>", renderer: partpayInfoArea, align: 'center'},
-        {header: "", renderer: receiptBtnArea},        
-        {header: "", renderer: cancelBtnArea, hidden: isHiddenCancelBtn},
+        {header: "<fmt:message key='aimir.hems.prepayment.chargedate'/>", dataIndex: 'lastTokenDate'},
+        {header: "<fmt:message key='aimir.chargeAmount'/>", align: 'right', dataIndex: 'chargedCredit'},
+        {header: "<fmt:message key='aimir.credit'/>", align: 'right', dataIndex: 'balance'},
+        {header: "<fmt:message key='aimir.usageFee2'/> <fmt:message key='aimir.arrearsA'/>", align: 'right', dataIndex: 'chargedArrears'},
+        {header: "<fmt:message key='aimir.arrearsA'/>", align: 'right', dataIndex: 'arrears'},
+        {header: "<fmt:message key='aimir.usageFee2'/> <fmt:message key='aimir.arrearsB'/>", align: 'right', dataIndex: 'chargedArrears2'},
+        {header: "<fmt:message key='aimir.arrearsB'/>", align: 'right', dataIndex: 'arrears2'},
+        {header: "<fmt:message key='aimir.contract.receioptNo'/>", align: 'center',  dataIndex: 'prepaymentLogId'},
+        //{header: "<fmt:message key='aimir.prepayment.authCode'/>", dataIndex: 'authCode'},
+        //{header: "<fmt:message key='aimir.prepayment.municipalityCode'/>", dataIndex: 'municipalityCode'},
+        {header: "<fmt:message key='aimir.paymenttype'/>",  align: 'center', dataIndex: 'payType'},
+        {header: "<fmt:message key='aimir.partpayInfo'/>", renderer: partpayInfoArea, align: 'center', dataIndex: 'firstArrears'},
+        {header: "<fmt:message key='aimir.receipt'/>", renderer: receiptBtnArea},        
+        {header: "<fmt:message key='aimir.partpayInfo'/>", renderer: cancelBtnArea, hidden: isHiddenCancelBtn},
         {header: "", renderer: relayOnBtnArea, hidden: true}
       ],
       defaults: {sortable: true, 
@@ -871,14 +965,15 @@
         {header: "<fmt:message key='aimir.buildingMgmt.contractNumber'/>"},
         {header: "<fmt:message key='aimir.customerid'/>"},
         {header: "<fmt:message key='aimir.meterid'/>"},
+        {header: "<fmt:message key='aimir.shipment.gs1'/>"},
         {header: "<fmt:message key='aimir.customername'/>"},
         {header: "<fmt:message key='aimir.address'/>"},
         {header: "<fmt:message key='aimir.hems.prepayment.chargedate'/>"},
-        {header: "<fmt:message key='aimir.deposit.chargecredit'/>", align: 'right'},
-        {header: "<fmt:message key='aimir.paymenttype'/>",  align: 'center'},
-        {header: "<fmt:message key='aimir.deposit.chargedeposit'/>", align: 'right'},
-        {header: "<fmt:message key='aimir.deposit'/>", align: 'right', 
-          css: 'padding-right:10px'}
+        {header: "<fmt:message key='aimir.amount.paid'/>", align: 'right'},
+        {header: "<fmt:message key='aimir.paymenttype'/>",  align: 'center'}
+        //{header: "<fmt:message key='aimir.deposit.chargedeposit'/>", align: 'right'},
+        //{header: "<fmt:message key='aimir.deposit'/>", align: 'right', 
+          //css: 'padding-right:10px'}
       ],
       defaults : {
         sortable: true,
@@ -1028,7 +1123,14 @@
     	renderTo: 'casherManagerPwdDiv'
     })
 
-    var eventHandler = {      
+    var selectedMdsId = "";
+    var totalAmountPaid = 0;
+    var chargeAmount = 0;
+    var chargeArrears = 0;
+    var chargeArrears2 = 0;
+    var vat = 0;
+    var eventHandler = {
+    	
       initDateFormat: function(inst) {
         $.getJSON("${ctx}/common/convertLocalDate.do", 
           {supplierId: supplierId, dbDate: inst.val()},
@@ -1081,6 +1183,7 @@
         var params = $.extend(true, {}, contractListParams, {
           barcode: $("#barcodeNumber").val(),
           contractNumber: $("#contractNumber").val(),
+          phone: $("#phone").val(),
           customerNo: $("#customerNo").val(),
           customerName: $("#customerName").val(),
           mdsId: $("#mdsId").val()
@@ -1093,335 +1196,321 @@
       },
 
       depositHistoryListSearch: function() {
-        var params = $.extend(true, {}, vendorHistoryParams, {
-          vendor: $("#vendor").val(),
-          reportType: $("#depositHistory select[name=reportType]").val(),
-          subType : $("#depositHistory select[name=subType]").val(),
-          contract: $("#depositHistory input[name=contract]").val(),
-          customerName: $("#depositHistory input[name=customerName]").val(),
-          customerNo: $("#depositHistory input[name=customerId]").val(),
-          meterId: $("#depositHistory input[name=meterId]").val(),
-          casherId: $("#depositHistory input[name=casherId]").val(),
-          startDate: $("#depositHistory input[name=startDate]").val(),
-          endDate: $("#depositHistory input[name=endDate]").val(),
-          locationId : $("#locationId").val()
-        });        
-        vendorHistoryStore.baseParams = params;
-        vendorHistoryStore.load();
+	      var params = $.extend(true, {}, vendorHistoryParams, {
+		      vendor: $("#vendor").val(),
+		      reportType: $("#reportType").val(),
+		      subType : $("#depositHistory select[name=subType]").val(),
+		      contract: $("#depositHistory input[name=contract]").val(),
+		      customerName: $("#depositHistory input[name=customerName]").val(),
+		      customerNo: $("#depositHistory input[name=customerId]").val(),
+		      meterId: $("#depositHistory input[name=meterId]").val(),
+		      gs1: $("#depositHistory input[name=gs1]").val(),
+		      casherId: $("#depositHistory input[name=casherId]").val(),
+		      startDate: $("#depositHistory input[name=startDate]").val(),
+		      endDate: $("#depositHistory input[name=endDate]").val(),
+		      locationId : $("#locationId").val()
+	      });        
+	      vendorHistoryStore.baseParams = params;
+	      vendorHistoryStore.load();
       },
 
       saveChargeAmount: function(rec) {
-
-        // 충전가능여부 체크
-        var params = {
-            contractNumber : rec.get("contractNumber")
-        };
-        var jsonText = $.ajax({
-            type: "POST",
-            url: "${ctx}/gadget/prepaymentMgmt/checkChargeAvailable.do",
-            data: params,
-            async: false
-        }).responseText;
-
-        eval("var json=" + jsonText);
-
-        // 충전불가 인 경우
-        if (json.result == null || json.result == false) {
-            Ext.Msg.alert("<fmt:message key="aimir.message"/>", "<fmt:message key="aimir.msg.notcharge"/>");
-            return;
-        }
-
-        var chargeAmount = Number(rec.get("chargeAmount"));
-        var chargeArrears = Number(rec.get("chargeArrears"));
-        var currentArrears = NumberUtil.parseNumber(rec.get("currentArrears"));
-        var currentAmount = NumberUtil.parseNumber(rec.get("currentCredit"));
-        var contractPrice = Number(rec.get("contractPrice"));// init Credit
-
-        //미수금이 존재하는 분할납부 고객의 경우 몇회에 걸쳐 납부할 것인가를 등록해야함
-        //초기 미수금인 initArrears의 경우 분할납부 대상이 아님
-       	if((isPartpayment == true || isPartpayment == 'true') 
-       			&& (arrearsContractCount == null || arrearsContractCount == '') && currentArrears > initArrears) {
-           	var tempMsg = "<fmt:message key='aimir.register.arrearsContractCount'/>".replace("$SUPPLIER",supplierName);
-           	Ext.Msg.show({
-           		title: params.cusomterName,
-           		msg: tempMsg,
-           		buttons : Ext.MessageBox.OK
-           		});
-           	return;
-       	}
-        
-        var params = {
-          contractNumber: rec.json.contractNumber,
-          casherId: $("#loginWrapper input[name=loginId]").val(),
-          contractId: rec.json.contractId,
-          mdsId: rec.json.mdsId,
-          lastTokenId: rec.json.lastTokenId,
-          contractDemand: rec.json.contractDemand || 0,
-          tariffCode: rec.json.tariffCode,
-          amount: chargeAmount || 0,
-          arrears: chargeArrears || 0,
-          contractPrice: contractPrice || 0, //initCredit
-          currentAmount: currentAmount,
-          currentArrears: currentArrears,
-          customerName: rec.json.customerName || "",
-          supplierId : supplierId,
-          partpayReset : false,
-          isVendor: isVendor,
-          isPartpayment : isPartpayment
-        };        
-
-        var saveAction = function() {
-          Ext.Msg.confirm("<fmt:message key='aimir.message'/>", 
-            "<fmt:message key='aimir.wouldSave'/>", function(btn) {
-              if (btn == "yes") {
-                emergePre();
-
-                $.post(
-                  "${ctx}/gadget/prepaymentMgmt/vendorSavePrepaymentCharge.do",
-                      params,
-                      function(json) {
-                        var receiptParam = {};
-
-                        if (json != null && json.result == "success") {
-                          Ext.Msg.alert("<fmt:message key='aimir.message'/>",
-                           "<fmt:message key='aimir.save'/>",
-                              function() {
-                                contractListStore.reload();
-
-                                $("#historyForm input").val(null);
-                                $("#historyForm input[name=contractNumber]").val(params.contractNumber);
-                                eventHandler.historyListSearch();
-                                eventHandler.refreshDeposit(json.deposit);
-                                // 결제를 진행한 후에 credit이 0 이상이고,
-                                // 미터가 차단되어 있는 경우 
-                                // relay on 수행
-
-                                if(json.isCutOff == true && json.credit > 0) {
-                                  eventHandler.relayOn(rec.json, function() {
-                                    receiptParam.prepaymentLogId = 
-                                      json.prepaymentLogId;
-                                    receiptParam.contractId = 
-                                      rec.json.contractId;
-                                    eventHandler.chargeAfterReceipt(receiptParam);
-                                  });
-                                } else {
-                                  receiptParam.prepaymentLogId = 
-                                    json.prepaymentLogId;
-                                  receiptParam.contractId = 
-                                    rec.json.contractId;
-                                  eventHandler.chargeAfterReceipt(receiptParam);
-                                }
-                              }
-                            );
-
-                          } else {
-                              Ext.Msg.alert("<fmt:message key='aimir.error'/>", 
-                                json.result);
-                          }
-                          hide();
-                          return;
-                      }
-                );
-              }
-          });
-        }
-
-        eventHandler.validateSaveAction(params, saveAction);
+	      // 충전가능여부 체크
+	      var params = {
+	          contractNumber : rec.get("contractNumber")
+	      };
+	      var jsonText = $.ajax({
+	          type: "POST",
+	          url: "${ctx}/gadget/prepaymentMgmt/checkChargeAvailable.do",
+	          data: params,
+	          async: false
+	      }).responseText;
+	
+	      eval("var json=" + jsonText);
+	
+	      // 충전불가 인 경우
+	      if (json.result == null || json.result == false) {
+	          Ext.Msg.alert("<fmt:message key="aimir.message"/>", "<fmt:message key="aimir.msg.notcharge"/>");
+	          return;
+	      }
+	
+	      var currentArrears = NumberUtil.parseNumber(rec.get("currentArrears"));
+	      var currentArrears2 = NumberUtil.parseNumber(rec.get("currentArrears2"));
+	      var currentAmount = NumberUtil.parseNumber(rec.get("currentCredit"));
+	      var contractPrice = Number(rec.get("contractPrice"));// init Credit
+	
+	      //미수금이 존재하는 분할납부 고객의 경우 몇회에 걸쳐 납부할 것인가를 등록해야함
+	      //초기 미수금인 initArrears의 경우 분할납부 대상이 아님
+	     	if((isPartpayment == true || isPartpayment == 'true') 
+	     			&& (arrearsContractCount == null || arrearsContractCount == '') && currentArrears > initArrears) {
+	         	var tempMsg = "<fmt:message key='aimir.register.arrearsContractCount'/>".replace("$SUPPLIER",supplierName);
+	         	Ext.Msg.show({
+	         		title: params.cusomterName,
+	         		msg: tempMsg,
+	         		buttons : Ext.MessageBox.OK
+	         		});
+	         	return;
+	     	}
+	      
+	      var params = {
+			contractNumber: rec.json.contractNumber,
+			casherId: $("#loginWrapper input[name=loginId]").val(),
+			contractId: rec.json.contractId,
+			mdsId: rec.json.mdsId,
+			lastTokenId: rec.json.lastTokenId,
+			contractDemand: rec.json.contractDemand || 0,
+			tariffCode: rec.json.tariffCode,
+			totalAmountPaid : totalAmountPaid,
+			amount: chargeAmount,
+			arrears: chargeArrears,
+			arrears2: chargeArrears2,
+			vat: vat,
+			currentAmount: currentAmount,
+			currentArrears: currentArrears,
+			currentArrears2: currentArrears2,
+			contractPrice: contractPrice || 0, //initCredit
+			customerName: rec.json.customerName || "",
+			supplierId : supplierId,
+			partpayReset : false,
+			isVendor: isVendor,
+			isPartpayment : isPartpayment
+	      };        
+	      
+	      var saveAction = function() {
+	        Ext.Msg.confirm("<fmt:message key='aimir.message'/>", 
+	          "<fmt:message key='aimir.wouldSave'/>", function(btn) {
+	            if (btn == "yes") {
+	              emergePre();
+	              
+	              params.totalAmountPaid = totalAmountPaid;
+	              params.amount = chargeAmount;
+	              params.arrears= chargeArrears;
+	              params.arrears2= chargeArrears2;
+	              params.vat= vat;
+	              
+	              $.post(
+	                "${ctx}/gadget/prepaymentMgmt/vendorSavePrepaymentCharge.do",
+	                    params,
+	                    function(json) {
+	                      var receiptParam = {};
+	
+	                      if (json != null && json.result == "success") {
+	                        Ext.Msg.alert("<fmt:message key='aimir.message'/>",
+	                         "<fmt:message key='aimir.save'/>",
+	                            function() {
+	                              contractListStore.reload();
+	
+	                              $("#historyForm input").val(null);
+	                              $("#historyForm input[name=contractNumber]").val(params.contractNumber);
+	                              eventHandler.historyListSearch();
+	                              eventHandler.refreshDeposit(json.deposit);
+	                              // 결제를 진행한 후에 credit이 0 이상이고,
+	                              // 미터가 차단되어 있는 경우 
+	                              // relay on 수행
+	
+	                              if(json.isCutOff == true && json.credit > 0) {
+	                                eventHandler.relayOn(rec.json, function() {
+	                                  receiptParam.prepaymentLogId = json.prepaymentLogId;
+	                                  receiptParam.contractId =  rec.json.contractId;
+	                                  eventHandler.chargeAfterReceipt(receiptParam);
+	                                });
+	                              } else {
+	                                receiptParam.prepaymentLogId = json.prepaymentLogId;
+	                                receiptParam.contractId = rec.json.contractId;
+	                                eventHandler.chargeAfterReceipt(receiptParam);
+	                              }
+	                            }
+	                          );
+	
+	                        } else {
+	                            Ext.Msg.alert("<fmt:message key='aimir.error'/>", json.result);
+	                        }
+	                        hide();
+	                        return;
+	                    }
+	              );
+	            }
+	        });
+	      }
+	
+	      eventHandler.validateSaveAction(params, saveAction);
       },
       
       validateSaveAction: function(params, callback) {
         var currentArrears = params.currentArrears;
+        var currentArrears2 = params.currentArrears2;
         var currentAmount = params.currentAmount;
-        var chargeAmount = params.amount;
-        var chargeArrears = params.arrears;
         var contractPrice = params.contractPrice;
         var customerName = params.customerName;
 
-        // validation check
-        // 지불 미수금이 잔여 미수금 보다 큰 경우 X
-        if (!isNaN(chargeArrears) && !isNaN(currentArrears) 
-          && chargeArrears > currentArrears) {
-          Ext.Msg.alert("<fmt:message key='aimir.alert'/>",
-            "<fmt:message key='aimir.msg.check.input.arrears'/>");
-          return;
-        }
-
-        // 지불 미수금과 지불 creit의 값이 숫자가 아닌 경우 
-        if (isNaN(chargeAmount) && isNaN(chargeArrears)) {
-          return;
-        }
-
-        if(chargeAmount) {
-
        	eventHandler.retypePaidAmount({
-            title: customerName,
-            msg: "<fmt:message key='aimir.retype.amount'/>",  //Please retype paid amount
+            title: "<fmt:message key='aimir.topup'/>",
+            msg: "Please input paid amount.",  //Please retype paid amount
             amount: chargeAmount,
+            currentArrears: currentArrears,
+            currentArrears2: currentArrears2,
             amountLabel: "<fmt:message key='aimir.amount.paid'/>",
             payTypeLabel: "<fmt:message key='aimir.paymenttype'/>",
             callback: function(payType) {
-       				params.payTypeId = payType;   // cash or check
-
-              if(currentArrears > 0) {
-           	  //분할납부기능 사용여부
-           	  //(분할납부 기능을 사용하고) && (초기미수금보다 현재 미수금이 크거나 || 분할납부가 진행중이여서 현재미수금이 초기미수금보다 작아진 경우) 는 분할납부 기능 사용
-               	if((isPartpayment == true || isPartpayment == 'true') 
-               			&& (((currentArrears > initArrears) && (arrearsContractCount != '' || arrearsContractCount != null))
-               			|| ((currentArrears <= initArrears) && (Number(arrearsContractCount) > 0))) ) {
-               		if((currentArrears <= chargeAmount) && currentArrears == firstArrears) {
-	              		Ext.Msg.show({
-	  	                  title: customerName,
-	  	                  msg: "<fmt:message key='aimir.fullPay.arrears'/>",   // Do you want to pay in full arrears?
-	  	                  buttons: Ext.MessageBox.YESNO,
-	  	                  fn: function(btn) {
-	  	                      if(btn == 'yes') {
-	  	                    	params.amount = chargeAmount-currentArrears;
-	  	                    	params.arrears = currentArrears;
-
-	  	                    	callback();
-	  	                      } else {
-	  	                        eventHandler.partPayment(params,callback);
-	  	                      }
-
-	  	                  }
-	  	                });
-               		} else {
-                    eventHandler.partPayment(params,callback);
-               		}
-               	} else {
-	                Ext.Msg.show({
-	                  title: customerName,
-	                  msg: "<fmt:message key='aimir.msg.pay.amount.arrears'/>", // There is arrears, customer should pay. How much should pay for arrears?
-	                  buttons: Ext.MessageBox.OKCANCEL,
-	                  prompt: true,
-	                  fn: function(btn, text) {
-	                    var arrearsAmount = Number(text);
-	                    var cb = function(arrearsAmount, callback) {
-	                      if(btn == 'ok' 
-	                        && !isNaN(arrearsAmount) 
-	                        && (params.amount >= arrearsAmount)) {
-	                    	
-	                        // 입력한 미수금 금액이 남은 미수금 금액보다 큰경우 
-	                        // 미수금 금액은 남은 미수금 금액이 된다. 
-	                        if(currentArrears < arrearsAmount) {
-	                          arrearsAmount = currentArrears;
-	                        }
-	                        params.amount -= arrearsAmount;
-	                        params.arrears = arrearsAmount;
-	                        callback();
-	                      } else {
-	                        Ext.Msg.alert("<fmt:message key='aimir.error'/>",
-	                          "<fmt:message key='aimir.error'/>");
-	                      }
-	                    };
-	                    eventHandler.retypePaidAmount({
-	                      title: customerName,
-	                      amount: arrearsAmount,
-	                      msg: "<fmt:message key='aimir.retype.arrears'/>",  // Please retype paid arrears
-	                      amountLabel: "Paid Arrears",
-	                      payTypeLabel: "<fmt:message key='aimir.paymenttype'/>",
-	                      callback: function() {
-	                        cb(arrearsAmount, callback);
-	                      }
-	                    });
-	                  }
-	                });
-              	}
-              } else {
-                callback();
-              }
+   				params.payTypeId = payType;   // cash or check
+   				
+            	if(totalAmountPaid <= 0){
+            		Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.amount.paid'/> <fmt:message key='aimir.msg.greater'/> 0" );
+            	}else if(chargeAmount < 0){
+            		Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.total.amount'/> <fmt:message key='aimir.msg.greater'/> 0");
+            	}else if(chargeArrears < 0 || chargeArrears > params.currentArrears || chargeArrears > totalAmountPaid){
+            		Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.confirm.arrears.paid'/> A");
+            	}else if(chargeArrears2 < 0 || chargeArrears2 > params.currentArrears2 || chargeArrears2 > totalAmountPaid){
+            		Ext.Msg.alert("<fmt:message key='aimir.alert'/>","<fmt:message key='aimir.confirm.arrears.paid'/> B");
+            	}else{
+   					callback();
+            	}
             }
           });
+      	},
+      
+      	changeCredit : function() {
+			totalAmountPaid = Number(Ext.getCmp('retypeAmount_id').getValue());
+			chargeArrears = Number(Ext.getCmp('arrearsA').getValue());
+			chargeArrears2 = Number(Ext.getCmp('arrearsB').getValue());
+			
+			if(vatUnit=='%'){
+				vat = (totalAmountPaid - (chargeArrears + chargeArrears2)) * vatAmount/100 ;
+			}else{
+				vat = vatAmount;
+			}
+			
+			if(Number($("#bCurrentArrears").text()) - chargeArrears == 0){
+				Ext.getCmp('arrearsB').setReadOnly(false);
+			}else{
+				Ext.getCmp('arrearsB').setReadOnly(true);
+			}
+			
+			chargeAmount = totalAmountPaid - chargeArrears - chargeArrears2 - vat;
+			$("#vatB").text(' (='+vat+')');
+			$("#totalAmountB").text(chargeAmount);
+      	},
 
-        }
-      },
-
-      retypePaidAmount: function (params) {
-
-/*
-        Ext.Msg.show({
-          title: params.title,
-          msg: params.msg,
-          buttons: Ext.MessageBox.OKCANCEL,
-          prompt: true,
-          fn: function(btn, text) {
-            var prompt = Number(text);
-            if (btn == 'ok' && !isNaN(params.amount)) {
-              if(prompt != params.amount) {
-                Ext.Msg.alert("<fmt:message key='aimir.alert'/>", 
-                  "<fmt:message key='aimir.msg.check.input.value'/>");
-                return;
-              } else {
-                params.callback();
-              }
-            } 
-          }
-        });     
-*/          
+      	retypePaidAmount: function (params) {
           var searchWin = new Ext.Window({
-            title: params.title,
-            modal: true, closable:true, resizable: true,
-            width:250, height:200,
-            border:true, plain:false,                      
-            items:[{
-                xtype: 'panel',
-                frame: false, border: false,
-                items:{
-                  id: 'reTypeAmount_form',
-                  xtype: 'form',
-                  bodyStyle:'padding:10px',
-                  labelWidth: 100,
-                  frame: false, border: false,
-                  items: [{
-                    xtype: 'label', html:'<div style="text-align:left;">' + params.msg +'</div>',  anchor: '100%'
-                  }, {
-                    xtype: 'textfield', fieldLabel: params.amountLabel, id: 'retypeAmount_id', name: 'retypeAmount_name', anchor: '100%'
-                  }, {
-                    xtype: 'combo',
-                    id:'payType_id', name: 'payType_name', value:'Select...',          
-                    fieldLabel: params.payTypeLabel, triggerAction: 'all', editable: false, mode: 'local',
-                    store: new Ext.data.JsonStore({
-                      url: '${ctx}/gadget/prepaymentMgmt/vendorPrepaymentPayType.do',
-                      storeId: 'payTypeListStore',
-                      root: 'payTypeList',
-                      idProperty: 'id',
-                      fields: [{name: 'id', type: 'int'}, 'name'],
-                      listeners: {
-                        load: function(store, records, options){
-                          Ext.getCmp('payType_id').setValue(records[0].id); // default : cash                          
-                        }
-                      }
-                    }),
-                    valueField: 'id', displayField: 'name',
-                    anchor: '100%',
-                    listeners: {
-                      render: function() {
-                        this.store.load();
-                      },
-                      select : function(combo, record, index){
-                        //var payTypeValeu = record.get(combo.valueField);
-                      }
-                    }
-                  }]
+	          title: params.title,
+	          modal: true, closable:true, resizable: true,
+	          width:350, height:420,
+	          border:true, plain:false,                      
+	          items:[{
+	              xtype: 'panel',
+	              frame: false, border: false,
+	              items:{
+	                id: 'reTypeAmount_form',
+	                xtype: 'form',
+	                bodyStyle:'padding:10px',
+	                labelWidth: 100,
+	                frame: false, border: false,
+	                items: [{
+	                  xtype: 'label', html:'<div style="text-align:left;">' + params.msg +'</div>', anchor: '100%'
+	                }, {
+	                	xtype: 'numberfield', fieldLabel: params.amountLabel, id: 'retypeAmount_id', name: 'retypeAmount_name', anchor: '100%',
+	                  	listeners:{
+		                    change: function(obj, value){
+		                    	eventHandler.changeCredit();
+		                    }
+		                },
+	                }, {
+	                  xtype: 'combo',
+	                  id:'payType_id', name: 'payType_name', value:'Select...',          
+	                  fieldLabel: params.payTypeLabel, triggerAction: 'all', editable: false, mode: 'local',
+	                  store: new Ext.data.JsonStore({
+	                    url: '${ctx}/gadget/prepaymentMgmt/vendorPrepaymentPayType.do',
+	                    storeId: 'payTypeListStore',
+	                    root: 'payTypeList',
+	                    idProperty: 'id',
+	                    fields: [{name: 'id', type: 'int'}, 'name'],
+	                    listeners: {
+	                      load: function(store, records, options){
+	                        Ext.getCmp('payType_id').setValue(records[0].id); // default : cash                          
+	                      }
+	                    }
+	                  }),
+	                  valueField: 'id', displayField: 'name',
+	                  anchor: '100%',
+	                  listeners: {
+	                    render: function() {
+	                      this.store.load();
+	                    },
+	                    select : function(combo, record, index){
+	                      //var payTypeValeu = record.get(combo.valueField);
+	                    }
+	                  }
+	                }, {	                	
+	                	xtype: 'container',
+	    				items: [{
+	    	            	xtype:'fieldset',
+	    	                title: 'Deduction',
+	    	                bodyStyle:'padding:5px 5px 5px 5px',
+	    	                autoHeight:true,
+	    	                defaultType: 'textfield', 
+	    				    items : [
+	    				    	{
+		    						xtype : 'label',
+		    						id: 'currentArrears',
+	    							html : "Current Arrears A  =  <b id='bCurrentArrears'>"+ params.currentArrears+"</b>",
+	    							anchor: '100%'
+	    						},{
+		    				    	fieldLabel : "Arrears A",
+		    						xtype : 'numberfield',
+		    						id	 : 'arrearsA',
+		    						minValue : 0,
+		    						maxValue : params.currentArrears,
+		    						value : 0,
+		    						readOnly : params.currentArrears > 0 ? false:true,
+		    	                  	listeners:{
+		    		                    change: function(obj, value){
+		    		                    	eventHandler.changeCredit();
+		    		                    }
+		    		                },
+	    						},{
+		    						xtype : 'label',
+		    						html : "Current Arrears B  =  <b id='bCurrentArrears2'>"+ params.currentArrears2+"</b>",
+	    							anchor: '100%'
+	    						},{
+		    				    	fieldLabel : "Arrears B",
+		    						xtype : 'numberfield',
+		    						id	 : 'arrearsB',
+		    						minValue : 0,
+		    						maxValue : params.currentArrears2,
+		    						value : 0,
+		    						readOnly : (params.currentArrears == 0 && params.currentArrears2 > 0) ? false:true,
+		    	                  	listeners:{
+		    		                    change: function(obj, value){
+		    		                    	eventHandler.changeCredit();
+		    		                    }
+		    		                },
+	    						},{
+		    						xtype : 'label',
+	    							html : "VAT : "+ vatAmount + vatUnit + '<b id="vatB">',
+	    							id	 : 'vat',
+	    							anchor: '100%'
+	    						}]
+	    				}],
+	                },
+	                {
+	                  xtype: 'label', html: 'Final Paid Amount : '+ '<b id="totalAmountB">'
+                	}]
                 }
             }],
             
             buttons: [{
               text: 'Ok',
-              handler: function() {                          
+              handler: function() {
                 var reTypeValue = Number(Ext.getCmp('retypeAmount_id').getValue());
                 if (!isNaN(params.amount)) {
-                  if(reTypeValue != params.amount) {
-                    Ext.Msg.alert("<fmt:message key='aimir.alert'/>", "<fmt:message key='aimir.msg.check.input.value'/>");
-                    return;
-                  } else {
-                    var payType = Ext.getCmp('payType_id').getValue();
-                    if(payType == '' || payType == 'Select...'){
-                      Ext.Msg.alert("<fmt:message key='aimir.alert'/>", "<fmt:message key='aimir.msg.check.input.value'/>");
-                    }else{
-                      params.callback(payType);
-                    }
-                  }
+	                var payType = Ext.getCmp('payType_id').getValue();
+	                if(payType == '' || payType == 'Select...'){
+	                    Ext.Msg.alert("<fmt:message key='aimir.alert'/>", "<fmt:message key='aimir.msg.check.input.value'/>");
+	                }else{
+	                    params.callback(payType);
+	                	//saveAction();
+	                }
                 }
                 searchWin.close();
               }
@@ -1561,13 +1650,15 @@
 
       openReceiptPopup: function(rec) {
         var url = "${ctx}/gadget/prepaymentMgmt/prepaymentChargeReceiptPopup.do";
-        var opt = "width=350px, height=615px, resizable=no, status=no";
+        //var opt = "width=350px, height=615px, resizable=no, status=no";
+        var opt = "width=270px, height=580px, resizable=no, status=no";
 
         var params = {
           vendor: vendor,
           supplierId: supplierId,
           contractId: rec.contractId || rec.json.contractId,
-          prepaymentLogId: rec.prepaymentLogId || rec.json.prepaymentLogId
+          prepaymentLogId: rec.prepaymentLogId || rec.json.prepaymentLogId,
+          mdsId: selectedMdsId || rec.json.mdsId 
         }
         
         if ( receiptPopupWindow ) {
@@ -1576,17 +1667,34 @@
         
         var queryString = CommonUtil.getQueryString(params);
         receiptPopupWindow = window.open(url + queryString, "receiptPopupWindow", opt);
-      },        
+      },
+      
+      totalReceiptByCashierPopup: function(rec) {
+          var url = "${ctx}/gadget/prepaymentMgmt/totalReceiptByCashierPopup.do";
+          var opt = "width=270px, height=300px, resizable=no, status=no";
+
+          var params = {
+            supplierId: supplierId,
+            casherId: loginCasherId,
+            startDate: $("#report input[name=startDate]").val(),
+            endDate: $("#report input[name=endDate]").val()
+          }
+          
+          if ( receiptPopupWindow ) {
+            receiptPopupWindow.close();
+          }
+          
+          var queryString = CommonUtil.getQueryString(params);
+          receiptPopupWindow = window.open(url + queryString, "receiptPopupWindow", opt);
+      },     
       
       initChargeTab: function() {
-    	$('#arrearsInfo').hide();
         eventHandler.refreshDeposit();        
         contractListStore.reload();
         historyListStore.reload();
       },
 
       initHistoryTab: function() {
-    	 $('#arrearsInfo').show();
         eventHandler.depositHistoryListSearch();
       },      
 
@@ -1699,7 +1807,14 @@
               if(isManager) {
             	  isHiddenPasswordBtn = true;  
               }
-               
+              
+              if(!isManager){
+            	  $("#depositHistory input[name=casherId]").val(params.casherId);
+            	  $(".checkCashier").hide(); 
+              }
+              
+              loginCasherId = params.casherId;
+              
               isFirstLogIn = json.isFirstLogIn != null ? json.isFirstLogIn : true;
               logOn(json);
             } else {
@@ -1707,6 +1822,14 @@
             }
         });
       },
+      
+      Initialization: function() {
+          var rec = {
+            casherId: $("#loginWrapper input[name=loginId]").val(),
+            vendorId: vendor          
+          };
+	        eventHandler.initializePassword(JSON.stringify(rec));
+        },
 
       addCasher: function() {
         var params = {
@@ -1904,6 +2027,119 @@
     	  }
       },
       
+      initializePassword: function(rec) {
+    	  var changeVendorId = vendor;
+    	  if(Ext.getCmp('initializePassWinId') == undefined) {
+    		  var initializePass = new Ext.FormPanel ({
+  	   		  	frame: true,
+  				width: 300,
+  				height: 210,
+  				bodyStyle:'padding:5px 5px 5px 5px',
+  				defaultType: 'textfield',
+  				items: [{ 
+  	            	xtype:'fieldset',
+  	                title: '<fmt:message key="aimir.hems.alert.inputPassword"/>',
+  	                bodyStyle:'padding:5px 5px 5px 5px',
+  	                //collapsible: true,
+  	                autoHeight:true,
+  	                defaultType: 'textfield', 
+  				     items : [{
+  				    	 fieldLabel : "Cashier ID",
+  							xtype : 'textfield',
+  							inputType: 'text',
+  							id	 : 'casherId',
+  							name : 'casherId'},
+  				    	{fieldLabel : "<fmt:message key='aimir.newpassword'/>",
+  						xtype : 'textfield',
+  						inputType: 'password',
+  						id	 : 'newPwd',
+  						name : 'newPwd'},
+  						{fieldLabel : "<fmt:message key='aimir.userreg.confirmpassword'/>",
+  						xtype : 'textfield',
+  						inputType: 'password',
+  						id	 : 'confirmPwd',
+  						name : 'confirmPwd'}]
+  				}],
+  				buttons:[{text : '<fmt:message key="aimir.ok"/>',
+  						handler : function() {
+  							var casherId = Ext.getCmp('casherId').getValue();
+  							var pass = Ext.getCmp('newPwd').getValue();
+  							var checkPass = Ext.getCmp('confirmPwd').getValue();	
+  							console.log("checkPass",checkPass);
+  							console.log("pass",pass);
+  							if(pass == checkPass) {
+  								Ext.Msg.show({
+  										title: casherId,
+  							            msg:  "<fmt:message key='aimir.wouldChange'/>",
+  							            buttons: Ext.MessageBox.OKCANCEL,
+  							            fn: function(btn, text) {
+  							            	if(btn == 'ok') {
+  							            		var params = {
+  					        				          vendor: changeVendorId,
+  					        				          casherId: casherId, 
+  					        				          password: checkPass
+  				        				        };
+  							            		
+  							            		$.post("${ctx}/gadget/prepaymentMgmt/changePwd.do", params,
+  							   				            function(json) {
+  							   				              if (json.result == "success") {
+  							   				            	initializePassWin.hide();
+  						   									Ext.getCmp('newPwd').setValue();
+  						   									Ext.getCmp('confirmPwd').setValue();
+  							   				            	Ext.Msg.alert(casherId,"<fmt:message key='aimir.success'/>");
+  							   				              } else {
+  							   				            	initializePassWin.hide();
+  						   									Ext.getCmp('newPwd').setValue();
+  						   									Ext.getCmp('confirmPwd').setValue();
+  							   				            	Ext.Msg.alert(casherId,"<fmt:message key='aimir.failed'/>");
+  							   				              }              
+  						   				            	}
+  						          				  );
+  							            		
+  							            	} else {
+  							            		return false;
+  							            	}
+  							            }
+  								});
+  	          				  
+  	          			  } else {
+  	          				Ext.getCmp('newPwd').setValue();
+  							Ext.getCmp('confirmPwd').setValue();
+  	          				Ext.Msg.alert("<fmt:message key='aimir.error'/>", 
+  	          	                "<fmt:message key='aimir.hems.alert.notMatchPassword'/>");
+  	          				//$('#newPwd').focus();
+  	          			  }
+  	
+  						}},
+  						{text : '<fmt:message key="aimir.cancel"/>',
+  						handler : function() {
+  							initializePassWin.hide();
+  							Ext.getCmp('newPwd').setValue();
+  							Ext.getCmp('confirmPwd').setValue();
+  							
+  						}}
+  						]
+  	    	  });
+  	    	  
+  	    	  initializePassWin = new Ext.Window({
+  				    title : 'Initialize password',
+  				    id : 'initializePassWinId',
+  				    applyTo : 'InitializePwdDiv',
+  				    autoScroll : true,
+  				    width : 330,
+  					height : 280,
+  					pageX : 600,
+  					pageY : 210,
+  				    items : [initializePass],
+  				    closeAction : 'hide'
+  				});
+  				initializePassWin.show(this);
+    	  } else {
+    		  initializePassWin.show(this);
+    	  }
+	    	  
+      },
+      
       confirmPwd: function() {
         var prevPwd = $("#loginWrapper input[name=password]").val();
         var currPwd = $("#passwordTab input[name=prevPwd]").val();
@@ -2010,9 +2246,11 @@
         header[5] = '<fmt:message key="aimir.supplystatus"/>'; // Supply Status        
         header[6] = '<fmt:message key="aimir.hems.prepayment.lastchargedate"/>'; //Last Charge Date
         header[7] = '<fmt:message key="aimir.credit"/>'; //Credit
-        header[8] = '<fmt:message key="aimir.arrears"/>'; //Arrears
+        header[8] = '<fmt:message key="aimir.arrearsA"/>'; //Arrears A
         header[9] = '<fmt:message key="aimir.barcode"/>'; //Barcode
         header[10] = '<fmt:message key="aimir.vendorprepayment.contract.list"/>'; //파일명 : Vendor Prepayment Contract List
+        header[11] = '<fmt:message key="aimir.arrearsB"/>'; //Arrears B
+        header[12] = '<fmt:message key="aimir.celluarphone"/>'; //celluarphone 
 
         //parameter
         param[0] = $("#barcodeNumber").val();
@@ -2021,6 +2259,7 @@
         param[3] = $("#customerName").val(); 
         param[4] = $("#mdsId").val();
         param[5] = supplierId;
+        param[6] = $("#phone").val();
 
         contactListObj.fmtMessage = header;
         contactListObj.condition = param ;
@@ -2050,7 +2289,15 @@
 
           window.open(
             "${ctx}/gadget/prepaymentMgmt/vendorChargeHistoryExcelDownloadPopup.do", "arrearsInfoExcel", opt);
-        },
+      },
+      
+      historyExcel: function() {
+          excelType = 5;
+          var opt = "width=600px, height=400px, left=100px, top=100px  resizable=no, status=no";
+
+          window.open(
+            "${ctx}/gadget/prepaymentMgmt/vendorChargeHistoryExcelDownloadPopup.do", "historyExcel", opt);
+      },
 
       addManager: function() {
         //clientMacAddress = document.MacAddress.getMacAddress();
@@ -2120,13 +2367,11 @@
       },
 
       initManagerTab: function() {
-    	$('#arrearsInfo').hide();
         casherManagerStore.reload();
       },
       
       
       initManagerPwdTab: function() {
-    	  $('#arrearsInfo').hide();
     	  isGetAllManager = (vendorRole=='admin') && (isManager == true);
     	  casherManagerPwdParams.allManager = isGetAllManager;
     	  casherManagerPwdParams.vendorId = $.trim($("#managerPwdTab input[name=searchVendorId]").val());
@@ -2135,7 +2380,6 @@
       },
 
       initPasswordTab: function() {
-    	$('#arrearsInfo').hide();
         if ( isFirstLogIn ) {
           $("#confirm-pwd").hide();
           $("#confirm-pwd input").val(null);
@@ -2228,13 +2472,13 @@
       },
 
       tagExcelButton: function() {
-        var val = $("#depositHistory select[name=reportType]").val();
+        var val = $("#reportType").val();
         if (val == "all") {
           $("#depositHistoryExcel").hide();
           $("#depositHistoryTotalExcel").hide();
         } else {
           $("#depositHistoryExcel").show();
-          $("#depositHistoryTotalExcel").show();
+          //$("#depositHistoryTotalExcel").show();
         }
       }
     };
@@ -2245,11 +2489,13 @@
       $('#historyForm span#historySearch').click(eventHandler.historyListSearch);
       $('#depositHistory span#depositHistorySearch').click(eventHandler.depositHistoryListSearch);
       $('#depositHistory span#depositHistoryExcel').click(eventHandler.depositHistoryExcel);
+      $('#report span#totalReceiptByCashier').click(eventHandler.totalReceiptByCashierPopup);
       $('#depositHistory span#depositHistoryTotalExcel').click(eventHandler.depositHistoryTotalExcel);
       $('#arrearsExcel').click(eventHandler.arrearsExcel);
+      $('#historyExcel').click(eventHandler.historyExcel);
       $('input[name=startDate]').datepicker('option',{onSelect:eventHandler.modifiedDateFormat});
       $('input[name=endDate]').datepicker('option',{onSelect:eventHandler.modifiedDateFormat});
-      $("#depositHistory select[name=reportType]").bind('change', eventHandler.tagExcelButton);
+      //$("#report-type").bind('change', eventHandler.tagExcelButton);
 
       contractListSm.addListener('rowselect', eventHandler.selectedHistorySearch);
       $('a[href=#chargeTab]').bind('click', eventHandler.initChargeTab);
@@ -2259,6 +2505,7 @@
       $('a[href=#passwordTab]').bind('click', eventHandler.initPasswordTab);
       $('#barcodeNumber').bind('change', eventHandler.selectBarcode);
       $("#loginWrapper span#logIn").click(eventHandler.logIn);
+      $("#loginWrapper span#Initialization").click(eventHandler.Initialization);
       $("#loginWrapper input[name=password]").bind('keyup', function(event) {
           var evCode = (window.netscape) ? event.which : event.keyCode;
 
@@ -2302,15 +2549,15 @@
       $('#historyForm input[name=endDate]').datepicker(endProp);
       $('#depositHistory input[name=startDate]').datepicker(deStartProp);
       $('#depositHistory input[name=endDate]').datepicker(deEndProp);
-      $('#arrearsInfo input[name=startDate]').datepicker(deStartProp);
-      $('#arrearsInfo input[name=endDate]').datepicker(deEndProp);
+      $('#report input[name=startDate]').datepicker(deEndProp);
+      $('#report input[name=endDate]').datepicker(deEndProp);
       
       $('#historyForm input[name=startDate]').datepicker('setDate', startDate);
       $('#historyForm input[name=endDate]').datepicker('setDate', endDate);
       $('#depositHistory input[name=startDate]').datepicker('setDate', startDate);
       $('#depositHistory input[name=endDate]').datepicker('setDate', endDate);
-      $('#arrearsInfo input[name=startDate]').datepicker('setDate', startDate);
-      $('#arrearsInfo input[name=endDate]').datepicker('setDate', endDate);
+      $('#report input[name=startDate]').datepicker('setDate', endDate);
+      $('#report input[name=endDate]').datepicker('setDate', endDate);
 
       var initDateFormat = function(inst ,date) {
         var dbDate = $.datepicker.formatDate('yymmdd', date);
@@ -2323,6 +2570,7 @@
 
       initDateFormat($('input[name=startDate]'), startDate);
       initDateFormat($('input[name=endDate]'), endDate);
+      initDateFormat($('#report input[name=startDate]'), endDate);
     };
     
     // 로그인 이전 화면 설정
@@ -2338,23 +2586,23 @@
     };
 
     // vendor(Operator)가 3rd party인 경우(role = 'vendor')에만 예치금이 보인다
-    var initDepositSettings = function() {
+    /* var initDepositSettings = function() {
       if ( isVendor ) {
         $(".current-deposit").removeClass("hidden");
         $(".current-deposit").show();
       }
-    }
+    } */
     
     var init = function() {
       Ext.QuickTips.init();
-      $("#report-type").selectbox();
+      //$("#report-type").selectbox();
       $("#sub-type").selectbox();
       $("#vendor").selectbox();
       initCalendar();
       renderGrid();
       $("#menu").tabs();
       locationTreeGoGo('treeDiv2', 'searchWord', 'locationId');
-      initDepositSettings();
+      //initDepositSettings();
       bind();    
       eventHandler.refreshDeposit();
       eventHandler.tagExcelButton(); 
@@ -2381,6 +2629,43 @@
             metadata.attr = 'ext:qtip="' + value + '"';
         }
         return value;
+    }
+    
+    function getCustomerWindowWithID(selectedCustomerId) {
+        if(selectedCustomerId != null && selectedCustomerId != ""){
+           	var customerObj = new Object();
+           	customerObj.customerId = selectedCustomerId;
+
+           	var opts = "width=1400px, height=630px, left=100px, top=100px, location= no, resizable=no, status=no";
+           	customerInfoWindow = window.open("${ctx}/gadget/system/customerMax.do", "Connected Customer ", opts);
+           	customerInfoWindow.opener.customerObj = customerObj;
+        }else{
+            Ext.Msg.alert('<fmt:message key='aimir.message'/>','<fmt:message key="aimir.extjs.empty"/>');
+        }
+    }
+    
+    $(document).ready(function(){
+        $(document).bind('keydown',function(e){
+            if (e.keyCode == 123 /* F12 */) {
+                e.preventDefault();
+                //alert("F12 is not available.");
+                e.returnValue = false;
+            }
+            if (e.ctrlKey && e.shiftKey) { 
+                e.preventDefault(); 
+                //alert("Ctrl + Shift is not available.");
+                e.returnValue = false;
+            }
+        });
+    });
+    
+    document.onmousedown=disableclick;
+    function disableclick(event){
+        if (event.button==2) {
+            event.preventDefault(); 
+            alert("Right click is not available.");
+            return false;
+        }
     }
 
     /*]]>*/

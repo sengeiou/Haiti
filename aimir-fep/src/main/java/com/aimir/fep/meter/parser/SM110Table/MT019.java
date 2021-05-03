@@ -134,6 +134,10 @@ public class MT019 implements java.io.Serializable {
 		log.debug("pos = "+pos+", data.length = "+data.length);
     }
     
+    public String getSTART_CHR() throws Exception {
+    	return new String(START_CHR).trim();
+    }
+    
 	public Double getTOTAL_DEL_KWH() throws Exception {
 		return Double.valueOf(DataFormat.hex2dec(TOTAL_DEL_KWH));
 	}

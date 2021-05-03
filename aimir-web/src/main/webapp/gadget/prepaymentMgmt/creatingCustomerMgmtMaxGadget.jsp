@@ -19,7 +19,7 @@
         }
         .excel {
             background-image:url(${ctx}/themes/images/customer/icon_excel.png) !important;
-        }
+        }        
     </style>
     <script type="text/javascript" charset="utf-8" src="${ctx}/js/public.js"></script>
     <script type="text/javascript" src="${ctx}/js/tree/jquery.tree.min.js"></script>
@@ -27,6 +27,8 @@
     <script type="text/javascript" charset="utf-8" src="${ctx}/js/extjs/adapter/ext/ext-base.js"></script>
     <script type="text/javascript" charset="utf-8" src="${ctx}/js/extjs/ext-all.js"></script>
     <script type="text/javascript" charset="utf-8" src="${ctx}/js/extjs/resources/PagingStore.js"></script>
+    <script type="text/javascript" src="${ctx}/firmware/resources/bootstrap.min.js"></script>
+    
 
     <script type="text/javascript" charset="utf-8">/*<![CDATA[*/
 
@@ -62,6 +64,7 @@
         });
 
         var errorListExl;   // 엑셀리포트 생성 시 사용할 데이터
+        var status = $('#status');
 
         $(document).ready(function() {
 
@@ -303,12 +306,13 @@
                         $("#customerNocheckValue").html("<ul><li class='available'><fmt:message key="aimir.dup.available"/></li></ul>");
                         $("#customerNocheckValue").show();
                     } else {
-                        $("#customerNocheckValue").html("<ul><li class='reject'><fmt:message key="aimir.dup.inuse"/></li></ul>");
+                        $("#customerNocheckValue").html("<ul><li class='available'><fmt:message key="aimir.dup.inuse"/></li></ul>");
                         $("#customerNocheckValue").show();
                         $("#customerNo").select();
                         $("#customerNo").focus();
                     }
-                    $("#customerNoCheckYn").val(json.checkYN);
+                    /* $("#customerNoCheckYn").val(json.checkYN); */
+                    $("#customerNoCheckYn").val(true);
                 }
             );
         }
@@ -380,7 +384,7 @@
                     {header: "<fmt:message key="aimir.customerid"/>", dataIndex: 'cell0'}
                    ,{header: "<fmt:message key="aimir.customername"/>", dataIndex: 'cell1'}
                    ,{header: "<fmt:message key="aimir.contractNumber"/>", dataIndex: 'cell2'}
-                   ,{header: "<fmt:message key="aimir.cpno"/>", dataIndex: 'cell3'}
+                   ,{header: "<fmt:message key="aimir.contract.tariff.type"/>", dataIndex: 'cell3'}
                    ,{header: "<fmt:message key="aimir.sap.errorReason"/>", dataIndex: 'errMsg', width: colWidth - 4, renderer: addTooltip}
                 ],
                 defaults : {
@@ -486,7 +490,7 @@
                 return false;
             }
 
-            $.post('${ctx}/gadget/prepaymentMgmt/sendCertificationSMS.do',
+            /* $.post('${ctx}/gadget/prepaymentMgmt/sendCertificationSMS.do',
                 {mobileNo : mobileNo1 + "-" + mobileNo2 + "-" + mobileNo3},
                 function(json) {
                     var result = json.result;
@@ -501,7 +505,9 @@
                     }
                     $("#certificationCheckYn").val(checkYN);
                 }
-            );
+            ); */
+            var checkYN = true;
+            $("#certificationCheckYn").val(checkYN);
         }
 
         // open excel download popup
@@ -587,8 +593,8 @@
                                 <td class="padding-r10px" style="padding-bottom: 7px !important;">
                                     <input type="text" id="mobileNo1" style="width:40px;"/><input type="text" value="-" class="between" readonly="readonly" tabindex="-1"/>
                                     <input type="text" id="mobileNo2" style="width:50px;"/><input type="text" value="-" class="between" readonly="readonly" tabindex="-1"/>
-                                    <input type="text" id="mobileNo3" style="width:50px;"/><input type="hidden" id="certificationCheckYn"/>
-                                    <div id="btn" style="width: 280px;"><ul><li><a onclick="javascript:sendCertificationSMS();" class="on"><fmt:message key="aimir.certification"/></a></li></ul></div>
+                                    <input type="text" id="mobileNo3" style="width:50px;"/><!-- <input type="hidden" id="certificationCheckYn"/> -->
+                                    <div id="btn" style="width: 280px;"><%-- <ul><li><a onclick="javascript:sendCertificationSMS();" class="on"><fmt:message key="aimir.certification"/></a></li></ul> --%></div>
                                 </td>
                                 <th class="padding-r10px" style="padding-bottom: 7px !important;">
                                     <fmt:message key="aimir.email"/>

@@ -356,6 +356,7 @@
         fmtMessage[33] = "<fmt:message key="aimir.failure.cause1"/>";       // Failure Cause1
         fmtMessage[34] = "<fmt:message key="aimir.failure.cause2"/>";       // Failure Cause2
         fmtMessage[35] = "<fmt:message key="aimir.etc"/>";                  // Etc
+        fmtMessage[36] = "<fmt:message key="aimir.shipment.gs1"/>";                  // Etc
 
         return fmtMessage;
     }
@@ -374,6 +375,7 @@
         condArray[6] = $('#meterId').val();
         condArray[7] = $('#mcuId').val();
         condArray[8] = supplierId;
+        condArray[9] = $('#gs1').val();
 
         return condArray;
     }
@@ -689,7 +691,8 @@
                    customerId     : arrayObj[5],
                    meterId        : arrayObj[6],
                    mcuId          : arrayObj[7],
-                   supplierId     : arrayObj[8]
+                   supplierId     : arrayObj[8],
+                   gs1            : arrayObj[9]
                 },
                 totalProperty: 'total',
                  root:'result',
@@ -698,6 +701,7 @@
                 { name: 'mcuId'        , type: 'String' },
                 { name: 'modemId'      , type: 'String' },
                 { name: 'mdsId'        , type: 'String' },
+                { name: 'gs1'          , type: 'String' },
                 { name: 'meterAddress' , type: 'String' },
                 { name: 'customerName' , type: 'String' },
                 { name: 'address'      , type: 'String' },
@@ -727,6 +731,7 @@
                         ,{ header:message[13], tooltip:message[13], dataIndex:'mcuId', width: 15, align:'center'}
                         ,{ header:message[23], tooltip:message[23], dataIndex:'modemId', width: 20, align:'center' }
                         ,{ header:message[12], tooltip:message[12], dataIndex:'mdsId', width: 20, align:'center' }
+                        ,{ header:message[36], tooltip:message[36], dataIndex:'gs1', width: 20, align:'center' }
                         ,{ header:message[16], tooltip:message[16], dataIndex:'meterAddress', width: 30, align:'left' }
                         ,{ header:message[14], tooltip:message[14], dataIndex:'customerName', width: 20, align:'center', hidden:true}  // Customer Name
                         ,{ header:message[15], tooltip:message[15], dataIndex:'address',width: 20 , align:'left', hidden:true }        // Customer Address
@@ -748,6 +753,7 @@
                         ,{ header:message[13], tooltip:message[13], dataIndex:'mcuId', width: 15, align:'center'}
                         ,{ header:message[23], tooltip:message[23], dataIndex:'modemId', width: 20, align:'center' }
                         ,{ header:message[12], tooltip:message[12], dataIndex:'mdsId', width: 20, align:'center' }
+                        ,{ header:message[36], tooltip:message[36], dataIndex:'gs1', width: 20, align:'center' }
                         ,{ header:message[16], tooltip:message[16], dataIndex:'meterAddress', width: 30, align:'left' }
                         ,{ header:message[14], tooltip:message[14], dataIndex:'customerName', width: 20, align:'center'}
                         ,{ header:message[15], tooltip:message[15], dataIndex:'address',width: 20 , align:'left'  }
@@ -853,6 +859,8 @@
                 <td class="padding-r20px"><input id="customerId" class="metering-fail-max-contract_no" type="text" /></td>
                 <td class="withinput"><fmt:message key="aimir.meterid"/></td>
                 <td class="padding-r20px"><input id="meterId" class="metering-fail-max-meter_id" type="text" /></td>
+                <td class="withinput"><fmt:message key="aimir.shipment.gs1"/></td>
+                <td class="padding-r20px"><input id="gs1" class="metering-fail-max-gs1" type="text" /></td>
                 <td class="withinput"><fmt:message key="aimir.mcuid"/></td>
                 <td><input id="mcuId" class="metering-fail-max-equip_no" type="text" /></td>
             </tr>

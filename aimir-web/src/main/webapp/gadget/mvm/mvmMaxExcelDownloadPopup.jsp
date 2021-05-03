@@ -32,8 +32,8 @@
         	var arr = getFmtMessage();
 
         	if(obj.mvmMiniType == "EM"){
-        		arr[4] = arr[4]+" [kwh]";
-        		arr[5] = arr[5]+" [kwh]";
+        		arr[4] = arr[4]+" [kWh]";
+        		arr[5] = arr[5]+" [kWh]";
             }
             else if(obj.mvmMiniType=="GM" || obj.mvmMiniType=="WM" || obj.mvmMiniType=="HM"){
             	arr[4] = arr[4]+" [㎥]";
@@ -56,8 +56,9 @@
             $.post('${ctx}/gadget/mvm/mvmMaxGadgetExcelMake.do'
                     , { 
                         'supplierId'        : obj.supplierId,
-                        'contractNumber'    : obj.customer_number,
+                        'contractNumber'    : '',//obj.customer_number,
                         'customerName'      : obj.customer_name,
+                        'customerNumber'      : obj.customer_number,
                         'meteringSF'        : obj.meteringSF,
                         'searchDateType'    : obj.searchDateType,
                         'searchStartDate'   : obj.searchStartDate,
@@ -74,8 +75,9 @@
                         'contractGroup'     : obj.contractGroup,
                         'sicId'             : obj.customType,
                         'mvmMiniType'       : obj.mvmMiniType,
+                        'gs1'				: obj.gs1,
                         'msgNumber'         : arr[0],
-                        'msgContractNumber' : arr[1],
+                        'msgCustomerNumber' : arr[1],
                         'msgCustomerName'   : arr[2], 
                         'msgMeteringtime'   : arr[3],
                         'msgUsage'          : arr[4],
@@ -87,7 +89,7 @@
                         'msgMeterValue2'     : arr[11],
                         'msaPrevMeterValue'  : arr[12],
                         'msaPrevUsage'       : arr[13],
-                        
+                        'msgGs1'			 : arr[14],
                         'filePath'       : arr[8],
                         'title'			:obj.title,
                         'meterValue'	:obj.meterValue
@@ -125,12 +127,12 @@
             var cnt = 0;
 
             fmtMessage[0] = "<fmt:message key="aimir.number"/>";
-            fmtMessage[1] = "<fmt:message key="aimir.contractNumber"/>";
+            fmtMessage[1] = "<fmt:message key="aimir.customerid"/>";
             fmtMessage[2] = "<fmt:message key="aimir.customername"/>";
             fmtMessage[3] = "<fmt:message key="aimir.meteringtime"/>";
-            fmtMessage[4] = "<fmt:message key="aimir.usage"/>";
+            fmtMessage[4] = "<fmt:message key="aimir.accu.usage"/>";
             fmtMessage[5] = "<fmt:message key="aimir.previous"/>";
-            fmtMessage[6] = "<fmt:message key="aimir.meterid2"/>";
+            fmtMessage[6] = "<fmt:message key="aimir.meterid"/>";
             fmtMessage[7] = "<fmt:message key="aimir.modemid"/>";
             fmtMessage[8] = "<fmt:message key="aimir.report.fileDownloadDir"/>";        // File Path
             fmtMessage[9] = "<fmt:message key="aimir.cumm.importActiveEnergy"/>";
@@ -138,6 +140,7 @@
             fmtMessage[11] = "<fmt:message key="aimir.meter.value"/>";
             fmtMessage[12] = "<fmt:message key="aimir.prev.meter.value"/>";
             fmtMessage[13] = "<fmt:message key="aimir.prev.consumption"/>";
+            fmtMessage[14] = "<fmt:message key="aimir.shipment.gs1"/>";
 
             return fmtMessage;
         }

@@ -82,6 +82,7 @@ import com.aimir.service.device.MCUManager;
 import com.aimir.service.device.MeterManager;
 import com.aimir.service.device.ModemManager;
 import com.aimir.service.mvm.BillingManager;
+import com.aimir.service.mvm.SearchMeteringDataManager;
 import com.aimir.service.system.CodeManager;
 import com.aimir.service.system.ContractChangeLogManager;
 import com.aimir.service.system.ContractManager;
@@ -197,6 +198,9 @@ public class CustomerController {
     
     @Autowired
     DebtEntManager debtEntManager;
+    
+    @Autowired
+    SearchMeteringDataManager searchMeteringDataManager;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -232,12 +236,14 @@ public class CustomerController {
         String initArrears = prop.getProperty("prepay.init.arrears");
 
         int supplierId = user.getRoleData().getSupplier().getId();
+        Map<String, String> tariffType = searchMeteringDataManager.getTariffTypeList();
 
         mav.addObject("editAuth", authMap.get("cud"));  // 수정권한(write/command = true)
         mav.addObject("supplierId", supplierId);
         mav.addObject("isPartpayment" , (isPartpayment == null || "".equals(isPartpayment)) ? false : isPartpayment);
         mav.addObject("initArrears" , (initArrears == null || "".equals(initArrears)) ? 0 : Integer.parseInt(initArrears));
         mav.addObject("role" , role.getName());
+        mav.addObject("tariffType", tariffType);
         
         return mav;
     }
@@ -607,6 +613,9 @@ public class CustomerController {
             }
             if (customer.getMobileNo() == null) {
                 customer.setMobileNo("");
+            }
+            if (customer.getCarrier() == null) {
+                customer.setCarrier("");
             }
         }
 
@@ -1225,7 +1234,7 @@ public class CustomerController {
             @ModelAttribute("contractForm") Contract contract,
             @RequestParam("mdsId") String mdsId,
             @RequestParam("contractNumber") String contractNumber,
-            @RequestParam("sicId") Integer sicId,
+            @RequestParam(value="sicId", required=false)  Integer sicId,
             @RequestParam(value="customerId", required=false) Integer customerId,
             @RequestParam(value="prevContractId", required=false) Integer prevContractId,
             @RequestParam(value="serviceType2", required=false) String serviceType2,
@@ -1292,11 +1301,11 @@ public class CustomerController {
             	contract.setCurrentCredit(Double.parseDouble(currentbalanceValue));
             }
             
-            String initArrears = prop.getProperty("prepay.init.arrears");
+/*            String initArrears = prop.getProperty("prepay.init.arrears");
             initArrears = (initArrears == null || initArrears.isEmpty()) ? null : initArrears;
             if(contract.getCurrentArrears() == null || "".equals(contract.getCurrentArrears())) {
             	contract.setCurrentArrears((initArrears == null) ? null : Double.parseDouble(initArrears));
-            }
+            }*/
             
             if(contract.getPrepaymentThreshold() == null || "".equals(contract.getPrepaymentThreshold())) {
             	String initAlertBalance = prop.getProperty("prepay.init.alertBalance");
@@ -1330,7 +1339,7 @@ public class CustomerController {
             conditionMap.put("operatorId", operatorId);
             conditionMap.put("serviceType2", serviceType2);
             conditionMap.put("isPartpayment", isPartpayment);
-            conditionMap.put("initArrears", initArrears);
+            //conditionMap.put("initArrears", initArrears);
 
             if(debtInfoList.size() > 0) {
             	conditionMap.put("debtSaveInfo", debtInfoList);
@@ -1827,7 +1836,7 @@ public class CustomerController {
     @RequestMapping(value="/gadget/system/customerMax", params="param=updateContract")
     public ModelAndView modifyContract(@ModelAttribute("contract") Contract contract,
              @RequestParam("mdsId") String mdsId,
-             @RequestParam("sicId") Integer sicId,
+             @RequestParam(value="sicId", required=false) Integer sicId,
              @RequestParam("locationId2") Integer locationId2,
              @RequestParam("customerId") Integer customerId,
              @RequestParam(value="prevContractId", required=false) Integer prevContractId,
@@ -1836,6 +1845,7 @@ public class CustomerController {
              @RequestParam(value="isPartpayment", required=false) Boolean isPartpayment,
              @RequestParam(value="initArrears", required=false) String initArrears,
              @RequestParam(value="debtSaveInfo", required=false) String debtSaveInfo,
+             @RequestParam(value="gs1", required=false) String gs1,
              String barcode,
              HttpServletResponse response,
              HttpServletRequest request,
@@ -2090,6 +2100,7 @@ public class CustomerController {
             @RequestParam("startDate") String startDate,
             @RequestParam("endDate") String endDate,
             @RequestParam("address") String address,
+            @RequestParam("gs1") String gs1,
             @RequestParam("serviceType") String serviceType,
             @RequestParam("serviceTypeTab") String serviceTypeTab) {
         ModelAndView mav = new ModelAndView("jsonView");
@@ -2119,10 +2130,11 @@ public class CustomerController {
         conditionMap.put("startDate", startDate);
         conditionMap.put("endDate", endDate);
         conditionMap.put("address", address);
+        conditionMap.put("gs1", gs1);
         conditionMap.put("serviceType", serviceType);
         conditionMap.put("serviceTypeTab", serviceTypeTab);
         conditionMap.put("supplierId", user.getSupplier().getId());
-
+        
         List<Map<String, Object>> result = contractManager.getCustomerListByType(conditionMap);
         mav.addObject("result", result);
         mav.addObject("totalCount", contractManager.getCustomerListByTypeTotalCount(conditionMap));
@@ -2205,6 +2217,11 @@ public class CustomerController {
             @RequestParam("address") String address,
             @RequestParam("serviceType") String serviceType,
             @RequestParam("serviceTypeTab") String serviceTypeTab,
+            @RequestParam("gs1") String gs1,
+            @RequestParam("phoneNumber") String phoneNumber,
+            @RequestParam("barcode") String barcode,
+            @RequestParam("oldMdsId") String oldMdsId,
+            @RequestParam("tariffType") String tariffType,
             @RequestParam(value="operatorId", required=false) String operatorId) {
 
         ModelAndView mav = new ModelAndView("jsonView");
@@ -2247,6 +2264,11 @@ public class CustomerController {
         conditionMap.put("address", address);
         conditionMap.put("serviceType", serviceType);
         conditionMap.put("serviceTypeTab", serviceTypeTab);
+        conditionMap.put("gs1", gs1);
+        conditionMap.put("phoneNumber", phoneNumber);
+        conditionMap.put("barcode", barcode);
+        conditionMap.put("oldMdsId", oldMdsId);
+        conditionMap.put("tariffType", tariffType);
         conditionMap.put("supplierId", supplier.getId().toString());
         conditionMap.put("operatorId", operatorId);
         log.info("startDate["+startDate+"], endDate["+endDate+"]");
@@ -2308,6 +2330,11 @@ public class CustomerController {
             conditionMap.put("serviceType", condition[14]);
             conditionMap.put("serviceTypeTab", condition[15]);
             conditionMap.put("supplierId", condition[16]);
+            conditionMap.put("gs1", condition[17]);
+            conditionMap.put("phoneNumber", condition[18]);
+            conditionMap.put("barcode", condition[19]);
+            conditionMap.put("oldMdsId", condition[20]);
+            conditionMap.put("tariffType", condition[21]);
 
             result = contractManager.getContractsTree(conditionMap);
             total = new Integer(result.size()).longValue();
@@ -2327,6 +2354,7 @@ public class CustomerController {
             msgMap.put("customerNo",       fmtMessage[1]);
             msgMap.put("customerName",     fmtMessage[2]);
             msgMap.put("address",          fmtMessage[3]);
+//            msgMap.put("gs1",         	   fmtMessage[4]);
 
             // check download dir
             File downDir = new File(filePath);
@@ -2439,6 +2467,7 @@ public class CustomerController {
             @RequestParam("mdsId") String mdsId,
             @RequestParam("status") String status,
             @RequestParam("dr") String dr,
+            @RequestParam("gs1") String gs1,
             @RequestParam("customerType") String customerType,
             @RequestParam("startDate") String startDate,
             @RequestParam("endDate") String endDate,
@@ -2470,6 +2499,7 @@ public class CustomerController {
         conditionMap.put("mdsId", mdsId);
         conditionMap.put("status", status);
         conditionMap.put("dr", dr);
+        conditionMap.put("gs1", gs1);
         conditionMap.put("customerType", customerType);
         conditionMap.put("startDate", startDate);
         conditionMap.put("endDate", endDate);
@@ -2921,7 +2951,7 @@ public class CustomerController {
      * @return
      */
     @RequestMapping(value = "/gadget/contract/getMeterGridList")
-    public ModelAndView getMeterGridList (@RequestParam("mdsId") String mdsId) {
+    public ModelAndView getMeterGridList (@RequestParam("mdsId") String mdsId, @RequestParam(value="gs1", required=false) String gs1) {
         ModelAndView mav = new ModelAndView("jsonView");
         HttpServletRequest request = ESAPI.httpUtilities().getCurrentRequest();
 
@@ -2932,6 +2962,7 @@ public class CustomerController {
         conditionMap.put("page", page);
         conditionMap.put("limit", limit);
         conditionMap.put("mdsId", mdsId);
+        conditionMap.put("gs1", gs1);
 
         List<Map<String, Object>> result = contractManager.getMeterGridList(conditionMap);
 

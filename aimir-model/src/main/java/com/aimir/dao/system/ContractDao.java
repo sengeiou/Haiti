@@ -718,6 +718,8 @@ public interface ContractDao extends GenericDao<Contract, Integer>{
      *      { c.id as id }
      */
     public List<Integer> getPrepaymentContract(String serviceType);
+    
+    public List<Contract> getContract(String payType, String serviceType);
 
     /**
      * method name : idOverlapCheck
@@ -936,4 +938,30 @@ public interface ContractDao extends GenericDao<Contract, Integer>{
      * @return
      */
     public Map<String, Object> getRequestDataForUSSDPOS(Map<String, Object> conditionMap);
+    
+    /**
+     * @return List<Contract>
+     * @@Description SMS 전송할 대상 리스트 
+     */
+    public List<Contract> getReqSendSMSList(String mdevId);
+    
+    /**
+     * @return
+     * @Description Emergency 기간이 지난 계약을 선불로 되돌린다.
+     */
+    public void updateExpiredEmergencyCredit();
+    
+    /**
+     * @param  mdevId(Option)
+     * @return List<Contract>
+     * @현재 미터와 연결이 유효한 계약 리스트
+     */
+    public List<Contract> getValidContractList(String mdevId);
+    
+    /**
+     * @param  mdevId(Option)
+     * @return List<Contract>
+     * @현재 월 정산 대상 조회 리스트
+     */
+    public List<Contract> getMnthlyBillingContractList(String mdevId);
 }

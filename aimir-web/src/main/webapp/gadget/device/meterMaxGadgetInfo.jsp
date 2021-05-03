@@ -234,7 +234,7 @@
                           </td>
                         </tr>
 						<tr>
-						    <td class="withinput" style="width:105px;"><b>GS1</b></td>
+						    <td class="withinput" style="width:105px;"><b><fmt:message key="aimir.shipment.gs1"/></b></td>
 						    <td class="padding-l20px"><input type="text" class="border-trans" readonly="readonly" value="${meter.gs1}"/></td>
 						</tr>
 						<!-- 
@@ -375,7 +375,7 @@
                             <td class="padding-l20px"><input type="text" id="mcuSysIdView" class="border-trans" readonly="readonly"/></td>
                         </tr>
                         <tr>
-                            <td class="withinput"><b>GS1</b></td>
+                            <td class="withinput"><b><fmt:message key="aimir.shipment.gs1" /></b></td>
                             <td class="padding-l20px"><input type="text" class="border-trans" readonly="readonly" value="${meter.gs1}"/></td>
                         </tr>
                         <tr>

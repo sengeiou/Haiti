@@ -589,6 +589,7 @@ public class ContractManagerImpl implements ContractManager {
             customerMap.put("id", map.get("CUSTOMER_ID").toString());
             customerMap.put("customerId", map.get("CUSTOMER_ID"));
             customerMap.put("customerName", map.get("CUSTOMER_NAME"));
+            customerMap.put("gs1", map.get("GS1"));
 
             if (map.get("CUSTOMER_ADDRESS") != null) {
                 addr.append(map.get("CUSTOMER_ADDRESS"));
@@ -668,6 +669,7 @@ public class ContractManagerImpl implements ContractManager {
             contractMap.put("customerNo", map.get("CUSTOMER_NO"));
             contractMap.put("iconCls", "task");
             contractMap.put("leaf", true);
+            contractMap.put("gs1", map.get("GS1"));
             contractList.add(contractMap);
         }
 
@@ -2035,7 +2037,7 @@ public class ContractManagerImpl implements ContractManager {
         String initArrears = StringUtil.nullToBlank(conditionMap.get("initArrears"));
         Operator operator = operatorDao.get(operatorId);
 
-        // Update 화면에서 신규등록할 경우 기존 Contract 의 customer 를 null 로 수정한다.
+        // Update 화면에서 신규등록할 경우 기존 Contract 의 customer 를 null 로 수정한다. 
         if (prevContractId != null) {
             Customer prevCustomer = customerDao.get(customerId);
             Contract prevContract = dao.get(prevContractId);
@@ -2109,8 +2111,11 @@ public class ContractManagerImpl implements ContractManager {
 		if(newContract.getCurrentArrears() != null) {
 			addContractChangeLog("", newContract.getCurrentArrears(), "currentArrears", startDatetime, startDatetime, newContract.getCustomer(), operator, newContract);
 		}
+		if(newContract.getCurrentArrears2() != null) {
+			addContractChangeLog("", newContract.getCurrentArrears2(), "currentArrears2", startDatetime, startDatetime, newContract.getCustomer(), operator, newContract);
+		}
 		
-        try {
+/*        try {
         	//분할납부이 경우 적용
         	//담당자가 고객의 Arrears를 등록했을 때 초기 미수금(initArrears)보다 큰 미수금이면 고객에게 SMS 메세지를 전송한다.
 	    	if(isPartpayment && (contract.getCreditType().getId() == prepaymentCodeId || contract.getCreditType().getId() == emergencyCodeId) &&
@@ -2145,7 +2150,7 @@ public class ContractManagerImpl implements ContractManager {
 	    	}
         } catch (Exception e) {
         	logger.error(e,e);
-		}
+		}*/
 		
         return newContract;
     }
@@ -2384,7 +2389,7 @@ public class ContractManagerImpl implements ContractManager {
 //            	contract1.setBarcode(barcode);
 //            }
 //        }
-        if (contract.getCreditType() != null && contract.getCreditType().getId() == prepaymentCodeId) {
+        if (contract.getCreditType() != null && (contract.getCreditType().getId() == prepaymentCodeId || contract.getCreditType().getId() == emergencyCodeId)) {
             contract1.setCreditStatus(contract.getCreditStatus());
             contract1.setPrepaymentThreshold(contract.getPrepaymentThreshold());
 
@@ -2392,9 +2397,9 @@ public class ContractManagerImpl implements ContractManager {
                 contract1.setBarcode(barcode);
             }
             
-            contract1.setOldArrears(contract.getOldArrears());
             
             contract1.setCurrentArrears(contract.getCurrentArrears());
+            contract1.setCurrentArrears2(contract.getCurrentArrears2());
             addContractChangeLog(preContractArrears, contract.getCurrentArrears(), "currentArrears", startDatetime, writeDatetime, customer, operator, contract);
             
             if(isPartpayment) {
@@ -2431,10 +2436,10 @@ public class ContractManagerImpl implements ContractManager {
         dao.update(contract1);
         dao.flushAndClear();
         
-        //분할납부일 경우 적용
+        /*//분할납부일 경우 적용
         //선불고객이면서 고객의 미수금이 입력되었을 때 고객에게 SMS 문자를 전송한다. 이때 미수금은 initial Credit(initArrears)를 제외하고 판단한다
         Double currentArrears = contract.getCurrentArrears() == null ? 0.0 : contract.getCurrentArrears();
-        if(isPartpayment && (contract.getCreditType() != null && contract.getCreditType().getId() == prepaymentCodeId) &&
+        if(isPartpayment && (contract.getCreditType() != null && (contract.getCreditType().getId() == prepaymentCodeId || contract.getCreditType().getId() == emergencyCodeId)) &&
         		!(preContractArrears.equals(contract.getCurrentArrears())) && (currentArrears > initArrears)) {
     		try {
 	    		Supplier supplier = supplierDao.getSupplierById(contract1.getSupplierId());
@@ -2461,7 +2466,7 @@ public class ContractManagerImpl implements ContractManager {
     		} catch (Exception e) {
     			logger.error(e,e);
 			}
-    	}
+    	}*/
     }
 
     /**

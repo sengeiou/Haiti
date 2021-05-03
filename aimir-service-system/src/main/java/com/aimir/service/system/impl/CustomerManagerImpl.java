@@ -133,6 +133,7 @@ public class CustomerManagerImpl implements CustomerManager {
         curCustomer.setName(customer.getName());
         curCustomer.setLoginId(customer.getLoginId());
         curCustomer.setMobileNo(customer.getMobileNo());
+        curCustomer.setCarrier(customer.getCarrier());
         curCustomer.setTelephoneNo(customer.getTelephoneNo());
         curCustomer.setAddress(customer.getAddress());
         curCustomer.setAddress1(customer.getAddress1());
