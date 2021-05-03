@@ -1035,7 +1035,7 @@
 
                                     <!-- search button -->
                                     	<span class="am_button margin-l10 margin-t1px">
-                                        <a id="meterSearchButton" href="#" class="on"><fmt:message key="aimir.button.search" /></a></span>
+                                        <a id="meterSearchButton" href="#a" class="on"><fmt:message key="aimir.button.search" /></a></span>
                                     </td>        
                                 </tr>     
                                 <tr>
