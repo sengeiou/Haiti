@@ -235,7 +235,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 		
 		//이번달 월정산 여부를 확인한다.
 		log.info("curMonth : " + curMonth +", mdsId : " + meter.getMdsId() +", contractId : "+contractId);
-		MonthlyBillingLog monthlyBillingLog = monthlyBillingLogDao.getLastMonthlyBillingLog(contractId, meter.getMdsId(), curMonth);
+		MonthlyBillingLog monthlyBillingLog = monthlyBillingLogDao.getLastMonthlyBillingLog(contractId, null, curMonth);
 		if(monthlyBillingLog != null) {
 			log.debug("yyyymm : " + monthlyBillingLog.getYyyymm() +", mdsId : " +monthlyBillingLog.getMdsId());
 			return;
