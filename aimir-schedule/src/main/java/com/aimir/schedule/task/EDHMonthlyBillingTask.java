@@ -86,7 +86,7 @@ public class EDHMonthlyBillingTask extends ScheduleTask {
 	
 	private void execute(ApplicationContext ctx, String mdevId) {
 		if(isNowRunning){
-            log.info("########### EDH Realy off already running...");
+            log.info("########### EDH Monthly Billing already running...");
             return;
         }
 		
@@ -97,7 +97,7 @@ public class EDHMonthlyBillingTask extends ScheduleTask {
 		}
 		
 		isNowRunning = true;
-	    log.info("########### START Realy off Task ###############");
+	    log.info("########### START Monthly Billing Task ###############");
 	
 	    int poolSize = Integer.parseInt(FMPProperty.getProperty("edh.sms.thread.pool.size", ""+6));
         ThreadPoolExecutor executor = new ThreadPoolExecutor(poolSize, poolSize, 10, TimeUnit.MINUTES, new LinkedBlockingQueue<Runnable>());
@@ -117,7 +117,7 @@ public class EDHMonthlyBillingTask extends ScheduleTask {
         }
         catch (Exception e) {}
         
-        log.info("########### END Realy off Task ############");
+        log.info("########### END Monthly Billing Task ############");
         isNowRunning = false;        
 	}
 	
@@ -179,7 +179,8 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 	
 	private void init() {
 		contract = contractDao.get(contractId);
-
+		log.debug("contractId : " + contractId);
+		
 		if(contract != null)
 			meter = contract.getMeter();
 	}
@@ -233,6 +234,7 @@ class EDHMonthlyBillingTaskSubClz implements Runnable {
 		String curMonth = DateTimeUtil.getDateString(new Date(), "yyyyMM");
 		
 		//이번달 월정산 여부를 확인한다.
+		log.info("curMonth : " + curMonth +", mdsId : " + meter.getMdsId() +", contractId : "+contractId);
 		MonthlyBillingLog monthlyBillingLog = monthlyBillingLogDao.getLastMonthlyBillingLog(contractId, meter.getMdsId(), curMonth);
 		if(monthlyBillingLog != null) {
 			log.debug("yyyymm : " + monthlyBillingLog.getYyyymm() +", mdsId : " +monthlyBillingLog.getMdsId());

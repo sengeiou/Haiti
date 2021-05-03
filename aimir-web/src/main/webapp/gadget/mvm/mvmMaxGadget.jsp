@@ -414,7 +414,8 @@
                 url : "${ctx}/gadget/mvm/getMeteringDataList.do",
                 baseParams : {
                     supplierId : supplierId,
-                    contractNumber : $("#customer_number").val(),
+                    customerNumber : $("#customer_number").val(),
+                    contractNumber : '',
                     customerName : $("#customer_name").val(),
                     meteringSF : $("#meteringSF").val(),
                     searchDateType : $("#searchDateType").val(),
@@ -437,7 +438,7 @@
                 },
                 totalProperty : 'totalCount',
                 root : 'result',
-                fields : ["num", "contractNumber", "customerName", "meteringTime", "value", "prevValue", "meterNo", "modemId", "gs1"],
+                fields : ["num", "contractNumber", "customerName", "meteringTime", "value", "prevValue", "meterNo", "modemId", "gs1", "customerNumber", "consumption"],
                 listeners : {
                     beforeload : function(store, options) {
                         options.params || (options.params = {});
@@ -496,10 +497,11 @@
                             columns : [
                                   meteringDataCheckSelModel
                                  ,{header: "<fmt:message key='aimir.number'/>", dataIndex: 'num', width: 50}
-                                 ,{header: "<fmt:message key='aimir.contractNumber'/>", dataIndex: 'contractNumber'}
+                                 ,{header: "<fmt:message key='aimir.customerid'/>", dataIndex: 'customerNumber'}
                                  ,{header: "<fmt:message key='aimir.customername'/>", dataIndex: 'customerName' }
                                  ,{header: "<fmt:message key='aimir.meteringtime'/>", dataIndex: 'meteringTime'}
                                  ,{header: "<fmt:message key='aimir.accu.usage'/> (<fmt:message key='aimir.unit.kwh'/>)", dataIndex: 'value', align: 'right'}
+                                 //,{header: "<fmt:message key='aimir.locationUsage.usage'/> (<fmt:message key='aimir.unit.kwh'/>)", dataIndex: 'consumption', align: 'right'}
                                  //,{header: "<fmt:message key='aimir.previous'/> [<fmt:message key='aimir.unit.kwh'/>]", dataIndex: 'prevValue', align: 'right'}
                                  ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'meterNo'}
                                  ,{header: "<fmt:message key='aimir.shipment.gs1'/>", dataIndex: 'gs1'}
@@ -739,7 +741,7 @@
                     </select>
                 </td>
                 <td class="space20"></td>
-                <td class="gray11pt withinput" style="width:80px;"><fmt:message key="aimir.contractNumber"/></td>
+                <td class="gray11pt withinput" style="width:80px;"><fmt:message key="aimir.customerid"/></td>
                 <td><input id="customer_number" type="text" style="width:110px;"></td>
                 <td class="space20"></td>
                 <td class="gray11pt withinput" style="width: 95px"><fmt:message key="aimir.customername"/></td>

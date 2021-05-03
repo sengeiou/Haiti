@@ -56,8 +56,9 @@
             $.post('${ctx}/gadget/mvm/mvmMaxGadgetExcelMake.do'
                     , { 
                         'supplierId'        : obj.supplierId,
-                        'contractNumber'    : obj.customer_number,
+                        'contractNumber'    : '',//obj.customer_number,
                         'customerName'      : obj.customer_name,
+                        'customerNumber'      : obj.customer_number,
                         'meteringSF'        : obj.meteringSF,
                         'searchDateType'    : obj.searchDateType,
                         'searchStartDate'   : obj.searchStartDate,
@@ -76,7 +77,7 @@
                         'mvmMiniType'       : obj.mvmMiniType,
                         'gs1'				: obj.gs1,
                         'msgNumber'         : arr[0],
-                        'msgContractNumber' : arr[1],
+                        'msgCustomerNumber' : arr[1],
                         'msgCustomerName'   : arr[2], 
                         'msgMeteringtime'   : arr[3],
                         'msgUsage'          : arr[4],
@@ -126,7 +127,7 @@
             var cnt = 0;
 
             fmtMessage[0] = "<fmt:message key="aimir.number"/>";
-            fmtMessage[1] = "<fmt:message key="aimir.contractNumber"/>";
+            fmtMessage[1] = "<fmt:message key="aimir.customerid"/>";
             fmtMessage[2] = "<fmt:message key="aimir.customername"/>";
             fmtMessage[3] = "<fmt:message key="aimir.meteringtime"/>";
             fmtMessage[4] = "<fmt:message key="aimir.accu.usage"/>";
