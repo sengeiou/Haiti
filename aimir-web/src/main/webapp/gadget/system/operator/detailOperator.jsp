@@ -126,7 +126,7 @@
             </div>
         </div>
 
-        <table class="customer_detail">
+        <table class="customer_detail" style="width:100%">
             <colgroup>
             <col width="35%"  />
             <col width="" />

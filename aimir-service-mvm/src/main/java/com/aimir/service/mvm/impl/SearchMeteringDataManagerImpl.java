@@ -3208,6 +3208,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("num", num++);
             map.put("contractNumber", (String)obj.get("CONTRACT_NUMBER"));
+            map.put("customerNumber", (String)obj.get("CUSTOMER_NUMBER"));
             map.put("friendlyName", (String)obj.get("FRIENDLY_NAME"));
             map.put("customerName", (String)obj.get("CUSTOMER_NAME"));
             map.put("meteringTime", TimeLocaleUtil.getLocaleDateHour(YYYYMMDDHH, lang, country));
@@ -3216,10 +3217,17 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));
             map.put("value", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
+    		map.put("pre_value", obj.get("PRE_VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE"))));
+    		if(obj.get("VALUE") != null  && obj.get("PRE_VALUE") != null)
+    			map.put("consumption", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE")) - DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE")) ));
+    		
 
             try {
             	String prevKey = TimeUtil.getPreDay(YYYYMMDDHH).substring(0, 10) + "_" + METER_NO;
             	Double prevValue = DecimalUtil.ConvertNumberToDouble(prevValueMap.get(prevKey));
+                map.put("prevValue", (prevValue == null) ? "" : mdf.format(prevValue));
+                
+                
                 map.put("prevValue", (prevValue == null) ? "" : mdf.format(prevValue));
             } catch (ParseException e) {
                 logger.error(e, e);
@@ -3691,8 +3699,12 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("gs1", (String)obj.get("GS1"));
             map.put("modemId", (String)obj.get("MODEM_ID"));
             map.put("sicName", (String)obj.get("SIC_NAME"));
+            map.put("customerNumber", (String)obj.get("CUSTOMER_NUMBER"));
             map.put("value", obj.get("VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE"))));
 //            map.put("prevValue", obj.get("PRE_VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE"))));
+    		map.put("pre_value", obj.get("PRE_VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE"))));
+    		if(obj.get("VALUE") != null  && obj.get("PRE_VALUE") != null)
+    			map.put("consumption", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE")) - DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE")) ));
 
             result.add(map);
         }
@@ -3826,6 +3838,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             
             map.put("num", num++);
             map.put("contractNumber", (String)obj.get("CONTRACT_NUMBER"));
+            map.put("customerNumber", (String)obj.get("CUSTOMER_NUMBER"));
             map.put("customerName", (String)obj.get("CUSTOMER_NAME"));
             map.put("meteringTime", searchWeek + " Week");
             map.put("meterNo", (String)obj.get("METER_NO"));
@@ -3834,6 +3847,9 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("sicName", (String)obj.get("SIC_NAME"));
             if(obj.get("CH_METHOD").toString().equals("MAX")){
             	map.put("value", obj.get("VALUE_MAX") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE_MAX"))));
+            	map.put("pre_value", obj.get("PRE_VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE"))));
+            	if(obj.get("VALUE_MAX") != null  && obj.get("PRE_VALUE") != null)
+            		map.put("consumption", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE_MAX")) - DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE")) ));
             }else if(obj.get("CH_METHOD").toString().equals("SUM")) {
             	map.put("value", obj.get("VALUE_SUM") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE_SUM"))));
             }
@@ -3943,6 +3959,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
         	Map<String, Object> map = new HashMap<String, Object>();
             map.put("num", num++);
             map.put("contractNumber", (String)obj.get("CONTRACT_NUMBER"));
+            map.put("customerNumber", (String)obj.get("CUSTOMER_NUMBER"));
             map.put("customerName", (String)obj.get("CUSTOMER_NAME"));
             map.put("meteringTime", TimeLocaleUtil.getLocaleWeekDay((String)obj.get("YYYYMMDD"), lang, country));
             map.put("meterNo", (String)obj.get("METER_NO"));
@@ -4212,6 +4229,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
 
             map.put("num", num++);
             map.put("contractNumber", (String)obj.get("CONTRACT_NUMBER"));
+            map.put("customerNumber", (String)obj.get("CUSTOMER_NUMBER"));
             map.put("customerName", (String)obj.get("CUSTOMER_NAME"));
             map.put("friendlyName", (String)obj.get("FRIENDLY_NAME"));
             map.put("meteringTime", TimeLocaleUtil.getLocaleYearMonth((String)obj.get("YYYYMM"), lang, country));
@@ -4222,6 +4240,10 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             map.put("sicName", (String)obj.get("SIC_NAME"));
             if(obj.get("CH_METHOD").toString().equals("MAX")){
             	map.put("value", obj.get("VALUE_MAX") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE_MAX"))));
+        		map.put("pre_value", obj.get("PRE_VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE"))));
+        		
+        		if(obj.get("VALUE_MAX") != null  && obj.get("PRE_VALUE") != null)
+        			map.put("consumption", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE_MAX")) - DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE")) ));
             }else if(obj.get("CH_METHOD").toString().equals("SUM")) {
             	map.put("value", obj.get("VALUE_SUM") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE_SUM"))));
             }
@@ -4339,6 +4361,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
         	Map<String, Object> map = new HashMap<String, Object>();
             map.put("num", num++);
             map.put("contractNumber", (String)obj.get("CONTRACT_NUMBER"));
+            map.put("customerNumber", (String)obj.get("CUSTOMER_NUMBER"));
             map.put("customerName", (String)obj.get("CUSTOMER_NAME"));
             map.put("meteringTime", searchSeason);
             map.put("meterNo", (String)obj.get("METER_NO"));
@@ -4460,6 +4483,7 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
         	Map<String, Object> map = new HashMap<String, Object>();
             map.put("num", num++);
             map.put("contractNumber", (String)obj.get("CONTRACT_NUMBER"));
+            map.put("customerNumber", (String)obj.get("CUSTOMER_NUMBER"));
             map.put("customerName", (String)obj.get("CUSTOMER_NAME"));
             map.put("meteringTime", searchYear);
             map.put("meterNo", (String)obj.get("METER_NO"));
@@ -4469,6 +4493,11 @@ public class SearchMeteringDataManagerImpl implements SearchMeteringDataManager 
             
             if(obj.get("CH_METHOD").toString().equals("MAX")){
             	map.put("value", obj.get("VALUE_MAX") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE_MAX"))));
+        		map.put("pre_value", obj.get("PRE_VALUE") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE"))));
+        		
+        		if(obj.get("VALUE_MAX") != null  && obj.get("PRE_VALUE") != null)
+        			map.put("consumption", mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE_MAX")) - DecimalUtil.ConvertNumberToDouble(obj.get("PRE_VALUE")) ));
+        		
             }else if(obj.get("CH_METHOD").toString().equals("SUM")) {
             	map.put("value", obj.get("VALUE_SUM") == null ? "" :  mdf.format(DecimalUtil.ConvertNumberToDouble(obj.get("VALUE_SUM"))));
             }
