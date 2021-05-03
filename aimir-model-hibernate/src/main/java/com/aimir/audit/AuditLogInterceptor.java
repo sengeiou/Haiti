@@ -22,6 +22,7 @@ import com.aimir.constants.CommonConstants.AuditAction;
 import com.aimir.model.BaseObject;
 import com.aimir.model.system.AuditLog;
 import com.aimir.model.system.Code;
+import com.aimir.model.system.Contract;
 import com.aimir.util.SessionContext;
 
 /**
@@ -74,15 +75,15 @@ public class AuditLogInterceptor extends EmptyInterceptor {
         }
 	}
 
-
-
 	/**
      * Called before an object is saved. The interceptor may modify the state,
      * which will be used for the SQL INSERT and propagated to the persistent object.
      */
     @Override
-    public boolean onSave(Object entity,Serializable id, Object[] state,String[] propertyNames,Type[] types)
+    public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types)
     {
+    	
+    	/*
         try{
         	if(sessionContextFactory != null){
                 SessionContext sessionContext = (SessionContext) sessionContextFactory.getObject();
@@ -125,6 +126,14 @@ public class AuditLogInterceptor extends EmptyInterceptor {
             }
         }
         return true;
+        */
+    	
+    	if (entity instanceof Contract) {
+    		Contract book = (Contract) entity;
+    		
+         }
+    	
+         return super.onSave(entity, id, state, propertyNames, types);
     }
 
     /**
@@ -136,6 +145,7 @@ public class AuditLogInterceptor extends EmptyInterceptor {
      * but not necessarily (immediately) to the database.
      * It is strongly recommended that the interceptor not modify the previousState.
      */
+    /*
     @Override
     public boolean onFlushDirty(Object entity,Serializable id,
             Object[] currentState,Object[] previousState,
@@ -169,10 +179,10 @@ public class AuditLogInterceptor extends EmptyInterceptor {
                     previousState = new Object[currentState.length];
 
                 for (int i = 0; i < propertyNames.length; i++) {
-                    /*
-                     * 속성으로 관계된 클래스의 equals가 구현되지 않아서 다른 객체로 인식하여 변경 이력이 남는다.
-                     * BaseObject을 상속받지 않은 객체와 Primitive type 속성만 비교하도록 한다.
-                     */
+                    
+                    // 속성으로 관계된 클래스의 equals가 구현되지 않아서 다른 객체로 인식하여 변경 이력이 남는다.
+                    //  BaseObject을 상속받지 않은 객체와 Primitive type 속성만 비교하도록 한다.
+                     
                     if (currentState[i] instanceof Code || !(currentState[i] instanceof BaseObject)) {
                         if ( ((currentState[i] != null && previousState[i] == null) ||
                                 (currentState[i] == null && previousState[i] != null)) ||
@@ -230,53 +240,10 @@ public class AuditLogInterceptor extends EmptyInterceptor {
 
         return true;
     }
-
+    */
+    
+    
     /**
      * Called before an object is deleted. It is not recommended that the interceptor modify the state.
      */
-    @Override
-    public void onDelete(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
-        try{
-        	if(sessionContextFactory != null){
-                SessionContext sessionContext = (SessionContext) sessionContextFactory.getObject();
-                if(sessionContext != null && sessionContext.getUser() != null){
-                	auditTargetName = sessionContext.getUser().getLoginId();
-                }        		
-        	}
-        }catch(Exception e){
-        	log.debug("Have no SessionContext (delete) : " + e.getMessage());
-        }
-
-        if (entity instanceof IAuditable) {
-            log.debug("ENTITY[" + entity.getClass().getName() + "] ID[" + id + "]");
-            Session session = null;
-            TransactionStatus txStatus = null;
-            try {
-                txStatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
-                session = transactionManager.getSessionFactory().getCurrentSession();
-
-                AuditLog auditLog = new AuditLog();
-                auditLog.setAction(AuditAction.DELETED);
-                auditLog.setCreatedDate(new Date());
-                auditLog.setEntityId(id instanceof Long? (Long)id:new Long((Integer)id));
-                auditLog.setEntityName(entity.getClass().getName());
-                auditLog.setInstanceName(((IAuditable) entity).getInstanceName());
-
-                if(!auditTargetName.equals("")){
-                	auditLog.setLoginId(auditTargetName);
-                }
-
-                session.save(auditLog);
-                session.flush();
-
-                transactionManager.commit(txStatus);
-            }
-            catch (Exception e) {
-                if (txStatus != null)
-                    transactionManager.rollback(txStatus);
-            }
-            finally {
-            }
-        }
-    }
 }
