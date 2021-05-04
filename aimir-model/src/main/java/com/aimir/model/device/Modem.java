@@ -25,11 +25,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import org.eclipse.persistence.annotations.Index;
-import org.eclipse.persistence.annotations.Indexes;
-
 import com.aimir.annotation.ColumnInfo;
 import com.aimir.annotation.ReferencedBy;
 import com.aimir.annotation.Scope;
