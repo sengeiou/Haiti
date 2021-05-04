@@ -460,7 +460,7 @@ public class DeviceRegistrationManagerImpl implements DeviceRegistrationManager 
 
 			extractor.setFormulasNotResults(true);
 			extractor.setIncludeSheetNames(false);
-			if("ModemAndMeterMapper_template.xlsx".equals(fileName)) {
+			if("MeterMapper".equals(fileType)) {
 				result = insertBulkModemMeterforHaiti(excel, supplierId);
 			}else {
 				result = makeExcelToObject(wb.getSheetAt(0), fileType, supplierId, detailType, "xlsx");
@@ -626,13 +626,13 @@ public class DeviceRegistrationManagerImpl implements DeviceRegistrationManager 
             		newMeter.setMeterPrintedMdsId(MeterSerial);
             		newMeter.setMeterObisMdsId(MeterId);
             		meterMapperDao.add(newMeter);
-            		logger.info("### New MeterMapper add  ModemSerial[" + ModemSerial + "] MeterSerial[" + MeterSerial + "] MeterId[" + MeterId + "]");
+            		logger.info("### [Add] MeterMapper ModemSerial[" + ModemSerial + "] MeterSerial[" + MeterSerial + "] MeterId[" + MeterId + "]");
         		}else {
         			chkModem.setModemDeviceSerial(ModemSerial);
         			chkModem.setMeterPrintedMdsId(MeterSerial);
         			chkModem.setMeterObisMdsId(MeterId);
             		meterMapperDao.update(chkModem);
-            		logger.info("### MeterMapper update ModemSerial[" + ModemSerial + "] MeterSerial[" + MeterSerial + "] MeterId[" + MeterId + "]");
+            		logger.info("### [Update] MeterMapper ModemSerial[" + ModemSerial + "] MeterSerial[" + MeterSerial + "] MeterId[" + MeterId + "]");
         		}
         		logger.debug("MeterMapper save finished : " + new Timestamp(System.currentTimeMillis()));
         		logger.info("### saveRows loop size :  " + ++loopSize);
