@@ -3582,6 +3582,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 		sbQuery.append("\n WHERE ");
 		sbQuery.append("\n 	a.mds_id = me.MDS_ID ");
 		sbQuery.append("\n 	AND co.METER_ID = me.id ");
+		sbQuery.append("\n 	AND co.CREDITTYPE_ID IN (SELECT id FROM code WHERE code IN ('2.2.1', '2.2.2')) ");
 		
 		if(mdevId != null  && !mdevId.isEmpty())
 			sbQuery.append("\n 	AND me.mds_id = " + mdevId);
