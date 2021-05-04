@@ -515,6 +515,7 @@ public class PrepaymentLogDaoImpl  extends AbstractHibernateGenericDao< Prepayme
             sb.append("\n       p.arrears AS arrears, ");
             sb.append("\n       p.arrears2 AS arrears2, ");
             sb.append("\n       p.vat AS vat, ");
+            sb.append("\n       p.totalAmountPaid AS totalAmountPaid, ");
             sb.append("\n       p.partpayInfo AS partpayInfo, ");
             sb.append("\n       p.isCanceled AS isCanceled, ");
             sb.append("\n       p.chargedCredit AS chargedCredit, ");
@@ -1157,7 +1158,7 @@ public class PrepaymentLogDaoImpl  extends AbstractHibernateGenericDao< Prepayme
     		if(searchType.equals("all"))
     			sb.append("\n   UNION ALL  ");
     		sb.append("\n   SELECT 'Billing(month)' AS TYPE,  ");
-    		sb.append("\n      WRITE_DATE AS DATETIME,  ");
+    		sb.append("\n      YYYYMM AS DATETIME,  ");
     		sb.append("\n      BEFORE_CREDIT AS BEFOREBALANCE,  ");
     		sb.append("\n      CURRENT_CREDIT AS BALANCE,  ");
     		sb.append("\n      null AS CHARGEDAMOUNT,  ");

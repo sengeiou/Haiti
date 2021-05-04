@@ -75,6 +75,7 @@ public class PrepaymentMgmtOperatorController {
 
         List<Code> serviceType = codeManager.getChildCodes(Code.ENERGY);
         List<Code> status = codeManager.getChildCodes(Code.STATUS);
+        List<Code> meterStatus = codeManager.getChildCodes(Code.METER_STATUS);
 
         Role role = roleManager.getRole(user.getRoleData().getId());
 
@@ -85,6 +86,7 @@ public class PrepaymentMgmtOperatorController {
         mav.addObject("loginId", user.getLoginId());
         mav.addObject("serviceTypeCodeList", serviceType);
         mav.addObject("statusCodeList", status);
+        mav.addObject("meterStatus", meterStatus);
         mav.addObject("editAuth", authMap.get("cud"));  // 수정권한(write/command = true)
         return mav;
     }
@@ -188,6 +190,7 @@ public class PrepaymentMgmtOperatorController {
             @RequestParam("customerNumber") String customerNumber,
             @RequestParam("statusCode") String statusCode,
             @RequestParam("amountStatus") String amountStatus,
+            @RequestParam("meterStatus") String meterStatus,
             @RequestParam("mdsId") String mdsId,
             @RequestParam("gs1") String gs1,
             //@RequestParam("address") String address,
@@ -212,6 +215,7 @@ public class PrepaymentMgmtOperatorController {
         conditionMap.put("customerName", StringUtil.nullToBlank(customerName));
         conditionMap.put("statusCode", StringUtil.nullToBlank(statusCode));
         conditionMap.put("amountStatus", StringUtil.nullToBlank(amountStatus));
+        conditionMap.put("meterStatus", StringUtil.nullToBlank(meterStatus));
         conditionMap.put("mdsId", mdsId);
         conditionMap.put("gs1", gs1);
 //        conditionMap.put("address", StringUtil.nullToBlank(address));

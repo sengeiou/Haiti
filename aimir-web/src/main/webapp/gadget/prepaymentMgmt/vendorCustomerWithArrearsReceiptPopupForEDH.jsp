@@ -96,10 +96,10 @@
                     </tr>
                    	<tr>
 						<td>
-							<fmt:message key='aimir.contractNumber'/>
+							<fmt:message key='aimir.customerid'/>
 						</td>
 						<td>
-							${contractNumber}
+							${customerNumber}
 						</td>
 					</tr>
                    	<tr>

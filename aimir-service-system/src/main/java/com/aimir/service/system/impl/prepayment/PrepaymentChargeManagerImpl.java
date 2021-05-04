@@ -198,6 +198,7 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
 //            map.put("currentCredit", ((map.get("currentCredit") != null) ? cdf.format(DecimalUtil.ConvertNumberToDouble(map.get("currentCredit"))) : cdf.format(0d)));
             map.put("balance", ((map.get("balance") != null) ? cdf.format(DecimalUtil.ConvertNumberToDouble(map.get("balance"))) : cdf.format(0d)));
             map.put("vat", ((map.get("vat") != null) ? cdf.format(DecimalUtil.ConvertNumberToDouble(map.get("vat"))) : cdf.format(0d)));
+            map.put("totalAmountPaid", ((map.get("totalAmountPaid") != null) ? cdf.format(DecimalUtil.ConvertNumberToDouble(map.get("totalAmountPaid"))) : cdf.format(0d)));
             map.put("arrears", ((map.get("arrears") != null) ? cdf.format(DecimalUtil.ConvertNumberToDouble(map.get("arrears"))) : cdf.format(0d)));
             map.put("arrears2", ((map.get("arrears2") != null) ? cdf.format(DecimalUtil.ConvertNumberToDouble(map.get("arrears2"))) : cdf.format(0d)));
             map.put("chargedArrears", ((map.get("chargedArrears") != null) ? cdf.format(DecimalUtil.ConvertNumberToDouble(map.get("chargedArrears"))) : cdf.format(0d)));

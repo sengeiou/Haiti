@@ -2344,6 +2344,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         String customerName = (String) conditionMap.get("customerName");
         String customerNumber = (String) conditionMap.get("customerNumber");
         String statusCode 	= (String) conditionMap.get("statusCode");
+        String meterStatus 	= (String) conditionMap.get("meterStatus");
         String amountStatus = StringUtil.nullToBlank(conditionMap.get("amountStatus"));
         String mdsId 		= (String) conditionMap.get("mdsId");
         String gs1 			= (String) conditionMap.get("gs1");
@@ -2366,6 +2367,7 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("\n       c.customer.name AS customerName, ");                           // Customer Name
             sb.append("\n       c.customer.customerNo AS customerNumber, ");                   // customerNo
             sb.append("\n       c.customer.mobileNo AS mobileNo, ");                           // mobile No.
+            sb.append("\n       m.meterStatus.name AS meterStatus, ");                              // Meter Status
             sb.append("\n       m.mdsId AS mdsId, ");                                          // Meter ID
             sb.append("\n       m.id AS meterId, ");
             sb.append("\n       m.gs1 AS gs1, ");  
@@ -2402,6 +2404,10 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 
         if (mdsId != null && !mdsId.isEmpty()) {
             sb.append("\nAND   c.meter.mdsId LIKE :mdsId||'%' ");
+        }
+        
+        if (meterStatus != null && !meterStatus.isEmpty()) {
+            sb.append("\nAND   c.meter.meterStatus = :meterStatus ");
         }
 
         if (gs1 != null && !gs1.isEmpty()) {
@@ -2459,7 +2465,9 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         if (mdsId != null && !mdsId.isEmpty()) {
             query.setString("mdsId", mdsId);
         }
-
+        if (meterStatus != null && !meterStatus.isEmpty()) {
+            query.setInteger("meterStatus", Integer.parseInt(meterStatus));
+        }
         if (gs1 != null && !gs1.isEmpty()) {
             query.setString("gs1", '%'+gs1+'%');
         }
