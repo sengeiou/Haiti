@@ -9940,12 +9940,17 @@ public class MeterDaoImpl extends AbstractHibernateGenericDao<Meter, Integer> im
     		sbQuery.append("\n	 AND me.mds_id = '").append(meterId).append("'");
     	
     	if("RELAY_OFF".equalsIgnoreCase(action)) {
+    		sbQuery.append("\n	 AND me.meter_status != (select id from code where code = '1.3.3.9')"); //delete
     		sbQuery.append("\n	 AND me.meter_status != (select id from code where code = '1.3.3.4')"); //relay off
     		sbQuery.append("\n	 AND co.CURRENTCREDIT < 0 ");
     	} else if("RELAY_ON".equalsIgnoreCase(action)) {
+    		sbQuery.append("\n	 AND me.meter_status != (select id from code where code = '1.3.3.9')"); //delete
     		sbQuery.append("\n	 AND me.meter_status = (select id from code where code = '1.3.3.4')"); //relay on
     		sbQuery.append("\n	 AND co.CURRENTCREDIT >= 0 ");
     	}
+    	sbQuery.append("\n	 AND co.CREDITTYPE_ID IN (SELECT id FROM code WHERE code IN ('2.2.1', '2.2.2')) ");
+    	
+    	
     	List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
     	
     	List<Object[]> queryList = getSession().createNativeQuery(sbQuery.toString()).list();
