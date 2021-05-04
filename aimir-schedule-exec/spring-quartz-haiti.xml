@@ -67,6 +67,11 @@
 	<bean id="auditLogInterceptor" class="com.aimir.audit.AuditLogInterceptor">
 		<property name="transactionManager" ref="auditTransactionManager" />
 	</bean>
+	
+	<bean id="sessionContextFactory"
+		class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
+		<property name="targetBeanName" value="sessionContext" />
+	</bean>
 
 	<!-- Transaction manager for a single Hibernate SessionFactory (alternative 
 		to JTA) -->
