@@ -127,7 +127,6 @@
     <!-- Scans for @Repository, @Service -->
     <context:component-scan base-package="com.aimir">
         <context:exclude-filter type="regex" expression="com\.aimir\.fep.*"/>
-        <context:exclude-filter type="regex" expression="com\.aimir\.comm.*" />			
     </context:component-scan>
     
     <!-- Enable @Transactional support -->
@@ -216,6 +215,6 @@
                <entry key="Adapter:name=Scheduler" value-ref="schedulerFactory"/>
            </map>
        </property>
-       <property name="registrationBehaviorName" value="REGISTRATION_REPLACE_EXISTING"/>
+       <property name="registrationPolicy" value="REPLACE_EXISTING"/>
     </bean>
 </beans>
