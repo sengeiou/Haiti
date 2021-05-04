@@ -3159,7 +3159,8 @@
                                         <option value="MCU"  ><fmt:message key="aimir.mcu"/></option>
                                         <option value="Modem"><fmt:message key="aimir.modem"/></option>
                                         <option value="Meter"><fmt:message key="aimir.meter"/></option>
-                                        <option value="Customer"><fmt:message key="aimir.customer"/></option>
+                                        <!-- 선불 고객 등록 Prepayment 탭에서 제공 -->
+                                        <!--  <option value="Customer"><fmt:message key="aimir.customer"/></option>	-->
                                         <option value="MeterMapper">MeterMapper</option>
                                     </select>
                                 </td>
@@ -3181,7 +3182,7 @@
                                         <option value="MCU"  ><fmt:message key="aimir.mcu"/> </option>
                                         <option value="Modem"><fmt:message key="aimir.modem"/></option>
                                         <option value="Meter"><fmt:message key="aimir.meter"/></option>
-                                        <option value="Customer"><fmt:message key="aimir.customer"/></option>
+                                        <!--<option value="Customer"><fmt:message key="aimir.customer"/></option> -->
                                         <option value="MeterMapper">MeterMapper</option>
                                     </select>
                                 </td>
