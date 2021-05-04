@@ -53,7 +53,7 @@
 				<prop key="hibernate.show_sql">false</prop>
 				<prop key="hibernate.bytecode.use_reflection_optimizer">false</prop>
 				<prop key="hibernate.use_sql_comments">false</prop>
-				<prop key="hibernate.hbm2ddl.auto">false</prop>
+				<prop key="hibernate.hbm2ddl.auto">none</prop>
 				<prop key="hibernate.connection.autocommit">false</prop>
 			</props>
 		</property>
@@ -66,6 +66,11 @@
 
 	<bean id="auditLogInterceptor" class="com.aimir.audit.AuditLogInterceptor">
 		<property name="transactionManager" ref="auditTransactionManager" />
+	</bean>
+	
+	<bean id="sessionContextFactory"
+		class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
+		<property name="targetBeanName" value="sessionContext" />
 	</bean>
 
 	<!-- Transaction manager for a single Hibernate SessionFactory (alternative 
@@ -92,7 +97,7 @@
 				<!--<prop key="hibernate.hbm2ddl.auto">create-drop</prop> -->
 				<!--<prop key="hibernate.hbm2ddl.auto">create</prop> -->
 				<!--<prop key="hibernate.hbm2ddl.auto">validate</prop> -->
-				<prop key="hibernate.hbm2ddl.auto">false</prop>
+				<prop key="hibernate.hbm2ddl.auto">none</prop>
 				<prop key="hibernate.connection.autocommit">false</prop>
 				<!-- 0:none, 1:read_uncommitted, 2:read_committed, 4:repeatable_read, 
 					8:serializable -->
@@ -112,7 +117,7 @@
 	</bean>
 
     <!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     
@@ -122,23 +127,27 @@
     <!-- Scans for @Repository, @Service -->
     <context:component-scan base-package="com.aimir">
         <context:exclude-filter type="regex" expression="com\.aimir\.fep.*"/>
+        <context:exclude-filter type="regex" expression="com\.aimir\.comm.*" />			
     </context:component-scan>
     
     <!-- Enable @Transactional support -->
-    <tx:annotation-driven/>
+    <tx:annotation-driven transaction-manager="transactionManager" />
 
     <!-- Enable @AspectJ support -->
     <aop:aspectj-autoproxy/>
     
     <!--  Schedule -->
-    <!-- <bean id="deleteSensorJob" class="com.aimir.schedule.job.DeleteSensorJob" /> -->
+    <!-- 
+    <bean id="deleteSensorJob" class="com.aimir.schedule.job.DeleteSensorJob" /> 
     <bean id="EDHBalanceMonitorDemoTask" class="com.aimir.schedule.task.EDHBalanceMonitorDemoTask" />
     <bean id="EDHBlockDailyEMBillingInfoSaveTask" class="com.aimir.schedule.task.EDHBlockDailyEMBillingInfoSaveV2Task" />
     <bean id="BalanceMonitoringTask" class="com.aimir.schedule.task.BalanceMonitorV2Task"/>
     <bean id="prepaySendSMSTask" class="com.aimir.schedule.task.PrepaySendSMSEDHTask"/>
     <bean id="sendUsageSMSTask" class="com.aimir.schedule.task.PrepaySendUsageSMSTask"/>
     <bean id="mcuUnitScanningTask" class="com.aimir.schedule.task.McuUnitScanningTask"/>
-
+    -->
+	
+	<!--
     <bean name="EDHBalanceMonitorDemoJob" class="org.springframework.scheduling.quartz.JobDetailBean">
         <property name="jobClass" value="com.aimir.schedule.job.EDHBalanceMonitorDemoJob"/>
     </bean>
@@ -163,17 +172,6 @@
         <property name="jobClass" value="com.aimir.schedule.job.McuUnitScanningJob"/>
     </bean>
 
-    <!-- Simple Trigger 
-    <bean id="simpleTrigger"
-        class="org.springframework.scheduling.quartz.SimpleTriggerBean">
-        
-        <property name="jobDetail" ref="runMeJob" />
-        <property name="repeatInterval" value="5000" />
-        <property name="startDelay" value="1000" />
-        
-    </bean>
--->
-     
     <bean id="blockTariffCalculateTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="BlockTariffCalculateJob"/>
         <property name="cronExpression" value="0 0 * * * ?" />
@@ -196,26 +194,18 @@
         <property name="jobDetail" ref="McuUnitScanningJob"/>
         <property name="cronExpression" value="0 15 0 ? * 1" />
     </bean>    
+	-->
 
     <bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="jobDetails">
             <list>
-<!-- >	            <ref bean="BlockTariffCalculateJob" />  
-	            <ref bean="BalanceMonitoringJob" />  
-	            <ref bean="PrepaySendSMSJob" />    -->
-	    <!--        <ref bean="PrepaySendUsageSMSJob" />
-	            <ref bean="EDHBalanceMonitorDemoJob" />   -->
-	            <ref bean="McuUnitScanningJob" />
+		<!-- <ref bean="McuUnitScanningJob" /> -->
             </list>
         </property>
         
         <property name="triggers">
             <list>
-<!-- 	            <ref bean="blockTariffCalculateTrigger" />    
-	            <ref bean="balanceMonitoringTrigger" />  
-	            <ref bean="prepaySendSMSTrigger" />  -->
-	<!--             <ref bean="edhBalanceMonitorDemoTrigger" />   -->
-				<ref bean="mcuUnitScanningTrigger" />
+		<!-- <ref bean="mcuUnitScanningTrigger" /> -->
             </list>
         </property>
     </bean>
@@ -226,6 +216,6 @@
                <entry key="Adapter:name=Scheduler" value-ref="schedulerFactory"/>
            </map>
        </property>
-       <property name="registrationBehaviorName" value="REGISTRATION_REPLACE_EXISTING"/>
+       <property name="registrationPolicy" value="REPLACE_EXISTING"/>
     </bean>
 </beans>

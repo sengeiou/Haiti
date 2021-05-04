@@ -2257,7 +2257,7 @@ public class CmdController<V> {
 		 * 
 		 * Code operationCode = codeManager.getCodeByCode("8.1.4");
 		 */
-		Code operationCode = codeManager.getCodeByCode("8.1.4");
+		Code operationCode = codeManager.getCodeByCode("8.1.10");
 		Code meterTypeCode = codeManager.getCode(meter.getMeterTypeCodeId());
 		if (operationCode != null) {
 			operationLogManager.saveOperationLog(supplier, meterTypeCode, meter.getMdsId(), loginId, operationCode,
@@ -2545,7 +2545,7 @@ public class CmdController<V> {
 		 * 
 		 * Code operationCode = codeManager.getCodeByCode("8.1.4");
 		 */
-		Code operationCode = codeManager.getCodeByCode("8.1.3");
+		Code operationCode = codeManager.getCodeByCode("8.1.9");
 		Code meterTypeCode = codeManager.getCode(meter.getMeterTypeCodeId());
 		if (operationCode != null) {
 			operationLogManager.saveOperationLog(supplier, meterTypeCode, meter.getMdsId(), loginId, operationCode,

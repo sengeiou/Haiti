@@ -36,6 +36,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.aimir.constants.CommonConstants.ContractStatus;
 import com.aimir.constants.CommonConstants.MeterStatus;
 import com.aimir.constants.CommonConstants.MeterType;
 import com.aimir.dao.device.MeterDao;
@@ -457,8 +458,6 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
 	    		errorList.addAll(saveRows(entities, supplier, location));
 	    	}
 	    	
-	    	
-//        	errorList = validateSheet(sheet, supplier, location);
         	logger.info("Read Sheet end timestamp : "+ new Timestamp(System.currentTimeMillis()));
         	
         	if (errorList.size() <= 0) {
@@ -520,6 +519,8 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 Code statusCode = codeDao.getCodeIdByCodeObject(Code.NORMAL);
                 Code creditTypeCode = codeDao.getCodeIdByCodeObject(Code.EMERGENCY_CREDIT);
                 Code meterStatusCode = codeDao.getCodeIdByCodeObject(MeterStatus.NewRegistered.getCode());
+                Code contractStatusCode = codeDao.getCodeIdByCodeObject(ContractStatus.PAUSE.getCode());
+                
                 
                 if("sample".equals(NIB)) { // contractNumber 값이 sample이면 skip
                 	continue;
@@ -557,12 +558,9 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 		continue;
                 	}
                 	logger.info("### Meter search result - MdsId ["+ meter.getMdsId()+"]");
-                	meter.setMdsId(meterMapper.getMeterObisMdsId());
                 	meter.setSupplier(supplier);;
                 	meter.setLocation(location);
                 	meter.setModel(model);
-                	meter.setMeterStatus(meterStatusCode);
-                	meter.setWriteDate(dateTime);
                 	meterDao.update(meter);
                 	newMeter = meter;
                 }
@@ -646,7 +644,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 }
                 logger.info("### Contract 저장  : "+contract.toString());
                 logger.debug("contractDao.add finished : " + new Timestamp(date.getTime()) );
-                logger.info("### saveRows loop size :  " + ++loopSize +",  totalSize : "+ totalSize);
+                logger.info("### saveRows loop size :  " + ++loopSize);
 			}
     		
     		txManager.commit(txStatus);

@@ -236,11 +236,11 @@
             }
 
             // 휴대폰번호
-            if ( $("#certificationCheckYn").val() != "true" ) {
+            /* if ( $("#certificationCheckYn").val() != "true" ) {
                 Ext.Msg.alert('<fmt:message key='aimir.message'/>',"<fmt:message key='aimir.msg.mobilecertification'/>");
                 $("#mobileNo1").focus();
                 return false;
-            }
+            } */
 
             var email1 = $("#email1").val();
             var email2 = $("#email2").val();
@@ -593,8 +593,7 @@
                                 <td class="padding-r10px" style="padding-bottom: 7px !important;">
                                     <input type="text" id="mobileNo1" style="width:40px;"/><input type="text" value="-" class="between" readonly="readonly" tabindex="-1"/>
                                     <input type="text" id="mobileNo2" style="width:50px;"/><input type="text" value="-" class="between" readonly="readonly" tabindex="-1"/>
-                                    <input type="text" id="mobileNo3" style="width:50px;"/><!-- <input type="hidden" id="certificationCheckYn"/> -->
-                                    <div id="btn" style="width: 280px;"><%-- <ul><li><a onclick="javascript:sendCertificationSMS();" class="on"><fmt:message key="aimir.certification"/></a></li></ul> --%></div>
+                                    <input type="text" id="mobileNo3" style="width:50px;"/><input type="hidden" id="certificationCheckYn"/>
                                 </td>
                                 <th class="padding-r10px" style="padding-bottom: 7px !important;">
                                     <fmt:message key="aimir.email"/>
