@@ -145,6 +145,8 @@
     <bean id="sendUsageSMSTask" class="com.aimir.schedule.task.PrepaySendUsageSMSTask"/>
     <bean id="mcuUnitScanningTask" class="com.aimir.schedule.task.McuUnitScanningTask"/>
     -->
+	
+	<!--
     <bean name="EDHBalanceMonitorDemoJob" class="org.springframework.scheduling.quartz.JobDetailBean">
         <property name="jobClass" value="com.aimir.schedule.job.EDHBalanceMonitorDemoJob"/>
     </bean>
@@ -191,6 +193,7 @@
         <property name="jobDetail" ref="McuUnitScanningJob"/>
         <property name="cronExpression" value="0 15 0 ? * 1" />
     </bean>    
+	-->
 
     <bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="jobDetails">
