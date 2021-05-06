@@ -169,7 +169,7 @@
       url: "${ctx}/gadget/prepaymentMgmt/vendorChargeHistoryList.do",
       totalProperty: 'count',
       root: 'list',
-      fields: ['customerId', 'chargeCredit', 'chargeDeposit', 'deposit'],
+      fields: ['customerId', 'totalAmountPaid', 'changeDate', 'isCanceled'],
       listeners: {
         beforeload: function(store, options) {
           var params = options.params;
@@ -257,10 +257,9 @@
     var vendorHistoryModel = new Ext.grid.ColumnModel({
       columns: [
         {header: "<fmt:message key='aimir.customerid'/>"},
-        {header: "<fmt:message key='aimir.deposit.chargecredit'/>", align: 'right'},
-        {header: "<fmt:message key='aimir.deposit.chargedeposit'/>", align: 'right'},
-        {header: "<fmt:message key='aimir.deposit'/>", align: 'right', 
-          css: 'padding-right:5px'}
+        {header: "<fmt:message key='aimir.total.amount'/>", align: 'right'},
+        {header: "<fmt:message key='aimir.date'/>", align: 'right'},
+        {header: "<fmt:message key='aimir.canceled'/>", align: 'right'}
       ],
       defaults : {
         sortable: true,
