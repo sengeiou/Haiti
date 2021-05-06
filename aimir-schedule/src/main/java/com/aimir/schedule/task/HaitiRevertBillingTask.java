@@ -59,7 +59,9 @@ public class HaitiRevertBillingTask extends ScheduleTask {
 			txmanager.commit(txstatus);
 			
 			if(listData != null && listData.size() > 0) {
-				setData(listData);
+				for(Integer key : listData.keySet() ){
+					setData(listData.get(key));
+				}
 			}
 		}catch(Exception e) {
 			log.error(e, e);
@@ -133,7 +135,7 @@ public class HaitiRevertBillingTask extends ScheduleTask {
 			
 			for(RevertBill r : data) {
 				if(r.getContractId() == 17141) {
-					log.info( r.getWritedate());
+					log.info(r.getContractId() + ", " + r.getWritedate());
 				}
 			}
 			
