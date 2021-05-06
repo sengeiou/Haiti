@@ -905,7 +905,7 @@
              return value ? tplBtn.apply():"";}}
          ,{header: "<fmt:message key='aimir.supplystatus'/>", dataIndex: 'statusName'}
          ,{header: "<fmt:message key='aimir.hems.prepayment.lastchargedate'/>", dataIndex: 'lastTokenDate', align: 'center',tooltip: "<fmt:message key='aimir.hems.prepayment.lastchargedate'/>"}
-         ,{header: "<fmt:message key='aimir.credit'/>", dataIndex: 'currentCredit',  align: 'right'}
+         ,{header: "<fmt:message key='aimir.balance'/>", dataIndex: 'currentCredit',  align: 'right'}
          ,{header: "<fmt:message key='aimir.arrearsA'/>", dataIndex: 'currentArrears', align: 'right'}
          ,{header: "<fmt:message key='aimir.arrearsB'/>", dataIndex: 'currentArrears2', align: 'right'}
  /*		 ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'mdsId'}
