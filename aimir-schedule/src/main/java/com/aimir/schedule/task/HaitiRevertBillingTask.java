@@ -62,6 +62,10 @@ public class HaitiRevertBillingTask extends ScheduleTask {
 			sql = con.createStatement();
 			
 			StringBuffer buffer = new StringBuffer();
+			buffer.append(" truncate table TEMP_BILLGIN ");
+			rs = sql.executeQuery(buffer.toString());			
+			
+			buffer = new StringBuffer();
 			buffer.append(" INSERT INTO TEMP_BILLGIN ");
 			buffer.append(" SELECT *  FROM  ");
 			buffer.append(" ( ");
@@ -112,7 +116,7 @@ public class HaitiRevertBillingTask extends ScheduleTask {
 			buffer.append("     SELECT 'BBT' AS TABLETYPE, 0 AS ID, bbt.CONTRACT_ID, 0 AS CHARGEDCREDIT,  bbt.MDEV_ID , bbt.BILL, 0 as PRE_BALANCE, bbt.BALANCE, bbt.YYYYMMDD,  bbt.HHMMSS , bbt.WRITEDATE FROM BILLING_BLOCK_TARIFF_HSW bbt ");
 			buffer.append("     UNION ALL ");
 			buffer.append("     SELECT 'PREPAY' AS TABLETYPE, ph.ID, ph.CONTRACT_ID, ph.CHARGEDCREDIT, '' AS MDEV_ID , 0 AS BILL, ph.PRE_BALANCE, ph.BALANCE, '' AS YYYYMMDD, '' AS HHMMSS, ph.LASTTOKENDATE AS WRITEDATE FROM PREPAYMENTLOG_HSW ph where ph.CANCEL_DATE IS null ");
-			buffer.append(" )a, TEMP_BILLGIN_TEMP tb ");
+			buffer.append(" )a, TEMP_BILLGIN tb ");
 			buffer.append(" where ");
 			buffer.append("     a.contract_id = tb.contract_id ");
 			buffer.append("     and a.writedate >= tb.writedate ");
