@@ -19,6 +19,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
 
 import com.aimir.dao.mvm.BillingBlockTariffDao;
 import com.aimir.fep.util.DataUtil;
@@ -48,8 +49,21 @@ public class HaitiRevertBillingTask extends ScheduleTask {
 
 	private void execute(ApplicationContext ctx) {
 		log.info("########### START HaitiRevertBillingTask Task ###############");
+		TransactionStatus txstatus = null;
 		
-		Map<Integer, LinkedList<RevertBill>> listData = getDataList(ctx);
+		try {
+			txstatus = txmanager.getTransaction(null);
+			
+			Map<Integer, LinkedList<RevertBill>> listData = getDataList(ctx);
+			
+			txmanager.commit(txstatus);
+		}catch(Exception e) {
+			log.error(e, e);
+			
+			if (txstatus != null)
+				txmanager.rollback(txstatus);
+		}
+		
 		
 		log.info("########### END HaitiRevertBillingTask Task ###############");
 	}
