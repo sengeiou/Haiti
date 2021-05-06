@@ -82,17 +82,17 @@ public class HaitiRevertBillingTask extends ScheduleTask {
 			List<String> keyList = new ArrayList<>(m.keySet());
 			log.info(keyList);
 			
-			String tabletype = String.valueOf(m.get("tabletype"));
-			String mdev_id = String.valueOf(m.get("mdev_id"));
-			String yyyymmdd = String.valueOf(m.get("yyyymmdd"));
-			String hhmmss = String.valueOf(m.get("hhmmss"));
-			String writedate = String.valueOf(m.get("writedate"));
-			int contract_id = Integer.parseInt(m.get("contract_id").toString());
-			long id = Long.parseLong(m.get("id").toString());
-			double chargedcredit = Double.parseDouble(m.get("chargedcredit").toString());			
-			double bill = Double.parseDouble(m.get("bill").toString());
-			double pre_balance = Double.parseDouble(m.get("pre_balance").toString());
-			double balance = Double.parseDouble(m.get("balance").toString());
+			String tabletype = String.valueOf(m.get("TABLETYPE"));
+			String mdev_id = String.valueOf(m.get("MDEV_ID"));
+			String yyyymmdd = String.valueOf(m.get("YYYYMMDD"));
+			String hhmmss = String.valueOf(m.get("HHMMSS"));
+			String writedate = String.valueOf(m.get("WRITEDATE"));
+			int contract_id = Integer.parseInt(m.get("CONTRACT_ID").toString());
+			long id = Long.parseLong(m.get("ID").toString());
+			double chargedcredit = Double.parseDouble(m.get("CHARGEDCREDIT").toString());			
+			double bill = Double.parseDouble(m.get("BILL").toString());
+			double pre_balance = Double.parseDouble(m.get("PRE_BALANCE").toString());
+			double balance = Double.parseDouble(m.get("BALANCE").toString());
 			
 			RevertBill r = new RevertBill();
 			r.setTabletype(tabletype);
