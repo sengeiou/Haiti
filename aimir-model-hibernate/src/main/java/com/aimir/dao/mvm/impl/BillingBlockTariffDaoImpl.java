@@ -272,16 +272,16 @@ public class BillingBlockTariffDaoImpl extends AbstractHibernateGenericDao<Billi
     		sbQuery.append("\n WHERE 1 = 1");
     		
     		if(contractId != null)
-    			sbQuery.append("\n bbt.CONTRACT_ID = :contractId ");
+    			sbQuery.append("\n AND bbt.CONTRACT_ID = :contractId ");
     		
     		if(mdevId != null)
-    			sbQuery.append("\n bbt.MDEV_ID = :mdevId ");
+    			sbQuery.append("\n AND bbt.MDEV_ID = :mdevId ");
     		
     		if(yyyymmdd != null)
-    			sbQuery.append("\n bbt.YYYYMMDD = :yyyymmdd ");
+    			sbQuery.append("\n AND bbt.YYYYMMDD = :yyyymmdd ");
     		
     		if(hhmmss != null)
-    			sbQuery.append("\n bbt.HHMMSS = :hhmmss ");
+    			sbQuery.append("\n AND bbt.HHMMSS = :hhmmss ");
     		
     		org.hibernate.query.Query query = getSession().createNativeQuery(sbQuery.toString(), BillingBlockTariff.class);
     		if(contractId != null)

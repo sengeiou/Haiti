@@ -247,7 +247,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
             	 log.info("charged credit gap occur - "
              			+ " CurrentCredit[" + convertBigDecimal(currentCredit) + "] "
              			+ " lastBilling Balance[" + convertBigDecimal(lastBilling.getBalance()) + "] ");
-            	lastBilling.setBalance(currentCredit);
+            	lastBilling.setBalance(Double.parseDouble(String.format("%.2f", currentCredit)));
             }
             log.info("Contract[" + contract.getContractNumber() + "] "        			
         			+ " lastAccumulateBill[" + convertBigDecimal(lastBilling.getAccumulateBill()) + "] "
@@ -383,7 +383,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     	BigDecimal accumulateBill = blockBill(meter.getMdsId(), contract.getTariffIndex().getName(), tariffEMList, convertBigDecimal(bill.getAccumulateUsage()));	//BlockTariff
     	bill.setAccumulateBill(accumulateBill.doubleValue());
     	BigDecimal billingBill = accumulateBill.subtract(convertBigDecimal(lastIndex.getAccumulateBill()));
-    	bill.setBill(accumulateBill.subtract(convertBigDecimal(lastIndex.getAccumulateBill())).doubleValue());	// ACCUMULATEBILL - Previous ACCUMULATEBILL = Bill
+    	bill.setBill(accumulateBill.subtract(convertBigDecimal(lastIndex.getAccumulateBill()).setScale(2, BigDecimal.ROUND_HALF_UP)).doubleValue());	// ACCUMULATEBILL - Previous ACCUMULATEBILL = Bill
     	bill.setBalance(convertBigDecimal(lastIndex.getBalance()).subtract(billingBill).doubleValue());			// Balance - Bill
     	bill.setContractId(lastIndex.getContractId());
     	bill.setAvg(isAVG);
