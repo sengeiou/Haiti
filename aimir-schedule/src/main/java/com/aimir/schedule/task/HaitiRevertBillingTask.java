@@ -3,6 +3,7 @@ package com.aimir.schedule.task;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -77,6 +78,9 @@ public class HaitiRevertBillingTask extends ScheduleTask {
 		}
 		
 		for(Map<String, Object> m : queryList) {
+			
+			List<String> keyList = new ArrayList<>(m.keySet());
+			log.info(keyList);
 			
 			String tabletype = String.valueOf(m.get("tabletype"));
 			String mdev_id = String.valueOf(m.get("mdev_id"));
