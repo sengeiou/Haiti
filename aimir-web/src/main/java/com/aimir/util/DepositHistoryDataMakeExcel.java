@@ -45,8 +45,10 @@ public class DepositHistoryDataMakeExcel {
 	HSSFCellStyle bodyStyle_S_R;
 	HSSFCellStyle bodyStyle_W_L;
 	HSSFCellStyle bodyStyle_W_R;
+	HSSFCellStyle canceledStyle_S_L;
+	HSSFCellStyle canceledStyle_S_R;
 	
-	int SALES_WIDTH = 18;
+	int SALES_WIDTH = 21;
 	int DEPOSIT_WIDTH = 10;
 	String supplierName = null;
 	public DepositHistoryDataMakeExcel() {
@@ -84,6 +86,8 @@ public class DepositHistoryDataMakeExcel {
             bodyStyle_S_R = commonStyle(workbook, fontBody, HSSFCellStyle.ALIGN_RIGHT, HSSFColor.LIGHT_TURQUOISE.index);
             bodyStyle_W_L = commonStyle(workbook, fontBody, HSSFCellStyle.ALIGN_LEFT, (short)-1);
             bodyStyle_W_R = commonStyle(workbook, fontBody, HSSFCellStyle.ALIGN_RIGHT, (short)-1);
+            canceledStyle_S_L = commonStyle(workbook, fontBody, HSSFCellStyle.ALIGN_LEFT, HSSFColor.LIGHT_ORANGE.index);
+            canceledStyle_S_R = commonStyle(workbook, fontBody, HSSFCellStyle.ALIGN_RIGHT, HSSFColor.LIGHT_ORANGE.index);
             
             String fileFullPath = new StringBuilder().append(filePath).append(File.separator).append(fileName).toString();
             HSSFSheet sheet = workbook.createSheet();
@@ -110,18 +114,19 @@ public class DepositHistoryDataMakeExcel {
             sheet.setColumnWidth(colIdx++, (256*65)/7); //vending Station
             sheet.setColumnWidth(colIdx++, (256*65)/7); //cashier
             sheet.setColumnWidth(colIdx++, (256*20)/7); //cashier
-            sheet.setColumnWidth(colIdx++, (256*100)/7); //customer
+            sheet.setColumnWidth(colIdx++, (256*120)/7); //customer
             sheet.setColumnWidth(colIdx++, (256*75)/7); //accoutNo
             sheet.setColumnWidth(colIdx++, (256*75)/7); //meterId
             sheet.setColumnWidth(colIdx++, (256*75)/7); //prepaymentType
+            sheet.setColumnWidth(colIdx++, (256*75)/7); //canceled
             sheet.setColumnWidth(colIdx++, (256*80)/7); //chargeValue
-            sheet.setColumnWidth(colIdx++, (256*75)/7); //ChargedArrearsA
-            sheet.setColumnWidth(colIdx++, (256*75)/7); //ChargedArrearsB
-            sheet.setColumnWidth(colIdx++, (256*75)/7); //activity
-            sheet.setColumnWidth(colIdx++, (256*75)/7); //activity
-            sheet.setColumnWidth(colIdx++, (256*75)/7); //NIC
+            sheet.setColumnWidth(colIdx++, (256*60)/7); //ChargedArrearsA
+            sheet.setColumnWidth(colIdx++, (256*60)/7); //ChargedArrearsA
+            sheet.setColumnWidth(colIdx++, (256*120)/7); //ChargedArrearsB
+            sheet.setColumnWidth(colIdx++, (256*75)/7); //Tariff
+            sheet.setColumnWidth(colIdx++, (256*75)/7); //NIB
             sheet.setColumnWidth(colIdx++, (256*75)/7); //billId
-            sheet.setColumnWidth(colIdx++, (256*90)/7); //date
+            sheet.setColumnWidth(colIdx++, (256*110)/7); //date
             sheet.setColumnWidth(colIdx++, (256*150)/7); //address
             sheet.setColumnWidth(colIdx++, (256*120)/7); //cancelDate
             sheet.setColumnWidth(colIdx++, (256*150)/7); //cancelReason
@@ -298,17 +303,18 @@ public class DepositHistoryDataMakeExcel {
     	customer("aimir.customer", 5, "customerName", "L", null),
     	accountNo("aimir.accountNo", 6, "accountNo", "L", null),
     	meterId("aimir.meterid", 7, "meterId", "L", null),
-    	paymentType("aimir.paymenttype", 8, "paymentType", "L", null), 
-    	totalAmountPaid("aimir.amount.paid", 9, "totalAmountPaid", "R", "totalAmountPaidSum"),
-    	chargedArrearsA("aimir.prepayment.chargearrearsA", 10, "chargedArrears", "R", null),
-    	chargedArrearsB("aimir.prepayment.chargearrearsB", 11, "chargedArrears2", "R", null),
-    	tariff("aimir.residental.activity", 13, "tariffName", "L", null),
-    	geoCode("aimir.contractNumber", 14, "geoCode", "L", null),
-    	prepaymentLogId("aimir.billId", 15, "prepaymentLogId", "L", null),
-    	date("aimir.date", 16, "date", "L", null), 
-    	address("aimir.address", 17, "address", "L", null),
-    	cancelDate("aimir.cancelDate", 18, "cancelDate", "L", null),
-    	cancelReason("aimir.cancelReason", 19, "cancelReason", "L", null);
+    	paymentType("aimir.paymenttype", 8, "paymentType", "L", null),
+    	canceled("aimir.canceled", 9, "isCanceled", "L", null), 
+    	totalAmountPaid("aimir.amount.paid", 10, "totalAmountPaid", "R", "totalAmountPaidSum"),
+    	chargedArrearsA("aimir.prepayment.chargearrearsA", 11, "chargedArrears", "R", "totalChargedArrears"),
+    	chargedArrearsB("aimir.prepayment.chargearrearsB", 13, "chargedArrears2", "R", "totalChargedArrears2"),
+    	tariff("aimir.residental.activity", 14, "tariffName", "L", null),
+    	geoCode("aimir.contractNumber", 15, "geoCode", "L", null),
+    	prepaymentLogId("aimir.billId", 16, "prepaymentLogId", "L", null),
+    	date("aimir.date", 17, "date", "L", null), 
+    	address("aimir.address", 18, "address", "L", null),
+    	cancelDate("aimir.cancelDate", 19, "cancelDate", "L", null),
+    	cancelReason("aimir.cancelReason", 20, "cancelReason", "L", null);
     	
     	// column header의 msg property key
     	String columnHeader;
@@ -821,7 +827,7 @@ public class DepositHistoryDataMakeExcel {
         		} else if(withDebt) {
         			sheet.addMergedRegion(new CellRangeAddress(rowNumber, rowNumber, 11, 19));
         		} else {
-        			sheet.addMergedRegion(new CellRangeAddress(rowNumber, rowNumber, 10, 18));
+//        			sheet.addMergedRegion(new CellRangeAddress(rowNumber, rowNumber, 10, 11));
         		}
         	}
         } else if ( reportType.equalsIgnoreCase("deposit") ) {

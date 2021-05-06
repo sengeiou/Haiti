@@ -2002,7 +2002,7 @@ public class PrepaymentChargeController {
             @RequestParam String filePath,
             String logoImg) {
         ModelAndView mav = new ModelAndView("jsonView");
-        String prefix = "depositHistoryData";
+        String prefix = "Charge History";
         StringBuilder fileName = new StringBuilder(prefix);
         StringBuilder splFileName = new StringBuilder();
         Supplier supplier = supplierDao.get(supplierId);
@@ -2511,10 +2511,15 @@ public class PrepaymentChargeController {
                 data.put("cancelDate", cancelLocaleDate);
                 data.put("lastTokenId", lastTokenId);
 
-                totalChargedCredit += StringUtil.nullToDoubleZero(chargedCredit);
-                totalAmountPaidSum += StringUtil.nullToDoubleZero(totalAmountPaid);
-                totalChargedArrears += StringUtil.nullToDoubleZero(chargedArrears);
-                totalChargedArrears2 += StringUtil.nullToDoubleZero(chargedArrears2);
+                if(isCanceled) {
+                	data.put("isCanceled", "Canceled");
+                }else {
+                	//취소되지 않은 충전 내역만 합산해서 출력
+                	totalChargedCredit += StringUtil.nullToDoubleZero(chargedCredit);
+                	totalAmountPaidSum += StringUtil.nullToDoubleZero(totalAmountPaid);
+                	totalChargedArrears += StringUtil.nullToDoubleZero(chargedArrears);
+                	totalChargedArrears2 += StringUtil.nullToDoubleZero(chargedArrears2);
+                }
 
                 if (vendorCasherId != null) {
                     data.put("cashier", (String)map.get("vendorCasherName"));
@@ -2584,8 +2589,10 @@ public class PrepaymentChargeController {
                     data.put("vendingStationName", (String)map.get("historyOpName"));
                 }
             }
+            
             total.put("totalChargedCredit", df.format(totalChargedCredit));
             total.put("totalChargedArrears", df.format(totalChargedArrears));
+            total.put("totalChargedArrears2", df.format(totalChargedArrears2));
             total.put("totalChargedDeposit", df.format(totalChargedDeposit));
             total.put("totalChargedCommission", df.format(totalChargedCommission));
             total.put("totalChargedTax", df.format(totalChargedTax));

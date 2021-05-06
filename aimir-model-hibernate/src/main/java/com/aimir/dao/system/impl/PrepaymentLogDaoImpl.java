@@ -1104,6 +1104,7 @@ public class PrepaymentLogDaoImpl  extends AbstractHibernateGenericDao< Prepayme
     	if(searchType.equals("all") || searchType.equals("charge")) {
     		sb.append("\n   SELECT 'Recharge' AS TYPE,  ");
     		sb.append("\n	   p.LASTTOKENDATE AS DATETIME,  ");
+    		sb.append("\n	   p.LASTTOKENDATE AS SORTTIME,  ");
     		sb.append("\n      p.PRE_BALANCE AS BEFOREBALANCE,  ");
     		sb.append("\n	   p.BALANCE AS BALANCE,  ");
     		sb.append("\n	   p.CHARGEDCREDIT AS CHARGEDAMOUNT,  ");
@@ -1131,6 +1132,7 @@ public class PrepaymentLogDaoImpl  extends AbstractHibernateGenericDao< Prepayme
     			sb.append("\n   UNION ALL  ");
     		sb.append("\n   SELECT 'Billing(day)' AS TYPE,  ");
     		sb.append("\n	   YYYYMMDD||HHMMSS AS DATETIME,  ");
+    		sb.append("\n	   YYYYMMDD||HHMMSS AS SORTTIME,  ");
     		sb.append("\n      BALANCE+BILL AS BEFOREBALANCE,  ");
     		sb.append("\n	   BALANCE AS BALANCE,  ");
     		sb.append("\n      null AS CHARGEDAMOUNT,  ");
@@ -1159,6 +1161,7 @@ public class PrepaymentLogDaoImpl  extends AbstractHibernateGenericDao< Prepayme
     			sb.append("\n   UNION ALL  ");
     		sb.append("\n   SELECT 'Billing(month)' AS TYPE,  ");
     		sb.append("\n      YYYYMM AS DATETIME,  ");
+    		sb.append("\n      WRITE_DATE AS SORTTIME,  ");
     		sb.append("\n      BEFORE_CREDIT AS BEFOREBALANCE,  ");
     		sb.append("\n      CURRENT_CREDIT AS BALANCE,  ");
     		sb.append("\n      null AS CHARGEDAMOUNT,  ");
@@ -1181,7 +1184,7 @@ public class PrepaymentLogDaoImpl  extends AbstractHibernateGenericDao< Prepayme
     	}
 
         if (!isCount) {
-            sb.append("\n) ORDER BY DATETIME DESC ");
+            sb.append("\n) ORDER BY SORTTIME DESC ");
         }else {
         	sb.append("\n) ");
         }

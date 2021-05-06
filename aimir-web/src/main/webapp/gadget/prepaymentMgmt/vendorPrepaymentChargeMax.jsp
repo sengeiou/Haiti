@@ -346,7 +346,9 @@
 		            <input class="alt endDate" name="endDateDisplay" type='text' readOnly/><input name="endDate" type="hidden"/>
 	          	</span>
 	          </td>
-	          <td class="withinput">
+	          <td><input id="subType" type="checkbox" name='subType' style="float: right; "></td>
+              <td><label class="datetxt">Include cancelled history</label></td>
+<%-- 	          <td class="withinput">
 	          	<fmt:message key='aimir.cancelled'/>
 	          </td>
 	          <td class="padding-r20px2">
@@ -355,7 +357,7 @@
 	              <option value='cancelled'><fmt:message key='aimir.cancelled'/></option>
 	              <option value='unCancelled'><fmt:message key='aimir.uncancelled'/></option>
 	            </select>
-	          </td>
+	          </td> --%>
 	          <td>
 		          <span id='depositHistorySearch' class="am_button margin-l10 margin-t1px">
 		            <a><fmt:message key="aimir.button.search"/></a>
@@ -899,11 +901,12 @@
     var contractListModel = new Ext.grid.ColumnModel({
       columns: [
           {header: "<fmt:message key='aimir.customerid'/>", dataIndex: 'customerNo'}
+         ,{header: "<fmt:message key='aimir.contractNumber'/>", dataIndex: 'contractNumber'}
          ,{header: "<fmt:message key='aimir.customername'/>", dataIndex: 'customerName'}
          ,{header: "<fmt:message key='aimir.celluarphone'/>", dataIndex: 'phone', renderer: function(value, metaData, record, index) {
              var tplBtn = new Ext.Template("<a href='#;' onclick='getCustomerWindowWithID("+record.data.customerNo+");'>"+value+"</a>");
              return value ? tplBtn.apply():"";}}
-         ,{header: "<fmt:message key='aimir.supplystatus'/>", dataIndex: 'statusName'}
+         ,{header: "<fmt:message key='aimir.operator.contractStatus'/>", dataIndex: 'statusName'}
          ,{header: "<fmt:message key='aimir.hems.prepayment.lastchargedate'/>", dataIndex: 'lastTokenDate', align: 'center',tooltip: "<fmt:message key='aimir.hems.prepayment.lastchargedate'/>"}
          ,{header: "<fmt:message key='aimir.balance'/>", dataIndex: 'currentCredit',  align: 'right'}
          ,{header: "<fmt:message key='aimir.arrearsA'/>", dataIndex: 'currentArrears', align: 'right'}
@@ -1208,7 +1211,8 @@
 	      var params = $.extend(true, {}, vendorHistoryParams, {
 		      vendor: $("#vendor").val(),
 		      reportType: $("#reportType").val(),
-		      subType : $("#depositHistory select[name=subType]").val(),
+		      /* subType : $("#depositHistory select[name=subType]").val(), */
+		      subType : $('#subType').is(':checked') ? "all":"unCancelled",
 		      contract: $("#depositHistory input[name=contract]").val(),
 		      customerName: $("#depositHistory input[name=customerName]").val(),
 		      customerNo: $("#depositHistory input[name=customerId]").val(),
@@ -2611,7 +2615,7 @@
     var init = function() {
       Ext.QuickTips.init();
       //$("#report-type").selectbox();
-      $("#sub-type").selectbox();
+      //$("#sub-type").selectbox();
       $("#vendor").selectbox();
       initCalendar();
       renderGrid();
