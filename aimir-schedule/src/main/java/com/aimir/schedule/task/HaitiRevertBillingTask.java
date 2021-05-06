@@ -3,7 +3,6 @@ package com.aimir.schedule.task;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,7 +22,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 
 import com.aimir.dao.mvm.BillingBlockTariffDao;
+import com.aimir.dao.system.ContractDao;
+import com.aimir.dao.system.PrepaymentLogDao;
 import com.aimir.fep.util.DataUtil;
+import com.aimir.model.mvm.BillingBlockTariff;
+import com.aimir.model.system.Contract;
+import com.aimir.model.system.PrepaymentLog;
 
 @Service
 public class HaitiRevertBillingTask extends ScheduleTask {
@@ -34,6 +38,12 @@ public class HaitiRevertBillingTask extends ScheduleTask {
 	
 	@Autowired
 	private BillingBlockTariffDao billingBlockTariffDao;
+		
+	@Autowired
+	private PrepaymentLogDao prepaymentLogDao;
+	
+	@Autowired
+	private ContractDao contractDao;
 	
 	public static void main(String[] args) {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[]{"spring-public.xml"}); 
@@ -133,9 +143,42 @@ public class HaitiRevertBillingTask extends ScheduleTask {
 		try {
 			txstatus = txmanager.getTransaction(null);
 			
-			for(RevertBill r : data) {
-				if(r.getContractId() == 17141) {
-					log.info(r.getContractId() + ", " + r.getWritedate());
+			Contract contract = null;
+			double balance = 0d;
+			
+			for(int i=0; i<data.size(); i++) {
+				RevertBill rb = data.get(i);
+				
+				if(contract == null) {
+					contract = contractDao.get(rb.getContractId());
+				}
+				
+				if(i == 0) {
+					balance = rb.getBalance();
+					continue;
+				}
+				
+				if("BBT".equals(rb.getTabletype())) {
+					BillingBlockTariff bbt = billingBlockTariffDao.getBillingBlockTariff(rb.getContractId(), rb.getMdevId(), rb.getYyyymmdd(), rb.getHhmmss());
+					if(bbt != null) {
+						double b = balance - rb.getBill();
+						bbt.setBalance(b);
+						contract.setCurrentCredit(b);
+						log.debug("BBT || balance : " +balance +", bill : " + rb.getBill()+", b : " + b);
+						
+						balance = b;
+					}
+				} else {
+					PrepaymentLog pr = prepaymentLogDao.get(rb.getId());
+					if(pr != null) {
+						double b = balance + pr.getChargedCredit();
+						pr.setPreBalance(balance);
+						pr.setBalance(b);
+						contract.setCurrentCredit(b);
+						log.debug("PRE || balance : " +balance +", chargeCredit : " + pr.getChargedCredit() + ", b : " + b);
+						
+						balance = b;
+					}
 				}
 			}
 			

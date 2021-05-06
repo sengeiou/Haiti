@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.NoResultException;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
@@ -26,6 +28,7 @@ import com.aimir.dao.mvm.BillingBlockTariffDao;
 import com.aimir.model.mvm.BillingBlockTariff;
 import com.aimir.model.mvm.BillingDayEM;
 import com.aimir.model.system.Contract;
+import com.aimir.model.system.MonthlyBillingLog;
 
 /**
  * BillingBlockTariffDaoImpl.java Description 
@@ -257,6 +260,55 @@ public class BillingBlockTariffDaoImpl extends AbstractHibernateGenericDao<Billi
     }
     
     @Override
+    public BillingBlockTariff getBillingBlockTariff(Integer contractId, String mdevId, String yyyymmdd, String hhmmss) {
+    	if(contractId == null && mdevId == null) {
+    		logger.error("contractId and mdevId is null. please check value");
+    		return null;
+    	}
+    		
+    	try {
+    		StringBuffer sbQuery = new StringBuffer();
+    		sbQuery.append(" SELECT * FROM BILLING_BLOCK_TARIFF bbt ");
+    		sbQuery.append("\n WHERE 1 = 1");
+    		
+    		if(contractId != null)
+    			sbQuery.append("\n bbt.CONTRACT_ID = :contractId ");
+    		
+    		if(mdevId != null)
+    			sbQuery.append("\n bbt.MDEV_ID = :mdevId ");
+    		
+    		if(yyyymmdd != null)
+    			sbQuery.append("\n bbt.YYYYMMDD = :yyyymmdd ");
+    		
+    		if(hhmmss != null)
+    			sbQuery.append("\n bbt.HHMMSS = :hhmmss ");
+    		
+    		org.hibernate.query.Query query = getSession().createNativeQuery(sbQuery.toString(), BillingBlockTariff.class);
+    		if(contractId != null)
+    			query.setParameter("contractId", contractId);
+    		
+    		if(mdevId != null)
+    			query.setParameter("mdevId", mdevId);
+    		
+    		if(yyyymmdd != null)
+    			query.setParameter("yyyymmdd", yyyymmdd);
+    		
+    		if(hhmmss != null)
+    			query.setParameter("hhmmss", hhmmss);
+    		
+    		return (BillingBlockTariff)query.getSingleResult();
+    		
+    	} catch(NoResultException e) {
+			return null;
+		} catch(Exception e) {
+    		logger.error(e, e);
+    	}
+    	
+    	return null;
+    }
+    
+    
+    @Override
     public List<Map<String, Object>> getRevertBillingList() {
     	try {
     		StringBuffer buffer = new StringBuffer();
@@ -320,7 +372,7 @@ public class BillingBlockTariffDaoImpl extends AbstractHibernateGenericDao<Billi
 			buffer.append("     a.contract_id = tb.contract_id ");
 			buffer.append("     and a.writedate >= tb.writedate ");
 			buffer.append(" order by ");
-			buffer.append("     a.contract_id, a.writedate asc ");
+			buffer.append("     a.contract_id, a.writedate, a.yyyymmdd, a.hhmmss ");
 			query = getSession().createNativeQuery(buffer.toString());
 			return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();    		
     		
