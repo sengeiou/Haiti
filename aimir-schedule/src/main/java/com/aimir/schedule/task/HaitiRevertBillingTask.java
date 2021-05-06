@@ -166,6 +166,9 @@ public class HaitiRevertBillingTask extends ScheduleTask {
 						contract.setCurrentCredit(b);
 						log.debug("BBT || balance : " +balance +", bill : " + rb.getBill()+", b : " + b);
 						
+						billingBlockTariffDao.update(bbt);
+						contractDao.update(contract);
+						
 						balance = b;
 					}
 				} else {
@@ -176,6 +179,9 @@ public class HaitiRevertBillingTask extends ScheduleTask {
 						pr.setBalance(b);
 						contract.setCurrentCredit(b);
 						log.debug("PRE || balance : " +balance +", chargeCredit : " + pr.getChargedCredit() + ", b : " + b);
+						
+						prepaymentLogDao.update(pr);
+						contractDao.update(contract);
 						
 						balance = b;
 					}
