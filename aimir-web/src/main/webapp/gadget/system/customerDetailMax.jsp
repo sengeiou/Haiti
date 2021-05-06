@@ -570,10 +570,10 @@
 						<!--고객주소 --></th>
 					<td style="padding: 0">
 						<table>
-							<tr><td style="border-color: #FFF"><div id="InfoAddress" class="input-fake"></div></td></tr>
-							<tr><td style="border-color: #FFF"><div id="InfoAddress1" class="input-fake"></div></td></tr>
-							<tr><td style="border-color: #FFF"><div id="InfoAddress2" class="input-fake"></div></td></tr>
-							<tr><td style="border-color: #FFF"><div id="InfoAddress3" class="input-fake"></div></td></tr>
+							<tr><td style="border-color: #FFF"><div id="InfoAddress" class="input-fake" style="height:auto"></div></td></tr>
+							<tr><td style="border-color: #FFF"><div id="InfoAddress1" class="input-fake" style="height:auto"></div></td></tr>
+							<tr><td style="border-color: #FFF"><div id="InfoAddress2" class="input-fake" style="height:auto"></div></td></tr>
+							<tr><td style="border-color: #FFF"><div id="InfoAddress3" class="input-fake" style="height:auto"></div></td></tr>
 						</table>
 					</td>
 				</tr>

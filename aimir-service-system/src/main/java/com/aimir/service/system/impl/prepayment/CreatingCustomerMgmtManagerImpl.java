@@ -146,7 +146,8 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
         }
 
         Code serviceTypeCode = codeDao.getCodeIdByCodeObject(MeterType.EnergyMeter.getServiceType());
-        Code creditTypeCode = codeDao.getCodeIdByCodeObject(Code.EMERGENCY_CREDIT);
+//        Code creditTypeCode = codeDao.getCodeIdByCodeObject(Code.EMERGENCY_CREDIT);
+        Code creditTypeCode = codeDao.getCodeIdByCodeObject(Code.POSTPAY);
         Code statusCode = codeDao.getCodeIdByCodeObject(Code.NORMAL);
 //        TariffType tariffType = tariffTypeDao.findByCondition("name", tariffTypeName);
 
@@ -176,9 +177,9 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
         contract.setCurrentCredit(0.0);
         contract.setCurrentArrears(0.0);
         contract.setCurrentArrears2(0.0);
-        contract.setEmergencyCreditAvailable(true);
-        contract.setEmergencyCreditMaxDuration(365);
-        contract.setEmergencyCreditStartTime(dateTime);
+//        contract.setEmergencyCreditAvailable(true);
+//        contract.setEmergencyCreditMaxDuration(365);
+//        contract.setEmergencyCreditStartTime(dateTime);
         contractDao.add(contract);
 //        contractDao.merge(contract);
     }
@@ -517,7 +518,8 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 TariffType tariffType = tariffTypeDao.findByCondition("name", tariffIndexID);
                 Code serviceTypeCode = codeDao.getCodeIdByCodeObject(MeterType.EnergyMeter.getServiceType());
                 Code statusCode = codeDao.getCodeIdByCodeObject(Code.NORMAL);
-                Code creditTypeCode = codeDao.getCodeIdByCodeObject(Code.EMERGENCY_CREDIT);
+//                Code creditTypeCode = codeDao.getCodeIdByCodeObject(Code.EMERGENCY_CREDIT);
+                Code creditTypeCode = codeDao.getCodeIdByCodeObject(Code.POSTPAY);
                 Code meterStatusCode = codeDao.getCodeIdByCodeObject(MeterStatus.NewRegistered.getCode());
                 Code contractStatusCode = codeDao.getCodeIdByCodeObject(ContractStatus.PAUSE.getCode());
                 
@@ -612,9 +614,9 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                     contract.setCurrentArrears(currentArrears1 == null  ?  0.0 : Double.parseDouble(currentArrears1));
                     contract.setCurrentArrears2(currentArrears2 == null  ?  0.0 : Double.parseDouble(currentArrears2));
                     contract.setPreMdsId(previousMeter);
-                    contract.setEmergencyCreditAvailable(true);
-                    contract.setEmergencyCreditMaxDuration(365);
-                    contract.setEmergencyCreditStartTime(dateTime);
+//                    contract.setEmergencyCreditAvailable(true);
+//                    contract.setEmergencyCreditMaxDuration(365);
+//                    contract.setEmergencyCreditStartTime(dateTime);
                     if (meterNumber != null && !"".equals(meterNumber)) {
                     	contract.setMeter(newMeter);
                     }
@@ -634,9 +636,9 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 	contract.setCurrentArrears(currentArrears1 == null  ?  0.0 : Double.parseDouble(currentArrears1));
                 	contract.setCurrentArrears2(currentArrears2 == null  ?  0.0 : Double.parseDouble(currentArrears2));
                 	contract.setPreMdsId(previousMeter);
-                	contract.setEmergencyCreditAvailable(true);
-                	contract.setEmergencyCreditMaxDuration(365);
-                	contract.setEmergencyCreditStartTime(dateTime);
+//                	contract.setEmergencyCreditAvailable(true);
+//                	contract.setEmergencyCreditMaxDuration(365);
+//                	contract.setEmergencyCreditStartTime(dateTime);
                 	if (meterNumber != null && !"".equals(meterNumber)) {
                 		contract.setMeter(newMeter);
                 	}
