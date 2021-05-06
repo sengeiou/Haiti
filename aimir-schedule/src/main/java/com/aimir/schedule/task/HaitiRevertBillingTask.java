@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -13,11 +14,13 @@ import javax.sql.DataSource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.JobExecutionContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.stereotype.Service;
 
+import com.aimir.dao.mvm.BillingBlockTariffDao;
 import com.aimir.fep.util.DataUtil;
 
 @Service
@@ -26,6 +29,9 @@ public class HaitiRevertBillingTask extends ScheduleTask {
 	
 	@Resource(name = "transactionManager")
 	private HibernateTransactionManager txmanager;
+	
+	@Autowired
+	private BillingBlockTariffDao billingBlockTariffDao;
 	
 	public static void main(String[] args) {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[]{"spring-public.xml"}); 
@@ -51,6 +57,61 @@ public class HaitiRevertBillingTask extends ScheduleTask {
 	private Map<Integer, LinkedList<RevertBill>> getDataList(ApplicationContext ctx) {
 		Map<Integer , LinkedList<RevertBill>> map = new HashMap<Integer , LinkedList<RevertBill>>();
 		
+		List<Map<String, Object>> queryList = billingBlockTariffDao.getRevertBillingList();
+		if(queryList == null || queryList.size() == 0) {
+			log.debug("map is empty!");
+		}
+		
+		for(Map<String, Object> m : queryList) {
+			
+			String tabletype = String.valueOf(m.get("tabletype"));
+			String mdev_id = String.valueOf(m.get("mdev_id"));
+			String yyyymmdd = String.valueOf(m.get("yyyymmdd"));
+			String hhmmss = String.valueOf(m.get("hhmmss"));
+			String writedate = String.valueOf(m.get("writedate"));
+			int contract_id = Integer.parseInt(m.get("contract_id").toString());
+			long id = Long.parseLong(m.get("id").toString());
+			double chargedcredit = Double.parseDouble(m.get("chargedcredit").toString());			
+			double bill = Double.parseDouble(m.get("bill").toString());
+			double pre_balance = Double.parseDouble(m.get("pre_balance").toString());
+			double balance = Double.parseDouble(m.get("balance").toString());
+			
+			RevertBill r = new RevertBill();
+			r.setTabletype(tabletype);
+			r.setMdevId(mdev_id);
+			r.setYyyymmdd(yyyymmdd);
+			r.setHhmmss(hhmmss);
+			r.setWritedate(writedate);
+			r.setContractId(contract_id);
+			r.setId(id);
+			r.setChargedcredit(chargedcredit);
+			r.setBill(bill);
+			r.setPre_balance(pre_balance);
+			r.setBalance(balance);
+			
+			if(map.containsKey(contract_id)) {
+				LinkedList<RevertBill> li = map.get(contract_id);
+				li.add(r);
+				
+				map.put(contract_id, li);
+			}else {
+				LinkedList<RevertBill> li = new LinkedList<RevertBill>();
+				li.add(r);
+				
+				map.put(contract_id, li);
+			}
+		}
+		
+		log.debug("total Map Count : " + map.size());
+		
+		return null;
+		
+	}
+	
+	
+	private Map<Integer, LinkedList<RevertBill>> getDataListOld(ApplicationContext ctx) {
+		Map<Integer , LinkedList<RevertBill>> map = new HashMap<Integer , LinkedList<RevertBill>>();
+		
 		Statement sql = null;
 		Connection con = null;
 		ResultSet rs = null;
@@ -63,7 +124,7 @@ public class HaitiRevertBillingTask extends ScheduleTask {
 			
 			StringBuffer buffer = new StringBuffer();
 			buffer.append(" truncate table TEMP_BILLGIN ");
-			rs = sql.executeQuery(buffer.toString());			
+			rs = sql.executeQuery(buffer.toString());
 			
 			buffer = new StringBuffer();
 			buffer.append(" INSERT INTO TEMP_BILLGIN ");
