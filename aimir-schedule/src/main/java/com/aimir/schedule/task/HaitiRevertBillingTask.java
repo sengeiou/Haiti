@@ -123,7 +123,7 @@ public class HaitiRevertBillingTask extends ScheduleTask {
 		
 		log.debug("total Map Count : " + map.size());
 		
-		return null;
+		return map;
 		
 	}
 	
