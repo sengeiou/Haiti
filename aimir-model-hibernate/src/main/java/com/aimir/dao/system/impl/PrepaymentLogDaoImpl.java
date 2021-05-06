@@ -1184,7 +1184,7 @@ public class PrepaymentLogDaoImpl  extends AbstractHibernateGenericDao< Prepayme
     	}
 
         if (!isCount) {
-            sb.append("\n) ORDER BY SORTTIME DESC ");
+            sb.append("\n) ORDER BY SORTTIME DESC, DATETIME DESC ");
         }else {
         	sb.append("\n) ");
         }
