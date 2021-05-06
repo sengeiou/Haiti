@@ -142,7 +142,9 @@ public class BillingBlockTariffDaoImpl extends AbstractJpaDao<BillingBlockTariff
     }
     
     @Override
-    public BillingBlockTariff getBillingBlockTariff(Integer contractId, String mdevId, String yyyymmdd, String hhmmss) { }
+    public BillingBlockTariff getBillingBlockTariff(Integer contractId, String mdevId, String yyyymmdd, String hhmmss) { 
+    	return null;
+    }
     
     @Override
     public List<Map<String, Object>> getRevertBillingList() {
