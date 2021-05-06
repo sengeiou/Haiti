@@ -56,8 +56,11 @@ public class HaitiRevertBillingTask extends ScheduleTask {
 			txstatus = txmanager.getTransaction(null);
 			
 			Map<Integer, LinkedList<RevertBill>> listData = getDataList(ctx);
-			
 			txmanager.commit(txstatus);
+			
+			if(listData != null && listData.size() > 0) {
+				
+			}
 		}catch(Exception e) {
 			log.error(e, e);
 			
@@ -78,10 +81,6 @@ public class HaitiRevertBillingTask extends ScheduleTask {
 		}
 		
 		for(Map<String, Object> m : queryList) {
-			
-			List<String> keyList = new ArrayList<>(m.keySet());
-			log.info(keyList);
-			
 			String tabletype = String.valueOf(m.get("TABLETYPE"));
 			String mdev_id = String.valueOf(m.get("MDEV_ID"));
 			String yyyymmdd = String.valueOf(m.get("YYYYMMDD"));
@@ -126,6 +125,26 @@ public class HaitiRevertBillingTask extends ScheduleTask {
 		
 	}
 	
+	private void setData(LinkedList<RevertBill> data) {
+		TransactionStatus txstatus = null;
+		
+		try {
+			txstatus = txmanager.getTransaction(null);
+			
+			for(RevertBill r : data) {
+				if(r.getContractId() == 17141) {
+					log.info(r.getWritedate());
+				}
+			}
+			
+			txmanager.commit(txstatus);
+		}catch(Exception e) {
+			log.error(e, e);
+			
+			if (txstatus != null)
+				txmanager.rollback(txstatus);
+		}
+	}
 	
 	private Map<Integer, LinkedList<RevertBill>> getDataListOld(ApplicationContext ctx) {
 		Map<Integer , LinkedList<RevertBill>> map = new HashMap<Integer , LinkedList<RevertBill>>();
