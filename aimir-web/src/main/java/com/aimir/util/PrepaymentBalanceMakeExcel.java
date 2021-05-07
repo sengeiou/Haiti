@@ -142,7 +142,11 @@ public class PrepaymentBalanceMakeExcel {
 			cell.setCellStyle(titleCellStyle);
 			
 			cell = row.createCell(cellCnt++);
-			cell.setCellValue(msgMap.get("meterstatus"));
+			cell.setCellValue(msgMap.get("contractStatus"));
+			cell.setCellStyle(titleCellStyle);
+			
+			cell = row.createCell(cellCnt++);
+			cell.setCellValue(msgMap.get("meterStatus"));
 			cell.setCellStyle(titleCellStyle);
 			
 //			cell = row.createCell(cellCnt++);
@@ -213,6 +217,10 @@ public class PrepaymentBalanceMakeExcel {
 				
 				cell = row.createCell(cellCnt++);
 				cell.setCellValue(resultMap.get("statusName") == null ? "" : resultMap.get("statusName").toString());
+				cell.setCellStyle(dataCellStyle);
+				
+				cell = row.createCell(cellCnt++);
+				cell.setCellValue(resultMap.get("meterStatus") == null ? "" : resultMap.get("meterStatus").toString());
 				cell.setCellStyle(dataCellStyle);
 				
 //				cell = row.createCell(cellCnt++);

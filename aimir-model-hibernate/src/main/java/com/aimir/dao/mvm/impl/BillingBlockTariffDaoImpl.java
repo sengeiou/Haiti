@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.NoResultException;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
@@ -26,6 +28,7 @@ import com.aimir.dao.mvm.BillingBlockTariffDao;
 import com.aimir.model.mvm.BillingBlockTariff;
 import com.aimir.model.mvm.BillingDayEM;
 import com.aimir.model.system.Contract;
+import com.aimir.model.system.MonthlyBillingLog;
 
 /**
  * BillingBlockTariffDaoImpl.java Description 
@@ -254,6 +257,131 @@ public class BillingBlockTariffDaoImpl extends AbstractHibernateGenericDao<Billi
             logger.error(e, e);
         }
         return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+    }
+    
+    @Override
+    public BillingBlockTariff getBillingBlockTariff(Integer contractId, String mdevId, String yyyymmdd, String hhmmss) {
+    	if(contractId == null && mdevId == null) {
+    		logger.error("contractId and mdevId is null. please check value");
+    		return null;
+    	}
+    		
+    	try {
+    		StringBuffer sbQuery = new StringBuffer();
+    		sbQuery.append(" SELECT * FROM BILLING_BLOCK_TARIFF bbt ");
+    		sbQuery.append("\n WHERE 1 = 1");
+    		
+    		if(contractId != null)
+    			sbQuery.append("\n AND bbt.CONTRACT_ID = :contractId ");
+    		
+    		if(mdevId != null)
+    			sbQuery.append("\n AND bbt.MDEV_ID = :mdevId ");
+    		
+    		if(yyyymmdd != null)
+    			sbQuery.append("\n AND bbt.YYYYMMDD = :yyyymmdd ");
+    		
+    		if(hhmmss != null)
+    			sbQuery.append("\n AND bbt.HHMMSS = :hhmmss ");
+    		
+    		org.hibernate.query.Query query = getSession().createNativeQuery(sbQuery.toString(), BillingBlockTariff.class);
+    		if(contractId != null)
+    			query.setParameter("contractId", contractId);
+    		
+    		if(mdevId != null)
+    			query.setParameter("mdevId", mdevId);
+    		
+    		if(yyyymmdd != null)
+    			query.setParameter("yyyymmdd", yyyymmdd);
+    		
+    		if(hhmmss != null)
+    			query.setParameter("hhmmss", hhmmss);
+    		
+    		return (BillingBlockTariff)query.getSingleResult();
+    		
+    	} catch(NoResultException e) {
+			return null;
+		} catch(Exception e) {
+    		logger.error(e, e);
+    	}
+    	
+    	return null;
+    }
+    
+    
+    @Override
+    public List<Map<String, Object>> getRevertBillingList() {
+    	try {
+    		StringBuffer buffer = new StringBuffer();
+    		buffer.append(" truncate table TEMP_BILLGIN ");	
+    		org.hibernate.query.Query query = getSession().createNativeQuery(buffer.toString());
+    		query.executeUpdate();
+    		
+    		buffer = new StringBuffer();
+			buffer.append(" INSERT INTO TEMP_BILLGIN ");
+			buffer.append(" SELECT *  FROM  ");
+			buffer.append(" ( ");
+			buffer.append("     WITH TPREPAY AS  ");
+			buffer.append("     ( ");
+			buffer.append("         SELECT  ");
+			buffer.append("             A.CONTRACT_ID, A.LASTTOKENDATE ");
+			buffer.append("         FROM  ");
+			buffer.append("         ( ");
+			buffer.append("             SELECT  ");
+			buffer.append("                 p.*, ");
+			buffer.append("                 row_number() OVER (PARTITION BY p.CONTRACT_ID ORDER BY p.LASTTOKENDATE asc) AS row_idx ");
+			buffer.append("             FROM  ");
+			buffer.append("                 PREPAYMENTLOG_HSW p ");
+			buffer.append("             WHERE ");
+			buffer.append("                 1 = 1 ");
+			buffer.append("                 AND p.CANCEL_DATE IS NULL  ");
+			buffer.append("         )A WHERE  ");
+			buffer.append("             row_idx = 1 ");
+			buffer.append("     ), ");
+			buffer.append("     TDAYBILLING AS  ");
+			buffer.append("     ( ");
+			buffer.append("         SELECT ");
+			buffer.append("             * ");
+			buffer.append("         FROM  ");
+			buffer.append("         ( ");
+			buffer.append("             SELECT  ");
+			buffer.append("                 bbt.*, ");
+			buffer.append("                 row_number() OVER (PARTITION BY bbt.CONTRACT_ID ORDER BY bbt.WRITEDATE desc) AS row_idx ");
+			buffer.append("             FROM  ");
+			buffer.append("                 BILLING_BLOCK_TARIFF_HSW bbt, TPREPAY tp ");
+			buffer.append("             WHERE ");
+			buffer.append("                bbt.CONTRACT_ID = tp.CONTRACT_ID ");
+			buffer.append("            and bbt.WRITEDATE < tp.LASTTOKENDATE ");
+			buffer.append("         ) where ");
+			buffer.append("             row_idx = 1 ");
+			buffer.append("     ) ");
+			buffer.append("     select * from TDAYBILLING ");
+			buffer.append(" ) ");
+			query = getSession().createNativeQuery(buffer.toString());
+			query.executeUpdate();
+			
+			buffer = new StringBuffer();
+			buffer.append(" select  ");
+			buffer.append("    a.* ");
+			buffer.append(" from  ");
+			buffer.append(" ( ");
+			buffer.append("     SELECT 'BBT' AS TABLETYPE, 0 AS ID, bbt.CONTRACT_ID, 0 AS CHARGEDCREDIT,  bbt.MDEV_ID , bbt.BILL, 0 as PRE_BALANCE, bbt.BALANCE, bbt.YYYYMMDD,  bbt.HHMMSS , bbt.WRITEDATE FROM BILLING_BLOCK_TARIFF_HSW bbt ");
+			buffer.append("     UNION ALL ");
+			buffer.append("     SELECT 'PREPAY' AS TABLETYPE, ph.ID, ph.CONTRACT_ID, ph.CHARGEDCREDIT, '' AS MDEV_ID , 0 AS BILL, ph.PRE_BALANCE, ph.BALANCE, '' AS YYYYMMDD, '' AS HHMMSS, ph.LASTTOKENDATE AS WRITEDATE FROM PREPAYMENTLOG_HSW ph where ph.CANCEL_DATE IS null ");
+			buffer.append(" )a, TEMP_BILLGIN tb ");
+			buffer.append(" where ");
+			buffer.append("     a.contract_id = tb.contract_id ");
+			buffer.append("     and a.writedate >= tb.writedate ");
+			buffer.append(" order by ");
+			buffer.append("     a.contract_id, a.writedate, a.yyyymmdd, a.hhmmss ");
+			query = getSession().createNativeQuery(buffer.toString());
+			return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();    		
+    		
+    	}catch(Exception e) {
+    		logger.error(e, e);
+    	}
+    	
+		return null;
+		
     }
 
 }

@@ -66,4 +66,8 @@ public interface BillingBlockTariffDao extends GenericDao<BillingBlockTariff, In
      * @return
      */
     public List<Map<String, Object>> getLastAccumulateBill(String mdevId);
+    
+    public BillingBlockTariff getBillingBlockTariff(Integer contractId, String mdevId, String yyyymmdd, String hhmmss);
+    
+    public List<Map<String, Object>> getRevertBillingList();
 }

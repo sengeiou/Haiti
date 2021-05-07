@@ -269,16 +269,6 @@
           <input type='hidden' id='reportType' name='reportType' value='sales'/>
           	<tr>
 	          <td class="withinput">
-	          	<fmt:message key='aimir.cancelled'/>
-	          </td>
-	          <td class="padding-r20px2">
-	            <select id='sub-type' name='subType'>
-	              <option value='all'><fmt:message key='aimir.all'/></option>
-	              <option value='cancelled'><fmt:message key='aimir.cancelled'/></option>
-	              <option value='unCancelled'><fmt:message key='aimir.uncancelled'/></option>
-	            </select>
-	          </td>
-	          <td class="withinput">
 	            <fmt:message key="aimir.customer"/> <fmt:message key="aimir.userreg.name"/>
 	          </td>
 	          <td class="padding-r20px2">
@@ -356,6 +346,18 @@
 		            <input class="alt endDate" name="endDateDisplay" type='text' readOnly/><input name="endDate" type="hidden"/>
 	          	</span>
 	          </td>
+	          <td><input id="subType" type="checkbox" name='subType' style="float: right; "></td>
+              <td><label class="datetxt">Include cancelled history</label></td>
+<%-- 	          <td class="withinput">
+	          	<fmt:message key='aimir.cancelled'/>
+	          </td>
+	          <td class="padding-r20px2">
+	            <select id='sub-type' name='subType'>
+	              <option value='all'><fmt:message key='aimir.all'/></option>
+	              <option value='cancelled'><fmt:message key='aimir.cancelled'/></option>
+	              <option value='unCancelled'><fmt:message key='aimir.uncancelled'/></option>
+	            </select>
+	          </td> --%>
 	          <td>
 		          <span id='depositHistorySearch' class="am_button margin-l10 margin-t1px">
 		            <a><fmt:message key="aimir.button.search"/></a>
@@ -649,7 +651,7 @@
       url: "${ctx}/gadget/prepaymentMgmt/getChargeHistoryList.do",
       totalProperty: 'totalCount',
       root: 'result',
-      fields: ["lastTokenDate", "chargedCredit", "chargedArrears", "chargedArrears2", "balance", "arrears", "arrears2", "vat", "prepaymentLogId",
+      fields: ["lastTokenDate", "totalAmountPaid", "chargedCredit", "chargedArrears", "chargedArrears2", "balance", "arrears", "arrears2", "vat", "prepaymentLogId",
         "lastTokenId", "authCode", "municipalityCode", "payType", "firstArrears", "arrearsContractCount", "arrearsPaymentCount","partpayInfo"],
       listeners: {
         beforeload: function(store, options) {
@@ -697,8 +699,8 @@
       url: "${ctx}/gadget/prepaymentMgmt/vendorChargeHistoryList.do",
       totalProperty: 'count',
       root: 'list',
-      fields: ['vendor', 'casher','contractNo', 'customerId', 'meter', 'gs1', 
-        'customerName', 'address', 'changeDate', 'totalAmountPaid', 'payType', 'chargeDeposit', 'deposit'],
+      fields: ['vendor', 'casher','contractNo', 'customerId', 'meter', 'gs1',
+        'customerName', 'address', 'changeDate', 'totalAmountPaid', 'payType', 'isCanceled', 'chargeDeposit', 'deposit'],
       listeners: {
         beforeload: function(store, options) {
           var params = options.params;
@@ -786,6 +788,12 @@
       button.defer(100);
       return $div[0].outerHTML;
     };
+    
+    var displayCanceled = function(value, meta, rec) {        
+        if (rec.json.isCanceled) {
+          return "<fmt:message key='aimir.canceled'/>"
+        }
+      };
 
     var deleteCasherBtnArea = function(value, meta, rec) {
       var id = Ext.id();
@@ -893,13 +901,14 @@
     var contractListModel = new Ext.grid.ColumnModel({
       columns: [
           {header: "<fmt:message key='aimir.customerid'/>", dataIndex: 'customerNo'}
+         ,{header: "<fmt:message key='aimir.contractNumber'/>", dataIndex: 'contractNumber'}
          ,{header: "<fmt:message key='aimir.customername'/>", dataIndex: 'customerName'}
          ,{header: "<fmt:message key='aimir.celluarphone'/>", dataIndex: 'phone', renderer: function(value, metaData, record, index) {
              var tplBtn = new Ext.Template("<a href='#;' onclick='getCustomerWindowWithID("+record.data.customerNo+");'>"+value+"</a>");
              return value ? tplBtn.apply():"";}}
-         ,{header: "<fmt:message key='aimir.supplystatus'/>", dataIndex: 'statusName'}
+         ,{header: "<fmt:message key='aimir.operator.contractStatus'/>", dataIndex: 'statusName'}
          ,{header: "<fmt:message key='aimir.hems.prepayment.lastchargedate'/>", dataIndex: 'lastTokenDate', align: 'center',tooltip: "<fmt:message key='aimir.hems.prepayment.lastchargedate'/>"}
-         ,{header: "<fmt:message key='aimir.credit'/>", dataIndex: 'currentCredit',  align: 'right'}
+         ,{header: "<fmt:message key='aimir.balance'/>", dataIndex: 'currentCredit',  align: 'right'}
          ,{header: "<fmt:message key='aimir.arrearsA'/>", dataIndex: 'currentArrears', align: 'right'}
          ,{header: "<fmt:message key='aimir.arrearsB'/>", dataIndex: 'currentArrears2', align: 'right'}
  /*		 ,{header: "<fmt:message key='aimir.meterid'/>", dataIndex: 'mdsId'}
@@ -937,19 +946,21 @@
     var historyListModel = new Ext.grid.ColumnModel({
       columns: [
         {header: "<fmt:message key='aimir.hems.prepayment.chargedate'/>", dataIndex: 'lastTokenDate'},
+        {header: "<fmt:message key='aimir.total.amount'/>", align: 'right', dataIndex: 'totalAmountPaid'},
         {header: "<fmt:message key='aimir.chargeAmount'/>", align: 'right', dataIndex: 'chargedCredit'},
         {header: "<fmt:message key='aimir.credit'/>", align: 'right', dataIndex: 'balance'},
         {header: "<fmt:message key='aimir.usageFee2'/> <fmt:message key='aimir.arrearsA'/>", align: 'right', dataIndex: 'chargedArrears'},
         {header: "<fmt:message key='aimir.arrearsA'/>", align: 'right', dataIndex: 'arrears'},
         {header: "<fmt:message key='aimir.usageFee2'/> <fmt:message key='aimir.arrearsB'/>", align: 'right', dataIndex: 'chargedArrears2'},
         {header: "<fmt:message key='aimir.arrearsB'/>", align: 'right', dataIndex: 'arrears2'},
+        {header: "<fmt:message key='aimir.prepayment.vat'/>", align: 'right', dataIndex: 'vat'},
         {header: "<fmt:message key='aimir.contract.receioptNo'/>", align: 'center',  dataIndex: 'prepaymentLogId'},
         //{header: "<fmt:message key='aimir.prepayment.authCode'/>", dataIndex: 'authCode'},
         //{header: "<fmt:message key='aimir.prepayment.municipalityCode'/>", dataIndex: 'municipalityCode'},
         {header: "<fmt:message key='aimir.paymenttype'/>",  align: 'center', dataIndex: 'payType'},
         {header: "<fmt:message key='aimir.partpayInfo'/>", renderer: partpayInfoArea, align: 'center', dataIndex: 'firstArrears'},
         {header: "<fmt:message key='aimir.receipt'/>", renderer: receiptBtnArea},        
-        {header: "<fmt:message key='aimir.partpayInfo'/>", renderer: cancelBtnArea, hidden: isHiddenCancelBtn},
+        {header: "<fmt:message key='aimir.cancel'/>", renderer: cancelBtnArea, hidden: isHiddenCancelBtn},
         {header: "", renderer: relayOnBtnArea, hidden: true}
       ],
       defaults: {sortable: true, 
@@ -970,7 +981,8 @@
         {header: "<fmt:message key='aimir.address'/>"},
         {header: "<fmt:message key='aimir.hems.prepayment.chargedate'/>"},
         {header: "<fmt:message key='aimir.amount.paid'/>", align: 'right'},
-        {header: "<fmt:message key='aimir.paymenttype'/>",  align: 'center'}
+        {header: "<fmt:message key='aimir.paymenttype'/>",  align: 'center'},
+        {header: "<fmt:message key='aimir.canceled'/>",  align: 'center', renderer: displayCanceled}
         //{header: "<fmt:message key='aimir.deposit.chargedeposit'/>", align: 'right'},
         //{header: "<fmt:message key='aimir.deposit'/>", align: 'right', 
           //css: 'padding-right:10px'}
@@ -1141,7 +1153,7 @@
 
       selectedHistorySearch: function(sm, rowIndex, rec) {
 //        historyListModel.setHidden(10, true);
-        historyListModel.setHidden(12, true);
+        historyListModel.setHidden(14, true);
         var contractNumber = rec.json.contractNumber;
         var params = $.extend(true, {}, historyListParams, {
           contractNumber: contractNumber,
@@ -1199,7 +1211,8 @@
 	      var params = $.extend(true, {}, vendorHistoryParams, {
 		      vendor: $("#vendor").val(),
 		      reportType: $("#reportType").val(),
-		      subType : $("#depositHistory select[name=subType]").val(),
+		      /* subType : $("#depositHistory select[name=subType]").val(), */
+		      subType : $('#subType').is(':checked') ? "all":"unCancelled",
 		      contract: $("#depositHistory input[name=contract]").val(),
 		      customerName: $("#depositHistory input[name=customerName]").val(),
 		      customerNo: $("#depositHistory input[name=customerId]").val(),
@@ -1617,7 +1630,7 @@
               Ext.Msg.alert("<fmt:message key='aimir.error'/>", 
                 "<fmt:message key='aimir.error'/>");                     
 //              historyListModel.setHidden(10, false);
-                historyListModel.setHidden(12, false);
+                historyListModel.setHidden(14, false);
             }
             hide();
             if (callback) {
@@ -1764,7 +1777,7 @@
         var logOn = function(json) {
           isHiddenCancelBtn = (vendorRole == 'admin' || vendorRole == 'edh_vendor' || (vendorRole == 'ECG vendor' && isManager)) ? false : true; 
           //historyListModel.setHidden(9, isHiddenCancelBtn);
-          historyListModel.setHidden(11, isHiddenCancelBtn);
+          historyListModel.setHidden(13, isHiddenCancelBtn);
           //clientMacAddress = document.MacAddress.getMacAddress();
           //macAddressList = document.MacAddress.getMacAddressList();
 
@@ -2393,6 +2406,9 @@
           vendor: vendor,
           reason: null
         };
+        if(rec.lastTokenDate){
+        	Ext.Msg.alert("<fmt:message key='aimir.warning'/>","You can only cancel the details of the charge today.");
+        }
 
 		  var charLenText = 'character : ';
           var refund =  new Ext.Window({
@@ -2565,6 +2581,9 @@
           {supplierId: supplierId, dbDate: dbDate},
           function(data) {            
             $(inst).siblings("." + inst.attr('name')).val(data.localDate);
+            if(data){
+            	console.log(data)
+            }
           });
       };
 
@@ -2596,7 +2615,7 @@
     var init = function() {
       Ext.QuickTips.init();
       //$("#report-type").selectbox();
-      $("#sub-type").selectbox();
+      //$("#sub-type").selectbox();
       $("#vendor").selectbox();
       initCalendar();
       renderGrid();

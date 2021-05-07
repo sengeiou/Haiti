@@ -757,6 +757,7 @@ public class PrepaymentMgmtCustomerController {
 	        conditionMap.put("searchLastChargeDate", StringUtil.nullToBlank(condition[8]));
 	        conditionMap.put("lastChargeStartDate", StringUtil.nullToBlank(condition[9]));
 	        conditionMap.put("lastChargeEndDate", StringUtil.nullToBlank(condition[10]));
+	        conditionMap.put("meterStatus", StringUtil.nullToBlank(condition[13]));
 	        conditionMap.put("page", 1);
 	        conditionMap.put("limit", 10000000);
 	        conditionMap.put("supplierId", supplierId);
@@ -782,12 +783,13 @@ public class PrepaymentMgmtCustomerController {
 	        msgMap.put("stsnumber", fmtMessage[7]);
 	        msgMap.put("supplyType", fmtMessage[8]);
 	        msgMap.put("tariffType", fmtMessage[9]);
-	        msgMap.put("meterstatus", fmtMessage[10]);
+	        msgMap.put("contractStatus", fmtMessage[10]);
 	        msgMap.put("lastreaddate", fmtMessage[11]);
 	        msgMap.put("validperiod", fmtMessage[12]);
 	        msgMap.put("address", fmtMessage[13]);
 	        msgMap.put("title", fmtMessage[14]);
 	        msgMap.put("gs1", fmtMessage[15]);
+	        msgMap.put("meterStatus", fmtMessage[16]);
 	        
 			sbFileName.append(fmtMessage[14]+"_");
 			sbFileName.append(TimeUtil.getCurrentTimeMilli());

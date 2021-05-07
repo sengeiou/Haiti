@@ -421,6 +421,7 @@
                        $("#serviceTypeCode").val("");
                        $("#serviceTypeCode").selectbox();
 
+                       $('#meterStatus').selectbox();
 /*                        
                        var stsCommandList = json.stsCommandList;
                        var stsCmdArr = Array();
@@ -757,6 +758,7 @@
                     statusCode 	: $("#statusCode").val(),
                     paymentType : $("#paymentType").val(),
                     amountStatus : $("#amountStatus").val(),
+                    meterStatus : $("#meterStatus").val(),
                     mdsId		: $("#mdsId").val(),
                     gs1			: $("#gs1").val(),
                     locationId 	: $("#locationId").val(),
@@ -769,7 +771,7 @@
                 root:'result',
                 fields: ["contractNumber", "customerNumber", "customerName", "mdsId", "serviceTypeCode", "serviceTypeName", "creditTypeCode", "creditTypeName", "tariffTypeName","mobileNo",
                          "prepaymentPowerDelay", "lastTokenDate", "currentCredit", "statusName", "emergencyCreditStartTime", "emergencyCreditMaxDuration", "emergencyCreditMaxDate",
-                         "meterId", "mcuId", "modelName","lastReadDate","ihdId","address", "SPN", "gs1"],
+                         "meterId", "mcuId", "modelName","lastReadDate","ihdId","address", "SPN", "gs1", "meterStatus"],
                 listeners: {
                     beforeload: function(store, options){
                         options.params || (options.params = {});
@@ -807,9 +809,10 @@
                     ,{header: "<fmt:message key="aimir.meterid"/>", dataIndex: 'mdsId',  renderer: addTooltip}
                     ,{header: "<fmt:message key="aimir.shipment.gs1"/>", dataIndex: 'gs1',  renderer: addTooltip}
                     //,{header: "<fmt:message key="aimir.sts.number"/>", dataIndex: 'ihdId',  renderer: addTooltip, width: width/13-10}
-                    ,{header: "<fmt:message key="aimir.supply.type"/>", dataIndex: 'serviceTypeName' }
+                    //,{header: "<fmt:message key="aimir.supply.type"/>", dataIndex: 'serviceTypeName' }
                     ,{header: "<fmt:message key="aimir.contract.tariff.type"/>", dataIndex: 'tariffTypeName', renderer: addTooltip}
-                    ,{header: "<fmt:message key="aimir.meterstatus"/>", dataIndex: 'statusName'}
+                    ,{header: "<fmt:message key="aimir.operator.contractStatus"/>", dataIndex: 'statusName'}
+                    ,{header: "<fmt:message key="aimir.meterstatus"/>", dataIndex: 'meterStatus'}
                     //,{header: "<fmt:message key="aimir.lastreaddate"/>", dataIndex: 'lastReadDate'}
                     //,{header: "<fmt:message key="aimir.address"/>", dataIndex: 'address', renderer: addTooltip}
                     //,{header: "<fmt:message key="aimir.hems.prepayment.validperiod"/>", dataIndex: 'emergencyCreditMaxDate', width: width/13-30}
@@ -3660,12 +3663,13 @@
                 header[7] = '<fmt:message key="aimir.sts.number"/>'; 
                 header[8] = '<fmt:message key="aimir.supply.type"/>'; 
                 header[9] = '<fmt:message key="aimir.contract.tariff.type"/>'; 
-                header[10] = '<fmt:message key="aimir.meterstatus"/>';
+                header[10] = '<fmt:message key="aimir.operator.contractStatus"/>';
                 header[11] = '<fmt:message key="aimir.lastreaddate"/>'; 
                 header[12] = '<fmt:message key="aimir.hems.prepayment.validperiod"/>';
                 header[13] = '<fmt:message key="aimir.address"/>'; 
                 header[14] = '<fmt:message key="aimir.hems.prepayment.prepaymentCustomerList"/>';
-                header[15] = '<fmt:message key="aimir.shipment.gs1"/>'; 
+                header[15] = '<fmt:message key="aimir.shipment.gs1"/>';
+                header[16] = '<fmt:message key="aimir.meterstatus"/>'; 
                 
 
                 //parameter
@@ -3682,6 +3686,7 @@
                 param[10] = $("#searchLastChargeEndDate").val();
                 param[11] = $("#paymentType").val();
                 param[12] = $("#gs1").val();
+                param[13] = $("#meterStatus").val();
             }else if(exType == 'balanceHistory'){
                 obj.excelType = 'balanceHistory'
                 
@@ -4182,25 +4187,6 @@
                     <td><input name="mdsId" id='mdsId' type="text" style="width:100px"/></td>
                     <td><fmt:message key="aimir.shipment.gs1"/></td>
                     <td><input name="gs1" id='gs1' type="text" style="width:100px"/></td>
-                    <td><fmt:message key="aimir.supplystatus"/><!-- 상태 --></td>
-                    <td><select id="statusCode" name="statusCode" style="width:110px"><option value=""></option></select></td>
-                    <td><fmt:message key="aimir.paymenttype"/><!-- Payment Type --></td>
-                    <td><select id="paymentType" name="paymentType" style="width:110px"><option value=""></option></select></td>
-                </tr>
-                <tr style="height: 5px"></tr>
-                </tr>
-                	<td><fmt:message key="aimir.customername"/><!-- 고객명 --></td>
-                    <td><input id="customerName" name="customerName" style="width:130px"/></td>
-					<td><fmt:message key="aimir.supply.type"/><!-- 공급타입 --></td>
-                    <td><select id="serviceTypeCode" name="serviceTypeCode" style="width:100px"><option value=""></option></select></td>
-					<td><fmt:message key='aimir.amount.status'/><!-- 금액 상태 --></td>
-                    <td>
-                    	<select id="amountStatus" name="amountStatus" style="width:80px">
-                    		<option value=""><fmt:message key='aimir.all'/></option>
-                    		<option value="negative"><fmt:message key='aimir.negative'/></option>
-                    		<option value="positive"><fmt:message key='aimir.positive'/></option>
-                    	</select>
-                    </td>
                     <td><fmt:message key='aimir.hems.prepayment.lastchargedate'/></td>
                     <td>
                     	<div id="searchlastChargeDate_1">
@@ -4224,6 +4210,30 @@
                             </ul>
                         </div>       
                     </td>
+                    <td style="display: none"><select id="paymentType" name="paymentType" style="width:110px"><option value=""></option></select></td>
+                </tr>
+                <tr style="height: 5px"></tr>
+                </tr>
+                	<td><fmt:message key="aimir.customername"/><!-- 고객명 --></td>
+                    <td><input id="customerName" name="customerName" style="width:130px"/></td>
+                    <td style="display: none;"><select id="serviceTypeCode" name="serviceTypeCode" style="width:100px"><option value=""></option></select></td>
+					<td><fmt:message key='aimir.amount.status'/><!-- 금액 상태 --></td>
+                    <td>
+                    	<select id="amountStatus" name="amountStatus" style="width:80px">
+                    		<option value=""><fmt:message key='aimir.all'/></option>
+                    		<option value="negative"><fmt:message key='aimir.negative'/></option>
+                    		<option value="positive"><fmt:message key='aimir.positive'/></option>
+                    	</select>
+                    </td>
+                    <td><fmt:message key="aimir.operator.contractStatus"/><!-- 상태 --></td>
+                    <td><select id="statusCode" name="statusCode" style="width:110px"><option value=""></option></select></td>
+                    <td><fmt:message key="aimir.meterstatus" /></td>
+					<td class="padding-r20px"><select id="meterStatus" name="select" style="width: 190px;">
+							<option value=""><fmt:message key="aimir.all" /></option>
+							<c:forEach var="meterStatus" items="${meterStatus}">
+								<option value="${meterStatus.id}">${meterStatus.descr}</option>
+							</c:forEach>
+					</select></td>
                     <td><a href="#" class="btn_blue" onClick="getPrepayContractDivData();"><span><fmt:message key='aimir.button.search'/></span></a></td>
                     <td><a href="#" class="btn_blue" onClick="openExcelReport('main_list');"><span><fmt:message key='aimir.button.excel'/></span></a></td>
                </tr>

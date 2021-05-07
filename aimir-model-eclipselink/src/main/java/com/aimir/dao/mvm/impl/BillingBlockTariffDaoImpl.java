@@ -140,4 +140,15 @@ public class BillingBlockTariffDaoImpl extends AbstractJpaDao<BillingBlockTariff
         // TODO Auto-generated method stub
         return null;
     }
+    
+    @Override
+    public BillingBlockTariff getBillingBlockTariff(Integer contractId, String mdevId, String yyyymmdd, String hhmmss) { 
+    	return null;
+    }
+    
+    @Override
+    public List<Map<String, Object>> getRevertBillingList() {
+    	// TODO Auto-generated method stub
+        return null;
+    }
 }

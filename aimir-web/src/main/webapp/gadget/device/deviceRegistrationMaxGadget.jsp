@@ -3477,7 +3477,7 @@
                             <td class="padding-r20px">
                                 <select id="regLogDeviceType" onChange="javascript:regLogDeviceTypeChange();" style="width:130px">
                                     <option value=""><fmt:message key="aimir.all"/></option>
-                                    <option value="Customer"><fmt:message key="aimir.customer"/></option>
+                                    <!--  <option value="Customer"><fmt:message key="aimir.customer"/></option> -->
                                     <option value="MCU"><fmt:message key="aimir.mcu"/></option>
                                     <option value="Meter"><fmt:message key="aimir.meter"/></option>
                                     <option value="Modem"><fmt:message key="aimir.modem"/></option>
