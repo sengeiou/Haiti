@@ -285,7 +285,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         		for (int i = 1; i < sequenceBillings.size(); i++) {
         			saveBillingBlockTariff(contract, meter, sequenceBillings.get(i));		// BillingBlockTariff 저장
         			contract.setCurrentCredit(sequenceBillings.get(i).getBalance());
-        			log.info("[Update CurrentCredit ContractNumber["+ contract.getContractNumber() + " ] MdsId[" + meter.getMdsId() + "] yyyymmdd[" + lastDayEM.getYyyymmdd() + "] "
+        			log.info("[Update CurrentCredit ContractNumber["+ contract.getContractNumber() + "] MdsId[" + meter.getMdsId() + "] yyyymmdd[" + lastDayEM.getYyyymmdd() + "] "
         					+ "==> BlockBill[" + sequenceBillings.get(i).getBill() + "] lastAccumulateBill[" + sequenceBillings.get(i-1).getBill()+ "]");
     			}
         		contractDao.merge(contract);
