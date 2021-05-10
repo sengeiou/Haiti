@@ -170,6 +170,15 @@
                         <td class="padding-r20px2">
 			            	<input id=phone type="text" style="width:120px;">
 			          	</td>
+			          	<td><fmt:message key="aimir.operator.contractStatus"/><!-- 상태 --></td>
+	                    <td><select id="contractStatus" name="contractStatus" style="width:110px"><option value=""></option></select></td>
+	                    <td><fmt:message key="aimir.meterstatus" /></td>
+						<td class="padding-r20px"><select id="meterStatus" name="select" style="width: 190px;">
+								<option value=""><fmt:message key="aimir.all" /></option>
+								<c:forEach var="meterStatus" items="${meterStatus}">
+									<option value="${meterStatus.id}">${meterStatus.descr}</option>
+								</c:forEach>
+						</select></td>
 			        </tr>
 			        <tr class="clear-form">
 						<td class="withinput">
@@ -635,7 +644,7 @@
       root: 'result',
       fields: ['contractNumber', 'customerNo', 'customerName', 'mdsId', 
         'address', 'lastTokenDate', 'currentCredit', 'currentArrears', //'contractPrice', 
-        'barcode', 'chargeAvailable', 'statusName', 'phone', 'currentArrears2'],
+        'barcode', 'chargeAvailable', 'statusName', 'phone', 'currentArrears2', 'meterStatus'],
       listeners: {
         beforeload: function(store, options) {
           var params = options.params;
@@ -907,6 +916,7 @@
              var tplBtn = new Ext.Template("<a href='#;' onclick='getCustomerWindowWithID("+record.data.customerNo+");'>"+value+"</a>");
              return value ? tplBtn.apply():"";}}
          ,{header: "<fmt:message key='aimir.operator.contractStatus'/>", dataIndex: 'statusName'}
+         ,{header: "<fmt:message key='aimir.meterstatus'/>", dataIndex: 'meterStatus'}
          ,{header: "<fmt:message key='aimir.hems.prepayment.lastchargedate'/>", dataIndex: 'lastTokenDate', align: 'center',tooltip: "<fmt:message key='aimir.hems.prepayment.lastchargedate'/>"}
          ,{header: "<fmt:message key='aimir.balance'/>", dataIndex: 'currentCredit',  align: 'right'}
          ,{header: "<fmt:message key='aimir.arrearsA'/>", dataIndex: 'currentArrears', align: 'right'}
@@ -1198,6 +1208,8 @@
           phone: $("#phone").val(),
           customerNo: $("#customerNo").val(),
           customerName: $("#customerName").val(),
+          meterStatus : $("#meterStatus").val(),
+          contractStatus : $("#contractStatus").val(),
           mdsId: $("#mdsId").val()
         });
         contractListStore.baseParams = params;
@@ -1417,7 +1429,7 @@
 	                id: 'reTypeAmount_form',
 	                xtype: 'form',
 	                bodyStyle:'padding:10px',
-	                labelWidth: 100,
+	                labelWidth: 140,
 	                frame: false, border: false,
 	                items: [{
 	                  xtype: 'label', html:'<div style="text-align:left;">' + params.msg +'</div>', anchor: '100%'
@@ -1466,10 +1478,10 @@
 	    				    	{
 		    						xtype : 'label',
 		    						id: 'currentArrears',
-	    							html : "Current Arrears A  =  <b id='bCurrentArrears'>"+ params.currentArrears+"</b>",
+	    							html : "Current <fmt:message key='aimir.arrearsA'/> =  <b id='bCurrentArrears'>"+ params.currentArrears+"</b>",
 	    							anchor: '100%'
 	    						},{
-		    				    	fieldLabel : "Arrears A",
+		    				    	fieldLabel : "<b><fmt:message key='aimir.arrearsA'/></b>",
 		    						xtype : 'numberfield',
 		    						id	 : 'arrearsA',
 		    						minValue : 0,
@@ -1483,10 +1495,10 @@
 		    		                },
 	    						},{
 		    						xtype : 'label',
-		    						html : "Current Arrears B  =  <b id='bCurrentArrears2'>"+ params.currentArrears2+"</b>",
+		    						html : "Current <fmt:message key='aimir.arrearsB'/>  =  <b id='bCurrentArrears2'>"+ params.currentArrears2+"</b>",
 	    							anchor: '100%'
 	    						},{
-		    				    	fieldLabel : "Arrears B",
+		    				    	fieldLabel : "<b><fmt:message key='aimir.arrearsB'/></b>",
 		    						xtype : 'numberfield',
 		    						id	 : 'arrearsB',
 		    						minValue : 0,
@@ -2256,14 +2268,15 @@
         header[2] = '<fmt:message key="aimir.customername"/>'; // Customer Name
         header[3] = '<fmt:message key="aimir.meterid"/>'; //Meter ID
         header[4] = '<fmt:message key="aimir.address"/>'; //Address
-        header[5] = '<fmt:message key="aimir.supplystatus"/>'; // Supply Status        
+        header[5] = '<fmt:message key="aimir.operator.contractStatus"/>'; // Supply Status        
         header[6] = '<fmt:message key="aimir.hems.prepayment.lastchargedate"/>'; //Last Charge Date
         header[7] = '<fmt:message key="aimir.credit"/>'; //Credit
         header[8] = '<fmt:message key="aimir.arrearsA"/>'; //Arrears A
         header[9] = '<fmt:message key="aimir.barcode"/>'; //Barcode
         header[10] = '<fmt:message key="aimir.vendorprepayment.contract.list"/>'; //파일명 : Vendor Prepayment Contract List
         header[11] = '<fmt:message key="aimir.arrearsB"/>'; //Arrears B
-        header[12] = '<fmt:message key="aimir.celluarphone"/>'; //celluarphone 
+        header[12] = '<fmt:message key="aimir.celluarphone"/>'; //celluarphone
+        header[13] = '<fmt:message key="aimir.meterstatus"/>'; //celluarphone 
 
         //parameter
         param[0] = $("#barcodeNumber").val();
@@ -2273,6 +2286,8 @@
         param[4] = $("#mdsId").val();
         param[5] = supplierId;
         param[6] = $("#phone").val();
+        param[7] = $("#contractStatus").val();
+        param[8] = $("#meterStatus").val();
 
         contactListObj.fmtMessage = header;
         contactListObj.condition = param ;
@@ -2627,7 +2642,9 @@
       eventHandler.tagExcelButton(); 
       initSettings();
       hide();
+      setSelectBox();
     };
+    
 
     Ext.onReady(function() {
 	  Ext.Ajax.timeout = 60000; //Ext 화면 표시시 타임아웃을 defaults(30초) -> 1분(60초)으로 변경
@@ -2642,6 +2659,27 @@
       casherManagerGrid.getView().refresh();
     });
 
+    function setSelectBox() {
+        $.post("${ctx}/gadget/prepaymentMgmt/getSelectBoxData.do",
+               function(json) {
+
+                   var statusResult = json.status;
+                   var startArr = Array();
+                   for (var i = 0; i < statusResult.length; i++) {
+                       var obj = new Object();
+                       obj.name=statusResult[i].descr;
+                       obj.id=statusResult[i].id;
+                       startArr[i]=obj
+                   };
+                   $("#contractStatus").loadSelect(startArr);
+                   $("#contractStatus option:eq(0)").replaceWith("<option value=''><fmt:message key='aimir.all'/></option>");
+                   $("#contractStatus").val("");
+                   
+                   $("#contractStatus").selectbox();
+                   $('#meterStatus').selectbox();
+               });
+    }
+    
     // grid column tooltip
     function addTooltip(value, metadata) {
         if (value != null && value != "") {

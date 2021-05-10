@@ -1525,66 +1525,70 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
         String casherName = "";
         String lastTokenId = "";    
         
-        if (operator.getLocation() != null) {
-            vendorDistinct = operator.getLocation().getName();
-        }
-        
-        if (prepaymentLog != null && prepaymentLog.getCustomer() != null) {
-            Customer customer = prepaymentLog.getCustomer();
-            customerName = customer.getName();
-            customerNumber = customer.getCustomerNo();
-            date = TimeLocaleUtil.getLocaleDate(prepaymentLog.getLastTokenDate(), lang, country);
-            dateByYyyymmdd = TimeLocaleUtil.getLocaleDate(prepaymentLog.getLastTokenDate().substring(0,8), lang, country);
-            lastTokenId = prepaymentLog.getLastTokenId();
-        }
-        
-        if (contract != null && contract.getMeter() != null) {
-            meterId = contract.getMeter().getMdsId();
-            gs1 = contract.getMeter().getGs1();
-            lastMeterId = contract.getMeter().getInstallProperty();
-            customerName = contract.getCustomer().getName();
-        }
-        
-        if (contract != null && contract.getTariffIndex() != null) {
-            TariffType tarrifType = tariffTypeDao.get(contract.getTariffIndexId());
-            if (tarrifType != null) {
-                tarrif = tarrifType.getName();
-            }
-        }
-        
-        if (casher != null) {
-            casherId = casher.getCasherId();
-            casherName = casher.getName();
-        }
-        
-        if (contract != null && contract.getLocation() != null) {
-            address = contract.getLocation().getName();
-
-            Location tempLoc = contract.getLocation();
-            Location districLoc = null;
-            List<Location> tempLocList = new ArrayList<Location>();
-            
-            for (int i = 0; i < 20; i++) {
-                if (tempLoc.getParent() != null) {
-                    tempLocList.add(tempLoc.getParent());
-                    tempLoc = tempLoc.getParent();
-                } else {
-                    break;
-                }
-            }
-
-            if (tempLocList.size() > 2) {
-                districLoc = tempLocList.get(tempLocList.size()-3);
-            } else {
-                districLoc = contract.getLocation();
-            }
- 
-            district = districLoc.getName();
-        }
-        
-        if(contract != null && contract.getCustomer() != null) {
-            customerAddr = contract.getCustomer().getAddress();
-        }
+        try {
+        	if (operator.getLocation() != null) {
+        		vendorDistinct = operator.getLocation().getName();
+        	}
+        	
+        	if (prepaymentLog != null && prepaymentLog.getCustomer() != null) {
+        		Customer customer = prepaymentLog.getCustomer();
+        		customerName = customer.getName();
+        		customerNumber = customer.getCustomerNo();
+        		date = TimeLocaleUtil.getLocaleDate(prepaymentLog.getLastTokenDate(), lang, country);
+        		dateByYyyymmdd = TimeLocaleUtil.getLocaleDate(prepaymentLog.getLastTokenDate().substring(0,8), lang, country);
+        		lastTokenId = prepaymentLog.getLastTokenId();
+        	}
+        	
+        	if (contract != null && contract.getMeter() != null) {
+        		meterId = contract.getMeter().getMdsId();
+        		gs1 = contract.getMeter().getGs1();
+        		lastMeterId = contract.getMeter().getInstallProperty();
+        		customerName = contract.getCustomer().getName();
+        	}
+        	
+        	if (contract != null && contract.getTariffIndex() != null) {
+        		TariffType tarrifType = tariffTypeDao.get(contract.getTariffIndexId());
+        		if (tarrifType != null) {
+        			tarrif = tarrifType.getName();
+        		}
+        	}
+        	
+        	if (casher != null) {
+        		casherId = casher.getCasherId();
+        		casherName = casher.getName();
+        	}
+        	
+        	if (contract != null && contract.getLocation() != null) {
+        		address = contract.getLocation().getName();
+        		
+        		Location tempLoc = contract.getLocation();
+        		Location districLoc = null;
+        		List<Location> tempLocList = new ArrayList<Location>();
+        		
+        		for (int i = 0; i < 20; i++) {
+        			if (tempLoc.getParent() != null) {
+        				tempLocList.add(tempLoc.getParent());
+        				tempLoc = tempLoc.getParent();
+        			} else {
+        				break;
+        			}
+        		}
+        		
+        		if (tempLocList.size() > 2) {
+        			districLoc = tempLocList.get(tempLocList.size()-3);
+        		} else {
+        			districLoc = contract.getLocation();
+        		}
+        		
+        		district = districLoc.getName();
+        	}
+        	
+        	if(contract != null && contract.getCustomer() != null) {
+        		customerAddr = contract.getCustomer().getAddress();
+        	}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
         // 일반 영수증의 경우
         result.put("daysFromCharge", daysFromCharge);
@@ -2006,6 +2010,9 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
             }
             if (hmap.get("historyMeterId") != null) {
                 map.put("meter", hmap.get("historyMeterMdsId"));
+            }            
+            if (hmap.get("gs1") != null) {
+                map.put("gs1", hmap.get("gs1"));
             }
             if (hmap.get("changeDate") != null && !((String)hmap.get("changeDate")).equals("")) {
                 map.put("changeDate", TimeLocaleUtil.getLocaleDate((String)hmap.get("changeDate"), lang, country));

@@ -322,7 +322,7 @@
                 else {
                     //후불
                     if (  json.creditType.code == "2.2.0" ) {
-                    	$('#meterDiv').css("left",825);
+                    	$('#meterDiv').css("left",1000);
                         $("#pane-creditType-prepay1").hide();
                         $("#pane-creditType-prepay2").hide();
                         $("#pane-creditType-prepay3").hide();

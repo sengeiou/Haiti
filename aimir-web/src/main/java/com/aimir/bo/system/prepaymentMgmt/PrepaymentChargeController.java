@@ -43,6 +43,7 @@ import com.aimir.dao.system.SupplierDao;
 import com.aimir.esapi.AimirAuthenticator;
 import com.aimir.esapi.AimirUser;
 import com.aimir.model.prepayment.VendorCasher;
+import com.aimir.model.system.Code;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.MonthlyBillingLog;
 import com.aimir.model.system.Operator;
@@ -204,6 +205,9 @@ public class PrepaymentChargeController {
         Map<String, Object> vat = prepaymentChargeManager.getVatByFixedVariable("CHARGE_TAX", null, format.format(now));
         mav.addObject("vatAmount", vat.get("vatAmount"));
         mav.addObject("vatUnit", vat.get("vatUnit"));
+        
+        List<Code> meterStatus = codeManager.getChildCodes(Code.METER_STATUS);
+        mav.addObject("meterStatus", meterStatus);
         
         try {
         	Properties prop = new Properties();
@@ -534,6 +538,8 @@ public class PrepaymentChargeController {
             String phone,
             String customerNo,
             String customerName,
+            String contractStatus,
+            String meterStatus,
             String mdsId) {
         ModelAndView mav = new ModelAndView("jsonView");
         List<Map<String, Object>> result = null;
@@ -547,6 +553,8 @@ public class PrepaymentChargeController {
         conditionMap.put("phone", phone);
         conditionMap.put("customerNo", customerNo);
         conditionMap.put("customerName", customerName);
+        conditionMap.put("meterStatus", meterStatus);
+        conditionMap.put("contractStatus", contractStatus);
         conditionMap.put("mdsId", mdsId);
 
         try{
@@ -1603,6 +1611,8 @@ public class PrepaymentChargeController {
 	        conditionMap.put("mdsId", StringUtil.nullToBlank(condition[4]));
 	        conditionMap.put("supplierId", supplierId);
 	        conditionMap.put("phone", StringUtil.nullToBlank(condition[6]));
+	        conditionMap.put("contractStatus", StringUtil.nullToBlank(condition[7]));
+	        conditionMap.put("meterStatus", StringUtil.nullToBlank(condition[8]));
 	        conditionMap.put("page", 1);
 	        conditionMap.put("limit", 10000000);
 
@@ -1629,6 +1639,7 @@ public class PrepaymentChargeController {
 	        msgMap.put("title", fmtMessage[10]);
 	        msgMap.put("currentArrears2", fmtMessage[11]);
 	        msgMap.put("phone", fmtMessage[12]);
+	        msgMap.put("meterStatus", fmtMessage[13]);
 	        
 	        
 			Supplier supplier = supplierManager.getSupplier(supplierId);
