@@ -628,7 +628,7 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 	contract.setCreditType(creditTypeCode);         // emergency credit
                 	contract.setStatus(statusCode);					// Normal
                 	contract.setTariffIndex(tariffType);			// TariffType
-                	contract.setContractDate(contractDate);
+                	if(contractDate != null) contract.setContractDate(contractDate);
                 	contract.setChargeAvailable(true);
                 	contract.setSupplier(supplier);
                 	contract.setCustomer(customer);
