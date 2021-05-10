@@ -2006,6 +2006,9 @@ public class PrepaymentChargeManagerImpl implements PrepaymentChargeManager {
             }
             if (hmap.get("historyMeterId") != null) {
                 map.put("meter", hmap.get("historyMeterMdsId"));
+            }            
+            if (hmap.get("gs1") != null) {
+                map.put("gs1", hmap.get("gs1"));
             }
             if (hmap.get("changeDate") != null && !((String)hmap.get("changeDate")).equals("")) {
                 map.put("changeDate", TimeLocaleUtil.getLocaleDate((String)hmap.get("changeDate"), lang, country));

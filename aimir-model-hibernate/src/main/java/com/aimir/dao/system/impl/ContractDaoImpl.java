@@ -2865,6 +2865,8 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         String phone = StringUtil.nullToBlank(conditionMap.get("phone"));
         String customerNo = StringUtil.nullToBlank(conditionMap.get("customerNo"));
         String customerName = StringUtil.nullToBlank(conditionMap.get("customerName"));
+        String contractStatus = StringUtil.nullToBlank(conditionMap.get("contractStatus"));
+        String meterStatus = StringUtil.nullToBlank(conditionMap.get("meterStatus"));
         String mdsId = StringUtil.nullToBlank(conditionMap.get("mdsId"));
         Integer page = (Integer)conditionMap.get("page");
         Integer limit = (Integer)conditionMap.get("limit");
@@ -2897,11 +2899,14 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
             sb.append("\n       cont.tariffIndex.code AS tariffCode, ");
             sb.append("\n       mcu.sysID AS mcuId, ");
             sb.append("\n       cont.chargeAvailable AS chargeAvailable, ");
+            sb.append("\n       meterStatus.descr AS meterStatus, ");
             sb.append("\n       stat.descr AS statusName ");
         }
         sb.append("\nFROM Contract cont ");
         sb.append("\n     LEFT OUTER JOIN ");
         sb.append("\n     cont.meter meter ");
+        sb.append("\n     LEFT OUTER JOIN ");
+        sb.append("\n     meter.meterStatus meterStatus ");
         sb.append("\n     LEFT OUTER JOIN ");
         sb.append("\n     meter.modem modem");
         sb.append("\n     LEFT OUTER JOIN ");
@@ -2932,6 +2937,13 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         if (!barcode.isEmpty()) {
             sb.append("\nAND   cont.barcode = :barcode ");
         }
+        if (!meterStatus.isEmpty()) {
+        	sb.append("\nAND   meter.meterStatus = :meterStatus ");
+        }
+        if (!contractStatus.isEmpty()) {
+        	sb.append("\nAND   cont.status = :contractStatus ");
+        }
+        
         if (!isCount) {
             sb.append("\nORDER BY cont.contractNumber ");
         } else {
@@ -2958,6 +2970,12 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
         }
         if (!barcode.isEmpty()) {
             query.setString("barcode", barcode);
+        }
+        if (!meterStatus.isEmpty()) {
+            query.setString("meterStatus", meterStatus);
+        }
+        if (!contractStatus.isEmpty()) {
+            query.setString("contractStatus", contractStatus);
         }
         if (isCount) {
             Map<String, Object> map = new HashMap<String, Object>();
