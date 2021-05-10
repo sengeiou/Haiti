@@ -1429,7 +1429,7 @@
 	                id: 'reTypeAmount_form',
 	                xtype: 'form',
 	                bodyStyle:'padding:10px',
-	                labelWidth: 100,
+	                labelWidth: 140,
 	                frame: false, border: false,
 	                items: [{
 	                  xtype: 'label', html:'<div style="text-align:left;">' + params.msg +'</div>', anchor: '100%'
@@ -1478,10 +1478,10 @@
 	    				    	{
 		    						xtype : 'label',
 		    						id: 'currentArrears',
-	    							html : "Current Arrears A  =  <b id='bCurrentArrears'>"+ params.currentArrears+"</b>",
+	    							html : "Current <fmt:message key='aimir.arrearsA'/> =  <b id='bCurrentArrears'>"+ params.currentArrears+"</b>",
 	    							anchor: '100%'
 	    						},{
-		    				    	fieldLabel : "Arrears A",
+		    				    	fieldLabel : "<b><fmt:message key='aimir.arrearsA'/></b>",
 		    						xtype : 'numberfield',
 		    						id	 : 'arrearsA',
 		    						minValue : 0,
@@ -1495,10 +1495,10 @@
 		    		                },
 	    						},{
 		    						xtype : 'label',
-		    						html : "Current Arrears B  =  <b id='bCurrentArrears2'>"+ params.currentArrears2+"</b>",
+		    						html : "Current <fmt:message key='aimir.arrearsB'/>  =  <b id='bCurrentArrears2'>"+ params.currentArrears2+"</b>",
 	    							anchor: '100%'
 	    						},{
-		    				    	fieldLabel : "Arrears B",
+		    				    	fieldLabel : "<b><fmt:message key='aimir.arrearsB'/></b>",
 		    						xtype : 'numberfield',
 		    						id	 : 'arrearsB',
 		    						minValue : 0,
