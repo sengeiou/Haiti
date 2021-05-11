@@ -146,8 +146,8 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
         }
 
         Code serviceTypeCode = codeDao.getCodeIdByCodeObject(MeterType.EnergyMeter.getServiceType());
-//        Code creditTypeCode = codeDao.getCodeIdByCodeObject(Code.EMERGENCY_CREDIT);
-        Code creditTypeCode = codeDao.getCodeIdByCodeObject(Code.POSTPAY);
+        Code creditTypeCode = codeDao.getCodeIdByCodeObject(Code.EMERGENCY_CREDIT);
+//        Code creditTypeCode = codeDao.getCodeIdByCodeObject(Code.POSTPAY);
         Code statusCode = codeDao.getCodeIdByCodeObject(Code.NORMAL);
 //        TariffType tariffType = tariffTypeDao.findByCondition("name", tariffTypeName);
 
@@ -518,8 +518,8 @@ public class CreatingCustomerMgmtManagerImpl implements CreatingCustomerMgmtMana
                 TariffType tariffType = tariffTypeDao.findByCondition("name", tariffIndexID);
                 Code serviceTypeCode = codeDao.getCodeIdByCodeObject(MeterType.EnergyMeter.getServiceType());
                 Code statusCode = codeDao.getCodeIdByCodeObject(Code.NORMAL);
-//                Code creditTypeCode = codeDao.getCodeIdByCodeObject(Code.EMERGENCY_CREDIT);
-                Code creditTypeCode = codeDao.getCodeIdByCodeObject(Code.POSTPAY);
+                Code creditTypeCode = codeDao.getCodeIdByCodeObject(Code.EMERGENCY_CREDIT);
+//                Code creditTypeCode = codeDao.getCodeIdByCodeObject(Code.POSTPAY);
                 Code meterStatusCode = codeDao.getCodeIdByCodeObject(MeterStatus.NewRegistered.getCode());
                 Code contractStatusCode = codeDao.getCodeIdByCodeObject(ContractStatus.PAUSE.getCode());
                 
