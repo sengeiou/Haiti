@@ -1132,7 +1132,7 @@ public class PrepaymentLogDaoImpl  extends AbstractHibernateGenericDao< Prepayme
     			sb.append("\n   UNION ALL  ");
     		sb.append("\n   SELECT 'Billing(day)' AS TYPE,  ");
     		sb.append("\n	   WRITEDATE AS DATETIME,  ");
-    		sb.append("\n	   WRITEDATE AS SORTTIME,  ");
+    		sb.append("\n	   YYYYMMDD||HHMMSS AS SORTTIME,  ");
     		sb.append("\n      BALANCE+BILL AS BEFOREBALANCE,  ");
     		sb.append("\n	   BALANCE AS BALANCE,  ");
     		sb.append("\n      null AS CHARGEDAMOUNT,  ");
