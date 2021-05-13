@@ -234,7 +234,6 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     		
     		Contract contract =  contractDao.findByCondition("id", contractId);
     		Meter meter = meterDao.findByCondition("id", contract.getMeterId());
-    		Double currentCredit = contract.getCurrentCredit() != null ? contract.getCurrentCredit() : 0.0;
             DayEM lastDayEM = null;
 
             //마지막 누적요금이 저장된 데이터를 가지고 온다.
@@ -243,17 +242,8 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
             if(lastBilling == null) {
             	// 마지막 누적 요금이 저장된 billingDayEM이 없을 경우 한번도 선불스케줄을 돌리지 않은것으로 간주
             	lastBilling = makeNewBillingBlockTariff(contract);
-            }else if(Double.compare(lastBilling.getBalance(), currentCredit) != 0) {
-            	 log.info("charged credit gap occur - "
-             			+ " CurrentCredit[" + convertBigDecimal(currentCredit) + "] "
-             			+ " lastBilling Balance[" + convertBigDecimal(lastBilling.getBalance()) + "] ");
-            	lastBilling.setBalance(Double.parseDouble(String.format("%.2f", currentCredit)));
             }
-            log.info("Contract[" + contract.getContractNumber() + "] "        			
-        			+ " lastAccumulateBill[" + convertBigDecimal(lastBilling.getAccumulateBill()) + "] "
-        			+ " lastAccumulateUsage[" + convertBigDecimal(lastBilling.getAccumulateUsage()) + "] "
-        			+ " lastAccumulateDate[" + lastBilling.getYyyymmdd().toString() + "] "
-        			+ " mdsId[" + meter.getMdsId() + "] ");
+            log.info("ContractNumber [" + contract.getContractNumber() + "] lastBilling balance [" + convertBigDecimal(lastBilling.getBalance()) + "] lastAccumulateBill [" + convertBigDecimal(lastBilling.getAccumulateBill()) + "] lastAccumulateUsage [" + convertBigDecimal(lastBilling.getAccumulateUsage()) + "] lastAccumulateDate [" + lastBilling.getYyyymmdd().toString() + "] mdsId [" + meter.getMdsId() + "] ");
             
             lastDayEM = getDayEM(meter.getMdsId(), lastBilling.getYyyymmdd());	//최근 DAY_EM 조회
             
@@ -285,8 +275,8 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         		for (int i = 1; i < sequenceBillings.size(); i++) {
         			saveBillingBlockTariff(contract, meter, sequenceBillings.get(i));		// BillingBlockTariff 저장
         			contract.setCurrentCredit(sequenceBillings.get(i).getBalance());
-        			log.info("[Update CurrentCredit ContractNumber["+ contract.getContractNumber() + "] MdsId[" + meter.getMdsId() + "] yyyymmdd[" + lastDayEM.getYyyymmdd() + "] "
-        					+ "==> BlockBill[" + sequenceBillings.get(i).getBill() + "] lastAccumulateBill[" + sequenceBillings.get(i-1).getBill()+ "]");
+        			log.info("Update contract is ContractNumber["+ contract.getContractNumber() + "] MdsId[" + meter.getMdsId() + "] yyyymmdd[" + lastDayEM.getYyyymmdd() + "] "
+        					+ "==> Balance[" + sequenceBillings.get(i).getBalance() + "] BlockBill[" + sequenceBillings.get(i).getBill() + "] lastAccumulateBill[" + sequenceBillings.get(i-1).getBill()+ "]");
     			}
         		contractDao.merge(contract);
         	}
@@ -384,9 +374,11 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
     	bill.setAccumulateBill(accumulateBill.doubleValue());
     	BigDecimal billingBill = accumulateBill.subtract(convertBigDecimal(lastIndex.getAccumulateBill()));
     	bill.setBill(accumulateBill.subtract(convertBigDecimal(lastIndex.getAccumulateBill()).setScale(2, BigDecimal.ROUND_HALF_UP)).doubleValue());	// ACCUMULATEBILL - Previous ACCUMULATEBILL = Bill
-    	bill.setBalance(convertBigDecimal(lastIndex.getBalance()).subtract(billingBill).doubleValue());			// Balance - Bill
+    	bill.setBalance(convertBigDecimal(contract.getCurrentCredit() != null ? contract.getCurrentCredit() : 0.0).subtract(billingBill).doubleValue());// Balance - Bill
     	bill.setContractId(lastIndex.getContractId());
     	bill.setAvg(isAVG);
+    	
+    	contract.setCurrentCredit(bill.getBalance());   	
 
 		return bill;
 	}
@@ -466,14 +458,14 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         bill.setAccumulateBill(billingBlockTariff.getAccumulateBill());
 
         monthlyBillingLogDao.updateMonthlyUsageInfo(contract.getId(), bill.getMDevId(), bill.getYyyymmdd(), bill.getAccumulateUsage(), bill.getAccumulateBill(), bill.getActiveEnergyImport(), bill.getActiveEnergyExport());
-        log.info("[SaveMonthlyBillingLog] MeterId[" + bill.getMDevId() + "] BillDay[" + bill.getYyyymmdd() +
+        log.info("SaveMonthlyBillingLog ==> MeterId[" + bill.getMDevId() + "] BillDay[" + bill.getYyyymmdd() +
                 "] AccumulateUsage[" + bill.getAccumulateUsage() + "] AccumulateBill[" + bill.getAccumulateBill() +
                 "] ActiveEnergyImport[" + bill.getActiveEnergyImport() + "]" + "] ActiveEnergyExport[" + bill.getActiveEnergyExport() + "]");
         
         billingBlockTariffDao.add(bill);
-        log.info("[SaveBillingBlockTariff] MeterId[" + bill.getMDevId() + "] BillDay[" + bill.getYyyymmdd() +
+        log.info("SaveBillingBlockTariff ==> MeterId[" + bill.getMDevId() + "] BillDay[" + bill.getYyyymmdd() +
             "] BillTime[" + bill.getHhmmss() + "] AccumulateUsage[" + bill.getAccumulateUsage() +
-            "] AccumulateBill[" + bill.getAccumulateBill() + "] CurrentBill[" + bill.getBill() + "]");
+            "] AccumulateBill[" + bill.getAccumulateBill() + "] CurrentBill[" + bill.getBill() + "] Balance[" + bill.getBalance() + "]");
     }
     
     /**
@@ -541,7 +533,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
         	log.info("### validateBillingValues DayEM is null ContractNumber[" +contract.getContractNumber() + "] Meter[" + contract.getMeter().getMdsId() + "] ###");
         	return true;
         }else {
-        	log.info("#### validateBillingValues start  lastBilling yyyymmdd["+ lastBilling.getYyyymmdd()+ "] ActiveEnergy[" + lastBilling.getActiveEnergy() + "] lastDayEM yyyymmdd["+ lastDayEM.getYyyymmdd() +"] ActiveEnergy["+ lastDayEM.getValue() +"] ####");
+        	log.info("#### validateBillingValues start ==> lastBilling yyyymmdd["+ lastBilling.getYyyymmdd()+ "] lastBilling ActiveEnergy[" + lastBilling.getActiveEnergy() + "] lastDayEM yyyymmdd["+ lastDayEM.getYyyymmdd() +"] lastDayEM ActiveEnergy["+ lastDayEM.getValue() +"] ####");
         }
     	
     	log.info("### validateBillingValues   TariffIndexId["+contract.getTariffIndexId()+"]  lastDayEM["+lastDayEM.getValue()+"]  ActiveEnergy["+lastBilling.getActiveEnergy() + "] ###");
@@ -666,7 +658,7 @@ public class EDHBlockDailyEMBillingInfoSaveV2Task extends ScheduleTask {
 	   billingBlockTariff.setActiveEnergyExport(0.0);
 	   billingBlockTariff.setUsage(0.0);
 	   billingBlockTariff.setBill(0.0);
-	   billingBlockTariff.setBalance(contract.getCurrentCredit() != null ? contract.getCurrentCredit() : 0);
+	   billingBlockTariff.setBalance(contract.getCurrentCredit() != null ? contract.getCurrentCredit() : 0.0);
 	   billingBlockTariff.setYyyymmdd(contract.getContractDate() != null ? contract.getContractDate().substring(0, 8) : contract.getMeter().getInstallDate().substring(0, 8));
 	   billingBlockTariff.setHhmmss(contract.getContractDate() != null ? contract.getContractDate().substring(8, 14) : contract.getMeter().getInstallDate().substring(8, 14));
 	   return billingBlockTariff;
