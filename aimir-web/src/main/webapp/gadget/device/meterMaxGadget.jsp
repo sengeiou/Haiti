@@ -2412,6 +2412,9 @@
 
         $("#meterInstallDiv").load("${ctx}/gadget/device/getMeterByType.do",
                 params, function(response, status, xhr){
+        	if(status=='error' && response.includes('More than one row with the given identifier was found')){
+        		Ext.Msg.alert('<fmt:message key='aimir.message'/>','Please check if the same meter is connected to another contract in duplicate.');
+        	}
 /*             console.log("qwerqwerqwer");
             console.log(response);
             console.log(status);
