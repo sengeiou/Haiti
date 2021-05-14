@@ -150,7 +150,7 @@ public class EV_202_6_0_Action implements EV_Action
             String ipAddr = event.getEventAttrValue("ipAddr");
             log.debug("Mobile Ipaddr=["+ipAddr+"]");
     
-            if (ipAddr != null && !ipAddr.equals("") && !ipAddr.equals("0.0.0.0"))
+            if (ipAddr != null/* && !ipAddr.equals("") && !ipAddr.equals("0.0.0.0")*/)
             {
                 mcu.setIpAddr(ipAddr);
             }
@@ -195,12 +195,15 @@ public class EV_202_6_0_Action implements EV_Action
             log.debug("mobile Id=["+mobileId+"]");
             //mmp.addProperty(new MOPROPERTY("portState", "1"));
             //mmp.addProperty(new MOPROPERTY("packetIpAddr", ipAddr));
-            // mcuDao.update(mcu);
+             mcuDao.update(mcu);
             log.debug("Mobile Keepalive Event Action Compelte");
-        }
-        finally {
-            if (txstatus != null) txmanager.commit(txstatus);
-        }
+            txmanager.commit(txstatus);
+        } catch (Exception e) {
+        	if(txstatus != null) 
+        		 txmanager.rollback(txstatus);
+        	
+        	throw e;
+		}
     }
 
     
