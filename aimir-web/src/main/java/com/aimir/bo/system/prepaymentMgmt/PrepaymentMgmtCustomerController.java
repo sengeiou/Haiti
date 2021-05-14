@@ -1127,6 +1127,7 @@ public class PrepaymentMgmtCustomerController {
 	        msgMap.put("serviceCharge", fmtMessage[18]);
 	        msgMap.put("description", fmtMessage[19]);
 	        msgMap.put("title", fmtMessage[20]);
+	        msgMap.put("sortTime", fmtMessage[21]);
 	        
 			Supplier supplier = supplierManager.getSupplier(supplierId);
 			sbFileName.append(fmtMessage[20]+"_");

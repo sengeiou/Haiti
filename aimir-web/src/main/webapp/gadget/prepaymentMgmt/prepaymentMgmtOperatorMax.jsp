@@ -1268,7 +1268,7 @@
                 url: "${ctx}/gadget/prepaymentMgmt/getChargeAndBalanceHistory.do",
                 totalProperty: 'totalCount',
                 root:'result',
-                fields: ["TYPE", "SPN", "CONTRACTID", "DATETIME", "BEFOREBALANCE", "BALANCE", "CHARGEDAMOUNT", "CHARGEDTOKEN", "CANCELDATE", "CANCELTOKEN", "PAYTYPE", "USAGETOTAL", 
+                fields: ["TYPE", "SPN", "CONTRACTID", "DATETIME", "SORTTIME", "BEFOREBALANCE", "BALANCE", "CHARGEDAMOUNT", "CHARGEDTOKEN", "CANCELDATE", "CANCELTOKEN", "PAYTYPE", "USAGETOTAL", 
                 	"USAGECOST", "MONTHLYUSAGE", "MONTHLYCOST", "VAT", "TOTALLEVY", "TOTALSUBSIDY", "SERVICECHARGE", "DESCR"],
                 listeners: {
                     beforeload: function(store, options){
@@ -1292,7 +1292,8 @@
                         }}
                     ,{header: "<fmt:message key="aimir.contractNumber"/>", dataIndex: 'CONTRACTID', align:'left'}
                     //,{header: "<fmt:message key="aimir.accountNo"/>", dataIndex: 'SPN', align:'left' ,width:100 }
-                    ,{header: "<fmt:message key="aimir.time.date"/>", dataIndex: 'DATETIME', align:'left' ,width:140 }
+                    ,{header: "Time of Billing Data", dataIndex: 'DATETIME', align:'left' ,width:140 }
+                    ,{header: "<fmt:message key="aimir.writetime"/>", dataIndex: 'SORTTIME', align:'left' ,width:140 }
                     ,{header: "<fmt:message key="aimir.prepayment.beforebalance"/>(<fmt:message key='aimir.price.unit'/>)", dataIndex: 'BEFOREBALANCE', align:'right' }
                     ,{header: "<fmt:message key="aimir.balance"/>(<fmt:message key='aimir.price.unit'/>)", dataIndex: 'BALANCE', align:'right' }
                     ,{header: "<fmt:message key="aimir.bill"/>(<fmt:message key='aimir.price.unit'/>)", dataIndex: 'USAGECOST', align:'right' }
@@ -3698,7 +3699,7 @@
 				header[0] = '<fmt:message key="aimir.header.type"/>';
                 header[1] = '<fmt:message key="aimir.contractNumber"/>';
                 header[2] = '<fmt:message key="aimir.accountNo"/>';
-                header[3] = '<fmt:message key="aimir.time.date"/>';
+                header[3] = 'Time of Billing Data ';//'<fmt:message key="aimir.time.date"/>';
                 header[4] = '<fmt:message key="aimir.prepayment.beforebalance"/>(<fmt:message key="aimir.price.unit"/>)';
                 header[5] = '<fmt:message key="aimir.balance"/>(<fmt:message key="aimir.price.unit"/>)';
                 header[6] = '<fmt:message key="aimir.usage"/>(<fmt:message key="aimir.unit.kwh"/>)';
@@ -3716,6 +3717,7 @@
                 header[18] = '<fmt:message key="aimir.serviceCharge"/>(<fmt:message key="aimir.price.unit"/>)';
                 header[19] = '<fmt:message key="aimir.description"/>';
                 header[20] = '<fmt:message key="aimir.prepayment.balancehistory"/>';
+                header[21] = '<fmt:message key="aimir.writetime"/>';
                 //parameter
                 param[0] = selectedContractNumber;
                 param[1] = $("#searchType").val();

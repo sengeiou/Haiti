@@ -78,6 +78,7 @@ public class ChargeAndBalanceHistoryMakeExcel {
 			sheet.setColumnWidth(colIdx++, 256 * 20);
 			sheet.setColumnWidth(colIdx++, 256 * 20);
 			sheet.setColumnWidth(colIdx++, 256 * 20);
+			sheet.setColumnWidth(colIdx++, 256 * 20);
 			sheet.setColumnWidth(colIdx++, 256 * 25);
 			sheet.setColumnWidth(colIdx++, 256 * 25);
 			sheet.setColumnWidth(colIdx++, 256 * 20);
@@ -119,6 +120,10 @@ public class ChargeAndBalanceHistoryMakeExcel {
 
 			cell = row.createCell(cellCnt++);
 			cell.setCellValue(msgMap.get("date"));
+			cell.setCellStyle(titleCellStyle);
+			
+			cell = row.createCell(cellCnt++);
+			cell.setCellValue(msgMap.get("sortTime"));
 			cell.setCellStyle(titleCellStyle);
 
 			cell = row.createCell(cellCnt++);
@@ -190,6 +195,10 @@ public class ChargeAndBalanceHistoryMakeExcel {
 				
 				cell = row.createCell(cellCnt++);
 				cell.setCellValue(resultMap.get("DATETIME") == null ? "" : resultMap.get("DATETIME").toString());
+				cell.setCellStyle(dataCellStyle);
+				
+				cell = row.createCell(cellCnt++);
+				cell.setCellValue(resultMap.get("SORTTIME") == null ? "" : resultMap.get("SORTTIME").toString());
 				cell.setCellStyle(dataCellStyle);
 				
 				cell = row.createCell(cellCnt++);

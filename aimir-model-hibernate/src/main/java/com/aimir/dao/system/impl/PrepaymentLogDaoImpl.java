@@ -1131,8 +1131,8 @@ public class PrepaymentLogDaoImpl  extends AbstractHibernateGenericDao< Prepayme
     		if(searchType.equals("all"))
     			sb.append("\n   UNION ALL  ");
     		sb.append("\n   SELECT 'Billing(day)' AS TYPE,  ");
-    		sb.append("\n	   WRITEDATE AS DATETIME,  ");
-    		sb.append("\n	   YYYYMMDD||HHMMSS AS SORTTIME,  ");
+    		sb.append("\n	   YYYYMMDD||HHMMSS AS DATETIME,  ");
+    		sb.append("\n	   WRITEDATE AS SORTTIME,  ");
     		sb.append("\n      BALANCE+BILL AS BEFOREBALANCE,  ");
     		sb.append("\n	   BALANCE AS BALANCE,  ");
     		sb.append("\n      null AS CHARGEDAMOUNT,  ");
@@ -1151,7 +1151,7 @@ public class PrepaymentLogDaoImpl  extends AbstractHibernateGenericDao< Prepayme
 //    		sb.append("\n      DESCRIPTION AS DESCR  ");
     		sb.append("\n      null AS DESCR  ");
     		sb.append("\n   FROM BILLING_BLOCK_TARIFF ");
-    		sb.append("\n   WHERE MDEV_ID = :mdsId ");
+    		sb.append("\n   WHERE CONTRACT_ID = :contractId ");
     		sb.append("\n      AND YYYYMMDD BETWEEN :searchStartDate AND :searchEndDate ");
     		sb.append("\n      AND VALIDITY != 0 ");
     	}
@@ -1160,7 +1160,7 @@ public class PrepaymentLogDaoImpl  extends AbstractHibernateGenericDao< Prepayme
     		if(searchType.equals("all"))
     			sb.append("\n   UNION ALL  ");
     		sb.append("\n   SELECT 'Billing(month)' AS TYPE,  ");
-    		sb.append("\n      YYYYMM AS DATETIME,  ");
+    		sb.append("\n      YYYYMM||'01000000' AS DATETIME,  ");
     		sb.append("\n      WRITE_DATE AS SORTTIME,  ");
     		sb.append("\n      BEFORE_CREDIT AS BEFOREBALANCE,  ");
     		sb.append("\n      CURRENT_CREDIT AS BALANCE,  ");
@@ -1184,7 +1184,7 @@ public class PrepaymentLogDaoImpl  extends AbstractHibernateGenericDao< Prepayme
     	}
 
         if (!isCount) {
-            sb.append("\n) ORDER BY SORTTIME DESC, DATETIME DESC ");
+            sb.append("\n) ORDER BY DATETIME DESC, SORTTIME DESC ");
         }else {
         	sb.append("\n) ");
         }
@@ -1197,7 +1197,7 @@ public class PrepaymentLogDaoImpl  extends AbstractHibernateGenericDao< Prepayme
         	query.setString("searchEndDateTime", searchEndDate+"235959");
         }
         if(searchType.equals("all") || searchType.equals("day")) {
-        	query.setString("mdsId", mdsId);
+//        	query.setString("mdsId", mdsId);
         	query.setString("searchStartDate", searchStartDate);
         	query.setString("searchEndDate", searchEndDate);
         }

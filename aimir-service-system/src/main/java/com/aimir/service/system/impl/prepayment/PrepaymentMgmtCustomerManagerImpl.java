@@ -619,6 +619,7 @@ public class PrepaymentMgmtCustomerManagerImpl implements PrepaymentMgmtCustomer
 	                    map.put("BEFOREBALANCE", cdf.format(Double.parseDouble(map.get("BEFOREBALANCE") == null ? "0" : map.get("BEFOREBALANCE").toString())));
 	                    
 	                    map.put("DATETIME", TimeLocaleUtil.getLocaleDateByMediumFormat(((String)map.get("DATETIME")), lang, country));
+	                    map.put("SORTTIME", TimeLocaleUtil.getLocaleDateByMediumFormat(((String)map.get("SORTTIME")), lang, country));
                         
 	                    //충전된 정보일 경우는 차감된 요금과 사용량을 0으로 보여준다.
 	                    if(map.get("TYPE").equals("Recharge") ) {
