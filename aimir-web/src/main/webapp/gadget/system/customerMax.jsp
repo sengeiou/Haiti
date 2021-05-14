@@ -1679,7 +1679,11 @@
                                 }
                             },
                             error:function(request, status) {
-                                Ext.Msg.alert('<fmt:message key='aimir.message'/>',"creditStatusName fetch failed");
+                            	if(request.response.includes('More than one row with the given identifier was found')){
+                            		Ext.Msg.alert('<fmt:message key='aimir.message'/>',"Please check if the same meter is connected to another contract in duplicate.");
+                            	}else{
+                            		Ext.Msg.alert('<fmt:message key='aimir.message'/>',"creditStatusName fetch failed");
+                            	}
                             }
                         });
 
