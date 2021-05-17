@@ -3509,7 +3509,7 @@
             if (rtnStr == 'Success') {
                 Ext.Msg.alert('', 'Success!', null, null);
                 $('#commandResult').val(rtnStr);
-            } else if ( rtnStr == ''){
+            } else if ( rtnStr == '' || rtnStr == null){
                 Ext.Msg.alert('', 'Fail', null, null);
                 $('#commandResult').val("No Result");
             } else{

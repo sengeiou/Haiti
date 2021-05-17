@@ -1861,12 +1861,17 @@ public class CmdController<V> {
 					if(meter.getModel() != null && ("I210+").equals(meter.getModel().getName())) {
 						StringBuffer buffer = new StringBuffer();
 						
-						if(relayStatus == 1) 
+						if(relayStatus == 1) {
 							buffer.append("Relay off (" + relayStatus + ")");
-						else if(relayStatus == 15)
+							meter.setMeterStatus(codeDao.findByCondition("code", "1.3.3.4"));
+							meterManager.updateMeter(meter);
+						} else if(relayStatus == 15) {
 							buffer.append("Relay on (" + relayStatus + ")");
-						else
+							meter.setMeterStatus(codeDao.findByCondition("code", "1.3.3.1"));
+							meterManager.updateMeter(meter);
+						} else {
 							buffer.append("Unknow (" + relayStatus + ")");
+						}
 						
 						relayStr = buffer.toString();
 					}
@@ -1997,12 +2002,11 @@ public class CmdController<V> {
 		 * 
 		 * Code operationCode = codeManager.getCodeByCode("8.1.4");
 		 */
-		Code operationCode = codeManager.getCodeByCode("8.1.2");
+		Code operationCode = codeManager.getCodeByCode("8.1.8");
 
 		Code meterTypeCode = codeManager.getCode(meter.getMeterTypeCodeId());
 		if (operationCode != null) {
-			operationLogManager.saveOperationLog(supplier, meterTypeCode, meter.getMdsId(), loginId, operationCode,
-					status.getCode(), status.name());
+			operationLogManager.saveOperationLog(supplier, meterTypeCode, meter.getMdsId(), loginId, operationCode, status.getCode(), status.name());
 		}
 		// meterManager.updateMeter(meter);
 		mav.addObject("status", status.name());
@@ -2126,12 +2130,17 @@ public class CmdController<V> {
 					if(meter.getModel() != null && ("I210+").equals(meter.getModel().getName())) {
 						StringBuffer buffer = new StringBuffer();
 						
-						if(relayStatus == 1) 
+						if(relayStatus == 1) {
 							buffer.append("Relay off (" + relayStatus + ")");
-						else if(relayStatus == 15)
+							meter.setMeterStatus(codeDao.findByCondition("code", "1.3.3.4"));
+							meterManager.updateMeter(meter);
+						} else if(relayStatus == 15) {
 							buffer.append("Relay on (" + relayStatus + ")");
-						else
+							meter.setMeterStatus(codeDao.findByCondition("code", "1.3.3.1"));
+							meterManager.updateMeter(meter);
+						} else {
 							buffer.append("Unknow (" + relayStatus + ")");
+						}
 						
 						relayStr = buffer.toString();
 					}
@@ -2408,12 +2417,17 @@ public class CmdController<V> {
 					if(meter.getModel() != null && ("I210+").equals(meter.getModel().getName())) {
 						StringBuffer buffer = new StringBuffer();
 						
-						if(relayStatus == 1) 
+						if(relayStatus == 1) {
 							buffer.append("Relay off (" + relayStatus + ")");
-						else if(relayStatus == 15)
+							meter.setMeterStatus(codeDao.findByCondition("code", "1.3.3.4"));
+							meterManager.updateMeter(meter);
+						} else if(relayStatus == 15) {
 							buffer.append("Relay on (" + relayStatus + ")");
-						else
+							meter.setMeterStatus(codeDao.findByCondition("code", "1.3.3.1"));
+							meterManager.updateMeter(meter);
+						} else {
 							buffer.append("Unknow (" + relayStatus + ")");
+						}
 						
 						relayStr = buffer.toString();
 					}
