@@ -156,7 +156,10 @@ public class EV_202_4_0_Action implements EV_Action
    	            log.debug("ipaddr ["+ipaddr+"]");
    	            
    	            mcu.setLastCommDate(currentTime);
-   	            mcu.setIpAddr(ipaddr);
+
+   	            if (ipaddr != null && !ipaddr.equals("") && !ipaddr.equals("0.0.0.0")) {
+   	            	mcu.setIpAddr(ipaddr);
+   	            }
    	            /*
    	            if (ipaddr != null && !ipaddr.equals("") && !ipaddr.equals("0.0.0.0"))
 	            {
