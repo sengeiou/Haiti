@@ -1400,7 +1400,7 @@
 			chargeArrears2 = Number(Ext.getCmp('arrearsB').getValue());
 			
 			if(vatUnit=='%'){
-				vat = (totalAmountPaid - (chargeArrears + chargeArrears2)) * vatAmount/100 ;
+				vat = Math.floor( (totalAmountPaid - (chargeArrears + chargeArrears2)) * vatAmount) / 100 ;
 			}else{
 				vat = vatAmount;
 			}
@@ -1411,7 +1411,7 @@
 				Ext.getCmp('arrearsB').setReadOnly(true);
 			}
 			
-			chargeAmount = totalAmountPaid - chargeArrears - chargeArrears2 - vat;
+			chargeAmount = Math.floor((totalAmountPaid - chargeArrears - chargeArrears2 - vat) * 100) / 100;
 			$("#vatB").text(' (='+vat+')');
 			$("#totalAmountB").text(chargeAmount);
       	},
