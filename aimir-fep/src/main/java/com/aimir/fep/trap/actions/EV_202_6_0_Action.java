@@ -147,10 +147,11 @@ public class EV_202_6_0_Action implements EV_Action
             //Code mcuType = mcu.getMcuType();
     
             // Update MCU Mobile IP        
-            String ipAddr = event.getEventAttrValue("ipAddr");
+            //String ipAddr = event.getEventAttrValue("ipAddr");
+            String ipAddr = event.getEventAttrValue("ethIpAddr");
             log.debug("Mobile Ipaddr=["+ipAddr+"]");
     
-            if (ipAddr != null/* && !ipAddr.equals("") && !ipAddr.equals("0.0.0.0")*/)
+            if (ipAddr != null && !ipAddr.equals("") && !ipAddr.equals("0.0.0.0"))
             {
                 mcu.setIpAddr(ipAddr);
             }
