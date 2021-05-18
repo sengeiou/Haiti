@@ -111,7 +111,7 @@ public class EV_202_6_0_Action implements EV_Action
 					mcu.setSupplier(supplierDao.getAll().get(0));
 				}
 				
-				DeviceModel model = modelDao.findByCondition("name", "DCU-DUMMY");
+				DeviceModel model = modelDao.findByCondition("name", "NZC I211");
                 if (model != null) {
                     mcu.setDeviceModel(model);
                 }
@@ -157,7 +157,7 @@ public class EV_202_6_0_Action implements EV_Action
             }
             
             mcu.setNetworkStatus(1);
-            
+            mcu.setLastCommDate(currentTime);
             processingCodi(trap, event, mcu);
             
            // MOINSTANCE mmp = IUtil.makeDummyMO("MCUMobilePort");

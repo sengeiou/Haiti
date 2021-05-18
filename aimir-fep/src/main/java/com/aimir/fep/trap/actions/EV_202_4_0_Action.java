@@ -108,7 +108,7 @@ public class EV_202_4_0_Action implements EV_Action
 					mcu.setSupplier(supplierDao.getAll().get(0));
 				}
 				
-				DeviceModel model = modelDao.findByCondition("name", "DCU-DUMMY");
+				DeviceModel model = modelDao.findByCondition("name", "NZC I211");
                 if (model != null) {
                     mcu.setDeviceModel(model);
                 }

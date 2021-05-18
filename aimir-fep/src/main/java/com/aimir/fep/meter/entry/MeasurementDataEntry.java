@@ -472,7 +472,7 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
             mcu = new MCU();
             mcu.setSysID(mcuId);
             mcu.setMcuType(CommonConstants.getMcuTypeByName(McuType.DCU.name()));
-            DeviceModel model = deviceModelDao.findByCondition("name", "DCU-DUMMY");
+            DeviceModel model = deviceModelDao.findByCondition("name", "NZC I211");
 			if (model != null) {
 				mcu.setDeviceModel(model);
 	            log.debug("DCU["+mcuId+"] SET MODEL["+model.getName()+"]");
@@ -540,11 +540,11 @@ public class MeasurementDataEntry implements IMeasurementDataEntry
             //throw new Exception("Invalid MCU[" + mcuId + "]");
         } else {
         	if(mcu.getDeviceModel() == null) {
-            	DeviceModel model = deviceModelDao.findByCondition("name", "DCU-DUMMY");
+            	DeviceModel model = deviceModelDao.findByCondition("name", "NZC I211");
     			if (model != null) {
     				mcu.setDeviceModel(model);
     			}
-    			mcu.setSysModel("DCU-DUMMY");
+//    			mcu.setSysModel("DCU-DUMMY");
                 log.debug("DCU["+mcu.getSysID()+"] SET MODEL["+model.getName()+"]");
         	}
         	
