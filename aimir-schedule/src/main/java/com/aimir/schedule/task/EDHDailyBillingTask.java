@@ -635,15 +635,15 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 		
 		log.debug("left : " + left +", right : " +right);
 		
-		if(left instanceof Number)
-			bLeft = new BigDecimal(String.valueOf((Double)left));
-		else if(left instanceof BigDecimal)
+		if(left instanceof BigDecimal)
 			bLeft = (BigDecimal)left;
+		else if(left instanceof Number)
+			bLeft = new BigDecimal(String.valueOf((Double)left));
 		
-		if(right instanceof Number)
-			bRigth = new BigDecimal(String.valueOf((Double)right));
-		else if(right instanceof BigDecimal)
+		if(right instanceof BigDecimal)
 			bRigth = (BigDecimal)right;
+		else if(right instanceof Number)
+			bRigth = new BigDecimal(String.valueOf((Double)right));
 		
 		if(bLeft != null && bRigth != null)
 			return getCale(bLeft, bRigth, calcOP);
