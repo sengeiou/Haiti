@@ -48,8 +48,6 @@ import com.aimir.schedule.exception.DailyBillingException;
 import com.aimir.schedule.task.EDHDailyBillingTask.BIGDECIMAL_CALC;
 import com.aimir.util.DateTimeUtil;
 
-import antlr.ParseTreeToken;
-
 @Service
 public class EDHDailyBillingTask extends ScheduleTask {
 	private static Log log = LogFactory.getLog(EDHDailyBillingTask.class);
@@ -129,7 +127,7 @@ public class EDHDailyBillingTask extends ScheduleTask {
 		
 		List<Contract> targets = getTargets(mdevId, billingDay);
 		if(targets != null && targets.size() > 0) {
-			int poolSize = Integer.parseInt(FMPProperty.getProperty("edh.sms.thread.pool.size", ""+6));
+			int poolSize = Integer.parseInt(FMPProperty.getProperty("edh.billing.thread.pool.size", ""+6));
 	        ThreadPoolExecutor executor = new ThreadPoolExecutor(poolSize, poolSize, 10, TimeUnit.MINUTES, new LinkedBlockingQueue<Runnable>());
 	        
 	        for(Contract co : targets) {
@@ -200,7 +198,12 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 	
 	private void init() throws Exception {
 		txmanager = (HibernateTransactionManager)DataUtil.getBean("transactionManager");
+		log.debug("this txmanager : " + this.txmanager);
+		log.debug("txmanager : " + txmanager);
+		
 		codeDao = DataUtil.getBean(CodeDao.class);
+		log.debug("codeDao : " + codeDao);
+		
 		contractDao = DataUtil.getBean(ContractDao.class);
 		meterDao = DataUtil.getBean(MeterDao.class);
 		dayEMDao = DataUtil.getBean(DayEMDao.class);
@@ -290,7 +293,6 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 		
 		TransactionStatus txstatus = null;
 		try {
-			log.debug("txmanager : " + txmanager);
 			txstatus = txmanager.getTransaction(null);
 			
 			init();	
