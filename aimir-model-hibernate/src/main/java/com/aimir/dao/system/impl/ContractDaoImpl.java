@@ -3604,12 +3604,12 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 		sbQuery.append("\n 	WHERE  ");
 		sbQuery.append("\n 		1 = 1  ");
 
-		if(yyyymmdd == null)
-			sbQuery.append("\n 			AND de.YYYYMMDD BETWEEN (SELECT to_char(sysdate - 7, 'YYYYMMDD') FROM dual) AND (SELECT to_char(sysdate - 7, 'YYYYMMDD') FROM dual) ");
+		if(yyyymmdd != null && !yyyymmdd.isEmpty())
+			sbQuery.append("\n 			AND de.YYYYMMDD <= :yyyymmdd ");
 		else			
-			sbQuery.append("\n 			AND de.YYYYMMDD <= :yyyymmdd ");			
+			sbQuery.append("\n 			AND de.YYYYMMDD BETWEEN (SELECT to_char(sysdate - 7, 'YYYYMMDD') FROM dual) AND (SELECT to_char(sysdate - 7, 'YYYYMMDD') FROM dual) ");			
 			
-		if(mdevId != null)		
+		if(mdevId != null && !mdevId.isEmpty())		
 			sbQuery.append("\n 			AND de.MDEV_ID = :mdevId ");
 					
 		sbQuery.append("\n 		AND de.CONTRACT_ID IS NOT null ");
@@ -3622,10 +3622,10 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 		
 		NativeQuery query = getSession().createNativeQuery(sbQuery.toString(), Contract.class);
 		
-		if(yyyymmdd != null)
+		if(yyyymmdd != null && !yyyymmdd.isEmpty())
 			query.setParameter("yyyymmdd", yyyymmdd);
 			
-		if(mdevId != null)
+		if(mdevId != null && !mdevId.isEmpty())
 			query.setParameter("mdevId", mdevId);
 		
 		List<Contract> result = query.getResultList();
