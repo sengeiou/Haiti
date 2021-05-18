@@ -210,12 +210,9 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 	}
 	
 	private void setBaseData() throws Exception, DailyBillingException {
-		TransactionStatus txstatus = null;
 		StringBuffer errBuffer = new StringBuffer();
 		
 		try {
-			txstatus = txmanager.getTransaction(null);
-			
 			contract = contractDao.get(contractId);
 			if(contract != null) {
 				meter = contract.getMeter();
@@ -239,7 +236,6 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 				throw ex;
 			}
 			
-			txmanager.commit(txstatus);
 		}catch(HibernateException he) {
 			//계약 - 미터가 1:1 관계가 아닐 경우
 			DailyBillingException ex = new DailyBillingException(EDHDailyBillingTask.DAILY_BILLING_ERROR_CODE.UCM.name(), 
@@ -294,6 +290,7 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 		
 		TransactionStatus txstatus = null;
 		try {
+			log.debug("txmanager : " _+ txmanager);
 			txstatus = txmanager.getTransaction(null);
 			
 			init();	
