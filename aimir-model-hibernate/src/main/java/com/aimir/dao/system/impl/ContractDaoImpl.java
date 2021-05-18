@@ -3623,11 +3623,11 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 		
 		NativeQuery query = getSession().createNativeQuery(sbQuery.toString(), Contract.class);
 		
-		if(yyyymmdd == null)
+		if(yyyymmdd != null)
 			query.setParameter("yyyymmdd", yyyymmdd);
 			
 		if(mdevId != null)
-			query.setParameter("yyyymmdd", yyyymmdd);
+			query.setParameter("mdevId", yyyymmdd);
 		
 		List<Contract> result = query.getResultList();
 		return result;
