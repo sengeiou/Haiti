@@ -247,7 +247,11 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 			
 			throw ex;
 		} catch (Exception e) {
-			throw e;
+			log.error(e, e);
+			DailyBillingException ex = new DailyBillingException(EDHDailyBillingTask.DAILY_BILLING_ERROR_CODE.UNKNOW.name(), 
+					e.getMessage());
+			
+			throw ex;
 		}
 	}
 	
