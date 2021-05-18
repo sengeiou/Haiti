@@ -3620,16 +3620,17 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 		sbQuery.append("\n 	a.CONTRACT_ID = co.ID ");
 		sbQuery.append("\n 	AND co.CREDITTYPE_ID IN (SELECT id FROM code WHERE code IN ('2.2.2', '2.2.1')) ");
 		
-		
 		NativeQuery query = getSession().createNativeQuery(sbQuery.toString(), Contract.class);
 		
 		if(yyyymmdd != null)
 			query.setParameter("yyyymmdd", yyyymmdd);
 			
 		if(mdevId != null)
-			query.setParameter("mdevId", yyyymmdd);
+			query.setParameter("mdevId", mdevId);
 		
 		List<Contract> result = query.getResultList();
+		logger.debug("Query : " + sbQuery.toString()+", Cnt : " +result.size());
+		
 		return result;
 	}
 	

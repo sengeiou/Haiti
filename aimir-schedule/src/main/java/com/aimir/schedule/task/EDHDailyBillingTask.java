@@ -163,7 +163,7 @@ public class EDHDailyBillingTask extends ScheduleTask {
 			
 			queryResult = contractDao.getDailyBillingContractList(mdevId, yyyymmdd);
 			totalExecuteCount = queryResult.size();
-			log.info("relay off meter cnt : " + totalExecuteCount);
+			log.info("Daily Billing Contract cnt : " + totalExecuteCount);
 			
 			txmanager.commit(txstatus);
 		}catch(Exception e) {
