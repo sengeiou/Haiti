@@ -293,9 +293,9 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 		
 		TransactionStatus txstatus = null;
 		try {
-			txstatus = txmanager.getTransaction(null);
+			init();
 			
-			init();	
+			txstatus = txmanager.getTransaction(null);
 			setBaseData();
 			
 			//마지막 이전 일정산 조회
