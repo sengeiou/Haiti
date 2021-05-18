@@ -317,6 +317,9 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 						pvBBT = lastBBT;
 
 					cvBBT = bbtList.get(i);
+					
+					log.debug("meterId : " + meter.getMdsId() +", usage : " + cvBBT.getUsage() +", accUsage : "+ cvBBT.getAccumulateUsage() +", bill : " +cvBBT.getBill() +",accBill : " +cvBBT.getAccumulateBill());
+					
 					//01. bill 체크
 					if(cvBBT.getBill() < 0) {
 						DailyBillingException ex = new DailyBillingException(EDHDailyBillingTask.DAILY_BILLING_ERROR_CODE.MB.name(), 
@@ -341,7 +344,7 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 					}
 						
 					
-					log.debug("meterId : " + meter.getMdsId() +", usage : " + cvBBT.getUsage() +", accUsage : "+ cvBBT.getAccumulateUsage() +", bill : " +cvBBT.getBill() +",accBill : " +cvBBT.getAccumulateBill());
+					
 				}
 			}
 		
@@ -632,8 +635,6 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 	private BigDecimal getCale(Object left, Object right, EDHDailyBillingTask.BIGDECIMAL_CALC calcOP) {
 		BigDecimal bLeft = null;
 		BigDecimal bRigth = null;
-		
-		log.debug("left : " + left +", right : " +right);
 		
 		if(left instanceof BigDecimal)
 			bLeft = (BigDecimal)left;
