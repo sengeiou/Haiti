@@ -46,6 +46,7 @@ import com.aimir.dao.AbstractHibernateGenericDao;
 import com.aimir.dao.mvm.DayEMDao;
 import com.aimir.model.mvm.DayEM;
 import com.aimir.model.mvm.DayPk;
+import com.aimir.model.system.Contract;
 import com.aimir.util.Condition;
 import com.aimir.util.Condition.Restriction;
 import com.aimir.util.SQLWrapper;
@@ -3928,4 +3929,39 @@ public class DayEMDaoImpl extends AbstractHibernateGenericDao<DayEM, Integer>
         // this.getSession().bulkUpdate(hqlBuf.toString(),
         //    new Object[] {bDate, mdsId} );	
 	}
+	
+	@Override
+    public DayEM getLastDayEM(String mdsId) {
+		StringBuffer sbQuery = new StringBuffer();
+		try {
+			sbQuery.append("\n SELECT ");
+			sbQuery.append("\n 	dem.* ");
+			sbQuery.append("\n FROM  ");
+			sbQuery.append("\n ( ");
+			sbQuery.append("\n 	SELECT  ");
+			sbQuery.append("\n 		* ");
+			sbQuery.append("\n 	FROM  ");
+			sbQuery.append("\n 	( ");
+			sbQuery.append("\n 		SELECT  ");
+			sbQuery.append("\n 			de.*,  ");
+			sbQuery.append("\n 			row_number() over(PARTITION BY de.mdev_id ORDER BY de.yyyymmdd DESC, hh desc) AS rowIdx ");
+			sbQuery.append("\n 		FROM  ");
+			sbQuery.append("\n 			DAY_EM de  ");
+			sbQuery.append("\n 		WHERE  ");
+			sbQuery.append("\n 			de.MDEV_ID = '").append(mdsId).append("'");
+			sbQuery.append("\n 			AND de.YYYYMMDD BETWEEN (SELECT to_char(sysdate - 7, 'YYYYMMDD') FROM dual) AND (SELECT to_char(sysdate - 7, 'YYYYMMDD') FROM dual) ");
+			sbQuery.append("\n 	)WHERE  ");
+			sbQuery.append("\n 		rowIdx = 1 ");
+			sbQuery.append("\n )A, DAY_EM dem  ");
+			sbQuery.append("\n 	WHERE  ");
+			sbQuery.append("\n 		A.mdev_id = dem.mdev_id ");
+			sbQuery.append("\n 		AND A.yyyymmdd = dem.yyyymmdd ");
+			sbQuery.append("\n 		AND A.hh = dem.hh ");
+		
+			DayEM dayEM = getSession().createNativeQuery(sbQuery.toString(), DayEM.class).getSingleResult();
+			return dayEM;
+		}catch(Exception e) {
+			return null;
+		}
+    }
 }

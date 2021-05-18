@@ -18,6 +18,7 @@ import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
@@ -3585,6 +3586,50 @@ public class ContractDaoImpl extends AbstractHibernateGenericDao<Contract, Integ
 			sbQuery.append("\n 	AND me.mds_id = " + mdevId);
 		
 		List<Contract> result = getSession().createNativeQuery(sbQuery.toString(), Contract.class).getResultList();
+		return result;
+	}
+	
+	@Override
+	public List<Contract> getDailyBillingContractList(String mdevId, String yyyymmdd) {
+		StringBuffer sbQuery = new StringBuffer();
+		
+		sbQuery.append(" SELECT ");
+		sbQuery.append("\n  	co.* ");
+		sbQuery.append("\n FROM  ");
+		sbQuery.append("\n ( ");
+		sbQuery.append("\n 	 SELECT   ");
+		sbQuery.append("\n 		de.CONTRACT_ID ");
+		sbQuery.append("\n 	FROM   ");
+		sbQuery.append("\n 		DAY_EM de   ");
+		sbQuery.append("\n 	WHERE  ");
+		sbQuery.append("\n 		1 = 1  ");
+
+		if(yyyymmdd == null)
+			sbQuery.append("\n 			AND de.YYYYMMDD BETWEEN (SELECT to_char(sysdate - 7, 'YYYYMMDD') FROM dual) AND (SELECT to_char(sysdate - 7, 'YYYYMMDD') FROM dual) ");
+		else			
+			sbQuery.append("\n 			AND de.YYYYMMDD <= :yyyymmdd ");			
+			
+		if(mdevId != null)		
+			sbQuery.append("\n 			AND de.MDEV_ID = :mdevId ");
+					
+		sbQuery.append("\n 		AND de.CONTRACT_ID IS NOT null ");
+		sbQuery.append("\n 	GROUP BY ");
+		sbQuery.append("\n 		de.CONTRACT_ID ");
+		sbQuery.append("\n )A, CONTRACT co ");
+		sbQuery.append("\n WHERE  ");
+		sbQuery.append("\n 	a.CONTRACT_ID = co.ID ");
+		sbQuery.append("\n 	AND co.CREDITTYPE_ID IN (SELECT id FROM code WHERE code IN ('2.2.2', '2.2.1')) ");
+		
+		
+		NativeQuery query = getSession().createNativeQuery(sbQuery.toString(), Contract.class);
+		
+		if(yyyymmdd == null)
+			query.setParameter("yyyymmdd", yyyymmdd);
+			
+		if(mdevId != null)
+			query.setParameter("yyyymmdd", yyyymmdd);
+		
+		List<Contract> result = query.getResultList();
 		return result;
 	}
 	

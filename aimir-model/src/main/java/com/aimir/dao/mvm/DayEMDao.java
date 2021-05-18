@@ -389,4 +389,10 @@ public interface DayEMDao extends GenericDao<DayEM, Integer>{
      * @param bDate
      */
 	public void oldLPDelete(String mdsId, String substring);
+	
+    /**
+     * 해당 미터의 가장 최근의 Day을 가져온다.
+     * @param mdsId
+     */
+	public DayEM getLastDayEM(String mdsId);
 }

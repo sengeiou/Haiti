@@ -151,4 +151,10 @@ public class BillingBlockTariffDaoImpl extends AbstractJpaDao<BillingBlockTariff
     	// TODO Auto-generated method stub
         return null;
     }
+    
+    @Override
+    public BillingBlockTariff getLastBillingBlockTariff(Integer contractId, String mdevId) {
+    	// TODO Auto-generated method stub
+        return null;
+    }
 }

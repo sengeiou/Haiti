@@ -487,5 +487,11 @@ public class DayEMDaoImpl extends AbstractJpaDao<DayEM, Integer>
         // TODO Auto-generated method stub
         
     }
+    
+    @Override
+    public DayEM getLastDayEM(String mdsId) {
+    	// TODO Auto-generated method stub
+    	return null;
+    }
 
 }

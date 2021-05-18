@@ -417,10 +417,10 @@ public class BillingBlockTariff {
         buf.append("',accumulateUsage:'" + this.getAccumulateUsage());
         buf.append("',activeEnergy:'" + this.getActiveEnergy());
         buf.append("',activeEnergyImport:'" + this.getActiveEnergyImport());
-        buf.append("',activeEnergyExport:'" + this.getActiveEnergyExport());
-        buf.append("',reactiveEnergy:'" + this.getReactiveEnergy());
-        buf.append("',reactiveEnergyImport:'" + this.getReactiveEnergyImport());
-        buf.append("',reactiveEnergyExport:'" + this.getReactiveEnergyExport());
+        buf.append("',accumulateBill:'" + this.getAccumulateBill());
+        buf.append("',bill:'" + this.getAccumulateBill());
+        buf.append("',accumulateUsage:'" + this.getAccumulateUsage());
+        buf.append("',usage:'" + this.getUsage());
         buf.append("',writeDate:'" + this.getWriteDate());
         buf.append("'}");
      

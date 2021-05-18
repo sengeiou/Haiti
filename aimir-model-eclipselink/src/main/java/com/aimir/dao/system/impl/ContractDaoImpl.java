@@ -557,6 +557,12 @@ public class ContractDaoImpl extends AbstractJpaDao<Contract, Integer> implement
 	}
 	
 	@Override
+	public List<Contract> getDailyBillingContractList(String mdevId, String yyyymmdd) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	public List<Contract> getMnthlyBillingContractList(String mdevId) {
 		// TODO Auto-generated method stub
 		return null;

@@ -70,4 +70,6 @@ public interface BillingBlockTariffDao extends GenericDao<BillingBlockTariff, In
     public BillingBlockTariff getBillingBlockTariff(Integer contractId, String mdevId, String yyyymmdd, String hhmmss);
     
     public List<Map<String, Object>> getRevertBillingList();
+    
+    public BillingBlockTariff getLastBillingBlockTariff(Integer contractId, String mdevId);
 }

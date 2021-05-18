@@ -27,6 +27,7 @@ import com.aimir.dao.AbstractHibernateGenericDao;
 import com.aimir.dao.mvm.BillingBlockTariffDao;
 import com.aimir.model.mvm.BillingBlockTariff;
 import com.aimir.model.mvm.BillingDayEM;
+import com.aimir.model.mvm.DayEM;
 import com.aimir.model.system.Contract;
 import com.aimir.model.system.MonthlyBillingLog;
 
@@ -381,7 +382,25 @@ public class BillingBlockTariffDaoImpl extends AbstractHibernateGenericDao<Billi
     	}
     	
 		return null;
-		
     }
 
+    @Override
+    public BillingBlockTariff getLastBillingBlockTariff(Integer contractId, String mdevId) {
+    	StringBuffer sbQuery = new StringBuffer();
+		try {
+	    	sbQuery.append(" SELECT ");
+	    	sbQuery.append("\n * ");
+	    	sbQuery.append("\n FROM  ");
+	    	sbQuery.append("\n ( ");
+	    	sbQuery.append("\n 	SELECT  ");
+	    	sbQuery.append("\n 		bbt.*	 ");	
+	    	sbQuery.append("\n 	FROM BILLING_BLOCK_TARIFF bbt WHERE bbt.CONTRACT_ID = 17200 AND bbt.MDEV_ID = '810897038' ORDER BY bbt.YYYYMMDD DESC, bbt.HHMMSS DESC ");
+	    	sbQuery.append("\n )WHERE ROWNUM = 1 ");
+	    	
+	    	BillingBlockTariff bbt = getSession().createNativeQuery(sbQuery.toString(), BillingBlockTariff.class).getSingleResult();
+			return bbt;
+		}catch(Exception e) {
+			return null;
+		}
+    }
 }
