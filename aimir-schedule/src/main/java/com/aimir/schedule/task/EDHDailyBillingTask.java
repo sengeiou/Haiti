@@ -325,13 +325,21 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 						DailyBillingException ex = new DailyBillingException(EDHDailyBillingTask.DAILY_BILLING_ERROR_CODE.MB.name(), 
 								EDHDailyBillingTask.DAILY_BILLING_ERROR_CODE.MB.getDesc());
 						
+						ex.setPrev_activeEnergy(pvBBT.getActiveEnergy());
+						ex.setPrev_yyyymmddhh(pvBBT.getYyyymmdd() + pvBBT.getHhmmss().substring(0, 2));
+						ex.setBilling_yyyymmddhh(cvBBT.getYyyymmdd() + cvBBT.getHhmmss().substring(0, 2));
+						ex.setBilling_activeEnergy(cvBBT.getActiveEnergy());
 						throw ex;
 					}
 					
-					if(pvBBT.getActiveEnergy() >= cvBBT.getActiveEnergy()) {
+					if(pvBBT.getActiveEnergy() > cvBBT.getActiveEnergy()) {
 						DailyBillingException ex = new DailyBillingException(EDHDailyBillingTask.DAILY_BILLING_ERROR_CODE.AED.name(), 
 								EDHDailyBillingTask.DAILY_BILLING_ERROR_CODE.AED.getDesc());
 						
+						ex.setPrev_activeEnergy(pvBBT.getActiveEnergy());
+						ex.setPrev_yyyymmddhh(pvBBT.getYyyymmdd() + pvBBT.getHhmmss().substring(0, 2));
+						ex.setBilling_yyyymmddhh(cvBBT.getYyyymmdd() + cvBBT.getHhmmss().substring(0, 2));
+						ex.setBilling_activeEnergy(cvBBT.getActiveEnergy());
 						throw ex;
 					}
 					
@@ -340,6 +348,10 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 						DailyBillingException ex = new DailyBillingException(EDHDailyBillingTask.DAILY_BILLING_ERROR_CODE.AEU.name(), 
 								EDHDailyBillingTask.DAILY_BILLING_ERROR_CODE.AEU.getDesc());
 						
+						ex.setPrev_activeEnergy(pvBBT.getActiveEnergy());
+						ex.setPrev_yyyymmddhh(pvBBT.getYyyymmdd() + pvBBT.getHhmmss().substring(0, 2));
+						ex.setBilling_yyyymmddhh(cvBBT.getYyyymmdd() + cvBBT.getHhmmss().substring(0, 2));
+						ex.setBilling_activeEnergy(cvBBT.getActiveEnergy());
 						throw ex;
 					}
 						
