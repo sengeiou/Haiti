@@ -318,7 +318,7 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 
 					cvBBT = bbtList.get(i);
 					
-					log.debug("meterId : " + meter.getMdsId() +", usage : " + cvBBT.getUsage() +", accUsage : "+ cvBBT.getAccumulateUsage() +", bill : " +cvBBT.getBill() +",accBill : " +cvBBT.getAccumulateBill());
+					log.debug("meterId : " + meter.getMdsId() +",yyyymmdd :" + cvBBT.getYyyymmdd() + cvBBT.getHhmmss()+", usage : " + cvBBT.getUsage() +", accUsage : "+ cvBBT.getAccumulateUsage() +", bill : " +cvBBT.getBill() +", accBill : " +cvBBT.getAccumulateBill());
 					
 					//01. bill 체크
 					if(cvBBT.getBill() < 0) {
@@ -589,7 +589,7 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 						bill = getCale(bill, tBill, BIGDECIMAL_CALC.ADD);
 					}
 					
-					log.info("meterId : " + meter.getMdsId()+", bill : " + bill);
+					log.info("meterId : " + meter.getMdsId()+", bill : " + bill +", supplySizeMin : " + em.getSupplySizeMax() +", charge : " +em.getActiveEnergyCharge());
 					return bill;
 				}
 				
@@ -607,7 +607,7 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 						bill = getCale(bill, tBill, BIGDECIMAL_CALC.ADD);
 					}
 					
-					log.info("meterId : " + meter.getMdsId()+", bill : " + bill);
+					log.info("meterId : " + meter.getMdsId()+", bill : " + bill + ", supplySizeMin : " + em.getSupplySizeMax() +", charge : " +em.getActiveEnergyCharge());
 					return bill;
 				} else {
 					if(bill == null) {
@@ -617,6 +617,8 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 						bill = getCale(bill, tBill, BIGDECIMAL_CALC.ADD);
 						mod = getCale(mod, remainUsage, BIGDECIMAL_CALC.SUBTRACT);
 					}
+					
+					log.info("meterId : " + meter.getMdsId()+", bill : " + bill +", mod0 : " + ", remainUsage : " +remainUsage +", supplySizeMin : " + em.getSupplySizeMax() +", charge : " +em.getActiveEnergyCharge());
 				}
 			}
 		}
