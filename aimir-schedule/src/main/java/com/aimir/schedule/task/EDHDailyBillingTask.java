@@ -290,7 +290,7 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 		
 		TransactionStatus txstatus = null;
 		try {
-			log.debug("txmanager : " _+ txmanager);
+			log.debug("txmanager : " + txmanager);
 			txstatus = txmanager.getTransaction(null);
 			
 			init();	
