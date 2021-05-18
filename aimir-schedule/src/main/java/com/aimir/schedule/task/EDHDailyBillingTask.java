@@ -311,9 +311,10 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 			
 			LinkedList<BillingBlockTariff> bbtList = getDailyBilingData(lastDayEM, lastBBT);
 			
-			log.debug("meterId : " + meter.getMdsId() +", bbtList Cnt : " +bbtList.size());
-			log.debug("############### TAGINNG START ###############");
 			if(bbtList != null) {
+				log.debug("meterId : " + meter.getMdsId() +", bbtList Cnt : " +bbtList.size());
+				log.debug("############### TAGINNG START ###############");
+				
 				BillingBlockTariff pvBBT = null;
 				BillingBlockTariff cvBBT = null;
 				for(int i=0; i<bbtList.size(); i++) {
@@ -418,8 +419,10 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 		BillingBlockTariff prevBBT = null;
 		
 		//01. 마지막 정산의 날짜와 DayEM의 날짜가 동일한지 판단
-		if(isSkipDailyBilling(lastDayEM, lastBBT)) 
+		if(isSkipDailyBilling(lastDayEM, lastBBT)) {
+			log.info("It's meter done daily billing. skip daily billing ");
 			return null;
+		}
 		
 		//02. 이전 빌링과 최근 검침날짜의 차이를 계산
 		long intervalDay = TimeUnit.DAYS.convert(Math.abs(DateTimeUtil.getDateFromYYYYMMDDHHMM(lastBBT.getYyyymmdd() + lastBBT.getHhmmss().substring(0, 2)).getTime() -
