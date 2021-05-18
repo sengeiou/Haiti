@@ -387,6 +387,7 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 	private BillingBlockTariff getLastBBT() {
 		BillingBlockTariff bbt = billingBlockTariffDao.getLastBillingBlockTariff(contractId, meter.getMdsId());
 		if(bbt == null) {
+			bbt = new BillingBlockTariff();
 			bbt.setContract(contract);
 			bbt.setMeter(meter);
 			bbt.setMDevId(meter.getMdsId());
