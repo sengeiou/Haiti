@@ -16,4 +16,27 @@ import org.eclipse.persistence.annotations.Indexes;
 //        })
 public class DayEM extends MeteringDay {
 
+	@Override
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
+		
+		buffer.append("mdevId : ").append(getMDevId()).append(", ");
+		buffer.append("YYYYMMDD : ").append(getYyyymmdd()).append(", ");
+		buffer.append("HH : ").append(getHh()).append(", ");
+		buffer.append("channel : ").append(getChannel()).append(", ");
+		buffer.append("mdevType : ").append(getMDevType()).append(", ");
+		buffer.append("DST : ").append(getDst()).append(", ");
+		buffer.append("ModemId : ").append(getModemId()).append(", ");
+		buffer.append("DeviceID : ").append(getDeviceId()).append(", ");
+		buffer.append("DeviceType : ").append(getDeviceType()).append(", ");
+		buffer.append("BaseValue : ").append(getBaseValue()).append(", ");
+		buffer.append("value : ").append(getValue()).append(", ");
+		buffer.append("WriteDate : ").append(getWriteDate()).append(", ");
+		buffer.append("Supplier_Id : ").append(getSupplierId()).append(", ");
+		buffer.append("Ch_Method : ").append(getCh_method()).append(", ");
+		buffer.append("Contract_ID : ").append(getContractId());
+		
+		return buffer.toString();
+	}
+
 }

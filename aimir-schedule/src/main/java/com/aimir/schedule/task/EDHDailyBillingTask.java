@@ -198,12 +198,7 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 	
 	private void init() throws Exception {
 		txmanager = (HibernateTransactionManager)DataUtil.getBean("transactionManager");
-		log.debug("this txmanager : " + this.txmanager);
-		log.debug("txmanager : " + txmanager);
-		
 		codeDao = DataUtil.getBean(CodeDao.class);
-		log.debug("codeDao : " + codeDao);
-		
 		contractDao = DataUtil.getBean(ContractDao.class);
 		meterDao = DataUtil.getBean(MeterDao.class);
 		dayEMDao = DataUtil.getBean(DayEMDao.class);
@@ -637,6 +632,8 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 	private BigDecimal getCale(Object left, Object right, EDHDailyBillingTask.BIGDECIMAL_CALC calcOP) {
 		BigDecimal bLeft = null;
 		BigDecimal bRigth = null;
+		
+		log.debug("left : " + left +", right : " +right);
 		
 		if(left instanceof Number)
 			bLeft = new BigDecimal(String.valueOf((Double)left));
