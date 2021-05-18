@@ -637,13 +637,21 @@ class EDHDailyBillingTaskSubClz implements Runnable {
 		
 		if(left instanceof BigDecimal)
 			bLeft = (BigDecimal)left;
-		else if(left instanceof Number)
+		else if(left instanceof Double)
 			bLeft = new BigDecimal(String.valueOf((Double)left));
+		else if(left instanceof Long)
+			bLeft = new BigDecimal(String.valueOf((Long)left));
+		else if(left instanceof Integer)
+			bLeft = new BigDecimal(String.valueOf((Integer)left));
 		
 		if(right instanceof BigDecimal)
 			bRigth = (BigDecimal)right;
-		else if(right instanceof Number)
+		else if(right instanceof Double)
 			bRigth = new BigDecimal(String.valueOf((Double)right));
+		else if(right instanceof Long)
+			bRigth = new BigDecimal(String.valueOf((Long)right));
+		else if(right instanceof Integer)
+			bRigth = new BigDecimal(String.valueOf((Integer)right));
 		
 		if(bLeft != null && bRigth != null)
 			return getCale(bLeft, bRigth, calcOP);
