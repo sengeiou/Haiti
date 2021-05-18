@@ -18,8 +18,8 @@
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="poolName" value="springHikariCP" />
 		<property name="dataSourceClassName" value="${jdbc.driverClassName}" />
-		<property name="maximumPoolSize" value="10" />
-		<property name="minimumIdle" value="5" />
+		<property name="maximumPoolSize" value="50" />
+		<property name="minimumIdle" value="30" />
 		<property name="idleTimeout" value="30000" />
 
 		<property name="dataSourceProperties">
